@@ -31,6 +31,10 @@ public class Name implements Asn1Structure<Asn1Sequence> {
         this.relativeDistinguishedNames = relativeDistinguishedNames;
     }
 
+    public void addRelativeDistinguishedName(RelativeDistinguishedName relativeDistinguishedName) {
+        this.relativeDistinguishedNames.add(relativeDistinguishedName);
+    }
+
     public Asn1Sequence getAsn1Structure(String identifier) throws CertificateGeneratorException {
         Asn1Sequence name = new Asn1Sequence();
         name.setIdentifier(identifier);

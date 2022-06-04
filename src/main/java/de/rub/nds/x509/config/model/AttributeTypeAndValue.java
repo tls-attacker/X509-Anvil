@@ -26,6 +26,14 @@ public class AttributeTypeAndValue implements Asn1Structure<Asn1Sequence> {
         return value;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setValue(Asn1Encodable value) {
+        this.value = value;
+    }
+
     @Override
     public Asn1Sequence getAsn1Structure(String identifier) throws CertificateGeneratorException {
         Asn1Sequence attributeTypeAndValue = new Asn1Sequence();

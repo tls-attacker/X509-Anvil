@@ -26,6 +26,10 @@ public class RelativeDistinguishedName implements Asn1Structure<Asn1Set> {
         this.attributeTypeAndValueList = attributeTypeAndValueList;
     }
 
+    public void addAttributeTypeAndValue(AttributeTypeAndValue attributeTypeAndValue) {
+        this.attributeTypeAndValueList.add(attributeTypeAndValue);
+    }
+
     @Override
     public Asn1Set getAsn1Structure(String identifier) throws CertificateGeneratorException {
         Asn1Set relativeDistinguishedName = new Asn1Set();

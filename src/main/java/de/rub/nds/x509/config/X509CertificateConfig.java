@@ -10,8 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class X509CertificateConfig {
-    private byte[] privateKey;
-    String signatureAlgorithmOid;
+    // TODO: Maybe use KeyPair instead
+    private byte[] subjectPrivateKey;
+    private String signatureAlgorithmOid;
+    private Asn1Encodable signatureAlgorithmParameters;
+    private Signer signer;
+    private byte[] signaturePrivateKeyOverride;
 
     private boolean versionPresent = true;
     private BigInteger version;
@@ -46,26 +50,26 @@ public class X509CertificateConfig {
     private boolean extensionsPresent = true;
     private List<Extension> extensions = new ArrayList<>();
 
-    private boolean algorithmIdentifierPresent = true;
-    private boolean overrideAlgorithmIdentifierOid;
-    private Asn1ObjectIdentifier algorithmIdentifierOidOverridden;
-    private AlgorithmParametersType algorithmIdentifierParametersType;
-    // TODO: Parameters
+    private boolean signatureAlgorithmPresent = true;
+    private boolean overrideSignatureAlgorithmOid;
+    private String signatureAlgorithmOidOverridden;
+    private AlgorithmParametersType signatureAlgorithmParametersType;
+    private Asn1Encodable algorithmIdentifiersParameters;       // TODO resolve naming conflicts
 
     private boolean signaturePresent = true;
-    private boolean overrideSignature;
+    private boolean overrideSignature;          // TODO use in generator
     private ASN1BitString signatureOverridden;
 
 
     public X509CertificateConfig() {}
 
 
-    public byte[] getPrivateKey() {
-        return privateKey;
+    public byte[] getSubjectPrivateKey() {
+        return subjectPrivateKey;
     }
 
-    public void setPrivateKey(byte[] privateKey) {
-        this.privateKey = privateKey;
+    public void setSubjectPrivateKey(byte[] subjectPrivateKey) {
+        this.subjectPrivateKey = subjectPrivateKey;
     }
 
     public String getSignatureAlgorithmOid() {
@@ -74,6 +78,30 @@ public class X509CertificateConfig {
 
     public void setSignatureAlgorithmOid(String signatureAlgorithmOid) {
         this.signatureAlgorithmOid = signatureAlgorithmOid;
+    }
+
+    public Asn1Encodable getSignatureAlgorithmParameters() {
+        return signatureAlgorithmParameters;
+    }
+
+    public void setSignatureAlgorithmParameters(Asn1Encodable signatureAlgorithmParameters) {
+        this.signatureAlgorithmParameters = signatureAlgorithmParameters;
+    }
+
+    public Signer getSigner() {
+        return signer;
+    }
+
+    public void setSigner(Signer signer) {
+        this.signer = signer;
+    }
+
+    public byte[] getSignaturePrivateKeyOverride() {
+        return signaturePrivateKeyOverride;
+    }
+
+    public void setSignaturePrivateKeyOverride(byte[] signaturePrivateKeyOverride) {
+        this.signaturePrivateKeyOverride = signaturePrivateKeyOverride;
     }
 
     public boolean isVersionPresent() {
@@ -276,36 +304,44 @@ public class X509CertificateConfig {
         this.extensionsPresent = extensionsPresent;
     }
 
-    public boolean isAlgorithmIdentifierPresent() {
-        return algorithmIdentifierPresent;
+    public boolean isSignatureAlgorithmPresent() {
+        return signatureAlgorithmPresent;
     }
 
-    public void setAlgorithmIdentifierPresent(boolean algorithmIdentifierPresent) {
-        this.algorithmIdentifierPresent = algorithmIdentifierPresent;
+    public void setSignatureAlgorithmPresent(boolean signatureAlgorithmPresent) {
+        this.signatureAlgorithmPresent = signatureAlgorithmPresent;
     }
 
-    public boolean isOverrideAlgorithmIdentifierOid() {
-        return overrideAlgorithmIdentifierOid;
+    public boolean isOverrideSignatureAlgorithmOid() {
+        return overrideSignatureAlgorithmOid;
     }
 
-    public void setOverrideAlgorithmIdentifierOid(boolean overrideAlgorithmIdentifierOid) {
-        this.overrideAlgorithmIdentifierOid = overrideAlgorithmIdentifierOid;
+    public void setOverrideSignatureAlgorithmOid(boolean overrideSignatureAlgorithmOid) {
+        this.overrideSignatureAlgorithmOid = overrideSignatureAlgorithmOid;
     }
 
-    public Asn1ObjectIdentifier getAlgorithmIdentifierOidOverridden() {
-        return algorithmIdentifierOidOverridden;
+    public String getSignatureAlgorithmOidOverridden() {
+        return signatureAlgorithmOidOverridden;
     }
 
-    public void setAlgorithmIdentifierOidOverridden(Asn1ObjectIdentifier algorithmIdentifierOidOverridden) {
-        this.algorithmIdentifierOidOverridden = algorithmIdentifierOidOverridden;
+    public void setSignatureAlgorithmOidOverridden(String signatureAlgorithmOidOverridden) {
+        this.signatureAlgorithmOidOverridden = signatureAlgorithmOidOverridden;
     }
 
-    public AlgorithmParametersType getAlgorithmIdentifierParametersType() {
-        return algorithmIdentifierParametersType;
+    public AlgorithmParametersType getSignatureAlgorithmParametersType() {
+        return signatureAlgorithmParametersType;
     }
 
-    public void setAlgorithmIdentifierParametersType(AlgorithmParametersType algorithmIdentifierParametersType) {
-        this.algorithmIdentifierParametersType = algorithmIdentifierParametersType;
+    public void setSignatureAlgorithmParametersType(AlgorithmParametersType signatureAlgorithmParametersType) {
+        this.signatureAlgorithmParametersType = signatureAlgorithmParametersType;
+    }
+
+    public Asn1Encodable getAlgorithmIdentifiersParameters() {
+        return algorithmIdentifiersParameters;
+    }
+
+    public void setAlgorithmIdentifiersParameters(Asn1Encodable algorithmIdentifiersParameters) {
+        this.algorithmIdentifiersParameters = algorithmIdentifiersParameters;
     }
 
     public boolean isSignaturePresent() {
