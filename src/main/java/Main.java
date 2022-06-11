@@ -1,14 +1,15 @@
 import de.rub.nds.asn1.model.*;
-import de.rub.nds.exception.CertificateGeneratorException;
-import de.rub.nds.util.PemUtil;
-import de.rub.nds.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509.config.constants.AlgorithmObjectIdentifiers;
-import de.rub.nds.x509.config.X509CertificateConfig;
-import de.rub.nds.x509.config.constants.AttributeTypeObjectIdentifiers;
-import de.rub.nds.x509.config.model.*;
-import de.rub.nds.x509.config.model.Signer;
-import de.rub.nds.x509.generator.X509CertificateChainGenerator;
-import de.rub.nds.x509.generator.X509CertificateGenerator;
+import de.rub.nds.x509anvil.exception.CertificateGeneratorException;
+import de.rub.nds.x509anvil.verifier.TlsClientAuthVerifierAdapter;
+import de.rub.nds.x509anvil.verifier.VerifierException;
+import de.rub.nds.x509anvil.verifier.VerifierResult;
+import de.rub.nds.x509anvil.x509.config.X509CertificateChainConfig;
+import de.rub.nds.x509anvil.x509.config.constants.AlgorithmObjectIdentifiers;
+import de.rub.nds.x509anvil.x509.config.X509CertificateConfig;
+import de.rub.nds.x509anvil.x509.config.constants.AttributeTypeObjectIdentifiers;
+import de.rub.nds.x509anvil.x509.config.model.*;
+import de.rub.nds.x509anvil.x509.config.model.Signer;
+import de.rub.nds.x509anvil.x509.generator.X509CertificateChainGenerator;
 import de.rub.nds.x509attacker.registry.Registry;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -19,7 +20,7 @@ import java.security.*;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws NoSuchAlgorithmException, CertificateGeneratorException, IOException {
+    public static void main(String[] args) throws NoSuchAlgorithmException, CertificateGeneratorException, IOException, VerifierException {
         Security.addProvider(new BouncyCastleProvider());
         Registry.getInstance();
 
@@ -33,8 +34,7 @@ public class Main {
             KeyPair keyPair = keyPairGenerator.generateKeyPair();
 
             X509CertificateConfig rootConfig = new X509CertificateConfig();
-            byte[] pemEncodedPrivateKey = PemUtil.encodePrivateKeyAsPem(keyPair.getPrivate().getEncoded());
-            rootConfig.setSubjectPrivateKey(pemEncodedPrivateKey);
+            rootConfig.setSubjectKeyPair(keyPair);
             rootConfig.setSignatureAlgorithmParameters(new Asn1Null());
             rootConfig.setSignatureAlgorithmOid(AlgorithmObjectIdentifiers.SHA256_WITH_RSA_ENCRYPTION);
             rootConfig.setSigner(Signer.SELF);
@@ -78,8 +78,7 @@ public class Main {
             KeyPair keyPair = keyPairGenerator.generateKeyPair();
 
             X509CertificateConfig entityConfig = new X509CertificateConfig();
-            byte[] pemEncodedPrivateKey = PemUtil.encodePrivateKeyAsPem(keyPair.getPrivate().getEncoded());
-            entityConfig.setSubjectPrivateKey(pemEncodedPrivateKey);
+            entityConfig.setSubjectKeyPair(keyPair);
             entityConfig.setSignatureAlgorithmParameters(new Asn1Null());
             entityConfig.setSignatureAlgorithmOid(AlgorithmObjectIdentifiers.SHA256_WITH_RSA_ENCRYPTION);
             entityConfig.setSigner(Signer.NEXT_IN_CHAIN);
@@ -119,7 +118,8 @@ public class Main {
         x509CertificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificates = x509CertificateChainGenerator.retrieveCertificateChain();
 
-
-        System.out.println(certificates.size());
+        TlsClientAuthVerifierAdapter authVerifierAdapter = new TlsClientAuthVerifierAdapter("192.168.56.101", 4433);
+        VerifierResult verifierResult = authVerifierAdapter.invokeVerifier(certificates, certificateChainConfig);
+        System.out.println(verifierResult.isValid());
     }
 }
