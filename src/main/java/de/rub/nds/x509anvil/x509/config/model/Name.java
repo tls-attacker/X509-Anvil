@@ -1,14 +1,9 @@
-package de.rub.nds.x509.config.model;
+package de.rub.nds.x509anvil.x509.config.model;
 
-import de.rub.nds.asn1.Asn1Encodable;
-import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
 import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.asn1.model.Asn1Set;
-import de.rub.nds.exception.CertificateGeneratorException;
+import de.rub.nds.x509anvil.exception.CertificateGeneratorException;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

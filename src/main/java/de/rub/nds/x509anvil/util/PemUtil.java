@@ -1,4 +1,4 @@
-package de.rub.nds.util;
+package de.rub.nds.x509anvil.util;
 
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemWriter;

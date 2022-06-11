@@ -1,4 +1,4 @@
-package de.rub.nds.x509.config.constants;
+package de.rub.nds.x509anvil.x509.config.constants;
 
 public class AlgorithmObjectIdentifiers {
     public static final String DSA_WITH_NONE = "2.16.840.1.101.3.4.3.2";

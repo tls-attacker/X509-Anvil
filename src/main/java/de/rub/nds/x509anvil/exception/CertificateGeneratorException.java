@@ -1,4 +1,4 @@
-package de.rub.nds.exception;
+package de.rub.nds.x509anvil.exception;
 
 public class CertificateGeneratorException extends Exception {
     public CertificateGeneratorException() {

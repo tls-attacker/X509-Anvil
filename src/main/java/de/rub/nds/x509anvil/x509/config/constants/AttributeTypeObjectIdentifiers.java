@@ -1,4 +1,4 @@
-package de.rub.nds.x509.config.constants;
+package de.rub.nds.x509anvil.x509.config.constants;
 
 public class AttributeTypeObjectIdentifiers {
     public static final String NAME = "2.5.4.41";

@@ -1,4 +1,4 @@
-package de.rub.nds.x509.config;
+package de.rub.nds.x509anvil.x509.config;
 
 import java.util.ArrayList;
 import java.util.List;

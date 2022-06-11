@@ -1,8 +1,8 @@
-package de.rub.nds.x509.config.model;
+package de.rub.nds.x509anvil.x509.config.model;
 
 import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.asn1.model.Asn1Set;
-import de.rub.nds.exception.CertificateGeneratorException;
+import de.rub.nds.x509anvil.exception.CertificateGeneratorException;
 
 import java.util.ArrayList;
 import java.util.List;

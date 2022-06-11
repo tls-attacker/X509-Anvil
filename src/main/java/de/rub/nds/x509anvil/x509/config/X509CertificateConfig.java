@@ -1,17 +1,16 @@
-package de.rub.nds.x509.config;
+package de.rub.nds.x509anvil.x509.config;
 
 import de.rub.nds.asn1.Asn1Encodable;
-import de.rub.nds.asn1.model.*;
-import de.rub.nds.x509.config.model.*;
+import de.rub.nds.x509anvil.x509.config.model.*;
 import org.bouncycastle.asn1.ASN1BitString;
 
 import java.math.BigInteger;
+import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.List;
 
 public class X509CertificateConfig {
-    // TODO: Maybe use KeyPair instead
-    private byte[] subjectPrivateKey;
+    private KeyPair subjectKeyPair;
     private String signatureAlgorithmOid;
     private Asn1Encodable signatureAlgorithmParameters;
     private Signer signer;
@@ -64,12 +63,12 @@ public class X509CertificateConfig {
     public X509CertificateConfig() {}
 
 
-    public byte[] getSubjectPrivateKey() {
-        return subjectPrivateKey;
+    public KeyPair getSubjectKeyPair() {
+        return subjectKeyPair;
     }
 
-    public void setSubjectPrivateKey(byte[] subjectPrivateKey) {
-        this.subjectPrivateKey = subjectPrivateKey;
+    public void setSubjectKeyPair(KeyPair subjectKeyPair) {
+        this.subjectKeyPair = subjectKeyPair;
     }
 
     public String getSignatureAlgorithmOid() {

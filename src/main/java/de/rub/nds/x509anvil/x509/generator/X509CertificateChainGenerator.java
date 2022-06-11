@@ -1,8 +1,8 @@
-package de.rub.nds.x509.generator;
+package de.rub.nds.x509anvil.x509.generator;
 
-import de.rub.nds.exception.CertificateGeneratorException;
-import de.rub.nds.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509.config.X509CertificateConfig;
+import de.rub.nds.x509anvil.exception.CertificateGeneratorException;
+import de.rub.nds.x509anvil.x509.config.X509CertificateChainConfig;
+import de.rub.nds.x509anvil.x509.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 
 import java.util.ArrayList;

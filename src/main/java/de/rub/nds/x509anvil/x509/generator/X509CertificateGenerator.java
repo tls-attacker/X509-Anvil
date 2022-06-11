@@ -1,12 +1,13 @@
-package de.rub.nds.x509.generator;
+package de.rub.nds.x509anvil.x509.generator;
 
 import de.rub.nds.asn1.Asn1Encodable;
 import de.rub.nds.asn1.model.*;
-import de.rub.nds.exception.CertificateGeneratorException;
-import de.rub.nds.x509.config.model.AlgorithmParametersType;
-import de.rub.nds.x509.config.model.TimeType;
-import de.rub.nds.x509.config.X509CertificateConfig;
-import de.rub.nds.x509.config.model.Name;
+import de.rub.nds.x509anvil.exception.CertificateGeneratorException;
+import de.rub.nds.x509anvil.util.PemUtil;
+import de.rub.nds.x509anvil.x509.config.model.AlgorithmParametersType;
+import de.rub.nds.x509anvil.x509.config.model.TimeType;
+import de.rub.nds.x509anvil.x509.config.X509CertificateConfig;
+import de.rub.nds.x509anvil.x509.config.model.Name;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 
 import javax.xml.bind.JAXBException;
@@ -66,17 +67,21 @@ public class X509CertificateGenerator {
 
         // Set key info
         byte[] privateKeyForSignature;
-        switch (certificateConfig.getSigner()) {
-            case NEXT_IN_CHAIN:
-                privateKeyForSignature = issuerConfig.getSubjectPrivateKey();
-                break;
-            case SELF:
-                privateKeyForSignature = certificateConfig.getSubjectPrivateKey();
-                break;
-            case OVERRIDE:
-            default:
-                privateKeyForSignature = certificateConfig.getSignaturePrivateKeyOverride();
-                break;
+        try {
+            switch (certificateConfig.getSigner()) {
+                case NEXT_IN_CHAIN:
+                    privateKeyForSignature = PemUtil.encodePrivateKeyAsPem(issuerConfig.getSubjectKeyPair().getPrivate().getEncoded());
+                    break;
+                case SELF:
+                    privateKeyForSignature = PemUtil.encodePrivateKeyAsPem(certificateConfig.getSubjectKeyPair().getPrivate().getEncoded());
+                    break;
+                case OVERRIDE:
+                default:
+                    privateKeyForSignature = certificateConfig.getSignaturePrivateKeyOverride();
+                    break;
+            }
+        } catch (IOException e) {
+            throw new CertificateGeneratorException("Unable to encode private key as pem", e);
         }
 
         KeyInfo keyInfo = new KeyInfo();

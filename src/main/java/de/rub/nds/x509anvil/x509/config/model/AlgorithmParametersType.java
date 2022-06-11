@@ -1,4 +1,4 @@
-package de.rub.nds.x509.config.model;
+package de.rub.nds.x509anvil.x509.config.model;
 
 public enum AlgorithmParametersType {
     NO_PARAMETERS,      // No parameters indicated by omitted parameters tag in AlgorithmIdentifier sequence

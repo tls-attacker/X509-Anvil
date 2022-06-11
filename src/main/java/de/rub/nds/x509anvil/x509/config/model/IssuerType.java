@@ -1,4 +1,4 @@
-package de.rub.nds.x509.config.model;
+package de.rub.nds.x509anvil.x509.config.model;
 
 public enum IssuerType {
     NEXT_IN_CHAIN,          // Issuer field is identical to Subject of next cert in chain

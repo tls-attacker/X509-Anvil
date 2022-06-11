@@ -1,4 +1,4 @@
-package de.rub.nds.constants;
+package de.rub.nds.x509anvil.constants;
 
 public enum KeyType {
     RSA,
