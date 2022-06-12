@@ -4,6 +4,7 @@ import de.rub.nds.x509anvil.verifier.TlsClientAuthVerifierAdapter;
 import de.rub.nds.x509anvil.verifier.VerifierException;
 import de.rub.nds.x509anvil.verifier.VerifierResult;
 import de.rub.nds.x509anvil.x509.config.X509CertificateChainConfig;
+import de.rub.nds.x509anvil.x509.config.X509Util;
 import de.rub.nds.x509anvil.x509.config.constants.AlgorithmObjectIdentifiers;
 import de.rub.nds.x509anvil.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.x509.config.constants.AttributeTypeObjectIdentifiers;
@@ -117,6 +118,8 @@ public class Main {
         X509CertificateChainGenerator x509CertificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         x509CertificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificates = x509CertificateChainGenerator.retrieveCertificateChain();
+
+        X509Util.exportCertificates(certificates, "resources");
 
         TlsClientAuthVerifierAdapter authVerifierAdapter = new TlsClientAuthVerifierAdapter("192.168.56.101", 4433);
         VerifierResult verifierResult = authVerifierAdapter.invokeVerifier(certificates, certificateChainConfig);

@@ -1,6 +1,8 @@
 package de.rub.nds.x509anvil.x509.config;
 
+import de.rub.nds.x509attacker.constants.X509CertChainOutFormat;
 import de.rub.nds.x509attacker.x509.X509Certificate;
+import de.rub.nds.x509attacker.x509.X509CertificateChain;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -42,5 +44,10 @@ public class X509Util {
         outputStream.write((byte)(value >>> 16));
         outputStream.write((byte)(value >>> 8));
         outputStream.write((byte)value);
+    }
+
+    public static void exportCertificates(List<X509Certificate> certificateChain, String directory) {
+        X509CertificateChain x509CertificateChain = new X509CertificateChain(certificateChain);
+        x509CertificateChain.writeCertificateChainToFile(directory, X509CertChainOutFormat.CHAIN_ALL_IND_ROOT_TO_LEAF);
     }
 }
