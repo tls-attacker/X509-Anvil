@@ -1,13 +1,13 @@
 package de.rub.nds.x509anvil.x509.config.model;
 
-public abstract class Extension {
+public abstract class ExtensionConfig {
     private boolean critical;
 
-    public Extension(boolean critical) {
+    public ExtensionConfig(boolean critical) {
         this.critical = critical;
     }
 
-    public Extension() {}
+    public ExtensionConfig() {}
 
     public boolean isCritical() {
         return critical;

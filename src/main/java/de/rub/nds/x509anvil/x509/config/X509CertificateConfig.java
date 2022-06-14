@@ -47,7 +47,7 @@ public class X509CertificateConfig {
     private SubjectPublicKeyInfo subjectPublicKeyInfo;
 
     private boolean extensionsPresent = true;
-    private List<Extension> extensions = new ArrayList<>();
+    private List<ExtensionConfig> extensions = new ArrayList<>();
 
     private boolean signatureAlgorithmPresent = true;
     private boolean overrideSignatureAlgorithmOid;
@@ -287,11 +287,11 @@ public class X509CertificateConfig {
         this.subjectPublicKeyInfo = subjectPublicKeyInfo;
     }
 
-    public List<Extension> getExtensions() {
+    public List<ExtensionConfig> getExtensions() {
         return extensions;
     }
 
-    public void setExtensions(List<Extension> extensions) {
+    public void setExtensions(List<ExtensionConfig> extensions) {
         this.extensions = extensions;
     }
 
