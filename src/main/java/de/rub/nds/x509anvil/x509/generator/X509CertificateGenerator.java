@@ -17,7 +17,7 @@ import java.util.Collections;
 
 public class X509CertificateGenerator {
     private final X509CertificateConfig certificateConfig;
-    private final X509CertificateConfig issuerConfig;
+    private final X509CertificateConfig nextInChainConfig;
 
     private Asn1Sequence tbsCertificate;
     private Asn1Sequence certificateAsn1;
@@ -26,12 +26,12 @@ public class X509CertificateGenerator {
 
     public X509CertificateGenerator(X509CertificateConfig certificateConfig, X509CertificateConfig issuerConfig) {
         this.certificateConfig = certificateConfig;
-        this.issuerConfig = issuerConfig;
+        this.nextInChainConfig = issuerConfig;
     }
 
     public X509CertificateGenerator(X509CertificateConfig certificateConfig) {
         this.certificateConfig = certificateConfig;
-        this.issuerConfig = null;       // TODO: Check for null pointer exceptions
+        this.nextInChainConfig = null;       // TODO: Check for null pointer exceptions
     }
 
     public void generateCertificate() throws CertificateGeneratorException {
@@ -70,7 +70,7 @@ public class X509CertificateGenerator {
         try {
             switch (certificateConfig.getSigner()) {
                 case NEXT_IN_CHAIN:
-                    privateKeyForSignature = PemUtil.encodePrivateKeyAsPem(issuerConfig.getSubjectKeyPair().getPrivate().getEncoded());
+                    privateKeyForSignature = PemUtil.encodePrivateKeyAsPem(nextInChainConfig.getSubjectKeyPair().getPrivate().getEncoded());
                     break;
                 case SELF:
                     privateKeyForSignature = PemUtil.encodePrivateKeyAsPem(certificateConfig.getSubjectKeyPair().getPrivate().getEncoded());
@@ -159,7 +159,7 @@ public class X509CertificateGenerator {
                 algorithm.setValue(certificateConfig.getTbsSignatureOidOverridden());
             }
             else {
-                algorithm.setValue(certificateConfig.getSignatureAlgorithmOid());
+                algorithm.setValue(certificateConfig.getSignatureAlgorithmOid());       // TODO ????
             }
             signature.addChild(algorithm);
 
@@ -187,7 +187,7 @@ public class X509CertificateGenerator {
             Name issuer;
             switch (certificateConfig.getIssuerType()){
                 case NEXT_IN_CHAIN:
-                    issuer = issuerConfig.getSubject();
+                    issuer = nextInChainConfig.getSubject();
                     break;
                 case SELF:
                     issuer = certificateConfig.getSubject();
