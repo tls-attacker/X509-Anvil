@@ -50,7 +50,7 @@ public abstract class CertificateSpecificParameter<T> extends DerivationParamete
     @Override
     public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
         List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
-        defaultConstraints.add(createCertificateNotModeledConstraint());
+        //defaultConstraints.add(createCertificateNotModeledConstraint());
         return defaultConstraints;
     }
 
