@@ -35,6 +35,12 @@ public class ParameterModelFactory {
             .parameters(parameterBuilders).exclusionConstraints(constraints).build();
     }
 
+    public static boolean mustUseSimpleModel(TestContext testContext, DerivationScope scope) {
+        List<ParameterIdentifier> parameterIdentifiers = getParameterIdentifiersForScope(scope);
+        Parameter.Builder[] builders = getParameterBuilders(parameterIdentifiers, scope, testContext);
+        return builders.length == 1;
+    }
+
     private static Parameter.Builder[] getParameterBuilders(List<ParameterIdentifier> parameterIdentifiers,
         DerivationScope derivationScope, TestContext testContext) {
         List<Parameter.Builder> parameterBuilders = new ArrayList<>();

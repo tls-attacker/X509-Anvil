@@ -84,7 +84,7 @@ public abstract class DerivationParameter<T> {
     public Parameter.Builder getParameterBuilder(TestContext testContext, DerivationScope derivationScope) {
         List<DerivationParameter<T>> constrainedParameterValues =
             getConstrainedParameterValues(testContext, derivationScope);
-        return Parameter.parameter(parameterIdentifier.toString()).value(constrainedParameterValues.toArray());
+        return Parameter.parameter(parameterIdentifier.toString()).values(constrainedParameterValues.toArray());
     }
 
     public List<ConditionalConstraint> getConditionalConstraints(DerivationScope derivationScope) {
