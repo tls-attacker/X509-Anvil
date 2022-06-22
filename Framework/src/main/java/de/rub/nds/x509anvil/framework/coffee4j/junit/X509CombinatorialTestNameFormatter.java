@@ -15,5 +15,6 @@ public class X509CombinatorialTestNameFormatter extends CombinatorialTestNameFor
     public X509CombinatorialTestNameFormatter(String namePattern) {
         super(namePattern);
     }
-    // TODO
+
+
 }
