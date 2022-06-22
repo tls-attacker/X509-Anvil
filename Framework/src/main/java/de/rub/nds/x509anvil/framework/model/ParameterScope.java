@@ -11,11 +11,11 @@ package de.rub.nds.x509anvil.framework.model;
 
 public enum ParameterScope {
     GLOBAL,
-    ENTITY_CERT,
-    INTERMEDIATE_CERT,
-    ROOT_CERT;
+    CERT_ENTITY,
+    CERT_INTERMEDIATE,
+    CERT_ROOT;
 
     static ParameterScope[] getCertificateScopes() {
-        return new ParameterScope[] { ENTITY_CERT, INTERMEDIATE_CERT, ROOT_CERT };
+        return new ParameterScope[] {CERT_ENTITY, CERT_INTERMEDIATE, CERT_ROOT};
     }
 }
