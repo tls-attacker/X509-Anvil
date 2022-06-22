@@ -50,18 +50,15 @@ public abstract class DerivationParameter<T> {
     public abstract List<DerivationParameter<T>> getParameterValues(TestContext testContext,
         DerivationScope derivationScope);
 
-    public List<DerivationParameter<T>> getConstrainedParameterValues(TestContext testContext,
-        DerivationScope derivationScope) {
-        List<DerivationParameter<T>> constrainedParameterValues = new ArrayList<>();
+    public List<DerivationParameter<T>> getConstrainedParameterValues(TestContext testContext, DerivationScope derivationScope) {
         if (derivationScope.hasExplicitValues(parameterIdentifier)) {
             return getExplicitValues(derivationScope);
         } else {
-            constrainedParameterValues = getParameterValues(testContext, derivationScope).stream()
+            return getParameterValues(testContext, derivationScope).stream()
                 .filter(value -> valueApplicableUnderAllConstraints(derivationScope.getValueConstraints(),
                     value.getSelectedValue()))
                 .collect(Collectors.toList());
         }
-        return constrainedParameterValues;
     }
 
     /**
@@ -125,5 +122,13 @@ public abstract class DerivationParameter<T> {
     private boolean valueApplicableUnderConstraint(ValueConstraint constraint, T value) {
         // TODO
         return true;
+    }
+
+    @Override
+    public String toString() {
+        if (selectedValue == null) {
+            return "null";
+        }
+        return selectedValue.toString();
     }
 }

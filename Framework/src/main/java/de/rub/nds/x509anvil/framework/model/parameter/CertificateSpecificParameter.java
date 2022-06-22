@@ -38,7 +38,7 @@ public abstract class CertificateSpecificParameter<T> extends DerivationParamete
             Collections.singleton(new ParameterIdentifier(ParameterScope.GLOBAL, ParameterType.CHAIN_LENGTH));
         Constraint constraint = ConstraintBuilder
             .constrain(getParameterIdentifier().toString(), requiredParameters.stream().findFirst().get().toString())
-            .by((ChainLengthParameter chainLengthParam, CertificateSpecificParameter<T> certificateSpecificParam) -> {
+            .by((CertificateSpecificParameter<T> certificateSpecificParam, ChainLengthParameter chainLengthParam) -> {
                 Integer chainLength = chainLengthParam.getSelectedValue();
                 T selectedValue = certificateSpecificParam.getSelectedValue();
                 return (certificateParameterScopeModeled(getParameterIdentifier().getParameterScope(), chainLength)
@@ -50,17 +50,17 @@ public abstract class CertificateSpecificParameter<T> extends DerivationParamete
     @Override
     public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
         List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
-        //defaultConstraints.add(createCertificateNotModeledConstraint());
+        defaultConstraints.add(createCertificateNotModeledConstraint());
         return defaultConstraints;
     }
 
     private static boolean certificateParameterScopeModeled(ParameterScope parameterScope, int chainLength) {
         switch (parameterScope) {
-            case ENTITY_CERT:
+            case CERT_ENTITY:
                 return chainLength >= 1;
-            case ROOT_CERT:
+            case CERT_ROOT:
                 return chainLength >= 2;
-            case INTERMEDIATE_CERT:
+            case CERT_INTERMEDIATE:
                 return chainLength >= 3;
             default:
                 return false; // Not a certificate parameter scope
