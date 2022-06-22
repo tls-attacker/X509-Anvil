@@ -2,17 +2,30 @@ package de.rub.nds.x509anvil.framework.junit.test;
 
 import de.rub.nds.x509anvil.framework.TestContext;
 import de.rub.nds.x509anvil.framework.junit.execution.X509TestRunner;
+import de.rub.nds.x509anvil.framework.junit.extension.ExtensionContextParameterResolver;
+import de.rub.nds.x509anvil.framework.junit.extension.X509TestRunnerResolver;
 import de.rub.nds.x509anvil.framework.model.DerivationScope;
 import de.rub.nds.x509anvil.framework.model.ParameterCombination;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 
-// TODO ExtendsWith
+@ExtendWith({
+        //TestWatcher.class,
+        //EndpointCondition.class,
+        //TlsVersionCondition.class,
+        //KexCondition.class,
+        //MethodConditionExtension.class,
+        //EnforcedSenderRestrictionConditionExtension.class,
+        //ValueConstraintsConditionExtension.class,
+        ExtensionContextParameterResolver.class,
+        X509TestRunnerResolver.class
+})
 public abstract class X509VerifierTest {
     protected static final Logger LOGGER = LogManager.getLogger();
 
