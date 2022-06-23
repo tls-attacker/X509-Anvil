@@ -63,9 +63,8 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         X509CertificateChainConfig chainConfig) throws VerifierException {
         try {
             byte[] encodedChain = X509Util.encodeCertificateChainForTls(certificatesChain);
-            Certificate certificate = Certificate.parse(new ByteArrayInputStream(encodedChain));
-            CertificateKeyPair certificateKeyPair =
-                new CertificateKeyPair(certificate, chainConfig.getEntityCertificateConfig().getSubjectKeyPair().getPrivate(),
+            CertificateKeyPair certificateKeyPair = new CertificateKeyPair(encodedChain,
+                    chainConfig.getEntityCertificateConfig().getSubjectKeyPair().getPrivate(),
                     chainConfig.getEntityCertificateConfig().getSubjectKeyPair().getPublic());
             config.setDefaultExplicitCertificateKeyPair(certificateKeyPair);
         } catch (IOException e) {
