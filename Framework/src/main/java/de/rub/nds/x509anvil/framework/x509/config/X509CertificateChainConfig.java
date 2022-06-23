@@ -10,28 +10,62 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class X509CertificateChainConfig {
-    private List<X509CertificateConfig> certificateConfigs = new ArrayList<>(); // Index 0 is root
-
-    public void addCertificateConfig(X509CertificateConfig certificateConfig) {
-        this.certificateConfigs.add(certificateConfig);
-    }
-
-    public X509CertificateConfig getRootConfig() {
-        return this.certificateConfigs.get(0);
-    }
-
-    public X509CertificateConfig getEntityConfig() {
-        return this.certificateConfigs.get(this.certificateConfigs.size() - 1);
-    }
+    // TODO Find more elegant way for handling default values
+    private int chainLength = 1;
+    private X509CertificateConfig entityCertificateConfig = X509CertificateUtil.getDefaultCertificateConfig(true);
+    private X509CertificateConfig intermediateCertificatesConfig = X509CertificateUtil.getDefaultCertificateConfig(true);
+    private X509CertificateConfig rootCertificateConfig = X509CertificateUtil.getDefaultCertificateConfig(true);
 
     public List<X509CertificateConfig> getCertificateConfigs() {
-        return certificateConfigs;
+        List<X509CertificateConfig> certificateConfigList = new ArrayList<>(chainLength);
+        if (chainLength >= 1) {
+            // Generate at least the entity certificate
+            certificateConfigList.add(entityCertificateConfig);
+        }
+        if (chainLength >= 2) {
+            // Generate at least the entity and root certificates
+            certificateConfigList.add(0, rootCertificateConfig);
+        }
+        if (chainLength >= 3) {
+            // Generate chainLength-2 intermediate certificates using the same config
+            certificateConfigList.addAll(1, Collections.nCopies(chainLength - 2, intermediateCertificatesConfig));
+        }
+        return certificateConfigList;
     }
 
-    public void setCertificateConfigs(List<X509CertificateConfig> certificateConfigs) {
-        this.certificateConfigs = certificateConfigs;
+    public int getChainLength() {
+        return chainLength;
+    }
+
+    public void setChainLength(int chainLength) {
+        this.chainLength = chainLength;
+    }
+
+    public X509CertificateConfig getEntityCertificateConfig() {
+        return entityCertificateConfig;
+    }
+
+    public X509CertificateConfig getIntermediateCertificatesConfig() {
+        return intermediateCertificatesConfig;
+    }
+
+    public X509CertificateConfig getRootCertificateConfig() {
+        return rootCertificateConfig;
+    }
+
+    public void setEntityCertificateConfig(X509CertificateConfig entityCertificateConfig) {
+        this.entityCertificateConfig = entityCertificateConfig;
+    }
+
+    public void setIntermediateCertificatesConfig(X509CertificateConfig intermediateCertificatesConfig) {
+        this.intermediateCertificatesConfig = intermediateCertificatesConfig;
+    }
+
+    public void setRootCertificateConfig(X509CertificateConfig rootCertificateConfig) {
+        this.rootCertificateConfig = rootCertificateConfig;
     }
 }

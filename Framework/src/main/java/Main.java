@@ -81,7 +81,7 @@ public class Main {
 
             rootConfig.setExtensionsPresent(false);
 
-            certificateChainConfig.addCertificateConfig(rootConfig);
+            certificateChainConfig.setRootCertificateConfig(rootConfig);
         }
 
         // Entity certificate config
@@ -125,7 +125,7 @@ public class Main {
 
             entityConfig.setExtensionsPresent(false);
 
-            certificateChainConfig.addCertificateConfig(entityConfig);
+            certificateChainConfig.setEntityCertificateConfig(entityConfig);
         }
 
         X509CertificateChainGenerator x509CertificateChainGenerator =
