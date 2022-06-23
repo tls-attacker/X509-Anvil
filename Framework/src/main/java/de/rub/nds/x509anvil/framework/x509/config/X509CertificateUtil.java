@@ -13,15 +13,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 public class X509CertificateUtil {
-    public static X509CertificateConfig getDefaultCertificateConfig(boolean selfSigned) {
-        // Generate key pair
+    public static X509CertificateConfig getDefaultCertificateConfig(boolean selfSigned, String keyPairIdentifier) {
         KeyPair keyPair;
         try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(4096);
-            keyPair = keyPairGenerator.generateKeyPair();
+            keyPair = CachedKeyPairGenerator.retrieveKeyPair(keyPairIdentifier, "RSA", 4096);
         } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("This should not happen", e);
+            throw new IllegalStateException("This should not happen");
         }
 
         X509CertificateConfig config = new X509CertificateConfig();
