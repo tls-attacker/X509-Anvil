@@ -43,6 +43,12 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         defaultConfigCache = new ConfigCache(defaultConfig);
     }
 
+    public static TlsClientAuthVerifierAdapter fromConfig(TlsClientAuthVerifierAdapterConfig config) {
+        String hostname = config.getHostname();
+        int port = config.getPort();
+        return new TlsClientAuthVerifierAdapter(hostname, port);
+    }
+
     public TlsClientAuthVerifierAdapter(String hostname, int port) {
         config = defaultConfigCache.getCachedCopy();
         config.setDefaultClientConnection(new OutboundConnection("client", port, hostname));
@@ -59,8 +65,8 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
             byte[] encodedChain = X509Util.encodeCertificateChainForTls(certificatesChain);
             Certificate certificate = Certificate.parse(new ByteArrayInputStream(encodedChain));
             CertificateKeyPair certificateKeyPair =
-                new CertificateKeyPair(certificate, chainConfig.getEntityConfig().getSubjectKeyPair().getPrivate(),
-                    chainConfig.getEntityConfig().getSubjectKeyPair().getPublic());
+                new CertificateKeyPair(certificate, chainConfig.getEntityCertificateConfig().getSubjectKeyPair().getPrivate(),
+                    chainConfig.getEntityCertificateConfig().getSubjectKeyPair().getPublic());
             config.setDefaultExplicitCertificateKeyPair(certificateKeyPair);
         } catch (IOException e) {
             throw new VerifierException("Failed to encode certificate", e);
