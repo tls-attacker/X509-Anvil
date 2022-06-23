@@ -9,7 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.model.parameter;
 
-import de.rub.nds.x509anvil.framework.TestContext;
+import de.rub.nds.x509anvil.framework.junit.context.TestContext;
 import de.rub.nds.x509anvil.framework.model.DerivationScope;
 import de.rub.nds.x509anvil.framework.model.ParameterScope;
 import de.rub.nds.x509anvil.framework.model.ParameterType;
@@ -38,7 +38,7 @@ public class ChainLengthParameter extends DerivationParameter<Integer> {
     public List<DerivationParameter<Integer>> getParameterValues(TestContext testContext,
         DerivationScope derivationScope) {
         List<DerivationParameter<Integer>> parameterValues = new ArrayList<>();
-        for (int i = 0; i <= 3; i++) {
+        for (int i = 1; i <= 3; i++) {
             parameterValues.add(this.generateValue(i));
         }
         return parameterValues;
@@ -46,6 +46,6 @@ public class ChainLengthParameter extends DerivationParameter<Integer> {
 
     @Override
     public void applyToConfig(X509CertificateChainConfig config, TestContext testContext) {
-        // TODO
+        config.setChainLength(getSelectedValue());
     }
 }

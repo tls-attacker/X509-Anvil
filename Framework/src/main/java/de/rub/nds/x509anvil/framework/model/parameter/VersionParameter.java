@@ -9,7 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.model.parameter;
 
-import de.rub.nds.x509anvil.framework.TestContext;
+import de.rub.nds.x509anvil.framework.junit.context.TestContext;
 import de.rub.nds.x509anvil.framework.model.ParameterScope;
 import de.rub.nds.x509anvil.framework.model.DerivationScope;
 import de.rub.nds.x509anvil.framework.model.ParameterType;
@@ -55,6 +55,8 @@ public class VersionParameter extends CertificateSpecificParameter<BigInteger> {
 
     @Override
     public void applyToConfig(X509CertificateChainConfig config, TestContext testContext) {
-
+        if (getSelectedValue() != null) {
+            getCertificateConfigByScope(config).setVersion(getSelectedValue());
+        }
     }
 }

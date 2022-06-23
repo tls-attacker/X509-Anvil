@@ -14,6 +14,8 @@ import de.rub.nds.x509anvil.framework.model.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.model.ParameterScope;
 import de.rub.nds.x509anvil.framework.model.ParameterType;
 import de.rub.nds.x509anvil.framework.model.constraint.ConditionalConstraint;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rwth.swc.coffee4j.model.constraints.Constraint;
 import de.rwth.swc.coffee4j.model.constraints.ConstraintBuilder;
 
@@ -64,6 +66,19 @@ public abstract class CertificateSpecificParameter<T> extends DerivationParamete
                 return chainLength >= 3;
             default:
                 return false; // Not a certificate parameter scope
+        }
+    }
+
+    protected X509CertificateConfig getCertificateConfigByScope(X509CertificateChainConfig certificateChainConfig) {
+        switch (getParameterIdentifier().getParameterScope()) {
+            case CERT_ENTITY:
+                return certificateChainConfig.getEntityCertificateConfig();
+            case CERT_INTERMEDIATE:
+                return certificateChainConfig.getIntermediateCertificatesConfig();
+            case CERT_ROOT:
+                return certificateChainConfig.getRootCertificateConfig();
+            default:
+                throw new UnsupportedOperationException("Invalid ParameterScope");
         }
     }
 }
