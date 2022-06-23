@@ -1,6 +1,6 @@
 package de.rub.nds.x509anvil.framework.junit.testchooser;
 
-import de.rub.nds.x509anvil.framework.TestContext;
+import de.rub.nds.x509anvil.framework.junit.context.TestContext;
 import de.rub.nds.x509anvil.framework.annotations.TestChooser;
 import de.rub.nds.x509anvil.framework.coffee4j.junit.CombinatorialX509VerifierTestExtension;
 import de.rub.nds.x509anvil.framework.model.DerivationScope;

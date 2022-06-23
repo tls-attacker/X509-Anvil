@@ -9,7 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.junit.extension;
 
-import de.rub.nds.x509anvil.framework.junit.execution.X509TestRunner;
+import de.rub.nds.x509anvil.framework.junit.execution.X509VerifierRunner;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
@@ -19,7 +19,7 @@ public class X509TestRunnerResolver implements ParameterResolver {
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
         throws ParameterResolutionException {
-        return parameterContext.getParameter().getType().equals(X509TestRunner.class);
+        return parameterContext.getParameter().getType().equals(X509VerifierRunner.class);
     }
 
     @Override
@@ -28,6 +28,6 @@ public class X509TestRunnerResolver implements ParameterResolver {
         if (!extensionContext.getTestMethod().isPresent()) {
             return null;
         }
-        return new X509TestRunner(extensionContext);
+        return new X509VerifierRunner(extensionContext);
     }
 }

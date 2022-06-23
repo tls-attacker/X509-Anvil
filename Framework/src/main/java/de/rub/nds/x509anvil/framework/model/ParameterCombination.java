@@ -1,6 +1,6 @@
 package de.rub.nds.x509anvil.framework.model;
 
-import de.rub.nds.x509anvil.framework.TestContext;
+import de.rub.nds.x509anvil.framework.junit.context.TestContext;
 import de.rub.nds.x509anvil.framework.model.parameter.DerivationParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rwth.swc.coffee4j.model.Combination;

@@ -10,8 +10,7 @@
 package de.rub.nds.x509anvil.framework.coffee4j.junit;
 
 import de.rub.nds.x509anvil.framework.util.TestUtil;
-import de.rub.nds.x509anvil.framework.TestContext;
-import de.rub.nds.x509anvil.framework.util.TestUtil;
+import de.rub.nds.x509anvil.framework.junit.context.TestContext;
 import de.rwth.swc.coffee4j.model.Combination;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
