@@ -21,14 +21,11 @@ public class CachedKeyPairGenerator {
             if (keyPairCache.containsKey(hashKey)) {
                 return keyPairCache.get(hashKey);
             }
-            else {
-                KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(algorithm);
-                keyPairGenerator.initialize(keySize);
-                KeyPair keyPair = keyPairGenerator.generateKeyPair();
-                keyPairCache.put(hashKey, keyPair);
-                return keyPair;
-            }
         }
+        // Need to generate new key pair
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(algorithm);
+        keyPairGenerator.initialize(keySize);
+        return attemptGeneratingKeyPair(keyPairGenerator, hashKey);
     }
 
     public static KeyPair retrieveKeyPair(String identifier, String algorithm, AlgorithmParameterSpec params)
@@ -40,14 +37,24 @@ public class CachedKeyPairGenerator {
             if (keyPairCache.containsKey(hashKey)) {
                 return keyPairCache.get(hashKey);
             }
-            else {
-                KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(algorithm);
-                keyPairGenerator.initialize(params);
-
-                KeyPair keyPair = keyPairGenerator.generateKeyPair();
-                keyPairCache.put(hashKey, keyPair);
-                return keyPair;
-            }
         }
+
+        // Need to generate new key pair
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(algorithm);
+        keyPairGenerator.initialize(params);
+        return attemptGeneratingKeyPair(keyPairGenerator, hashKey);
+    }
+
+    private static KeyPair attemptGeneratingKeyPair(KeyPairGenerator keyPairGenerator, String hashKey) throws NoSuchAlgorithmException {
+        KeyPair keyPair = keyPairGenerator.generateKeyPair();
+
+        synchronized (keyPairCache) {
+            // Did another thread create the keypair in the meantime?
+            if (keyPairCache.containsKey(hashKey)) {
+                return keyPairCache.get(hashKey);
+            }
+            keyPairCache.put(hashKey, keyPair);
+        }
+        return keyPair;
     }
 }
