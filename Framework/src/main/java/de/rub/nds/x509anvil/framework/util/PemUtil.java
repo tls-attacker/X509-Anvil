@@ -15,15 +15,23 @@ import org.bouncycastle.util.io.pem.PemWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Base64;
 
 public class PemUtil {
-    public static byte[] encodePrivateKeyAsPem(byte[] keyDer) throws IOException {
-        PemObject pemObject = new PemObject("PRIVATE KEY", keyDer);
+    public static byte[] encodeKeyAsPem(byte[] keyDer, String type) throws IOException {
+        PemObject pemObject = new PemObject(type, keyDer);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         PemWriter pemWriter = new PemWriter(new OutputStreamWriter(stream));
         pemWriter.writeObject(pemObject);
         pemWriter.close();
         String stripWindowsLineEndings = stream.toString().replace("\r", "");
         return stripWindowsLineEndings.getBytes();
+    }
+
+    public static byte[] pemToDer(byte[] pemBytes) {
+        String pem = new String(pemBytes);
+        pem = pem.replaceAll("-----.+-----", "")
+                .replaceAll(System.lineSeparator(), "");
+        return Base64.getDecoder().decode(pem);
     }
 }

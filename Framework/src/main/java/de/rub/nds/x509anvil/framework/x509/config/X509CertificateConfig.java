@@ -53,6 +53,7 @@ public class X509CertificateConfig {
     private Name subject;
 
     private boolean subjectPublicKeyInfoPresent = true;
+    private boolean useKeyPair = true;
     private SubjectPublicKeyInfo subjectPublicKeyInfo;
 
     private boolean extensionsPresent = true;
@@ -373,5 +374,13 @@ public class X509CertificateConfig {
 
     public void setSignatureOverridden(ASN1BitString signatureOverridden) {
         this.signatureOverridden = signatureOverridden;
+    }
+
+    public boolean isUseKeyPair() {
+        return useKeyPair;
+    }
+
+    public void setUseKeyPair(boolean useKeyPair) {
+        this.useKeyPair = useKeyPair;
     }
 }

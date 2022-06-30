@@ -2,13 +2,14 @@ package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.model.Asn1Null;
 import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
+import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AlgorithmObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.config.model.*;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
@@ -42,25 +43,18 @@ public class X509CertificateUtil {
         }
 
         config.setNotBeforeTimeType(TimeType.UTC_TIME);
-        config.setNotBeforeValue("20220101000000Z");
+        config.setNotBeforeValue("220101000000Z");
         config.setNotAfterTimeType(TimeType.UTC_TIME);
-        config.setNotAfterValue("20320101000000Z");
+        config.setNotAfterValue("320101000000Z");
 
         Name subject = new Name();
         RelativeDistinguishedName commonNameDN = new RelativeDistinguishedName();
         Asn1PrimitivePrintableString commonName = new Asn1PrimitivePrintableString();
         commonName.setValue("Certificate Generated with Default Configuration");
         commonNameDN.addAttributeTypeAndValue(
-                new AttributeTypeAndValue(AttributeTypeObjectIdentifiers.COUNTRY_NAME, commonName));
+                new AttributeTypeAndValue(AttributeTypeObjectIdentifiers.COMMON_NAME, commonName));
         subject.addRelativeDistinguishedName(commonNameDN);
         config.setSubject(subject);
-
-        SubjectPublicKeyInfo subjectPublicKeyInfo = new SubjectPublicKeyInfo();
-        subjectPublicKeyInfo.setSubjectPublicKey(keyPair.getPublic().getEncoded());
-        subjectPublicKeyInfo.setAlgorithmOid(AlgorithmObjectIdentifiers.SHA256_WITH_RSA_ENCRYPTION);
-        subjectPublicKeyInfo.setParametersType(AlgorithmParametersType.NO_PARAMETERS);
-        subjectPublicKeyInfo.setParameters(new Asn1Null());
-        config.setSubjectPublicKeyInfo(subjectPublicKeyInfo);
 
         config.setExtensionsPresent(false);
 

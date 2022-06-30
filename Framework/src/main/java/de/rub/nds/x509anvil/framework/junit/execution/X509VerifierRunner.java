@@ -16,6 +16,7 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterFactory;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
+import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
 import de.rub.nds.x509attacker.x509.X509Certificate;
@@ -64,6 +65,7 @@ public class X509VerifierRunner {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateList = certificateChainGenerator.retrieveCertificateChain();
+        X509Util.exportCertificates(certificateList,  "resources");
 
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testContext.getTestConfig().getVerifierAdapterType(), testContext.getTestConfig().getVerifierAdapterConfig());
         return verifierAdapter.invokeVerifier(certificateList, config);

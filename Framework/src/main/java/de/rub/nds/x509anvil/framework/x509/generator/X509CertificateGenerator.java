@@ -17,6 +17,7 @@ import de.rub.nds.x509anvil.framework.x509.config.model.AlgorithmParametersType;
 import de.rub.nds.x509anvil.framework.x509.config.model.Name;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509attacker.x509.X509Certificate;
+import org.checkerframework.checker.units.qual.K;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
@@ -64,7 +65,6 @@ public class X509CertificateGenerator {
         signatureInfo.setType("SignatureInfo");
         signatureInfo.setToBeSignedIdentifiers(Collections.singletonList("/certificate/tbsCertificate"));
         signatureInfo.setSignatureValueTargetIdentifier("/certificate/signatureValue");
-        signatureInfo.setKeyInfoIdentifier("keyInfo");
         signatureInfo.setSignatureAlgorithmOidValue(certificateConfig.getSignatureAlgorithmOid());
         try {
             signatureInfo.setParameters(certificateConfig.getSignatureAlgorithmParameters().getCopy());
@@ -72,17 +72,30 @@ public class X509CertificateGenerator {
             throw new CertificateGeneratorException("Unable to copy signature algorithm parameters from config", e);
         }
 
-        // Set key info
+        // Set subject key info
+        KeyInfo subjectKeyInfo = new KeyInfo();
+        subjectKeyInfo.setIdentifier("keyInfo");
+        subjectKeyInfo.setType("KeyInfo");
+        try {
+            subjectKeyInfo.setKeyBytes(PemUtil.encodeKeyAsPem(certificateConfig.getSubjectKeyPair().getPublic().getEncoded(), "PUBLIC KEY"));
+        } catch (IOException e) {
+            throw new CertificateGeneratorException("Unable to encode key in PEM format", e);
+        }
+
+        // Create certificate
+        x509Certificate = new X509Certificate(certificateAsn1, signatureInfo, subjectKeyInfo);
+
+        // Sign certificate
         byte[] privateKeyForSignature;
         try {
             switch (certificateConfig.getSigner()) {
                 case NEXT_IN_CHAIN:
                     privateKeyForSignature =
-                        PemUtil.encodePrivateKeyAsPem(nextInChainConfig.getSubjectKeyPair().getPrivate().getEncoded());
+                            PemUtil.encodeKeyAsPem(nextInChainConfig.getSubjectKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
                     break;
                 case SELF:
                     privateKeyForSignature =
-                        PemUtil.encodePrivateKeyAsPem(certificateConfig.getSubjectKeyPair().getPrivate().getEncoded());
+                            PemUtil.encodeKeyAsPem(certificateConfig.getSubjectKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
                     break;
                 case OVERRIDE:
                 default:
@@ -93,16 +106,13 @@ public class X509CertificateGenerator {
             throw new CertificateGeneratorException("Unable to encode private key as pem", e);
         }
 
-        KeyInfo keyInfo = new KeyInfo();
-        keyInfo.setIdentifier("keyInfo");
-        keyInfo.setType("KeyInfo");
-        keyInfo.setKeyBytes(privateKeyForSignature);
-
-        // Create and sign certificate
-        x509Certificate = new X509Certificate(certificateAsn1, signatureInfo, keyInfo);
+        KeyInfo signingKeyInfo = new KeyInfo();
+        signingKeyInfo.setIdentifier("signingKeyInfo");
+        signingKeyInfo.setType("KeyInfo");
+        signingKeyInfo.setKeyBytes(privateKeyForSignature);
 
         if (certificateConfig.isSignaturePresent() && !certificateConfig.isOverrideSignature()) {
-            x509Certificate.signCertificate(keyInfo);
+            x509Certificate.signCertificate(signingKeyInfo);
         }
     }
 
@@ -254,8 +264,12 @@ public class X509CertificateGenerator {
 
     private void generateSubjectPublicKeyInfo() throws CertificateGeneratorException {
         if (certificateConfig.isSubjectPublicKeyInfoPresent()) {
-            tbsCertificate
-                .addChild(certificateConfig.getSubjectPublicKeyInfo().getAsn1Structure("subjectPublicKeyInfo"));
+            // Create empty subject public key info and let X509-Attacker fill in the data
+            Asn1Sequence subjectPublicKeyInfo = new Asn1Sequence();
+            subjectPublicKeyInfo.setIdentifier("subjectPublicKeyInfo");
+            subjectPublicKeyInfo.setType("SubjectPublicKeyInfo");
+            subjectPublicKeyInfo.setAttribute("fromIdentifier", "/keyInfo");
+            tbsCertificate.addChild(subjectPublicKeyInfo);
         }
     }
 

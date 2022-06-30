@@ -31,8 +31,12 @@ public class ParameterModelFactory {
             getParameterBuilders(parameterIdentifiers, derivationScope, testContext);
         Constraint[] constraints = getConstraints(parameterIdentifiers, derivationScope, testContext);
 
-        return InputParameterModel.inputParameterModel("dynamic-model").strength(derivationScope.getTestStrength())
-            .parameters(parameterBuilders).exclusionConstraints(constraints).build();
+        return InputParameterModel
+                .inputParameterModel("dynamic-model")
+                .strength(derivationScope.getTestStrength())
+                .parameters(parameterBuilders)
+                .exclusionConstraints(constraints)
+                .build();
     }
 
     public static boolean mustUseSimpleModel(TestContext testContext, DerivationScope scope) {

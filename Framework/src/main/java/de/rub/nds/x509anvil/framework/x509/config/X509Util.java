@@ -9,6 +9,12 @@
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
+import de.rub.nds.asn1.Asn1Encodable;
+import de.rub.nds.asn1.parser.Asn1Parser;
+import de.rub.nds.asn1.parser.IntermediateAsn1Field;
+import de.rub.nds.asn1.parser.ParserException;
+import de.rub.nds.asn1.translator.SubjectPublicKeyInfoContext;
+import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509attacker.constants.X509CertChainOutFormat;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
@@ -53,6 +59,13 @@ public class X509Util {
         outputStream.write((byte) (value >>> 16));
         outputStream.write((byte) (value >>> 8));
         outputStream.write((byte) value);
+    }
+
+    public static byte[] extractKeyBytesFromSubjectPublicKeyInfo(byte[] subjectPublicKeyInfoBytes) {
+        Asn1Parser asn1Parser = new Asn1Parser(subjectPublicKeyInfoBytes, false);
+        List<IntermediateAsn1Field> intermediateAsn1Fields = asn1Parser.parseIntermediateFields();
+        // TODO Error handling
+        return intermediateAsn1Fields.get(0).getChildren().get(1).getContent();
     }
 
     public static void exportCertificates(List<X509Certificate> certificateChain, String directory) {
