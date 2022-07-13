@@ -9,11 +9,13 @@
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
+import de.rub.nds.anvilcore.model.config.AnvilConfig;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class X509CertificateChainConfig {
+public class X509CertificateChainConfig implements AnvilConfig {
     // TODO Find more elegant way for handling default values
     private int chainLength = 1;
     private X509CertificateConfig entityCertificateConfig = X509CertificateUtil.getDefaultCertificateConfig(true, "entity");
