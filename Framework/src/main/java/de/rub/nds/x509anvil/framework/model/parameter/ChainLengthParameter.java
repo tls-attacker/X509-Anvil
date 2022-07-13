@@ -9,19 +9,21 @@
 
 package de.rub.nds.x509anvil.framework.model.parameter;
 
+import de.rub.nds.anvilcore.model.DerivationScope;
+import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
+import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
+import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterScope;
+import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.junit.context.TestContext;
-import de.rub.nds.x509anvil.framework.model.DerivationScope;
-import de.rub.nds.x509anvil.framework.model.ParameterScope;
-import de.rub.nds.x509anvil.framework.model.ParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChainLengthParameter extends DerivationParameter<Integer> {
+public class ChainLengthParameter extends X509AnvilDerivationParameter<Integer> {
 
     public ChainLengthParameter() {
-        super(ParameterType.CHAIN_LENGTH, ParameterScope.GLOBAL, Integer.class);
+        super(Integer.class, new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH, X509AnvilParameterScope.GLOBAL));
     }
 
     public ChainLengthParameter(Integer selectedValue) {
@@ -30,14 +32,13 @@ public class ChainLengthParameter extends DerivationParameter<Integer> {
     }
 
     @Override
-    public DerivationParameter<Integer> generateValue(Integer selectedValue) {
+    public DerivationParameter<X509CertificateChainConfig, Integer> generateValue(Integer selectedValue) {
         return new ChainLengthParameter(selectedValue);
     }
 
     @Override
-    public List<DerivationParameter<Integer>> getParameterValues(TestContext testContext,
-        DerivationScope derivationScope) {
-        List<DerivationParameter<Integer>> parameterValues = new ArrayList<>();
+    public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
+        List<DerivationParameter> parameterValues = new ArrayList<>();
         for (int i = 1; i <= 3; i++) {
             parameterValues.add(this.generateValue(i));
         }
@@ -45,7 +46,7 @@ public class ChainLengthParameter extends DerivationParameter<Integer> {
     }
 
     @Override
-    public void applyToConfig(X509CertificateChainConfig config, TestContext testContext) {
+    public void applyToConfig(X509CertificateChainConfig config) {
         config.setChainLength(getSelectedValue());
     }
 }

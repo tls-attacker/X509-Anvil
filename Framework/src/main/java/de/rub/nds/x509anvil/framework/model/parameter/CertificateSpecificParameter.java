@@ -9,11 +9,12 @@
 
 package de.rub.nds.x509anvil.framework.model.parameter;
 
-import de.rub.nds.x509anvil.framework.model.DerivationScope;
-import de.rub.nds.x509anvil.framework.model.ParameterIdentifier;
-import de.rub.nds.x509anvil.framework.model.ParameterScope;
-import de.rub.nds.x509anvil.framework.model.ParameterType;
-import de.rub.nds.x509anvil.framework.model.constraint.ConditionalConstraint;
+import de.rub.nds.anvilcore.model.DerivationScope;
+import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
+import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
+import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterScope;
+import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rwth.swc.coffee4j.model.constraints.Constraint;
@@ -23,11 +24,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-public abstract class CertificateSpecificParameter<T> extends DerivationParameter<T> {
+public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivationParameter<T> {
 
-    public CertificateSpecificParameter(ParameterType parameterType, ParameterScope parameterScope,
-        Class<T> valueClass) {
-        super(parameterType, parameterScope, valueClass);
+    public CertificateSpecificParameter(ParameterIdentifier parameterIdentifier, Class<T> valueClass) {
+        super(valueClass, parameterIdentifier);
     }
 
     /**
@@ -37,7 +37,7 @@ public abstract class CertificateSpecificParameter<T> extends DerivationParamete
      */
     private ConditionalConstraint createCertificateNotModeledConstraint() {
         Set<ParameterIdentifier> requiredParameters =
-            Collections.singleton(new ParameterIdentifier(ParameterScope.GLOBAL, ParameterType.CHAIN_LENGTH));
+            Collections.singleton(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH, X509AnvilParameterScope.GLOBAL));
         Constraint constraint = ConstraintBuilder
             .constrain(getParameterIdentifier().toString(), requiredParameters.stream().findFirst().get().toString())
             .by((CertificateSpecificParameter<T> certificateSpecificParam, ChainLengthParameter chainLengthParam) -> {
@@ -57,12 +57,12 @@ public abstract class CertificateSpecificParameter<T> extends DerivationParamete
     }
 
     private static boolean certificateParameterScopeModeled(ParameterScope parameterScope, int chainLength) {
-        switch (parameterScope) {
-            case CERT_ENTITY:
+        switch (parameterScope.getUniqueScopeIdentifier()) {
+            case "cert_entity":
                 return chainLength >= 1;
-            case CERT_ROOT:
+            case "cert_root":
                 return chainLength >= 2;
-            case CERT_INTERMEDIATE:
+            case "cert_intermediate":
                 return chainLength >= 3;
             default:
                 return false; // Not a certificate parameter scope
@@ -70,12 +70,12 @@ public abstract class CertificateSpecificParameter<T> extends DerivationParamete
     }
 
     protected X509CertificateConfig getCertificateConfigByScope(X509CertificateChainConfig certificateChainConfig) {
-        switch (getParameterIdentifier().getParameterScope()) {
-            case CERT_ENTITY:
+        switch (getParameterIdentifier().getParameterScope().getUniqueScopeIdentifier()) {
+            case "cert_entity":
                 return certificateChainConfig.getEntityCertificateConfig();
-            case CERT_INTERMEDIATE:
+            case "cert_intermediate":
                 return certificateChainConfig.getIntermediateCertificatesConfig();
-            case CERT_ROOT:
+            case "cert_root":
                 return certificateChainConfig.getRootCertificateConfig();
             default:
                 throw new UnsupportedOperationException("Invalid ParameterScope");

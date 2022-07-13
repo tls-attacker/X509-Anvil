@@ -9,8 +9,6 @@
 
 package de.rub.nds.x509anvil.framework.model.parameter;
 
-import de.rub.nds.x509anvil.framework.model.ParameterIdentifier;
-
 public class ParameterFactory {
     public static DerivationParameter getInstance(ParameterIdentifier parameterIdentifier) {
         switch (parameterIdentifier.getParameterType()) {

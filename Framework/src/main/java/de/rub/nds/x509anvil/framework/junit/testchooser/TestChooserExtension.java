@@ -3,7 +3,6 @@ package de.rub.nds.x509anvil.framework.junit.testchooser;
 import de.rub.nds.x509anvil.framework.junit.context.TestContext;
 import de.rub.nds.x509anvil.framework.annotations.TestChooser;
 import de.rub.nds.x509anvil.framework.coffee4j.junit.CombinatorialX509VerifierTestExtension;
-import de.rub.nds.x509anvil.framework.model.DerivationScope;
 import de.rub.nds.x509anvil.framework.model.ParameterModelFactory;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestTemplateInvocationContext;

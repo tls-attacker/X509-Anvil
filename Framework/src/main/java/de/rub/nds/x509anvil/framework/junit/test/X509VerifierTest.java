@@ -4,7 +4,6 @@ import de.rub.nds.x509anvil.framework.junit.context.TestContext;
 import de.rub.nds.x509anvil.framework.junit.execution.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.junit.extension.ExtensionContextParameterResolver;
 import de.rub.nds.x509anvil.framework.junit.extension.X509TestRunnerResolver;
-import de.rub.nds.x509anvil.framework.model.DerivationScope;
 import de.rub.nds.x509anvil.framework.model.ParameterCombination;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.registry.Registry;

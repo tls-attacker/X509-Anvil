@@ -10,7 +10,6 @@
 package de.rub.nds.x509anvil.framework.coffee4j.model;
 
 import de.rub.nds.x509anvil.framework.junit.context.TestContext;
-import de.rub.nds.x509anvil.framework.model.DerivationScope;
 import de.rub.nds.x509anvil.framework.model.ParameterModelFactory;
 import de.rwth.swc.coffee4j.junit.provider.model.ModelProvider;
 import de.rwth.swc.coffee4j.model.InputParameterModel;

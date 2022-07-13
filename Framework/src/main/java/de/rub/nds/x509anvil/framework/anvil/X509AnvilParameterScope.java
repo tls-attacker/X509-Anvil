@@ -15,4 +15,9 @@ public class X509AnvilParameterScope extends ParameterScope {
     public String getUniqueScopeIdentifier() {
         return parameterScope.name().toLowerCase();
     }
+
+    public static X509AnvilParameterScope GLOBAL = new X509AnvilParameterScope(de.rub.nds.x509anvil.framework.model.ParameterScope.GLOBAL);
+    public static X509AnvilParameterScope CERT_ROOT = new X509AnvilParameterScope(de.rub.nds.x509anvil.framework.model.ParameterScope.CERT_ROOT);
+    public static X509AnvilParameterScope CERT_INTERMEDIATE = new X509AnvilParameterScope(de.rub.nds.x509anvil.framework.model.ParameterScope.CERT_INTERMEDIATE);
+    public static X509AnvilParameterScope CERT_ENTITY = new X509AnvilParameterScope(de.rub.nds.x509anvil.framework.model.ParameterScope.CERT_ENTITY);
 }
