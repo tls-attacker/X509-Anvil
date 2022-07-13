@@ -1,5 +1,9 @@
 package de.rub.nds.x509anvil.framework.junit.test;
 
+import de.rub.nds.anvilcore.junit.ExtensionContextParameterResolver;
+import de.rub.nds.anvilcore.model.DerivationScope;
+import de.rub.nds.anvilcore.model.ParameterCombination;
+import de.rub.nds.anvilcore.model.config.ConfigContainer;
 import de.rub.nds.x509anvil.framework.junit.execution.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.junit.extension.X509TestRunnerResolver;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -35,13 +39,8 @@ public abstract class X509VerifierTest {
         Registry.getInstance();
     }
 
-    protected TestContext testContext;
     protected ExtensionContext extensionContext;
     protected ParameterCombination parameterCombination;
-
-    public X509VerifierTest() {
-        testContext = TestContext.getInstance();
-    }
 
     @BeforeEach
     public void setExtensionContext(ExtensionContext extensionContext) {
@@ -51,16 +50,11 @@ public abstract class X509VerifierTest {
     public X509CertificateChainConfig prepareConfig(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) {
         X509CertificateChainConfig config = initConfig();
         parameterCombination = ParameterCombination.fromArgumentsAccessor(argumentsAccessor, new DerivationScope(extensionContext));
-        parameterCombination.applyToConfig(config, testContext);
+        parameterCombination.applyToConfig(ConfigContainer.fromConfig(X509CertificateChainConfig.class, config));
         testRunner.setPreparedConfig(config);
         testRunner.setParameterCombination(parameterCombination);
         return config;
     }
-
-    public TestContext getTestContext() {
-        return testContext;
-    }
-
 
     public abstract X509CertificateChainConfig initConfig();
 }
