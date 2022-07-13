@@ -9,6 +9,11 @@
 
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
+import de.rub.nds.anvilcore.model.DerivationScope;
+import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
+import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
+import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 
 import java.math.BigInteger;
@@ -18,7 +23,7 @@ import java.util.List;
 public class VersionParameter extends CertificateSpecificParameter<BigInteger> {
 
     public VersionParameter(ParameterScope parameterScope) {
-        super(ParameterType.VERSION, parameterScope, BigInteger.class);
+        super(new ParameterIdentifier(X509AnvilParameterType.VERSION, parameterScope), BigInteger.class);
     }
 
     public VersionParameter(BigInteger selectedValue, ParameterScope parameterScope) {
@@ -27,30 +32,24 @@ public class VersionParameter extends CertificateSpecificParameter<BigInteger> {
     }
 
     @Override
-    public DerivationParameter<BigInteger> generateValue(BigInteger selectedValue) {
+    public DerivationParameter<X509CertificateChainConfig, BigInteger> generateValue(BigInteger selectedValue) {
         return new VersionParameter(selectedValue, getParameterIdentifier().getParameterScope());
     }
 
     @Override
-    public List<DerivationParameter<BigInteger>> getParameterValues(TestContext testContext,
-        DerivationScope derivationScope) {
-        List<DerivationParameter<BigInteger>> parameterValues = new ArrayList<>();
+    public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
+        List<DerivationParameter> parameterValues = new ArrayList<>();
         parameterValues.add(generateValue(null)); // If we don't want this parameter to be modelled (i.e. ParameterScope
                                                   // is not in use)
-        parameterValues.add(generateValue(BigInteger.valueOf(-1))); // Represents invalid negative values
         parameterValues.add(generateValue(BigInteger.valueOf(0))); // Version 1
         parameterValues.add(generateValue(BigInteger.valueOf(1))); // Version 2
         parameterValues.add(generateValue(BigInteger.valueOf(2))); // Version 3
-        parameterValues.add(generateValue(BigInteger.valueOf(3))); // Represents invalid positive values
-        parameterValues.add(generateValue(new BigInteger("FFEEDDCCBBAA9988776655443322110011223344", 16))); // Represents
-                                                                                                            // really
-                                                                                                            // big
-                                                                                                            // integers
+
         return parameterValues;
     }
 
     @Override
-    public void applyToConfig(X509CertificateChainConfig config, TestContext testContext) {
+    public void applyToConfig(X509CertificateChainConfig config) {
         if (getSelectedValue() != null) {
             getCertificateConfigByScope(config).setVersion(getSelectedValue());
         }
