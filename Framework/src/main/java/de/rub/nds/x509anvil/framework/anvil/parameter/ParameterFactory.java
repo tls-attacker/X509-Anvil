@@ -7,7 +7,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 
-package de.rub.nds.x509anvil.framework.model.parameter;
+package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 public class ParameterFactory {
     public static DerivationParameter getInstance(ParameterIdentifier parameterIdentifier) {

@@ -9,8 +9,6 @@
 
 package de.rub.nds.x509anvil.framework.junit.execution;
 
-import de.rub.nds.x509anvil.framework.junit.context.TestContext;
-import de.rub.nds.x509anvil.framework.model.ParameterCombination;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapter;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterFactory;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;

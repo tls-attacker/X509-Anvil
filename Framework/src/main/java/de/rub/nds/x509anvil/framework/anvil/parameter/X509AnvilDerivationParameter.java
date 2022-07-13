@@ -1,4 +1,4 @@
-package de.rub.nds.x509anvil.framework.model.parameter;
+package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;

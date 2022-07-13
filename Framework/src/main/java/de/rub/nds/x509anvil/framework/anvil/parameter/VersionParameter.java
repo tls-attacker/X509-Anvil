@@ -7,12 +7,8 @@
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 
-package de.rub.nds.x509anvil.framework.model.parameter;
+package de.rub.nds.x509anvil.framework.anvil.parameter;
 
-import de.rub.nds.x509anvil.framework.junit.context.TestContext;
-import de.rub.nds.x509anvil.framework.model.ParameterScope;
-import de.rub.nds.x509anvil.framework.model.DerivationScope;
-import de.rub.nds.x509anvil.framework.model.ParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 
 import java.math.BigInteger;
@@ -41,12 +37,12 @@ public class VersionParameter extends CertificateSpecificParameter<BigInteger> {
         List<DerivationParameter<BigInteger>> parameterValues = new ArrayList<>();
         parameterValues.add(generateValue(null)); // If we don't want this parameter to be modelled (i.e. ParameterScope
                                                   // is not in use)
-        //parameterValues.add(generateValue(BigInteger.valueOf(-1))); // Represents invalid negative values
+        parameterValues.add(generateValue(BigInteger.valueOf(-1))); // Represents invalid negative values
         parameterValues.add(generateValue(BigInteger.valueOf(0))); // Version 1
         parameterValues.add(generateValue(BigInteger.valueOf(1))); // Version 2
         parameterValues.add(generateValue(BigInteger.valueOf(2))); // Version 3
-        //parameterValues.add(generateValue(BigInteger.valueOf(3))); // Represents invalid positive values
-        //parameterValues.add(generateValue(new BigInteger("FFEEDDCCBBAA9988776655443322110011223344", 16))); // Represents
+        parameterValues.add(generateValue(BigInteger.valueOf(3))); // Represents invalid positive values
+        parameterValues.add(generateValue(new BigInteger("FFEEDDCCBBAA9988776655443322110011223344", 16))); // Represents
                                                                                                             // really
                                                                                                             // big
                                                                                                             // integers
