@@ -9,11 +9,13 @@
  */
 
 import de.rub.nds.anvilcore.context.AnvilContext;
+import de.rub.nds.x509anvil.framework.anvil.X509AnvilModelBasedIpmFactory;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterFactory;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 
 public class Main {
     public static void main(String[] args) {
         AnvilContext.getInstance().addParameterTypes(X509AnvilParameterType.values(), new X509AnvilParameterFactory());
+        AnvilContext.getInstance().setModelBasedIpmFactory(new X509AnvilModelBasedIpmFactory());
     }
 }
