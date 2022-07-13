@@ -9,6 +9,10 @@
 
 package de.rub.nds.x509anvil.framework.junit.execution;
 
+import de.rub.nds.anvilcore.context.AnvilContext;
+import de.rub.nds.anvilcore.model.ParameterCombination;
+import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
+import de.rub.nds.x509anvil.framework.junit.context.TestConfig;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapter;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterFactory;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
@@ -31,10 +35,8 @@ public class X509VerifierRunner {
     private X509CertificateChainConfig preparedConfig;
     private ParameterCombination parameterCombination;
     private final ExtensionContext extensionContext;
-    private final TestContext testContext;
 
     public X509VerifierRunner(ExtensionContext extensionContext) {
-        this.testContext = TestContext.getInstance();
         this.extensionContext = extensionContext;
     }
 
@@ -65,7 +67,8 @@ public class X509VerifierRunner {
         List<X509Certificate> certificateList = certificateChainGenerator.retrieveCertificateChain();
         X509Util.exportCertificates(certificateList,  "resources");
 
-        VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testContext.getTestConfig().getVerifierAdapterType(), testContext.getTestConfig().getVerifierAdapterConfig());
+        TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
+        VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(), testConfig.getVerifierAdapterConfig());
         return verifierAdapter.invokeVerifier(certificateList, config);
     }
 }
