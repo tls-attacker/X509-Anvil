@@ -14,7 +14,7 @@ public class X509AnvilParameterFactory extends ParameterFactory {
     @Override
     public ParameterScope resolveParameterScope(String scopeIdentifier) {
         try {
-            de.rub.nds.x509anvil.framework.model.ParameterScope parameterScopeValue = de.rub.nds.x509anvil.framework.model.ParameterScope.valueOf(scopeIdentifier);
+            ParameterScopeEnum parameterScopeValue = ParameterScopeEnum.valueOf(scopeIdentifier);
             return new X509AnvilParameterScope(parameterScopeValue);
         } catch (IllegalArgumentException e) {
             return ParameterScope.NO_SCOPE;
