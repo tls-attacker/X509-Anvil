@@ -13,7 +13,7 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilModelBasedIpmFactory;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterFactory;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
-import de.rub.nds.x509anvil.framework.junit.context.TestConfig;
+import de.rub.nds.x509anvil.framework.anvil.TestConfig;
 
 public class Main {
     public static void main(String[] args) {

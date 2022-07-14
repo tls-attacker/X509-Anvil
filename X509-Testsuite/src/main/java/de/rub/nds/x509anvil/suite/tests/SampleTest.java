@@ -1,7 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.x509anvil.framework.junit.execution.X509VerifierRunner;
+import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;

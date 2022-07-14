@@ -7,9 +7,9 @@
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 
-package de.rub.nds.x509anvil.framework.junit.extension;
+package de.rub.nds.x509anvil.framework.anvil;
 
-import de.rub.nds.x509anvil.framework.junit.execution.X509VerifierRunner;
+import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;

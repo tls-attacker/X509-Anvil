@@ -155,6 +155,7 @@
             </executions>
         </plugin>
         <!-- formats the code -->
+        <!--
         <plugin>
             <groupId>net.revelc.code.formatter</groupId>
             <artifactId>formatter-maven-plugin</artifactId>
@@ -171,6 +172,7 @@
                 </execution>
             </executions>
         </plugin>
+        -->
         <plugin>
             <groupId>com.mycila</groupId>
             <artifactId>license-maven-plugin</artifactId>
