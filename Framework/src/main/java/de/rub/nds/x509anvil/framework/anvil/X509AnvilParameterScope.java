@@ -24,7 +24,6 @@ public class X509AnvilParameterScope extends ParameterScope {
         return parameterScope.name().toLowerCase();
     }
 
-    public static X509AnvilParameterScope GLOBAL = new X509AnvilParameterScope(ParameterScopeEnum.GLOBAL);
     public static X509AnvilParameterScope CERT_ROOT = new X509AnvilParameterScope(ParameterScopeEnum.CERT_ROOT);
     public static X509AnvilParameterScope CERT_INTERMEDIATE =
         new X509AnvilParameterScope(ParameterScopeEnum.CERT_INTERMEDIATE);
