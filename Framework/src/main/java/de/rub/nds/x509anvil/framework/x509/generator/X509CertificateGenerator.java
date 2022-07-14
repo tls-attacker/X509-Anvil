@@ -77,7 +77,8 @@ public class X509CertificateGenerator {
         subjectKeyInfo.setIdentifier("keyInfo");
         subjectKeyInfo.setType("KeyInfo");
         try {
-            subjectKeyInfo.setKeyBytes(PemUtil.encodeKeyAsPem(certificateConfig.getSubjectKeyPair().getPublic().getEncoded(), "PUBLIC KEY"));
+            subjectKeyInfo.setKeyBytes(
+                PemUtil.encodeKeyAsPem(certificateConfig.getSubjectKeyPair().getPublic().getEncoded(), "PUBLIC KEY"));
         } catch (IOException e) {
             throw new CertificateGeneratorException("Unable to encode key in PEM format", e);
         }
@@ -90,12 +91,12 @@ public class X509CertificateGenerator {
         try {
             switch (certificateConfig.getSigner()) {
                 case NEXT_IN_CHAIN:
-                    privateKeyForSignature =
-                            PemUtil.encodeKeyAsPem(nextInChainConfig.getSubjectKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
+                    privateKeyForSignature = PemUtil
+                        .encodeKeyAsPem(nextInChainConfig.getSubjectKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
                     break;
                 case SELF:
-                    privateKeyForSignature =
-                            PemUtil.encodeKeyAsPem(certificateConfig.getSubjectKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
+                    privateKeyForSignature = PemUtil
+                        .encodeKeyAsPem(certificateConfig.getSubjectKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
                     break;
                 case OVERRIDE:
                 default:

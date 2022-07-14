@@ -19,6 +19,7 @@ public class Main {
     public static void main(String[] args) {
         AnvilContext.getInstance().addParameterTypes(X509AnvilParameterType.values(), new X509AnvilParameterFactory());
         AnvilContext.getInstance().setModelBasedIpmFactory(new X509AnvilModelBasedIpmFactory());
-        AnvilContext.getInstance().setApplicationSpecificContextDelegate(new X509AnvilContextDelegate(new TestConfig()));
+        AnvilContext.getInstance()
+            .setApplicationSpecificContextDelegate(new X509AnvilContextDelegate(new TestConfig()));
     }
 }

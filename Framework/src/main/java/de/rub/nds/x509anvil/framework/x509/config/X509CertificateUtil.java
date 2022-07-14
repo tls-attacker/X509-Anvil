@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.model.Asn1Null;
@@ -52,7 +61,7 @@ public class X509CertificateUtil {
         Asn1PrimitivePrintableString commonName = new Asn1PrimitivePrintableString();
         commonName.setValue("Certificate Generated with Default Configuration");
         commonNameDN.addAttributeTypeAndValue(
-                new AttributeTypeAndValue(AttributeTypeObjectIdentifiers.COMMON_NAME, commonName));
+            new AttributeTypeAndValue(AttributeTypeObjectIdentifiers.COMMON_NAME, commonName));
         subject.addRelativeDistinguishedName(commonNameDN);
         config.setSubject(subject);
 

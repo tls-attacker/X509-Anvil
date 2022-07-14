@@ -28,7 +28,6 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.util.List;
 
-
 public class X509VerifierRunner {
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -61,14 +60,18 @@ public class X509VerifierRunner {
         this.parameterCombination = parameterCombination;
     }
 
-    public VerifierResult execute(X509CertificateChainConfig config) throws CertificateGeneratorException, VerifierException {
+    public VerifierResult execute(X509CertificateChainConfig config)
+        throws CertificateGeneratorException, VerifierException {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateList = certificateChainGenerator.retrieveCertificateChain();
-        X509Util.exportCertificates(certificateList,  "resources");
+        X509Util.exportCertificates(certificateList, "resources");
 
-        TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
-        VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(), testConfig.getVerifierAdapterConfig());
+        TestConfig testConfig =
+            ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate())
+                .getTestConfig();
+        VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
+            testConfig.getVerifierAdapterConfig());
         return verifierAdapter.invokeVerifier(certificateList, config);
     }
 }

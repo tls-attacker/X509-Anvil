@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import java.security.InvalidAlgorithmParameterException;
@@ -14,7 +23,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CachedKeyPairGenerator {
     private static final Map<String, KeyPair> keyPairCache = new ConcurrentHashMap<>();
 
-    public static KeyPair retrieveKeyPair(String identifier, String algorithm, int keySize) throws NoSuchAlgorithmException {
+    public static KeyPair retrieveKeyPair(String identifier, String algorithm, int keySize)
+        throws NoSuchAlgorithmException {
         String hashKey = identifier + ":" + algorithm + ":" + keySize;
 
         synchronized (keyPairCache) {
@@ -29,8 +39,7 @@ public class CachedKeyPairGenerator {
     }
 
     public static KeyPair retrieveKeyPair(String identifier, String algorithm, AlgorithmParameterSpec params)
-            throws NoSuchAlgorithmException, InvalidAlgorithmParameterException
-    {
+        throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
         String hashKey = identifier + ":" + algorithm + ":" + params;
 
         synchronized (keyPairCache) {
@@ -45,7 +54,8 @@ public class CachedKeyPairGenerator {
         return attemptGeneratingKeyPair(keyPairGenerator, hashKey);
     }
 
-    private static KeyPair attemptGeneratingKeyPair(KeyPairGenerator keyPairGenerator, String hashKey) throws NoSuchAlgorithmException {
+    private static KeyPair attemptGeneratingKeyPair(KeyPairGenerator keyPairGenerator, String hashKey)
+        throws NoSuchAlgorithmException {
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
 
         synchronized (keyPairCache) {

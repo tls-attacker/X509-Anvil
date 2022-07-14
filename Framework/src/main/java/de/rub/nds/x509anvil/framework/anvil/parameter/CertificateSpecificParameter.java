@@ -36,8 +36,8 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
      * intermediate certificate and the certificate length parameter is 2, we don't need the parameter to be included.
      */
     private ConditionalConstraint createCertificateNotModeledConstraint() {
-        Set<ParameterIdentifier> requiredParameters =
-            Collections.singleton(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH, X509AnvilParameterScope.GLOBAL));
+        Set<ParameterIdentifier> requiredParameters = Collections
+            .singleton(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH, X509AnvilParameterScope.GLOBAL));
         Constraint constraint = ConstraintBuilder
             .constrain(getParameterIdentifier().toString(), requiredParameters.stream().findFirst().get().toString())
             .by((CertificateSpecificParameter<T> certificateSpecificParam, ChainLengthParameter chainLengthParam) -> {

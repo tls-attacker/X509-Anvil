@@ -22,7 +22,8 @@ import java.util.List;
 public class ChainLengthParameter extends X509AnvilDerivationParameter<Integer> {
 
     public ChainLengthParameter() {
-        super(Integer.class, new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH, X509AnvilParameterScope.GLOBAL));
+        super(Integer.class,
+            new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH, X509AnvilParameterScope.GLOBAL));
     }
 
     public ChainLengthParameter(Integer selectedValue) {

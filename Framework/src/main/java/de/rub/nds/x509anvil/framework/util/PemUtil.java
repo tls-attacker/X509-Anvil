@@ -30,8 +30,7 @@ public class PemUtil {
 
     public static byte[] pemToDer(byte[] pemBytes) {
         String pem = new String(pemBytes);
-        pem = pem.replaceAll("-----.+-----", "")
-                .replaceAll(System.lineSeparator(), "");
+        pem = pem.replaceAll("-----.+-----", "").replaceAll(System.lineSeparator(), "");
         return Base64.getDecoder().decode(pem);
     }
 }

@@ -18,8 +18,10 @@ import java.util.List;
 public class X509CertificateChainConfig implements AnvilConfig {
     // TODO Find more elegant way for handling default values
     private int chainLength = 1;
-    private X509CertificateConfig entityCertificateConfig = X509CertificateUtil.getDefaultCertificateConfig(true, "entity");
-    private X509CertificateConfig intermediateCertificatesConfig = X509CertificateUtil.getDefaultCertificateConfig(true, "intermediate");
+    private X509CertificateConfig entityCertificateConfig =
+        X509CertificateUtil.getDefaultCertificateConfig(true, "entity");
+    private X509CertificateConfig intermediateCertificatesConfig =
+        X509CertificateUtil.getDefaultCertificateConfig(true, "intermediate");
     private X509CertificateConfig rootCertificateConfig = X509CertificateUtil.getDefaultCertificateConfig(true, "root");
 
     public List<X509CertificateConfig> getCertificateConfigs() {
