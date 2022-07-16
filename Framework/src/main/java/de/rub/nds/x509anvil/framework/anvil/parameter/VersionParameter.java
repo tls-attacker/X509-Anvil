@@ -49,7 +49,7 @@ public class VersionParameter extends CertificateSpecificParameter<BigInteger> {
     }
 
     @Override
-    public void applyToConfig(X509CertificateChainConfig config) {
+    public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
         if (getSelectedValue() != null) {
             getCertificateConfigByScope(config).setVersion(getSelectedValue());
         }
