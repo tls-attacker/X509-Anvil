@@ -58,4 +58,28 @@ public class TestConfig {
     public void setDefaultIntermediateCertsModeled(int defaultIntermediateCertsModeled) {
         this.defaultIntermediateCertsModeled = defaultIntermediateCertsModeled;
     }
+
+    public Boolean getUseStaticRootCertificate() {
+        return useStaticRootCertificate;
+    }
+
+    public void setUseStaticRootCertificate(Boolean useStaticRootCertificate) {
+        this.useStaticRootCertificate = useStaticRootCertificate;
+    }
+
+    public String getStaticRootCertificateFile() {
+        return staticRootCertificateFile;
+    }
+
+    public void setStaticRootCertificateFile(String staticRootCertificateFile) {
+        this.staticRootCertificateFile = staticRootCertificateFile;
+    }
+
+    public String getStaticRootPrivateKeyFile() {
+        return staticRootPrivateKeyFile;
+    }
+
+    public void setStaticRootPrivateKeyFile(String staticRootPrivateKeyFile) {
+        this.staticRootPrivateKeyFile = staticRootPrivateKeyFile;
+    }
 }
