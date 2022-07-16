@@ -12,8 +12,8 @@ package de.rub.nds.x509anvil.framework.anvil.parameter;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
-import de.rub.nds.anvilcore.model.parameter.ParameterScope;
-import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterScope;
+import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
+import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 
@@ -38,8 +38,12 @@ public class ChainLengthParameter extends X509AnvilDerivationParameter<Integer> 
 
     @Override
     public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
+        ChainLength chainLengthAnnotation = AnnotationUtil.resolveChainLengthAnnotation(derivationScope.getExtensionContext());
+        int minChainLength = AnnotationUtil.resolveMinLength(chainLengthAnnotation);
+        int maxChainLength = AnnotationUtil.resolveMaxLength(chainLengthAnnotation);
+
         List<DerivationParameter> parameterValues = new ArrayList<>();
-        for (int i = 1; i <= 3; i++) {
+        for (int i = minChainLength; i <= maxChainLength; i++) {
             parameterValues.add(this.generateValue(i));
         }
         return parameterValues;
