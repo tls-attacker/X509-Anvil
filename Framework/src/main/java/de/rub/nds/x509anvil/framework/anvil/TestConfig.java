@@ -23,11 +23,39 @@ public class TestConfig {
     private String staticRootCertificateFile = "";
     private String staticRootPrivateKeyFile = "";
 
+    private int defaultMinChainLength = 1;
+    private int defaultMaxChainLength = 3;
+    private int defaultIntermediateCertsModeled = 1;
+
     public VerifierAdapterType getVerifierAdapterType() {
         return verifierAdapterType;
     }
 
     public VerifierAdapterConfig getVerifierAdapterConfig() {
         return verifierAdapterConfig;
+    }
+
+    public int getDefaultMinChainLength() {
+        return defaultMinChainLength;
+    }
+
+    public void setDefaultMinChainLength(int defaultMinChainLength) {
+        this.defaultMinChainLength = defaultMinChainLength;
+    }
+
+    public int getDefaultMaxChainLength() {
+        return defaultMaxChainLength;
+    }
+
+    public void setDefaultMaxChainLength(int defaultMaxChainLength) {
+        this.defaultMaxChainLength = defaultMaxChainLength;
+    }
+
+    public int getDefaultIntermediateCertsModeled() {
+        return defaultIntermediateCertsModeled;
+    }
+
+    public void setDefaultIntermediateCertsModeled(int defaultIntermediateCertsModeled) {
+        this.defaultIntermediateCertsModeled = defaultIntermediateCertsModeled;
     }
 }

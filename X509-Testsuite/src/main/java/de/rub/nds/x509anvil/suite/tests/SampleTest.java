@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
@@ -13,6 +14,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 public class SampleTest extends X509AnvilTest {
 
     @AnvilTest(description = "a description")
+    @ChainLength(maxLength = 4, intermediateCertsModeled = 2)
     public void sampleTestCase(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(config);
