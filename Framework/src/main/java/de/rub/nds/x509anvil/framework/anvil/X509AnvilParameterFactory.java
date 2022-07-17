@@ -32,9 +32,8 @@ public class X509AnvilParameterFactory extends ParameterFactory {
     @Override
     public ParameterScope resolveParameterScope(String scopeIdentifier) {
         try {
-            ParameterScopeEnum parameterScopeValue = ParameterScopeEnum.valueOf(scopeIdentifier);
-            return new X509AnvilParameterScope(parameterScopeValue);
-        } catch (IllegalArgumentException e) {
+            return X509AnvilParameterScope.fromUniqueIdentifier(scopeIdentifier);
+        } catch (NumberFormatException e) {
             return ParameterScope.NO_SCOPE;
         }
     }
