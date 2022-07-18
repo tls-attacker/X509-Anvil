@@ -10,11 +10,9 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.Asn1Encodable;
+import de.rub.nds.asn1.model.Asn1Container;
 import de.rub.nds.asn1.parser.Asn1Parser;
 import de.rub.nds.asn1.parser.IntermediateAsn1Field;
-import de.rub.nds.asn1.parser.ParserException;
-import de.rub.nds.asn1.translator.SubjectPublicKeyInfoContext;
-import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509attacker.constants.X509CertChainOutFormat;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
@@ -26,6 +24,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class X509Util {
+    public static Asn1Encodable getAsn1ElementByIdentifierPath(X509Certificate x509Certificate, String... identifiers) {
+        Asn1Encodable currentAsn1Encodable = x509Certificate.getCertificate();
+
+        for (String identifier : identifiers) {
+            if (currentAsn1Encodable instanceof Asn1Container) {
+                currentAsn1Encodable = ((Asn1Container) currentAsn1Encodable).getChildren().stream()
+                        .filter(encodable -> encodable.getIdentifier().equals(identifier))
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalArgumentException("Could not find " + identifier + " in " + String.join(".", identifiers)));
+            }
+            else {
+                throw new IllegalArgumentException(identifier + " is not a container");
+            }
+        }
+        return currentAsn1Encodable;
+    }
+
     public static byte[] encodeCertificateChainForTls(List<X509Certificate> certificates) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         List<byte[]> encodedCertificates = new ArrayList<>();
