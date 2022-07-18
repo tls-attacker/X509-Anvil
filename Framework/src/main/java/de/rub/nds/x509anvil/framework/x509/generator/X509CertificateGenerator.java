@@ -97,8 +97,13 @@ public class X509CertificateGenerator {
         try {
             switch (certificateConfig.getSigner()) {
                 case NEXT_IN_CHAIN:
-                    privateKeyForSignature = PemUtil
-                        .encodeKeyAsPem(nextInChainConfig.getSubjectKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
+                    if (nextInChainConfig.isStatic()) {
+                        privateKeyForSignature = nextInChainConfig.getStaticX509Certificate().getKeyInfo().getKeyBytes();
+                    }
+                    else {
+                        privateKeyForSignature = PemUtil
+                                .encodeKeyAsPem(nextInChainConfig.getSubjectKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
+                    }
                     break;
                 case SELF:
                     privateKeyForSignature = PemUtil
