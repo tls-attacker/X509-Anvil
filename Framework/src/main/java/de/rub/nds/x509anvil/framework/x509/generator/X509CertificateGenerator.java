@@ -229,10 +229,13 @@ public class X509CertificateGenerator {
                             if (!(subject instanceof Asn1Sequence)) {
                                 throw new CertificateGeneratorException("Unable to copy subject field of static certificate");
                             }
-                            tbsCertificate.addChild(subject);
+                            Asn1Encodable issuerAsn1 = subject.getCopy();
+                            issuerAsn1.setIdentifier("issuer");
+
+                            tbsCertificate.addChild(issuerAsn1);
                             return;
                         }
-                        catch (IllegalArgumentException e) {
+                        catch (IllegalArgumentException | XMLStreamException | JAXBException | IOException e) {
                             throw new CertificateGeneratorException("Unable to copy subject field of static certificate", e);
                         }
                     }
