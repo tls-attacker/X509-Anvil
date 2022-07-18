@@ -43,7 +43,7 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
             .by((CertificateSpecificParameter<T> certificateSpecificParam, ChainLengthParameter chainLengthParam) -> {
                 Integer chainLength = chainLengthParam.getSelectedValue();
                 T selectedValue = certificateSpecificParam.getSelectedValue();
-                return (certificateParameterScopeModeled(getParameterIdentifier().getParameterScope(), chainLength)
+                return (certificateParameterScopeModeled((X509AnvilParameterScope) getParameterIdentifier().getParameterScope(), chainLength)
                     ^ selectedValue == null);
             });
         return new ConditionalConstraint(requiredParameters, constraint);
@@ -56,29 +56,12 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
         return defaultConstraints;
     }
 
-    private static boolean certificateParameterScopeModeled(ParameterScope parameterScope, int chainLength) {
-        switch (parameterScope.getUniqueScopeIdentifier()) {
-            case "cert_entity":
-                return chainLength >= 1;
-            case "cert_root":
-                return chainLength >= 2;
-            case "cert_intermediate":
-                return chainLength >= 3;
-            default:
-                return false; // Not a certificate parameter scope
-        }
+    private static boolean certificateParameterScopeModeled(X509AnvilParameterScope parameterScope, int chainLength) {
+        return parameterScope.getChainPosition() < chainLength;
     }
 
     protected X509CertificateConfig getCertificateConfigByScope(X509CertificateChainConfig certificateChainConfig) {
-        switch (getParameterIdentifier().getParameterScope().getUniqueScopeIdentifier()) {
-            case "cert_entity":
-                return certificateChainConfig.getEntityCertificateConfig();
-            case "cert_intermediate":
-                return certificateChainConfig.getIntermediateCertificatesConfig();
-            case "cert_root":
-                return certificateChainConfig.getRootCertificateConfig();
-            default:
-                throw new UnsupportedOperationException("Invalid ParameterScope");
-        }
+        X509AnvilParameterScope parameterScope = (X509AnvilParameterScope) getParameterIdentifier().getParameterScope();
+        return certificateChainConfig.getConfigByChainPosition(parameterScope.getChainPosition());
     }
 }

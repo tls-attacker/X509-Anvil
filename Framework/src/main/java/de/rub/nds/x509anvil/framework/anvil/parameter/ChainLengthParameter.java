@@ -9,6 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
+import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
@@ -54,7 +55,7 @@ public class ChainLengthParameter extends X509AnvilDerivationParameter<Integer> 
         // We need to set the chain length before other parameters access the config
         ChainLength chainLengthAnnotation = AnnotationUtil.resolveChainLengthAnnotation(derivationScope.getExtensionContext());
         int intermediateCertsModeled = AnnotationUtil.resolveIntermediateCertsModeled(chainLengthAnnotation);
-        //config.initializeChain(getSelectedValue(), intermediateCertsModeled);
+        config.initializeChain(getSelectedValue(), intermediateCertsModeled);
     }
 
     @Override
