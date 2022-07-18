@@ -11,6 +11,7 @@ package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.Asn1Encodable;
 import de.rub.nds.x509anvil.framework.x509.config.model.*;
+import de.rub.nds.x509attacker.x509.X509Certificate;
 import org.bouncycastle.asn1.ASN1BitString;
 
 import java.math.BigInteger;
@@ -19,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class X509CertificateConfig {
+    private boolean isStatic;
+    private X509Certificate staticX509Certificate;
+
     private KeyPair subjectKeyPair;
     private String signatureAlgorithmOid;
     private Asn1Encodable signatureAlgorithmParameters;
@@ -70,6 +74,22 @@ public class X509CertificateConfig {
     private ASN1BitString signatureOverridden;
 
     public X509CertificateConfig() {
+    }
+
+    public boolean isStatic() {
+        return isStatic;
+    }
+
+    public void setStatic(boolean isStatic) {
+        this.isStatic = isStatic;
+    }
+
+    public X509Certificate getStaticX509Certificate() {
+        return staticX509Certificate;
+    }
+
+    public void setStaticX509Certificate(X509Certificate staticX509Certificate) {
+        this.staticX509Certificate = staticX509Certificate;
     }
 
     public KeyPair getSubjectKeyPair() {

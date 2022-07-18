@@ -9,67 +9,126 @@
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
+import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.config.AnvilConfig;
+import de.rub.nds.x509anvil.framework.anvil.TestConfig;
+import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
+import de.rub.nds.x509anvil.framework.x509.X509CertificateUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class X509CertificateChainConfig implements AnvilConfig {
-    // TODO Find more elegant way for handling default values
-    private int chainLength = 1;
-    private X509CertificateConfig entityCertificateConfig =
-        X509CertificateUtil.getDefaultCertificateConfig(true, "entity");
-    private X509CertificateConfig intermediateCertificatesConfig =
-        X509CertificateUtil.getDefaultCertificateConfig(true, "intermediate");
-    private X509CertificateConfig rootCertificateConfig = X509CertificateUtil.getDefaultCertificateConfig(true, "root");
+    private static final Logger LOGGER = LogManager.getLogger();
 
-    public List<X509CertificateConfig> getCertificateConfigs() {
-        List<X509CertificateConfig> certificateConfigList = new ArrayList<>(chainLength);
-        if (chainLength >= 1) {
-            // Generate at least the entity certificate
-            certificateConfigList.add(entityCertificateConfig);
+    private int chainLength;
+    private int intermediateCertsModeled;
+    private boolean staticRoot;
+
+    private X509CertificateConfig rootCertificateConfig = null;
+    private final List<X509CertificateConfig> intermediateCertificateConfigs = new ArrayList<>();
+    private X509CertificateConfig entityCertificateConfig = null;
+
+    private boolean initialized = false;
+
+
+    public void initializeChain(int chainLength, int intermediateCertsModeled) {
+        if (initialized) {
+            throw new IllegalStateException("Config is already initialized");
         }
-        if (chainLength >= 2) {
-            // Generate at least the entity and root certificates
-            certificateConfigList.add(0, rootCertificateConfig);
+
+        this.chainLength = chainLength;
+        this.intermediateCertsModeled = intermediateCertsModeled;
+
+        TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
+        this.staticRoot = testConfig.getUseStaticRootCertificate();
+
+
+        if (staticRoot) {
+            try {
+                rootCertificateConfig = X509CertificateUtil.loadStaticCertificateConfig(testConfig.getStaticRootCertificateFile(), testConfig.getStaticRootPrivateKeyFile());
+            }
+            catch (IOException e) {
+                LOGGER.error("Unable to load static root certificate and its private key", e);
+                throw new IllegalArgumentException("Unable to load static root certificate and its private key", e);
+            }
         }
-        if (chainLength >= 3) {
-            // Generate chainLength-2 intermediate certificates using the same config
-            certificateConfigList.addAll(1, Collections.nCopies(chainLength - 2, intermediateCertificatesConfig));
+        else {
+            // We need to generate our own root
+            rootCertificateConfig = X509CertificateUtil.getDefaultCertificateConfig(true, "cert_root");
         }
-        return certificateConfigList;
+
+        // Generate configs for intermediate certificates
+        for (int i = 0; i < chainLength - 2; i++) {
+            if (i < intermediateCertsModeled) {
+                intermediateCertificateConfigs.add(X509CertificateUtil.getDefaultCertificateConfig(false, "cert_inter_" + i));
+            }
+        }
+
+        // Generate entity config
+        if (chainLength == 1) {
+            entityCertificateConfig = rootCertificateConfig;
+        }
+        else {
+            entityCertificateConfig = X509CertificateUtil.getDefaultCertificateConfig(false, "cert_entity");
+        }
+
+        initialized = true;
     }
 
     public int getChainLength() {
         return chainLength;
     }
 
-    public void setChainLength(int chainLength) {
-        this.chainLength = chainLength;
-    }
-
     public X509CertificateConfig getEntityCertificateConfig() {
         return entityCertificateConfig;
-    }
-
-    public X509CertificateConfig getIntermediateCertificatesConfig() {
-        return intermediateCertificatesConfig;
     }
 
     public X509CertificateConfig getRootCertificateConfig() {
         return rootCertificateConfig;
     }
 
-    public void setEntityCertificateConfig(X509CertificateConfig entityCertificateConfig) {
-        this.entityCertificateConfig = entityCertificateConfig;
+    public List<X509CertificateConfig> getIntermediateCertificateConfigs() {
+        return intermediateCertificateConfigs;
     }
 
-    public void setIntermediateCertificatesConfig(X509CertificateConfig intermediateCertificatesConfig) {
-        this.intermediateCertificatesConfig = intermediateCertificatesConfig;
+    public X509CertificateConfig getConfigByChainPosition(int chainPosition) {
+        int entityPosition = Integer.min(chainLength, intermediateCertsModeled + 2) - 1;
+        if (chainPosition == 0) {
+            if (rootCertificateConfig == null) {
+                throw new IllegalArgumentException("Config for root certificate does not exist");
+            }
+            return rootCertificateConfig;
+        }
+        else if (chainPosition > 0 && chainPosition < entityPosition) {
+            if (chainPosition - 1 >= intermediateCertificateConfigs.size()) {
+                throw new IllegalArgumentException("Config for intermediate certificate at position " + chainPosition + " does not exist");
+            }
+            return intermediateCertificateConfigs.get(chainPosition - 1);
+        }
+        else if (chainPosition == entityPosition) {
+            if (entityCertificateConfig == null) {
+                throw new IllegalArgumentException("Config for entity certificate does not exist");
+            }
+            return entityCertificateConfig;
+        }
+        else {
+            throw new IllegalArgumentException("Invalid chain position");
+        }
     }
 
-    public void setRootCertificateConfig(X509CertificateConfig rootCertificateConfig) {
-        this.rootCertificateConfig = rootCertificateConfig;
+    public int getIntermediateCertsModeled() {
+        return intermediateCertsModeled;
+    }
+
+    public boolean isStaticRoot() {
+        return staticRoot;
+    }
+
+    public boolean isInitialized() {
+        return initialized;
     }
 }
