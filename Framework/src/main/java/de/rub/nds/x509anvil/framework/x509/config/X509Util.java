@@ -11,15 +11,21 @@ package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.Asn1Encodable;
 import de.rub.nds.asn1.model.Asn1Container;
+import de.rub.nds.asn1.model.KeyInfo;
 import de.rub.nds.asn1.parser.Asn1Parser;
 import de.rub.nds.asn1.parser.IntermediateAsn1Field;
+import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509attacker.constants.X509CertChainOutFormat;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
 
+import javax.security.cert.CertificateException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,13 +38,56 @@ public class X509Util {
                 currentAsn1Encodable = ((Asn1Container) currentAsn1Encodable).getChildren().stream()
                         .filter(encodable -> encodable.getIdentifier().equals(identifier))
                         .findFirst()
-                        .orElseThrow(() -> new IllegalArgumentException("Could not find " + identifier + " in " + String.join(".", identifiers)));
+                        .orElseThrow(() -> new IllegalArgumentException("Could not find " + identifier + " in " + String.join("/", identifiers)));
             }
             else {
                 throw new IllegalArgumentException(identifier + " is not a container");
             }
         }
         return currentAsn1Encodable;
+    }
+
+    public static KeyPair retrieveKeyPairFromX509Certificate(X509Certificate x509Certificate) {
+        try {
+            PrivateKey privateKey = retrievePrivateKeyFromKeyInfo(x509Certificate.getKeyInfo());
+            PublicKey publicKey = retrievePublicKeyFromSubjectPublicKeyInfo(x509Certificate, privateKey.getAlgorithm());
+            return new KeyPair(publicKey, privateKey);
+        } catch (CertificateException | InvalidKeySpecException e) {
+            throw new IllegalArgumentException("Unable to retrieve key pair from x509Certificate", e);
+        }
+    }
+
+    public static PrivateKey retrievePrivateKeyFromKeyInfo(KeyInfo privateKeyInfo) throws InvalidKeySpecException {
+        byte[] privateKeyBytes = PemUtil.pemToDer(privateKeyInfo.getKeyBytes());
+
+        KeyFactory keyFactory;
+        try {
+            switch (privateKeyInfo.getKeyType()) {
+                case RSA:
+                    keyFactory = KeyFactory.getInstance("RSA");
+                    break;
+                case DSA:
+                    keyFactory = KeyFactory.getInstance("DSA");
+                    break;
+                case ECDSA:
+                    keyFactory = KeyFactory.getInstance("EC");
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unsupported key type");
+            }
+        }
+        catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException("No key factory for key type " + privateKeyInfo.getKeyType().name());
+        }
+
+        return keyFactory.generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
+    }
+
+    public static PublicKey retrievePublicKeyFromSubjectPublicKeyInfo(X509Certificate x509Certificate, String algorithm) throws CertificateException {
+        // TODO: This is a workaround because using the Asn1-Tool classes didn't work
+        byte[] certBytes = x509Certificate.getEncodedCertificate();
+        javax.security.cert.X509Certificate cert = javax.security.cert.X509Certificate.getInstance(certBytes);
+        return cert.getPublicKey();
     }
 
     public static byte[] encodeCertificateChainForTls(List<X509Certificate> certificates) throws IOException {

@@ -18,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class X509CertificateChainConfig implements AnvilConfig {
             try {
                 rootCertificateConfig = X509CertificateUtil.loadStaticCertificateConfig(testConfig.getStaticRootCertificateFile(), testConfig.getStaticRootPrivateKeyFile());
             }
-            catch (IOException e) {
+            catch (IOException | InvalidKeySpecException e) {
                 LOGGER.error("Unable to load static root certificate and its private key", e);
                 throw new IllegalArgumentException("Unable to load static root certificate and its private key", e);
             }

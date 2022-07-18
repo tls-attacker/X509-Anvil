@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -76,7 +77,7 @@ public class X509CertificateUtil {
         return config;
     }
 
-    public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String privateKeyFile) throws IOException {
+    public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String privateKeyFile) throws IOException, InvalidKeySpecException {
         X509Parser x509Parser = new X509Parser(new File(staticCertificateFile));
         X509Certificate staticRootCertificate = x509Parser.parse();
         staticRootCertificate.setKeyFile(new File(privateKeyFile));

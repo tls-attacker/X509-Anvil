@@ -16,6 +16,7 @@ import org.bouncycastle.asn1.ASN1BitString;
 
 import java.math.BigInteger;
 import java.security.KeyPair;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,8 +89,9 @@ public class X509CertificateConfig {
         return staticX509Certificate;
     }
 
-    public void setStaticX509Certificate(X509Certificate staticX509Certificate) {
+    public void setStaticX509Certificate(X509Certificate staticX509Certificate) throws InvalidKeySpecException {
         this.staticX509Certificate = staticX509Certificate;
+        this.subjectKeyPair = X509Util.retrieveKeyPairFromX509Certificate(staticX509Certificate);
     }
 
     public KeyPair getSubjectKeyPair() {
