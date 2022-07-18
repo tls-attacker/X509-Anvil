@@ -7,7 +7,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 
-package de.rub.nds.x509anvil.framework.x509.config;
+package de.rub.nds.x509anvil.framework.x509;
 
 import de.rub.nds.asn1.model.Asn1Null;
 import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
@@ -18,12 +18,14 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AlgorithmObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.config.model.*;
+import de.rub.nds.x509attacker.x509.X509Certificate;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
 import java.util.UUID;
 
 public class X509CertificateUtil {
@@ -87,5 +89,40 @@ public class X509CertificateUtil {
     public static BigInteger generateUniqueSerialNumber() {
         UUID uuid = UUID.randomUUID();
         return new BigInteger(uuid.toString().replace("-", ""), 16);
+    }
+
+    public static Iterable<X509CertificateConfig> expandCertificateConfigs(X509CertificateChainConfig certificateChainConfig) {
+        return () -> new Iterator<X509CertificateConfig>() {
+            private int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < certificateChainConfig.getChainLength();
+            }
+
+            @Override
+            public X509CertificateConfig next() {
+                int i = currentIndex++;
+                if (i == 0) {
+                    return certificateChainConfig.getRootCertificateConfig();
+                }
+                else if (i > 0 && i < certificateChainConfig.getChainLength() - 1) {
+                    if (i - 1 < certificateChainConfig.getIntermediateCertsModeled()) {
+                        // Intermediate certificate is modeled, return config
+                        return certificateChainConfig.getIntermediateCertificateConfigs().get(i - 1);
+                    }
+                    else {
+                        // Intermediate certificate is not modeled, copy config of last modeled intermediate cert
+                        return certificateChainConfig.getIntermediateCertificateConfigs().get(certificateChainConfig.getIntermediateCertsModeled()-1);
+                    }
+                }
+                else if (i == certificateChainConfig.getChainLength() - 1) {
+                    return certificateChainConfig.getEntityCertificateConfig();
+                }
+                else {
+                    throw new IndexOutOfBoundsException();
+                }
+            }
+        };
     }
 }
