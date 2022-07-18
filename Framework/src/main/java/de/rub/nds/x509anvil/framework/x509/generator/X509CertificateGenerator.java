@@ -18,7 +18,6 @@ import de.rub.nds.x509anvil.framework.x509.config.model.AlgorithmParametersType;
 import de.rub.nds.x509anvil.framework.x509.config.model.Name;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509attacker.x509.X509Certificate;
-import org.checkerframework.checker.units.qual.K;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
@@ -270,7 +269,7 @@ public class X509CertificateGenerator {
                     utcTime.setIdentifier("notBefore");
                     utcTime.setValue(certificateConfig.getNotBeforeValue());
                     validity.addChild(utcTime);
-                } else if (certificateConfig.getNotBeforeTimeType() == TimeType.GENERAL_TIME) {
+                } else if (certificateConfig.getNotBeforeTimeType() == TimeType.GENERALIZED_TIME) {
                     Asn1PrimitiveGeneralizedTime generalTime = new Asn1PrimitiveGeneralizedTime();
                     generalTime.setIdentifier("notBefore");
                     generalTime.setValue(certificateConfig.getNotBeforeValue());
@@ -284,7 +283,7 @@ public class X509CertificateGenerator {
                     utcTime.setIdentifier("notAfter");
                     utcTime.setValue(certificateConfig.getNotAfterValue());
                     validity.addChild(utcTime);
-                } else if (certificateConfig.getNotAfterTimeType() == TimeType.GENERAL_TIME) {
+                } else if (certificateConfig.getNotAfterTimeType() == TimeType.GENERALIZED_TIME) {
                     Asn1PrimitiveGeneralizedTime generalTime = new Asn1PrimitiveGeneralizedTime();
                     generalTime.setIdentifier("notAfter");
                     generalTime.setValue(certificateConfig.getNotAfterValue());

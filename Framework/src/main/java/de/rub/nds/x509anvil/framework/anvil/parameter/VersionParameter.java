@@ -39,8 +39,7 @@ public class VersionParameter extends CertificateSpecificParameter<BigInteger> {
     @Override
     public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter> parameterValues = new ArrayList<>();
-        parameterValues.add(generateValue(null)); // If we don't want this parameter to be modelled (i.e. ParameterScope
-                                                  // is not in use)
+        parameterValues.add(generateValue(null)); // If we don't want this parameter to be modelled (i.e. ParameterScope is not in use)
         parameterValues.add(generateValue(BigInteger.valueOf(0))); // Version 1
         parameterValues.add(generateValue(BigInteger.valueOf(1))); // Version 2
         parameterValues.add(generateValue(BigInteger.valueOf(2))); // Version 3
