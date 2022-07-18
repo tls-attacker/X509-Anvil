@@ -13,6 +13,7 @@ import de.rub.nds.asn1.Asn1Encodable;
 import de.rub.nds.asn1.model.*;
 import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
+import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.model.AlgorithmParametersType;
 import de.rub.nds.x509anvil.framework.x509.config.model.Name;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
@@ -43,6 +44,11 @@ public class X509CertificateGenerator {
     }
 
     public void generateCertificate() throws CertificateGeneratorException {
+        if (certificateConfig.isStatic()) {
+            this.x509Certificate = certificateConfig.getStaticX509Certificate();
+            return;
+        }
+
         generateTbsCertificate();
 
         certificateAsn1 = new Asn1Sequence();
