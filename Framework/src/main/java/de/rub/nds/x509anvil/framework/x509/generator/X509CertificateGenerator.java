@@ -213,6 +213,24 @@ public class X509CertificateGenerator {
             Name issuer;
             switch (certificateConfig.getIssuerType()) {
                 case NEXT_IN_CHAIN:
+                    if (nextInChainConfig == null) {
+                        throw new CertificateGeneratorException("Config of issuer certificate is null");
+                    }
+                    if (nextInChainConfig.isStatic()) {
+                        // Copy subject field
+                        try {
+                            Asn1Encodable subject = X509Util.getAsn1ElementByIdentifierPath(nextInChainConfig.getStaticX509Certificate(),
+                                    "tbsCertificate", "subject");
+                            if (!(subject instanceof Asn1Sequence)) {
+                                throw new CertificateGeneratorException("Unable to copy subject field of static certificate");
+                            }
+                            tbsCertificate.addChild(subject);
+                            return;
+                        }
+                        catch (IllegalArgumentException e) {
+                            throw new CertificateGeneratorException("Unable to copy subject field of static certificate", e);
+                        }
+                    }
                     issuer = nextInChainConfig.getSubject();
                     break;
                 case SELF:
