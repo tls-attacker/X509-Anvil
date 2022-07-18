@@ -21,12 +21,8 @@ import de.rub.nds.tlsattacker.core.workflow.DefaultWorkflowExecutor;
 import de.rub.nds.tlsattacker.core.workflow.WorkflowTrace;
 import de.rub.nds.tlsattacker.core.workflow.action.ReceiveAction;
 import de.rub.nds.tlsattacker.core.workflow.action.SendAction;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509attacker.x509.X509Certificate;
-import org.bouncycastle.crypto.tls.Certificate;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 

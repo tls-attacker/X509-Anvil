@@ -11,8 +11,6 @@ package de.rub.nds.x509anvil.framework.anvil;
 
 import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.ParameterCombination;
-import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
-import de.rub.nds.x509anvil.framework.anvil.TestConfig;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapter;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterFactory;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
