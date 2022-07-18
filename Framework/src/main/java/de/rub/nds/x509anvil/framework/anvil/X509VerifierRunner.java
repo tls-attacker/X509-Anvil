@@ -63,7 +63,7 @@ public class X509VerifierRunner {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateList = certificateChainGenerator.retrieveCertificateChain();
-        X509Util.exportCertificates(certificateList, "resources");
+        X509Util.exportCertificates(certificateList, "resources/out");
 
         TestConfig testConfig =
             ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate())

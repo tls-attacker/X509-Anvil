@@ -19,9 +19,9 @@ public class TestConfig {
     private VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_CLIENT_AUTH;
     private VerifierAdapterConfig verifierAdapterConfig =
         new TlsClientAuthVerifierAdapterConfig("192.168.178.66", 4433);
-    private Boolean useStaticRootCertificate = false;
-    private String staticRootCertificateFile = "";
-    private String staticRootPrivateKeyFile = "";
+    private Boolean useStaticRootCertificate = true;
+    private String staticRootCertificateFile = "resources/static-root/root-cert.pem";
+    private String staticRootPrivateKeyFile = "resources/static-root/private-key.pem";
 
     private int defaultMinChainLength = 1;
     private int defaultMaxChainLength = 3;
