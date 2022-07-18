@@ -11,11 +11,15 @@ package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.model.Asn1Null;
 import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
-import de.rub.nds.x509anvil.framework.util.PemUtil;
+import de.rub.nds.asn1.parser.X509Parser;
+import de.rub.nds.x509anvil.framework.x509.config.CachedKeyPairGenerator;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AlgorithmObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.config.model.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.KeyPair;
@@ -68,6 +72,16 @@ public class X509CertificateUtil {
         config.setExtensionsPresent(false);
 
         return config;
+    }
+
+    public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String privateKeyFile) throws IOException {
+        X509Parser x509Parser = new X509Parser(new File(staticCertificateFile));
+        X509Certificate staticRootCertificate = x509Parser.parse();
+        staticRootCertificate.setKeyFile(new File(privateKeyFile));
+        X509CertificateConfig staticX509CertificateConfig = new X509CertificateConfig();
+        staticX509CertificateConfig.setStatic(true);
+        staticX509CertificateConfig.setStaticX509Certificate(staticRootCertificate);
+        return staticX509CertificateConfig;
     }
 
     public static BigInteger generateUniqueSerialNumber() {
