@@ -19,7 +19,7 @@ public class TestConfig {
     private VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_CLIENT_AUTH;
     private VerifierAdapterConfig verifierAdapterConfig =
         new TlsClientAuthVerifierAdapterConfig("192.168.178.66", 4433);
-    private Boolean useStaticRootCertificate = true;
+    private Boolean useStaticRootCertificate = false;
     private String staticRootCertificateFile = "";
     private String staticRootPrivateKeyFile = "";
 
