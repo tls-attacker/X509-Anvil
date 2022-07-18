@@ -13,6 +13,8 @@ import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.ModelBasedIpmFactory;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
+import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +22,18 @@ import java.util.List;
 public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
     @Override
     protected List<ParameterIdentifier> getAllParameterIdentifiers(DerivationScope derivationScope) {
+        ChainLength chainLengthAnnotation = AnnotationUtil.resolveChainLengthAnnotation(derivationScope.getExtensionContext());
+        int maxChainLength = AnnotationUtil.resolveMaxLength(chainLengthAnnotation);
+        int intermediateCertsModeled = AnnotationUtil.resolveIntermediateCertsModeled(chainLengthAnnotation);
+        int numCertificateScopes = Integer.min(maxChainLength, 2 + intermediateCertsModeled);
+
         List<ParameterIdentifier> parameterIdentifiers = new ArrayList<>();
         parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH));
-        parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.VERSION, X509AnvilParameterScope.CERT_ENTITY));
-        parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.VERSION, X509AnvilParameterScope.CERT_INTERMEDIATE));
+
+        // certificate specific parameters
+        for (int chainPosition = 0; chainPosition < numCertificateScopes; chainPosition++) {
+            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.VERSION, new X509AnvilParameterScope(chainPosition)));
+        }
         return parameterIdentifiers;
     }
 }
