@@ -11,8 +11,8 @@ package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
+import de.rub.nds.anvilcore.model.parameter.ParameterFactory;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
-import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -35,24 +35,45 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
      * the parameter is associated with is not modelled. For example, if the parameter is associated with an
      * intermediate certificate and the certificate length parameter is 2, we don't need the parameter to be included.
      */
-    private ConditionalConstraint createCertificateNotModeledConstraint() {
-        Set<ParameterIdentifier> requiredParameters = Collections
-            .singleton(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH));
+    private ConditionalConstraint createCertificateNotModeledConstraint(DerivationScope derivationScope) {
+        ChainLengthParameter chainLengthParameter =
+                (ChainLengthParameter) ParameterFactory.getInstanceFromIdentifier(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH));
+        if (chainLengthParameter.canBeModeled(derivationScope)) {
+            return createDynamicCertificateNotModeledConstraint();
+        }
+        else {
+            if (chainLengthParameter.getConstrainedParameterValues(derivationScope).size() != 1) {
+                throw new IllegalStateException("ChainLength parameter has no values");
+            }
+            Constraint constraint = ConstraintBuilder
+                    .constrain(getParameterIdentifier().toString())
+                    .by((CertificateSpecificParameter<T> parameter) -> {
+                        Integer chainLength = (Integer) chainLengthParameter.getParameterValues(derivationScope).get(0).getSelectedValue();
+                        T selectedValue = parameter.getSelectedValue();
+                        return (certificateParameterScopeModeled((X509AnvilParameterScope) getParameterIdentifier().getParameterScope(), chainLength)
+                                ^ selectedValue == null);
+                    });
+            return new ConditionalConstraint(Collections.emptySet(), constraint);
+        }
+    }
+
+    private ConditionalConstraint createDynamicCertificateNotModeledConstraint() {
+        Set<ParameterIdentifier> requiredParameters = Collections.singleton(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH));
         Constraint constraint = ConstraintBuilder
-            .constrain(getParameterIdentifier().toString(), requiredParameters.stream().findFirst().get().toString())
-            .by((CertificateSpecificParameter<T> certificateSpecificParam, ChainLengthParameter chainLengthParam) -> {
-                Integer chainLength = chainLengthParam.getSelectedValue();
-                T selectedValue = certificateSpecificParam.getSelectedValue();
-                return (certificateParameterScopeModeled((X509AnvilParameterScope) getParameterIdentifier().getParameterScope(), chainLength)
-                    ^ selectedValue == null);
-            });
+                .constrain(getParameterIdentifier().toString(), requiredParameters.stream().findFirst().get().toString())
+                .by((CertificateSpecificParameter<T> certificateSpecificParam, ChainLengthParameter chainLengthParam) -> {
+                    Integer chainLength = chainLengthParam.getSelectedValue();
+                    T selectedValue = certificateSpecificParam.getSelectedValue();
+                    return (certificateParameterScopeModeled((X509AnvilParameterScope) getParameterIdentifier().getParameterScope(), chainLength)
+                            ^ selectedValue == null);
+                });
         return new ConditionalConstraint(requiredParameters, constraint);
     }
 
     @Override
     public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
         List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
-        defaultConstraints.add(createCertificateNotModeledConstraint());
+        defaultConstraints.add(createCertificateNotModeledConstraint(derivationScope));
         return defaultConstraints;
     }
 
