@@ -9,6 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.anvil;
 
+import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.ModelBasedIpmFactory;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
@@ -31,7 +32,13 @@ public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
         parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH));
 
         // certificate specific parameters
-        for (int chainPosition = 0; chainPosition < numCertificateScopes; chainPosition++) {
+        TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
+        int chainPosition = 0;
+        // Forgo modeling root certificate if static root is used
+        if (testConfig.getUseStaticRootCertificate()) {
+            chainPosition = 1;
+        }
+        for (; chainPosition < numCertificateScopes; chainPosition++) {
             parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.VERSION, new X509AnvilParameterScope(chainPosition)));
         }
         return parameterIdentifiers;
