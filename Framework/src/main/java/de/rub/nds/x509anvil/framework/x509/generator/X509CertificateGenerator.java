@@ -18,6 +18,7 @@ import de.rub.nds.x509anvil.framework.x509.config.model.AlgorithmParametersType;
 import de.rub.nds.x509anvil.framework.x509.config.model.Name;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509attacker.x509.X509Certificate;
+import org.bouncycastle.asn1.ASN1BitString;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
@@ -152,7 +153,7 @@ public class X509CertificateGenerator {
         generateValidity();
         generateSubject();
         generateSubjectPublicKeyInfo();
-        // TODO: Test if X509-Attacker supports unique identifiers at all
+        generateUniqueIdentifiers();
         // TODO: Extensions
     }
 
@@ -305,6 +306,34 @@ public class X509CertificateGenerator {
         }
     }
 
+    private void generateUniqueIdentifiers() {
+        if (certificateConfig.isIssuerUniqueIdPresent()) {
+            Asn1Implicit issuerUniqueIdImplicit = new Asn1Implicit();
+            issuerUniqueIdImplicit.setIdentifier("implicitIssuerUniqueId");
+            issuerUniqueIdImplicit.setOffset(1);
+
+            Asn1PrimitiveBitString issuerUniqueIdBitString = new Asn1PrimitiveBitString();
+            issuerUniqueIdBitString.setValue(certificateConfig.getIssuerUniqueId().getBytes());
+            issuerUniqueIdBitString.setUnusedBits(certificateConfig.getIssuerUniqueId().getUnusedBits());
+            issuerUniqueIdBitString.setIdentifier("issuerUniqueID");
+            issuerUniqueIdImplicit.addChild(issuerUniqueIdBitString);
+            tbsCertificate.addChild(issuerUniqueIdImplicit);
+        }
+
+        if (certificateConfig.isSubjectUniqueIdPresent()) {
+            Asn1Implicit subjectUniqueIdImplicit = new Asn1Implicit();
+            subjectUniqueIdImplicit.setIdentifier("implicitSubjectUniqueId");
+            subjectUniqueIdImplicit.setOffset(1);
+
+            Asn1PrimitiveBitString subjectUniqueIdBitString = new Asn1PrimitiveBitString();
+            subjectUniqueIdBitString.setValue(certificateConfig.getSubjectUniqueId().getBytes());
+            subjectUniqueIdBitString.setUnusedBits(certificateConfig.getSubjectUniqueId().getUnusedBits());
+            subjectUniqueIdBitString.setIdentifier("subjectUniqueID");
+            subjectUniqueIdImplicit.addChild(subjectUniqueIdBitString);
+            tbsCertificate.addChild(subjectUniqueIdImplicit);
+        }
+    }
+
     private void generateSignatureAlgorithm() throws CertificateGeneratorException {
         if (certificateConfig.isSignatureAlgorithmPresent()) {
             Asn1Sequence signatureAlgorithm = new Asn1Sequence();
@@ -337,5 +366,4 @@ public class X509CertificateGenerator {
             certificateAsn1.addChild(signatureAlgorithm);
         }
     }
-
 }

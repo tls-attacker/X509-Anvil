@@ -64,6 +64,8 @@ public class X509CertificateConfig {
 
     private boolean issuerUniqueIdPresent = false;
     private BitString issuerUniqueId = new BitString(new byte[0]);
+    private boolean subjectUniqueIdPresent = false;
+    private BitString subjectUniqueId = new BitString(new byte[0]);
 
     private boolean extensionsPresent = true;
     private List<ExtensionConfig> extensions = new ArrayList<>();
@@ -336,6 +338,22 @@ public class X509CertificateConfig {
 
     public void setIssuerUniqueId(BitString issuerUniqueId) {
         this.issuerUniqueId = issuerUniqueId;
+    }
+
+    public boolean isSubjectUniqueIdPresent() {
+        return subjectUniqueIdPresent;
+    }
+
+    public void setSubjectUniqueIdPresent(boolean subjectUniqueIdPresent) {
+        this.subjectUniqueIdPresent = subjectUniqueIdPresent;
+    }
+
+    public BitString getSubjectUniqueId() {
+        return subjectUniqueId;
+    }
+
+    public void setSubjectUniqueId(BitString subjectUniqueId) {
+        this.subjectUniqueId = subjectUniqueId;
     }
 
     public List<ExtensionConfig> getExtensions() {
