@@ -7,6 +7,10 @@ import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.function.Predicate;
+
 public class IssuerUniqueIdPresentParameter extends BooleanCertificateSpecificParameter {
 
     public IssuerUniqueIdPresentParameter(ParameterScope parameterScope) {
@@ -27,5 +31,13 @@ public class IssuerUniqueIdPresentParameter extends BooleanCertificateSpecificPa
         if (getSelectedValue() != null) {
             getCertificateConfigByScope(config).setIssuerUniqueIdPresent(getSelectedValue());
         }
+    }
+
+    @Override
+    public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
+        return Collections.singletonMap(
+                getScopedIdentifier(X509AnvilParameterType.VERSION),
+                new CertificateSpecificParameter.AllowParameterValuesCondition<>(2)
+        );
     }
 }

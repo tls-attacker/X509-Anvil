@@ -5,11 +5,14 @@ import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
-import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
+import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
 
 public class IssuerUniqueIdParameter extends CertificateSpecificParameter<BitString>{
 
@@ -46,4 +49,20 @@ public class IssuerUniqueIdParameter extends CertificateSpecificParameter<BitStr
             getCertificateConfigByScope(config).setIssuerUniqueId(getSelectedValue());
         }
     }
+
+    @Override
+    public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
+        Map<ParameterIdentifier, Predicate<DerivationParameter>> additionalConditions = new HashMap<>();
+        additionalConditions.put(
+                getScopedIdentifier(X509AnvilParameterType.ISSUER_UNIQUE_ID_PRESENT),
+                CertificateSpecificParameter::enabledByParameterCondition
+        );
+        additionalConditions.put(
+                getScopedIdentifier(X509AnvilParameterType.VERSION),
+                new CertificateSpecificParameter.AllowParameterValuesCondition<>(2)
+        );
+        return additionalConditions;
+    }
+
+
 }

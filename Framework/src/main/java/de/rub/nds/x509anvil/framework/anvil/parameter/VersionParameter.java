@@ -20,19 +20,19 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VersionParameter extends CertificateSpecificParameter<BigInteger> {
+public class VersionParameter extends CertificateSpecificParameter<Integer> {
 
     public VersionParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.VERSION, parameterScope), BigInteger.class);
+        super(new ParameterIdentifier(X509AnvilParameterType.VERSION, parameterScope), Integer.class);
     }
 
-    public VersionParameter(BigInteger selectedValue, ParameterScope parameterScope) {
+    public VersionParameter(Integer selectedValue, ParameterScope parameterScope) {
         this(parameterScope);
         setSelectedValue(selectedValue);
     }
 
     @Override
-    public DerivationParameter<X509CertificateChainConfig, BigInteger> generateValue(BigInteger selectedValue) {
+    public DerivationParameter<X509CertificateChainConfig, Integer> generateValue(Integer selectedValue) {
         return new VersionParameter(selectedValue, getParameterIdentifier().getParameterScope());
     }
 
@@ -40,9 +40,9 @@ public class VersionParameter extends CertificateSpecificParameter<BigInteger> {
     public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter> parameterValues = new ArrayList<>();
         parameterValues.add(generateValue(null)); // If we don't want this parameter to be modelled (i.e. ParameterScope is not in use)
-        parameterValues.add(generateValue(BigInteger.valueOf(0))); // Version 1
-        parameterValues.add(generateValue(BigInteger.valueOf(1))); // Version 2
-        parameterValues.add(generateValue(BigInteger.valueOf(2))); // Version 3
+        parameterValues.add(generateValue(0)); // Version 1
+        parameterValues.add(generateValue(1)); // Version 2
+        parameterValues.add(generateValue(2)); // Version 3
 
         return parameterValues;
     }
@@ -50,7 +50,7 @@ public class VersionParameter extends CertificateSpecificParameter<BigInteger> {
     @Override
     public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
         if (getSelectedValue() != null) {
-            getCertificateConfigByScope(config).setVersion(getSelectedValue());
+            getCertificateConfigByScope(config).setVersion(BigInteger.valueOf(getSelectedValue()));
         }
     }
 }
