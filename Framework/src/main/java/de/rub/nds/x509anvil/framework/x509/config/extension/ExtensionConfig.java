@@ -7,16 +7,18 @@
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 
-package de.rub.nds.x509anvil.framework.x509.config.model;
+package de.rub.nds.x509anvil.framework.x509.config.extension;
 
 public abstract class ExtensionConfig {
-    private boolean critical;
+    private boolean present = false;
+    private boolean critical = false;
 
-    public ExtensionConfig(boolean critical) {
-        this.critical = critical;
+    public boolean isPresent() {
+        return present;
     }
 
-    public ExtensionConfig() {
+    public void setPresent(boolean present) {
+        this.present = present;
     }
 
     public boolean isCritical() {

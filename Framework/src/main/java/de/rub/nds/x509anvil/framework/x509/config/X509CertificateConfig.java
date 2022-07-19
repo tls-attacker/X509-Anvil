@@ -10,6 +10,9 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.Asn1Encodable;
+import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
+import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
+import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
 import de.rub.nds.x509anvil.framework.x509.config.model.*;
 import de.rub.nds.x509attacker.x509.X509Certificate;
@@ -18,8 +21,8 @@ import org.bouncycastle.asn1.ASN1BitString;
 import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class X509CertificateConfig {
     private boolean isStatic;
@@ -68,7 +71,7 @@ public class X509CertificateConfig {
     private BitString subjectUniqueId = new BitString(new byte[0]);
 
     private boolean extensionsPresent = true;
-    private List<ExtensionConfig> extensions = new ArrayList<>();
+    private final Map<ExtensionType, ExtensionConfig> extensions = new HashMap<>();
 
     private boolean signatureAlgorithmPresent = true;
     private boolean overrideSignatureAlgorithmOid;
@@ -81,6 +84,7 @@ public class X509CertificateConfig {
     private ASN1BitString signatureOverridden;
 
     public X509CertificateConfig() {
+        extensions.put(ExtensionType.BASIC_CONSTRAINTS, new BasicConstraintsExtensionConfig());
     }
 
     public boolean isStatic() {
@@ -356,12 +360,15 @@ public class X509CertificateConfig {
         this.subjectUniqueId = subjectUniqueId;
     }
 
-    public List<ExtensionConfig> getExtensions() {
+    public Map<ExtensionType, ExtensionConfig> getExtensions() {
         return extensions;
     }
 
-    public void setExtensions(List<ExtensionConfig> extensions) {
-        this.extensions = extensions;
+    public ExtensionConfig extension(ExtensionType extensionType) {
+        if (!extensions.containsKey(extensionType)) {
+            throw new IllegalArgumentException("No extension config registered for extension type " + extensionType.name());
+        }
+        return extensions.get(extensionType);
     }
 
     public boolean isExtensionsPresent() {
