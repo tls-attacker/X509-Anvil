@@ -22,4 +22,8 @@ public enum X509AnvilParameterType implements ParameterType {
     SUBJECT_UNIQUE_ID_PRESENT,
     SUBJECT_UNIQUE_ID,
     EXTENSIONS_PRESENT,
+
+    // Extensions
+    EXT_BASIC_CONSTRAINTS_PRESENT,
+    EXT_BASIC_CONSTRAINTS_CRITICAL,
 }

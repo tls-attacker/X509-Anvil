@@ -48,6 +48,10 @@ public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
             parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT, new X509AnvilParameterScope(chainPosition)));
             parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.SUBJECT_UNIQUE_ID, new X509AnvilParameterScope(chainPosition)));
             parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.EXTENSIONS_PRESENT, new X509AnvilParameterScope(chainPosition)));
+
+            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT, new X509AnvilParameterScope(chainPosition)));
+            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_CRITICAL, new X509AnvilParameterScope(chainPosition)));
+
         }
         return parameterIdentifiers;
     }
