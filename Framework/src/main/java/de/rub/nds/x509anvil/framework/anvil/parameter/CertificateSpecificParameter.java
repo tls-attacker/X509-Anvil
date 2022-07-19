@@ -43,13 +43,10 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
     }
 
     private AggregatedEnableConstraint createAggregatedEnableConstraint(DerivationScope derivationScope) {
-        Map<ParameterIdentifier, Predicate<DerivationParameter>> additionalConditions = getAdditionalEnableConditions();
-
-        return AggregatedEnableConstraintBuilder
-                .init(derivationScope)
+        return AggregatedEnableConstraintBuilder.init(derivationScope)
                 .constrain(this)
                 .condition(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH), this::certificateParameterScopeModeled)
-                .conditions(additionalConditions)
+                .conditions(getAdditionalEnableConditions())
                 .get();
     }
 
@@ -75,5 +72,9 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
 
     public int getChainPosition() {
         return ((X509AnvilParameterScope) getParameterIdentifier().getParameterScope()).getChainPosition();
+    }
+
+    public ParameterIdentifier getScopedIdentifier(X509AnvilParameterType parameterType) {
+        return new ParameterIdentifier(parameterType, getParameterIdentifier().getParameterScope());
     }
 }
