@@ -10,7 +10,10 @@
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
+import de.rub.nds.anvilcore.model.constraint.AggregatedEnableConstraint;
+import de.rub.nds.anvilcore.model.constraint.AggregatedEnableConstraintBuilder;
 import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
+import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterFactory;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterScope;
@@ -22,7 +25,9 @@ import de.rwth.swc.coffee4j.model.constraints.ConstraintBuilder;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivationParameter<T> {
 
@@ -30,59 +35,45 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
         super(valueClass, parameterIdentifier);
     }
 
-    /**
-     * Creates a conditional constraint that enforces the parameter value to be null if and only if the certificate that
-     * the parameter is associated with is not modelled. For example, if the parameter is associated with an
-     * intermediate certificate and the certificate length parameter is 2, we don't need the parameter to be included.
-     */
-    private ConditionalConstraint createCertificateNotModeledConstraint(DerivationScope derivationScope) {
-        ChainLengthParameter chainLengthParameter =
-                (ChainLengthParameter) ParameterFactory.getInstanceFromIdentifier(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH));
-        if (chainLengthParameter.canBeModeled(derivationScope)) {
-            return createDynamicCertificateNotModeledConstraint();
-        }
-        else {
-            if (chainLengthParameter.getConstrainedParameterValues(derivationScope).size() != 1) {
-                throw new IllegalStateException("ChainLength parameter has no values");
-            }
-            Constraint constraint = ConstraintBuilder
-                    .constrain(getParameterIdentifier().toString())
-                    .by((CertificateSpecificParameter<T> parameter) -> {
-                        Integer chainLength = (Integer) chainLengthParameter.getParameterValues(derivationScope).get(0).getSelectedValue();
-                        T selectedValue = parameter.getSelectedValue();
-                        return (certificateParameterScopeModeled((X509AnvilParameterScope) getParameterIdentifier().getParameterScope(), chainLength)
-                                ^ selectedValue == null);
-                    });
-            return new ConditionalConstraint(Collections.emptySet(), constraint);
-        }
-    }
-
-    private ConditionalConstraint createDynamicCertificateNotModeledConstraint() {
-        Set<ParameterIdentifier> requiredParameters = Collections.singleton(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH));
-        Constraint constraint = ConstraintBuilder
-                .constrain(getParameterIdentifier().toString(), requiredParameters.stream().findFirst().get().toString())
-                .by((CertificateSpecificParameter<T> certificateSpecificParam, ChainLengthParameter chainLengthParam) -> {
-                    Integer chainLength = chainLengthParam.getSelectedValue();
-                    T selectedValue = certificateSpecificParam.getSelectedValue();
-                    return (certificateParameterScopeModeled((X509AnvilParameterScope) getParameterIdentifier().getParameterScope(), chainLength)
-                            ^ selectedValue == null);
-                });
-        return new ConditionalConstraint(requiredParameters, constraint);
-    }
-
     @Override
     public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
         List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
-        defaultConstraints.add(createCertificateNotModeledConstraint(derivationScope));
+        defaultConstraints.add(createAggregatedEnableConstraint(derivationScope));
         return defaultConstraints;
     }
 
-    private static boolean certificateParameterScopeModeled(X509AnvilParameterScope parameterScope, int chainLength) {
-        return parameterScope.getChainPosition() < chainLength;
+    private AggregatedEnableConstraint createAggregatedEnableConstraint(DerivationScope derivationScope) {
+        Map<ParameterIdentifier, Predicate<DerivationParameter>> additionalConditions = getAdditionalEnableConditions();
+
+        return AggregatedEnableConstraintBuilder
+                .init(derivationScope)
+                .constrain(this)
+                .condition(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH), this::certificateParameterScopeModeled)
+                .conditions(additionalConditions)
+                .get();
+    }
+
+    /**
+     * Override method to add additional enable conditions
+     */
+    public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
+        return Collections.emptyMap();
+    }
+
+    private boolean certificateParameterScopeModeled(DerivationParameter chainLengthParameter) {
+        if (!(chainLengthParameter instanceof ChainLengthParameter)) {
+            throw new IllegalArgumentException("Unexpected parameter type");
+        }
+        Integer chainLength = ((ChainLengthParameter) chainLengthParameter).getSelectedValue();
+        return getChainPosition() < chainLength;
     }
 
     protected X509CertificateConfig getCertificateConfigByScope(X509CertificateChainConfig certificateChainConfig) {
         X509AnvilParameterScope parameterScope = (X509AnvilParameterScope) getParameterIdentifier().getParameterScope();
         return certificateChainConfig.getConfigByChainPosition(parameterScope.getChainPosition());
+    }
+
+    public int getChainPosition() {
+        return ((X509AnvilParameterScope) getParameterIdentifier().getParameterScope()).getChainPosition();
     }
 }
