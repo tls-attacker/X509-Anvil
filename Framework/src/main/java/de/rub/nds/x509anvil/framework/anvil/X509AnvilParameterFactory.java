@@ -29,6 +29,8 @@ public class X509AnvilParameterFactory extends ParameterFactory {
                 return new NotBeforeParameter(parameterIdentifier.getParameterScope());
             case NOT_AFTER:
                 return new NotAfterParameter(parameterIdentifier.getParameterScope());
+            case ISSUER_UNIQUE_ID_PRESENT:
+                return new IssuerUniqueIdPresentParameter(parameterIdentifier.getParameterScope());
             default:
                 throw new IllegalArgumentException("Unknown parameter identifier " + parameterIdentifier.getParameterType().toString());
         }

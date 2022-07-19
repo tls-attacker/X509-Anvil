@@ -61,6 +61,8 @@ public class X509CertificateConfig {
     private boolean useKeyPair = true;
     private SubjectPublicKeyInfo subjectPublicKeyInfo;
 
+    private boolean issuerUniqueIdPresent = false;
+
     private boolean extensionsPresent = true;
     private List<ExtensionConfig> extensions = new ArrayList<>();
 
@@ -316,6 +318,14 @@ public class X509CertificateConfig {
 
     public void setSubjectPublicKeyInfo(SubjectPublicKeyInfo subjectPublicKeyInfo) {
         this.subjectPublicKeyInfo = subjectPublicKeyInfo;
+    }
+
+    public boolean isIssuerUniqueIdPresent() {
+        return issuerUniqueIdPresent;
+    }
+
+    public void setIssuerUniqueIdPresent(boolean issuerUniqueIdPresent) {
+        this.issuerUniqueIdPresent = issuerUniqueIdPresent;
     }
 
     public List<ExtensionConfig> getExtensions() {

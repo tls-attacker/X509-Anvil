@@ -16,5 +16,6 @@ public enum X509AnvilParameterType implements ParameterType {
     VERSION,
     SERIAL_NUMBER,
     NOT_BEFORE,
-    NOT_AFTER
+    NOT_AFTER,
+    ISSUER_UNIQUE_ID_PRESENT,
 }
