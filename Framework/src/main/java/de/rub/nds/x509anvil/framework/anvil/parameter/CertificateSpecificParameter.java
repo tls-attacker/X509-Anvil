@@ -23,10 +23,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rwth.swc.coffee4j.model.constraints.Constraint;
 import de.rwth.swc.coffee4j.model.constraints.ConstraintBuilder;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 
 public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivationParameter<T> {
@@ -65,16 +62,6 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
         return getChainPosition() < chainLength;
     }
 
-    /**
-     * This condition predicate can be used whenever a parameter is enabled by another Boolean parameter
-     */
-    protected static boolean enabledByParameterCondition(DerivationParameter enabler) {
-        if (!(enabler instanceof BooleanCertificateSpecificParameter)) {
-            throw new IllegalArgumentException("Unexpected parameter type, expected BooleanCertificateSpecificParameter");
-        }
-        return ((BooleanCertificateSpecificParameter) enabler).getSelectedValue();
-    }
-
     protected X509CertificateConfig getCertificateConfigByScope(X509CertificateChainConfig certificateChainConfig) {
         X509AnvilParameterScope parameterScope = (X509AnvilParameterScope) getParameterIdentifier().getParameterScope();
         return certificateChainConfig.getConfigByChainPosition(parameterScope.getChainPosition());
@@ -86,5 +73,69 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
 
     public ParameterIdentifier getScopedIdentifier(X509AnvilParameterType parameterType) {
         return new ParameterIdentifier(parameterType, getParameterIdentifier().getParameterScope());
+    }
+
+
+    /**
+     * This condition predicate can be used whenever a parameter is enabled by another Boolean parameter
+     */
+    protected static boolean enabledByParameterCondition(DerivationParameter enabler) {
+        if (!(enabler instanceof BooleanCertificateSpecificParameter)) {
+            throw new IllegalArgumentException("Unexpected parameter type, expected BooleanCertificateSpecificParameter");
+        }
+        if (((BooleanCertificateSpecificParameter) enabler).getSelectedValue() == null) {
+            return false;
+        }
+        return ((BooleanCertificateSpecificParameter) enabler).getSelectedValue();
+    }
+
+    /**
+     * This condition predicate can be used whenever a parameter should only be enabled if another parameter has an
+     * allowed value
+     */
+    protected static class AllowParameterValuesCondition<V> implements Predicate<DerivationParameter> {
+        private final List<V> allowedValues;
+
+        public AllowParameterValuesCondition(List<V> allowedValues) {
+            this.allowedValues = allowedValues;
+        }
+
+        public AllowParameterValuesCondition(V... allowedValues) {
+            this.allowedValues = Arrays.asList(allowedValues);
+
+        }
+
+        @Override
+        public boolean test(DerivationParameter derivationParameter) {
+            if (derivationParameter == null) {
+                return false;
+            }
+            return allowedValues.contains(derivationParameter.getSelectedValue());
+        }
+    }
+
+    /**
+     * This condition predicate can be used whenever a parameter should only be enabled if the value of another parameter
+     * is not among a set of restricted values
+     */
+    protected static class RestrictParameterValuesCondition<V> implements Predicate<DerivationParameter> {
+        private final List<V> restrictedValues;
+
+        public RestrictParameterValuesCondition(List<V> allowedValues) {
+            this.restrictedValues = allowedValues;
+        }
+
+        public RestrictParameterValuesCondition(V... allowedValues) {
+            this.restrictedValues = Arrays.asList(allowedValues);
+
+        }
+
+        @Override
+        public boolean test(DerivationParameter derivationParameter) {
+            if (derivationParameter == null) {
+                return false;
+            }
+            return !restrictedValues.contains(derivationParameter.getSelectedValue());
+        }
     }
 }
