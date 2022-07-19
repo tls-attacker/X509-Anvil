@@ -59,10 +59,20 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
 
     private boolean certificateParameterScopeModeled(DerivationParameter chainLengthParameter) {
         if (!(chainLengthParameter instanceof ChainLengthParameter)) {
-            throw new IllegalArgumentException("Unexpected parameter type");
+            throw new IllegalArgumentException("Unexpected parameter type, expected ChainLengthParameter");
         }
         Integer chainLength = ((ChainLengthParameter) chainLengthParameter).getSelectedValue();
         return getChainPosition() < chainLength;
+    }
+
+    /**
+     * This condition predicate can be used whenever a parameter is enabled by another Boolean parameter
+     */
+    protected static boolean enabledByParameterCondition(DerivationParameter enabler) {
+        if (!(enabler instanceof BooleanCertificateSpecificParameter)) {
+            throw new IllegalArgumentException("Unexpected parameter type, expected BooleanCertificateSpecificParameter");
+        }
+        return ((BooleanCertificateSpecificParameter) enabler).getSelectedValue();
     }
 
     protected X509CertificateConfig getCertificateConfigByScope(X509CertificateChainConfig certificateChainConfig) {
