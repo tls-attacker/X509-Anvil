@@ -30,9 +30,8 @@ public class NotAfterParameter extends CertificateSpecificParameter<NotAfterValu
     }
 
     @Override
-    public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter> parameterValues = new ArrayList<>();
-        parameterValues.add(generateValue(null));
         for (NotAfterValue value : NotAfterValue.values()) {
             parameterValues.add(generateValue(value));
         }
@@ -40,31 +39,28 @@ public class NotAfterParameter extends CertificateSpecificParameter<NotAfterValu
     }
 
     @Override
-    public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
-        if (getSelectedValue() != null) {
-            X509CertificateConfig certificateConfig = getCertificateConfigByScope(config);
-            switch (getSelectedValue()) {
-                case UTC_TIME:
-                    certificateConfig.setNotAfterTimeType(TimeType.UTC_TIME);
-                    certificateConfig.setNotAfterValue("250101000000Z");
-                    break;
-                case UTC_TIME_LATEST:
-                    certificateConfig.setNotAfterTimeType(TimeType.UTC_TIME);
-                    certificateConfig.setNotAfterValue("491231235959Z");
-                    break;
-                case GENERALIZED_TIME:
-                    certificateConfig.setNotAfterTimeType(TimeType.GENERALIZED_TIME);
-                    certificateConfig.setNotAfterValue("20500101000000Z");
-                    break;
-                case GENERALIZED_TIME_BEFORE_2050:
-                    certificateConfig.setNotAfterTimeType(TimeType.GENERALIZED_TIME);
-                    certificateConfig.setNotAfterValue("20250101000000Z");
-                    break;
-                case NO_WELL_DEFINED_EXPIRATION:
-                    certificateConfig.setNotAfterTimeType(TimeType.GENERALIZED_TIME);
-                    certificateConfig.setNotAfterValue("99991231235959Z");
-                    break;
-            }
+    public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
+        switch (getSelectedValue()) {
+            case UTC_TIME:
+                certificateConfig.setNotAfterTimeType(TimeType.UTC_TIME);
+                certificateConfig.setNotAfterValue("250101000000Z");
+                break;
+            case UTC_TIME_LATEST:
+                certificateConfig.setNotAfterTimeType(TimeType.UTC_TIME);
+                certificateConfig.setNotAfterValue("491231235959Z");
+                break;
+            case GENERALIZED_TIME:
+                certificateConfig.setNotAfterTimeType(TimeType.GENERALIZED_TIME);
+                certificateConfig.setNotAfterValue("20500101000000Z");
+                break;
+            case GENERALIZED_TIME_BEFORE_2050:
+                certificateConfig.setNotAfterTimeType(TimeType.GENERALIZED_TIME);
+                certificateConfig.setNotAfterValue("20250101000000Z");
+                break;
+            case NO_WELL_DEFINED_EXPIRATION:
+                certificateConfig.setNotAfterTimeType(TimeType.GENERALIZED_TIME);
+                certificateConfig.setNotAfterValue("99991231235959Z");
+                break;
         }
     }
 }

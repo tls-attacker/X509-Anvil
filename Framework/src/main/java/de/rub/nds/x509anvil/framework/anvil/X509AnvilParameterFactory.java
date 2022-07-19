@@ -37,6 +37,8 @@ public class X509AnvilParameterFactory extends ParameterFactory {
                 return new SubjectUniqueIdPresentParameter(parameterIdentifier.getParameterScope());
             case SUBJECT_UNIQUE_ID:
                 return new SubjectUniqueIdParameter(parameterIdentifier.getParameterScope());
+            case EXTENSIONS_PRESENT:
+                return new ExtensionsPresentParameter(parameterIdentifier.getParameterScope());
             default:
                 throw new IllegalArgumentException("Unknown parameter identifier " + parameterIdentifier.getParameterType().toString());
         }

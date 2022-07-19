@@ -15,6 +15,7 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -37,9 +38,8 @@ public class VersionParameter extends CertificateSpecificParameter<Integer> {
     }
 
     @Override
-    public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter> parameterValues = new ArrayList<>();
-        parameterValues.add(generateValue(null)); // If we don't want this parameter to be modelled (i.e. ParameterScope is not in use)
         parameterValues.add(generateValue(0)); // Version 1
         parameterValues.add(generateValue(1)); // Version 2
         parameterValues.add(generateValue(2)); // Version 3
@@ -48,9 +48,7 @@ public class VersionParameter extends CertificateSpecificParameter<Integer> {
     }
 
     @Override
-    public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
-        if (getSelectedValue() != null) {
-            getCertificateConfigByScope(config).setVersion(BigInteger.valueOf(getSelectedValue()));
-        }
+    public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
+        certificateConfig.setVersion(BigInteger.valueOf(getSelectedValue()));
     }
 }

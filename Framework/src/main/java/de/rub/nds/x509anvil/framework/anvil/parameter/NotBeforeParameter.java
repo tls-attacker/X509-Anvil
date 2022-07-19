@@ -30,9 +30,8 @@ public class NotBeforeParameter extends CertificateSpecificParameter<NotBeforeVa
     }
 
     @Override
-    public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter> parameterValues = new ArrayList<>();
-        parameterValues.add(generateValue(null));
         for (NotBeforeValue value : NotBeforeValue.values()) {
             parameterValues.add(generateValue(value));
         }
@@ -40,27 +39,24 @@ public class NotBeforeParameter extends CertificateSpecificParameter<NotBeforeVa
     }
 
     @Override
-    public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
-        if (getSelectedValue() != null) {
-            X509CertificateConfig certificateConfig = getCertificateConfigByScope(config);
-            switch (getSelectedValue()) {
-                case UTC_TIME:
-                    certificateConfig.setNotBeforeTimeType(TimeType.UTC_TIME);
-                    certificateConfig.setNotBeforeValue("220101000000Z");
-                    break;
-                case UTC_TIME_EARLIEST:
-                    certificateConfig.setNotBeforeTimeType(TimeType.UTC_TIME);
-                    certificateConfig.setNotBeforeValue("500101000000Z");
-                    break;
-                case GENERALIZED_TIME:
-                    certificateConfig.setNotBeforeTimeType(TimeType.GENERALIZED_TIME);
-                    certificateConfig.setNotBeforeValue("20220101000000Z");
-                    break;
-                case GENERALIZED_TIME_BEFORE_1950:
-                    certificateConfig.setNotBeforeTimeType(TimeType.GENERALIZED_TIME);
-                    certificateConfig.setNotBeforeValue("19400101000000Z");
-                    break;
-            }
+    public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
+        switch (getSelectedValue()) {
+            case UTC_TIME:
+                certificateConfig.setNotBeforeTimeType(TimeType.UTC_TIME);
+                certificateConfig.setNotBeforeValue("220101000000Z");
+                break;
+            case UTC_TIME_EARLIEST:
+                certificateConfig.setNotBeforeTimeType(TimeType.UTC_TIME);
+                certificateConfig.setNotBeforeValue("500101000000Z");
+                break;
+            case GENERALIZED_TIME:
+                certificateConfig.setNotBeforeTimeType(TimeType.GENERALIZED_TIME);
+                certificateConfig.setNotBeforeValue("20220101000000Z");
+                break;
+            case GENERALIZED_TIME_BEFORE_1950:
+                certificateConfig.setNotBeforeTimeType(TimeType.GENERALIZED_TIME);
+                certificateConfig.setNotBeforeValue("19400101000000Z");
+                break;
         }
     }
 }

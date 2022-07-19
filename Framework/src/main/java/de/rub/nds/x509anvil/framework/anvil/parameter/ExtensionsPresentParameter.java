@@ -12,31 +12,33 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class SubjectUniqueIdPresentParameter extends BooleanCertificateSpecificParameter {
+public class ExtensionsPresentParameter extends  BooleanCertificateSpecificParameter {
+    // TODO If present, this field is a SEQUENCE of one or more certificate extensions.
 
-    public SubjectUniqueIdPresentParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT, parameterScope));
+    public ExtensionsPresentParameter(ParameterScope parameterScope) {
+        super(new ParameterIdentifier(X509AnvilParameterType.EXTENSIONS_PRESENT, parameterScope));
     }
 
-    public SubjectUniqueIdPresentParameter(Boolean selectedValue, ParameterScope parameterScope) {
-        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT, parameterScope));
+    public ExtensionsPresentParameter(Boolean selectedValue, ParameterScope parameterScope) {
+        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.EXTENSIONS_PRESENT, parameterScope));
     }
 
     @Override
-    public DerivationParameter<X509CertificateChainConfig, Boolean> generateValue(Boolean selectedValue) {
-        return new SubjectUniqueIdPresentParameter(selectedValue, getParameterIdentifier().getParameterScope());
+    protected DerivationParameter<X509CertificateChainConfig, Boolean> generateValue(Boolean selectedValue) {
+        return new ExtensionsPresentParameter(selectedValue, getParameterIdentifier().getParameterScope());
     }
 
     @Override
     public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        certificateConfig.setSubjectUniqueIdPresent(getSelectedValue());
+        certificateConfig.setExtensionsPresent(getSelectedValue());
     }
 
     @Override
     public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
+        // Extensions are only allowed in v3 certificates
         return Collections.singletonMap(
                 getScopedIdentifier(X509AnvilParameterType.VERSION),
-                new AllowParameterValuesCondition<>(2)
+                new CertificateSpecificParameter.AllowParameterValuesCondition<>(2)
         );
     }
 }

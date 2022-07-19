@@ -21,9 +21,8 @@ public abstract class BooleanCertificateSpecificParameter extends CertificateSpe
     }
 
     @Override
-    public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter> parameterValues = new ArrayList<>();
-        parameterValues.add(generateValue(null)); // If we don't want this parameter to be modelled (i.e. ParameterScope is not in use)
         parameterValues.add(generateValue(false));
         parameterValues.add(generateValue(true));
         return parameterValues;

@@ -47,6 +47,27 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
                 .get();
     }
 
+
+    @Override
+    public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
+        if (getSelectedValue() != null) {
+            applyToCertificateConfig(getCertificateConfigByScope(config), derivationScope);
+        }
+    }
+
+    protected abstract void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope);
+
+
+    @Override
+    public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
+        List<DerivationParameter> parameterValues = new ArrayList<>();
+        parameterValues.add(generateValue(null));                               // A value of null is used whenever we don't want to model this parameter at all
+        parameterValues.addAll(getNonNullParameterValues(derivationScope));
+        return parameterValues;
+    }
+
+    protected abstract List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope);
+
     /**
      * Override method to add additional enable conditions
      */

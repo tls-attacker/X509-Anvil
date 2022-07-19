@@ -6,6 +6,7 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
 import java.util.Collections;
 import java.util.Map;
@@ -27,14 +28,13 @@ public class IssuerUniqueIdPresentParameter extends BooleanCertificateSpecificPa
     }
 
     @Override
-    public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
-        if (getSelectedValue() != null) {
-            getCertificateConfigByScope(config).setIssuerUniqueIdPresent(getSelectedValue());
-        }
+    public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
+        certificateConfig.setIssuerUniqueIdPresent(getSelectedValue());
     }
 
     @Override
     public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
+        // Unique IDs are only allowed in v3 certificates
         return Collections.singletonMap(
                 getScopedIdentifier(X509AnvilParameterType.VERSION),
                 new CertificateSpecificParameter.AllowParameterValuesCondition<>(2)
