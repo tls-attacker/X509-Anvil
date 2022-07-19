@@ -323,7 +323,7 @@ public class X509CertificateGenerator {
         if (certificateConfig.isSubjectUniqueIdPresent()) {
             Asn1Implicit subjectUniqueIdImplicit = new Asn1Implicit();
             subjectUniqueIdImplicit.setIdentifier("implicitSubjectUniqueId");
-            subjectUniqueIdImplicit.setOffset(1);
+            subjectUniqueIdImplicit.setOffset(2);
 
             Asn1PrimitiveBitString subjectUniqueIdBitString = new Asn1PrimitiveBitString();
             subjectUniqueIdBitString.setValue(certificateConfig.getSubjectUniqueId().getBytes());
