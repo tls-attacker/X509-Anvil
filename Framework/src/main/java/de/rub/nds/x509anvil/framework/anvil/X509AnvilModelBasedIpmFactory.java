@@ -39,19 +39,9 @@ public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
             chainPosition = 1;
         }
         for (; chainPosition < numCertificateScopes; chainPosition++) {
-            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.VERSION, new X509AnvilParameterScope(chainPosition)));
-            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.SERIAL_NUMBER, new X509AnvilParameterScope(chainPosition)));
-            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.NOT_BEFORE, new X509AnvilParameterScope(chainPosition)));
-            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.NOT_AFTER, new X509AnvilParameterScope(chainPosition)));
-            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.ISSUER_UNIQUE_ID_PRESENT, new X509AnvilParameterScope(chainPosition)));
-            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.ISSUER_UNIQUE_ID, new X509AnvilParameterScope(chainPosition)));
-            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT, new X509AnvilParameterScope(chainPosition)));
-            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.SUBJECT_UNIQUE_ID, new X509AnvilParameterScope(chainPosition)));
-            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.EXTENSIONS_PRESENT, new X509AnvilParameterScope(chainPosition)));
-
-            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT, new X509AnvilParameterScope(chainPosition)));
-            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_CRITICAL, new X509AnvilParameterScope(chainPosition)));
-
+            for (X509AnvilParameterType x509AnvilParameterType : X509AnvilParameterType.getCertificateSpecificTypes()) {
+                parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, new X509AnvilParameterScope(chainPosition)));
+            }
         }
         return parameterIdentifiers;
     }

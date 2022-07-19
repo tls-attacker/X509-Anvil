@@ -11,6 +11,10 @@ package de.rub.nds.x509anvil.framework.anvil;
 
 import de.rub.nds.anvilcore.model.parameter.ParameterType;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public enum X509AnvilParameterType implements ParameterType {
     CHAIN_LENGTH,
     VERSION,
@@ -26,4 +30,11 @@ public enum X509AnvilParameterType implements ParameterType {
     // Extensions
     EXT_BASIC_CONSTRAINTS_PRESENT,
     EXT_BASIC_CONSTRAINTS_CRITICAL,
+    EXT_BASIC_CONSTRAINTS_CA;
+
+    public static List<X509AnvilParameterType> getCertificateSpecificTypes() {
+        List<X509AnvilParameterType> certificateSpecificTypes = new ArrayList<>(Arrays.asList(X509AnvilParameterType.values()));
+        certificateSpecificTypes.remove(X509AnvilParameterType.CHAIN_LENGTH);
+        return certificateSpecificTypes;
+    }
 }
