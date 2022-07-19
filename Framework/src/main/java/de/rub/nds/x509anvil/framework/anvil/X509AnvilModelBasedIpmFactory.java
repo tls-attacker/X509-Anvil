@@ -41,6 +41,8 @@ public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
         for (; chainPosition < numCertificateScopes; chainPosition++) {
             parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.VERSION, new X509AnvilParameterScope(chainPosition)));
             parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.SERIAL_NUMBER, new X509AnvilParameterScope(chainPosition)));
+            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.NOT_BEFORE, new X509AnvilParameterScope(chainPosition)));
+            parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.NOT_AFTER, new X509AnvilParameterScope(chainPosition)));
         }
         return parameterIdentifiers;
     }

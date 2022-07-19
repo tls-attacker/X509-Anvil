@@ -13,9 +13,7 @@ import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterFactory;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
-import de.rub.nds.x509anvil.framework.anvil.parameter.ChainLengthParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.SerialNumberParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.VersionParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.*;
 
 public class X509AnvilParameterFactory extends ParameterFactory {
     @Override
@@ -27,6 +25,10 @@ public class X509AnvilParameterFactory extends ParameterFactory {
                 return new VersionParameter(parameterIdentifier.getParameterScope());
             case SERIAL_NUMBER:
                 return new SerialNumberParameter(parameterIdentifier.getParameterScope());
+            case NOT_BEFORE:
+                return new NotBeforeParameter(parameterIdentifier.getParameterScope());
+            case NOT_AFTER:
+                return new NotAfterParameter(parameterIdentifier.getParameterScope());
             default:
                 throw new IllegalArgumentException("Unknown parameter identifier " + parameterIdentifier.getParameterType().toString());
         }

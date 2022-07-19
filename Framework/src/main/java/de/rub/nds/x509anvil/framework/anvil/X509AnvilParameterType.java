@@ -14,5 +14,7 @@ import de.rub.nds.anvilcore.model.parameter.ParameterType;
 public enum X509AnvilParameterType implements ParameterType {
     CHAIN_LENGTH,
     VERSION,
-    SERIAL_NUMBER
+    SERIAL_NUMBER,
+    NOT_BEFORE,
+    NOT_AFTER
 }

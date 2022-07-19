@@ -11,5 +11,5 @@ package de.rub.nds.x509anvil.framework.x509.config.model;
 
 public enum TimeType {
     UTC_TIME,
-    GENERAL_TIME
+    GENERALIZED_TIME
 }

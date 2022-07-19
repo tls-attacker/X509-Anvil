@@ -44,8 +44,8 @@ public class X509AnvilTest extends CombinatorialAnvilTest {
         Registry.getInstance();
         AnvilContext.getInstance().addParameterTypes(X509AnvilParameterType.values(), new X509AnvilParameterFactory());
         AnvilContext.getInstance().setModelBasedIpmFactory(new X509AnvilModelBasedIpmFactory());
-        AnvilContext.getInstance()
-                .setApplicationSpecificContextDelegate(new X509AnvilContextDelegate(new TestConfig()));
+        AnvilContext.getInstance().setApplicationSpecificContextDelegate(new X509AnvilContextDelegate(new TestConfig()));
+        AnvilContext.getInstance().setTestStrength(2);
     }
 
     public X509CertificateChainConfig prepareConfig(ArgumentsAccessor argumentsAccessor,
