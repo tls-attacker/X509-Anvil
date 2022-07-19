@@ -18,5 +18,7 @@ public enum X509AnvilParameterType implements ParameterType {
     NOT_BEFORE,
     NOT_AFTER,
     ISSUER_UNIQUE_ID_PRESENT,
-    ISSUER_UNIQUE_ID
+    ISSUER_UNIQUE_ID,
+    SUBJECT_UNIQUE_ID_PRESENT,
+    SUBJECT_UNIQUE_ID,
 }

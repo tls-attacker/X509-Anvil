@@ -33,6 +33,10 @@ public class X509AnvilParameterFactory extends ParameterFactory {
                 return new IssuerUniqueIdPresentParameter(parameterIdentifier.getParameterScope());
             case ISSUER_UNIQUE_ID:
                 return new IssuerUniqueIdParameter(parameterIdentifier.getParameterScope());
+            case SUBJECT_UNIQUE_ID_PRESENT:
+                return new SubjectUniqueIdPresentParameter(parameterIdentifier.getParameterScope());
+            case SUBJECT_UNIQUE_ID:
+                return new SubjectUniqueIdParameter(parameterIdentifier.getParameterScope());
             default:
                 throw new IllegalArgumentException("Unknown parameter identifier " + parameterIdentifier.getParameterType().toString());
         }

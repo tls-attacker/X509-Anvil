@@ -8,27 +8,28 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
 
-public class IssuerUniqueIdParameter extends UniqueIdParameter {
+public class SubjectUniqueIdParameter extends UniqueIdParameter {
 
-    public IssuerUniqueIdParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.SUBJECT_UNIQUE_ID, parameterScope),
-                X509AnvilParameterType.ISSUER_UNIQUE_ID_PRESENT);
+    public SubjectUniqueIdParameter(ParameterScope parameterScope) {
+        super(new ParameterIdentifier(X509AnvilParameterType.ISSUER_UNIQUE_ID, parameterScope),
+                X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT);
     }
 
-    public IssuerUniqueIdParameter(BitString selectedValue, ParameterScope parameterScope) {
-        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.SUBJECT_UNIQUE_ID, parameterScope),
-                X509AnvilParameterType.ISSUER_UNIQUE_ID_PRESENT);
+    public SubjectUniqueIdParameter(BitString selectedValue, ParameterScope parameterScope) {
+        super(selectedValue,
+                new ParameterIdentifier(X509AnvilParameterType.ISSUER_UNIQUE_ID, parameterScope),
+                X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT);
     }
 
     @Override
     protected DerivationParameter<X509CertificateChainConfig, BitString> generateValue(BitString selectedValue) {
-        return new IssuerUniqueIdParameter(selectedValue, this.getParameterIdentifier().getParameterScope());
+        return new SubjectUniqueIdParameter(selectedValue, this.getParameterIdentifier().getParameterScope());
     }
 
     @Override
     public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
         if (getSelectedValue() != null) {
-            getCertificateConfigByScope(config).setIssuerUniqueId(getSelectedValue());
+            getCertificateConfigByScope(config).setSubjectUniqueId(getSelectedValue());
         }
     }
 }
