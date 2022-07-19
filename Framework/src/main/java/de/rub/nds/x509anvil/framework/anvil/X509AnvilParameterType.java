@@ -30,7 +30,9 @@ public enum X509AnvilParameterType implements ParameterType {
     // Extensions
     EXT_BASIC_CONSTRAINTS_PRESENT,
     EXT_BASIC_CONSTRAINTS_CRITICAL,
-    EXT_BASIC_CONSTRAINTS_CA;
+    EXT_BASIC_CONSTRAINTS_CA,
+    EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT,
+    EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT;
 
     public static List<X509AnvilParameterType> getCertificateSpecificTypes() {
         List<X509AnvilParameterType> certificateSpecificTypes = new ArrayList<>(Arrays.asList(X509AnvilParameterType.values()));
