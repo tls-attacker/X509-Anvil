@@ -49,4 +49,9 @@ public class BitString {
         BitString other = (BitString) obj;
         return Arrays.compare(bytes, other.bytes) == 0 && unusedBits == other.unusedBits;
     }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(bytes) + "-" + unusedBits;
+    }
 }
