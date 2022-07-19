@@ -1,4 +1,4 @@
-package de.rub.nds.x509anvil.framework.anvil.parameter.value;
+package de.rub.nds.x509anvil.framework.x509.config.model;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -10,6 +10,11 @@ public class BitString {
     public BitString(byte[] bytes, int unusedBits) {
         this.bytes = bytes;
         this.unusedBits = unusedBits;
+    }
+
+    public BitString(byte[] bytes) {
+        this.bytes = bytes;
+        this.unusedBits = 0;
     }
 
     public byte[] getBytes() {

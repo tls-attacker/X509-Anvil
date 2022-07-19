@@ -10,6 +10,7 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.Asn1Encodable;
+import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
 import de.rub.nds.x509anvil.framework.x509.config.model.*;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 import org.bouncycastle.asn1.ASN1BitString;
@@ -62,6 +63,7 @@ public class X509CertificateConfig {
     private SubjectPublicKeyInfo subjectPublicKeyInfo;
 
     private boolean issuerUniqueIdPresent = false;
+    private BitString issuerUniqueId = new BitString(new byte[0]);
 
     private boolean extensionsPresent = true;
     private List<ExtensionConfig> extensions = new ArrayList<>();
@@ -326,6 +328,14 @@ public class X509CertificateConfig {
 
     public void setIssuerUniqueIdPresent(boolean issuerUniqueIdPresent) {
         this.issuerUniqueIdPresent = issuerUniqueIdPresent;
+    }
+
+    public BitString getIssuerUniqueId() {
+        return issuerUniqueId;
+    }
+
+    public void setIssuerUniqueId(BitString issuerUniqueId) {
+        this.issuerUniqueId = issuerUniqueId;
     }
 
     public List<ExtensionConfig> getExtensions() {
