@@ -2,11 +2,13 @@ package de.rub.nds.x509anvil.framework.anvil;
 
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 
+import java.util.Objects;
+
 public class X509AnvilParameterScope extends ParameterScope {
-    private int chainPosition;
+    private final int chainPosition;
 
     public static X509AnvilParameterScope fromUniqueIdentifier(String uniqueIdentifier) throws NumberFormatException {
-        String withoutPrefix = uniqueIdentifier.replace("char_", "");
+        String withoutPrefix = uniqueIdentifier.replace("cert_", "");
         int chainPosition = Integer.parseInt(withoutPrefix);
         return new X509AnvilParameterScope(chainPosition);
     }
