@@ -17,9 +17,8 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.*;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionCriticalParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsCaParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPathLenConstraint;
+import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPathLenConstraintParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPathLenConstraintPresentParameter;
-import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionType;
 
 public class X509AnvilParameterFactory extends ParameterFactory {
@@ -55,7 +54,7 @@ public class X509AnvilParameterFactory extends ParameterFactory {
             case EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT:
                 return new BasicConstraintsPathLenConstraintPresentParameter(parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT:
-                return new BasicConstraintsPathLenConstraint(parameterIdentifier.getParameterScope());
+                return new BasicConstraintsPathLenConstraintParameter(parameterIdentifier.getParameterScope());
             default:
                 throw new IllegalArgumentException("Unknown parameter identifier " + parameterIdentifier.getParameterType().toString());
         }
