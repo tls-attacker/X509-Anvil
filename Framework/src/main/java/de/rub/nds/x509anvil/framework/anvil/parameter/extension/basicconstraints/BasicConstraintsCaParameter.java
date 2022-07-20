@@ -1,18 +1,23 @@
 package de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
+import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
+import de.rub.nds.anvilcore.model.constraint.ValueRestrictionConstraintBuilder;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.ChainLengthParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionType;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -44,5 +49,26 @@ public class BasicConstraintsCaParameter extends BooleanCertificateSpecificParam
                 getScopedIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT),
                 CertificateSpecificParameter::enabledByParameterCondition
         );
+    }
+
+    @Override
+    public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
+        List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
+
+        int maxEntityCertChainPosition = AnnotationUtil.resolveMaxEntityCertChainPosition(derivationScope.getExtensionContext());
+        if (getChainPosition() > 0 && getChainPosition() < maxEntityCertChainPosition) {
+            defaultConstraints.add(0, ValueRestrictionConstraintBuilder.init("intermediate cert must have ca flag asserted", derivationScope)
+                    .target(this)
+                    .requiredParameter(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH))
+                    .allowValues(Collections.singletonList(true))
+                    .condition((target, requiredParameters) -> {
+                        int chainLength = ((ChainLengthParameter) requiredParameters.get(0)).getSelectedValue();
+                        return (getChainPosition() > 0 && getChainPosition() < chainLength - 1);        // "is intermediate cert"
+                    })
+                    .get()
+            );
+        }
+
+        return defaultConstraints;
     }
 }
