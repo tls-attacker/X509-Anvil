@@ -69,7 +69,7 @@ public class VersionParameter extends CertificateSpecificParameter<Integer> {
                     .allowValues(Collections.singletonList(2))
                     .condition((target, requiredParameters) -> {
                         int chainLength = ((ChainLengthParameter) requiredParameters.get(0)).getSelectedValue();
-                        return (getChainPosition() > 0 && getChainPosition() < chainLength - 1);        // "is intermediate cert"
+                        return ChainPositionUtil.isIntermediate(getChainPosition(), chainLength, derivationScope);
                     })
                     .get()
             );

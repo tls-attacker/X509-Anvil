@@ -11,6 +11,7 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.ChainLengthParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.ChainPositionUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
@@ -63,7 +64,7 @@ public class BasicConstraintsCaParameter extends BooleanCertificateSpecificParam
                     .allowValues(Collections.singletonList(true))
                     .condition((target, requiredParameters) -> {
                         int chainLength = ((ChainLengthParameter) requiredParameters.get(0)).getSelectedValue();
-                        return (getChainPosition() > 0 && getChainPosition() < chainLength - 1);        // "is intermediate cert"
+                        return ChainPositionUtil.isIntermediate(getChainPosition(), chainLength, derivationScope);
                     })
                     .get()
             );

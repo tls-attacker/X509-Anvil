@@ -12,4 +12,8 @@ public class ChainPositionUtil {
         int maxEntityCertChainPosition = AnnotationUtil.resolveMaxEntityCertChainPosition(derivationScope.getExtensionContext());
         return chainPosition == Integer.min(maxEntityCertChainPosition, chainLength - 1);
     }
+
+    public static boolean isIntermediate(int chainPosition, int chainLength, DerivationScope derivationScope) {
+        return !isRoot(chainPosition) && !isEntity(chainPosition, chainLength, derivationScope);
+    }
 }
