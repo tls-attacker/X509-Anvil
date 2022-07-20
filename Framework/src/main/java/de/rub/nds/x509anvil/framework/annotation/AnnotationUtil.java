@@ -14,7 +14,8 @@ public class AnnotationUtil {
         return testMethod.getAnnotation(ChainLength.class);
     }
 
-    public static int resolveMaxLength(ChainLength chainLengthAnnotation) {
+    public static int resolveMaxChainLength(ExtensionContext extensionContext) {
+        ChainLength chainLengthAnnotation = resolveChainLengthAnnotation(extensionContext);
         if (chainLengthAnnotation == null) {
             TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
             return testConfig.getDefaultMaxChainLength();
@@ -22,7 +23,8 @@ public class AnnotationUtil {
         return chainLengthAnnotation.maxLength();
     }
 
-    public static int resolveMinLength(ChainLength chainLengthAnnotation) {
+    public static int resolveMinChainLength(ExtensionContext extensionContext) {
+        ChainLength chainLengthAnnotation = resolveChainLengthAnnotation(extensionContext);
         if (chainLengthAnnotation == null) {
             TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
             return testConfig.getDefaultMinChainLength();
@@ -30,11 +32,18 @@ public class AnnotationUtil {
         return chainLengthAnnotation.minLength();
     }
 
-    public static int resolveIntermediateCertsModeled(ChainLength chainLengthAnnotation) {
+    public static int resolveIntermediateCertsModeled(ExtensionContext extensionContext) {
+        ChainLength chainLengthAnnotation = resolveChainLengthAnnotation(extensionContext);
         if (chainLengthAnnotation == null) {
             TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
             return testConfig.getDefaultIntermediateCertsModeled();
         }
         return chainLengthAnnotation.intermediateCertsModeled();
+    }
+
+    public static int resolveMaxEntityCertChainPosition(ExtensionContext extensionContext) {
+        int maxChainLength = resolveMaxChainLength(extensionContext);
+        int intermediateCertsModeled = resolveIntermediateCertsModeled(extensionContext);
+        return Integer.min(maxChainLength-1, intermediateCertsModeled + 1);
     }
 }

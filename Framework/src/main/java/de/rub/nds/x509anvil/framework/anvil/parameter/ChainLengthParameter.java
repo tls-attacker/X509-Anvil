@@ -9,12 +9,10 @@
 
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
-import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 
@@ -39,9 +37,8 @@ public class ChainLengthParameter extends X509AnvilDerivationParameter<Integer> 
 
     @Override
     public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
-        ChainLength chainLengthAnnotation = AnnotationUtil.resolveChainLengthAnnotation(derivationScope.getExtensionContext());
-        int minChainLength = AnnotationUtil.resolveMinLength(chainLengthAnnotation);
-        int maxChainLength = AnnotationUtil.resolveMaxLength(chainLengthAnnotation);
+        int minChainLength = AnnotationUtil.resolveMinChainLength(derivationScope.getExtensionContext());
+        int maxChainLength = AnnotationUtil.resolveMaxChainLength(derivationScope.getExtensionContext());
 
         List<DerivationParameter> parameterValues = new ArrayList<>();
         for (int i = minChainLength; i <= maxChainLength; i++) {
@@ -53,8 +50,7 @@ public class ChainLengthParameter extends X509AnvilDerivationParameter<Integer> 
     @Override
     public void preProcessConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
         // We need to set the chain length before other parameters access the config
-        ChainLength chainLengthAnnotation = AnnotationUtil.resolveChainLengthAnnotation(derivationScope.getExtensionContext());
-        int intermediateCertsModeled = AnnotationUtil.resolveIntermediateCertsModeled(chainLengthAnnotation);
+        int intermediateCertsModeled = AnnotationUtil.resolveIntermediateCertsModeled(derivationScope.getExtensionContext());
         config.initializeChain(getSelectedValue(), intermediateCertsModeled);
     }
 
