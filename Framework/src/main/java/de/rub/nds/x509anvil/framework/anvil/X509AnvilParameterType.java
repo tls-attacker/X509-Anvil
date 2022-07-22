@@ -19,6 +19,8 @@ public enum X509AnvilParameterType implements ParameterType {
     CHAIN_LENGTH,
     VERSION,
     SERIAL_NUMBER,
+    KEY_TYPE,
+    HASH_ALGORITHM,
     NOT_BEFORE,
     NOT_AFTER,
     ISSUER_UNIQUE_ID_PRESENT,

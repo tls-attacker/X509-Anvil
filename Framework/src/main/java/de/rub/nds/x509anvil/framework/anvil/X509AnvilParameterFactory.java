@@ -31,6 +31,10 @@ public class X509AnvilParameterFactory extends ParameterFactory {
                 return new VersionParameter(parameterIdentifier.getParameterScope());
             case SERIAL_NUMBER:
                 return new SerialNumberParameter(parameterIdentifier.getParameterScope());
+            case KEY_TYPE:
+                return new KeyTypeParameter(parameterIdentifier.getParameterScope());
+            case HASH_ALGORITHM:
+                return new HashAlgorithmParameter(parameterIdentifier.getParameterScope());
             case NOT_BEFORE:
                 return new NotBeforeParameter(parameterIdentifier.getParameterScope());
             case NOT_AFTER:

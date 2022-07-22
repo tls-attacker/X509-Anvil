@@ -13,7 +13,6 @@ import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.ModelBasedIpmFactory;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
-import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 
@@ -23,9 +22,8 @@ import java.util.List;
 public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
     @Override
     protected List<ParameterIdentifier> getAllParameterIdentifiers(DerivationScope derivationScope) {
-        ChainLength chainLengthAnnotation = AnnotationUtil.resolveChainLengthAnnotation(derivationScope.getExtensionContext());
-        int maxChainLength = AnnotationUtil.resolveMaxLength(chainLengthAnnotation);
-        int intermediateCertsModeled = AnnotationUtil.resolveIntermediateCertsModeled(chainLengthAnnotation);
+        int maxChainLength = AnnotationUtil.resolveMaxChainLength(derivationScope.getExtensionContext());
+        int intermediateCertsModeled = AnnotationUtil.resolveIntermediateCertsModeled(derivationScope.getExtensionContext());
         int numCertificateScopes = Integer.min(maxChainLength, 2 + intermediateCertsModeled);
 
         List<ParameterIdentifier> parameterIdentifiers = new ArrayList<>();
