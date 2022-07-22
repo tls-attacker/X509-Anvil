@@ -60,8 +60,8 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         try {
             byte[] encodedChain = X509Util.encodeCertificateChainForTls(certificatesChain);
             CertificateKeyPair certificateKeyPair = new CertificateKeyPair(encodedChain,
-                chainConfig.getEntityCertificateConfig().getSubjectKeyPair().getPrivate(),
-                chainConfig.getEntityCertificateConfig().getSubjectKeyPair().getPublic());
+                chainConfig.getEntityCertificateConfig().getKeyPair().getPrivate(),
+                chainConfig.getEntityCertificateConfig().getKeyPair().getPublic());
             config.setDefaultExplicitCertificateKeyPair(certificateKeyPair);
         } catch (IOException e) {
             throw new VerifierException("Failed to encode certificate", e);

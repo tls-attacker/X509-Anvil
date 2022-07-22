@@ -10,12 +10,12 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.Asn1Encodable;
+import de.rub.nds.x509anvil.framework.constants.KeyType;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.model.*;
 import de.rub.nds.x509attacker.x509.X509Certificate;
-import org.bouncycastle.asn1.ASN1BitString;
 
 import java.math.BigInteger;
 import java.security.KeyPair;
@@ -24,12 +24,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class X509CertificateConfig {
+    private String certificateName;
+
     private boolean isStatic;
     private X509Certificate staticX509Certificate;
     private boolean isSharedConfig = false;     // If this config is used for multiple certificates in a chain
     private int sharedId = 0;
 
-    private KeyPair subjectKeyPair;
+    private KeyType keyType;
+    private KeyPair keyPair;
     private String signatureAlgorithmOid;
     private Asn1Encodable signatureAlgorithmParameters;
     private Signer signer;
@@ -68,6 +71,14 @@ public class X509CertificateConfig {
         //extensions.put(ExtensionType.KEY_USAGE, new KeyUsageExtensionConfig());
     }
 
+    public String getCertificateName() {
+        return certificateName;
+    }
+
+    public void setCertificateName(String certificateName) {
+        this.certificateName = certificateName;
+    }
+
     public boolean isStatic() {
         return isStatic;
     }
@@ -82,7 +93,7 @@ public class X509CertificateConfig {
 
     public void setStaticX509Certificate(X509Certificate staticX509Certificate) throws InvalidKeySpecException {
         this.staticX509Certificate = staticX509Certificate;
-        this.subjectKeyPair = X509Util.retrieveKeyPairFromX509Certificate(staticX509Certificate);
+        this.keyPair = X509Util.retrieveKeyPairFromX509Certificate(staticX509Certificate);
     }
 
     public boolean isSharedConfig() {
@@ -101,12 +112,20 @@ public class X509CertificateConfig {
         this.sharedId = sharedId;
     }
 
-    public KeyPair getSubjectKeyPair() {
-        return subjectKeyPair;
+    public KeyType getKeyType() {
+        return keyType;
     }
 
-    public void setSubjectKeyPair(KeyPair subjectKeyPair) {
-        this.subjectKeyPair = subjectKeyPair;
+    public void setKeyType(KeyType keyType) {
+        this.keyType = keyType;
+    }
+
+    public KeyPair getKeyPair() {
+        return keyPair;
+    }
+
+    public void setKeyPair(KeyPair keyPair) {
+        this.keyPair = keyPair;
     }
 
     public String getSignatureAlgorithmOid() {

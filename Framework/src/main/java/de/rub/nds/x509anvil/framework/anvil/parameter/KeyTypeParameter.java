@@ -6,10 +6,12 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
+import de.rub.nds.x509anvil.framework.x509.X509CertificateUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import org.checkerframework.checker.units.qual.K;
 
+import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +40,8 @@ public class KeyTypeParameter extends CertificateSpecificParameter<KeyType> {
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-
+        certificateConfig.setKeyType(getSelectedValue());
+        KeyPair keyPair = X509CertificateUtil.generateKeyPair(getSelectedValue(), certificateConfig.getCertificateName());
+        certificateConfig.setKeyPair(keyPair);
     }
 }

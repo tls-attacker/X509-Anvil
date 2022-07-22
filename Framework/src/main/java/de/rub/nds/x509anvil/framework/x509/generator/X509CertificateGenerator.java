@@ -81,7 +81,7 @@ public class X509CertificateGenerator {
         subjectKeyInfo.setType("KeyInfo");
         try {
             subjectKeyInfo.setKeyBytes(
-                PemUtil.encodeKeyAsPem(certificateConfig.getSubjectKeyPair().getPublic().getEncoded(), "PUBLIC KEY"));
+                PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPublic().getEncoded(), "PUBLIC KEY"));
         } catch (IOException e) {
             throw new CertificateGeneratorException("Unable to encode key in PEM format", e);
         }
@@ -99,13 +99,13 @@ public class X509CertificateGenerator {
                     }
                     else {
                         privateKeyForSignature = PemUtil
-                                .encodeKeyAsPem(nextInChainConfig.getSubjectKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
+                                .encodeKeyAsPem(nextInChainConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
                     }
                     break;
                 case SELF:
                 default:
                     privateKeyForSignature = PemUtil
-                        .encodeKeyAsPem(certificateConfig.getSubjectKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
+                        .encodeKeyAsPem(certificateConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
                     break;
             }
         } catch (IOException e) {

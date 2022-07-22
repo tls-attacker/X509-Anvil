@@ -31,17 +31,11 @@ import java.util.Iterator;
 import java.util.UUID;
 
 public class X509CertificateUtil {
-    public static X509CertificateConfig getDefaultCertificateConfig(String cn, boolean selfSigned) {
-        KeyPair keyPair;
-        try {
-            keyPair = CachedKeyPairGenerator.retrieveKeyPair(cn, "RSA", 4096);
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("This should not happen");
-        }
-
+    public static X509CertificateConfig getDefaultCertificateConfig(String certificateName, boolean selfSigned) {
         X509CertificateConfig config = new X509CertificateConfig();
 
-        config.setKeyPair(keyPair);
+        config.setCertificateName(certificateName);
+        config.setKeyPair(generateKeyPair(KeyType.RSA, certificateName));
         config.setSignatureAlgorithmParameters(new Asn1Null());
         config.setSignatureAlgorithmOid(AlgorithmObjectIdentifiers.SHA256_WITH_RSA_ENCRYPTION);
         if (selfSigned) {
@@ -67,7 +61,7 @@ public class X509CertificateUtil {
         Name subject = new Name();
         RelativeDistinguishedName commonNameDN = new RelativeDistinguishedName();
         Asn1PrimitivePrintableString commonName = new Asn1PrimitivePrintableString();
-        commonName.setValue(cn);
+        commonName.setValue(certificateName);
         commonNameDN.addAttributeTypeAndValue(
             new AttributeTypeAndValue(AttributeTypeObjectIdentifiers.COMMON_NAME, commonName));
         subject.addRelativeDistinguishedName(commonNameDN);
@@ -79,7 +73,7 @@ public class X509CertificateUtil {
     }
 
     public static KeyPair generateKeyPair(KeyType keyType, String keyPairIdentifier) {
-        int defaultKeySize = keyType == KeyType.DSA ? 256 : 2048;
+        int defaultKeySize = keyType == KeyType.ECDSA ? 256 : 2048;
         try {
             return CachedKeyPairGenerator.retrieveKeyPair(keyPairIdentifier, keyType.name(), defaultKeySize);
         } catch (NoSuchAlgorithmException e) {
