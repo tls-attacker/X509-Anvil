@@ -83,7 +83,7 @@ public class BasicConstraintsPathLenConstraintParameter extends CertificateSpeci
                     // Allow only values that are big enough and null...
                     .restrictValues((target, requiredParameters) -> {
                         ChainLengthParameter chainLengthParameter = (ChainLengthParameter)
-                                ConstraintHelper.getParameterValues(requiredParameters, new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH));
+                                ConstraintHelper.getParameterValue(requiredParameters, new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH));
                         int chainLength = chainLengthParameter.getSelectedValue();
                         int minimumPathLen = chainLength - getChainPosition() - 2;
                         return IntStream.range(0, minimumPathLen).boxed().collect(Collectors.toList());
