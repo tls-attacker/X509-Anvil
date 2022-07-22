@@ -12,7 +12,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionType;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -39,10 +39,13 @@ public class BasicConstraintsPathLenConstraintPresentParameter extends BooleanCe
 
     @Override
     public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
+        Map<ParameterIdentifier, Predicate<DerivationParameter>> conditions = new HashMap<>();
         // Only model if corresponding ExtensionPresent parameter is true
-        return Collections.singletonMap(
-                getScopedIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT),
-                CertificateSpecificParameter::enabledByParameterCondition
-        );
+        conditions.put(getScopedIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT),
+                CertificateSpecificParameter::enabledByParameterCondition);
+        // Only model if ca is asserted
+        conditions.put(getScopedIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_CA),
+                CertificateSpecificParameter::enabledByParameterCondition);
+        return conditions;
     }
 }
