@@ -12,6 +12,7 @@ package de.rub.nds.x509anvil.framework.x509;
 import de.rub.nds.asn1.model.Asn1Null;
 import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
 import de.rub.nds.asn1.parser.X509Parser;
+import de.rub.nds.x509anvil.framework.constants.KeyType;
 import de.rub.nds.x509anvil.framework.x509.config.CachedKeyPairGenerator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
@@ -30,17 +31,17 @@ import java.util.Iterator;
 import java.util.UUID;
 
 public class X509CertificateUtil {
-    public static X509CertificateConfig getDefaultCertificateConfig(String cn, boolean selfSigned, String keyPairIdentifier) {
+    public static X509CertificateConfig getDefaultCertificateConfig(String cn, boolean selfSigned) {
         KeyPair keyPair;
         try {
-            keyPair = CachedKeyPairGenerator.retrieveKeyPair(keyPairIdentifier, "RSA", 4096);
+            keyPair = CachedKeyPairGenerator.retrieveKeyPair(cn, "RSA", 4096);
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException("This should not happen");
         }
 
         X509CertificateConfig config = new X509CertificateConfig();
 
-        config.setSubjectKeyPair(keyPair);
+        config.setKeyPair(keyPair);
         config.setSignatureAlgorithmParameters(new Asn1Null());
         config.setSignatureAlgorithmOid(AlgorithmObjectIdentifiers.SHA256_WITH_RSA_ENCRYPTION);
         if (selfSigned) {
@@ -75,6 +76,15 @@ public class X509CertificateUtil {
         config.setExtensionsPresent(false);
 
         return config;
+    }
+
+    public static KeyPair generateKeyPair(KeyType keyType, String keyPairIdentifier) {
+        int defaultKeySize = keyType == KeyType.DSA ? 256 : 2048;
+        try {
+            return CachedKeyPairGenerator.retrieveKeyPair(keyPairIdentifier, keyType.name(), defaultKeySize);
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException("This should not happen");
+        }
     }
 
     public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String privateKeyFile) throws IOException, InvalidKeySpecException {
