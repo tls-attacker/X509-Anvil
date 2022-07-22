@@ -57,14 +57,12 @@ public class X509CertificateGenerator {
         certificateAsn1.addChild(tbsCertificate);
         generateSignatureAlgorithm();
 
-        if (certificateConfig.isSignaturePresent()) {
-            Asn1PrimitiveBitString signatureField = new Asn1PrimitiveBitString();
-            signatureField.setIdentifier("signatureValue");
-            if (certificateConfig.isOverrideSignature()) {
-                signatureField.setValue(certificateConfig.getSignaturePrivateKeyOverride());
-            }
-            certificateAsn1.addChild(signatureField);
+        Asn1PrimitiveBitString signatureField = new Asn1PrimitiveBitString();
+        signatureField.setIdentifier("signatureValue");
+        if (certificateConfig.isOverrideSignature()) {
+            signatureField.setValue(certificateConfig.getSignaturePrivateKeyOverride());
         }
+        certificateAsn1.addChild(signatureField);
 
         // Set signature info
         SignatureInfo signatureInfo = new SignatureInfo();
@@ -124,7 +122,7 @@ public class X509CertificateGenerator {
         signingKeyInfo.setType("KeyInfo");
         signingKeyInfo.setKeyBytes(privateKeyForSignature);
 
-        if (certificateConfig.isSignaturePresent() && !certificateConfig.isOverrideSignature()) {
+        if (!certificateConfig.isOverrideSignature()) {
             x509Certificate.signCertificate(signingKeyInfo);
         }
     }
@@ -159,171 +157,153 @@ public class X509CertificateGenerator {
     }
 
     private void generateVersion() {
-        if (certificateConfig.isVersionPresent()) {
-            Asn1Explicit versionExplicitWrapper = new Asn1Explicit();
-            versionExplicitWrapper.setIdentifier("explicitversion");
-            versionExplicitWrapper.setOffset(0);
-            Asn1Integer version = new Asn1Integer();
-            version.setIdentifier("version");
-            version.setValue(certificateConfig.getVersion());
-            versionExplicitWrapper.addChild(version);
-            tbsCertificate.addChild(versionExplicitWrapper);
-        }
+        Asn1Explicit versionExplicitWrapper = new Asn1Explicit();
+        versionExplicitWrapper.setIdentifier("explicitversion");
+        versionExplicitWrapper.setOffset(0);
+        Asn1Integer version = new Asn1Integer();
+        version.setIdentifier("version");
+        version.setValue(certificateConfig.getVersion());
+        versionExplicitWrapper.addChild(version);
+        tbsCertificate.addChild(versionExplicitWrapper);
     }
 
     private void generateSerialNumber() {
-        if (certificateConfig.isSerialNumberPresent()) {
-            Asn1Integer serialNumber = new Asn1Integer();
-            serialNumber.setIdentifier("serialNumber");
-            serialNumber.setValue(certificateConfig.getSerialNumber());
-            tbsCertificate.addChild(serialNumber);
-        }
+        Asn1Integer serialNumber = new Asn1Integer();
+        serialNumber.setIdentifier("serialNumber");
+        serialNumber.setValue(certificateConfig.getSerialNumber());
+        tbsCertificate.addChild(serialNumber);
     }
 
     private void generateTbsSignature() throws CertificateGeneratorException {
-        if (certificateConfig.isTbsSignaturePresent()) {
-            Asn1Sequence signature = new Asn1Sequence();
-            signature.setIdentifier("signature");
+        Asn1Sequence signature = new Asn1Sequence();
+        signature.setIdentifier("signature");
 
-            Asn1ObjectIdentifier algorithm = new Asn1ObjectIdentifier();
-            algorithm.setIdentifier("algorithm");
-            if (certificateConfig.isOverrideTbsSignatureOid()) {
-                algorithm.setValue(certificateConfig.getTbsSignatureOidOverridden());
-            } else {
-                algorithm.setValue(certificateConfig.getSignatureAlgorithmOid()); // TODO ????
-            }
-            signature.addChild(algorithm);
+        Asn1ObjectIdentifier algorithm = new Asn1ObjectIdentifier();
+        algorithm.setIdentifier("algorithm");
+        if (certificateConfig.isOverrideTbsSignatureOid()) {
+            algorithm.setValue(certificateConfig.getTbsSignatureOidOverridden());
+        } else {
+            algorithm.setValue(certificateConfig.getSignatureAlgorithmOid()); // TODO ????
+        }
+        signature.addChild(algorithm);
 
-            if (certificateConfig.getTbsSignatureParametersType() == AlgorithmParametersType.NULL_PARAMETER) {
-                Asn1Null parameters = new Asn1Null();
+        if (certificateConfig.getTbsSignatureParametersType() == AlgorithmParametersType.NULL_PARAMETER) {
+            Asn1Null parameters = new Asn1Null();
+            parameters.setIdentifier("parameters");
+            signature.addChild(parameters);
+        } else if (certificateConfig.getTbsSignatureParametersType()
+            == AlgorithmParametersType.PARAMETERS_PRESENT) {
+            try {
+                Asn1Encodable parameters = certificateConfig.getTbsSignatureParameters().getCopy();
                 parameters.setIdentifier("parameters");
                 signature.addChild(parameters);
-            } else if (certificateConfig.getTbsSignatureParametersType()
-                == AlgorithmParametersType.PARAMETERS_PRESENT) {
-                try {
-                    Asn1Encodable parameters = certificateConfig.getTbsSignatureParameters().getCopy();
-                    parameters.setIdentifier("parameters");
-                    signature.addChild(parameters);
-                } catch (JAXBException | IOException | XMLStreamException e) {
-                    throw new CertificateGeneratorException(
-                        "Unable to copy tbsCertificate->signature->parameters field from config", e);
-                }
+            } catch (JAXBException | IOException | XMLStreamException e) {
+                throw new CertificateGeneratorException(
+                    "Unable to copy tbsCertificate->signature->parameters field from config", e);
             }
-
-            tbsCertificate.addChild(signature);
         }
+
+        tbsCertificate.addChild(signature);
     }
 
     private void generateIssuer() throws CertificateGeneratorException {
-        if (certificateConfig.isIssuerPresent()) {
-            Name issuer;
-            switch (certificateConfig.getIssuerType()) {
-                case NEXT_IN_CHAIN:
-                    if (nextInChainConfig == null) {
-                        throw new CertificateGeneratorException("Config of issuer certificate is null");
-                    }
-                    if (nextInChainConfig.isStatic()) {
-                        // Copy subject field
-                        try {
-                            Asn1Encodable subject = X509Util.getAsn1ElementByIdentifierPath(nextInChainConfig.getStaticX509Certificate(),
-                                    "tbsCertificate", "subject");
-                            if (!(subject instanceof Asn1Sequence)) {
-                                throw new CertificateGeneratorException("Unable to copy subject field of static certificate");
-                            }
-                            Asn1Encodable issuerAsn1 = subject.getCopy();
-                            issuerAsn1.setIdentifier("issuer");
-
-                            tbsCertificate.addChild(issuerAsn1);
-                            return;
-                        }
-                        catch (IllegalArgumentException | XMLStreamException | JAXBException | IOException e) {
-                            throw new CertificateGeneratorException("Unable to copy subject field of static certificate", e);
-                        }
-                    }
-                    issuer = nextInChainConfig.getSubject();
-                    break;
-                case SELF:
-                    issuer = certificateConfig.getSubject();
-                    break;
-                default: // OVERRIDE
-                    issuer = certificateConfig.getIssuerOverridden();
-                    break;
-            }
-
-            Asn1Sequence issuerAsn1 = issuer.getAsn1Structure("issuer");
-            if (certificateConfig.getIssuerType() == IssuerType.NEXT_IN_CHAIN && nextInChainConfig.isSharedConfig()) {
-                Asn1PrimitivePrintableString cn = X509Util.getCnFromName(issuerAsn1);
-                // TODO create if null
-                if (cn == null) {
-                    throw new CertificateGeneratorException("Shared cert has no subject CN");
+        Name issuer;
+        switch (certificateConfig.getIssuerType()) {
+            case NEXT_IN_CHAIN:
+                if (nextInChainConfig == null) {
+                    throw new CertificateGeneratorException("Config of issuer certificate is null");
                 }
-                cn.setValue(cn.getValue() + "_" + (nextInChainConfig.getSharedId() - 1));
-            }
-            tbsCertificate.addChild(issuerAsn1);
+                if (nextInChainConfig.isStatic()) {
+                    // Copy subject field
+                    try {
+                        Asn1Encodable subject = X509Util.getAsn1ElementByIdentifierPath(nextInChainConfig.getStaticX509Certificate(),
+                                "tbsCertificate", "subject");
+                        if (!(subject instanceof Asn1Sequence)) {
+                            throw new CertificateGeneratorException("Unable to copy subject field of static certificate");
+                        }
+                        Asn1Encodable issuerAsn1 = subject.getCopy();
+                        issuerAsn1.setIdentifier("issuer");
+
+                        tbsCertificate.addChild(issuerAsn1);
+                        return;
+                    }
+                    catch (IllegalArgumentException | XMLStreamException | JAXBException | IOException e) {
+                        throw new CertificateGeneratorException("Unable to copy subject field of static certificate", e);
+                    }
+                }
+                issuer = nextInChainConfig.getSubject();
+                break;
+            case SELF:
+                issuer = certificateConfig.getSubject();
+                break;
+            default: // OVERRIDE
+                issuer = certificateConfig.getIssuerOverridden();
+                break;
         }
+
+        Asn1Sequence issuerAsn1 = issuer.getAsn1Structure("issuer");
+        if (certificateConfig.getIssuerType() == IssuerType.NEXT_IN_CHAIN && nextInChainConfig.isSharedConfig()) {
+            Asn1PrimitivePrintableString cn = X509Util.getCnFromName(issuerAsn1);
+            // TODO create if null
+            if (cn == null) {
+                throw new CertificateGeneratorException("Shared cert has no subject CN");
+            }
+            cn.setValue(cn.getValue() + "_" + (nextInChainConfig.getSharedId() - 1));
+        }
+        tbsCertificate.addChild(issuerAsn1);
     }
 
     private void generateSubject() throws CertificateGeneratorException {
-        if (certificateConfig.isSubjectPresent()) {
-            Asn1Sequence subject = certificateConfig.getSubject().getAsn1Structure("subject");
-            tbsCertificate.addChild(subject);
-            if (certificateConfig.isSharedConfig()) {
-                Asn1PrimitivePrintableString cn = X509Util.getCnFromName(subject);
-                // TODO create if null
-                if (cn == null) {
-                    throw new CertificateGeneratorException("Shared cert has no subject CN");
-                }
-                cn.setValue(cn.getValue() + "_" + certificateConfig.getSharedId());
-                certificateConfig.setSharedId(certificateConfig.getSharedId() + 1);
+        Asn1Sequence subject = certificateConfig.getSubject().getAsn1Structure("subject");
+        tbsCertificate.addChild(subject);
+        if (certificateConfig.isSharedConfig()) {
+            Asn1PrimitivePrintableString cn = X509Util.getCnFromName(subject);
+            // TODO create if null
+            if (cn == null) {
+                throw new CertificateGeneratorException("Shared cert has no subject CN");
             }
+            cn.setValue(cn.getValue() + "_" + certificateConfig.getSharedId());
+            certificateConfig.setSharedId(certificateConfig.getSharedId() + 1);
         }
     }
 
     private void generateValidity() {
-        if (certificateConfig.isValidityPresent()) {
-            Asn1Sequence validity = new Asn1Sequence();
-            validity.setIdentifier("validity");
+        Asn1Sequence validity = new Asn1Sequence();
+        validity.setIdentifier("validity");
 
-            if (certificateConfig.isNotBeforePresent()) {
-                if (certificateConfig.getNotBeforeTimeType() == TimeType.UTC_TIME) {
-                    Asn1PrimitiveUtcTime utcTime = new Asn1PrimitiveUtcTime();
-                    utcTime.setIdentifier("notBefore");
-                    utcTime.setValue(certificateConfig.getNotBeforeValue());
-                    validity.addChild(utcTime);
-                } else if (certificateConfig.getNotBeforeTimeType() == TimeType.GENERALIZED_TIME) {
-                    Asn1PrimitiveGeneralizedTime generalTime = new Asn1PrimitiveGeneralizedTime();
-                    generalTime.setIdentifier("notBefore");
-                    generalTime.setValue(certificateConfig.getNotBeforeValue());
-                    validity.addChild(generalTime);
-                }
-            }
-
-            if (certificateConfig.isNotAfterPresent()) {
-                if (certificateConfig.getNotAfterTimeType() == TimeType.UTC_TIME) {
-                    Asn1PrimitiveUtcTime utcTime = new Asn1PrimitiveUtcTime();
-                    utcTime.setIdentifier("notAfter");
-                    utcTime.setValue(certificateConfig.getNotAfterValue());
-                    validity.addChild(utcTime);
-                } else if (certificateConfig.getNotAfterTimeType() == TimeType.GENERALIZED_TIME) {
-                    Asn1PrimitiveGeneralizedTime generalTime = new Asn1PrimitiveGeneralizedTime();
-                    generalTime.setIdentifier("notAfter");
-                    generalTime.setValue(certificateConfig.getNotAfterValue());
-                    validity.addChild(generalTime);
-                }
-            }
-            tbsCertificate.addChild(validity);
+        if (certificateConfig.getNotBeforeTimeType() == TimeType.UTC_TIME) {
+            Asn1PrimitiveUtcTime utcTime = new Asn1PrimitiveUtcTime();
+            utcTime.setIdentifier("notBefore");
+            utcTime.setValue(certificateConfig.getNotBeforeValue());
+            validity.addChild(utcTime);
+        } else if (certificateConfig.getNotBeforeTimeType() == TimeType.GENERALIZED_TIME) {
+            Asn1PrimitiveGeneralizedTime generalTime = new Asn1PrimitiveGeneralizedTime();
+            generalTime.setIdentifier("notBefore");
+            generalTime.setValue(certificateConfig.getNotBeforeValue());
+            validity.addChild(generalTime);
         }
+
+        if (certificateConfig.getNotAfterTimeType() == TimeType.UTC_TIME) {
+            Asn1PrimitiveUtcTime utcTime = new Asn1PrimitiveUtcTime();
+            utcTime.setIdentifier("notAfter");
+            utcTime.setValue(certificateConfig.getNotAfterValue());
+            validity.addChild(utcTime);
+        } else if (certificateConfig.getNotAfterTimeType() == TimeType.GENERALIZED_TIME) {
+            Asn1PrimitiveGeneralizedTime generalTime = new Asn1PrimitiveGeneralizedTime();
+            generalTime.setIdentifier("notAfter");
+            generalTime.setValue(certificateConfig.getNotAfterValue());
+            validity.addChild(generalTime);
+        }
+        tbsCertificate.addChild(validity);
     }
 
     private void generateSubjectPublicKeyInfo() throws CertificateGeneratorException {
-        if (certificateConfig.isSubjectPublicKeyInfoPresent()) {
-            // Create empty subject public key info and let X509-Attacker fill in the data
-            Asn1Sequence subjectPublicKeyInfo = new Asn1Sequence();
-            subjectPublicKeyInfo.setIdentifier("subjectPublicKeyInfo");
-            subjectPublicKeyInfo.setType("SubjectPublicKeyInfo");
-            subjectPublicKeyInfo.setAttribute("fromIdentifier", "/keyInfo");
-            tbsCertificate.addChild(subjectPublicKeyInfo);
-        }
+        // Create empty subject public key info and let X509-Attacker fill in the data
+        Asn1Sequence subjectPublicKeyInfo = new Asn1Sequence();
+        subjectPublicKeyInfo.setIdentifier("subjectPublicKeyInfo");
+        subjectPublicKeyInfo.setType("SubjectPublicKeyInfo");
+        subjectPublicKeyInfo.setAttribute("fromIdentifier", "/keyInfo");
+        tbsCertificate.addChild(subjectPublicKeyInfo);
     }
 
     private void generateUniqueIdentifiers() {
@@ -374,34 +354,32 @@ public class X509CertificateGenerator {
     }
 
     private void generateSignatureAlgorithm() throws CertificateGeneratorException {
-        if (certificateConfig.isSignatureAlgorithmPresent()) {
-            Asn1Sequence signatureAlgorithm = new Asn1Sequence();
-            signatureAlgorithm.setIdentifier("signatureAlgorithm");
+        Asn1Sequence signatureAlgorithm = new Asn1Sequence();
+        signatureAlgorithm.setIdentifier("signatureAlgorithm");
 
-            // Generate signature algorithm oid
-            Asn1ObjectIdentifier signatureAlgorithmOid = new Asn1ObjectIdentifier();
-            if (certificateConfig.isOverrideSignatureAlgorithmOid()) {
-                signatureAlgorithmOid.setValue(certificateConfig.getSignatureAlgorithmOidOverridden());
-            } else {
-                signatureAlgorithmOid.setValue(certificateConfig.getSignatureAlgorithmOid());
-            }
-            signatureAlgorithm.addChild(signatureAlgorithmOid);
+        // Generate signature algorithm oid
+        Asn1ObjectIdentifier signatureAlgorithmOid = new Asn1ObjectIdentifier();
+        if (certificateConfig.isOverrideSignatureAlgorithmOid()) {
+            signatureAlgorithmOid.setValue(certificateConfig.getSignatureAlgorithmOidOverridden());
+        } else {
+            signatureAlgorithmOid.setValue(certificateConfig.getSignatureAlgorithmOid());
+        }
+        signatureAlgorithm.addChild(signatureAlgorithmOid);
 
-            // Generate parameters
-            if (certificateConfig.getSignatureAlgorithmParametersType() == AlgorithmParametersType.PARAMETERS_PRESENT) {
-                try {
-                    Asn1Encodable parameters = certificateConfig.getAlgorithmIdentifiersParameters().getCopy();
-                    parameters.setIdentifier("parameters");
-                    signatureAlgorithm.addChild(parameters);
-                } catch (JAXBException | IOException | XMLStreamException e) {
-                    throw new CertificateGeneratorException("Unable to copy signature algorithm parameters", e);
-                }
-            } else if (certificateConfig.getSignatureAlgorithmParametersType() == AlgorithmParametersType.NULL_PARAMETER) {
-                Asn1Null parameters = new Asn1Null();
+        // Generate parameters
+        if (certificateConfig.getSignatureAlgorithmParametersType() == AlgorithmParametersType.PARAMETERS_PRESENT) {
+            try {
+                Asn1Encodable parameters = certificateConfig.getAlgorithmIdentifiersParameters().getCopy();
                 parameters.setIdentifier("parameters");
                 signatureAlgorithm.addChild(parameters);
+            } catch (JAXBException | IOException | XMLStreamException e) {
+                throw new CertificateGeneratorException("Unable to copy signature algorithm parameters", e);
             }
-            certificateAsn1.addChild(signatureAlgorithm);
+        } else if (certificateConfig.getSignatureAlgorithmParametersType() == AlgorithmParametersType.NULL_PARAMETER) {
+            Asn1Null parameters = new Asn1Null();
+            parameters.setIdentifier("parameters");
+            signatureAlgorithm.addChild(parameters);
         }
+        certificateAsn1.addChild(signatureAlgorithm);
     }
 }

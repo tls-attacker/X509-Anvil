@@ -35,34 +35,24 @@ public class X509CertificateConfig {
     private Signer signer;
     private byte[] signaturePrivateKeyOverride;
 
-    private boolean versionPresent = true;
     private BigInteger version;
-
-    private boolean serialNumberPresent = true;
     private BigInteger serialNumber;
 
-    private boolean tbsSignaturePresent = true;
     private boolean overrideTbsSignatureOid;
     private String tbsSignatureOidOverridden;
     private AlgorithmParametersType tbsSignatureParametersType;
     private Asn1Encodable tbsSignatureParameters;
 
-    private boolean issuerPresent = true;
     private IssuerType issuerType;
     private Name issuerOverridden;
 
-    private boolean validityPresent = true;
-    private boolean notBeforePresent = true;
     private TimeType notBeforeTimeType;
     private String notBeforeValue;
-    private boolean notAfterPresent = true;
     private TimeType notAfterTimeType;
     private String notAfterValue;
 
-    private boolean subjectPresent = true;
     private Name subject;
 
-    private boolean subjectPublicKeyInfoPresent = true;
     private boolean useKeyPair = true;
     private SubjectPublicKeyInfo subjectPublicKeyInfo;
 
@@ -74,13 +64,11 @@ public class X509CertificateConfig {
     private boolean extensionsPresent = true;
     private final Map<ExtensionType, ExtensionConfig> extensions = new HashMap<>();
 
-    private boolean signatureAlgorithmPresent = true;
     private boolean overrideSignatureAlgorithmOid;
     private String signatureAlgorithmOidOverridden;
     private AlgorithmParametersType signatureAlgorithmParametersType;
     private Asn1Encodable algorithmIdentifiersParameters; // TODO resolve naming conflicts
 
-    private boolean signaturePresent = true;
     private boolean overrideSignature; // TODO use in generator
     private ASN1BitString signatureOverridden;
 
@@ -162,14 +150,6 @@ public class X509CertificateConfig {
         this.signaturePrivateKeyOverride = signaturePrivateKeyOverride;
     }
 
-    public boolean isVersionPresent() {
-        return versionPresent;
-    }
-
-    public void setVersionPresent(boolean versionPresent) {
-        this.versionPresent = versionPresent;
-    }
-
     public BigInteger getVersion() {
         return version;
     }
@@ -178,28 +158,12 @@ public class X509CertificateConfig {
         this.version = version;
     }
 
-    public boolean isSerialNumberPresent() {
-        return serialNumberPresent;
-    }
-
-    public void setSerialNumberPresent(boolean serialNumberPresent) {
-        this.serialNumberPresent = serialNumberPresent;
-    }
-
     public BigInteger getSerialNumber() {
         return serialNumber;
     }
 
     public void setSerialNumber(BigInteger serialNumber) {
         this.serialNumber = serialNumber;
-    }
-
-    public boolean isTbsSignaturePresent() {
-        return tbsSignaturePresent;
-    }
-
-    public void setTbsSignaturePresent(boolean tbsSignaturePresent) {
-        this.tbsSignaturePresent = tbsSignaturePresent;
     }
 
     public boolean isOverrideTbsSignatureOid() {
@@ -234,14 +198,6 @@ public class X509CertificateConfig {
         this.tbsSignatureParameters = tbsSignatureParameters;
     }
 
-    public boolean isIssuerPresent() {
-        return issuerPresent;
-    }
-
-    public void setIssuerPresent(boolean issuerPresent) {
-        this.issuerPresent = issuerPresent;
-    }
-
     public IssuerType getIssuerType() {
         return issuerType;
     }
@@ -256,22 +212,6 @@ public class X509CertificateConfig {
 
     public void setIssuerOverridden(Name issuerOverridden) {
         this.issuerOverridden = issuerOverridden;
-    }
-
-    public boolean isValidityPresent() {
-        return validityPresent;
-    }
-
-    public void setValidityPresent(boolean validityPresent) {
-        this.validityPresent = validityPresent;
-    }
-
-    public boolean isNotBeforePresent() {
-        return notBeforePresent;
-    }
-
-    public void setNotBeforePresent(boolean notBeforePresent) {
-        this.notBeforePresent = notBeforePresent;
     }
 
     public TimeType getNotBeforeTimeType() {
@@ -290,14 +230,6 @@ public class X509CertificateConfig {
         this.notBeforeValue = notBeforeValue;
     }
 
-    public boolean isNotAfterPresent() {
-        return notAfterPresent;
-    }
-
-    public void setNotAfterPresent(boolean notAfterPresent) {
-        this.notAfterPresent = notAfterPresent;
-    }
-
     public TimeType getNotAfterTimeType() {
         return notAfterTimeType;
     }
@@ -314,28 +246,12 @@ public class X509CertificateConfig {
         this.notAfterValue = notAfterValue;
     }
 
-    public boolean isSubjectPresent() {
-        return subjectPresent;
-    }
-
-    public void setSubjectPresent(boolean subjectPresent) {
-        this.subjectPresent = subjectPresent;
-    }
-
     public Name getSubject() {
         return subject;
     }
 
     public void setSubject(Name subject) {
         this.subject = subject;
-    }
-
-    public boolean isSubjectPublicKeyInfoPresent() {
-        return subjectPublicKeyInfoPresent;
-    }
-
-    public void setSubjectPublicKeyInfoPresent(boolean subjectPublicKeyInfoPresent) {
-        this.subjectPublicKeyInfoPresent = subjectPublicKeyInfoPresent;
     }
 
     public SubjectPublicKeyInfo getSubjectPublicKeyInfo() {
@@ -397,14 +313,6 @@ public class X509CertificateConfig {
         this.extensionsPresent = extensionsPresent;
     }
 
-    public boolean isSignatureAlgorithmPresent() {
-        return signatureAlgorithmPresent;
-    }
-
-    public void setSignatureAlgorithmPresent(boolean signatureAlgorithmPresent) {
-        this.signatureAlgorithmPresent = signatureAlgorithmPresent;
-    }
-
     public boolean isOverrideSignatureAlgorithmOid() {
         return overrideSignatureAlgorithmOid;
     }
@@ -435,14 +343,6 @@ public class X509CertificateConfig {
 
     public void setAlgorithmIdentifiersParameters(Asn1Encodable algorithmIdentifiersParameters) {
         this.algorithmIdentifiersParameters = algorithmIdentifiersParameters;
-    }
-
-    public boolean isSignaturePresent() {
-        return signaturePresent;
-    }
-
-    public void setSignaturePresent(boolean signaturePresent) {
-        this.signaturePresent = signaturePresent;
     }
 
     public boolean isOverrideSignature() {
