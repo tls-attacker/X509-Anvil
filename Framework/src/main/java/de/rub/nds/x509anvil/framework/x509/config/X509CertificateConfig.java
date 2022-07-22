@@ -50,7 +50,6 @@ public class X509CertificateConfig {
 
     private Name subject;
 
-    private boolean useKeyPair = true;
     private SubjectPublicKeyInfo subjectPublicKeyInfo;
 
     private boolean issuerUniqueIdPresent = false;
@@ -295,13 +294,5 @@ public class X509CertificateConfig {
 
     public void setAlgorithmIdentifiersParameters(Asn1Encodable algorithmIdentifiersParameters) {
         this.algorithmIdentifiersParameters = algorithmIdentifiersParameters;
-    }
-
-    public boolean isUseKeyPair() {
-        return useKeyPair;
-    }
-
-    public void setUseKeyPair(boolean useKeyPair) {
-        this.useKeyPair = useKeyPair;
     }
 }
