@@ -42,7 +42,7 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-
+        certificateConfig.setHashAlgorithm(getSelectedValue());
     }
 
     @Override
