@@ -24,6 +24,7 @@ import de.rub.nds.x509attacker.x509.X509Certificate;
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.Collections;
 
 public class X509CertificateGenerator {
@@ -108,10 +109,6 @@ public class X509CertificateGenerator {
                     privateKeyForSignature = PemUtil
                         .encodeKeyAsPem(certificateConfig.getSubjectKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
                     break;
-                case OVERRIDE:
-                default:
-                    privateKeyForSignature = certificateConfig.getSignaturePrivateKeyOverride();
-                    break;
             }
         } catch (IOException e) {
             throw new CertificateGeneratorException("Unable to encode private key as pem", e);
@@ -162,7 +159,7 @@ public class X509CertificateGenerator {
         versionExplicitWrapper.setOffset(0);
         Asn1Integer version = new Asn1Integer();
         version.setIdentifier("version");
-        version.setValue(certificateConfig.getVersion());
+        version.setValue(BigInteger.valueOf(certificateConfig.getVersion()));
         versionExplicitWrapper.addChild(version);
         tbsCertificate.addChild(versionExplicitWrapper);
     }

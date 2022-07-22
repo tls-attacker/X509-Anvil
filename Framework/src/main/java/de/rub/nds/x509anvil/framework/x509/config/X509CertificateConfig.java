@@ -33,9 +33,8 @@ public class X509CertificateConfig {
     private String signatureAlgorithmOid;
     private Asn1Encodable signatureAlgorithmParameters;
     private Signer signer;
-    private byte[] signaturePrivateKeyOverride;
 
-    private BigInteger version;
+    private Integer version;
     private BigInteger serialNumber;
 
     private boolean overrideTbsSignatureOid;
@@ -142,19 +141,11 @@ public class X509CertificateConfig {
         this.signer = signer;
     }
 
-    public byte[] getSignaturePrivateKeyOverride() {
-        return signaturePrivateKeyOverride;
-    }
-
-    public void setSignaturePrivateKeyOverride(byte[] signaturePrivateKeyOverride) {
-        this.signaturePrivateKeyOverride = signaturePrivateKeyOverride;
-    }
-
-    public BigInteger getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public void setVersion(BigInteger version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 

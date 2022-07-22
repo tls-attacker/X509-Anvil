@@ -53,7 +53,7 @@ public class VersionParameter extends CertificateSpecificParameter<Integer> {
 
     @Override
     public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        certificateConfig.setVersion(BigInteger.valueOf(getSelectedValue()));
+        certificateConfig.setVersion(getSelectedValue());
     }
 
     @Override

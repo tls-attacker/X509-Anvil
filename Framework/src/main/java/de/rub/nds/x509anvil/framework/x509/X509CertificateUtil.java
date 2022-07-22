@@ -46,10 +46,10 @@ public class X509CertificateUtil {
         if (selfSigned) {
             config.setSigner(Signer.SELF);
         } else {
-            config.setSigner(Signer.NEXT_IN_CHAIN);
+            config.setSigner(Signer.CA);
         }
 
-        config.setVersion(BigInteger.valueOf(2));
+        config.setVersion(2);
         config.setSerialNumber(generateUniqueSerialNumber());
         config.setTbsSignatureParametersType(AlgorithmParametersType.NO_PARAMETERS);
         if (selfSigned) {
