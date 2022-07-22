@@ -14,6 +14,7 @@ import de.rub.nds.asn1.model.*;
 import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
+import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.AlgorithmParametersType;
 import de.rub.nds.x509anvil.framework.x509.config.model.IssuerType;
 import de.rub.nds.x509anvil.framework.x509.config.model.Name;
@@ -154,7 +155,7 @@ public class X509CertificateGenerator {
         generateSubject();
         generateSubjectPublicKeyInfo();
         generateUniqueIdentifiers();
-        // TODO: Extensions
+        generateExtensions();
     }
 
     private void generateVersion() {
@@ -350,6 +351,25 @@ public class X509CertificateGenerator {
             subjectUniqueIdBitString.setIdentifier("subjectUniqueID");
             subjectUniqueIdImplicit.addChild(subjectUniqueIdBitString);
             tbsCertificate.addChild(subjectUniqueIdImplicit);
+        }
+    }
+
+    private void generateExtensions() throws CertificateGeneratorException {
+        Asn1Sequence extensionsAsn1 = new Asn1Sequence();
+        extensionsAsn1.setIdentifier("extensions");
+        for (ExtensionConfig extensionConfig : certificateConfig.getExtensions().values()) {
+            if (extensionConfig.isPresent()) {
+                Asn1Encodable extensionAsn1 = extensionConfig.getAsn1Structure();
+                extensionsAsn1.addChild(extensionAsn1);
+            }
+        }
+
+        if (extensionsAsn1.getChildren().size() > 0) {
+            Asn1Explicit explicitExtensions = new Asn1Explicit();
+            explicitExtensions.setIdentifier("explicitExtensions");
+            explicitExtensions.setOffset(3);
+            explicitExtensions.addChild(extensionsAsn1);
+            tbsCertificate.addChild(explicitExtensions);
         }
     }
 

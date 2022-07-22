@@ -30,7 +30,7 @@ import java.util.Iterator;
 import java.util.UUID;
 
 public class X509CertificateUtil {
-    public static X509CertificateConfig getDefaultCertificateConfig(boolean selfSigned, String keyPairIdentifier) {
+    public static X509CertificateConfig getDefaultCertificateConfig(String cn, boolean selfSigned, String keyPairIdentifier) {
         KeyPair keyPair;
         try {
             keyPair = CachedKeyPairGenerator.retrieveKeyPair(keyPairIdentifier, "RSA", 4096);
@@ -66,7 +66,7 @@ public class X509CertificateUtil {
         Name subject = new Name();
         RelativeDistinguishedName commonNameDN = new RelativeDistinguishedName();
         Asn1PrimitivePrintableString commonName = new Asn1PrimitivePrintableString();
-        commonName.setValue("Certificate Generated with Default Configuration");
+        commonName.setValue(cn);
         commonNameDN.addAttributeTypeAndValue(
             new AttributeTypeAndValue(AttributeTypeObjectIdentifiers.COMMON_NAME, commonName));
         subject.addRelativeDistinguishedName(commonNameDN);

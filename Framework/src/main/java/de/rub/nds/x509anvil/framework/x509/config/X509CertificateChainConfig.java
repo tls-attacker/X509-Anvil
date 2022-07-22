@@ -59,13 +59,13 @@ public class X509CertificateChainConfig implements AnvilConfig {
         }
         else {
             // We need to generate our own root
-            rootCertificateConfig = X509CertificateUtil.getDefaultCertificateConfig(true, "cert_root");
+            rootCertificateConfig = X509CertificateUtil.getDefaultCertificateConfig("Generated Root Certificate", true, "cert_root");
         }
 
         // Generate configs for intermediate certificates
         for (int i = 0; i < chainLength - 2; i++) {
             if (i < intermediateCertsModeled) {
-                X509CertificateConfig config = X509CertificateUtil.getDefaultCertificateConfig(false, "cert_inter_" + i);
+                X509CertificateConfig config = X509CertificateUtil.getDefaultCertificateConfig("Generated Intermediate Certificate (" + i + ")",false, "cert_inter_" + i);
                 if (i == intermediateCertsModeled - 1 && intermediateCertsModeled < chainLength - 2) {
                     config.setSharedConfig(true);
                 }
@@ -78,7 +78,7 @@ public class X509CertificateChainConfig implements AnvilConfig {
             entityCertificateConfig = rootCertificateConfig;
         }
         else {
-            entityCertificateConfig = X509CertificateUtil.getDefaultCertificateConfig(false, "cert_entity");
+            entityCertificateConfig = X509CertificateUtil.getDefaultCertificateConfig("Generated Leaf Certificate", false, "cert_entity");
         }
 
         initialized = true;
