@@ -15,10 +15,10 @@ import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.model.AlgorithmParametersType;
+import de.rub.nds.x509anvil.framework.x509.config.model.IssuerType;
 import de.rub.nds.x509anvil.framework.x509.config.model.Name;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509attacker.x509.X509Certificate;
-import org.bouncycastle.asn1.ASN1BitString;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
@@ -249,13 +249,32 @@ public class X509CertificateGenerator {
                     break;
             }
 
-            tbsCertificate.addChild(issuer.getAsn1Structure("issuer"));
+            Asn1Sequence issuerAsn1 = issuer.getAsn1Structure("issuer");
+            if (certificateConfig.getIssuerType() == IssuerType.NEXT_IN_CHAIN && nextInChainConfig.isSharedConfig()) {
+                Asn1PrimitivePrintableString cn = X509Util.getCnFromName(issuerAsn1);
+                // TODO create if null
+                if (cn == null) {
+                    throw new CertificateGeneratorException("Shared cert has no subject CN");
+                }
+                cn.setValue(cn.getValue() + "_" + (nextInChainConfig.getSharedId() - 1));
+            }
+            tbsCertificate.addChild(issuerAsn1);
         }
     }
 
     private void generateSubject() throws CertificateGeneratorException {
         if (certificateConfig.isSubjectPresent()) {
-            tbsCertificate.addChild(certificateConfig.getSubject().getAsn1Structure("subject"));
+            Asn1Sequence subject = certificateConfig.getSubject().getAsn1Structure("subject");
+            tbsCertificate.addChild(subject);
+            if (certificateConfig.isSharedConfig()) {
+                Asn1PrimitivePrintableString cn = X509Util.getCnFromName(subject);
+                // TODO create if null
+                if (cn == null) {
+                    throw new CertificateGeneratorException("Shared cert has no subject CN");
+                }
+                cn.setValue(cn.getValue() + "_" + certificateConfig.getSharedId());
+                certificateConfig.setSharedId(certificateConfig.getSharedId() + 1);
+            }
         }
     }
 
@@ -357,8 +376,7 @@ public class X509CertificateGenerator {
                 } catch (JAXBException | IOException | XMLStreamException e) {
                     throw new CertificateGeneratorException("Unable to copy signature algorithm parameters", e);
                 }
-            } else if (certificateConfig.getSignatureAlgorithmParametersType()
-                == AlgorithmParametersType.NULL_PARAMETER) {
+            } else if (certificateConfig.getSignatureAlgorithmParametersType() == AlgorithmParametersType.NULL_PARAMETER) {
                 Asn1Null parameters = new Asn1Null();
                 parameters.setIdentifier("parameters");
                 signatureAlgorithm.addChild(parameters);

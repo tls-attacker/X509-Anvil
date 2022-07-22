@@ -27,6 +27,8 @@ import java.util.Map;
 public class X509CertificateConfig {
     private boolean isStatic;
     private X509Certificate staticX509Certificate;
+    private boolean isSharedConfig = false;     // If this config is used for multiple certificates in a chain
+    private int sharedId = 0;
 
     private KeyPair subjectKeyPair;
     private String signatureAlgorithmOid;
@@ -102,6 +104,22 @@ public class X509CertificateConfig {
     public void setStaticX509Certificate(X509Certificate staticX509Certificate) throws InvalidKeySpecException {
         this.staticX509Certificate = staticX509Certificate;
         this.subjectKeyPair = X509Util.retrieveKeyPairFromX509Certificate(staticX509Certificate);
+    }
+
+    public boolean isSharedConfig() {
+        return isSharedConfig;
+    }
+
+    public void setSharedConfig(boolean sharedConfig) {
+        isSharedConfig = sharedConfig;
+    }
+
+    public int getSharedId() {
+        return sharedId;
+    }
+
+    public void setSharedId(int sharedId) {
+        this.sharedId = sharedId;
     }
 
     public KeyPair getSubjectKeyPair() {

@@ -65,7 +65,11 @@ public class X509CertificateChainConfig implements AnvilConfig {
         // Generate configs for intermediate certificates
         for (int i = 0; i < chainLength - 2; i++) {
             if (i < intermediateCertsModeled) {
-                intermediateCertificateConfigs.add(X509CertificateUtil.getDefaultCertificateConfig(false, "cert_inter_" + i));
+                X509CertificateConfig config = X509CertificateUtil.getDefaultCertificateConfig(false, "cert_inter_" + i);
+                if (i == intermediateCertsModeled - 1 && intermediateCertsModeled < chainLength - 2) {
+                    config.setSharedConfig(true);
+                }
+                intermediateCertificateConfigs.add(config);
             }
         }
 

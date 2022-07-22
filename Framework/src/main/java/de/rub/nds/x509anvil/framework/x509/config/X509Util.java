@@ -10,11 +10,11 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.Asn1Encodable;
-import de.rub.nds.asn1.model.Asn1Container;
-import de.rub.nds.asn1.model.KeyInfo;
+import de.rub.nds.asn1.model.*;
 import de.rub.nds.asn1.parser.Asn1Parser;
 import de.rub.nds.asn1.parser.IntermediateAsn1Field;
 import de.rub.nds.x509anvil.framework.util.PemUtil;
+import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509attacker.constants.X509CertChainOutFormat;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
@@ -33,6 +33,22 @@ public class X509Util {
     public static Asn1Encodable getAsn1ElementByIdentifierPath(X509Certificate x509Certificate, String... identifiers) {
         Asn1Encodable currentAsn1Encodable = x509Certificate.getCertificate();
 
+        for (String identifier : identifiers) {
+            if (currentAsn1Encodable instanceof Asn1Container) {
+                currentAsn1Encodable = ((Asn1Container) currentAsn1Encodable).getChildren().stream()
+                        .filter(encodable -> encodable.getIdentifier().equals(identifier))
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalArgumentException("Could not find " + identifier + " in " + String.join("/", identifiers)));
+            }
+            else {
+                throw new IllegalArgumentException(identifier + " is not a container");
+            }
+        }
+        return currentAsn1Encodable;
+    }
+
+    public static Asn1Encodable getAsn1ElementByIdentifierPath(Asn1Container asn1Container, String... identifiers) {
+        Asn1Encodable currentAsn1Encodable = asn1Container;
         for (String identifier : identifiers) {
             if (currentAsn1Encodable instanceof Asn1Container) {
                 currentAsn1Encodable = ((Asn1Container) currentAsn1Encodable).getChildren().stream()
@@ -135,5 +151,27 @@ public class X509Util {
     public static void exportCertificates(List<X509Certificate> certificateChain, String directory) {
         X509CertificateChain x509CertificateChain = new X509CertificateChain(certificateChain);
         x509CertificateChain.writeCertificateChainToFile(directory, X509CertChainOutFormat.CHAIN_ALL_IND_ROOT_TO_LEAF);
+    }
+
+    public static Asn1PrimitivePrintableString getCnFromName(Asn1Sequence name) {
+        for (Asn1Encodable child : name.getChildren()) {
+            if (child instanceof Asn1Set) {
+                Asn1Set relativeDistinguishedName = (Asn1Set) child;
+                for (Asn1Encodable rdnchild : relativeDistinguishedName.getChildren()) {
+                    if (rdnchild instanceof Asn1Sequence) {
+                        Asn1Sequence attributeTypeAndValue = (Asn1Sequence) rdnchild;
+                        Asn1Encodable objectId = attributeTypeAndValue.getChildren().get(0);
+                        if (objectId instanceof Asn1ObjectIdentifier) {
+                            if (((Asn1ObjectIdentifier) objectId).getValue().equals(AttributeTypeObjectIdentifiers.COMMON_NAME)) {
+                                if (attributeTypeAndValue.getChildren().get(1) instanceof Asn1PrimitivePrintableString) {
+                                    return (Asn1PrimitivePrintableString) attributeTypeAndValue.getChildren().get(1);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
