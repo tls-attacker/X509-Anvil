@@ -37,8 +37,6 @@ public class X509CertificateConfig {
     private Integer version;
     private BigInteger serialNumber;
 
-    private boolean overrideTbsSignatureOid;
-    private String tbsSignatureOidOverridden;
     private AlgorithmParametersType tbsSignatureParametersType;
     private Asn1Encodable tbsSignatureParameters;
 
@@ -63,13 +61,8 @@ public class X509CertificateConfig {
     private boolean extensionsPresent = true;
     private final Map<ExtensionType, ExtensionConfig> extensions = new HashMap<>();
 
-    private boolean overrideSignatureAlgorithmOid;
-    private String signatureAlgorithmOidOverridden;
     private AlgorithmParametersType signatureAlgorithmParametersType;
     private Asn1Encodable algorithmIdentifiersParameters; // TODO resolve naming conflicts
-
-    private boolean overrideSignature; // TODO use in generator
-    private ASN1BitString signatureOverridden;
 
     public X509CertificateConfig() {
         extensions.put(ExtensionType.BASIC_CONSTRAINTS, new BasicConstraintsExtensionConfig());
@@ -155,22 +148,6 @@ public class X509CertificateConfig {
 
     public void setSerialNumber(BigInteger serialNumber) {
         this.serialNumber = serialNumber;
-    }
-
-    public boolean isOverrideTbsSignatureOid() {
-        return overrideTbsSignatureOid;
-    }
-
-    public void setOverrideTbsSignatureOid(boolean overrideTbsSignatureOid) {
-        this.overrideTbsSignatureOid = overrideTbsSignatureOid;
-    }
-
-    public String getTbsSignatureOidOverridden() {
-        return tbsSignatureOidOverridden;
-    }
-
-    public void setTbsSignatureOidOverridden(String tbsSignatureOidOverridden) {
-        this.tbsSignatureOidOverridden = tbsSignatureOidOverridden;
     }
 
     public AlgorithmParametersType getTbsSignatureParametersType() {
@@ -304,22 +281,6 @@ public class X509CertificateConfig {
         this.extensionsPresent = extensionsPresent;
     }
 
-    public boolean isOverrideSignatureAlgorithmOid() {
-        return overrideSignatureAlgorithmOid;
-    }
-
-    public void setOverrideSignatureAlgorithmOid(boolean overrideSignatureAlgorithmOid) {
-        this.overrideSignatureAlgorithmOid = overrideSignatureAlgorithmOid;
-    }
-
-    public String getSignatureAlgorithmOidOverridden() {
-        return signatureAlgorithmOidOverridden;
-    }
-
-    public void setSignatureAlgorithmOidOverridden(String signatureAlgorithmOidOverridden) {
-        this.signatureAlgorithmOidOverridden = signatureAlgorithmOidOverridden;
-    }
-
     public AlgorithmParametersType getSignatureAlgorithmParametersType() {
         return signatureAlgorithmParametersType;
     }
@@ -334,22 +295,6 @@ public class X509CertificateConfig {
 
     public void setAlgorithmIdentifiersParameters(Asn1Encodable algorithmIdentifiersParameters) {
         this.algorithmIdentifiersParameters = algorithmIdentifiersParameters;
-    }
-
-    public boolean isOverrideSignature() {
-        return overrideSignature;
-    }
-
-    public void setOverrideSignature(boolean overrideSignature) {
-        this.overrideSignature = overrideSignature;
-    }
-
-    public ASN1BitString getSignatureOverridden() {
-        return signatureOverridden;
-    }
-
-    public void setSignatureOverridden(ASN1BitString signatureOverridden) {
-        this.signatureOverridden = signatureOverridden;
     }
 
     public boolean isUseKeyPair() {

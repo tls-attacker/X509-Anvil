@@ -60,9 +60,6 @@ public class X509CertificateGenerator {
 
         Asn1PrimitiveBitString signatureField = new Asn1PrimitiveBitString();
         signatureField.setIdentifier("signatureValue");
-        if (certificateConfig.isOverrideSignature()) {
-            signatureField.setValue(certificateConfig.getSignaturePrivateKeyOverride());
-        }
         certificateAsn1.addChild(signatureField);
 
         // Set signature info
@@ -96,7 +93,7 @@ public class X509CertificateGenerator {
         byte[] privateKeyForSignature;
         try {
             switch (certificateConfig.getSigner()) {
-                case NEXT_IN_CHAIN:
+                case CA:
                     if (nextInChainConfig.isStatic()) {
                         privateKeyForSignature = nextInChainConfig.getStaticX509Certificate().getKeyInfo().getKeyBytes();
                     }
@@ -106,6 +103,7 @@ public class X509CertificateGenerator {
                     }
                     break;
                 case SELF:
+                default:
                     privateKeyForSignature = PemUtil
                         .encodeKeyAsPem(certificateConfig.getSubjectKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
                     break;
@@ -118,10 +116,7 @@ public class X509CertificateGenerator {
         signingKeyInfo.setIdentifier("signingKeyInfo");
         signingKeyInfo.setType("KeyInfo");
         signingKeyInfo.setKeyBytes(privateKeyForSignature);
-
-        if (!certificateConfig.isOverrideSignature()) {
-            x509Certificate.signCertificate(signingKeyInfo);
-        }
+        x509Certificate.signCertificate(signingKeyInfo);
     }
 
     public X509Certificate retrieveX509Certificate() throws CertificateGeneratorException {
@@ -177,11 +172,7 @@ public class X509CertificateGenerator {
 
         Asn1ObjectIdentifier algorithm = new Asn1ObjectIdentifier();
         algorithm.setIdentifier("algorithm");
-        if (certificateConfig.isOverrideTbsSignatureOid()) {
-            algorithm.setValue(certificateConfig.getTbsSignatureOidOverridden());
-        } else {
-            algorithm.setValue(certificateConfig.getSignatureAlgorithmOid()); // TODO ????
-        }
+        algorithm.setValue(certificateConfig.getSignatureAlgorithmOid()); // TODO ????
         signature.addChild(algorithm);
 
         if (certificateConfig.getTbsSignatureParametersType() == AlgorithmParametersType.NULL_PARAMETER) {
@@ -356,11 +347,7 @@ public class X509CertificateGenerator {
 
         // Generate signature algorithm oid
         Asn1ObjectIdentifier signatureAlgorithmOid = new Asn1ObjectIdentifier();
-        if (certificateConfig.isOverrideSignatureAlgorithmOid()) {
-            signatureAlgorithmOid.setValue(certificateConfig.getSignatureAlgorithmOidOverridden());
-        } else {
-            signatureAlgorithmOid.setValue(certificateConfig.getSignatureAlgorithmOid());
-        }
+        signatureAlgorithmOid.setValue(certificateConfig.getSignatureAlgorithmOid());
         signatureAlgorithm.addChild(signatureAlgorithmOid);
 
         // Generate parameters
