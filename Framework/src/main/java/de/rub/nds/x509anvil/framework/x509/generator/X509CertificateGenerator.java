@@ -292,7 +292,7 @@ public class X509CertificateGenerator {
             }
         }
 
-        if (extensionsAsn1.getChildren().size() > 0) {
+        if (extensionsAsn1.getChildren().size() > 0 && certificateConfig.isExtensionsPresent()) {
             Asn1Explicit explicitExtensions = new Asn1Explicit();
             explicitExtensions.setIdentifier("explicitExtensions");
             explicitExtensions.setOffset(3);

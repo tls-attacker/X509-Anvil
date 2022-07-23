@@ -28,35 +28,26 @@ import java.util.Map;
 
 public class X509CertificateConfig {
     private String certificateName;
-
     private boolean isStatic;
     private X509Certificate staticX509Certificate;
     private boolean isSharedConfig = false;     // If this config is used for multiple certificates in a chain
     private int sharedId = 0;
-
+    private boolean selfSigned;
     private KeyType keyType;
     private KeyPair keyPair;
     private HashAlgorithm hashAlgorithm;        // Hash algorithm used when signing another certificate with privkey
 
-    private boolean selfSigned;
-
     private Integer version;
     private BigInteger serialNumber;
-
-
-
     private TimeType notBeforeTimeType;
     private String notBeforeValue;
     private TimeType notAfterTimeType;
     private String notAfterValue;
-
     private Name subject;
-
     private boolean issuerUniqueIdPresent = false;
     private BitString issuerUniqueId = new BitString(new byte[0]);
     private boolean subjectUniqueIdPresent = false;
     private BitString subjectUniqueId = new BitString(new byte[0]);
-
     private boolean extensionsPresent = true;
     private final Map<ExtensionType, ExtensionConfig> extensions = new HashMap<>();
 
