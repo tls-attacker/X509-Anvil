@@ -52,8 +52,6 @@ public class X509CertificateConfig {
 
     private Name subject;
 
-    private SubjectPublicKeyInfo subjectPublicKeyInfo;
-
     private boolean issuerUniqueIdPresent = false;
     private BitString issuerUniqueId = new BitString(new byte[0]);
     private boolean subjectUniqueIdPresent = false;
@@ -194,14 +192,6 @@ public class X509CertificateConfig {
 
     public void setSubject(Name subject) {
         this.subject = subject;
-    }
-
-    public SubjectPublicKeyInfo getSubjectPublicKeyInfo() {
-        return subjectPublicKeyInfo;
-    }
-
-    public void setSubjectPublicKeyInfo(SubjectPublicKeyInfo subjectPublicKeyInfo) {
-        this.subjectPublicKeyInfo = subjectPublicKeyInfo;
     }
 
     public boolean isIssuerUniqueIdPresent() {
