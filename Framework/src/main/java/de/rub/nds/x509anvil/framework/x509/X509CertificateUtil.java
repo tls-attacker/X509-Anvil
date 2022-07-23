@@ -39,11 +39,7 @@ public class X509CertificateUtil {
         config.setKeyType(KeyType.RSA);
         config.setHashAlgorithm(HashAlgorithm.SHA256);
         config.setKeyPair(generateKeyPair(KeyType.RSA, certificateName));
-        if (selfSigned) {
-            config.setSigner(Signer.SELF);
-        } else {
-            config.setSigner(Signer.CA);
-        }
+        config.setSelfSigned(selfSigned);
 
         config.setVersion(2);
         config.setSerialNumber(generateUniqueSerialNumber());

@@ -38,7 +38,7 @@ public class X509CertificateConfig {
     private KeyPair keyPair;
     private HashAlgorithm hashAlgorithm;        // Hash algorithm used when signing another certificate with privkey
 
-    private Signer signer;
+    private boolean selfSigned;
 
     private Integer version;
     private BigInteger serialNumber;
@@ -134,12 +134,12 @@ public class X509CertificateConfig {
         this.hashAlgorithm = hashAlgorithm;
     }
 
-    public Signer getSigner() {
-        return signer;
+    public boolean isSelfSigned() {
+        return selfSigned;
     }
 
-    public void setSigner(Signer signer) {
-        this.signer = signer;
+    public void setSelfSigned(boolean selfSigned) {
+        this.selfSigned = selfSigned;
     }
 
     public Integer getVersion() {

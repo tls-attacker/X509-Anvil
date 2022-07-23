@@ -60,10 +60,10 @@ public class X509CertificateGenerator {
         signatureInfo.setType("SignatureInfo");
         signatureInfo.setToBeSignedIdentifiers(Collections.singletonList("/certificate/tbsCertificate"));
         signatureInfo.setSignatureValueTargetIdentifier("/certificate/signatureValue");
-        if (certificateConfig.getSigner() == Signer.CA) {
-            signatureInfo.setSignatureAlgorithmOidValue(previousConfig.getSignatureAlgorithmOid());
-        } else {
+        if (certificateConfig.isSelfSigned()) {
             signatureInfo.setSignatureAlgorithmOidValue(certificateConfig.getSignatureAlgorithmOid());
+        } else {
+            signatureInfo.setSignatureAlgorithmOidValue(previousConfig.getSignatureAlgorithmOid());
         }
         signatureInfo.setParameters(new Asn1Null());
 
@@ -83,19 +83,14 @@ public class X509CertificateGenerator {
         // Sign certificate
         byte[] privateKeyForSignature;
         try {
-            switch (certificateConfig.getSigner()) {
-                case CA:
-                    if (previousConfig.isStatic()) {
-                        privateKeyForSignature = previousConfig.getStaticX509Certificate().getKeyInfo().getKeyBytes();
-                    }
-                    else {
-                        privateKeyForSignature = PemUtil.encodeKeyAsPem(previousConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
-                    }
-                    break;
-                case SELF:
-                default:
-                    privateKeyForSignature = PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
-                    break;
+            if (certificateConfig.isSelfSigned()) {
+                privateKeyForSignature = PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
+            } else {
+                if (previousConfig.isStatic()) {
+                    privateKeyForSignature = previousConfig.getStaticX509Certificate().getKeyInfo().getKeyBytes();
+                } else {
+                    privateKeyForSignature = PemUtil.encodeKeyAsPem(previousConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
+                }
             }
         } catch (IOException e) {
             throw new CertificateGeneratorException("Unable to encode private key as pem", e);
@@ -154,10 +149,10 @@ public class X509CertificateGenerator {
 
         Asn1ObjectIdentifier algorithm = new Asn1ObjectIdentifier();
         algorithm.setIdentifier("algorithm");
-        if (certificateConfig.getSigner() == Signer.CA) {
-            algorithm.setValue(previousConfig.getSignatureAlgorithmOid());
-        } else {
+        if (certificateConfig.isSelfSigned()) {
             algorithm.setValue(certificateConfig.getSignatureAlgorithmOid());
+        } else {
+            algorithm.setValue(previousConfig.getSignatureAlgorithmOid());
         }
         signature.addChild(algorithm);
 
@@ -313,16 +308,16 @@ public class X509CertificateGenerator {
         }
     }
 
-    private void generateSignatureAlgorithm() throws CertificateGeneratorException {
+    private void generateSignatureAlgorithm() {
         Asn1Sequence signatureAlgorithm = new Asn1Sequence();
         signatureAlgorithm.setIdentifier("signatureAlgorithm");
 
         // Generate signature algorithm oid
         Asn1ObjectIdentifier signatureAlgorithmOid = new Asn1ObjectIdentifier();
-        if (certificateConfig.getSigner() == Signer.CA) {
-            signatureAlgorithmOid.setValue(previousConfig.getSignatureAlgorithmOid());
-        } else {
+        if (certificateConfig.isSelfSigned()) {
             signatureAlgorithmOid.setValue(certificateConfig.getSignatureAlgorithmOid());
+        } else {
+            signatureAlgorithmOid.setValue(previousConfig.getSignatureAlgorithmOid());
         }
         signatureAlgorithm.addChild(signatureAlgorithmOid);
         // TODO: Parameters
