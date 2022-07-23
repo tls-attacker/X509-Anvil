@@ -12,6 +12,7 @@ package de.rub.nds.x509anvil.framework.x509;
 import de.rub.nds.asn1.model.Asn1Null;
 import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
 import de.rub.nds.asn1.parser.X509Parser;
+import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
 import de.rub.nds.x509anvil.framework.x509.config.CachedKeyPairGenerator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -35,9 +36,9 @@ public class X509CertificateUtil {
         X509CertificateConfig config = new X509CertificateConfig();
 
         config.setCertificateName(certificateName);
+        config.setKeyType(KeyType.RSA);
+        config.setHashAlgorithm(HashAlgorithm.SHA256);
         config.setKeyPair(generateKeyPair(KeyType.RSA, certificateName));
-        config.setSignatureAlgorithmParameters(new Asn1Null());
-        config.setSignatureAlgorithmOid(AlgorithmObjectIdentifiers.SHA256_WITH_RSA_ENCRYPTION);
         if (selfSigned) {
             config.setSigner(Signer.SELF);
         } else {
@@ -46,7 +47,6 @@ public class X509CertificateUtil {
 
         config.setVersion(2);
         config.setSerialNumber(generateUniqueSerialNumber());
-        config.setTbsSignatureParametersType(AlgorithmParametersType.NO_PARAMETERS);
         if (selfSigned) {
             config.setIssuerType(IssuerType.SELF);
         } else {

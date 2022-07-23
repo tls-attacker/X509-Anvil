@@ -10,7 +10,9 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.Asn1Encodable;
+import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
+import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionType;
@@ -20,6 +22,7 @@ import de.rub.nds.x509attacker.x509.X509Certificate;
 import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,15 +36,13 @@ public class X509CertificateConfig {
 
     private KeyType keyType;
     private KeyPair keyPair;
-    private String signatureAlgorithmOid;
-    private Asn1Encodable signatureAlgorithmParameters;
+    private HashAlgorithm hashAlgorithm;        // Hash algorithm used when signing another certificate with privkey
+
     private Signer signer;
 
     private Integer version;
     private BigInteger serialNumber;
 
-    private AlgorithmParametersType tbsSignatureParametersType;
-    private Asn1Encodable tbsSignatureParameters;
 
     private IssuerType issuerType;
     private Name issuerOverridden;
@@ -62,9 +63,6 @@ public class X509CertificateConfig {
 
     private boolean extensionsPresent = true;
     private final Map<ExtensionType, ExtensionConfig> extensions = new HashMap<>();
-
-    private AlgorithmParametersType signatureAlgorithmParametersType;
-    private Asn1Encodable algorithmIdentifiersParameters; // TODO resolve naming conflicts
 
     public X509CertificateConfig() {
         extensions.put(ExtensionType.BASIC_CONSTRAINTS, new BasicConstraintsExtensionConfig());
@@ -128,20 +126,12 @@ public class X509CertificateConfig {
         this.keyPair = keyPair;
     }
 
-    public String getSignatureAlgorithmOid() {
-        return signatureAlgorithmOid;
+    public HashAlgorithm getHashAlgorithm() {
+        return hashAlgorithm;
     }
 
-    public void setSignatureAlgorithmOid(String signatureAlgorithmOid) {
-        this.signatureAlgorithmOid = signatureAlgorithmOid;
-    }
-
-    public Asn1Encodable getSignatureAlgorithmParameters() {
-        return signatureAlgorithmParameters;
-    }
-
-    public void setSignatureAlgorithmParameters(Asn1Encodable signatureAlgorithmParameters) {
-        this.signatureAlgorithmParameters = signatureAlgorithmParameters;
+    public void setHashAlgorithm(HashAlgorithm hashAlgorithm) {
+        this.hashAlgorithm = hashAlgorithm;
     }
 
     public Signer getSigner() {
@@ -166,22 +156,6 @@ public class X509CertificateConfig {
 
     public void setSerialNumber(BigInteger serialNumber) {
         this.serialNumber = serialNumber;
-    }
-
-    public AlgorithmParametersType getTbsSignatureParametersType() {
-        return tbsSignatureParametersType;
-    }
-
-    public void setTbsSignatureParametersType(AlgorithmParametersType tbsSignatureParametersType) {
-        this.tbsSignatureParametersType = tbsSignatureParametersType;
-    }
-
-    public Asn1Encodable getTbsSignatureParameters() {
-        return tbsSignatureParameters;
-    }
-
-    public void setTbsSignatureParameters(Asn1Encodable tbsSignatureParameters) {
-        this.tbsSignatureParameters = tbsSignatureParameters;
     }
 
     public IssuerType getIssuerType() {
@@ -299,19 +273,26 @@ public class X509CertificateConfig {
         this.extensionsPresent = extensionsPresent;
     }
 
-    public AlgorithmParametersType getSignatureAlgorithmParametersType() {
-        return signatureAlgorithmParametersType;
+    public SignatureAlgorithm getSignatureAlgorithm() {
+        if (isStatic) {
+            switch (staticX509Certificate.getKeyInfo().getKeyType()) {
+                case RSA:
+                    return SignatureAlgorithm.RSA_SHA256;
+                case DSA:
+                    return SignatureAlgorithm.DSA_SHA256;
+                case ECDSA:
+                default:
+                    return SignatureAlgorithm.ECDSA_SHA256;
+            }
+        }
+
+        return Arrays.stream(SignatureAlgorithm.values())
+                .filter(a -> a.getKeyType() == keyType && a.getHashAlgorithm() == hashAlgorithm)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Signature algorithm does not exist"));
     }
 
-    public void setSignatureAlgorithmParametersType(AlgorithmParametersType signatureAlgorithmParametersType) {
-        this.signatureAlgorithmParametersType = signatureAlgorithmParametersType;
-    }
-
-    public Asn1Encodable getAlgorithmIdentifiersParameters() {
-        return algorithmIdentifiersParameters;
-    }
-
-    public void setAlgorithmIdentifiersParameters(Asn1Encodable algorithmIdentifiersParameters) {
-        this.algorithmIdentifiersParameters = algorithmIdentifiersParameters;
+    public String getSignatureAlgorithmOid() {
+        return getSignatureAlgorithm().getOid();
     }
 }

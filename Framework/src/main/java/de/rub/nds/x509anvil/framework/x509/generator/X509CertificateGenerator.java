@@ -15,10 +15,7 @@ import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
-import de.rub.nds.x509anvil.framework.x509.config.model.AlgorithmParametersType;
-import de.rub.nds.x509anvil.framework.x509.config.model.IssuerType;
-import de.rub.nds.x509anvil.framework.x509.config.model.Name;
-import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
+import de.rub.nds.x509anvil.framework.x509.config.model.*;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 
 import javax.xml.bind.JAXBException;
@@ -29,7 +26,7 @@ import java.util.Collections;
 
 public class X509CertificateGenerator {
     private final X509CertificateConfig certificateConfig;
-    private final X509CertificateConfig nextInChainConfig;
+    private final X509CertificateConfig previousConfig;
 
     private Asn1Sequence tbsCertificate;
     private Asn1Sequence certificateAsn1;
@@ -37,12 +34,7 @@ public class X509CertificateGenerator {
 
     public X509CertificateGenerator(X509CertificateConfig certificateConfig, X509CertificateConfig issuerConfig) {
         this.certificateConfig = certificateConfig;
-        this.nextInChainConfig = issuerConfig;
-    }
-
-    public X509CertificateGenerator(X509CertificateConfig certificateConfig) {
-        this.certificateConfig = certificateConfig;
-        this.nextInChainConfig = null; // TODO: Check for null pointer exceptions
+        this.previousConfig = issuerConfig;
     }
 
     public void generateCertificate() throws CertificateGeneratorException {
@@ -68,20 +60,19 @@ public class X509CertificateGenerator {
         signatureInfo.setType("SignatureInfo");
         signatureInfo.setToBeSignedIdentifiers(Collections.singletonList("/certificate/tbsCertificate"));
         signatureInfo.setSignatureValueTargetIdentifier("/certificate/signatureValue");
-        signatureInfo.setSignatureAlgorithmOidValue(certificateConfig.getSignatureAlgorithmOid());
-        try {
-            signatureInfo.setParameters(certificateConfig.getSignatureAlgorithmParameters().getCopy());
-        } catch (JAXBException | IOException | XMLStreamException e) {
-            throw new CertificateGeneratorException("Unable to copy signature algorithm parameters from config", e);
+        if (certificateConfig.getSigner() == Signer.CA) {
+            signatureInfo.setSignatureAlgorithmOidValue(previousConfig.getSignatureAlgorithmOid());
+        } else {
+            signatureInfo.setSignatureAlgorithmOidValue(certificateConfig.getSignatureAlgorithmOid());
         }
+        signatureInfo.setParameters(new Asn1Null());
 
         // Set subject key info
         KeyInfo subjectKeyInfo = new KeyInfo();
         subjectKeyInfo.setIdentifier("keyInfo");
         subjectKeyInfo.setType("KeyInfo");
         try {
-            subjectKeyInfo.setKeyBytes(
-                PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPublic().getEncoded(), "PUBLIC KEY"));
+            subjectKeyInfo.setKeyBytes(PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPublic().getEncoded(), "PUBLIC KEY"));
         } catch (IOException e) {
             throw new CertificateGeneratorException("Unable to encode key in PEM format", e);
         }
@@ -94,18 +85,16 @@ public class X509CertificateGenerator {
         try {
             switch (certificateConfig.getSigner()) {
                 case CA:
-                    if (nextInChainConfig.isStatic()) {
-                        privateKeyForSignature = nextInChainConfig.getStaticX509Certificate().getKeyInfo().getKeyBytes();
+                    if (previousConfig.isStatic()) {
+                        privateKeyForSignature = previousConfig.getStaticX509Certificate().getKeyInfo().getKeyBytes();
                     }
                     else {
-                        privateKeyForSignature = PemUtil
-                                .encodeKeyAsPem(nextInChainConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
+                        privateKeyForSignature = PemUtil.encodeKeyAsPem(previousConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
                     }
                     break;
                 case SELF:
                 default:
-                    privateKeyForSignature = PemUtil
-                        .encodeKeyAsPem(certificateConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
+                    privateKeyForSignature = PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
                     break;
             }
         } catch (IOException e) {
@@ -124,13 +113,6 @@ public class X509CertificateGenerator {
             throw new CertificateGeneratorException("Certificate is not generated yet");
         }
         return x509Certificate;
-    }
-
-    public byte[] retrieveEncodedCertificate() throws CertificateGeneratorException {
-        if (x509Certificate == null) {
-            throw new CertificateGeneratorException("Certificate is not generated yet");
-        }
-        return x509Certificate.getEncodedCertificate();
     }
 
     private void generateTbsCertificate() throws CertificateGeneratorException {
@@ -172,24 +154,14 @@ public class X509CertificateGenerator {
 
         Asn1ObjectIdentifier algorithm = new Asn1ObjectIdentifier();
         algorithm.setIdentifier("algorithm");
-        algorithm.setValue(certificateConfig.getSignatureAlgorithmOid()); // TODO ????
+        if (certificateConfig.getSigner() == Signer.CA) {
+            algorithm.setValue(previousConfig.getSignatureAlgorithmOid());
+        } else {
+            algorithm.setValue(certificateConfig.getSignatureAlgorithmOid());
+        }
         signature.addChild(algorithm);
 
-        if (certificateConfig.getTbsSignatureParametersType() == AlgorithmParametersType.NULL_PARAMETER) {
-            Asn1Null parameters = new Asn1Null();
-            parameters.setIdentifier("parameters");
-            signature.addChild(parameters);
-        } else if (certificateConfig.getTbsSignatureParametersType()
-            == AlgorithmParametersType.PARAMETERS_PRESENT) {
-            try {
-                Asn1Encodable parameters = certificateConfig.getTbsSignatureParameters().getCopy();
-                parameters.setIdentifier("parameters");
-                signature.addChild(parameters);
-            } catch (JAXBException | IOException | XMLStreamException e) {
-                throw new CertificateGeneratorException(
-                    "Unable to copy tbsCertificate->signature->parameters field from config", e);
-            }
-        }
+        // TODO no parameters, null parameter, parameters....
 
         tbsCertificate.addChild(signature);
     }
@@ -198,13 +170,13 @@ public class X509CertificateGenerator {
         Name issuer;
         switch (certificateConfig.getIssuerType()) {
             case NEXT_IN_CHAIN:
-                if (nextInChainConfig == null) {
+                if (previousConfig == null) {
                     throw new CertificateGeneratorException("Config of issuer certificate is null");
                 }
-                if (nextInChainConfig.isStatic()) {
+                if (previousConfig.isStatic()) {
                     // Copy subject field
                     try {
-                        Asn1Encodable subject = X509Util.getAsn1ElementByIdentifierPath(nextInChainConfig.getStaticX509Certificate(),
+                        Asn1Encodable subject = X509Util.getAsn1ElementByIdentifierPath(previousConfig.getStaticX509Certificate(),
                                 "tbsCertificate", "subject");
                         if (!(subject instanceof Asn1Sequence)) {
                             throw new CertificateGeneratorException("Unable to copy subject field of static certificate");
@@ -219,7 +191,7 @@ public class X509CertificateGenerator {
                         throw new CertificateGeneratorException("Unable to copy subject field of static certificate", e);
                     }
                 }
-                issuer = nextInChainConfig.getSubject();
+                issuer = previousConfig.getSubject();
                 break;
             case SELF:
                 issuer = certificateConfig.getSubject();
@@ -230,13 +202,13 @@ public class X509CertificateGenerator {
         }
 
         Asn1Sequence issuerAsn1 = issuer.getAsn1Structure("issuer");
-        if (certificateConfig.getIssuerType() == IssuerType.NEXT_IN_CHAIN && nextInChainConfig.isSharedConfig()) {
+        if (certificateConfig.getIssuerType() == IssuerType.NEXT_IN_CHAIN && previousConfig.isSharedConfig()) {
             Asn1PrimitivePrintableString cn = X509Util.getCnFromName(issuerAsn1);
             // TODO create if null
             if (cn == null) {
                 throw new CertificateGeneratorException("Shared cert has no subject CN");
             }
-            cn.setValue(cn.getValue() + "_" + (nextInChainConfig.getSharedId() - 1));
+            cn.setValue(cn.getValue() + "_" + (previousConfig.getSharedId() - 1));
         }
         tbsCertificate.addChild(issuerAsn1);
     }
@@ -285,7 +257,7 @@ public class X509CertificateGenerator {
         tbsCertificate.addChild(validity);
     }
 
-    private void generateSubjectPublicKeyInfo() throws CertificateGeneratorException {
+    private void generateSubjectPublicKeyInfo() {
         // Create empty subject public key info and let X509-Attacker fill in the data
         Asn1Sequence subjectPublicKeyInfo = new Asn1Sequence();
         subjectPublicKeyInfo.setIdentifier("subjectPublicKeyInfo");
@@ -347,23 +319,14 @@ public class X509CertificateGenerator {
 
         // Generate signature algorithm oid
         Asn1ObjectIdentifier signatureAlgorithmOid = new Asn1ObjectIdentifier();
-        signatureAlgorithmOid.setValue(certificateConfig.getSignatureAlgorithmOid());
-        signatureAlgorithm.addChild(signatureAlgorithmOid);
-
-        // Generate parameters
-        if (certificateConfig.getSignatureAlgorithmParametersType() == AlgorithmParametersType.PARAMETERS_PRESENT) {
-            try {
-                Asn1Encodable parameters = certificateConfig.getAlgorithmIdentifiersParameters().getCopy();
-                parameters.setIdentifier("parameters");
-                signatureAlgorithm.addChild(parameters);
-            } catch (JAXBException | IOException | XMLStreamException e) {
-                throw new CertificateGeneratorException("Unable to copy signature algorithm parameters", e);
-            }
-        } else if (certificateConfig.getSignatureAlgorithmParametersType() == AlgorithmParametersType.NULL_PARAMETER) {
-            Asn1Null parameters = new Asn1Null();
-            parameters.setIdentifier("parameters");
-            signatureAlgorithm.addChild(parameters);
+        if (certificateConfig.getSigner() == Signer.CA) {
+            signatureAlgorithmOid.setValue(previousConfig.getSignatureAlgorithmOid());
+        } else {
+            signatureAlgorithmOid.setValue(certificateConfig.getSignatureAlgorithmOid());
         }
+        signatureAlgorithm.addChild(signatureAlgorithmOid);
+        // TODO: Parameters
+
         certificateAsn1.addChild(signatureAlgorithm);
     }
 }
