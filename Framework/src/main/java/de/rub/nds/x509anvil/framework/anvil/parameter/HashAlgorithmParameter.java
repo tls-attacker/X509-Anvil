@@ -7,7 +7,6 @@ import de.rub.nds.anvilcore.model.constraint.ValueRestrictionConstraintBuilder;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
-import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
@@ -15,7 +14,6 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +35,16 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
 
     @Override
     protected List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
-        return Arrays.stream(HashAlgorithm.values()).map(this::generateValue).collect(Collectors.toList());
+        // TODO Feature extraction for hash algorithms
+        return Arrays
+                .stream(HashAlgorithm.values())
+                .filter(h -> h != HashAlgorithm.SHA1)
+                .filter(h -> h != HashAlgorithm.MD2)
+                .filter(h -> h != HashAlgorithm.MD4)
+                .filter(h -> h != HashAlgorithm.MD5)
+                .filter(h -> h != HashAlgorithm.NONE)
+                .map(this::generateValue)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -49,16 +56,19 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
     public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
         List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
 
-        defaultConstraints.add(0, ValueRestrictionConstraintBuilder.init("MD2, MD4, MD5 cannot be used with DSA or ECDSA", derivationScope)
+
+        defaultConstraints.add(0, ValueRestrictionConstraintBuilder.init("DSA does not work with SHA512 or SHA384", derivationScope)
                 .target(this)
                 .requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
-                .restrictValues(Arrays.asList(HashAlgorithm.MD2, HashAlgorithm.MD4, HashAlgorithm.MD5))
+                .restrictValues(Arrays.asList(HashAlgorithm.SHA512, HashAlgorithm.SHA384))
                 .condition((target, requiredParameters) -> {
                     KeyType keyType = (KeyType) ConstraintHelper.getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE)).getSelectedValue();
-                    return keyType != KeyType.RSA;
+                    return keyType == KeyType.DSA;
                 })
                 .get()
         );
+
+
 
         return defaultConstraints;
     }
