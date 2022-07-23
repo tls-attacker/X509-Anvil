@@ -163,41 +163,34 @@ public class X509CertificateGenerator {
 
     private void generateIssuer() throws CertificateGeneratorException {
         Name issuer;
-        switch (certificateConfig.getIssuerType()) {
-            case NEXT_IN_CHAIN:
-                if (previousConfig == null) {
-                    throw new CertificateGeneratorException("Config of issuer certificate is null");
-                }
-                if (previousConfig.isStatic()) {
-                    // Copy subject field
-                    try {
-                        Asn1Encodable subject = X509Util.getAsn1ElementByIdentifierPath(previousConfig.getStaticX509Certificate(),
-                                "tbsCertificate", "subject");
-                        if (!(subject instanceof Asn1Sequence)) {
-                            throw new CertificateGeneratorException("Unable to copy subject field of static certificate");
-                        }
-                        Asn1Encodable issuerAsn1 = subject.getCopy();
-                        issuerAsn1.setIdentifier("issuer");
+        if (certificateConfig.isSelfSigned()) {
+            issuer = certificateConfig.getSubject();
+        } else {
+            if (previousConfig.isStatic()) {
+                // Copy subject field
+                try {
+                    Asn1Encodable subject = X509Util.getAsn1ElementByIdentifierPath(previousConfig.getStaticX509Certificate(),
+                            "tbsCertificate", "subject");
+                    if (!(subject instanceof Asn1Sequence)) {
+                        throw new CertificateGeneratorException("Unable to copy subject field of static certificate");
+                    }
+                    Asn1Encodable issuerAsn1 = subject.getCopy();
+                    issuerAsn1.setIdentifier("issuer");
 
-                        tbsCertificate.addChild(issuerAsn1);
-                        return;
-                    }
-                    catch (IllegalArgumentException | XMLStreamException | JAXBException | IOException e) {
-                        throw new CertificateGeneratorException("Unable to copy subject field of static certificate", e);
-                    }
+                    tbsCertificate.addChild(issuerAsn1);
+                    return;
                 }
+                catch (IllegalArgumentException | XMLStreamException | JAXBException | IOException e) {
+                    throw new CertificateGeneratorException("Unable to copy subject field of static certificate", e);
+                }
+            } else {
                 issuer = previousConfig.getSubject();
-                break;
-            case SELF:
-                issuer = certificateConfig.getSubject();
-                break;
-            default: // OVERRIDE
-                issuer = certificateConfig.getIssuerOverridden();
-                break;
+            }
         }
 
+
         Asn1Sequence issuerAsn1 = issuer.getAsn1Structure("issuer");
-        if (certificateConfig.getIssuerType() == IssuerType.NEXT_IN_CHAIN && previousConfig.isSharedConfig()) {
+        if (!certificateConfig.isSelfSigned() && previousConfig.isSharedConfig()) {
             Asn1PrimitivePrintableString cn = X509Util.getCnFromName(issuerAsn1);
             // TODO create if null
             if (cn == null) {

@@ -44,8 +44,6 @@ public class X509CertificateConfig {
     private BigInteger serialNumber;
 
 
-    private IssuerType issuerType;
-    private Name issuerOverridden;
 
     private TimeType notBeforeTimeType;
     private String notBeforeValue;
@@ -156,22 +154,6 @@ public class X509CertificateConfig {
 
     public void setSerialNumber(BigInteger serialNumber) {
         this.serialNumber = serialNumber;
-    }
-
-    public IssuerType getIssuerType() {
-        return issuerType;
-    }
-
-    public void setIssuerType(IssuerType issuerType) {
-        this.issuerType = issuerType;
-    }
-
-    public Name getIssuerOverridden() {
-        return issuerOverridden;
-    }
-
-    public void setIssuerOverridden(Name issuerOverridden) {
-        this.issuerOverridden = issuerOverridden;
     }
 
     public TimeType getNotBeforeTimeType() {

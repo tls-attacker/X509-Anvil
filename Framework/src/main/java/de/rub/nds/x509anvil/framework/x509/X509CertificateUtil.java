@@ -43,11 +43,6 @@ public class X509CertificateUtil {
 
         config.setVersion(2);
         config.setSerialNumber(generateUniqueSerialNumber());
-        if (selfSigned) {
-            config.setIssuerType(IssuerType.SELF);
-        } else {
-            config.setIssuerType(IssuerType.NEXT_IN_CHAIN);
-        }
 
         config.setNotBeforeTimeType(TimeType.UTC_TIME);
         config.setNotBeforeValue("220101000000Z");
