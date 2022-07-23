@@ -7,9 +7,15 @@
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 
-package de.rub.nds.x509anvil.framework.verifier;
+package de.rub.nds.x509anvil.framework.verifier.tlsclientauth;
 
+import de.rub.nds.tlsattacker.core.constants.ChooserType;
+import de.rub.nds.tlsattacker.core.constants.SignatureAndHashAlgorithm;
+import de.rub.nds.x509anvil.framework.verifier.VerifierAdapter;
+import de.rub.nds.x509anvil.framework.verifier.VerifierException;
+import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.tlsattacker.core.certificate.CertificateKeyPair;
 import de.rub.nds.tlsattacker.core.config.Config;
@@ -55,17 +61,20 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
     }
 
     @Override
-    public VerifierResult invokeVerifier(List<X509Certificate> certificatesChain,
-        X509CertificateChainConfig chainConfig) throws VerifierException {
+    public VerifierResult invokeVerifier(List<X509Certificate> certificatesChain, X509CertificateChainConfig chainConfig) throws VerifierException {
+        X509CertificateConfig entityConfig = chainConfig.getEntityCertificateConfig();
         try {
             byte[] encodedChain = X509Util.encodeCertificateChainForTls(certificatesChain);
             CertificateKeyPair certificateKeyPair = new CertificateKeyPair(encodedChain,
-                chainConfig.getEntityCertificateConfig().getKeyPair().getPrivate(),
-                chainConfig.getEntityCertificateConfig().getKeyPair().getPublic());
+                    entityConfig.getKeyPair().getPrivate(),
+                    entityConfig.getKeyPair().getPublic());
             config.setDefaultExplicitCertificateKeyPair(certificateKeyPair);
         } catch (IOException e) {
             throw new VerifierException("Failed to encode certificate", e);
         }
+
+        config.setDefaultSelectedSignatureAndHashAlgorithm(TlsAttackerUtil.translateSignatureAlgorithm(entityConfig.getSignatureAlgorithm()));
+        config.setAutoAdjustSignatureAndHashAlgorithm(false);
 
         // Execute workflow
         WorkflowTrace workflowTrace = buildWorkflowTrace(config);

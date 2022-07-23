@@ -9,7 +9,8 @@
 
 package de.rub.nds.x509anvil.framework.verifier;
 
-import de.rub.nds.x509anvil.framework.verifier.TlsClientAuthVerifierAdapter;
+import de.rub.nds.x509anvil.framework.verifier.tlsclientauth.TlsClientAuthVerifierAdapter;
+import de.rub.nds.x509anvil.framework.verifier.tlsclientauth.TlsClientAuthVerifierAdapterConfig;
 
 public class VerifierAdapterFactory {
     public static VerifierAdapter getInstance(VerifierAdapterType verifierAdapterType,

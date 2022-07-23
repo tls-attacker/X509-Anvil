@@ -9,7 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.anvil;
 
-import de.rub.nds.x509anvil.framework.verifier.TlsClientAuthVerifierAdapterConfig;
+import de.rub.nds.x509anvil.framework.verifier.tlsclientauth.TlsClientAuthVerifierAdapterConfig;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterConfig;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterType;
 
