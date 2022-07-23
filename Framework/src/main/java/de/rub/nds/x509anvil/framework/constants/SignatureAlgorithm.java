@@ -6,7 +6,7 @@ public enum SignatureAlgorithm {
     RSA_SHA224(KeyType.RSA, HashAlgorithm.SHA224, "1.2.840.113549.1.1.14"),
     RSA_SHA256(KeyType.RSA, HashAlgorithm.SHA256, "1.2.840.113549.1.1.11"),
     RSA_SHA384(KeyType.RSA, HashAlgorithm.SHA384, "1.2.840.113549.1.1.12"),
-    RSA_SHA512(KeyType.RSA, HashAlgorithm.SHA512, "1.2.840.113549.1.1.12"),
+    RSA_SHA512(KeyType.RSA, HashAlgorithm.SHA512, "1.2.840.113549.1.1.13"),
     RSA_MD2(KeyType.RSA, HashAlgorithm.MD2, "1.2.840.113549.1.1.1.2"),
     RSA_MD4(KeyType.RSA, HashAlgorithm.MD4, "1.2.840.113549.1.1.1.3"),
     RSA_MD5(KeyType.RSA, HashAlgorithm.MD5, "1.2.840.113549.1.1.1.4"),
