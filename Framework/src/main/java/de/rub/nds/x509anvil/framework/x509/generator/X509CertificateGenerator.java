@@ -1,12 +1,3 @@
-/**
- * Framework - A tool for creating arbitrary certificates
- *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
- * Licensed under Apache License, Version 2.0
- * http://www.apache.org/licenses/LICENSE-2.0.txt
- */
-
 package de.rub.nds.x509anvil.framework.x509.generator;
 
 import de.rub.nds.asn1.Asn1Encodable;
@@ -22,7 +13,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class X509CertificateGenerator {
     private final X509CertificateConfig certificateConfig;
@@ -31,10 +24,22 @@ public class X509CertificateGenerator {
     private Asn1Sequence tbsCertificate;
     private Asn1Sequence certificateAsn1;
     private X509Certificate x509Certificate;
+    private final List<X509CertificateModifier> certificateModifiers = new ArrayList<>();
+
+    public X509CertificateGenerator(X509CertificateConfig certificateConfig, X509CertificateConfig issuerConfig,
+                                    List<X509CertificateModifier> certificateModifiers) {
+        this.certificateConfig = certificateConfig;
+        this.previousConfig = issuerConfig;
+        this.certificateModifiers.addAll(certificateModifiers);
+    }
 
     public X509CertificateGenerator(X509CertificateConfig certificateConfig, X509CertificateConfig issuerConfig) {
         this.certificateConfig = certificateConfig;
         this.previousConfig = issuerConfig;
+    }
+
+    public void addCertificateModifier(X509CertificateModifier certificateModifier) {
+        certificateModifiers.add(certificateModifier);
     }
 
     public void generateCertificate() throws CertificateGeneratorException {
@@ -79,6 +84,11 @@ public class X509CertificateGenerator {
 
         // Create certificate
         x509Certificate = new X509Certificate(certificateAsn1, signatureInfo, subjectKeyInfo);
+
+        // Call certificate modifiers
+        for (X509CertificateModifier certificateModifier : certificateModifiers) {
+            certificateModifier.beforeSigning(x509Certificate, certificateConfig, previousConfig);
+        }
 
         // Sign certificate
         byte[] privateKeyForSignature;
