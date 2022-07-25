@@ -58,8 +58,7 @@ public class X509VerifierRunner {
         this.parameterCombination = parameterCombination;
     }
 
-    public VerifierResult execute(X509CertificateChainConfig config)
-        throws CertificateGeneratorException, VerifierException {
+    public VerifierResult execute(X509CertificateChainConfig config) throws CertificateGeneratorException, VerifierException {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateList = certificateChainGenerator.retrieveCertificateChain();

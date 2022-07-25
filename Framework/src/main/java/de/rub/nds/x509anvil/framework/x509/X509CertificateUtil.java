@@ -63,6 +63,12 @@ public class X509CertificateUtil {
         return config;
     }
 
+    public static X509CertificateChainConfig createBasicConfig(int chainLength) {
+        X509CertificateChainConfig x509CertificateChainConfig = new X509CertificateChainConfig();
+        x509CertificateChainConfig.initializeChain(chainLength, 1);
+        return x509CertificateChainConfig;
+    }
+
     public static KeyPair generateKeyPair(KeyType keyType, String keyPairIdentifier) {
         int defaultKeySize = keyType == KeyType.ECDSA ? 256 : 2048;
         try {
