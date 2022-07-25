@@ -19,11 +19,16 @@ import java.util.List;
 
 public class X509CertificateChainGenerator {
     private final X509CertificateChainConfig certificateChainConfig;
+    private final List<X509CertificateModifier> certificateModifiers = new ArrayList<>();
 
     private final List<X509Certificate> generatedCertificates = new ArrayList<>();
 
     public X509CertificateChainGenerator(X509CertificateChainConfig certificateChainConfig) {
         this.certificateChainConfig = certificateChainConfig;
+    }
+
+    public void addModifier(X509CertificateModifier x509CertificateModifier) {
+        certificateModifiers.add(x509CertificateModifier);
     }
 
     public void generateCertificateChain() throws CertificateGeneratorException {
@@ -44,7 +49,7 @@ public class X509CertificateChainGenerator {
 
     private void generateSingleCertificate(X509CertificateConfig config, X509CertificateConfig signerConfig)
         throws CertificateGeneratorException {
-        X509CertificateGenerator x509CertificateGenerator = new X509CertificateGenerator(config, signerConfig);
+        X509CertificateGenerator x509CertificateGenerator = new X509CertificateGenerator(config, signerConfig, certificateModifiers);
         x509CertificateGenerator.generateCertificate();
         this.generatedCertificates.add(x509CertificateGenerator.retrieveX509Certificate());
     }
