@@ -19,6 +19,8 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AlgorithmObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
+import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
+import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.model.*;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 
@@ -59,6 +61,18 @@ public class X509CertificateUtil {
         config.setSubject(subject);
 
         config.setExtensionsPresent(false);
+
+        return config;
+    }
+
+    public static X509CertificateConfig getDefaultCaCertificateConfig(String certificateName, boolean selfSigned) {
+        X509CertificateConfig config = getDefaultCertificateConfig(certificateName, selfSigned);
+
+        config.setExtensionsPresent(true);
+        BasicConstraintsExtensionConfig basicConstraints = (BasicConstraintsExtensionConfig) config.extension(ExtensionType.BASIC_CONSTRAINTS);
+        basicConstraints.setPresent(true);
+        basicConstraints.setCa(true);
+        basicConstraints.setPathLenConstraintPresent(false);
 
         return config;
     }

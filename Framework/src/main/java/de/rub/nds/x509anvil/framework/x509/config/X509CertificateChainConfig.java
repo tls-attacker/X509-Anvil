@@ -59,13 +59,13 @@ public class X509CertificateChainConfig implements AnvilConfig {
         }
         else {
             // We need to generate our own root
-            rootCertificateConfig = X509CertificateUtil.getDefaultCertificateConfig("cert_root", true);
+            rootCertificateConfig = X509CertificateUtil.getDefaultCaCertificateConfig("cert_root", true);
         }
 
         // Generate configs for intermediate certificates
         for (int i = 0; i < chainLength - 2; i++) {
             if (i < intermediateCertsModeled) {
-                X509CertificateConfig config = X509CertificateUtil.getDefaultCertificateConfig("cert_intermediate_" + i,false);
+                X509CertificateConfig config = X509CertificateUtil.getDefaultCaCertificateConfig("cert_intermediate_" + i,false);
                 if (i == intermediateCertsModeled - 1 && intermediateCertsModeled < chainLength - 2) {
                     config.setSharedConfig(true);
                 }
