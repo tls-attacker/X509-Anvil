@@ -22,5 +22,6 @@ public class Main {
 
         FeatureReport report = FeatureExtractor.scanFeatures();
         System.out.println(report);
+        ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).setFeatureReport(report);
     }
 }

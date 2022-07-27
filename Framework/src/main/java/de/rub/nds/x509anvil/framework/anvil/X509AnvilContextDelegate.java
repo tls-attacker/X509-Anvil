@@ -10,9 +10,11 @@
 package de.rub.nds.x509anvil.framework.anvil;
 
 import de.rub.nds.anvilcore.context.ApplicationSpecificContextDelegate;
+import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 
 public class X509AnvilContextDelegate implements ApplicationSpecificContextDelegate {
     private final TestConfig testConfig;
+    private FeatureReport featureReport = null;
 
     public X509AnvilContextDelegate(TestConfig testConfig) {
         this.testConfig = testConfig;
@@ -20,5 +22,13 @@ public class X509AnvilContextDelegate implements ApplicationSpecificContextDeleg
 
     public TestConfig getTestConfig() {
         return testConfig;
+    }
+
+    public FeatureReport getFeatureReport() {
+        return featureReport;
+    }
+
+    public void setFeatureReport(FeatureReport featureReport) {
+        this.featureReport = featureReport;
     }
 }

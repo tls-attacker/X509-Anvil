@@ -14,6 +14,10 @@ import de.rub.nds.anvilcore.junit.CombinatorialAnvilTest;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.ParameterCombination;
 import de.rub.nds.anvilcore.model.config.ConfigContainer;
+import de.rub.nds.x509anvil.framework.featureextraction.FeatureExtractor;
+import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
+import de.rub.nds.x509anvil.framework.featureextraction.UnsupportedFeatureException;
+import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeException;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.registry.Registry;
 import org.apache.logging.log4j.LogManager;
@@ -39,13 +43,17 @@ public class X509AnvilTest extends CombinatorialAnvilTest {
     protected ParameterCombination parameterCombination;
 
     @BeforeAll
-    public static void initialize() {
+    public static void initialize() throws UnsupportedFeatureException, ProbeException {
         Security.addProvider(new BouncyCastleProvider());
         Registry.getInstance();
         AnvilContext.getInstance().addParameterTypes(X509AnvilParameterType.values(), new X509AnvilParameterFactory());
         AnvilContext.getInstance().setModelBasedIpmFactory(new X509AnvilModelBasedIpmFactory());
         AnvilContext.getInstance().setApplicationSpecificContextDelegate(new X509AnvilContextDelegate(new TestConfig()));
         AnvilContext.getInstance().setTestStrength(2);
+
+        FeatureReport report = FeatureExtractor.scanFeatures();
+        System.out.println(report);
+        ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).setFeatureReport(report);
     }
 
     public X509CertificateChainConfig prepareConfig(ArgumentsAccessor argumentsAccessor,
