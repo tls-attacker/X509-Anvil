@@ -57,7 +57,6 @@ public class BasicConstraintsExtensionConfig extends ExtensionConfig {
     @Override
     public Asn1PrimitiveOctetString getContentAsn1Structure() {
         Asn1Sequence basicConstraintsAsn1 = new Asn1Sequence();
-        basicConstraintsAsn1.setIdentifier("basicConstraints");
 
         Asn1Boolean caAsn1 =  new Asn1Boolean();
         caAsn1.setIdentifier("ca");

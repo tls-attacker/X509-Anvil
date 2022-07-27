@@ -1,6 +1,6 @@
 package de.rub.nds.x509anvil.framework.featureextraction.probe.result;
 
-import de.rub.nds.x509anvil.framework.featureextraction.ProbeType;
+import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeType;
 
 public abstract class FeatureSupportedProbeResult extends ProbeResult {
     private final boolean supported;

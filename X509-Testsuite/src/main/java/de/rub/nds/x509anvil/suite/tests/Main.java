@@ -3,10 +3,7 @@ package de.rub.nds.x509anvil.suite.tests;
 import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.x509anvil.framework.anvil.*;
 import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.Probe;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeException;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.SignatureAlgorithmProbe;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.VersionProbe;
+import de.rub.nds.x509anvil.framework.featureextraction.probe.*;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
 import de.rub.nds.x509attacker.registry.Registry;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -28,6 +25,10 @@ public class Main {
 
         Probe signatureAlgorithmProbe = new SignatureAlgorithmProbe(SignatureAlgorithm.DSA_SHA512);
         ProbeResult result1 = signatureAlgorithmProbe.execute();
+
+        Probe extensionProbe = new BasicConstraintsExtensionProbe();
+        ProbeResult result2 = extensionProbe.execute();
+
         System.out.println(result);
     }
 }

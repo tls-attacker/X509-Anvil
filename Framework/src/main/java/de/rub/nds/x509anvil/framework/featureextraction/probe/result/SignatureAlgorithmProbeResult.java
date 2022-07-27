@@ -1,7 +1,7 @@
 package de.rub.nds.x509anvil.framework.featureextraction.probe.result;
 
 import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
-import de.rub.nds.x509anvil.framework.featureextraction.ProbeType;
+import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeType;
 
 public class SignatureAlgorithmProbeResult extends FeatureSupportedProbeResult {
     private final SignatureAlgorithm signatureAlgorithm;
