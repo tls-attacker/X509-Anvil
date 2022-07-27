@@ -15,10 +15,10 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.parameter.*;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionCriticalParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsCaParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPathLenConstraintParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPathLenConstraintPresentParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPresentParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 
 public class X509AnvilParameterFactory extends ParameterFactory {
@@ -50,7 +50,7 @@ public class X509AnvilParameterFactory extends ParameterFactory {
             case EXTENSIONS_PRESENT:
                 return new ExtensionsPresentParameter(parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_PRESENT:
-                return new ExtensionPresentParameter(parameterIdentifier, ExtensionType.BASIC_CONSTRAINTS);
+                return new BasicConstraintsPresentParameter(parameterIdentifier.getParameterScope(), ExtensionType.BASIC_CONSTRAINTS);
             case EXT_BASIC_CONSTRAINTS_CRITICAL:
                 return new ExtensionCriticalParameter(parameterIdentifier, ExtensionType.BASIC_CONSTRAINTS, X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT);
             case EXT_BASIC_CONSTRAINTS_CA:

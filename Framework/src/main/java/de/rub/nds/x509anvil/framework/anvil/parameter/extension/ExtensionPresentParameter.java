@@ -45,4 +45,8 @@ public class ExtensionPresentParameter extends BooleanCertificateSpecificParamet
                 CertificateSpecificParameter::enabledByParameterCondition
         );
     }
+
+    public ExtensionType getExtensionType() {
+        return extensionType;
+    }
 }
