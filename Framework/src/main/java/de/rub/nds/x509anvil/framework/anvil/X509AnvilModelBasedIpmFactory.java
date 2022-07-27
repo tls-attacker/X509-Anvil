@@ -37,7 +37,7 @@ public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
         }
 
         // Parameters for root certificate
-        if (testConfig.getUseStaticRootCertificate()) {
+        if (!testConfig.getUseStaticRootCertificate()) {
             for (X509AnvilParameterType x509AnvilParameterType : X509AnvilParameterType.getCertificateSpecificTypes()) {
                 parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ROOT));
             }
@@ -51,7 +51,7 @@ public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
         }
 
         // Parameters for entity certificate
-        if (numCertificateScopes > 2) {
+        if (numCertificateScopes >= 2) {
             for (X509AnvilParameterType x509AnvilParameterType : X509AnvilParameterType.getCertificateSpecificTypes()) {
                 parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ENTITY));
             }
