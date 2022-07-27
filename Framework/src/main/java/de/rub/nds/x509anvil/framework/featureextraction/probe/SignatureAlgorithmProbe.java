@@ -10,7 +10,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
 import java.security.KeyPair;
 
-public class SignatureAlgorithmProbe extends Probe {
+public class SignatureAlgorithmProbe extends SimpleProbe {
     private final SignatureAlgorithm signatureAlgorithm;
 
     public SignatureAlgorithmProbe(SignatureAlgorithm signatureAlgorithm) {
