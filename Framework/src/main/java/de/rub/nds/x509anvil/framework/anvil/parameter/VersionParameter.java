@@ -9,6 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
+import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
 import de.rub.nds.anvilcore.model.constraint.ValueRestrictionConstraintBuilder;
@@ -16,11 +17,11 @@ import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
+import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,9 +45,12 @@ public class VersionParameter extends CertificateSpecificParameter<Integer> {
     @Override
     public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter> parameterValues = new ArrayList<>();
-        parameterValues.add(generateValue(0)); // Version 1
-        parameterValues.add(generateValue(1)); // Version 2
-        parameterValues.add(generateValue(2)); // Version 3
+
+        List<Integer> supportedVersions = ((X509AnvilContextDelegate) AnvilContext.getInstance()
+                .getApplicationSpecificContextDelegate()).getFeatureReport().getSupportedVersions();
+        for (Integer version : supportedVersions) {
+            parameterValues.add(generateValue(version));
+        }
 
         return parameterValues;
     }
