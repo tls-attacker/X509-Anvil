@@ -1,6 +1,8 @@
 package de.rub.nds.x509anvil.framework.featureextraction;
 
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
+import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
+import de.rub.nds.x509anvil.framework.constants.KeyType;
 import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
 
@@ -47,6 +49,18 @@ public class FeatureReport {
 
     public void setSupportedAlgorithms(List<SignatureAlgorithm> supportedAlgorithms) {
         this.supportedAlgorithms = supportedAlgorithms;
+    }
+
+    public boolean algorithmSupported(SignatureAlgorithm algorithm) {
+        return supportedAlgorithms.contains(algorithm);
+    }
+
+    public boolean keyTypeSupported(KeyType keyType) {
+        return supportedAlgorithms.stream().anyMatch(a -> a.getKeyType().equals(keyType));
+    }
+
+    public boolean hashAlgorithmSupported(HashAlgorithm hashAlgorithm) {
+        return supportedAlgorithms.stream().anyMatch(a -> a.getHashAlgorithm().equals(hashAlgorithm));
     }
 
     public List<ExtensionType> getSupportedExtensions() {
