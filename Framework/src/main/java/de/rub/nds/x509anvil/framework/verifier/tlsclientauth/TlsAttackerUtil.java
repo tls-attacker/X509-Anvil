@@ -7,7 +7,7 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 public class TlsAttackerUtil {
     public static SignatureAndHashAlgorithm translateSignatureAlgorithm(SignatureAlgorithm signatureAlgorithm) throws VerifierException {
         switch (signatureAlgorithm) {
-            case RSA_NONE: return SignatureAndHashAlgorithm.RSA_NONE;
+            case RSA_NONE: return SignatureAndHashAlgorithm.RSA_SHA256;
             case RSA_SHA1: return SignatureAndHashAlgorithm.RSA_SHA1;
             case RSA_SHA224: return SignatureAndHashAlgorithm.RSA_SHA224;
             case RSA_SHA256: return SignatureAndHashAlgorithm.RSA_SHA256;
@@ -16,13 +16,13 @@ public class TlsAttackerUtil {
             case RSA_MD5:
             case RSA_MD2:
             case RSA_MD4: return SignatureAndHashAlgorithm.RSA_MD5;
-            case DSA_NONE: return SignatureAndHashAlgorithm.DSA_NONE;
+            case DSA_NONE: return SignatureAndHashAlgorithm.DSA_SHA256;
             case DSA_SHA1: return SignatureAndHashAlgorithm.DSA_SHA1;
             case DSA_SHA224: return SignatureAndHashAlgorithm.DSA_SHA224;
             case DSA_SHA256: return SignatureAndHashAlgorithm.DSA_SHA256;
             case DSA_SHA384: return SignatureAndHashAlgorithm.DSA_SHA384;
             case DSA_SHA512: return SignatureAndHashAlgorithm.DSA_SHA512;
-            case ECDSA_NONE: return SignatureAndHashAlgorithm.ECDSA_NONE;
+            case ECDSA_NONE: return SignatureAndHashAlgorithm.ECDSA_SHA256;
             case ECDSA_SHA1: return SignatureAndHashAlgorithm.ECDSA_SHA1;
             case ECDSA_SHA224: return SignatureAndHashAlgorithm.ECDSA_SHA224;
             case ECDSA_SHA256: return SignatureAndHashAlgorithm.ECDSA_SHA256;
