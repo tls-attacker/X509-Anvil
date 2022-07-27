@@ -27,10 +27,11 @@ public class BasicConstraintsPresentParameter extends ExtensionPresentParameter 
     }
 
     @Override
-    public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
+        // BasicConstraints must be present for intermediate certificates
         if (getParameterScope().isIntermediate()) {
             return Collections.singletonList(generateValue(true));
         }
-        return super.getParameterValues(derivationScope);
+        return super.getNonNullParameterValues(derivationScope);
     }
 }

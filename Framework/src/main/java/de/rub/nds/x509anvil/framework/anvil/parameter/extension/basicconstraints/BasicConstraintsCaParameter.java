@@ -28,12 +28,12 @@ public class BasicConstraintsCaParameter extends BooleanCertificateSpecificParam
     }
 
     @Override
-    public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
         // Ca must be set for intermediate certificates
         if (getParameterScope().isIntermediate()) {
             return Collections.singletonList(generateValue(true));
         }
-        return super.getParameterValues(derivationScope);
+        return super.getNonNullParameterValues(derivationScope);
     }
 
     @Override
