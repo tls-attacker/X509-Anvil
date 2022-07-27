@@ -71,4 +71,16 @@ public class X509AnvilParameterScope extends ParameterScope {
         }
         return chainPosition - INTER_CHAIN_OFFSET;
     }
+
+    public boolean isModeled(int chainLength) {
+        if (isRoot()) {
+            return chainLength >= 1;
+        }
+        else if (isEntity()) {
+            return chainLength >= 2;
+        }
+        else {
+            return chainLength >= getIntermediateIndex() + 3;
+        }
+    }
 }

@@ -14,14 +14,11 @@ import de.rub.nds.anvilcore.model.constraint.AggregatedEnableConstraint;
 import de.rub.nds.anvilcore.model.constraint.AggregatedEnableConstraintBuilder;
 import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
-import de.rub.nds.anvilcore.model.parameter.ParameterFactory;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
-import de.rwth.swc.coffee4j.model.constraints.Constraint;
-import de.rwth.swc.coffee4j.model.constraints.ConstraintBuilder;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -80,16 +77,24 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
             throw new IllegalArgumentException("Unexpected parameter type, expected ChainLengthParameter");
         }
         Integer chainLength = ((ChainLengthParameter) chainLengthParameter).getSelectedValue();
-        return getChainPosition() < chainLength;
+        return getParameterScope().isModeled(chainLength);
     }
 
     protected X509CertificateConfig getCertificateConfigByScope(X509CertificateChainConfig certificateChainConfig) {
         X509AnvilParameterScope parameterScope = (X509AnvilParameterScope) getParameterIdentifier().getParameterScope();
-        return certificateChainConfig.getConfigByChainPosition(parameterScope.getChainPosition());
+        if (parameterScope.isRoot()) {
+            return certificateChainConfig.getRootCertificateConfig();
+        }
+        else if (parameterScope.isEntity()) {
+            return certificateChainConfig.getEntityCertificateConfig();
+        }
+        else {
+            return certificateChainConfig.getIntermediateConfig(parameterScope.getIntermediateIndex());
+        }
     }
 
-    public int getChainPosition() {
-        return ((X509AnvilParameterScope) getParameterIdentifier().getParameterScope()).getChainPosition();
+    public X509AnvilParameterScope getParameterScope() {
+        return (X509AnvilParameterScope) getParameterIdentifier().getParameterScope();
     }
 
     public ParameterIdentifier getScopedIdentifier(X509AnvilParameterType parameterType) {

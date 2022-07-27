@@ -100,29 +100,8 @@ public class X509CertificateChainConfig implements AnvilConfig {
         return intermediateCertificateConfigs;
     }
 
-    public X509CertificateConfig getConfigByChainPosition(int chainPosition) {
-        int entityPosition = Integer.min(chainLength, intermediateCertsModeled + 2) - 1;
-        if (chainPosition == 0) {
-            if (rootCertificateConfig == null) {
-                throw new IllegalArgumentException("Config for root certificate does not exist");
-            }
-            return rootCertificateConfig;
-        }
-        else if (chainPosition > 0 && chainPosition < entityPosition) {
-            if (chainPosition - 1 >= intermediateCertificateConfigs.size()) {
-                throw new IllegalArgumentException("Config for intermediate certificate at position " + chainPosition + " does not exist");
-            }
-            return intermediateCertificateConfigs.get(chainPosition - 1);
-        }
-        else if (chainPosition == entityPosition) {
-            if (entityCertificateConfig == null) {
-                throw new IllegalArgumentException("Config for entity certificate does not exist");
-            }
-            return entityCertificateConfig;
-        }
-        else {
-            throw new IllegalArgumentException("Invalid chain position");
-        }
+    public X509CertificateConfig getIntermediateConfig(int index) {
+        return intermediateCertificateConfigs.get(index);
     }
 
     public int getIntermediateCertsModeled() {
