@@ -1,5 +1,7 @@
 package de.rub.nds.x509anvil.framework.constants;
 
+import java.util.Arrays;
+
 public enum SignatureAlgorithm {
     RSA_NONE(KeyType.RSA, HashAlgorithm.NONE, "1.2.840.113549.1.1.11"),
     RSA_SHA1(KeyType.RSA, HashAlgorithm.SHA1, "1.2.840.113549.1.1.5"),
@@ -33,6 +35,13 @@ public enum SignatureAlgorithm {
         this.keyType = keyType;
         this.hashAlgorithm = hashAlgorithm;
         this.oid = oid;
+    }
+
+    public static SignatureAlgorithm fromKeyHashCombination(KeyType keyType, HashAlgorithm hashAlgorithm) {
+        return Arrays.stream(SignatureAlgorithm.values())
+                .filter(a -> a.getKeyType() == keyType && a.getHashAlgorithm() == hashAlgorithm)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Signature algorithm does not exist"));
     }
 
     public KeyType getKeyType() {

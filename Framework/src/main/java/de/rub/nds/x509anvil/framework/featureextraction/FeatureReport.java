@@ -7,7 +7,9 @@ import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class FeatureReport {
@@ -59,8 +61,20 @@ public class FeatureReport {
         return supportedAlgorithms.stream().anyMatch(a -> a.getKeyType().equals(keyType));
     }
 
+    public List<KeyType> getSupportedKeyTypes() {
+        return Arrays.stream(KeyType.values())
+                .filter(this::keyTypeSupported)
+                .collect(Collectors.toList());
+    }
+
     public boolean hashAlgorithmSupported(HashAlgorithm hashAlgorithm) {
         return supportedAlgorithms.stream().anyMatch(a -> a.getHashAlgorithm().equals(hashAlgorithm));
+    }
+
+    public List<HashAlgorithm> getSupportedHashAlgorithms() {
+        return Arrays.stream(HashAlgorithm.values())
+                .filter(this::hashAlgorithmSupported)
+                .collect(Collectors.toList());
     }
 
     public List<ExtensionType> getSupportedExtensions() {

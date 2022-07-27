@@ -9,19 +9,20 @@
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
+import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
 import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
-import de.rub.nds.x509anvil.framework.constants.ExtensionType;
-import de.rub.nds.x509anvil.framework.x509.config.model.*;
+import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
+import de.rub.nds.x509anvil.framework.x509.config.model.Name;
+import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 
 import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -248,10 +249,7 @@ public class X509CertificateConfig {
             }
         }
 
-        return Arrays.stream(SignatureAlgorithm.values())
-                .filter(a -> a.getKeyType() == keyType && a.getHashAlgorithm() == hashAlgorithm)
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Signature algorithm does not exist"));
+        return SignatureAlgorithm.fromKeyHashCombination(keyType, hashAlgorithm);
     }
 
     public String getSignatureAlgorithmOid() {

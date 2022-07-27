@@ -14,7 +14,6 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
 import java.security.KeyPair;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,8 +36,7 @@ public class KeyTypeParameter extends CertificateSpecificParameter<KeyType> {
     @Override
     protected List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
         FeatureReport featureReport = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getFeatureReport();
-        return Arrays.stream(KeyType.values())
-                .filter(featureReport::keyTypeSupported)
+        return featureReport.getSupportedKeyTypes().stream()
                 .map(this::generateValue)
                 .collect(Collectors.toList());
     }

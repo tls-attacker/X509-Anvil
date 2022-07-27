@@ -12,11 +12,12 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
+import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,8 +40,7 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
     @Override
     protected List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
         FeatureReport featureReport = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getFeatureReport();
-        return Arrays.stream(HashAlgorithm.values())
-                .filter(featureReport::hashAlgorithmSupported)
+        return featureReport.getSupportedHashAlgorithms().stream()
                 .map(this::generateValue)
                 .collect(Collectors.toList());
     }
@@ -54,20 +54,33 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
     public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
         List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
 
+        // We need to build constraints for any unsupported keytype-hashalgo combinations
+        FeatureReport featureReport = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getFeatureReport();
+        List<KeyType> supportedKeyTypes = featureReport.getSupportedKeyTypes();
+        List<HashAlgorithm> supportedHashAlgorithms = featureReport.getSupportedHashAlgorithms();
 
-        defaultConstraints.add(0, ValueRestrictionConstraintBuilder.init("DSA does not work with SHA512 or SHA384", derivationScope)
-                .target(this)
-                .requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
-                .restrictValues(Arrays.asList(HashAlgorithm.SHA512, HashAlgorithm.SHA384))
-                .condition((target, requiredParameters) -> {
-                    KeyType keyType = (KeyType) ConstraintHelper.getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE)).getSelectedValue();
-                    return keyType == KeyType.DSA;
-                })
-                .get()
-        );
-
-
+        for (KeyType keyType : supportedKeyTypes) {
+            for (HashAlgorithm hashAlgorithm : supportedHashAlgorithms) {
+                SignatureAlgorithm resultingSignatureAlgorithm = SignatureAlgorithm.fromKeyHashCombination(keyType, hashAlgorithm);
+                if (!featureReport.algorithmSupported(resultingSignatureAlgorithm)) {
+                    defaultConstraints.add(createSignatureAlgorithmExclusionConstraint(keyType, hashAlgorithm, derivationScope));
+                }
+            }
+        }
 
         return defaultConstraints;
+    }
+
+    public ConditionalConstraint createSignatureAlgorithmExclusionConstraint(KeyType keyType, HashAlgorithm hashAlgorithm, DerivationScope derivationScope) {
+        return ValueRestrictionConstraintBuilder
+                .init("Target does not support " + keyType.name() + " with " + hashAlgorithm.name(), derivationScope)
+                .target(this)
+                .requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
+                .restrictValues(Collections.singletonList(hashAlgorithm))
+                .condition((target, requiredParameters) -> {
+                    KeyType selectedKeyType = (KeyType) ConstraintHelper.getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE)).getSelectedValue();
+                    return selectedKeyType == keyType;
+                })
+                .get();
     }
 }
