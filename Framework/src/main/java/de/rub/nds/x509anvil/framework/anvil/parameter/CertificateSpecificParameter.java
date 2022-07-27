@@ -15,6 +15,7 @@ import de.rub.nds.anvilcore.model.constraint.AggregatedEnableConstraintBuilder;
 import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
+import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -37,11 +38,20 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
     }
 
     private AggregatedEnableConstraint createAggregatedEnableConstraint(DerivationScope derivationScope) {
-        return AggregatedEnableConstraintBuilder.init(derivationScope)
-                .constrain(this)
-                .condition(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH), this::certificateParameterScopeModeled)
-                .conditions(getAdditionalEnableConditions())
-                .get();
+        // Only add certificateParameterScopeModeled constraint if parameter is not always modeled
+        if (isAlwaysModeled(derivationScope)) {
+            // TODO Check if constraint is empty
+            return AggregatedEnableConstraintBuilder.init(derivationScope)
+                    .constrain(this)
+                    .conditions(getAdditionalEnableConditions())
+                    .get();
+        } else {
+            return AggregatedEnableConstraintBuilder.init(derivationScope)
+                    .constrain(this)
+                    .condition(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH), this::certificateParameterScopeModeled)
+                    .conditions(getAdditionalEnableConditions())
+                    .get();
+        }
     }
 
 
@@ -58,7 +68,10 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
     @Override
     public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter> parameterValues = new ArrayList<>();
-        parameterValues.add(generateValue(null));                               // A value of null is used whenever we don't want to model this parameter at all
+        // A value of null is used whenever we don't want to model this parameter at all
+        if (!isAlwaysModeled(derivationScope)) {
+            parameterValues.add(generateValue(null));
+        }
         parameterValues.addAll(getNonNullParameterValues(derivationScope));
         return parameterValues;
     }
@@ -99,6 +112,15 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
 
     public ParameterIdentifier getScopedIdentifier(X509AnvilParameterType parameterType) {
         return new ParameterIdentifier(parameterType, getParameterIdentifier().getParameterScope());
+    }
+
+    /**
+     * Returns true if the corresponding certificate is always modeled for the selected minChainLength
+     * setting.
+     */
+    public boolean isAlwaysModeled(DerivationScope derivationScope) {
+        int minChainLength = AnnotationUtil.resolveMinChainLength(derivationScope.getExtensionContext());
+        return getParameterScope().isModeled(minChainLength);
     }
 
 
