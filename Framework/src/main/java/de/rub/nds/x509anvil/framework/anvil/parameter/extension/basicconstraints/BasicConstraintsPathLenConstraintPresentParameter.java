@@ -10,7 +10,7 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParamet
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
-import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionType;
+import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 
 import java.util.HashMap;
 import java.util.Map;

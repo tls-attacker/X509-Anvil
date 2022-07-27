@@ -9,7 +9,6 @@
 
 package de.rub.nds.x509anvil.framework.x509;
 
-import de.rub.nds.asn1.model.Asn1Null;
 import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
 import de.rub.nds.asn1.parser.X509Parser;
 import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
@@ -17,10 +16,9 @@ import de.rub.nds.x509anvil.framework.constants.KeyType;
 import de.rub.nds.x509anvil.framework.x509.config.CachedKeyPairGenerator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
-import de.rub.nds.x509anvil.framework.x509.config.constants.AlgorithmObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
-import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionType;
+import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.model.*;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 

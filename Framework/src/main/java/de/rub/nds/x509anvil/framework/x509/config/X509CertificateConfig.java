@@ -9,13 +9,12 @@
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
-import de.rub.nds.asn1.Asn1Encodable;
 import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
 import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
-import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionType;
+import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.model.*;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 

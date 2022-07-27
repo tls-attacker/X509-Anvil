@@ -8,7 +8,7 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecific
 import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
-import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionType;
+import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 
 import java.util.Collections;
 import java.util.Map;

@@ -19,7 +19,7 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionPresent
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsCaParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPathLenConstraintParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPathLenConstraintPresentParameter;
-import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionType;
+import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 
 public class X509AnvilParameterFactory extends ParameterFactory {
     @Override
