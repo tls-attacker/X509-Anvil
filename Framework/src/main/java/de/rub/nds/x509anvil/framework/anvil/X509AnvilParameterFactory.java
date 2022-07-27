@@ -15,10 +15,12 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.parameter.*;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionCriticalParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsCaParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPathLenConstraintParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPathLenConstraintPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPresentParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage.KeyUsageFlagParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 
 public class X509AnvilParameterFactory extends ParameterFactory {
@@ -59,6 +61,28 @@ public class X509AnvilParameterFactory extends ParameterFactory {
                 return new BasicConstraintsPathLenConstraintPresentParameter(parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT:
                 return new BasicConstraintsPathLenConstraintParameter(parameterIdentifier.getParameterScope());
+            case EXT_KEY_USAGE_PRESENT:
+                return new ExtensionPresentParameter(parameterIdentifier, ExtensionType.KEY_USAGE);
+            case EXT_KEY_USAGE_CRITICAL:
+                return new ExtensionCriticalParameter(parameterIdentifier, ExtensionType.KEY_USAGE, X509AnvilParameterType.EXT_KEY_USAGE_PRESENT);
+            case EXT_KEY_USAGE_DIGITAL_SIGNATURE:
+                return new KeyUsageFlagParameter(parameterIdentifier, 0);
+            case EXT_KEY_USAGE_NON_REPUDIATION:
+                return new KeyUsageFlagParameter(parameterIdentifier, 1);
+            case EXT_KEY_USAGE_KEY_ENCIPHERMENT:
+                return new KeyUsageFlagParameter(parameterIdentifier, 2);
+            case EXT_KEY_USAGE_DATA_ENCIPHERMENT:
+                return new KeyUsageFlagParameter(parameterIdentifier, 3);
+            case EXT_KEY_USAGE_KEY_AGREEMENT:
+                return new KeyUsageFlagParameter(parameterIdentifier, 4);
+            case EXT_KEY_USAGE_KEY_CERT_SIGN:
+                return new KeyUsageFlagParameter(parameterIdentifier, 5);
+            case EXT_KEY_USAGE_CRL_SIGN:
+                return new KeyUsageFlagParameter(parameterIdentifier, 6);
+            case EXT_KEY_USAGE_ENCIPHER_ONLY:
+                return new KeyUsageFlagParameter(parameterIdentifier, 7);
+            case EXT_KEY_USAGE_DECIPHER_ONLY:
+                return new KeyUsageFlagParameter(parameterIdentifier, 8);
             default:
                 throw new IllegalArgumentException("Unknown parameter identifier " + parameterIdentifier.getParameterType().toString());
         }
