@@ -1,5 +1,6 @@
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
+import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
 import de.rub.nds.anvilcore.model.constraint.ConstraintHelper;
@@ -7,9 +8,11 @@ import de.rub.nds.anvilcore.model.constraint.ValueRestrictionConstraintBuilder;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
+import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
@@ -35,14 +38,9 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
 
     @Override
     protected List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
-        // TODO Feature extraction for hash algorithms
-        return Arrays
-                .stream(HashAlgorithm.values())
-                .filter(h -> h != HashAlgorithm.SHA1)
-                .filter(h -> h != HashAlgorithm.MD2)
-                .filter(h -> h != HashAlgorithm.MD4)
-                .filter(h -> h != HashAlgorithm.MD5)
-                .filter(h -> h != HashAlgorithm.NONE)
+        FeatureReport featureReport = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getFeatureReport();
+        return Arrays.stream(HashAlgorithm.values())
+                .filter(featureReport::hashAlgorithmSupported)
                 .map(this::generateValue)
                 .collect(Collectors.toList());
     }
