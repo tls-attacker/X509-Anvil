@@ -29,12 +29,25 @@ public enum X509AnvilParameterType implements ParameterType {
     SUBJECT_UNIQUE_ID,
     EXTENSIONS_PRESENT,
 
-    // Extensions
+    // BasicConstraints extension
     EXT_BASIC_CONSTRAINTS_PRESENT,
     EXT_BASIC_CONSTRAINTS_CRITICAL,
     EXT_BASIC_CONSTRAINTS_CA,
     EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT,
-    EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT;
+    EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT,
+
+    // KeyUsage extension
+    EXT_KEY_USAGE_PRESENT,
+    EXT_KEY_USAGE_CRITICAL,
+    EXT_KEY_USAGE_DIGITAL_SIGNATURE,
+    EXT_KEY_USAGE_NON_REPUDIATION,
+    EXT_KEY_USAGE_KEY_ENCIPHERMENT,
+    EXT_KEY_USAGE_DATA_ENCIPHERMENT,
+    EXT_KEY_USAGE_KEY_AGREEMENT,
+    EXT_KEY_USAGE_KEY_CERT_SIGN,
+    EXT_KEY_USAGE_CRL_SIGN,
+    EXT_KEY_USAGE_ENCIPHER_ONLY,
+    EXT_KEY_USAGE_DECIPHER_ONLY;
 
     public static List<X509AnvilParameterType> getCertificateSpecificTypes() {
         List<X509AnvilParameterType> certificateSpecificTypes = new ArrayList<>(Arrays.asList(X509AnvilParameterType.values()));
