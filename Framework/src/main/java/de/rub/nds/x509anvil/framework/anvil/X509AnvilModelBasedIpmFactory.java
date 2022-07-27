@@ -14,7 +14,6 @@ import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.ModelBasedIpmFactory;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +35,28 @@ public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
         if (testConfig.getUseStaticRootCertificate()) {
             chainPosition = 1;
         }
-        for (; chainPosition < numCertificateScopes; chainPosition++) {
+
+        // Parameters for root certificate
+        if (testConfig.getUseStaticRootCertificate()) {
             for (X509AnvilParameterType x509AnvilParameterType : X509AnvilParameterType.getCertificateSpecificTypes()) {
-                parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, new X509AnvilParameterScope(chainPosition)));
+                parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ROOT));
             }
         }
+
+        // Parameters for intermediate certificates
+        for (int i = 0; i < numCertificateScopes - 2; i++) {
+            for (X509AnvilParameterType x509AnvilParameterType : X509AnvilParameterType.getCertificateSpecificTypes()) {
+                parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.createIntermediateScope(i)));
+            }
+        }
+
+        // Parameters for entity certificate
+        if (numCertificateScopes > 2) {
+            for (X509AnvilParameterType x509AnvilParameterType : X509AnvilParameterType.getCertificateSpecificTypes()) {
+                parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ENTITY));
+            }
+        }
+
         return parameterIdentifiers;
     }
 }

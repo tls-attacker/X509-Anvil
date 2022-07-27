@@ -12,6 +12,10 @@ public class X509AnvilParameterScope extends ParameterScope {
 
     private final int chainPosition;
 
+    public static X509AnvilParameterScope createIntermediateScope(int intermediateIndex) {
+        return new X509AnvilParameterScope(INTER_CHAIN_OFFSET + intermediateIndex);
+    }
+
     public static X509AnvilParameterScope fromUniqueIdentifier(String uniqueIdentifier) {
         if (uniqueIdentifier.equals("root")) {
             return ROOT;
