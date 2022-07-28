@@ -66,12 +66,15 @@ public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
         if (true) {
             return Arrays.stream(X509AnvilParameterType.values())
                     .filter(t -> t != X509AnvilParameterType.CHAIN_LENGTH)
+                    //.filter(t -> !t.name().startsWith("EXT_KEY_USAGE"))
                     .collect(Collectors.toList());
         }
 
         List<X509AnvilParameterType> modeledParameterTypes = new ArrayList<>(Arrays.asList(
                 X509AnvilParameterType.VERSION,
-                X509AnvilParameterType.EXTENSIONS_PRESENT
+                X509AnvilParameterType.EXTENSIONS_PRESENT,
+                X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT,
+                X509AnvilParameterType.SUBJECT_UNIQUE_ID
         ));
 
         Arrays.stream(X509AnvilParameterType.values())

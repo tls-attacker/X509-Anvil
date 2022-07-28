@@ -21,7 +21,7 @@ public class ModifyingTest extends X509AnvilTest {
 
     @AnvilTest(description = "Negative test case that performs some modifications")
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(3)
+    @TestStrength(2)
     public void sampleTestCase(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, (certificate, config, previousConfig) -> {
