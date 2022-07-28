@@ -48,4 +48,9 @@ public class ExtensionCriticalParameter extends BooleanCertificateSpecificParame
                 CertificateSpecificParameter::enabledByParameterCondition
         );
     }
+
+    @Override
+    protected boolean canBeDisabled(DerivationScope derivationScope) {
+        return true;
+    }
 }
