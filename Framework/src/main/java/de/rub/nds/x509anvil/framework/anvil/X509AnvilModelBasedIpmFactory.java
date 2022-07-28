@@ -18,6 +18,7 @@ import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
     @Override
@@ -39,21 +40,21 @@ public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
 
         // Parameters for root certificate
         if (!testConfig.getUseStaticRootCertificate()) {
-            for (X509AnvilParameterType x509AnvilParameterType : getModelledParameterTypes()) {
+            for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
                 parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ROOT));
             }
         }
 
         // Parameters for intermediate certificates
         for (int i = 0; i < numCertificateScopes - 2; i++) {
-            for (X509AnvilParameterType x509AnvilParameterType : getModelledParameterTypes()) {
+            for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
                 parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.createIntermediateScope(i)));
             }
         }
 
         // Parameters for entity certificate
         if (numCertificateScopes >= 2) {
-            for (X509AnvilParameterType x509AnvilParameterType : getModelledParameterTypes()) {
+            for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
                 parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ENTITY));
             }
         }
@@ -61,11 +62,16 @@ public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
         return parameterIdentifiers;
     }
 
-    public static List<X509AnvilParameterType> getModelledParameterTypes() {
-        return Arrays.asList(
+    public static List<X509AnvilParameterType> getModeledParameterTypes() {
+        List<X509AnvilParameterType> modeledParameterTypes = new ArrayList<>(Arrays.asList(
                 X509AnvilParameterType.VERSION,
-                X509AnvilParameterType.EXTENSIONS_PRESENT,
-                X509AnvilParameterType.EXT_KEY_USAGE_PRESENT
-        );
+                X509AnvilParameterType.EXTENSIONS_PRESENT
+        ));
+
+        Arrays.stream(X509AnvilParameterType.values())
+                .filter(t -> t.name().startsWith("EXT_KEY_USAGE"))
+                .collect(Collectors.toCollection(() -> modeledParameterTypes));
+
+        return modeledParameterTypes;
     }
 }

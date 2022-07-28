@@ -48,4 +48,9 @@ public class KeyUsageFlagParameter extends BooleanCertificateSpecificParameter {
     public int getBitPosition() {
         return bitPosition;
     }
+
+    @Override
+    protected boolean canBeDisabled(DerivationScope derivationScope) {
+        return true;
+    }
 }
