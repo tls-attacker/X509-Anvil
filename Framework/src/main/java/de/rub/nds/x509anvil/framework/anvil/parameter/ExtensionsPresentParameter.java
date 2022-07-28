@@ -46,9 +46,4 @@ public class ExtensionsPresentParameter extends  BooleanCertificateSpecificParam
     protected boolean canBeDisabled(DerivationScope derivationScope) {
         return true;
     }
-
-    @Override
-    protected Boolean getDefaultDisabledValue(DerivationScope derivationScope) {
-        return false;
-    }
 }
