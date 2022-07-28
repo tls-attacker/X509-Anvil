@@ -1,8 +1,6 @@
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
-import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
-import de.rub.nds.anvilcore.model.constraint.ValueRestrictionConstraintBuilder;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
@@ -11,7 +9,8 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
 
 public class ExtensionsPresentParameter extends  BooleanCertificateSpecificParameter {
     // TODO If present, this field is a SEQUENCE of one or more certificate extensions.
@@ -35,20 +34,21 @@ public class ExtensionsPresentParameter extends  BooleanCertificateSpecificParam
     }
 
     @Override
-    public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
-        List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
-
-        defaultConstraints.add(ValueRestrictionConstraintBuilder.<Boolean>init("Extensions may only be present in v3 certificates", derivationScope)
-                .target(this)
-                .requiredParameter(getScopedIdentifier(X509AnvilParameterType.VERSION))
-                .allowValues(Collections.singletonList(false))
-                .condition((target, requiredParameters) -> {
-                    int version = ((VersionParameter) requiredParameters.get(0)).getSelectedValue();
-                    return version != 2;
-                })
-                .get()
+    public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
+        // Extensions are only allowed in v3 certificates
+        return Collections.singletonMap(
+                getScopedIdentifier(X509AnvilParameterType.VERSION),
+                new CertificateSpecificParameter.AllowParameterValuesCondition<>(2)
         );
+    }
 
-        return defaultConstraints;
+    @Override
+    protected boolean canBeDisabled(DerivationScope derivationScope) {
+        return true;
+    }
+
+    @Override
+    protected Boolean getDefaultDisabledValue(DerivationScope derivationScope) {
+        return false;
     }
 }

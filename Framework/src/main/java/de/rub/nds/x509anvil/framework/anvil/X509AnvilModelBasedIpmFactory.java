@@ -63,7 +63,7 @@ public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
     }
 
     public static List<X509AnvilParameterType> getModeledParameterTypes() {
-        if (true) {
+        if (false) {
             return Arrays.stream(X509AnvilParameterType.values())
                     .filter(t -> t != X509AnvilParameterType.CHAIN_LENGTH)
                     .collect(Collectors.toList());
@@ -75,7 +75,7 @@ public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
         ));
 
         Arrays.stream(X509AnvilParameterType.values())
-                .filter(t -> t.name().startsWith("EXT_BASIC_CONSTRAINTS"))
+                .filter(t -> t.name().startsWith("EXT_BASIC_CONSTRAINTSxxx"))
                 .collect(Collectors.toCollection(() -> modeledParameterTypes));
 
         return modeledParameterTypes;
