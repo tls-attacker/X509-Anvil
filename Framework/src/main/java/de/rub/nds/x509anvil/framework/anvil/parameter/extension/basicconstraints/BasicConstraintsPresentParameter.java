@@ -34,4 +34,9 @@ public class BasicConstraintsPresentParameter extends ExtensionPresentParameter 
         }
         return super.getNonNullParameterValues(derivationScope);
     }
+
+    @Override
+    protected boolean canBeDisabled(DerivationScope derivationScope) {
+        return true;
+    }
 }

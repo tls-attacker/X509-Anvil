@@ -120,7 +120,11 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
      */
     public boolean isAlwaysModeled(DerivationScope derivationScope) {
         int minChainLength = AnnotationUtil.resolveMinChainLength(derivationScope.getExtensionContext());
-        return getParameterScope().isModeled(minChainLength);
+        return getParameterScope().isModeled(minChainLength) && !canBeDisabled(derivationScope);
+    }
+
+    protected boolean canBeDisabled(DerivationScope derivationScope) {
+        return false;
     }
 
 

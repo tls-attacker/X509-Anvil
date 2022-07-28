@@ -49,4 +49,9 @@ public class ExtensionPresentParameter extends BooleanCertificateSpecificParamet
     public ExtensionType getExtensionType() {
         return extensionType;
     }
+
+    @Override
+    protected boolean canBeDisabled(DerivationScope derivationScope) {
+        return true;
+    }
 }

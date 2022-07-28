@@ -100,4 +100,9 @@ public class BasicConstraintsPathLenConstraintParameter extends CertificateSpeci
 
         return defaultConstraints;
     }
+
+    @Override
+    protected boolean canBeDisabled(DerivationScope derivationScope) {
+        return true;
+    }
 }

@@ -55,4 +55,9 @@ public class BasicConstraintsCaParameter extends BooleanCertificateSpecificParam
                 CertificateSpecificParameter::enabledByParameterCondition
         );
     }
+
+    @Override
+    protected boolean canBeDisabled(DerivationScope derivationScope) {
+        return true;
+    }
 }

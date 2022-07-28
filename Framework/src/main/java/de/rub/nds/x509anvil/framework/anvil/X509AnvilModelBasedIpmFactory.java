@@ -16,6 +16,7 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
@@ -38,25 +39,33 @@ public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
 
         // Parameters for root certificate
         if (!testConfig.getUseStaticRootCertificate()) {
-            for (X509AnvilParameterType x509AnvilParameterType : X509AnvilParameterType.getCertificateSpecificTypes()) {
+            for (X509AnvilParameterType x509AnvilParameterType : getModelledParameterTypes()) {
                 parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ROOT));
             }
         }
 
         // Parameters for intermediate certificates
         for (int i = 0; i < numCertificateScopes - 2; i++) {
-            for (X509AnvilParameterType x509AnvilParameterType : X509AnvilParameterType.getCertificateSpecificTypes()) {
+            for (X509AnvilParameterType x509AnvilParameterType : getModelledParameterTypes()) {
                 parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.createIntermediateScope(i)));
             }
         }
 
         // Parameters for entity certificate
         if (numCertificateScopes >= 2) {
-            for (X509AnvilParameterType x509AnvilParameterType : X509AnvilParameterType.getCertificateSpecificTypes()) {
+            for (X509AnvilParameterType x509AnvilParameterType : getModelledParameterTypes()) {
                 parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ENTITY));
             }
         }
 
         return parameterIdentifiers;
+    }
+
+    public static List<X509AnvilParameterType> getModelledParameterTypes() {
+        return Arrays.asList(
+                X509AnvilParameterType.VERSION,
+                X509AnvilParameterType.EXTENSIONS_PRESENT,
+                X509AnvilParameterType.EXT_KEY_USAGE_PRESENT
+        );
     }
 }

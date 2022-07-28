@@ -20,7 +20,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class VersionParameter extends CertificateSpecificParameter<Integer> {
@@ -40,18 +40,11 @@ public class VersionParameter extends CertificateSpecificParameter<Integer> {
     }
 
     @Override
-    public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
-        // V1, V2 are not supported for CA certificates
-        if (!getParameterScope().isEntity()) {
-            return Arrays.asList(generateValue(null), generateValue(2));
-        }
-        return super.getParameterValues(derivationScope);
-    }
-
-    @Override
     public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
+        if (!getParameterScope().isEntity()) {
+            return Collections.singletonList(generateValue(2));
+        }
         List<DerivationParameter> parameterValues = new ArrayList<>();
-
         List<Integer> supportedVersions = ((X509AnvilContextDelegate) AnvilContext.getInstance()
                 .getApplicationSpecificContextDelegate()).getFeatureReport().getSupportedVersions();
         for (Integer version : supportedVersions) {
