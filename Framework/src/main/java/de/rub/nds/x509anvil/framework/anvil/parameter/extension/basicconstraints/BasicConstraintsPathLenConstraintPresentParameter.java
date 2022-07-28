@@ -48,4 +48,9 @@ public class BasicConstraintsPathLenConstraintPresentParameter extends BooleanCe
                 CertificateSpecificParameter::enabledByParameterCondition);
         return conditions;
     }
+
+    @Override
+    protected boolean canBeDisabled(DerivationScope derivationScope) {
+        return true;
+    }
 }
