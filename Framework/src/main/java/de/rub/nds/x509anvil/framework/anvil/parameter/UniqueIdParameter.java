@@ -3,9 +3,7 @@ package de.rub.nds.x509anvil.framework.anvil.parameter;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
-import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
 
 import java.util.ArrayList;
@@ -55,5 +53,8 @@ public abstract class UniqueIdParameter extends CertificateSpecificParameter<Bit
         return additionalConditions;
     }
 
-
+    @Override
+    protected boolean canBeDisabled(DerivationScope derivationScope) {
+        return true;
+    }
 }

@@ -2,17 +2,16 @@ package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
-import de.rub.nds.anvilcore.model.constraint.ValueRestrictionConstraintBuilder;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class ExtensionsPresentParameter extends  BooleanCertificateSpecificParameter {
     // TODO If present, this field is a SEQUENCE of one or more certificate extensions.
@@ -47,18 +46,8 @@ public class ExtensionsPresentParameter extends  BooleanCertificateSpecificParam
     @Override
     public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
         List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
-
-        defaultConstraints.add(ValueRestrictionConstraintBuilder.<Boolean>init("Extensions may only be present in v3 certificates", derivationScope)
-                .target(this)
-                .requiredParameter(getScopedIdentifier(X509AnvilParameterType.VERSION))
-                .restrictValues(Collections.singletonList(true))
-                .condition((target, requiredParameters) -> {
-                    Integer version = ((VersionParameter) requiredParameters.get(0)).getSelectedValue();
-                    return !Objects.equals(version, 2);
-                })
-                .get()
-        );
-
+        // Extensions are only allowed in v3 certificates
+        defaultConstraints.add(CommonConstraints.valuesOnlyAllowedInV3Certs(derivationScope, this, Collections.singletonList(true)));
         return defaultConstraints;
     }
 }

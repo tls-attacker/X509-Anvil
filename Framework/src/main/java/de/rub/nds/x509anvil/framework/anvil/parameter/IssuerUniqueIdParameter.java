@@ -30,9 +30,4 @@ public class IssuerUniqueIdParameter extends UniqueIdParameter {
     public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
         certificateConfig.setIssuerUniqueId(getSelectedValue());
     }
-
-    @Override
-    protected boolean canBeDisabled(DerivationScope derivationScope) {
-        return true;
-    }
 }

@@ -31,9 +31,4 @@ public class SubjectUniqueIdParameter extends UniqueIdParameter {
     public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
         certificateConfig.setSubjectUniqueId(getSelectedValue());
     }
-
-    @Override
-    protected boolean canBeDisabled(DerivationScope derivationScope) {
-        return true;
-    }
 }
