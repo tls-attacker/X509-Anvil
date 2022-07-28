@@ -8,6 +8,7 @@ import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
+import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.ChainLengthParameter;
@@ -63,7 +64,7 @@ public class BasicConstraintsPathLenConstraintParameter extends CertificateSpeci
     public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
         return Collections.singletonMap(
                 getScopedIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT),
-                CertificateSpecificParameter::enabledByParameterCondition
+                CommonConstraints::enabledByParameterCondition
         );
     }
 

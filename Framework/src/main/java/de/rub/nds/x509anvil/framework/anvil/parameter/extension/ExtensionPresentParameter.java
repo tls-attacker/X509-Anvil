@@ -3,9 +3,9 @@ package de.rub.nds.x509anvil.framework.anvil.parameter.extension;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
+import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
@@ -42,7 +42,7 @@ public class ExtensionPresentParameter extends BooleanCertificateSpecificParamet
         // Don't model extension if extensions sequence is not present
         return Collections.singletonMap(
                 getScopedIdentifier(X509AnvilParameterType.EXTENSIONS_PRESENT),
-                CertificateSpecificParameter::enabledByParameterCondition
+                CommonConstraints::enabledByParameterCondition
         );
     }
 

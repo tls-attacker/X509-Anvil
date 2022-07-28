@@ -3,6 +3,7 @@ package de.rub.nds.x509anvil.framework.anvil;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.constraint.FlexibleConditionalConstraint;
 import de.rub.nds.anvilcore.model.constraint.ValueRestrictionConstraintBuilder;
+import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.VersionParameter;
 
@@ -20,5 +21,15 @@ public class CommonConstraints {
                     return !Objects.equals(version, 2);
                 })
                 .get();
+    }
+
+    public static boolean enabledByParameterCondition(DerivationParameter enabler) {
+        if (!enabler.getValueClass().equals(Boolean.class)) {
+            throw new IllegalArgumentException("enabledByParameterCondition expects a Boolean value type");
+        }
+        if (enabler.getSelectedValue() == null) {
+            return false;
+        }
+        return (Boolean) enabler.getSelectedValue();
     }
 }

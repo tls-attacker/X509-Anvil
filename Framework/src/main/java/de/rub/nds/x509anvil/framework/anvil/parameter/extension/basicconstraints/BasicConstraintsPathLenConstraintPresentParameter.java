@@ -4,13 +4,13 @@ import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
+import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
-import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,12 +40,9 @@ public class BasicConstraintsPathLenConstraintPresentParameter extends BooleanCe
     @Override
     public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
         Map<ParameterIdentifier, Predicate<DerivationParameter>> conditions = new HashMap<>();
-        // Only model if corresponding ExtensionPresent parameter is true
-        conditions.put(getScopedIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT),
-                CertificateSpecificParameter::enabledByParameterCondition);
         // Only model if ca is asserted
         conditions.put(getScopedIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_CA),
-                CertificateSpecificParameter::enabledByParameterCondition);
+                CommonConstraints::enabledByParameterCondition);
         return conditions;
     }
 
