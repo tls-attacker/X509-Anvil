@@ -1,6 +1,8 @@
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
+import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
+import de.rub.nds.anvilcore.model.constraint.ValueRestrictionConstraintBuilder;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
@@ -9,8 +11,8 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
 import java.util.Collections;
-import java.util.Map;
-import java.util.function.Predicate;
+import java.util.List;
+import java.util.Objects;
 
 public class ExtensionsPresentParameter extends  BooleanCertificateSpecificParameter {
     // TODO If present, this field is a SEQUENCE of one or more certificate extensions.
@@ -24,6 +26,15 @@ public class ExtensionsPresentParameter extends  BooleanCertificateSpecificParam
     }
 
     @Override
+    public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
+        // CA certificates must contain BasicConstraints extension
+        if (!getParameterScope().isEntity()) {
+            return Collections.singletonList(generateValue(true));
+        }
+        return super.getNonNullParameterValues(derivationScope);
+    }
+
+    @Override
     protected DerivationParameter<X509CertificateChainConfig, Boolean> generateValue(Boolean selectedValue) {
         return new ExtensionsPresentParameter(selectedValue, getParameterIdentifier().getParameterScope());
     }
@@ -34,16 +45,20 @@ public class ExtensionsPresentParameter extends  BooleanCertificateSpecificParam
     }
 
     @Override
-    public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
-        // Extensions are only allowed in v3 certificates
-        return Collections.singletonMap(
-                getScopedIdentifier(X509AnvilParameterType.VERSION),
-                new CertificateSpecificParameter.AllowParameterValuesCondition<>(2)
-        );
-    }
+    public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
+        List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
 
-    @Override
-    protected boolean canBeDisabled(DerivationScope derivationScope) {
-        return true;
+        defaultConstraints.add(ValueRestrictionConstraintBuilder.<Boolean>init("Extensions may only be present in v3 certificates", derivationScope)
+                .target(this)
+                .requiredParameter(getScopedIdentifier(X509AnvilParameterType.VERSION))
+                .restrictValues(Collections.singletonList(true))
+                .condition((target, requiredParameters) -> {
+                    Integer version = ((VersionParameter) requiredParameters.get(0)).getSelectedValue();
+                    return !Objects.equals(version, 2);
+                })
+                .get()
+        );
+
+        return defaultConstraints;
     }
 }
