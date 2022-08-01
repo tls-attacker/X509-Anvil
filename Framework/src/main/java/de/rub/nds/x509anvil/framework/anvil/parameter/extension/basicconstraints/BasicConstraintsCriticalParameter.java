@@ -5,38 +5,36 @@ import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
-import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionPresentParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionCriticalParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 
 import java.util.Collections;
 import java.util.List;
 
-public class BasicConstraintsPresentParameter extends ExtensionPresentParameter {
-    public BasicConstraintsPresentParameter(ParameterScope parameterScope, ExtensionType extensionType) {
-        super(new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT, parameterScope), extensionType);
+public class BasicConstraintsCriticalParameter extends ExtensionCriticalParameter {
+
+    public BasicConstraintsCriticalParameter(ParameterScope parameterScope) {
+        super(new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_CRITICAL, parameterScope),
+                ExtensionType.BASIC_CONSTRAINTS, X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT);
     }
 
-    public BasicConstraintsPresentParameter(Boolean selectedValue, ParameterScope parameterScope, ExtensionType extensionType) {
-        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT, parameterScope), extensionType);
+    public BasicConstraintsCriticalParameter(Boolean selectedValue, ParameterScope parameterScope) {
+        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_CRITICAL, parameterScope),
+                ExtensionType.BASIC_CONSTRAINTS, X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT);
     }
 
     @Override
     protected DerivationParameter<X509CertificateChainConfig, Boolean> generateValue(Boolean selectedValue) {
-        return new BasicConstraintsPresentParameter(selectedValue, getParameterScope(), getExtensionType());
+        return new BasicConstraintsCriticalParameter(selectedValue, getParameterScope());
     }
 
     @Override
     public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
-        // BasicConstraints must be present for CA certificates
+        // BasicConstraints must be critical for CA
         if (!getParameterScope().isEntity()) {
             return Collections.singletonList(generateValue(true));
         }
         return super.getNonNullParameterValues(derivationScope);
-    }
-
-    @Override
-    protected boolean canBeDisabled(DerivationScope derivationScope) {
-        return true;
     }
 }
