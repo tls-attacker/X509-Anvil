@@ -36,8 +36,9 @@ public class IssuerUniqueIdPresentParameter extends BooleanCertificateSpecificPa
     @Override
     public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
         List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
-        // Unique IDs are only allowed in v3 certificates
-        defaultConstraints.add(CommonConstraints.valuesOnlyAllowedInV3Certs(derivationScope, this, Collections.singletonList(true)));
+        // Unique IDs are only allowed in v2 and v3 certificates
+        defaultConstraints.add(CommonConstraints.valuesNotAllowedForVersions(Collections.singletonList(0), derivationScope,
+                this, Collections.singletonList(true)));
         return defaultConstraints;
     }
 }
