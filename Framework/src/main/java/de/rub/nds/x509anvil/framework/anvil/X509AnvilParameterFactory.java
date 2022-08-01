@@ -68,8 +68,8 @@ public class X509AnvilParameterFactory extends ParameterFactory {
                 return new ExtensionCriticalParameter(parameterIdentifier, ExtensionType.KEY_USAGE, X509AnvilParameterType.EXT_KEY_USAGE_PRESENT);
             case EXT_KEY_USAGE_DIGITAL_SIGNATURE:
                 return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.DIGITAL_SIGNATURE);
-            case EXT_KEY_USAGE_NON_REPUDIATION:
-                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.NON_REPUDIATION);
+//            case EXT_KEY_USAGE_NON_REPUDIATION:
+//                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.NON_REPUDIATION);
             case EXT_KEY_USAGE_KEY_ENCIPHERMENT:
                 return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.KEY_ENCIPHERMENT);
             case EXT_KEY_USAGE_DATA_ENCIPHERMENT:
@@ -78,12 +78,12 @@ public class X509AnvilParameterFactory extends ParameterFactory {
                 return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.KEY_AGREEMENT);
             case EXT_KEY_USAGE_KEY_CERT_SIGN:
                 return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.KEY_CERT_SIGN);
-            case EXT_KEY_USAGE_CRL_SIGN:
-                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.CRL_SIGN);
-            case EXT_KEY_USAGE_ENCIPHER_ONLY:
-                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.ENCIPHER_ONLY);
-            case EXT_KEY_USAGE_DECIPHER_ONLY:
-                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.DECIPHER_ONLY);
+//            case EXT_KEY_USAGE_CRL_SIGN:
+//                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.CRL_SIGN);
+//            case EXT_KEY_USAGE_ENCIPHER_ONLY:
+//                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.ENCIPHER_ONLY);
+//            case EXT_KEY_USAGE_DECIPHER_ONLY:
+//                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.DECIPHER_ONLY);
             default:
                 throw new IllegalArgumentException("Unknown parameter identifier " + parameterIdentifier.getParameterType().toString());
         }
