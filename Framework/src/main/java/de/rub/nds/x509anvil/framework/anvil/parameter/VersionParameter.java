@@ -11,12 +11,9 @@ package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.DerivationScope;
-import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
-import de.rub.nds.anvilcore.model.constraint.ValueRestrictionConstraintBuilder;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
-import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -44,8 +41,10 @@ public class VersionParameter extends CertificateSpecificParameter<Integer> {
 
     @Override
     public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
+        if (!getParameterScope().isEntity()) {
+            return Collections.singletonList(generateValue(2));
+        }
         List<DerivationParameter> parameterValues = new ArrayList<>();
-
         List<Integer> supportedVersions = ((X509AnvilContextDelegate) AnvilContext.getInstance()
                 .getApplicationSpecificContextDelegate()).getFeatureReport().getSupportedVersions();
         for (Integer version : supportedVersions) {
@@ -58,27 +57,5 @@ public class VersionParameter extends CertificateSpecificParameter<Integer> {
     @Override
     public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
         certificateConfig.setVersion(getSelectedValue());
-    }
-
-    @Override
-    public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
-        List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
-
-        // Coffee4j does not allow constraints that do not constraint any combination. TODO: Fix coffee4j?
-        int maxEntityCertChainPosition = AnnotationUtil.resolveMaxEntityCertChainPosition(derivationScope.getExtensionContext());
-        if (getChainPosition() > 0 && getChainPosition() < maxEntityCertChainPosition) {
-            defaultConstraints.add(0, ValueRestrictionConstraintBuilder.init("intermediate cert must be v3", derivationScope)
-                    .target(this)
-                    .requiredParameter(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH))
-                    .allowValues(Collections.singletonList(2))
-                    .condition((target, requiredParameters) -> {
-                        int chainLength = ((ChainLengthParameter) requiredParameters.get(0)).getSelectedValue();
-                        return ChainPositionUtil.isIntermediate(getChainPosition(), chainLength, derivationScope);
-                    })
-                    .get()
-            );
-        }
-
-        return defaultConstraints;
     }
 }

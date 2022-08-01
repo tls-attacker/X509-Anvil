@@ -3,6 +3,7 @@ package de.rub.nds.x509anvil.framework.featureextraction;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.*;
+import de.rub.nds.x509anvil.framework.featureextraction.probe.result.DigitalSignatureKeyUsageRequiredProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ExtensionProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.SignatureAlgorithmProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.VersionProbeResult;
@@ -58,8 +59,23 @@ public class FeatureExtractor {
         }
 
 
-        // Probe support for other extensions
-        // TODO
+        // Probe support for key usage extension
+        Probe keyUsageProbe = new KeyUsageExtensionProbe();
+        ExtensionProbeResult keyUsageProbeResult = (ExtensionProbeResult) keyUsageProbe.execute();
+        if (keyUsageProbeResult.isSupported()) {
+            featureReport.addSupportedExtension(ExtensionType.KEY_USAGE);
+        }
+        featureReport.addProbeResult(basicConstraintsProbeResult);
+
+        if (keyUsageProbeResult.isSupported()) {
+            // Probe whether the digitalSignature key usage is required for entity certificates
+            Probe digitalSignatureRequiredProbe = new DigitalSignatureKeyUsageRequired();
+            DigitalSignatureKeyUsageRequiredProbeResult requiredProbeResult =
+                    (DigitalSignatureKeyUsageRequiredProbeResult) digitalSignatureRequiredProbe.execute();
+            if (requiredProbeResult.isRequired()) {
+                featureReport.setDigitalSignatureKeyUsageRequired(true);
+            }
+        }
 
         return featureReport;
     }

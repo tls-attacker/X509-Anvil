@@ -14,10 +14,11 @@ import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.ModelBasedIpmFactory;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
     @Override
@@ -36,11 +37,50 @@ public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
         if (testConfig.getUseStaticRootCertificate()) {
             chainPosition = 1;
         }
-        for (; chainPosition < numCertificateScopes; chainPosition++) {
-            for (X509AnvilParameterType x509AnvilParameterType : X509AnvilParameterType.getCertificateSpecificTypes()) {
-                parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, new X509AnvilParameterScope(chainPosition)));
+
+        // Parameters for root certificate
+        if (!testConfig.getUseStaticRootCertificate()) {
+            for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
+                parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ROOT));
             }
         }
+
+        // Parameters for intermediate certificates
+        for (int i = 0; i < numCertificateScopes - 2; i++) {
+            for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
+                parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.createIntermediateScope(i)));
+            }
+        }
+
+        // Parameters for entity certificate
+        if (numCertificateScopes >= 2) {
+            for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
+                parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ENTITY));
+            }
+        }
+
         return parameterIdentifiers;
+    }
+
+    public static List<X509AnvilParameterType> getModeledParameterTypes() {
+        if (true) {
+            return Arrays.stream(X509AnvilParameterType.values())
+                    .filter(t -> t != X509AnvilParameterType.CHAIN_LENGTH)
+                    //.filter(t -> !t.name().startsWith("EXT_KEY_USAGE"))
+                    .collect(Collectors.toList());
+        }
+
+        List<X509AnvilParameterType> modeledParameterTypes = new ArrayList<>(Arrays.asList(
+                X509AnvilParameterType.VERSION,
+                X509AnvilParameterType.EXTENSIONS_PRESENT,
+                X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT,
+                X509AnvilParameterType.SUBJECT_UNIQUE_ID
+        ));
+
+        Arrays.stream(X509AnvilParameterType.values())
+                .filter(t -> t.name().startsWith("EXT_BASIC_CONSTRAINTS"))
+                .collect(Collectors.toCollection(() -> modeledParameterTypes));
+
+        return modeledParameterTypes;
     }
 }

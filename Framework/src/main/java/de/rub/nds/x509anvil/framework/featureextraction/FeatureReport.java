@@ -17,6 +17,7 @@ public class FeatureReport {
     private List<Integer> supportedVersions = new ArrayList<>();
     private List<SignatureAlgorithm> supportedAlgorithms = new ArrayList<>();
     private List<ExtensionType> supportedExtensions = new ArrayList<>();
+    private boolean digitalSignatureKeyUsageRequired;
 
     public List<ProbeResult> getProbeResults() {
         return probeResults;
@@ -91,6 +92,14 @@ public class FeatureReport {
 
     public boolean extensionSupported(ExtensionType extensionType) {
         return supportedExtensions.contains(extensionType);
+    }
+
+    public boolean isDigitalSignatureKeyUsageRequired() {
+        return digitalSignatureKeyUsageRequired;
+    }
+
+    public void setDigitalSignatureKeyUsageRequired(boolean digitalSignatureKeyUsageRequired) {
+        this.digitalSignatureKeyUsageRequired = digitalSignatureKeyUsageRequired;
     }
 
     @Override

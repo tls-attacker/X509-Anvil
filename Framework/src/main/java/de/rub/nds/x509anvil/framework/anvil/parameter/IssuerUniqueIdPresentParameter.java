@@ -1,16 +1,17 @@
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
+import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
 import java.util.Collections;
-import java.util.Map;
-import java.util.function.Predicate;
+import java.util.List;
 
 public class IssuerUniqueIdPresentParameter extends BooleanCertificateSpecificParameter {
 
@@ -33,11 +34,11 @@ public class IssuerUniqueIdPresentParameter extends BooleanCertificateSpecificPa
     }
 
     @Override
-    public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
-        // Unique IDs are only allowed in v3 certificates
-        return Collections.singletonMap(
-                getScopedIdentifier(X509AnvilParameterType.VERSION),
-                new CertificateSpecificParameter.AllowParameterValuesCondition<>(2)
-        );
+    public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
+        List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
+        // Unique IDs are only allowed in v2 and v3 certificates
+        defaultConstraints.add(CommonConstraints.valuesNotAllowedForVersions(Collections.singletonList(0), derivationScope,
+                this, Collections.singletonList(true)));
+        return defaultConstraints;
     }
 }

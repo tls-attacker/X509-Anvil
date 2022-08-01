@@ -8,14 +8,14 @@ import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
+import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.ChainLengthParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.ChainPositionUtil;
+import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
-import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,7 +64,7 @@ public class BasicConstraintsPathLenConstraintParameter extends CertificateSpeci
     public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
         return Collections.singletonMap(
                 getScopedIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT),
-                CertificateSpecificParameter::enabledByParameterCondition
+                CommonConstraints::enabledByParameterCondition
         );
     }
 
@@ -74,29 +74,36 @@ public class BasicConstraintsPathLenConstraintParameter extends CertificateSpeci
 
         // Coffee4j cannot handle constraints without effect. Only add constraint if at least
         // one other intermediate certificate follows in chain
-        int maxEntityCertChainPosition = AnnotationUtil.resolveMaxEntityCertChainPosition(derivationScope.getExtensionContext());
         int maxChainLength = AnnotationUtil.resolveMaxChainLength(derivationScope.getExtensionContext());
-        if (getChainPosition() < maxChainLength - 2 && getChainPosition() != maxEntityCertChainPosition) {
-            defaultConstraints.add(0, ValueRestrictionConstraintBuilder.init("if CA is asserted, pathlen must be big enough (or null)", derivationScope)
+        if (getParameterScope().isIntermediate() && getParameterScope().getIntermediateIndex() < maxChainLength - 3) {
+            defaultConstraints.add(ValueRestrictionConstraintBuilder.<Integer>init("if CA is asserted, pathlen must be big enough (or null)", derivationScope)
                     .target(this)
                     .requiredParameter(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH))
                     // Allow only values that are big enough and null...
                     .restrictValues((target, requiredParameters) -> {
+                        List<Integer> restrictedValues = new ArrayList<>();
+                        restrictedValues.add(null);
                         ChainLengthParameter chainLengthParameter = (ChainLengthParameter)
                                 ConstraintHelper.getParameterValue(requiredParameters, new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH));
                         int chainLength = chainLengthParameter.getSelectedValue();
-                        int minimumPathLen = chainLength - getChainPosition() - 2;
-                        return IntStream.range(0, minimumPathLen).boxed().collect(Collectors.toList());
+                        int minimumPathLen = chainLength - getParameterScope().getIntermediateIndex() - 3;
+                        restrictedValues.addAll(IntStream.range(0, minimumPathLen).boxed().collect(Collectors.toList()));
+                        return restrictedValues;
                     })
                     // ... if the certificate is an intermediate certificate
                     .condition((target, requiredParameters) -> {
                         int chainLength = ((ChainLengthParameter) requiredParameters.get(0)).getSelectedValue();
-                        return (getChainPosition() < chainLength - 2 && !ChainPositionUtil.isEntity(getChainPosition(), chainLength, derivationScope));        // "is intermediate cert"
+                        return (getParameterScope().getIntermediateIndex() < chainLength - 3);        // "is intermediate cert"
                     })
                     .get()
             );
         }
 
         return defaultConstraints;
+    }
+
+    @Override
+    protected boolean canBeDisabled(DerivationScope derivationScope) {
+        return true;
     }
 }
