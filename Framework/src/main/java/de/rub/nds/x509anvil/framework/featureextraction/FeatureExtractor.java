@@ -59,7 +59,12 @@ public class FeatureExtractor {
 
 
         // Probe support for other extensions
-        // TODO
+        Probe keyUsageProbe = new KeyUsageExtensionProbe();
+        ExtensionProbeResult keyUsageProbeResult = (ExtensionProbeResult) keyUsageProbe.execute();
+        if (keyUsageProbeResult.isSupported()) {
+            featureReport.addSupportedExtension(ExtensionType.KEY_USAGE);
+        }
+        featureReport.addProbeResult(basicConstraintsProbeResult);
 
         return featureReport;
     }
