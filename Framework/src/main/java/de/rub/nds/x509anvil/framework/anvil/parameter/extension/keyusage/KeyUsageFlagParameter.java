@@ -1,17 +1,21 @@
 package de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage;
 
+import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
+import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
+import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -37,6 +41,17 @@ public class KeyUsageFlagParameter extends BooleanCertificateSpecificParameter {
     @Override
     protected DerivationParameter<X509CertificateChainConfig, Boolean> generateValue(Boolean selectedValue) {
         return new KeyUsageFlagParameter(selectedValue, getParameterIdentifier(), bitPosition);
+    }
+
+    @Override
+    public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
+        if (bitPosition == KeyUsageExtensionConfig.DIGITAL_SIGNATURE) {
+            FeatureReport featureReport = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getFeatureReport();
+            if (featureReport.isDigitalSignatureKeyUsageRequired()) {
+                return Collections.singletonList(generateValue(true));
+            }
+        }
+        return super.getNonNullParameterValues(derivationScope);
     }
 
     @Override
