@@ -22,6 +22,7 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage.KeyUsageFlagParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
+import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
 
 public class X509AnvilParameterFactory extends ParameterFactory {
     @Override
@@ -66,23 +67,23 @@ public class X509AnvilParameterFactory extends ParameterFactory {
             case EXT_KEY_USAGE_CRITICAL:
                 return new ExtensionCriticalParameter(parameterIdentifier, ExtensionType.KEY_USAGE, X509AnvilParameterType.EXT_KEY_USAGE_PRESENT);
             case EXT_KEY_USAGE_DIGITAL_SIGNATURE:
-                return new KeyUsageFlagParameter(parameterIdentifier, 0);
+                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.DIGITAL_SIGNATURE);
             case EXT_KEY_USAGE_NON_REPUDIATION:
-                return new KeyUsageFlagParameter(parameterIdentifier, 1);
+                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.NON_REPUDIATION);
             case EXT_KEY_USAGE_KEY_ENCIPHERMENT:
-                return new KeyUsageFlagParameter(parameterIdentifier, 2);
+                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.KEY_ENCIPHERMENT);
             case EXT_KEY_USAGE_DATA_ENCIPHERMENT:
-                return new KeyUsageFlagParameter(parameterIdentifier, 3);
+                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.DATA_ENCIPHERMENT);
             case EXT_KEY_USAGE_KEY_AGREEMENT:
-                return new KeyUsageFlagParameter(parameterIdentifier, 4);
+                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.KEY_AGREEMENT);
             case EXT_KEY_USAGE_KEY_CERT_SIGN:
-                return new KeyUsageFlagParameter(parameterIdentifier, 5);
+                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.KEY_CERT_SIGN);
             case EXT_KEY_USAGE_CRL_SIGN:
-                return new KeyUsageFlagParameter(parameterIdentifier, 6);
+                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.CRL_SIGN);
             case EXT_KEY_USAGE_ENCIPHER_ONLY:
-                return new KeyUsageFlagParameter(parameterIdentifier, 7);
+                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.ENCIPHER_ONLY);
             case EXT_KEY_USAGE_DECIPHER_ONLY:
-                return new KeyUsageFlagParameter(parameterIdentifier, 8);
+                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.DECIPHER_ONLY);
             default:
                 throw new IllegalArgumentException("Unknown parameter identifier " + parameterIdentifier.getParameterType().toString());
         }

@@ -10,107 +10,159 @@ import de.rub.nds.x509attacker.linker.Linker;
 import java.util.HashMap;
 
 public class KeyUsageExtensionConfig extends ExtensionConfig {
-    private boolean digitalSignature = false;
-    private boolean nonRepudiation = false;
-    private boolean keyEncipherment = false;
-    private boolean dataEncipherment = false;
-    private boolean keyAgreement = false;
-    private boolean keyCertSign = true;
-    private boolean cRLSign = false;
-    private boolean encipherOnly = false;
-    private boolean decipherOnly = false;
+    public static int DIGITAL_SIGNATURE = 128;
+    public static int NON_REPUDIATION = 64;
+    public static int KEY_ENCIPHERMENT = 32;
+    public static int DATA_ENCIPHERMENT = 16;
+    public static int KEY_AGREEMENT = 8;
+    public static int KEY_CERT_SIGN = 4;
+    public static int CRL_SIGN = 2;
+    public static int ENCIPHER_ONLY = 1;
+    public static int DECIPHER_ONLY = 128<<8;
+
+    private final byte[] flags = new byte[2];
 
     public KeyUsageExtensionConfig() {
         super(ExtensionObjectIdentifiers.KEY_USAGE, "keyUsage");
     }
 
+    public boolean isFlagSet(int flag) {
+        if (flag <= 128) {
+            return (flags[0] & flag) == flag;
+        } else {
+            return (flags[1] & (flag>>8)) == flag>>8;
+        }
+    }
+
+    public void setFlag(int flag, boolean value) {
+        if (flag <= 128) {
+            if (value) {
+                flags[0] |= flag;
+            } else {
+                flags[0] &= ~flag;
+            }
+        } else {
+            if (value) {
+                flags[1] |= flag>>8;
+            } else {
+                flags[1] &= ~(flag>>8);
+            }
+        }
+    }
+
     public boolean isDigitalSignature() {
-        return digitalSignature;
+        return (flags[0] & DIGITAL_SIGNATURE) == DIGITAL_SIGNATURE;
     }
 
     public void setDigitalSignature(boolean digitalSignature) {
-        this.digitalSignature = digitalSignature;
+        if (digitalSignature) {
+            flags[0] |= DIGITAL_SIGNATURE;
+        } else {
+            flags[0] &= ~DIGITAL_SIGNATURE;
+        }
     }
 
     public boolean isNonRepudiation() {
-        return nonRepudiation;
+        return (flags[0] & NON_REPUDIATION) == NON_REPUDIATION;
     }
 
     public void setNonRepudiation(boolean nonRepudiation) {
-        this.nonRepudiation = nonRepudiation;
+        if (nonRepudiation) {
+            flags[0] |= NON_REPUDIATION;
+        } else {
+            flags[0] &= ~NON_REPUDIATION;
+        }
     }
 
     public boolean isKeyEncipherment() {
-        return keyEncipherment;
+        return (flags[0] & KEY_ENCIPHERMENT) == KEY_ENCIPHERMENT;
     }
 
     public void setKeyEncipherment(boolean keyEncipherment) {
-        this.keyEncipherment = keyEncipherment;
+        if (keyEncipherment) {
+            flags[0] |= KEY_ENCIPHERMENT;
+        } else {
+            flags[0] &= ~KEY_ENCIPHERMENT;
+        }
     }
 
     public boolean isDataEncipherment() {
-        return dataEncipherment;
+        return (flags[0] & DATA_ENCIPHERMENT) == DATA_ENCIPHERMENT;
     }
 
     public void setDataEncipherment(boolean dataEncipherment) {
-        this.dataEncipherment = dataEncipherment;
+        if (dataEncipherment) {
+            flags[0] |= DATA_ENCIPHERMENT;
+        } else {
+            flags[0] &= ~DATA_ENCIPHERMENT;
+        }
     }
 
     public boolean isKeyAgreement() {
-        return keyAgreement;
+        return (flags[0] & KEY_AGREEMENT) == KEY_AGREEMENT;
     }
 
     public void setKeyAgreement(boolean keyAgreement) {
-        this.keyAgreement = keyAgreement;
+        if (keyAgreement) {
+            flags[0] |= KEY_AGREEMENT;
+        } else {
+            flags[0] &= ~KEY_AGREEMENT;
+        }
     }
 
     public boolean isKeyCertSign() {
-        return keyCertSign;
+        return (flags[0] & KEY_CERT_SIGN) == KEY_CERT_SIGN;
     }
 
     public void setKeyCertSign(boolean keyCertSign) {
-        this.keyCertSign = keyCertSign;
+        if (keyCertSign) {
+            flags[0] |= KEY_CERT_SIGN;
+        } else {
+            flags[0] &= ~KEY_CERT_SIGN;
+        }
     }
 
     public boolean iscRLSign() {
-        return cRLSign;
+        return (flags[0] & CRL_SIGN) == CRL_SIGN;
     }
 
     public void setcRLSign(boolean cRLSign) {
-        this.cRLSign = cRLSign;
+        if (cRLSign) {
+            flags[0] |= CRL_SIGN;
+        } else {
+            flags[0] &= ~CRL_SIGN;
+        }
     }
 
     public boolean isEncipherOnly() {
-        return encipherOnly;
+        return (flags[0] & ENCIPHER_ONLY) == ENCIPHER_ONLY;
     }
 
     public void setEncipherOnly(boolean encipherOnly) {
-        this.encipherOnly = encipherOnly;
+        if (encipherOnly) {
+            flags[0] |= ENCIPHER_ONLY;
+        } else {
+            flags[0] &= ~ENCIPHER_ONLY;
+        }
     }
 
     public boolean isDecipherOnly() {
-        return decipherOnly;
+        return (flags[1] & (DECIPHER_ONLY>>8)) == (DECIPHER_ONLY>>8);
     }
 
     public void setDecipherOnly(boolean decipherOnly) {
-        this.decipherOnly = decipherOnly;
+        if (decipherOnly) {
+            flags[1] |= (DECIPHER_ONLY>>8);
+        } else {
+            flags[1] &= ~(DECIPHER_ONLY>>8);
+        }
     }
 
     @Override
     protected Asn1PrimitiveOctetString getContentAsn1Structure() throws CertificateGeneratorException {
         Asn1PrimitiveBitString keyUsageAsn1 = new Asn1PrimitiveBitString();
         keyUsageAsn1.setIdentifier("keyUsage");
-        byte[] value = {0,0};
-        if (digitalSignature) value[0] |= 1;
-        if (nonRepudiation) value[0] |= 1 << 1;
-        if (keyEncipherment) value[0] |= 1 << 2;
-        if (dataEncipherment) value[0] |= 1 << 3;
-        if (keyAgreement) value[0] |= 1 << 4;
-        if (keyCertSign) value[0] |= 1 << 5;
-        if (cRLSign) value[0] |= 1 << 6;
-        if (encipherOnly) value[0] |= 1 << 7;
-        if (decipherOnly) value[1] |= 1;
-        keyUsageAsn1.setValue(value);
+        keyUsageAsn1.setValue(flags);
         keyUsageAsn1.setUnusedBits(7);
 
         byte[] derEncoded = Asn1EncoderForX509.encode(new Linker(new HashMap<>()), keyUsageAsn1);

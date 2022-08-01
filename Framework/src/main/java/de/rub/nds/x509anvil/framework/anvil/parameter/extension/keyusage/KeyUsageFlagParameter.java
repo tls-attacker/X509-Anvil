@@ -6,8 +6,10 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
+import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
+import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
 
 import java.util.Collections;
 import java.util.Map;
@@ -28,7 +30,8 @@ public class KeyUsageFlagParameter extends BooleanCertificateSpecificParameter {
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-
+        KeyUsageExtensionConfig extensionConfig = (KeyUsageExtensionConfig) certificateConfig.extension(ExtensionType.KEY_USAGE);
+        extensionConfig.setFlag(getBitPosition(), getSelectedValue());
     }
 
     @Override
