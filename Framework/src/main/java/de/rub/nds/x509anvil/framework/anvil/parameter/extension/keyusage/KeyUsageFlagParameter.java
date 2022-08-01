@@ -45,12 +45,19 @@ public class KeyUsageFlagParameter extends BooleanCertificateSpecificParameter {
 
     @Override
     public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
-        if (bitPosition == KeyUsageExtensionConfig.DIGITAL_SIGNATURE) {
+        // Entity certificates may be required to have digitalSignature bit set (e.g. if verifier adapter uses client authentication)
+        if (getParameterScope().isEntity() && bitPosition == KeyUsageExtensionConfig.DIGITAL_SIGNATURE) {
             FeatureReport featureReport = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getFeatureReport();
             if (featureReport.isDigitalSignatureKeyUsageRequired()) {
                 return Collections.singletonList(generateValue(true));
             }
         }
+
+        // CA certificates are required to assert keyCertSign if key usage extension is present
+        if (!getParameterScope().isEntity() && bitPosition == KeyUsageExtensionConfig.KEY_CERT_SIGN) {
+            return Collections.singletonList(generateValue(true));
+        }
+
         return super.getNonNullParameterValues(derivationScope);
     }
 
