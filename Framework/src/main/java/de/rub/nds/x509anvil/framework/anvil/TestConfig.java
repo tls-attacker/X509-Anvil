@@ -27,6 +27,9 @@ public class TestConfig {
     private int defaultMaxChainLength = 3;
     private int defaultIntermediateCertsModeled = 1;
 
+    private String testPackage = "de.rub.nds.tlstest.suite.tests";
+    private int numParallelTests = 4;
+
     public VerifierAdapterType getVerifierAdapterType() {
         return verifierAdapterType;
     }
@@ -81,5 +84,21 @@ public class TestConfig {
 
     public void setStaticRootPrivateKeyFile(String staticRootPrivateKeyFile) {
         this.staticRootPrivateKeyFile = staticRootPrivateKeyFile;
+    }
+
+    public String getTestPackage() {
+        return testPackage;
+    }
+
+    public void setTestPackage(String testPackage) {
+        this.testPackage = testPackage;
+    }
+
+    public int getNumParallelTests() {
+        return numParallelTests;
+    }
+
+    public void setNumParallelTests(int numParallelTests) {
+        this.numParallelTests = numParallelTests;
     }
 }

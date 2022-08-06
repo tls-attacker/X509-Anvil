@@ -7,5 +7,8 @@ import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeException;
 public class Main {
     public static void main(String[] args) throws ProbeException, UnsupportedFeatureException {
         ContextHelper.initializedContext();
+        // TODO: Parse config from file
+
+
     }
 }

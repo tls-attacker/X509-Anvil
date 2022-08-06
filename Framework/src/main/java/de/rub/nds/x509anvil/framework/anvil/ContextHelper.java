@@ -31,4 +31,8 @@ public class ContextHelper {
             contextInitialized = true;
         }
     }
+
+    public static X509AnvilContextDelegate getContextDelegate() {
+        return (X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate();
+    }
 }
