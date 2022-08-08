@@ -9,7 +9,7 @@ public enum KeyTypeLengthPair {
     RSA_1024(KeyType.RSA, 1024),
     RSA_2048(KeyType.RSA, 2048),
     RSA_4096(KeyType.RSA, 4096),
-    RSA_8192(KeyType.RSA, 8192),
+    //RSA_8192(KeyType.RSA, 8192),
 
     DSA_512(KeyType.DSA, 512),
     DSA_1024(KeyType.DSA, 1024),

@@ -12,6 +12,7 @@ public class FeatureReport {
     private List<Integer> supportedVersions = new ArrayList<>();
     private List<SignatureAlgorithm> supportedAlgorithms = new ArrayList<>();
     private List<KeyTypeLengthPair> supportedKeyLengths = new ArrayList<>();
+    private List<KeyTypeLengthPair> supportedEntityKeyLengths = new ArrayList<>();
     private List<ExtensionType> supportedExtensions = new ArrayList<>();
     private boolean digitalSignatureKeyUsageRequired;
 
@@ -80,6 +81,14 @@ public class FeatureReport {
 
     public void setSupportedKeyLengths(List<KeyTypeLengthPair> supportedKeyLengths) {
         this.supportedKeyLengths = supportedKeyLengths;
+    }
+
+    public List<KeyTypeLengthPair> getSupportedEntityKeyLengths() {
+        return supportedEntityKeyLengths;
+    }
+
+    public void setSupportedEntityKeyLengths(List<KeyTypeLengthPair> supportedEntityKeyLengths) {
+        this.supportedEntityKeyLengths = supportedEntityKeyLengths;
     }
 
     public List<ExtensionType> getSupportedExtensions() {

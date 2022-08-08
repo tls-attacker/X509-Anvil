@@ -13,26 +13,34 @@ import java.security.KeyPair;
 public class KeyLengthProbe extends SimpleProbe {
     private final SignatureAlgorithm signatureAlgorithm;
     private final int keyLength;
+    private final boolean isEntity;
 
-    public KeyLengthProbe(SignatureAlgorithm signatureAlgorithm, int keyLength) {
+    public KeyLengthProbe(SignatureAlgorithm signatureAlgorithm, int keyLength, boolean isEntity) {
         this.signatureAlgorithm = signatureAlgorithm;
         this.keyLength = keyLength;
+        this.isEntity = isEntity;
     }
 
     @Override
     protected X509CertificateChainConfig prepareConfig() {
-        X509CertificateChainConfig x509CertificateChainConfig = X509CertificateConfigUtil.createBasicConfig(3);
-        X509CertificateConfig ca = x509CertificateChainConfig.getIntermediateCertificateConfigs().get(0);
-        ca.setKeyType(signatureAlgorithm.getKeyType());
-        ca.setHashAlgorithm(signatureAlgorithm.getHashAlgorithm());
-        ca.setKeyLength(keyLength);
-        KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getKeyType(), ca.getCertificateName(), keyLength);
-        ca.setKeyPair(keyPair);
+        X509CertificateChainConfig x509CertificateChainConfig = X509CertificateConfigUtil.createBasicConfig(isEntity ? 2 : 3);
+
+        X509CertificateConfig certificateConfig;
+        if (isEntity) {
+            certificateConfig = x509CertificateChainConfig.getEntityCertificateConfig();
+        } else {
+            certificateConfig = x509CertificateChainConfig.getIntermediateCertificateConfigs().get(0);
+        }
+        certificateConfig.setKeyType(signatureAlgorithm.getKeyType());
+        certificateConfig.setHashAlgorithm(signatureAlgorithm.getHashAlgorithm());
+        certificateConfig.setKeyLength(keyLength);
+        KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getKeyType(), certificateConfig.getCertificateName(), keyLength);
+        certificateConfig.setKeyPair(keyPair);
         return x509CertificateChainConfig;
     }
 
     @Override
     protected ProbeResult createResult(VerifierResult verifierResult) {
-        return new KeyLengthProbeResult(signatureAlgorithm, keyLength, verifierResult.isValid());
+        return new KeyLengthProbeResult(signatureAlgorithm, keyLength, isEntity, verifierResult.isValid());
     }
 }

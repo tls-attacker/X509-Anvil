@@ -36,7 +36,13 @@ public class KeyTypeParameter extends CertificateSpecificParameter<KeyTypeLength
     @Override
     protected List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
         FeatureReport featureReport = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getFeatureReport();
-        return featureReport.getSupportedKeyLengths().stream()
+        List<KeyTypeLengthPair> supportedKeyLength;
+        if (getParameterScope().isEntity()) {
+            supportedKeyLength = featureReport.getSupportedEntityKeyLengths();
+        } else {
+            supportedKeyLength = featureReport.getSupportedKeyLengths();
+        }
+        return supportedKeyLength.stream()
                 .map(this::generateValue)
                 .collect(Collectors.toList());
     }

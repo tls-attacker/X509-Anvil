@@ -57,12 +57,12 @@ public class FeatureExtractor {
             throw new UnsupportedFeatureException("Target verifier does not support any of the implemented signature algorithms");
         }
 
-        // Probe support for key lengths
+        // Probe support for key lengths (for non-entity certs)
         List<KeyTypeLengthPair> supportedKeyLengths = new ArrayList<>();
         for (KeyType keyType : featureReport.getSupportedKeyTypes()) {
             for (int keyLength : KeyTypeLengthPair.getKeyLengths(keyType)) {
                 SignatureAlgorithm signatureAlgorithm = featureReport.getSupportedAlgorithms().stream().filter(a -> a.getKeyType() == keyType).findFirst().get();
-                Probe keyLengthProbe = new KeyLengthProbe(signatureAlgorithm, keyLength);
+                Probe keyLengthProbe = new KeyLengthProbe(signatureAlgorithm, keyLength, false);
                 KeyLengthProbeResult signatureAlgorithmProbeResult = (KeyLengthProbeResult) keyLengthProbe.execute();
                 if (signatureAlgorithmProbeResult.isSupported()) {
                     supportedKeyLengths.add(KeyTypeLengthPair.get(keyType, keyLength));
@@ -70,6 +70,20 @@ public class FeatureExtractor {
             }
         }
         featureReport.setSupportedKeyLengths(supportedKeyLengths);
+
+        // Probe support for key lengths (for entity certs)
+        List<KeyTypeLengthPair> supportedEntityKeyLengths = new ArrayList<>();
+        for (KeyType keyType : featureReport.getSupportedKeyTypes()) {
+            for (int keyLength : KeyTypeLengthPair.getKeyLengths(keyType)) {
+                SignatureAlgorithm signatureAlgorithm = featureReport.getSupportedAlgorithms().stream().filter(a -> a.getKeyType() == keyType).findFirst().get();
+                Probe keyLengthProbe = new KeyLengthProbe(signatureAlgorithm, keyLength, true);
+                KeyLengthProbeResult signatureAlgorithmProbeResult = (KeyLengthProbeResult) keyLengthProbe.execute();
+                if (signatureAlgorithmProbeResult.isSupported()) {
+                    supportedEntityKeyLengths.add(KeyTypeLengthPair.get(keyType, keyLength));
+                }
+            }
+        }
+        featureReport.setSupportedEntityKeyLengths(supportedEntityKeyLengths);
 
 
         // Probe support for key usage extension
