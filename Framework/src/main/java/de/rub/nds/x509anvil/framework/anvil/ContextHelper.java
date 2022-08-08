@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.framework.anvil;
 
 import de.rub.nds.anvilcore.context.AnvilContext;
+import de.rub.nds.anvilcore.context.AnvilFactoryRegistry;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureExtractor;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509anvil.framework.featureextraction.UnsupportedFeatureException;
@@ -16,8 +17,8 @@ public class ContextHelper {
     private static synchronized void setContext() throws UnsupportedFeatureException, ProbeException {
         Security.addProvider(new BouncyCastleProvider());
         Registry.getInstance();
-        AnvilContext.getInstance().addParameterTypes(X509AnvilParameterType.values(), new X509AnvilParameterFactory());
-        AnvilContext.getInstance().setModelBasedIpmFactory(new X509AnvilModelBasedIpmFactory());
+        AnvilFactoryRegistry.get().addParameterTypes(X509AnvilParameterType.values(), new X509AnvilParameterFactory());
+        AnvilFactoryRegistry.get().setParameterIdentifierProvider(new X509AnvilParameterIdentifierProvider());
         AnvilContext.getInstance().setApplicationSpecificContextDelegate(new X509AnvilContextDelegate(new TestConfig()));
         AnvilContext.getInstance().setTestStrength(2);
 

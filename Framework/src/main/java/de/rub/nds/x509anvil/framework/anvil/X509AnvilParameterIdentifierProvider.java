@@ -11,7 +11,7 @@ package de.rub.nds.x509anvil.framework.anvil;
 
 import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.DerivationScope;
-import de.rub.nds.anvilcore.model.ModelBasedIpmFactory;
+import de.rub.nds.anvilcore.model.ParameterIdentifierProvider;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
 
@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class X509AnvilModelBasedIpmFactory extends ModelBasedIpmFactory {
+public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierProvider {
     @Override
     protected List<ParameterIdentifier> getAllParameterIdentifiers(DerivationScope derivationScope) {
         int maxChainLength = AnnotationUtil.resolveMaxChainLength(derivationScope.getExtensionContext());
