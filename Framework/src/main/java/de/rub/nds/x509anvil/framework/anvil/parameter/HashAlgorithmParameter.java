@@ -12,6 +12,7 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
+import de.rub.nds.x509anvil.framework.constants.KeyTypeLengthPair;
 import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -78,7 +79,9 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
                 .requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
                 .restrictValues(Collections.singletonList(hashAlgorithm))
                 .condition((target, requiredParameters) -> {
-                    KeyType selectedKeyType = (KeyType) ConstraintHelper.getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE)).getSelectedValue();
+                    KeyType selectedKeyType = ((KeyTypeLengthPair) ConstraintHelper
+                            .getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
+                            .getSelectedValue()).getKeyType();
                     return selectedKeyType == keyType;
                 })
                 .get();
