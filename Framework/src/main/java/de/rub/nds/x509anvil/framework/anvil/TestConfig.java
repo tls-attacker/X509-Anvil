@@ -27,7 +27,7 @@ public class TestConfig {
     private int defaultMaxChainLength = 3;
     private int defaultIntermediateCertsModeled = 1;
 
-    private String testPackage = "de.rub.nds.tlstest.suite.tests";
+    private String testPackage = "de.rub.nds.x509anvil.suite.tests";
     private int numParallelTests = 4;
 
     public VerifierAdapterType getVerifierAdapterType() {
