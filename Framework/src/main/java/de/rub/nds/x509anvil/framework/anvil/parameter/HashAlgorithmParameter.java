@@ -79,10 +79,10 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
                 .requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
                 .restrictValues(Collections.singletonList(hashAlgorithm))
                 .condition((target, requiredParameters) -> {
-                    KeyType selectedKeyType = ((KeyTypeLengthPair) ConstraintHelper
+                    KeyTypeLengthPair selectedKeyTypeLengthPair = (KeyTypeLengthPair) ConstraintHelper
                             .getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
-                            .getSelectedValue()).getKeyType();
-                    return selectedKeyType == keyType;
+                            .getSelectedValue();
+                    return selectedKeyTypeLengthPair != null && selectedKeyTypeLengthPair.getKeyType() == keyType;
                 })
                 .get();
     }
