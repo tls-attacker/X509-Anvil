@@ -1,14 +1,9 @@
 package de.rub.nds.x509anvil.framework.featureextraction;
 
-import de.rub.nds.x509anvil.framework.constants.ExtensionType;
-import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
-import de.rub.nds.x509anvil.framework.constants.KeyType;
-import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
+import de.rub.nds.x509anvil.framework.constants.*;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -16,6 +11,7 @@ public class FeatureReport {
     private final List<ProbeResult> probeResults = new ArrayList<>();
     private List<Integer> supportedVersions = new ArrayList<>();
     private List<SignatureAlgorithm> supportedAlgorithms = new ArrayList<>();
+    private List<KeyTypeLengthPair> supportedKeyLengths = new ArrayList<>();
     private List<ExtensionType> supportedExtensions = new ArrayList<>();
     private boolean digitalSignatureKeyUsageRequired;
 
@@ -76,6 +72,14 @@ public class FeatureReport {
         return Arrays.stream(HashAlgorithm.values())
                 .filter(this::hashAlgorithmSupported)
                 .collect(Collectors.toList());
+    }
+
+    public List<KeyTypeLengthPair> getSupportedKeyLengths() {
+        return supportedKeyLengths;
+    }
+
+    public void setSupportedKeyLengths(List<KeyTypeLengthPair> supportedKeyLengths) {
+        this.supportedKeyLengths = supportedKeyLengths;
     }
 
     public List<ExtensionType> getSupportedExtensions() {

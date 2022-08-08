@@ -1,12 +1,11 @@
 package de.rub.nds.x509anvil.framework.featureextraction;
 
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
+import de.rub.nds.x509anvil.framework.constants.KeyType;
+import de.rub.nds.x509anvil.framework.constants.KeyTypeLengthPair;
 import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.*;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.result.DigitalSignatureKeyUsageRequiredProbeResult;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ExtensionProbeResult;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.result.SignatureAlgorithmProbeResult;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.result.VersionProbeResult;
+import de.rub.nds.x509anvil.framework.featureextraction.probe.result.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +56,20 @@ public class FeatureExtractor {
         if (supportedAlgorithms.isEmpty()) {
             throw new UnsupportedFeatureException("Target verifier does not support any of the implemented signature algorithms");
         }
+
+        // Probe support for key lengths
+        List<KeyTypeLengthPair> supportedKeyLengths = new ArrayList<>();
+        for (KeyType keyType : featureReport.getSupportedKeyTypes()) {
+            for (int keyLength : KeyTypeLengthPair.getKeyLengths(keyType)) {
+                SignatureAlgorithm signatureAlgorithm = featureReport.getSupportedAlgorithms().stream().filter(a -> a.getKeyType() == keyType).findFirst().get();
+                Probe keyLengthProbe = new KeyLengthProbe(signatureAlgorithm, keyLength);
+                KeyLengthProbeResult signatureAlgorithmProbeResult = (KeyLengthProbeResult) keyLengthProbe.execute();
+                if (signatureAlgorithmProbeResult.isSupported()) {
+                    supportedKeyLengths.add(KeyTypeLengthPair.get(keyType, keyLength));
+                }
+            }
+        }
+        featureReport.setSupportedKeyLengths(supportedKeyLengths);
 
 
         // Probe support for key usage extension

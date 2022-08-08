@@ -9,7 +9,7 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
-import de.rub.nds.x509anvil.framework.x509.X509CertificateUtil;
+import de.rub.nds.x509anvil.framework.x509.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
@@ -44,7 +44,7 @@ public class KeyTypeParameter extends CertificateSpecificParameter<KeyType> {
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
         certificateConfig.setKeyType(getSelectedValue());
-        KeyPair keyPair = X509CertificateUtil.generateKeyPair(getSelectedValue(), certificateConfig.getCertificateName());
+        KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(getSelectedValue(), certificateConfig.getCertificateName());
         certificateConfig.setKeyPair(keyPair);
     }
 }
