@@ -9,7 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.x509.generator;
 
-import de.rub.nds.x509anvil.framework.x509.X509CertificateUtil;
+import de.rub.nds.x509anvil.framework.x509.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.x509.X509Certificate;
@@ -37,7 +37,7 @@ public class X509CertificateChainGenerator {
         }
 
         X509CertificateConfig previousConfig = null;
-        for (X509CertificateConfig certificateConfig : X509CertificateUtil.expandCertificateConfigs(certificateChainConfig)) {
+        for (X509CertificateConfig certificateConfig : X509CertificateConfigUtil.expandCertificateConfigs(certificateChainConfig)) {
             generateSingleCertificate(certificateConfig, previousConfig);
             previousConfig = certificateConfig;
         }

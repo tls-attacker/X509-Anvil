@@ -4,7 +4,7 @@ import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.SignatureAlgorithmProbeResult;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
-import de.rub.nds.x509anvil.framework.x509.X509CertificateUtil;
+import de.rub.nds.x509anvil.framework.x509.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
@@ -19,11 +19,11 @@ public class SignatureAlgorithmProbe extends SimpleProbe {
 
     @Override
     protected X509CertificateChainConfig prepareConfig() {
-        X509CertificateChainConfig x509CertificateChainConfig = X509CertificateUtil.createBasicConfig(3);
+        X509CertificateChainConfig x509CertificateChainConfig = X509CertificateConfigUtil.createBasicConfig(3);
         X509CertificateConfig ca = x509CertificateChainConfig.getIntermediateCertificateConfigs().get(0);
         ca.setKeyType(signatureAlgorithm.getKeyType());
         ca.setHashAlgorithm(signatureAlgorithm.getHashAlgorithm());
-        KeyPair keyPair = X509CertificateUtil.generateKeyPair(signatureAlgorithm.getKeyType(), ca.getCertificateName());
+        KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getKeyType(), ca.getCertificateName());
         ca.setKeyPair(keyPair);
         return x509CertificateChainConfig;
     }

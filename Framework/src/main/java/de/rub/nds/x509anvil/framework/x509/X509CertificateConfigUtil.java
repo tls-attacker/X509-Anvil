@@ -31,14 +31,15 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Iterator;
 import java.util.UUID;
 
-public class X509CertificateUtil {
+public class X509CertificateConfigUtil {
     public static X509CertificateConfig getDefaultCertificateConfig(String certificateName, boolean selfSigned) {
         X509CertificateConfig config = new X509CertificateConfig();
 
         config.setCertificateName(certificateName);
         config.setKeyType(KeyType.RSA);
+        config.setKeyLength(2048);
         config.setHashAlgorithm(HashAlgorithm.SHA256);
-        config.setKeyPair(generateKeyPair(KeyType.RSA, certificateName));
+        config.setKeyPair(generateKeyPair(KeyType.RSA, certificateName, 2048));
         config.setSelfSigned(selfSigned);
 
         config.setVersion(2);
@@ -83,8 +84,12 @@ public class X509CertificateUtil {
 
     public static KeyPair generateKeyPair(KeyType keyType, String keyPairIdentifier) {
         int defaultKeySize = keyType == KeyType.ECDSA ? 256 : 2048;
+        return generateKeyPair(keyType, keyPairIdentifier, defaultKeySize);
+    }
+
+    public static KeyPair generateKeyPair(KeyType keyType, String keyPairIdentifier, int keyLength) {
         try {
-            return CachedKeyPairGenerator.retrieveKeyPair(keyPairIdentifier, keyType.name(), defaultKeySize);
+            return CachedKeyPairGenerator.retrieveKeyPair(keyPairIdentifier, keyType.name(), keyLength);
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException("This should not happen");
         }

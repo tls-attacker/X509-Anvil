@@ -35,6 +35,7 @@ public class X509CertificateConfig {
     private int sharedId = 0;
     private boolean selfSigned;
     private KeyType keyType;
+    private int keyLength;
     private KeyPair keyPair;
     private HashAlgorithm hashAlgorithm;        // Hash algorithm used when signing another certificate with privkey
 
@@ -104,6 +105,14 @@ public class X509CertificateConfig {
 
     public void setKeyType(KeyType keyType) {
         this.keyType = keyType;
+    }
+
+    public int getKeyLength() {
+        return keyLength;
+    }
+
+    public void setKeyLength(int keyLength) {
+        this.keyLength = keyLength;
     }
 
     public KeyPair getKeyPair() {
