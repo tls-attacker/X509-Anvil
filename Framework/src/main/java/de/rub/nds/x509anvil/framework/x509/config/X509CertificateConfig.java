@@ -9,10 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
-import de.rub.nds.x509anvil.framework.constants.ExtensionType;
-import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
-import de.rub.nds.x509anvil.framework.constants.KeyType;
-import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
+import de.rub.nds.x509anvil.framework.constants.*;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
@@ -29,6 +26,7 @@ import java.util.Map;
 
 public class X509CertificateConfig {
     private String certificateName;
+    private CertificateChainPosType certificateChainPosType;
     private boolean isStatic;
     private X509Certificate staticX509Certificate;
     private boolean isSharedConfig = false;     // If this config is used for multiple certificates in a chain
@@ -64,6 +62,14 @@ public class X509CertificateConfig {
 
     public void setCertificateName(String certificateName) {
         this.certificateName = certificateName;
+    }
+
+    public CertificateChainPosType getCertificateChainPosType() {
+        return certificateChainPosType;
+    }
+
+    public void setCertificateChainPosType(CertificateChainPosType certificateChainPosType) {
+        this.certificateChainPosType = certificateChainPosType;
     }
 
     public boolean isStatic() {

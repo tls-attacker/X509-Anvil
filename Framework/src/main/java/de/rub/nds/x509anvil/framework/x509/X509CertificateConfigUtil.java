@@ -11,6 +11,7 @@ package de.rub.nds.x509anvil.framework.x509;
 
 import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
 import de.rub.nds.asn1.parser.X509Parser;
+import de.rub.nds.x509anvil.framework.constants.CertificateChainPosType;
 import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
 import de.rub.nds.x509anvil.framework.x509.config.CachedKeyPairGenerator;
@@ -32,10 +33,11 @@ import java.util.Iterator;
 import java.util.UUID;
 
 public class X509CertificateConfigUtil {
-    public static X509CertificateConfig getDefaultCertificateConfig(String certificateName, boolean selfSigned) {
+    public static X509CertificateConfig getDefaultCertificateConfig(String certificateName, boolean selfSigned, CertificateChainPosType chainPosType) {
         X509CertificateConfig config = new X509CertificateConfig();
 
         config.setCertificateName(certificateName);
+        config.setCertificateChainPosType(chainPosType);
         config.setKeyType(KeyType.RSA);
         config.setKeyLength(2048);
         config.setHashAlgorithm(HashAlgorithm.SHA256);
@@ -64,8 +66,8 @@ public class X509CertificateConfigUtil {
         return config;
     }
 
-    public static X509CertificateConfig getDefaultCaCertificateConfig(String certificateName, boolean selfSigned) {
-        X509CertificateConfig config = getDefaultCertificateConfig(certificateName, selfSigned);
+    public static X509CertificateConfig getDefaultCaCertificateConfig(String certificateName, boolean selfSigned, CertificateChainPosType chainPosType) {
+        X509CertificateConfig config = getDefaultCertificateConfig(certificateName, selfSigned, chainPosType);
 
         config.setExtensionsPresent(true);
         BasicConstraintsExtensionConfig basicConstraints = (BasicConstraintsExtensionConfig) config.extension(ExtensionType.BASIC_CONSTRAINTS);

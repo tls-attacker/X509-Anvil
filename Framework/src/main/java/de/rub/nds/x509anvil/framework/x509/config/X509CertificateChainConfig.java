@@ -13,6 +13,7 @@ import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.config.AnvilConfig;
 import de.rub.nds.x509anvil.framework.anvil.TestConfig;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
+import de.rub.nds.x509anvil.framework.constants.CertificateChainPosType;
 import de.rub.nds.x509anvil.framework.x509.X509CertificateConfigUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -59,13 +60,14 @@ public class X509CertificateChainConfig implements AnvilConfig {
         }
         else {
             // We need to generate our own root
-            rootCertificateConfig = X509CertificateConfigUtil.getDefaultCaCertificateConfig("cert_root", true);
+            rootCertificateConfig = X509CertificateConfigUtil.getDefaultCaCertificateConfig("cert_root", true, CertificateChainPosType.ROOT);
         }
 
         // Generate configs for intermediate certificates
         for (int i = 0; i < chainLength - 2; i++) {
             if (i < intermediateCertsModeled) {
-                X509CertificateConfig config = X509CertificateConfigUtil.getDefaultCaCertificateConfig("cert_intermediate_" + i,false);
+                X509CertificateConfig config = X509CertificateConfigUtil
+                        .getDefaultCaCertificateConfig("cert_intermediate_" + i,false, CertificateChainPosType.INTERMEDIATE);
                 if (i == intermediateCertsModeled - 1 && intermediateCertsModeled < chainLength - 2) {
                     config.setSharedConfig(true);
                 }
@@ -78,7 +80,7 @@ public class X509CertificateChainConfig implements AnvilConfig {
             entityCertificateConfig = rootCertificateConfig;
         }
         else {
-            entityCertificateConfig = X509CertificateConfigUtil.getDefaultCertificateConfig("cert_entity", false);
+            entityCertificateConfig = X509CertificateConfigUtil.getDefaultCertificateConfig("cert_entity", false, CertificateChainPosType.ENTITY);
         }
 
         initialized = true;
