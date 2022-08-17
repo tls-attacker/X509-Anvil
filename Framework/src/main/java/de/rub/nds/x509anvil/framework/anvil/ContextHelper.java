@@ -23,7 +23,7 @@ public class ContextHelper {
         AnvilContext.getInstance().setTestStrength(2);
 
         FeatureReport report = FeatureExtractor.scanFeatures();
-        ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).setFeatureReport(report);
+        ContextHelper.getContextDelegate().setFeatureReport(report);
     }
 
     public static synchronized void initializedContext() throws UnsupportedFeatureException, ProbeException {
