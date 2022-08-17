@@ -10,6 +10,9 @@ public @interface RFC {
     @JsonProperty("number")
     int number();
 
-    @JsonProperty("Section")
+    @JsonProperty("section")
     String section();
+
+    @JsonProperty("text")
+    String text() default "";
 }

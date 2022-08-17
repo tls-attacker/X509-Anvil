@@ -9,9 +9,9 @@ import de.rub.nds.x509attacker.linker.Linker;
 
 import java.util.HashMap;
 
-public class UnknownNonCriticalExtensionConfig extends ExtensionConfig {
+public class UnknownExtensionConfig extends ExtensionConfig {
 
-    public UnknownNonCriticalExtensionConfig() {
+    public UnknownExtensionConfig() {
         super(ExtensionObjectIdentifiers.UNKNOWN_EXTENSION, "unknownExtension");
     }
 

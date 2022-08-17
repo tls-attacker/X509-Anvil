@@ -32,8 +32,8 @@ public class UnknownNonCriticalExtensionPresentParameter extends BooleanCertific
 
     @Override
     public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        certificateConfig.extension(ExtensionType.UNKNOWN_NONCRITICAL_EXTENSION).setPresent(getSelectedValue());
-        certificateConfig.extension(ExtensionType.UNKNOWN_NONCRITICAL_EXTENSION).setCritical(false);
+        certificateConfig.extension(ExtensionType.UNKNOWN_EXTENSION).setPresent(getSelectedValue());
+        certificateConfig.extension(ExtensionType.UNKNOWN_EXTENSION).setCritical(false);
     }
 
     @Override
