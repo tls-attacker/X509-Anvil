@@ -12,12 +12,12 @@ import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
 public class IssuerUniqueIdParameter extends UniqueIdParameter {
 
     public IssuerUniqueIdParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.SUBJECT_UNIQUE_ID, parameterScope),
+        super(new ParameterIdentifier(X509AnvilParameterType.ISSUER_UNIQUE_ID, parameterScope),
                 X509AnvilParameterType.ISSUER_UNIQUE_ID_PRESENT);
     }
 
     public IssuerUniqueIdParameter(BitString selectedValue, ParameterScope parameterScope) {
-        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.SUBJECT_UNIQUE_ID, parameterScope),
+        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.ISSUER_UNIQUE_ID, parameterScope),
                 X509AnvilParameterType.ISSUER_UNIQUE_ID_PRESENT);
     }
 
