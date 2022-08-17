@@ -11,7 +11,7 @@ public @interface RFC {
     int number();
 
     @JsonProperty("section")
-    String section();
+    String section() default "";
 
     @JsonProperty("text")
     String text() default "";
