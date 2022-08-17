@@ -13,6 +13,7 @@ import de.rub.nds.x509anvil.framework.constants.*;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
+import de.rub.nds.x509anvil.framework.x509.config.extension.UnknownNonCriticalExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
 import de.rub.nds.x509anvil.framework.x509.config.model.Name;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
@@ -54,6 +55,7 @@ public class X509CertificateConfig {
     public X509CertificateConfig() {
         extensions.put(ExtensionType.BASIC_CONSTRAINTS, new BasicConstraintsExtensionConfig());
         extensions.put(ExtensionType.KEY_USAGE, new KeyUsageExtensionConfig());
+        extensions.put(ExtensionType.UNKNOWN_NONCRITICAL_EXTENSION, new UnknownNonCriticalExtensionConfig());
     }
 
     public String getCertificateName() {
