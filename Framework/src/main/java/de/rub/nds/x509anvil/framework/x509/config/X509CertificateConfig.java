@@ -70,6 +70,18 @@ public class X509CertificateConfig {
         return certificateChainPosType;
     }
 
+    public boolean isRoot() {
+        return certificateChainPosType == CertificateChainPosType.ROOT;
+    }
+
+    public boolean isIntermediate() {
+        return certificateChainPosType == CertificateChainPosType.INTERMEDIATE;
+    }
+
+    public boolean isEntity() {
+        return certificateChainPosType == CertificateChainPosType.ENTITY;
+    }
+
     public void setCertificateChainPosType(CertificateChainPosType certificateChainPosType) {
         this.certificateChainPosType = certificateChainPosType;
     }
