@@ -32,11 +32,6 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
 
         // certificate specific parameters
         TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
-        int chainPosition = 0;
-        // Forgo modeling root certificate if static root is used
-        if (testConfig.getUseStaticRootCertificate()) {
-            chainPosition = 1;
-        }
 
         // Parameters for root certificate
         if (!testConfig.getUseStaticRootCertificate()) {
