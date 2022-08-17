@@ -34,7 +34,7 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
         TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
 
         // Parameters for root certificate
-        if (!testConfig.getUseStaticRootCertificate()) {
+        if (!AnnotationUtil.resolveStaticRoot(derivationScope.getExtensionContext())) {
             for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
                 parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ROOT));
             }

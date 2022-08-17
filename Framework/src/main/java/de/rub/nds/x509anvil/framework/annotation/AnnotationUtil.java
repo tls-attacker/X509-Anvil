@@ -1,8 +1,6 @@
 package de.rub.nds.x509anvil.framework.annotation;
 
-import de.rub.nds.anvilcore.context.AnvilContext;
-import de.rub.nds.x509anvil.framework.anvil.TestConfig;
-import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.lang.reflect.Method;
@@ -17,8 +15,7 @@ public class AnnotationUtil {
     public static int resolveMaxChainLength(ExtensionContext extensionContext) {
         ChainLength chainLengthAnnotation = resolveChainLengthAnnotation(extensionContext);
         if (chainLengthAnnotation == null) {
-            TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
-            return testConfig.getDefaultMaxChainLength();
+            return ContextHelper.getContextDelegate().getTestConfig().getDefaultMaxChainLength();
         }
         return chainLengthAnnotation.maxLength();
     }
@@ -26,8 +23,7 @@ public class AnnotationUtil {
     public static int resolveMinChainLength(ExtensionContext extensionContext) {
         ChainLength chainLengthAnnotation = resolveChainLengthAnnotation(extensionContext);
         if (chainLengthAnnotation == null) {
-            TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
-            return testConfig.getDefaultMinChainLength();
+            return ContextHelper.getContextDelegate().getTestConfig().getDefaultMinChainLength();
         }
         return chainLengthAnnotation.minLength();
     }
@@ -35,8 +31,7 @@ public class AnnotationUtil {
     public static int resolveIntermediateCertsModeled(ExtensionContext extensionContext) {
         ChainLength chainLengthAnnotation = resolveChainLengthAnnotation(extensionContext);
         if (chainLengthAnnotation == null) {
-            TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
-            return testConfig.getDefaultIntermediateCertsModeled();
+            return ContextHelper.getContextDelegate().getTestConfig().getDefaultIntermediateCertsModeled();
         }
         return chainLengthAnnotation.intermediateCertsModeled();
     }
@@ -45,5 +40,14 @@ public class AnnotationUtil {
         int maxChainLength = resolveMaxChainLength(extensionContext);
         int intermediateCertsModeled = resolveIntermediateCertsModeled(extensionContext);
         return Integer.min(maxChainLength-1, intermediateCertsModeled + 1);
+    }
+
+    public static boolean resolveStaticRoot(ExtensionContext extensionContext) {
+        Method testMethod = extensionContext.getRequiredTestMethod();
+        StaticRoot staticRootAnnotation = testMethod.getAnnotation(StaticRoot.class);
+        if (staticRootAnnotation == null) {
+            return ContextHelper.getContextDelegate().getTestConfig().getUseStaticRootCertificate();
+        }
+        return staticRootAnnotation.value();
     }
 }

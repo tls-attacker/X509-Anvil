@@ -37,7 +37,7 @@ public class X509CertificateChainConfig implements AnvilConfig {
     private boolean initialized = false;
 
 
-    public void initializeChain(int chainLength, int intermediateCertsModeled) {
+    public void initializeChain(int chainLength, int intermediateCertsModeled, boolean staticRoot) {
         if (initialized) {
             throw new IllegalStateException("Config is already initialized");
         }
@@ -46,7 +46,7 @@ public class X509CertificateChainConfig implements AnvilConfig {
         this.intermediateCertsModeled = intermediateCertsModeled;
 
         TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
-        this.staticRoot = testConfig.getUseStaticRootCertificate();
+        this.staticRoot = staticRoot;
 
 
         if (staticRoot) {

@@ -11,6 +11,7 @@ package de.rub.nds.x509anvil.framework.x509;
 
 import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
 import de.rub.nds.asn1.parser.X509Parser;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.constants.CertificateChainPosType;
 import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
@@ -80,7 +81,7 @@ public class X509CertificateConfigUtil {
 
     public static X509CertificateChainConfig createBasicConfig(int chainLength) {
         X509CertificateChainConfig x509CertificateChainConfig = new X509CertificateChainConfig();
-        x509CertificateChainConfig.initializeChain(chainLength, 1);
+        x509CertificateChainConfig.initializeChain(chainLength, 1, ContextHelper.getContextDelegate().getTestConfig().getUseStaticRootCertificate());
         return x509CertificateChainConfig;
     }
 
