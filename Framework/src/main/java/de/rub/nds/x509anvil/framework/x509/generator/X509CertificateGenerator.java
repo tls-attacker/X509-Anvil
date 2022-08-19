@@ -297,7 +297,7 @@ public class X509CertificateGenerator {
         extensionsAsn1.setIdentifier("extensions");
         for (ExtensionConfig extensionConfig : certificateConfig.getExtensions().values()) {
             if (extensionConfig.isPresent()) {
-                Asn1Encodable extensionAsn1 = extensionConfig.getAsn1Structure();
+                Asn1Encodable extensionAsn1 = extensionConfig.getAsn1Structure(certificateConfig, previousConfig);
                 extensionsAsn1.addChild(extensionAsn1);
             }
         }

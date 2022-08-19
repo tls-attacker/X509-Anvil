@@ -9,9 +9,8 @@
 
 package de.rub.nds.x509anvil.framework.x509.config.extension;
 
-import de.rub.nds.asn1.Asn1Encodable;
-
 import de.rub.nds.asn1.model.*;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 
 public abstract class ExtensionConfig {
@@ -41,7 +40,7 @@ public abstract class ExtensionConfig {
         this.critical = critical;
     }
 
-    public Asn1Sequence getAsn1Structure() throws CertificateGeneratorException {
+    public Asn1Sequence getAsn1Structure(X509CertificateConfig certificateConfig, X509CertificateConfig previousConfig) throws CertificateGeneratorException {
         Asn1Sequence extensionAsn1 = new Asn1Sequence();
         extensionAsn1.setIdentifier(name);
 
@@ -55,12 +54,12 @@ public abstract class ExtensionConfig {
         criticalAsn1.setValue(critical);
         extensionAsn1.addChild(criticalAsn1);
 
-        Asn1PrimitiveOctetString extnValueAsn1 = getContentAsn1Structure();
+        Asn1PrimitiveOctetString extnValueAsn1 = getContentAsn1Structure(certificateConfig, previousConfig);
         extnValueAsn1.setIdentifier("extnValue");
         extensionAsn1.addChild(extnValueAsn1);
 
         return extensionAsn1;
     }
 
-    protected abstract Asn1PrimitiveOctetString getContentAsn1Structure() throws CertificateGeneratorException;
+    protected abstract Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig, X509CertificateConfig previousConfig) throws CertificateGeneratorException;
 }

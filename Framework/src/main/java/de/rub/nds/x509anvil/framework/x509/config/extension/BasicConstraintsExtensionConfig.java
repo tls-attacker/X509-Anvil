@@ -1,12 +1,9 @@
 package de.rub.nds.x509anvil.framework.x509.config.extension;
 
-import de.rub.nds.asn1.Asn1Encodable;
-import de.rub.nds.asn1.encoder.Asn1Encoder;
 import de.rub.nds.asn1.encoder.Asn1EncoderForX509;
 import de.rub.nds.asn1.model.*;
-import de.rub.nds.tlsattacker.core.certificate.ExtensionObjectIdentifier;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
-import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509attacker.linker.Linker;
 
 import java.math.BigInteger;
@@ -55,7 +52,7 @@ public class BasicConstraintsExtensionConfig extends ExtensionConfig {
     }
 
     @Override
-    public Asn1PrimitiveOctetString getContentAsn1Structure() {
+    public Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig, X509CertificateConfig previousConfig) {
         Asn1Sequence basicConstraintsAsn1 = new Asn1Sequence();
 
         Asn1Boolean caAsn1 =  new Asn1Boolean();

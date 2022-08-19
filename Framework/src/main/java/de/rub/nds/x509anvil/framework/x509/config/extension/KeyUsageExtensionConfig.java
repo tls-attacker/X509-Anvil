@@ -3,6 +3,7 @@ package de.rub.nds.x509anvil.framework.x509.config.extension;
 import de.rub.nds.asn1.encoder.Asn1EncoderForX509;
 import de.rub.nds.asn1.model.Asn1PrimitiveBitString;
 import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509attacker.linker.Linker;
@@ -159,7 +160,7 @@ public class KeyUsageExtensionConfig extends ExtensionConfig {
     }
 
     @Override
-    protected Asn1PrimitiveOctetString getContentAsn1Structure() throws CertificateGeneratorException {
+    protected Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig, X509CertificateConfig previousConfig) throws CertificateGeneratorException {
         Asn1PrimitiveBitString keyUsageAsn1 = new Asn1PrimitiveBitString();
         keyUsageAsn1.setIdentifier("keyUsage");
         keyUsageAsn1.setValue(flags);
