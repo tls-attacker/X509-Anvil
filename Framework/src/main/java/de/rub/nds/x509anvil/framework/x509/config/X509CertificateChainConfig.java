@@ -106,6 +106,40 @@ public class X509CertificateChainConfig implements AnvilConfig {
         return intermediateCertificateConfigs.get(index);
     }
 
+    public X509CertificateConfig getIssuerConfigOf(X509CertificateConfig subject) {
+        List<X509CertificateConfig> certificateConfigList = getCertificateConfigList();
+        if (!certificateConfigList.contains(subject)) {
+            throw new IllegalArgumentException("Subject config is not part of the chain");
+        }
+        if (certificateConfigList.indexOf(subject) == 0) {
+            if (subject.isSelfSigned()) {
+                return subject;
+            }
+            throw new IllegalArgumentException("Subject config is root config and not self-signed");
+        }
+
+        return certificateConfigList.get(certificateConfigList.indexOf(subject) - 1);
+    }
+
+    public List<X509CertificateConfig> getCertificateConfigList() {
+        List<X509CertificateConfig> certificateConfigList = new ArrayList<>();
+
+        if (chainLength == 0) {
+            return certificateConfigList;
+        }
+        else if (chainLength == 1) {
+            certificateConfigList.add(rootCertificateConfig);
+            return certificateConfigList;
+        }
+        else {
+            certificateConfigList.add(rootCertificateConfig);
+            certificateConfigList.addAll(intermediateCertificateConfigs);
+            certificateConfigList.add(entityCertificateConfig);
+            return certificateConfigList;
+        }
+
+    }
+
     public int getIntermediateCertsModeled() {
         return intermediateCertsModeled;
     }
