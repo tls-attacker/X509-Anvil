@@ -22,6 +22,7 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPathLenConstraintPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage.KeyUsageFlagParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.extension.subjectkeyid.SubjectKeyIdentifierPresentParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
 
@@ -56,7 +57,7 @@ public class X509AnvilParameterFactory extends ParameterFactory {
             case EXT_UNKNOWN_NONCRITICAL_EXTENSION_PRESENT:
                 return new UnknownNonCriticalExtensionPresentParameter(parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_PRESENT:
-                return new BasicConstraintsPresentParameter(parameterIdentifier.getParameterScope(), ExtensionType.BASIC_CONSTRAINTS);
+                return new BasicConstraintsPresentParameter(parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_CRITICAL:
                 return new ExtensionCriticalParameter(parameterIdentifier, ExtensionType.BASIC_CONSTRAINTS, X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT);
             case EXT_BASIC_CONSTRAINTS_CA:
@@ -87,6 +88,8 @@ public class X509AnvilParameterFactory extends ParameterFactory {
 //                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.ENCIPHER_ONLY);
 //            case EXT_KEY_USAGE_DECIPHER_ONLY:
 //                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.DECIPHER_ONLY);
+            case EXT_SUBJECT_KEY_IDENTIFIER_PRESENT:
+                return new SubjectKeyIdentifierPresentParameter(parameterIdentifier.getParameterScope());
             default:
                 throw new IllegalArgumentException("Unknown parameter identifier " + parameterIdentifier.getParameterType().toString());
         }

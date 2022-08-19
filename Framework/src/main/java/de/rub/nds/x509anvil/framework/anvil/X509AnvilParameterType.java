@@ -51,6 +51,9 @@ public enum X509AnvilParameterType implements ParameterType {
     //EXT_KEY_USAGE_CRL_SIGN,
     //EXT_KEY_USAGE_ENCIPHER_ONLY,
     //EXT_KEY_USAGE_DECIPHER_ONLY
+
+    // SubjectKeyIdentifier extension
+    EXT_SUBJECT_KEY_IDENTIFIER_PRESENT
     ;
 
     public static List<X509AnvilParameterType> getCertificateSpecificTypes() {
