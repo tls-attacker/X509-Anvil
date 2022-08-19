@@ -317,6 +317,7 @@ public class X509CertificateGenerator {
 
         // Generate signature algorithm oid
         Asn1ObjectIdentifier signatureAlgorithmOid = new Asn1ObjectIdentifier();
+        signatureAlgorithmOid.setIdentifier("algorithm");
         if (certificateConfig.isSelfSigned()) {
             signatureAlgorithmOid.setValue(certificateConfig.getSignatureAlgorithmOid());
         } else {
