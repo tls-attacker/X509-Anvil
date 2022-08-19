@@ -15,6 +15,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
+import de.rub.nds.x509anvil.suite.tests.util.Modifiers;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
@@ -67,7 +68,7 @@ public class UnknownOidTests extends X509AnvilTest {
     public void unknownOidInBothFieldsEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
-        certificateChainGenerator.addModifier(TbsSignatureTests.createUnknownOidModifier(true));
+        certificateChainGenerator.addModifier(Modifiers.tbsSignatureUnknownOidModifier(true));
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         Asn1ObjectIdentifier signatureAlgorithmAsn1 = (Asn1ObjectIdentifier) X509Util.getAsn1ElementByIdentifierPath(
@@ -86,7 +87,7 @@ public class UnknownOidTests extends X509AnvilTest {
     public void unknownOidInBothFieldsIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
-        certificateChainGenerator.addModifier(TbsSignatureTests.createUnknownOidModifier(false));
+        certificateChainGenerator.addModifier(Modifiers.tbsSignatureUnknownOidModifier(false));
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         Asn1ObjectIdentifier signatureAlgorithmAsn1 = (Asn1ObjectIdentifier) X509Util.getAsn1ElementByIdentifierPath(
