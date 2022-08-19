@@ -81,4 +81,12 @@ public class X509VerifierRunner {
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(), testConfig.getVerifierAdapterConfig());
         return verifierAdapter.invokeVerifier(certificateList, config);
     }
+
+    public VerifierResult execute(List<X509Certificate> certificateList, X509CertificateChainConfig config) throws VerifierException {
+        X509Util.exportCertificates(certificateList, "resources/out");
+
+        TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
+        VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(), testConfig.getVerifierAdapterConfig());
+        return verifierAdapter.invokeVerifier(certificateList, config);
+    }
 }

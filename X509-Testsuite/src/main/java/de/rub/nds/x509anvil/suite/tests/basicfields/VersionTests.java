@@ -14,6 +14,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -67,8 +68,7 @@ public class VersionTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "entity.version")
     public void largeVersionEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(certificateChainConfig, createIllegalVersionModifier(true,
-                new BigInteger("FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100", 16)));
+        VerifierResult result = testRunner.execute(certificateChainConfig, createIllegalVersionModifier(true, TestUtils.create256BytesInteger()));
         Assertions.assertFalse(result.isValid());
     }
 
@@ -78,8 +78,7 @@ public class VersionTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "inter0.version")
     public void largeVersionIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(certificateChainConfig, createIllegalVersionModifier(false,
-                new BigInteger("FFEEDDCCBBAA99887766554433221100FFEEDDCCBBAA99887766554433221100", 17)));
+        VerifierResult result = testRunner.execute(certificateChainConfig, createIllegalVersionModifier(false, TestUtils.create256BytesInteger()));
         Assertions.assertFalse(result.isValid());
     }
 
