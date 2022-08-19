@@ -1,4 +1,4 @@
-package de.rub.nds.x509anvil.framework.anvil.parameter.extension.subjectkeyid;
+package de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyidentifier;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;

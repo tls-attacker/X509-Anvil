@@ -21,8 +21,9 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPathLenConstraintParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPathLenConstraintPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPresentParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyidentifier.AuthorityKeyIdentifierPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage.KeyUsageFlagParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.extension.subjectkeyid.SubjectKeyIdentifierPresentParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyidentifier.SubjectKeyIdentifierPresentParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
 
@@ -88,6 +89,8 @@ public class X509AnvilParameterFactory extends ParameterFactory {
 //                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.ENCIPHER_ONLY);
 //            case EXT_KEY_USAGE_DECIPHER_ONLY:
 //                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.DECIPHER_ONLY);
+            case EXT_AUTHORITY_KEY_IDENTIFIER_PRESENT:
+                return new AuthorityKeyIdentifierPresentParameter(parameterIdentifier.getParameterScope());
             case EXT_SUBJECT_KEY_IDENTIFIER_PRESENT:
                 return new SubjectKeyIdentifierPresentParameter(parameterIdentifier.getParameterScope());
             default:

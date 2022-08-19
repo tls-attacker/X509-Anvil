@@ -50,6 +50,7 @@ public class X509CertificateConfig {
     private final Map<ExtensionType, ExtensionConfig> extensions = new HashMap<>();
 
     public X509CertificateConfig() {
+        extensions.put(ExtensionType.AUTHORITY_KEY_IDENTIFIER, new AuthorityKeyIdentifierExtensionConfig());
         extensions.put(ExtensionType.SUBJECT_KEY_IDENTIFIER, new SubjectKeyIdentifierExtensionConfig());
         extensions.put(ExtensionType.BASIC_CONSTRAINTS, new BasicConstraintsExtensionConfig());
         extensions.put(ExtensionType.KEY_USAGE, new KeyUsageExtensionConfig());
