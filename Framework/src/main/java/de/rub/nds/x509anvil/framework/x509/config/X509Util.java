@@ -63,6 +63,24 @@ public class X509Util {
         return currentAsn1Encodable;
     }
 
+    public static Asn1Sequence getExtensionByOid(X509Certificate x509Certificate, String oid) {
+        Asn1Sequence extensionsAsn1 = (Asn1Sequence) getAsn1ElementByIdentifierPath(x509Certificate,
+                "tbsCertificate", "explicitExtensions", "extensions");
+        for (Asn1Encodable child : extensionsAsn1.getChildren()) {
+            if (!(child instanceof Asn1Sequence)) {
+                throw new IllegalArgumentException("Unexpected Asn1 Tag while searching for extension");
+            }
+            Asn1Sequence extension = (Asn1Sequence) child;
+            if (extension.getChildren().get(0) instanceof Asn1ObjectIdentifier) {
+                Asn1ObjectIdentifier extnId = (Asn1ObjectIdentifier) extension.getChildren().get(0);
+                if (extnId.getValue().equals(oid)) {
+                    return extension;
+                }
+            }
+        }
+        throw new IllegalArgumentException("Extensions not found");
+    }
+
     public static KeyPair retrieveKeyPairFromX509Certificate(X509Certificate x509Certificate) {
         try {
             PrivateKey privateKey = retrievePrivateKeyFromKeyInfo(x509Certificate.getKeyInfo());

@@ -2,6 +2,8 @@ package de.rub.nds.x509anvil.suite.tests.util;
 
 import de.rub.nds.asn1.model.Asn1Integer;
 import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
+import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
+import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
 
@@ -44,6 +46,26 @@ public class Modifiers {
                 Asn1ObjectIdentifier tbsSignatureAsn1 = (Asn1ObjectIdentifier) X509Util.getAsn1ElementByIdentifierPath(certificate,
                         "tbsCertificate", "signature", "algorithm");
                 tbsSignatureAsn1.setValue("1.2.3.4.5.6.7.8");
+            }
+        };
+    }
+
+    public static X509CertificateModifier invalidExtensionValueModifier(boolean entity, String extensionOid) {
+        return (certificate, config, previousConfig) -> {
+            if (entity && config.isEntity() || !entity && config.isIntermediate()) {
+                Asn1Sequence extension = X509Util.getExtensionByOid(certificate, extensionOid);
+                Asn1PrimitiveOctetString extnValue;
+                if (extension.getChildren().get(1) instanceof Asn1PrimitiveOctetString) {
+                    extnValue = (Asn1PrimitiveOctetString) extension.getChildren().get(1);
+                }
+                else if (extension.getChildren().get(2) instanceof Asn1PrimitiveOctetString) {
+                    extnValue = (Asn1PrimitiveOctetString) extension.getChildren().get(2);
+                }
+                else {
+                    throw new RuntimeException("Extension has no value");
+                }
+
+                extnValue.setValue(new byte[]{0x01,0x01,(byte) 0xFF});
             }
         };
     }
