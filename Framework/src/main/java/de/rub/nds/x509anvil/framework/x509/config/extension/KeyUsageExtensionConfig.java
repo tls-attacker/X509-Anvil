@@ -159,6 +159,15 @@ public class KeyUsageExtensionConfig extends ExtensionConfig {
         }
     }
 
+    public void unsetAllBits() {
+        flags[0] = 0;
+        flags[1] = 0;
+    }
+
+    public byte[] getFlags() {
+        return flags;
+    }
+
     @Override
     protected Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig, X509CertificateConfig previousConfig) throws CertificateGeneratorException {
         Asn1PrimitiveBitString keyUsageAsn1 = new Asn1PrimitiveBitString();
