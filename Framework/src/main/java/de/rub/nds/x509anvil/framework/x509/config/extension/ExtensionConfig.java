@@ -49,10 +49,12 @@ public abstract class ExtensionConfig {
         extnIdAsn1.setValue(extensionId);
         extensionAsn1.addChild(extnIdAsn1);
 
-        Asn1Boolean criticalAsn1 = new Asn1Boolean();
-        criticalAsn1.setIdentifier("critical");
-        criticalAsn1.setValue(critical);
-        extensionAsn1.addChild(criticalAsn1);
+        if (critical) {
+            Asn1Boolean criticalAsn1 = new Asn1Boolean();
+            criticalAsn1.setIdentifier("critical");
+            criticalAsn1.setValue(critical);
+            extensionAsn1.addChild(criticalAsn1);
+        }
 
         Asn1PrimitiveOctetString extnValueAsn1 = getContentAsn1Structure(certificateConfig, previousConfig);
         extnValueAsn1.setIdentifier("extnValue");

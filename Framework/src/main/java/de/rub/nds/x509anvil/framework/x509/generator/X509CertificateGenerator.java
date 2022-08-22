@@ -136,14 +136,17 @@ public class X509CertificateGenerator {
     }
 
     private void generateVersion() {
-        Asn1Explicit versionExplicitWrapper = new Asn1Explicit();
-        versionExplicitWrapper.setIdentifier("explicitversion");
-        versionExplicitWrapper.setOffset(0);
-        Asn1Integer version = new Asn1Integer();
-        version.setIdentifier("version");
-        version.setValue(BigInteger.valueOf(certificateConfig.getVersion()));
-        versionExplicitWrapper.addChild(version);
-        tbsCertificate.addChild(versionExplicitWrapper);
+        // Do not encode v1 (default value)
+        if (certificateConfig.getVersion() != 0) {
+            Asn1Explicit versionExplicitWrapper = new Asn1Explicit();
+            versionExplicitWrapper.setIdentifier("explicitversion");
+            versionExplicitWrapper.setOffset(0);
+            Asn1Integer version = new Asn1Integer();
+            version.setIdentifier("version");
+            version.setValue(BigInteger.valueOf(certificateConfig.getVersion()));
+            versionExplicitWrapper.addChild(version);
+            tbsCertificate.addChild(versionExplicitWrapper);
+        }
     }
 
     private void generateSerialNumber() {
