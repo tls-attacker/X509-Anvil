@@ -37,21 +37,4 @@ public class PathlenWithoutCaSetTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
-
-    @RFC(number = 5280, section = "4.2.1.9. Basic Constraints",
-            text = "CAs MUST NOT include the pathLenConstraint field unless the cA boolean is asserted")
-    @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.ext_basic_constraints_ca", clazz = Constraints.class, method = "strictlyDisabled")
-    @AnvilTest
-    public void pathlenWithoutCaSetIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        BasicConstraintsExtensionConfig basicConstraintsExtensionConfig = (BasicConstraintsExtensionConfig)
-                chainConfig.getIntermediateConfig(0).extension(ExtensionType.BASIC_CONSTRAINTS);
-        basicConstraintsExtensionConfig.setPathLenConstraintPresent(true);
-        basicConstraintsExtensionConfig.setPathLenConstraint(1);
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
-    }
 }
