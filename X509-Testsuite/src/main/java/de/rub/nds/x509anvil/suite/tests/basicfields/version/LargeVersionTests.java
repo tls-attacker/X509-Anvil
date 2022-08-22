@@ -25,7 +25,7 @@ public class LargeVersionTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "entity.version")
     public void largeVersionEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalVersionModifier(true, TestUtils.create256BytesInteger()));
+        VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalVersionModifier(true, TestUtils.createBigInteger(256)));
         Assertions.assertFalse(result.isValid());
     }
 
@@ -36,7 +36,7 @@ public class LargeVersionTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "inter0.version")
     public void largeVersionIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalVersionModifier(false, TestUtils.create256BytesInteger()));
+        VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalVersionModifier(false, TestUtils.createBigInteger(256)));
         Assertions.assertFalse(result.isValid());
     }
 }

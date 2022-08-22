@@ -9,7 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.x509.generator;
 
-import de.rub.nds.x509anvil.framework.x509.X509CertificateConfigUtil;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.x509.X509Certificate;

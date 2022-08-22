@@ -2,7 +2,7 @@ package de.rub.nds.x509anvil.framework.featureextraction.probe;
 
 import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
-import de.rub.nds.x509anvil.framework.x509.X509CertificateConfigUtil;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;

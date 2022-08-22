@@ -20,11 +20,16 @@ public class TestUtils {
         return nonMatchingSignatureAlgorithm.getOid();
     }
 
-    public static BigInteger create256BytesInteger() {
-        byte[] bytes = new byte[256];
-        for (int i = 0; i < 256; i++) {
-            bytes[i] = (byte) i;
-        }
+    public static BigInteger createBigInteger(int byteLength) {
+        byte[] bytes = createByteArray(byteLength);
         return new BigInteger(bytes);
+    }
+
+    public static byte[] createByteArray(int length) {
+        byte[] buffer = new byte[length];
+        for (int i = 0; i < length; i++) {
+            buffer[i] = (byte) (i % 256);
+        }
+        return buffer;
     }
 }

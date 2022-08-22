@@ -30,7 +30,7 @@ public class LargeSerialNumberTest extends X509AnvilTest {
     @AnvilTest
     public void largeSerialNumberEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalSerialNumberModifier(true, TestUtils.create256BytesInteger()));
+        VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalSerialNumberModifier(true, TestUtils.createBigInteger(256)));
         Assertions.assertFalse(result.isValid());
     }
 
@@ -45,7 +45,7 @@ public class LargeSerialNumberTest extends X509AnvilTest {
     @AnvilTest
     public void largeSerialNumberIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalSerialNumberModifier(false, TestUtils.create256BytesInteger()));
+        VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalSerialNumberModifier(false, TestUtils.createBigInteger(256)));
         Assertions.assertFalse(result.isValid());
     }
 }

@@ -14,7 +14,6 @@ import de.rub.nds.anvilcore.model.config.AnvilConfig;
 import de.rub.nds.x509anvil.framework.anvil.TestConfig;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
 import de.rub.nds.x509anvil.framework.constants.CertificateChainPosType;
-import de.rub.nds.x509anvil.framework.x509.X509CertificateConfigUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
