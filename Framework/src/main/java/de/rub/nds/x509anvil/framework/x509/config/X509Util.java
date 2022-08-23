@@ -194,6 +194,26 @@ public class X509Util {
         return null;
     }
 
+    public static Asn1Set getRdnFromName(Asn1Sequence name, String oid) {
+        for (Asn1Encodable child : name.getChildren()) {
+            if (child instanceof Asn1Set) {
+                Asn1Set relativeDistinguishedName = (Asn1Set) child;
+                for (Asn1Encodable rdnchild : relativeDistinguishedName.getChildren()) {
+                    if (rdnchild instanceof Asn1Sequence) {
+                        Asn1Sequence attributeTypeAndValue = (Asn1Sequence) rdnchild;
+                        Asn1Encodable objectId = attributeTypeAndValue.getChildren().get(0);
+                        if (objectId instanceof Asn1ObjectIdentifier) {
+                            if (((Asn1ObjectIdentifier) objectId).getValue().equals(oid)) {
+                                return relativeDistinguishedName;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     public static Asn1Encodable getDirectoryString(String value, DirectoryStringType type) {
         switch (type) {
             case PRINTABLE:
