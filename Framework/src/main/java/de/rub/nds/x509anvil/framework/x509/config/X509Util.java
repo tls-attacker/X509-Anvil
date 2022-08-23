@@ -15,6 +15,7 @@ import de.rub.nds.asn1.parser.Asn1Parser;
 import de.rub.nds.asn1.parser.IntermediateAsn1Field;
 import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
+import de.rub.nds.x509anvil.framework.x509.config.model.DirectoryStringType;
 import de.rub.nds.x509attacker.constants.X509CertChainOutFormat;
 import de.rub.nds.x509attacker.x509.X509Certificate;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
@@ -191,5 +192,19 @@ public class X509Util {
             }
         }
         return null;
+    }
+
+    public static Asn1Encodable getDirectoryString(String value, DirectoryStringType type) {
+        switch (type) {
+            case PRINTABLE:
+                Asn1PrimitivePrintableString primitivePrintableString = new Asn1PrimitivePrintableString();
+                primitivePrintableString.setValue(value);
+                return primitivePrintableString;
+            case UTF8:
+            default:
+                Asn1PrimitiveUtf8String utf8String = new Asn1PrimitiveUtf8String();
+                utf8String.setValue(value);
+                return utf8String;
+        }
     }
 }

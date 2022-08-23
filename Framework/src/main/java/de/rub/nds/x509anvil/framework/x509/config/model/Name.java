@@ -11,9 +11,11 @@ package de.rub.nds.x509anvil.framework.x509.config.model;
 
 import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.asn1.model.Asn1Set;
+import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Name implements Asn1Structure<Asn1Sequence> {
@@ -37,6 +39,12 @@ public class Name implements Asn1Structure<Asn1Sequence> {
 
     public void addRelativeDistinguishedName(RelativeDistinguishedName relativeDistinguishedName) {
         this.relativeDistinguishedNames.add(relativeDistinguishedName);
+    }
+
+    public void addNameComponent(String oid, String value, DirectoryStringType directoryStringType) {
+        AttributeTypeAndValue attributeTypeAndValue = new AttributeTypeAndValue(oid, X509Util.getDirectoryString(value, directoryStringType));
+        RelativeDistinguishedName rdn = new RelativeDistinguishedName(Collections.singletonList(attributeTypeAndValue));
+        addRelativeDistinguishedName(rdn);
     }
 
     public Asn1Sequence getAsn1Structure(String identifier) throws CertificateGeneratorException {

@@ -15,7 +15,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 public class SampleTest extends X509AnvilTest {
 
     @AnvilTest(description = "Positive test that covers all (hopefully) valid combination provided by our model")
-    @ChainLength(minLength = 2, maxLength = 2, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     public void sampleTestCase(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
