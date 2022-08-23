@@ -1,9 +1,6 @@
 package de.rub.nds.x509anvil.suite.tests.util;
 
-import de.rub.nds.asn1.model.Asn1Integer;
-import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
-import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
-import de.rub.nds.asn1.model.Asn1Sequence;
+import de.rub.nds.asn1.model.*;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
 
@@ -116,6 +113,28 @@ public class Modifiers {
                 extnValue.setValue(extensionValue);
 
                 extensionSequence.addChild(extension);
+            }
+        };
+
+    }
+
+    public static X509CertificateModifier nameComponentMismatchModifier(String oid) {
+        return (certificate, config, previousConfig) -> {
+            if (config.isEntity()) {
+                Asn1Sequence subjectAsn1 = (Asn1Sequence) X509Util.getAsn1ElementByIdentifierPath(certificate,
+                        "tbsCertificate", "issuer");
+                Asn1Sequence attribute = X509Util.getAttributeFromName(subjectAsn1, oid);
+                if (attribute.getChildren().get(1) instanceof Asn1PrimitivePrintableString) {
+                    Asn1PrimitivePrintableString value = (Asn1PrimitivePrintableString) attribute.getChildren().get(1);
+                    value.setValue(value.getValue() + "_modified");
+                }
+                else if (attribute.getChildren().get(1) instanceof Asn1PrimitiveUtf8String) {
+                    Asn1PrimitiveUtf8String value = (Asn1PrimitiveUtf8String) attribute.getChildren().get(1);
+                    value.setValue(value.getValue() + "_modified");
+                }
+                else {
+                    throw new RuntimeException("Could not change name component with oid " + oid);
+                }
             }
         };
     }

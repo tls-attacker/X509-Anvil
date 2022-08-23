@@ -57,10 +57,10 @@ public class X509AnvilParameterFactory extends ParameterFactory {
                 return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.STATE_OR_PROVINCE_NAME, "NRW");
             case NC_LOCALITY_PRESENT:
                 return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.LOCALITY_NAME, "Paderborn");
-            case NC_ORG_PRESENT:
+            case NC_ORGANIZATION_PRESENT:
                 return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.ORGANIZATION_NAME, "UPB");
-            case NC_ORG_UNIT_PRESENT:
-                return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.COUNTRY_NAME, "CS");
+            case NC_ORGANIZATIONAL_UNIT_PRESENT:
+                return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.ORGANIZATIONAL_UNIT_NAME, "CS");
             case NC_SERIAL_NUMBER_PRESENT:
                 return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.SERIAL_NUMBER, "SERIAL:A3:B4:1337");
             case DOMAIN_COMPONENTS_PRESENT:
