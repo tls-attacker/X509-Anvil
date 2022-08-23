@@ -24,6 +24,8 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyidentifier.AuthorityKeyIdentifierPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage.KeyUsageFlagParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyidentifier.SubjectKeyIdentifierPresentParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.name.CNTypeParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.name.DomainComponentPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.name.NameComponentPresentParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
@@ -47,6 +49,8 @@ public class X509AnvilParameterFactory extends ParameterFactory {
                 return new NotBeforeParameter(parameterIdentifier.getParameterScope());
             case NOT_AFTER:
                 return new NotAfterParameter(parameterIdentifier.getParameterScope());
+            case CN_TYPE_PARAMETER:
+                return new CNTypeParameter(parameterIdentifier.getParameterScope());
             case NC_COUNTRY_NAME_PRESENT:
                 return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.COUNTRY_NAME, "DE");
             case NC_STATE_PROVINCE_PRESENT:
@@ -59,6 +63,8 @@ public class X509AnvilParameterFactory extends ParameterFactory {
                 return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.COUNTRY_NAME, "CS");
             case NC_SERIAL_NUMBER_PRESENT:
                 return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.SERIAL_NUMBER, "SERIAL:A3:B4:1337");
+            case DOMAIN_COMPONENTS_PRESENT:
+                return new DomainComponentPresentParameter(parameterIdentifier.getParameterScope());
             case ISSUER_UNIQUE_ID_PRESENT:
                 return new IssuerUniqueIdPresentParameter(parameterIdentifier.getParameterScope());
             case ISSUER_UNIQUE_ID:
