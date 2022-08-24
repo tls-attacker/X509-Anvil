@@ -30,7 +30,7 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @Specification(document = "X.690", section = "11.1 Boolean values ",
             text = "If the encoding represents the boolean value TRUE, its single contents octet shall have all eight bits set to one")
     @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 2, maxLength = 2, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @ValueConstraint(identifier = "entity.ext_key_usage_critical", clazz = Constraints.class, method = "enabled")
     @AnvilTest(description = "Encode a TRUE value using a value 0 < value < 0xFF")
@@ -43,7 +43,7 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @Specification(document = "X.690", section = "11.1 Boolean values ",
             text = "If the encoding represents the boolean value TRUE, its single contents octet shall have all eight bits set to one")
     @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 2, maxLength = 2, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.ext_key_usage_critical", clazz = Constraints.class, method = "enabled")
     @AnvilTest(description = "Encode a TRUE value using a value 0 < value < 0xFF")
