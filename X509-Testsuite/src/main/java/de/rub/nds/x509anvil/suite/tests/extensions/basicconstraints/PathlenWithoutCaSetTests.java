@@ -4,7 +4,7 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.RFC;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -21,7 +21,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class PathlenWithoutCaSetTests extends X509AnvilTest {
 
-    @RFC(number = 5280, section = "4.2.1.9. Basic Constraints",
+    @Specification(document = "RFC 5280", section = "4.2.1.9. Basic Constraints",
             text = "CAs MUST NOT include the pathLenConstraint field unless the cA boolean is asserted")
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)

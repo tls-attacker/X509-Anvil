@@ -6,7 +6,7 @@ import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.asn1.model.Asn1PrimitiveIa5String;
 import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.RFC;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -24,7 +24,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class DomainComponentCaseInsensitiveTests extends X509AnvilTest {
 
-    @RFC(number = 5280, section = "7.3. Internationalized Domain Names in Distinguished Names",
+    @Specification(document = "RFC 5280", section = "7.3. Internationalized Domain Names in Distinguished Names",
             text = "Conforming implementations shall perform a case-insensitive exact match when comparing domainComponent " +
                     "attributes in distinguished names")
     @SeverityLevel(Severity.CRITICAL)

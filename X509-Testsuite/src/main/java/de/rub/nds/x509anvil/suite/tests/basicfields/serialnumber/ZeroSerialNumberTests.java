@@ -4,7 +4,7 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.RFC;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -21,7 +21,7 @@ import java.math.BigInteger;
 
 public class ZeroSerialNumberTests extends X509AnvilTest {
 
-    @RFC(number = 5280, section = "4.1.2.1. Version",
+    @Specification(document = "RFC 5280", section = "4.1.2.1. Version",
             text = "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may " +
                     "issue certificates with serial numbers that are negative or zero.  Certificate users SHOULD be prepared to " +
                     "gracefully handle such certificates.")
@@ -36,7 +36,7 @@ public class ZeroSerialNumberTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @RFC(number = 5280, section = "4.1.2.1. Version",
+    @Specification(document = "RFC 5280", section = "4.1.2.1. Version",
             text = "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may " +
                     "issue certificates with serial numbers that are negative or zero.  Certificate users SHOULD be prepared to " +
                     "gracefully handle such certificates.")

@@ -7,7 +7,7 @@ import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
 import de.rub.nds.asn1.model.Asn1PrimitiveUtf8String;
 import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.RFC;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -26,7 +26,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class AttributeTypeMismatchTests extends X509AnvilTest {
 
-    @RFC(number = 5280, section = "7.1. Internationalized Names in Distinguished Names",
+    @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling), as specified in [RFC4518], " +
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")
     @SeverityLevel(Severity.ERROR)
@@ -39,7 +39,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
         Assertions.assertTrue(result.isValid());
     }
 
-    @RFC(number = 5280, section = "7.1. Internationalized Names in Distinguished Names",
+    @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling), as specified in [RFC4518], " +
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")
     @SeverityLevel(Severity.ERROR)
@@ -53,7 +53,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
         Assertions.assertTrue(result.isValid());
     }
 
-    @RFC(number = 5280, section = "7.1. Internationalized Names in Distinguished Names",
+    @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling), as specified in [RFC4518], " +
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")
     @SeverityLevel(Severity.ERROR)
@@ -67,7 +67,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
         Assertions.assertTrue(result.isValid());
     }
 
-    @RFC(number = 5280, section = "7.1. Internationalized Names in Distinguished Names",
+    @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling), as specified in [RFC4518], " +
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")
     @SeverityLevel(Severity.ERROR)
@@ -81,7 +81,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
         Assertions.assertTrue(result.isValid());
     }
 
-    @RFC(number = 5280, section = "7.1. Internationalized Names in Distinguished Names",
+    @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling), as specified in [RFC4518], " +
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")
     @SeverityLevel(Severity.ERROR)
@@ -96,7 +96,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
         Assertions.assertTrue(result.isValid());
     }
 
-    @RFC(number = 5280, section = "7.1. Internationalized Names in Distinguished Names",
+    @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling), as specified in [RFC4518], " +
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")
     @SeverityLevel(Severity.ERROR)
@@ -110,7 +110,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
         Assertions.assertTrue(result.isValid());
     }
 
-    @RFC(number = 5280, section = "7.1. Internationalized Names in Distinguished Names",
+    @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling), as specified in [RFC4518], " +
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")
     @SeverityLevel(Severity.ERROR)

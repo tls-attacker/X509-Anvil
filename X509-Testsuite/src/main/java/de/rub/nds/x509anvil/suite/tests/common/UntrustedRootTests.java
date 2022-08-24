@@ -3,7 +3,7 @@ package de.rub.nds.x509anvil.suite.tests.common;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.RFC;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.StaticRoot;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -16,7 +16,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class UntrustedRootTests extends X509AnvilTest {
 
-    @RFC(number = 5280)
+    @Specification(document = "RFC 5280")
     @AnvilTest(description = "Checks whether the verifying application rejects a chain when the root certificate is untrusted")
     @StaticRoot(false)
     @ChainLength(minLength = 1, maxLength = 2, intermediateCertsModeled = 2)

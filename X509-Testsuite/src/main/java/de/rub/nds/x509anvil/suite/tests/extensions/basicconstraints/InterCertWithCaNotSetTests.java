@@ -3,7 +3,7 @@ package de.rub.nds.x509anvil.suite.tests.extensions.basicconstraints;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.RFC;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -19,7 +19,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class InterCertWithCaNotSetTests extends X509AnvilTest {
 
-    @RFC(number = 5280, section = "4.2.1.9. Basic Constraints",
+    @Specification(document = "RFC 5280", section = "4.2.1.9. Basic Constraints",
             text = "If the basic constraints extension is not present in a version 3 certificate, or the extension is present but the cA boolean " +
                     "is not asserted, then the certified public key MUST NOT be used to verify certificate signatures.")
     @SeverityLevel(Severity.CRITICAL)

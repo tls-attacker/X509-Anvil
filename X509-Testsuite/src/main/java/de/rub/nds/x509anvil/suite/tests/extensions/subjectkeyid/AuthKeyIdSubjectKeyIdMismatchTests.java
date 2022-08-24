@@ -8,7 +8,7 @@ import de.rub.nds.asn1.model.Asn1Implicit;
 import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
 import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.RFC;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -29,7 +29,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import java.util.HashMap;
 
 public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
-    @RFC(number = 5280, section = "4.2.1.2. Subject Key Identifier",
+    @Specification(document = "RFC 5280", section = "4.2.1.2. Subject Key Identifier",
             text = "In conforming CA certificates, the value of the subject key identifier MUST be the value placed in the key identifier " +
                     "field of the authority key identifier extension (Section 4.2.1.1) of certificates issued by the subject of this certificate.")
     @SeverityLevel(Severity.WARNING)
@@ -44,7 +44,7 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @RFC(number = 5280, section = "4.2.1.2. Subject Key Identifier",
+    @Specification(document = "RFC 5280", section = "4.2.1.2. Subject Key Identifier",
             text = "In conforming CA certificates, the value of the subject key identifier MUST be the value placed in the key identifier " +
                     "field of the authority key identifier extension (Section 4.2.1.1) of certificates issued by the subject of this certificate.")
     @SeverityLevel(Severity.WARNING)

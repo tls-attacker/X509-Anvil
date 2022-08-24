@@ -4,7 +4,7 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.RFC;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -19,7 +19,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class UnknownCriticalExtentionTests extends X509AnvilTest {
 
-    @RFC(number = 5280, section = "4.2 Certificate Extensions",
+    @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions",
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension it does not recognize")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
@@ -36,7 +36,7 @@ public class UnknownCriticalExtentionTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @RFC(number = 5280, section = "4.2 Certificate Extensions",
+    @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions",
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension it does not recognize")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)

@@ -6,7 +6,7 @@ import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.asn1.encoder.Asn1EncoderForX509;
 import de.rub.nds.asn1.model.Asn1PrimitiveBitString;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.RFC;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -29,7 +29,7 @@ import java.util.HashMap;
 
 public class DuplicateKeyUsageTests extends X509AnvilTest {
 
-    @RFC(number = 5280, section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
+    @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2, maxLength = 3)
     @TestStrength(2)
@@ -41,7 +41,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @RFC(number = 5280, section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
+    @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
@@ -53,7 +53,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @RFC(number = 5280, section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
+    @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2, maxLength = 3)
     @TestStrength(2)
@@ -66,7 +66,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @RFC(number = 5280, section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
+    @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)

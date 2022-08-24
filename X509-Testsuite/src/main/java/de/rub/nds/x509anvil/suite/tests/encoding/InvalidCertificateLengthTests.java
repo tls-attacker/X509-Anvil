@@ -4,7 +4,7 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.modifiablevariable.biginteger.BigIntegerAddModification;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.RFC;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
@@ -19,7 +19,7 @@ import java.math.BigInteger;
 
 public class InvalidCertificateLengthTests extends X509AnvilTest {
 
-    @RFC(number = 5280)
+    @Specification(document = "RFC 5280")
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest(description = "Reduces the length field of the entity certificate by 1")
@@ -29,7 +29,7 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @RFC(number = 5280)
+    @Specification(document = "RFC 5280")
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest(description = "Reduces the length field of the intermediate certificate by 1")
@@ -39,7 +39,7 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @RFC(number = 5280)
+    @Specification(document = "RFC 5280")
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest(description = "Increases the length field of the entity certificate by 1")
@@ -49,7 +49,7 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @RFC(number = 5280)
+    @Specification(document = "RFC 5280")
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest(description = "Increases the length field of the intermediate certificate by 1")

@@ -6,9 +6,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RFC {
-    @JsonProperty("number")
-    int number();
+public @interface Specification {
+    @JsonProperty("document")
+    String document();
 
     @JsonProperty("section")
     String section() default "";

@@ -4,7 +4,7 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.RFC;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -19,7 +19,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class UtcTimeNonZuluTests extends X509AnvilTest {
 
-    @RFC(number = 5280, section = "4.1.2.5.1. UTCTime",
+    @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime",
             text = "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
@@ -34,7 +34,7 @@ public class UtcTimeNonZuluTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @RFC(number = 5280, section = "4.1.2.5.1. UTCTime",
+    @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime",
             text = "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
@@ -49,7 +49,7 @@ public class UtcTimeNonZuluTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @RFC(number = 5280, section = "4.1.2.5.1. UTCTime",
+    @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime",
             text = "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
@@ -64,7 +64,7 @@ public class UtcTimeNonZuluTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @RFC(number = 5280, section = "4.1.2.5.1. UTCTime",
+    @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime",
             text = "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)

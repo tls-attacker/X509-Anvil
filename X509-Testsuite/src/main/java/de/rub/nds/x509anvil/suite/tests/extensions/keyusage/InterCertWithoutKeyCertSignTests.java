@@ -4,7 +4,7 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.RFC;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -21,7 +21,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class InterCertWithoutKeyCertSignTests extends X509AnvilTest {
 
-    @RFC(number = 5280, section = "4.2.1.3. Key Usage",
+    @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage",
             text = "If the keyUsage extension is present, then the subject public key MUST NOT be used to verify signatures on " +
                     "certificates or CRLs unless the corresponding keyCertSign or cRLSign bit is set.")
     @SeverityLevel(Severity.CRITICAL)

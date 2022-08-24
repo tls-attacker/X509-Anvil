@@ -4,7 +4,7 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.RFC;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
@@ -19,7 +19,7 @@ import java.math.BigInteger;
 
 public class InvalidPositiveVersionTests extends X509AnvilTest {
 
-    @RFC(number = 5280, section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
+    @Specification(document = "RFC 5280", section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
     @AnvilTest(description = "Use a illegal positive version value")
     @TestStrength(2)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
@@ -30,7 +30,7 @@ public class InvalidPositiveVersionTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @RFC(number = 5280, section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
+    @Specification(document = "RFC 5280", section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
     @AnvilTest(description = "Use a illegal positive version value")
     @TestStrength(2)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)

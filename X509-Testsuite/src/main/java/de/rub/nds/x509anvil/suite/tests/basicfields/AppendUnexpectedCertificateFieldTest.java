@@ -4,7 +4,7 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.RFC;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -23,7 +23,7 @@ import java.util.List;
 
 public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
 
-    @RFC(number = 5280)
+    @Specification(document = "RFC 5280")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
@@ -42,7 +42,7 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @RFC(number = 5280)
+    @Specification(document = "RFC 5280")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
