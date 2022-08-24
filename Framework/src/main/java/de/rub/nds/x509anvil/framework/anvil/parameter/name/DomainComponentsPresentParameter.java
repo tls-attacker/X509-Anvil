@@ -9,13 +9,13 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecific
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
-public class DomainComponentPresentParameter extends BooleanCertificateSpecificParameter {
+public class DomainComponentsPresentParameter extends BooleanCertificateSpecificParameter {
 
-    public DomainComponentPresentParameter(ParameterScope parameterScope) {
+    public DomainComponentsPresentParameter(ParameterScope parameterScope) {
         super(new ParameterIdentifier(X509AnvilParameterType.DOMAIN_COMPONENTS_PRESENT, parameterScope));
     }
 
-    public DomainComponentPresentParameter(Boolean selectedValue, ParameterScope parameterScope) {
+    public DomainComponentsPresentParameter(Boolean selectedValue, ParameterScope parameterScope) {
         super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.DOMAIN_COMPONENTS_PRESENT, parameterScope));
     }
 
@@ -28,6 +28,6 @@ public class DomainComponentPresentParameter extends BooleanCertificateSpecificP
 
     @Override
     protected DerivationParameter<X509CertificateChainConfig, Boolean> generateValue(Boolean selectedValue) {
-        return new DomainComponentPresentParameter(selectedValue, getParameterScope());
+        return new DomainComponentsPresentParameter(selectedValue, getParameterScope());
     }
 }

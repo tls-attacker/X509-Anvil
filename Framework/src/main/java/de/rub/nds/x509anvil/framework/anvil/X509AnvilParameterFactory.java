@@ -25,7 +25,7 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyidentifier.Au
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage.KeyUsageFlagParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyidentifier.SubjectKeyIdentifierPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.name.CNTypeParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.name.DomainComponentPresentParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.name.DomainComponentsPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.name.NameComponentPresentParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
@@ -64,7 +64,7 @@ public class X509AnvilParameterFactory extends ParameterFactory {
             case NC_SERIAL_NUMBER_PRESENT:
                 return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.SERIAL_NUMBER, "SERIAL:A3:B4:1337");
             case DOMAIN_COMPONENTS_PRESENT:
-                return new DomainComponentPresentParameter(parameterIdentifier.getParameterScope());
+                return new DomainComponentsPresentParameter(parameterIdentifier.getParameterScope());
             case ISSUER_UNIQUE_ID_PRESENT:
                 return new IssuerUniqueIdPresentParameter(parameterIdentifier.getParameterScope());
             case ISSUER_UNIQUE_ID:
