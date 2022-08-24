@@ -7,6 +7,7 @@ import de.rub.nds.asn1.model.Asn1Integer;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
+import de.rub.nds.x509anvil.framework.constants.CertificateChainPosType;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -25,7 +26,7 @@ public class ModifyingTest extends X509AnvilTest {
     public void sampleTestCase(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, (certificate, config, previousConfig) -> {
-            if (config == chainConfig.getEntityCertificateConfig()) {
+            if (config.getCertificateChainPosType() == CertificateChainPosType.ENTITY) {
                 Asn1Integer version = (Asn1Integer) X509Util.getAsn1ElementByIdentifierPath(certificate, "tbsCertificate", "explicitversion", "version");
                 version.setValue(BigInteger.valueOf(3));
 
