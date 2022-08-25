@@ -1,5 +1,6 @@
 package de.rub.nds.x509anvil.suite.tests.util;
 
+import de.rub.nds.asn1.Asn1Encodable;
 import de.rub.nds.asn1.model.*;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
@@ -8,8 +9,21 @@ import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Arrays;
 
 public class Modifiers {
+
+    public static X509CertificateModifier removeFieldModifier(boolean entity, String... path) {
+        return (certificate, config, previousConfig) -> {
+            if (entity && config.isEntity() || !entity && config.isIntermediate()) {
+                Asn1Encodable field = X509Util.getAsn1ElementByIdentifierPath(certificate, path);
+                String[] parentPath = Arrays.copyOf(path, path.length-1);
+                Asn1Container parent = (Asn1Container) X509Util.getAsn1ElementByIdentifierPath(certificate, parentPath);
+                parent.getChildren().remove(field);
+            }
+        };
+    }
+
     public static X509CertificateModifier illegalVersionModifier(boolean entity, BigInteger version) {
         return (certificate, config, previousConfig) -> {
             if (entity && config.isEntity() || !entity && config.isIntermediate()) {
