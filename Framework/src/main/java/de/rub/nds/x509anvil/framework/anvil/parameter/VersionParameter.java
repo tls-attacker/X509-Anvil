@@ -36,7 +36,7 @@ public class VersionParameter extends CertificateSpecificParameter<Integer> {
 
     @Override
     public DerivationParameter<X509CertificateChainConfig, Integer> generateValue(Integer selectedValue) {
-        return new VersionParameter(selectedValue, getParameterIdentifier().getParameterScope());
+        return new VersionParameter(selectedValue, getParameterScope());
     }
 
     @Override

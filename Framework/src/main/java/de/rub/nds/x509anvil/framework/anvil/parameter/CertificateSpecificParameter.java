@@ -42,7 +42,7 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
                     .get();
             defaultConstraints.add(aggregatedEnableConstraint);
         }
-        if (canBeDisabled(derivationScope)) {
+        else if (canBeDisabled(derivationScope)) {
             AggregatedEnableConstraint<T> aggregatedEnableConstraint = AggregatedEnableConstraintBuilder.<T>init(derivationScope)
                     .constrain(this)
                     .conditions(getAdditionalEnableConditions())

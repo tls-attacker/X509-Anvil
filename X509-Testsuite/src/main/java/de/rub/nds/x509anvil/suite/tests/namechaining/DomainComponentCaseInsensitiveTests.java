@@ -35,7 +35,7 @@ public class DomainComponentCaseInsensitiveTests extends X509AnvilTest {
     public void switchedCaseDomainComponentTest(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, domainComponentCaseSwitchModifier());
-        Assertions.assertFalse(result.isValid());
+        Assertions.assertTrue(result.isValid());
     }
 
     private static X509CertificateModifier domainComponentCaseSwitchModifier() {

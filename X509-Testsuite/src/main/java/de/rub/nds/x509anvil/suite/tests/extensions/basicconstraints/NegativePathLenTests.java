@@ -25,12 +25,13 @@ public class NegativePathLenTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void insufficientPathLenChainLength4(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void negativePathLen(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         BasicConstraintsExtensionConfig basicConstraintsExtensionConfig = (BasicConstraintsExtensionConfig)
                 chainConfig.getIntermediateConfig(0).extension(ExtensionType.BASIC_CONSTRAINTS);
         basicConstraintsExtensionConfig.setPresent(true);
         basicConstraintsExtensionConfig.setCa(true);
+        basicConstraintsExtensionConfig.setPathLenConstraintPresent(true);
         basicConstraintsExtensionConfig.setPathLenConstraint(-5);
         chainConfig.getIntermediateConfig(0).extension(ExtensionType.BASIC_CONSTRAINTS).setPresent(true);
         VerifierResult result = testRunner.execute(chainConfig);

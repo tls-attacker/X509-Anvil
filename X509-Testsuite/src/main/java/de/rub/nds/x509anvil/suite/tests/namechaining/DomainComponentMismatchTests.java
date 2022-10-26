@@ -35,7 +35,7 @@ public class DomainComponentMismatchTests extends X509AnvilTest {
     public void domainComponentMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, domainComponentMismatchModifier());
-        Assertions.assertTrue(result.isValid());
+        Assertions.assertFalse(result.isValid());
     }
 
     private static X509CertificateModifier domainComponentMismatchModifier() {

@@ -41,6 +41,11 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
     @Override
     protected List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
         FeatureReport featureReport = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getFeatureReport();
+        if (getParameterScope().isEntity()) {
+            return featureReport.getSupportedEntityHashAlgorithms().stream()
+                    .map(this::generateValue)
+                    .collect(Collectors.toList());
+        }
         return featureReport.getSupportedHashAlgorithms().stream()
                 .map(this::generateValue)
                 .collect(Collectors.toList());

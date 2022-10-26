@@ -172,7 +172,7 @@ public class X509Util {
         x509CertificateChain.writeCertificateChainToFile(directory, X509CertChainOutFormat.CHAIN_ALL_IND_ROOT_TO_LEAF);
     }
 
-    public static Asn1PrimitivePrintableString getCnFromName(Asn1Sequence name) {
+    public static Asn1Encodable getCnFromName(Asn1Sequence name) {
         for (Asn1Encodable child : name.getChildren()) {
             if (child instanceof Asn1Set) {
                 Asn1Set relativeDistinguishedName = (Asn1Set) child;
@@ -182,9 +182,7 @@ public class X509Util {
                         Asn1Encodable objectId = attributeTypeAndValue.getChildren().get(0);
                         if (objectId instanceof Asn1ObjectIdentifier) {
                             if (((Asn1ObjectIdentifier) objectId).getValue().equals(AttributeTypeObjectIdentifiers.COMMON_NAME)) {
-                                if (attributeTypeAndValue.getChildren().get(1) instanceof Asn1PrimitivePrintableString) {
-                                    return (Asn1PrimitivePrintableString) attributeTypeAndValue.getChildren().get(1);
-                                }
+                                return attributeTypeAndValue.getChildren().get(1);
                             }
                         }
                     }

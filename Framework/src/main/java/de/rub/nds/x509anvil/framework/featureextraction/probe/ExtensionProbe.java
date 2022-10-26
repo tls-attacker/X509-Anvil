@@ -35,8 +35,10 @@ public abstract class ExtensionProbe implements Probe {
             }
             addExtensionToConfig(baseConfig);
             boolean resultValid = testCertificateChain(baseConfig, createValidExtensionModifier());
-            boolean resultInvalid = testCertificateChain(baseConfig, createInvalidExtensionModifier());
-            return new ExtensionProbeResult(extensionType, resultValid && !resultInvalid);
+            // FIXME
+            //boolean resultInvalid = testCertificateChain(baseConfig, createInvalidExtensionModifier());
+            //return new ExtensionProbeResult(extensionType, resultValid && !resultInvalid);
+            return new ExtensionProbeResult(extensionType, resultValid);
         } catch (VerifierException | CertificateGeneratorException e) {
             throw new ProbeException("Unable to execute probe", e);
         }

@@ -49,7 +49,7 @@ public class X509AnvilParameterFactory extends ParameterFactory {
                 return new NotBeforeParameter(parameterIdentifier.getParameterScope());
             case NOT_AFTER:
                 return new NotAfterParameter(parameterIdentifier.getParameterScope());
-            case CN_TYPE_PARAMETER:
+            case CN_TYPE:
                 return new CNTypeParameter(parameterIdentifier.getParameterScope());
             case NC_COUNTRY_NAME_PRESENT:
                 return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.COUNTRY_NAME, "DE");

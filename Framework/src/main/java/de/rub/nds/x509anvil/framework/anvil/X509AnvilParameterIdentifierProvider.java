@@ -9,7 +9,6 @@
 
 package de.rub.nds.x509anvil.framework.anvil;
 
-import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.ParameterIdentifierProvider;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
@@ -29,9 +28,6 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
 
         List<ParameterIdentifier> parameterIdentifiers = new ArrayList<>();
         parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH));
-
-        // certificate specific parameters
-        TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
 
         // Parameters for root certificate
         if (!AnnotationUtil.resolveStaticRoot(derivationScope.getExtensionContext())) {
@@ -61,8 +57,9 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
         if (true) {
             return Arrays.stream(X509AnvilParameterType.values())
                     .filter(t -> t != X509AnvilParameterType.CHAIN_LENGTH)
-                    //.filter(t -> !t.name().startsWith("EXT_KEY_USAGE"))
-                    //.filter(t -> !t.name().contains("UNIQUE"))
+                    .filter(t -> !t.name().startsWith("EXT_KEY_USAGE"))
+                    .filter(t -> !t.name().contains("UNIQUE"))
+                    .filter(t -> !t.name().contains("NC"))
                     .collect(Collectors.toList());
         }
 

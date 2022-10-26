@@ -45,7 +45,7 @@ public class BasicConstraintsExtensionProbe extends ExtensionProbe {
             if (config == chainConfig.getEntityCertificateConfig()) {
                 Asn1PrimitiveOctetString extensionValue = (Asn1PrimitiveOctetString) X509Util.getAsn1ElementByIdentifierPath(certificate,
                         "tbsCertificate", "explicitExtensions", "extensions", "basicConstraints", "extnValue");
-                extensionValue.setValue(new byte[]{0x02,0x01, (byte)0xff});
+                extensionValue.setValue(new byte[]{0x05,0x00});
             }
         };
     }

@@ -41,7 +41,38 @@ public class FeatureExtractor {
         featureReport.addProbeResult(basicConstraintsProbeResult);
 
 
-        // Probe support for signature algorithms
+        // Probe support for signature algorithms (entity)
+        List<SignatureAlgorithm> supportedEntityAlgorithms = new ArrayList<>();
+        for (SignatureAlgorithm algorithm : SignatureAlgorithm.values()) {
+            Probe entitySignatureAlgorithmProbe = new EntitySignatureAlgorithmProbe(algorithm);
+            SignatureAlgorithmProbeResult signatureAlgorithmProbeResult = (SignatureAlgorithmProbeResult) entitySignatureAlgorithmProbe.execute();
+            if (signatureAlgorithmProbeResult.isSupported()) {
+                supportedEntityAlgorithms.add(algorithm);
+            }
+            featureReport.addProbeResult(signatureAlgorithmProbeResult);
+        }
+        featureReport.setSupportedEntityAlgorithms(supportedEntityAlgorithms);
+
+        if (supportedEntityAlgorithms.isEmpty()) {
+            throw new UnsupportedFeatureException("Target verifier does not support any of the implemented signature algorithms for entity certificates");
+        }
+
+        // Probe support for key lengths (for entity certs)
+        List<KeyTypeLengthPair> supportedEntityKeyLengths = new ArrayList<>();
+        for (KeyType keyType : featureReport.getSupportedEntityKeyTypes()) {
+            for (int keyLength : KeyTypeLengthPair.getKeyLengths(keyType)) {
+                SignatureAlgorithm signatureAlgorithm = featureReport.getSupportedEntityAlgorithms().stream().filter(a -> a.getKeyType() == keyType).findFirst().get();
+                Probe keyLengthProbe = new KeyLengthProbe(signatureAlgorithm, keyLength, true);
+                KeyLengthProbeResult signatureAlgorithmProbeResult = (KeyLengthProbeResult) keyLengthProbe.execute();
+                if (signatureAlgorithmProbeResult.isSupported()) {
+                    supportedEntityKeyLengths.add(KeyTypeLengthPair.get(keyType, keyLength));
+                }
+            }
+        }
+        featureReport.setSupportedEntityKeyLengths(supportedEntityKeyLengths);
+
+
+        // Probe support for signature algorithms (non-entity)
         List<SignatureAlgorithm> supportedAlgorithms = new ArrayList<>();
         for (SignatureAlgorithm algorithm : SignatureAlgorithm.values()) {
             Probe signatureAlgorithmProbe = new SignatureAlgorithmProbe(algorithm);
@@ -70,20 +101,6 @@ public class FeatureExtractor {
             }
         }
         featureReport.setSupportedKeyLengths(supportedKeyLengths);
-
-        // Probe support for key lengths (for entity certs)
-        List<KeyTypeLengthPair> supportedEntityKeyLengths = new ArrayList<>();
-        for (KeyType keyType : featureReport.getSupportedKeyTypes()) {
-            for (int keyLength : KeyTypeLengthPair.getKeyLengths(keyType)) {
-                SignatureAlgorithm signatureAlgorithm = featureReport.getSupportedAlgorithms().stream().filter(a -> a.getKeyType() == keyType).findFirst().get();
-                Probe keyLengthProbe = new KeyLengthProbe(signatureAlgorithm, keyLength, true);
-                KeyLengthProbeResult signatureAlgorithmProbeResult = (KeyLengthProbeResult) keyLengthProbe.execute();
-                if (signatureAlgorithmProbeResult.isSupported()) {
-                    supportedEntityKeyLengths.add(KeyTypeLengthPair.get(keyType, keyLength));
-                }
-            }
-        }
-        featureReport.setSupportedEntityKeyLengths(supportedEntityKeyLengths);
 
 
         // Probe support for key usage extension

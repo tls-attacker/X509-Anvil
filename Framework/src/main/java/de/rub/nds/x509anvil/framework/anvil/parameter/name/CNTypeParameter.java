@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 public class CNTypeParameter extends CertificateSpecificParameter<DirectoryStringType> {
 
     public CNTypeParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.CN_TYPE_PARAMETER, parameterScope), DirectoryStringType.class);
+        super(new ParameterIdentifier(X509AnvilParameterType.CN_TYPE, parameterScope), DirectoryStringType.class);
     }
 
     public CNTypeParameter(ParameterScope parameterScope, DirectoryStringType selectedValue) {
-        super(new ParameterIdentifier(X509AnvilParameterType.CN_TYPE_PARAMETER, parameterScope), DirectoryStringType.class);
+        super(new ParameterIdentifier(X509AnvilParameterType.CN_TYPE, parameterScope), DirectoryStringType.class);
         setSelectedValue(selectedValue);
     }
 

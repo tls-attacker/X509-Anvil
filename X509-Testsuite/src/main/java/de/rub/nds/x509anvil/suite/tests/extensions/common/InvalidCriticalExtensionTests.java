@@ -26,7 +26,7 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension [...] " +
                     "that contains information that it cannot process.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 2, maxLength = 2, intermediateCertsModeled = 2)
     @TestStrength(2)
     @ValueConstraint(identifier = "entity.extensions_present", clazz = Constraints.class, method = "enabled")
     @ValueConstraint(identifier = "entity.ext_subject_key_identifier_present", clazz = Constraints.class, method = "enabled")

@@ -23,7 +23,7 @@ public enum X509AnvilParameterType implements ParameterType {
     HASH_ALGORITHM,
     NOT_BEFORE,
     NOT_AFTER,
-    CN_TYPE_PARAMETER,
+    CN_TYPE,
     NC_COUNTRY_NAME_PRESENT,
     NC_STATE_PROVINCE_PRESENT,
     NC_LOCALITY_PRESENT,

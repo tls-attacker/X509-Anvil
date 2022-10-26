@@ -9,6 +9,9 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionPresent
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 
+import java.util.Collections;
+import java.util.List;
+
 public class AuthorityKeyIdentifierPresentParameter extends ExtensionPresentParameter {
 
     public AuthorityKeyIdentifierPresentParameter(ParameterScope parameterScope) {
@@ -22,6 +25,14 @@ public class AuthorityKeyIdentifierPresentParameter extends ExtensionPresentPara
     @Override
     protected DerivationParameter<X509CertificateChainConfig, Boolean> generateValue(Boolean selectedValue) {
         return new AuthorityKeyIdentifierPresentParameter(selectedValue, getParameterScope());
+    }
+
+    @Override
+    public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
+        if (getParameterScope().isRoot()) {
+            return Collections.singletonList(generateValue(false));
+        }
+        return super.getNonNullParameterValues(derivationScope);
     }
 
     @Override

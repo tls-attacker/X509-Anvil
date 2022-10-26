@@ -204,12 +204,19 @@ public class X509CertificateGenerator {
 
         Asn1Sequence issuerAsn1 = issuer.getAsn1Structure("issuer");
         if (!certificateConfig.isSelfSigned() && previousConfig.isSharedConfig()) {
-            Asn1PrimitivePrintableString cn = X509Util.getCnFromName(issuerAsn1);
+            Asn1Encodable cn = X509Util.getCnFromName(issuerAsn1);
             // TODO create if null
             if (cn == null) {
                 throw new CertificateGeneratorException("Shared cert has no subject CN");
             }
-            cn.setValue(cn.getValue() + "_" + (previousConfig.getSharedId() - 1));
+            if (cn instanceof Asn1PrimitivePrintableString) {
+                ((Asn1PrimitivePrintableString) cn).setValue(
+                        ((Asn1PrimitivePrintableString) cn).getValue() + "_" + (previousConfig.getSharedId() - 1));
+            }
+            else if (cn instanceof Asn1PrimitiveUtf8String) {
+                ((Asn1PrimitiveUtf8String) cn).setValue(
+                        ((Asn1PrimitiveUtf8String) cn).getValue() + "_" + (previousConfig.getSharedId() - 1));
+            }
         }
         tbsCertificate.addChild(issuerAsn1);
     }
@@ -218,12 +225,16 @@ public class X509CertificateGenerator {
         Asn1Sequence subject = certificateConfig.getSubject().getAsn1Structure("subject");
         tbsCertificate.addChild(subject);
         if (certificateConfig.isSharedConfig()) {
-            Asn1PrimitivePrintableString cn = X509Util.getCnFromName(subject);
+            Asn1Encodable cn = X509Util.getCnFromName(subject);
             // TODO create if null
             if (cn == null) {
                 throw new CertificateGeneratorException("Shared cert has no subject CN");
             }
-            cn.setValue(cn.getValue() + "_" + certificateConfig.getSharedId());
+            if (cn instanceof Asn1PrimitivePrintableString) {
+                ((Asn1PrimitivePrintableString) cn).setValue(((Asn1PrimitivePrintableString) cn).getValue() + "_" + certificateConfig.getSharedId());
+            } else if (cn instanceof Asn1PrimitiveUtf8String) {
+                ((Asn1PrimitiveUtf8String) cn).setValue(((Asn1PrimitiveUtf8String) cn).getValue() + "_" + certificateConfig.getSharedId());
+            }
             certificateConfig.setSharedId(certificateConfig.getSharedId() + 1);
         }
     }

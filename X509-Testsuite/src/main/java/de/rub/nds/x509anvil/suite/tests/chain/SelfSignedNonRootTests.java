@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.chain;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -20,6 +21,7 @@ public class SelfSignedNonRootTests extends X509AnvilTest {
             text = "for all x in {1, ..., n-1}, the subject of certificate x is the issuer of certificate x+1;")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @TestStrength(2)
     @AnvilTest
     public void selfSignedEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);

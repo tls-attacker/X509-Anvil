@@ -24,6 +24,7 @@ public class NegativeVersionTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     public void negativeVersionEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+        certificateChainConfig.getEntityCertificateConfig().setVersion(2); // Just to make sure that the version field is included
         VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalVersionModifier(true, BigInteger.valueOf(-1)));
         Assertions.assertFalse(result.isValid());
     }
@@ -34,6 +35,7 @@ public class NegativeVersionTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     public void negativeVersionIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+        certificateChainConfig.getIntermediateConfig(0).setVersion(2); // Just to make sure that the version field is included
         VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalVersionModifier(false, BigInteger.valueOf(-1)));
         Assertions.assertFalse(result.isValid());
     }

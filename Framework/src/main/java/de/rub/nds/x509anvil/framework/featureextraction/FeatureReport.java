@@ -11,6 +11,7 @@ public class FeatureReport {
     private final List<ProbeResult> probeResults = new ArrayList<>();
     private List<Integer> supportedVersions = new ArrayList<>();
     private List<SignatureAlgorithm> supportedAlgorithms = new ArrayList<>();
+    private List<SignatureAlgorithm> supportedEntityAlgorithms = new ArrayList<>();
     private List<KeyTypeLengthPair> supportedKeyLengths = new ArrayList<>();
     private List<KeyTypeLengthPair> supportedEntityKeyLengths = new ArrayList<>();
     private List<ExtensionType> supportedExtensions = new ArrayList<>();
@@ -59,9 +60,19 @@ public class FeatureReport {
         return supportedAlgorithms.stream().anyMatch(a -> a.getKeyType().equals(keyType));
     }
 
+    public boolean entityKeyTypeSupported(KeyType keyType) {
+        return supportedEntityAlgorithms.stream().anyMatch(a -> a.getKeyType().equals(keyType));
+    }
+
     public List<KeyType> getSupportedKeyTypes() {
         return Arrays.stream(KeyType.values())
                 .filter(this::keyTypeSupported)
+                .collect(Collectors.toList());
+    }
+
+    public List<KeyType> getSupportedEntityKeyTypes() {
+        return Arrays.stream(KeyType.values())
+                .filter(this::entityKeyTypeSupported)
                 .collect(Collectors.toList());
     }
 
@@ -69,9 +80,19 @@ public class FeatureReport {
         return supportedAlgorithms.stream().anyMatch(a -> a.getHashAlgorithm().equals(hashAlgorithm));
     }
 
+    public boolean entityHashAlgorithmSupported(HashAlgorithm hashAlgorithm) {
+        return supportedEntityAlgorithms.stream().anyMatch(a -> a.getHashAlgorithm().equals(hashAlgorithm));
+    }
+
     public List<HashAlgorithm> getSupportedHashAlgorithms() {
         return Arrays.stream(HashAlgorithm.values())
                 .filter(this::hashAlgorithmSupported)
+                .collect(Collectors.toList());
+    }
+
+    public List<HashAlgorithm> getSupportedEntityHashAlgorithms() {
+        return Arrays.stream(HashAlgorithm.values())
+                .filter(this::entityHashAlgorithmSupported)
                 .collect(Collectors.toList());
     }
 
@@ -120,5 +141,13 @@ public class FeatureReport {
         return "Supported versions: " + supportedVersions + "\n" +
                 "Supported algorithms: " + supportedAlgorithms + "\n" +
                 "Supported extensions: " + supportedExtensions;
+    }
+
+    public List<SignatureAlgorithm> getSupportedEntityAlgorithms() {
+        return supportedEntityAlgorithms;
+    }
+
+    public void setSupportedEntityAlgorithms(List<SignatureAlgorithm> supportedEntityAlgorithms) {
+        this.supportedEntityAlgorithms = supportedEntityAlgorithms;
     }
 }
