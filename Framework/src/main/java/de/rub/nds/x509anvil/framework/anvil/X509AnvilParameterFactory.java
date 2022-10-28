@@ -15,15 +15,15 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.parameter.*;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionCriticalParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.UnknownNonCriticalExtensionPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsCaParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPathLenConstraintParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPathLenConstraintPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.BasicConstraintsPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyidentifier.AuthorityKeyIdentifierPresentParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage.KeyUsageFlagParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyidentifier.SubjectKeyIdentifierPresentParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage.KeyUsageFlagParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage.KeyUsagePresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.name.CNTypeParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.name.DomainComponentsPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.name.NameComponentPresentParameter;
@@ -88,7 +88,7 @@ public class X509AnvilParameterFactory extends ParameterFactory {
             case EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT:
                 return new BasicConstraintsPathLenConstraintParameter(parameterIdentifier.getParameterScope());
             case EXT_KEY_USAGE_PRESENT:
-                return new ExtensionPresentParameter(parameterIdentifier, ExtensionType.KEY_USAGE);
+                return new KeyUsagePresentParameter(parameterIdentifier.getParameterScope());
             case EXT_KEY_USAGE_CRITICAL:
                 return new ExtensionCriticalParameter(parameterIdentifier, ExtensionType.KEY_USAGE, X509AnvilParameterType.EXT_KEY_USAGE_PRESENT);
             case EXT_KEY_USAGE_DIGITAL_SIGNATURE:
