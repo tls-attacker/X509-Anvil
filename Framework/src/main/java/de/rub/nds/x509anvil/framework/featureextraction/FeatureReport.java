@@ -56,6 +56,10 @@ public class FeatureReport {
         return supportedAlgorithms.contains(algorithm);
     }
 
+    public boolean entityAlgorithmSupported(SignatureAlgorithm algorithm) {
+        return supportedEntityAlgorithms.contains(algorithm);
+    }
+
     public boolean keyTypeSupported(KeyType keyType) {
         return supportedAlgorithms.stream().anyMatch(a -> a.getKeyType().equals(keyType));
     }

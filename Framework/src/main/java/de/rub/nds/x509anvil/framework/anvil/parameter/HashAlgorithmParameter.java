@@ -63,14 +63,23 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
 
         // We need to build constraints for any unsupported keytype-hashalgo combinations
         FeatureReport featureReport = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getFeatureReport();
-        List<KeyType> supportedKeyTypes = featureReport.getSupportedKeyTypes();
-        List<HashAlgorithm> supportedHashAlgorithms = featureReport.getSupportedHashAlgorithms();
+        List<KeyType> supportedKeyTypes;
+        List<HashAlgorithm> supportedHashAlgorithms;
+        if (getParameterScope().isEntity()) {
+            supportedKeyTypes = featureReport.getSupportedEntityKeyTypes();
+            supportedHashAlgorithms = featureReport.getSupportedEntityHashAlgorithms();
+        } else {
+            supportedKeyTypes = featureReport.getSupportedKeyTypes();
+            supportedHashAlgorithms = featureReport.getSupportedHashAlgorithms();
+        }
+
 
         for (KeyType keyType : supportedKeyTypes) {
             for (HashAlgorithm hashAlgorithm : supportedHashAlgorithms) {
                 try {
                     SignatureAlgorithm resultingSignatureAlgorithm = SignatureAlgorithm.fromKeyHashCombination(keyType, hashAlgorithm);
-                    if (!featureReport.algorithmSupported(resultingSignatureAlgorithm)) {
+                    if (getParameterScope().isEntity() && !featureReport.entityAlgorithmSupported(resultingSignatureAlgorithm)
+                            || !getParameterScope().isEntity() && !featureReport.algorithmSupported(resultingSignatureAlgorithm)) {
                         defaultConstraints.add(createSignatureAlgorithmExclusionConstraint(keyType, hashAlgorithm, derivationScope));
                     }
                 } catch (IllegalArgumentException e) {
