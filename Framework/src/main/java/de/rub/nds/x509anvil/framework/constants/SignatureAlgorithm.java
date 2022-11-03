@@ -41,7 +41,7 @@ public enum SignatureAlgorithm {
         return Arrays.stream(SignatureAlgorithm.values())
                 .filter(a -> a.getKeyType() == keyType && a.getHashAlgorithm() == hashAlgorithm)
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Signature algorithm does not exist"));
+                .orElseThrow(() -> new IllegalArgumentException("Signature algorithm does not exist"));
     }
 
     public KeyType getKeyType() {
