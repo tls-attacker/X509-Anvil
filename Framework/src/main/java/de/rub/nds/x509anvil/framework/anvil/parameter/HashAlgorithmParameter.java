@@ -18,6 +18,7 @@ import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,6 +79,17 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
                 }
             }
         }
+
+        defaultConstraints.add(ValueRestrictionConstraintBuilder.init("DSA and RSA512 do not work with SHA512 or SHA384", derivationScope)
+                .target(this)
+                .requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
+                .restrictValues(Arrays.asList(HashAlgorithm.SHA512, HashAlgorithm.SHA384))
+                .condition((target, requiredParameters) -> {
+                    KeyTypeLengthPair keyTypeLengthPair = (KeyTypeLengthPair) ConstraintHelper.getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE)).getSelectedValue();
+                    return (keyTypeLengthPair.getKeyType() == KeyType.DSA || keyTypeLengthPair.getKeyType() == KeyType.RSA) && keyTypeLengthPair.getKeyLength() < 1024;
+                })
+                .get()
+        );
 
         return defaultConstraints;
     }
