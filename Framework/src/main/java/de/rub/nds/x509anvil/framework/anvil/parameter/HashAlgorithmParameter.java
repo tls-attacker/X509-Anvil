@@ -67,8 +67,13 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
 
         for (KeyType keyType : supportedKeyTypes) {
             for (HashAlgorithm hashAlgorithm : supportedHashAlgorithms) {
-                SignatureAlgorithm resultingSignatureAlgorithm = SignatureAlgorithm.fromKeyHashCombination(keyType, hashAlgorithm);
-                if (!featureReport.algorithmSupported(resultingSignatureAlgorithm)) {
+                try {
+                    SignatureAlgorithm resultingSignatureAlgorithm = SignatureAlgorithm.fromKeyHashCombination(keyType, hashAlgorithm);
+                    if (!featureReport.algorithmSupported(resultingSignatureAlgorithm)) {
+                        defaultConstraints.add(createSignatureAlgorithmExclusionConstraint(keyType, hashAlgorithm, derivationScope));
+                    }
+                } catch (IllegalArgumentException e) {
+                    // Signature algorithm does not exist (i.e. not supported by X509-Anvil)
                     defaultConstraints.add(createSignatureAlgorithmExclusionConstraint(keyType, hashAlgorithm, derivationScope));
                 }
             }
