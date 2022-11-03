@@ -95,6 +95,9 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
                 .restrictValues(Arrays.asList(HashAlgorithm.SHA512, HashAlgorithm.SHA384))
                 .condition((target, requiredParameters) -> {
                     KeyTypeLengthPair keyTypeLengthPair = (KeyTypeLengthPair) ConstraintHelper.getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE)).getSelectedValue();
+                    if (keyTypeLengthPair == null) {
+                        return false;
+                    }
                     return (keyTypeLengthPair.getKeyType() == KeyType.DSA || keyTypeLengthPair.getKeyType() == KeyType.RSA) && keyTypeLengthPair.getKeyLength() < 1024;
                 })
                 .get()
