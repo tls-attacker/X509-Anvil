@@ -121,7 +121,7 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         config.setAutoAdjustSignatureAndHashAlgorithm(false);
 
         // Execute workflow
-        WorkflowTrace workflowTrace = buildWorkflowTraceRsa(config);
+        WorkflowTrace workflowTrace = buildWorkflowTraceDhe(config);
         State state = new State(config, workflowTrace);
         DefaultWorkflowExecutor workflowExecutor = new DefaultWorkflowExecutor(state);
         workflowExecutor.executeWorkflow();
@@ -131,13 +131,26 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
 
     private static WorkflowTrace buildWorkflowTraceDhe(Config config) {
         WorkflowTrace workflowTrace = new WorkflowTrace();
-        workflowTrace.addTlsAction(new SendAction(new ClientHelloMessage(config)));
-        workflowTrace.addTlsAction(new ReceiveAction(new ServerHelloMessage(), new CertificateMessage(), new DHEServerKeyExchangeMessage(),
-            new CertificateRequestMessage(), new ServerHelloDoneMessage()));
-        workflowTrace.addTlsAction(new SendAction(new CertificateMessage(config),
-            new DHClientKeyExchangeMessage(config), new CertificateVerifyMessage(config),
-            new ChangeCipherSpecMessage(config), new FinishedMessage(config)));
-        workflowTrace.addTlsAction(new ReceiveAction(new ChangeCipherSpecMessage(), new FinishedMessage()));
+        workflowTrace.addTlsAction(new SendAction(
+                new ClientHelloMessage(config))
+        );
+        workflowTrace.addTlsAction(new ReceiveAction(
+                new ServerHelloMessage(),
+                new CertificateMessage(),
+                new DHEServerKeyExchangeMessage(),
+                new CertificateRequestMessage(),
+                new ServerHelloDoneMessage())
+        );
+        workflowTrace.addTlsAction(new SendAction(
+                new CertificateMessage(config),
+                new DHClientKeyExchangeMessage(config),
+                new CertificateVerifyMessage(config),
+                new ChangeCipherSpecMessage(config),
+                new FinishedMessage(config))
+        );
+        workflowTrace.addTlsAction(new ReceiveAction(
+                new ChangeCipherSpecMessage(),
+                new FinishedMessage()));
         return workflowTrace;
     }
 
