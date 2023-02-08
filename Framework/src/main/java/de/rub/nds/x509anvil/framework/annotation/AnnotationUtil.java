@@ -5,6 +5,9 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.lang.reflect.Method;
 
+/**
+ *
+ */
 public class AnnotationUtil {
 
     public static ChainLength resolveChainLengthAnnotation(ExtensionContext extensionContext) {

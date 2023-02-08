@@ -21,6 +21,7 @@ public class Constraints {
         return !value;
     }
 
+    // TODO: enforce version 1?
     public static boolean allowVersion1(Integer value) {
         if (value == null) return false;
         return value.equals(0);

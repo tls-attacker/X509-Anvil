@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+/**
+ * Specifies the RFC with section of the test case. Also gives an informative text.
+ */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Specification {
     @JsonProperty("document")
