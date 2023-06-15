@@ -11,7 +11,6 @@ package de.rub.nds.x509anvil.framework.verifier.tlsclientauth;
 
 import de.rub.nds.tlsattacker.core.certificate.CertificateKeyPair;
 import de.rub.nds.tlsattacker.core.config.Config;
-import de.rub.nds.tlsattacker.core.config.ConfigCache;
 import de.rub.nds.tlsattacker.core.connection.OutboundConnection;
 import de.rub.nds.tlsattacker.core.constants.CipherSuite;
 import de.rub.nds.tlsattacker.core.constants.NamedGroup;
@@ -37,15 +36,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
-    private static final ConfigCache defaultConfigCache;
+
+    private static final Config defaultConfig;
 
     private final Config config;
 
     static {
-        Config defaultConfig = Config.createConfig();
-        defaultConfig.setAutoSelectCertificate(false);
-        defaultConfig.setDefaultClientConnection(new OutboundConnection("client", 4433, "localhost"));
-        defaultConfig.setClientAuthentication(true);
+        Config config = Config.createConfig();
+        config.setAutoSelectCertificate(false);
+        config.setDefaultClientConnection(new OutboundConnection("client", 4433, "localhost"));
+        config.setClientAuthentication(true);
 
         List<CipherSuite> supportedCipherSuites = new ArrayList<>();
         supportedCipherSuites.add(CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256);
@@ -55,7 +55,7 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
 
         supportedCipherSuites.add(CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256);
         supportedCipherSuites.add(CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256);
-        defaultConfig.setDefaultClientSupportedCipherSuites(supportedCipherSuites);
+        config.setDefaultClientSupportedCipherSuites(supportedCipherSuites);
 
         List<SignatureAndHashAlgorithm> supportedSignatureAndHashAlgorithms = new ArrayList<>();
         supportedSignatureAndHashAlgorithms.add(SignatureAndHashAlgorithm.RSA_MD5);
@@ -76,15 +76,15 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         supportedSignatureAndHashAlgorithms.add(SignatureAndHashAlgorithm.ECDSA_SHA256);
         supportedSignatureAndHashAlgorithms.add(SignatureAndHashAlgorithm.ECDSA_SHA384);
         supportedSignatureAndHashAlgorithms.add(SignatureAndHashAlgorithm.ECDSA_SHA512);
-        defaultConfig.setDefaultClientSupportedSignatureAndHashAlgorithms(supportedSignatureAndHashAlgorithms);
+        config.setDefaultClientSupportedSignatureAndHashAlgorithms(supportedSignatureAndHashAlgorithms);
 
         List<NamedGroup> supportedNamedGroups =
             Arrays.stream(NamedGroup.values()).filter(g -> g.name().contains("SECP256R")).collect(Collectors.toList());
-        defaultConfig.setDefaultClientNamedGroups(supportedNamedGroups);
+        config.setDefaultClientNamedGroups(supportedNamedGroups);
 
-        defaultConfig.setAddRenegotiationInfoExtension(false);
+        config.setAddRenegotiationInfoExtension(false);
 
-        defaultConfigCache = new ConfigCache(defaultConfig);
+        defaultConfig = config;
     }
 
     public static TlsClientAuthVerifierAdapter fromConfig(TlsClientAuthVerifierAdapterConfig config) {
@@ -94,12 +94,12 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
     }
 
     public TlsClientAuthVerifierAdapter(String hostname, int port) {
-        config = defaultConfigCache.getCachedCopy();
+        config = defaultConfig.createCopy();
         config.setDefaultClientConnection(new OutboundConnection("client", port, hostname));
     }
 
     public TlsClientAuthVerifierAdapter() {
-        config = defaultConfigCache.getCachedCopy();
+        config = defaultConfig.createCopy();
     }
 
     @Override
@@ -110,18 +110,18 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
             byte[] encodedChain = X509Util.encodeCertificateChainForTls(certificatesChain);
             CertificateKeyPair certificateKeyPair = new CertificateKeyPair(encodedChain,
                 entityConfig.getKeyPair().getPrivate(), entityConfig.getKeyPair().getPublic());
-            config.setDefaultExplicitCertificateKeyPair(certificateKeyPair);
+            defaultConfig.setDefaultExplicitCertificateKeyPair(certificateKeyPair);
         } catch (IOException e) {
             throw new VerifierException("Failed to encode certificate", e);
         }
 
-        config.setDefaultSelectedSignatureAndHashAlgorithm(
+        defaultConfig.setDefaultSelectedSignatureAndHashAlgorithm(
             TlsAttackerUtil.translateSignatureAlgorithm(entityConfig.getSignatureAlgorithm()));
-        config.setAutoAdjustSignatureAndHashAlgorithm(false);
+        defaultConfig.setAutoAdjustSignatureAndHashAlgorithm(false);
 
         // Execute workflow
-        WorkflowTrace workflowTrace = buildWorkflowTraceDhe(config);
-        State state = new State(config, workflowTrace);
+        WorkflowTrace workflowTrace = buildWorkflowTraceDhe(defaultConfig);
+        State state = new State(defaultConfig, workflowTrace);
         DefaultWorkflowExecutor workflowExecutor = new DefaultWorkflowExecutor(state);
         workflowExecutor.executeWorkflow();
 
@@ -133,9 +133,8 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         workflowTrace.addTlsAction(new SendAction(new ClientHelloMessage(config)));
         workflowTrace.addTlsAction(new ReceiveAction(new ServerHelloMessage(), new CertificateMessage(),
             new DHEServerKeyExchangeMessage(), new CertificateRequestMessage(), new ServerHelloDoneMessage()));
-        workflowTrace.addTlsAction(new SendAction(new CertificateMessage(config),
-            new DHClientKeyExchangeMessage(config), new CertificateVerifyMessage(config),
-            new ChangeCipherSpecMessage(config), new FinishedMessage(config)));
+        workflowTrace.addTlsAction(new SendAction(new CertificateMessage(), new DHClientKeyExchangeMessage(),
+            new CertificateVerifyMessage(), new ChangeCipherSpecMessage(), new FinishedMessage()));
         workflowTrace.addTlsAction(new ReceiveAction(new ChangeCipherSpecMessage(), new FinishedMessage()));
         return workflowTrace;
     }
@@ -145,9 +144,8 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         workflowTrace.addTlsAction(new SendAction(new ClientHelloMessage(config)));
         workflowTrace.addTlsAction(new ReceiveAction(new ServerHelloMessage(), new CertificateMessage(),
             new CertificateRequestMessage(), new ServerHelloDoneMessage()));
-        workflowTrace.addTlsAction(new SendAction(new CertificateMessage(config),
-            new RSAClientKeyExchangeMessage(config), new CertificateVerifyMessage(config),
-            new ChangeCipherSpecMessage(config), new FinishedMessage(config)));
+        workflowTrace.addTlsAction(new SendAction(new CertificateMessage(), new RSAClientKeyExchangeMessage(),
+            new CertificateVerifyMessage(), new ChangeCipherSpecMessage(), new FinishedMessage()));
         workflowTrace.addTlsAction(new ReceiveAction(new ChangeCipherSpecMessage(), new FinishedMessage()));
         return workflowTrace;
     }

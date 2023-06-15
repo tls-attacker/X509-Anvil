@@ -32,9 +32,8 @@
             <version>${x509attacker.version}</version>
         </dependency>
         <dependency>
-            <groupId>de.rub.nds.tlsattacker</groupId>
-            <artifactId>TLS-Core</artifactId>
-            <version>${tlsattacker.version}</version>
+            <groupId>de.rub.nds.tls.attacker</groupId>
+            <artifactId>tls-core</artifactId>
         </dependency>
         <dependency>
             <groupId>de.rwth.swc.coffee4j</groupId>
@@ -59,27 +58,22 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.17.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.17.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-jul</artifactId>
-            <version>2.17.2</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>${junit.jupiter.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
-            <version>${junit.platform.version}</version>
         </dependency>
     </dependencies>
     <build>
