@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -19,21 +28,25 @@ import java.util.function.Predicate;
 public class BasicConstraintsPathLenConstraintPresentParameter extends BooleanCertificateSpecificParameter {
 
     public BasicConstraintsPathLenConstraintPresentParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT, parameterScope));
+        super(new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT,
+            parameterScope));
     }
 
     public BasicConstraintsPathLenConstraintPresentParameter(Boolean selectedValue, ParameterScope parameterScope) {
-        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT, parameterScope));
+        super(selectedValue, new ParameterIdentifier(
+            X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT, parameterScope));
     }
 
     @Override
     protected DerivationParameter<X509CertificateChainConfig, Boolean> generateValue(Boolean selectedValue) {
-        return new BasicConstraintsPathLenConstraintPresentParameter(selectedValue, getParameterIdentifier().getParameterScope());
+        return new BasicConstraintsPathLenConstraintPresentParameter(selectedValue,
+            getParameterIdentifier().getParameterScope());
     }
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        BasicConstraintsExtensionConfig extensionConfig = (BasicConstraintsExtensionConfig) certificateConfig.extension(ExtensionType.BASIC_CONSTRAINTS);
+        BasicConstraintsExtensionConfig extensionConfig =
+            (BasicConstraintsExtensionConfig) certificateConfig.extension(ExtensionType.BASIC_CONSTRAINTS);
         extensionConfig.setPathLenConstraintPresent(getSelectedValue());
     }
 
@@ -42,7 +55,7 @@ public class BasicConstraintsPathLenConstraintPresentParameter extends BooleanCe
         Map<ParameterIdentifier, Predicate<DerivationParameter>> conditions = new HashMap<>();
         // Only model if ca is asserted
         conditions.put(getScopedIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_CA),
-                CommonConstraints::enabledByParameterCondition);
+            CommonConstraints::enabledByParameterCondition);
         return conditions;
     }
 

@@ -44,7 +44,8 @@ public class Name implements Asn1Structure<Asn1Sequence> {
     }
 
     public void addNameComponent(String oid, String value, DirectoryStringType directoryStringType) {
-        AttributeTypeAndValue attributeTypeAndValue = new AttributeTypeAndValue(oid, X509Util.getDirectoryString(value, directoryStringType));
+        AttributeTypeAndValue attributeTypeAndValue =
+            new AttributeTypeAndValue(oid, X509Util.getDirectoryString(value, directoryStringType));
         RelativeDistinguishedName rdn = new RelativeDistinguishedName(Collections.singletonList(attributeTypeAndValue));
         addRelativeDistinguishedName(rdn);
     }
@@ -54,7 +55,8 @@ public class Name implements Asn1Structure<Asn1Sequence> {
         for (String value : componentValues) {
             Asn1PrimitiveIa5String ia5String = new Asn1PrimitiveIa5String();
             ia5String.setValue(value);
-            AttributeTypeAndValue attributeTypeAndValue = new AttributeTypeAndValue(AttributeTypeObjectIdentifiers.DOMAIN_COMPONENT, ia5String);
+            AttributeTypeAndValue attributeTypeAndValue =
+                new AttributeTypeAndValue(AttributeTypeObjectIdentifiers.DOMAIN_COMPONENT, ia5String);
             rdn.addAttributeTypeAndValue(attributeTypeAndValue);
         }
         addRelativeDistinguishedName(rdn);
@@ -63,14 +65,16 @@ public class Name implements Asn1Structure<Asn1Sequence> {
     public void setCn(String value, DirectoryStringType directoryStringType) {
         // Remove existing cn
         for (RelativeDistinguishedName rdn : relativeDistinguishedNames) {
-            if (rdn.getAttributeTypeAndValueList().get(0).getType().equals(AttributeTypeObjectIdentifiers.COMMON_NAME)) {
+            if (rdn.getAttributeTypeAndValueList().get(0).getType()
+                .equals(AttributeTypeObjectIdentifiers.COMMON_NAME)) {
                 relativeDistinguishedNames.remove(rdn);
                 break;
             }
         }
 
         RelativeDistinguishedName cn = new RelativeDistinguishedName();
-        cn.addAttributeTypeAndValue(new AttributeTypeAndValue(AttributeTypeObjectIdentifiers.COMMON_NAME, X509Util.getDirectoryString(value, directoryStringType)));
+        cn.addAttributeTypeAndValue(new AttributeTypeAndValue(AttributeTypeObjectIdentifiers.COMMON_NAME,
+            X509Util.getDirectoryString(value, directoryStringType)));
         relativeDistinguishedNames.add(cn);
     }
 

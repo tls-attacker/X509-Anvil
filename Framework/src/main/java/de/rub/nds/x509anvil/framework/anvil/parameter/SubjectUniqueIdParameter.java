@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -13,13 +22,12 @@ public class SubjectUniqueIdParameter extends UniqueIdParameter {
 
     public SubjectUniqueIdParameter(ParameterScope parameterScope) {
         super(new ParameterIdentifier(X509AnvilParameterType.SUBJECT_UNIQUE_ID, parameterScope),
-                X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT);
+            X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT);
     }
 
     public SubjectUniqueIdParameter(BitString selectedValue, ParameterScope parameterScope) {
-        super(selectedValue,
-                new ParameterIdentifier(X509AnvilParameterType.SUBJECT_UNIQUE_ID, parameterScope),
-                X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT);
+        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.SUBJECT_UNIQUE_ID, parameterScope),
+            X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT);
     }
 
     @Override

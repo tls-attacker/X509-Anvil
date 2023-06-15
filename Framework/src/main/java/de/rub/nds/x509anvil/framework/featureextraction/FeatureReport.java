@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.featureextraction;
 
 import de.rub.nds.x509anvil.framework.constants.*;
@@ -5,7 +14,6 @@ import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult
 
 import java.util.*;
 import java.util.stream.Collectors;
-
 
 public class FeatureReport {
     private final List<ProbeResult> probeResults = new ArrayList<>();
@@ -20,6 +28,7 @@ public class FeatureReport {
     public List<ProbeResult> getProbeResults() {
         return probeResults;
     }
+
     public void addProbeResult(ProbeResult probeResult) {
         probeResults.add(probeResult);
     }
@@ -69,15 +78,11 @@ public class FeatureReport {
     }
 
     public List<KeyType> getSupportedKeyTypes() {
-        return Arrays.stream(KeyType.values())
-                .filter(this::keyTypeSupported)
-                .collect(Collectors.toList());
+        return Arrays.stream(KeyType.values()).filter(this::keyTypeSupported).collect(Collectors.toList());
     }
 
     public List<KeyType> getSupportedEntityKeyTypes() {
-        return Arrays.stream(KeyType.values())
-                .filter(this::entityKeyTypeSupported)
-                .collect(Collectors.toList());
+        return Arrays.stream(KeyType.values()).filter(this::entityKeyTypeSupported).collect(Collectors.toList());
     }
 
     public boolean hashAlgorithmSupported(HashAlgorithm hashAlgorithm) {
@@ -89,15 +94,12 @@ public class FeatureReport {
     }
 
     public List<HashAlgorithm> getSupportedHashAlgorithms() {
-        return Arrays.stream(HashAlgorithm.values())
-                .filter(this::hashAlgorithmSupported)
-                .collect(Collectors.toList());
+        return Arrays.stream(HashAlgorithm.values()).filter(this::hashAlgorithmSupported).collect(Collectors.toList());
     }
 
     public List<HashAlgorithm> getSupportedEntityHashAlgorithms() {
-        return Arrays.stream(HashAlgorithm.values())
-                .filter(this::entityHashAlgorithmSupported)
-                .collect(Collectors.toList());
+        return Arrays.stream(HashAlgorithm.values()).filter(this::entityHashAlgorithmSupported)
+            .collect(Collectors.toList());
     }
 
     public List<KeyTypeLengthPair> getSupportedKeyLengths() {
@@ -142,9 +144,8 @@ public class FeatureReport {
 
     @Override
     public String toString() {
-        return "Supported versions: " + supportedVersions + "\n" +
-                "Supported algorithms: " + supportedAlgorithms + "\n" +
-                "Supported extensions: " + supportedExtensions;
+        return "Supported versions: " + supportedVersions + "\n" + "Supported algorithms: " + supportedAlgorithms + "\n"
+            + "Supported extensions: " + supportedExtensions;
     }
 
     public List<SignatureAlgorithm> getSupportedEntityAlgorithms() {

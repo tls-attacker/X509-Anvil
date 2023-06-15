@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.featureextraction.probe;
 
 import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
@@ -25,8 +34,8 @@ public class KeyUsageExtensionProbe extends ExtensionProbe {
     @Override
     protected void addExtensionToConfig(X509CertificateChainConfig config) {
         config.getEntityCertificateConfig().setExtensionsPresent(true);
-        KeyUsageExtensionConfig extensionConfig = (KeyUsageExtensionConfig)
-                config.getEntityCertificateConfig().extension(ExtensionType.KEY_USAGE);
+        KeyUsageExtensionConfig extensionConfig =
+            (KeyUsageExtensionConfig) config.getEntityCertificateConfig().extension(ExtensionType.KEY_USAGE);
         extensionConfig.setPresent(true);
         extensionConfig.setCritical(true);
         extensionConfig.setDigitalSignature(true);
@@ -42,9 +51,10 @@ public class KeyUsageExtensionProbe extends ExtensionProbe {
     protected X509CertificateModifier createInvalidExtensionModifier() {
         return (certificate, config, previousConfig) -> {
             if (config == chainConfig.getEntityCertificateConfig()) {
-                Asn1PrimitiveOctetString extensionValue = (Asn1PrimitiveOctetString) X509Util.getAsn1ElementByIdentifierPath(certificate,
-                        "tbsCertificate", "explicitExtensions", "extensions", "keyUsage", "extnValue");
-                extensionValue.setValue(new byte[]{0x02,0x01, (byte)0xff});
+                Asn1PrimitiveOctetString extensionValue =
+                    (Asn1PrimitiveOctetString) X509Util.getAsn1ElementByIdentifierPath(certificate, "tbsCertificate",
+                        "explicitExtensions", "extensions", "keyUsage", "extnValue");
+                extensionValue.setValue(new byte[] { 0x02, 0x01, (byte) 0xff });
             }
         };
     }

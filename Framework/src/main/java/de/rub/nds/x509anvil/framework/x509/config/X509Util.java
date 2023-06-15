@@ -37,11 +37,10 @@ public class X509Util {
         for (String identifier : identifiers) {
             if (currentAsn1Encodable instanceof Asn1Container) {
                 currentAsn1Encodable = ((Asn1Container) currentAsn1Encodable).getChildren().stream()
-                        .filter(encodable -> encodable.getIdentifier().equals(identifier))
-                        .findFirst()
-                        .orElseThrow(() -> new IllegalArgumentException("Could not find " + identifier + " in " + String.join("/", identifiers)));
-            }
-            else {
+                    .filter(encodable -> encodable.getIdentifier().equals(identifier)).findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException(
+                        "Could not find " + identifier + " in " + String.join("/", identifiers)));
+            } else {
                 throw new IllegalArgumentException(identifier + " is not a container");
             }
         }
@@ -53,11 +52,10 @@ public class X509Util {
         for (String identifier : identifiers) {
             if (currentAsn1Encodable instanceof Asn1Container) {
                 currentAsn1Encodable = ((Asn1Container) currentAsn1Encodable).getChildren().stream()
-                        .filter(encodable -> encodable.getIdentifier().equals(identifier))
-                        .findFirst()
-                        .orElseThrow(() -> new IllegalArgumentException("Could not find " + identifier + " in " + String.join("/", identifiers)));
-            }
-            else {
+                    .filter(encodable -> encodable.getIdentifier().equals(identifier)).findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException(
+                        "Could not find " + identifier + " in " + String.join("/", identifiers)));
+            } else {
                 throw new IllegalArgumentException(identifier + " is not a container");
             }
         }
@@ -65,8 +63,8 @@ public class X509Util {
     }
 
     public static Asn1Sequence getExtensionByOid(X509Certificate x509Certificate, String oid) {
-        Asn1Sequence extensionsAsn1 = (Asn1Sequence) getAsn1ElementByIdentifierPath(x509Certificate,
-                "tbsCertificate", "explicitExtensions", "extensions");
+        Asn1Sequence extensionsAsn1 = (Asn1Sequence) getAsn1ElementByIdentifierPath(x509Certificate, "tbsCertificate",
+            "explicitExtensions", "extensions");
         for (Asn1Encodable child : extensionsAsn1.getChildren()) {
             if (!(child instanceof Asn1Sequence)) {
                 throw new IllegalArgumentException("Unexpected Asn1 Tag while searching for extension");
@@ -110,15 +108,15 @@ public class X509Util {
                 default:
                     throw new IllegalArgumentException("Unsupported key type");
             }
-        }
-        catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException("No key factory for key type " + privateKeyInfo.getKeyType().name());
         }
 
         return keyFactory.generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
     }
 
-    public static PublicKey retrievePublicKeyFromSubjectPublicKeyInfo(X509Certificate x509Certificate, String algorithm) throws CertificateException {
+    public static PublicKey retrievePublicKeyFromSubjectPublicKeyInfo(X509Certificate x509Certificate, String algorithm)
+        throws CertificateException {
         // TODO: This is a workaround because using the Asn1-Tool classes didn't work
         byte[] certBytes = x509Certificate.getEncodedCertificate();
         javax.security.cert.X509Certificate cert = javax.security.cert.X509Certificate.getInstance(certBytes);
@@ -181,7 +179,8 @@ public class X509Util {
                         Asn1Sequence attributeTypeAndValue = (Asn1Sequence) rdnchild;
                         Asn1Encodable objectId = attributeTypeAndValue.getChildren().get(0);
                         if (objectId instanceof Asn1ObjectIdentifier) {
-                            if (((Asn1ObjectIdentifier) objectId).getValue().equals(AttributeTypeObjectIdentifiers.COMMON_NAME)) {
+                            if (((Asn1ObjectIdentifier) objectId).getValue()
+                                .equals(AttributeTypeObjectIdentifiers.COMMON_NAME)) {
                                 return attributeTypeAndValue.getChildren().get(1);
                             }
                         }

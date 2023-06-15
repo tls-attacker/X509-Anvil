@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.featureextraction.probe;
 
 import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
@@ -23,7 +32,8 @@ public class SignatureAlgorithmProbe extends SimpleProbe {
         X509CertificateConfig ca = x509CertificateChainConfig.getIntermediateCertificateConfigs().get(0);
         ca.setKeyType(signatureAlgorithm.getKeyType());
         ca.setHashAlgorithm(signatureAlgorithm.getHashAlgorithm());
-        KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getKeyType(), ca.getCertificateName());
+        KeyPair keyPair =
+            X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getKeyType(), ca.getCertificateName());
         ca.setKeyPair(keyPair);
         return x509CertificateChainConfig;
     }

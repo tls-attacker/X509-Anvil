@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.constants;
 
 import java.util.Arrays;
@@ -9,7 +18,7 @@ public enum KeyTypeLengthPair {
     RSA_1024(KeyType.RSA, 1024),
     RSA_2048(KeyType.RSA, 2048),
     RSA_4096(KeyType.RSA, 4096),
-    //RSA_8192(KeyType.RSA, 8192),
+    // RSA_8192(KeyType.RSA, 8192),
 
     DSA_512(KeyType.DSA, 512),
     DSA_1024(KeyType.DSA, 1024),
@@ -19,8 +28,7 @@ public enum KeyTypeLengthPair {
     ECDSA_160(KeyType.ECDSA, 192),
     ECDSA_224(KeyType.ECDSA, 224),
     ECDSA_256(KeyType.ECDSA, 256),
-    ECDSA_384(KeyType.ECDSA, 384),
-    ;
+    ECDSA_384(KeyType.ECDSA, 384),;
 
     private final KeyType keyType;
     private final int keyLength;
@@ -39,16 +47,13 @@ public enum KeyTypeLengthPair {
     }
 
     public static List<Integer> getKeyLengths(KeyType keyType) {
-        return Arrays.stream(KeyTypeLengthPair.values())
-                .filter(p -> p.keyType == keyType)
-                .map(KeyTypeLengthPair::getKeyLength)
-                .collect(Collectors.toList());
+        return Arrays.stream(KeyTypeLengthPair.values()).filter(p -> p.keyType == keyType)
+            .map(KeyTypeLengthPair::getKeyLength).collect(Collectors.toList());
     }
 
     public static KeyTypeLengthPair get(KeyType keyType, int keyLength) {
-        return Arrays.stream(KeyTypeLengthPair.values())
-                .filter(p -> p.keyType == keyType && p.keyLength == keyLength)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("KeyType - length combination is not supported"));
+        return Arrays.stream(KeyTypeLengthPair.values()).filter(p -> p.keyType == keyType && p.keyLength == keyLength)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("KeyType - length combination is not supported"));
     }
 }

@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.annotation;
 
 import java.lang.annotation.ElementType;
@@ -10,9 +19,11 @@ import java.lang.annotation.Target;
  * modelling.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target({ ElementType.METHOD, ElementType.TYPE })
 public @interface ChainLength {
     int maxLength() default 3;
+
     int minLength() default 1;
+
     int intermediateCertsModeled() default 1;
 }

@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.annotation;
 
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
@@ -42,7 +51,7 @@ public class AnnotationUtil {
     public static int resolveMaxEntityCertChainPosition(ExtensionContext extensionContext) {
         int maxChainLength = resolveMaxChainLength(extensionContext);
         int intermediateCertsModeled = resolveIntermediateCertsModeled(extensionContext);
-        return Integer.min(maxChainLength-1, intermediateCertsModeled + 1);
+        return Integer.min(maxChainLength - 1, intermediateCertsModeled + 1);
     }
 
     public static boolean resolveStaticRoot(ExtensionContext extensionContext) {

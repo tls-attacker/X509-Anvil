@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -28,17 +37,20 @@ import java.util.stream.IntStream;
 public class BasicConstraintsPathLenConstraintParameter extends CertificateSpecificParameter<Integer> {
 
     public BasicConstraintsPathLenConstraintParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT, parameterScope), Integer.class);
+        super(new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT, parameterScope),
+            Integer.class);
     }
 
     public BasicConstraintsPathLenConstraintParameter(Integer selectedValue, ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT, parameterScope), Integer.class);
+        super(new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT, parameterScope),
+            Integer.class);
         setSelectedValue(selectedValue);
     }
 
     @Override
     protected DerivationParameter<X509CertificateChainConfig, Integer> generateValue(Integer selectedValue) {
-        return new BasicConstraintsPathLenConstraintParameter(selectedValue, getParameterIdentifier().getParameterScope());
+        return new BasicConstraintsPathLenConstraintParameter(selectedValue,
+            getParameterIdentifier().getParameterScope());
     }
 
     @Override
@@ -56,16 +68,16 @@ public class BasicConstraintsPathLenConstraintParameter extends CertificateSpeci
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        BasicConstraintsExtensionConfig extensionConfig = (BasicConstraintsExtensionConfig) certificateConfig.extension(ExtensionType.BASIC_CONSTRAINTS);
+        BasicConstraintsExtensionConfig extensionConfig =
+            (BasicConstraintsExtensionConfig) certificateConfig.extension(ExtensionType.BASIC_CONSTRAINTS);
         extensionConfig.setPathLenConstraint(getSelectedValue());
     }
 
     @Override
     public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
         return Collections.singletonMap(
-                getScopedIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT),
-                CommonConstraints::enabledByParameterCondition
-        );
+            getScopedIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT),
+            CommonConstraints::enabledByParameterCondition);
     }
 
     @Override
@@ -76,27 +88,26 @@ public class BasicConstraintsPathLenConstraintParameter extends CertificateSpeci
         // one other intermediate certificate follows in chain
         int maxChainLength = AnnotationUtil.resolveMaxChainLength(derivationScope.getExtensionContext());
         if (getParameterScope().isIntermediate() && getParameterScope().getIntermediateIndex() < maxChainLength - 3) {
-            defaultConstraints.add(ValueRestrictionConstraintBuilder.<Integer>init("if CA is asserted, pathlen must be big enough (or null)", derivationScope)
-                    .target(this)
-                    .requiredParameter(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH))
-                    // Allow only values that are big enough and null...
-                    .restrictValues((target, requiredParameters) -> {
-                        List<Integer> restrictedValues = new ArrayList<>();
-                        restrictedValues.add(null);
-                        ChainLengthParameter chainLengthParameter = (ChainLengthParameter)
-                                ConstraintHelper.getParameterValue(requiredParameters, new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH));
-                        int chainLength = chainLengthParameter.getSelectedValue();
-                        int minimumPathLen = chainLength - getParameterScope().getIntermediateIndex() - 3;
-                        restrictedValues.addAll(IntStream.range(0, minimumPathLen).boxed().collect(Collectors.toList()));
-                        return restrictedValues;
-                    })
-                    // ... if the certificate is an intermediate certificate
-                    .condition((target, requiredParameters) -> {
-                        int chainLength = ((ChainLengthParameter) requiredParameters.get(0)).getSelectedValue();
-                        return (getParameterScope().getIntermediateIndex() < chainLength - 3);        // "is intermediate cert"
-                    })
-                    .get()
-            );
+            defaultConstraints.add(ValueRestrictionConstraintBuilder
+                .<Integer>init("if CA is asserted, pathlen must be big enough (or null)", derivationScope).target(this)
+                .requiredParameter(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH))
+                // Allow only values that are big enough and null...
+                .restrictValues((target, requiredParameters) -> {
+                    List<Integer> restrictedValues = new ArrayList<>();
+                    restrictedValues.add(null);
+                    ChainLengthParameter chainLengthParameter =
+                        (ChainLengthParameter) ConstraintHelper.getParameterValue(requiredParameters,
+                            new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH));
+                    int chainLength = chainLengthParameter.getSelectedValue();
+                    int minimumPathLen = chainLength - getParameterScope().getIntermediateIndex() - 3;
+                    restrictedValues.addAll(IntStream.range(0, minimumPathLen).boxed().collect(Collectors.toList()));
+                    return restrictedValues;
+                })
+                // ... if the certificate is an intermediate certificate
+                .condition((target, requiredParameters) -> {
+                    int chainLength = ((ChainLengthParameter) requiredParameters.get(0)).getSelectedValue();
+                    return (getParameterScope().getIntermediateIndex() < chainLength - 3); // "is intermediate cert"
+                }).get());
         }
 
         return defaultConstraints;

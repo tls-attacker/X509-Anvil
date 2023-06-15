@@ -37,9 +37,11 @@ public class X509AnvilTest extends CombinatorialAnvilTest {
         ContextHelper.initializedContext();
     }
 
-    public X509CertificateChainConfig prepareConfig(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) {
+    public X509CertificateChainConfig prepareConfig(ArgumentsAccessor argumentsAccessor,
+        X509VerifierRunner testRunner) {
         X509CertificateChainConfig config = initializeConfig();
-        parameterCombination = ParameterCombination.fromArgumentsAccessor(argumentsAccessor, new DerivationScope(extensionContext));
+        parameterCombination =
+            ParameterCombination.fromArgumentsAccessor(argumentsAccessor, new DerivationScope(extensionContext));
         parameterCombination.applyToConfig(ConfigContainer.fromConfig(X509CertificateChainConfig.class, config));
         testRunner.setPreparedConfig(config);
         testRunner.setParameterCombination(parameterCombination);

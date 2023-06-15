@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter.name;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -32,13 +41,12 @@ public class CNTypeParameter extends CertificateSpecificParameter<DirectoryStrin
 
     @Override
     protected List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
-        return Arrays.stream(DirectoryStringType.values())
-                .map(this::generateValue)
-                .collect(Collectors.toList());
+        return Arrays.stream(DirectoryStringType.values()).map(this::generateValue).collect(Collectors.toList());
     }
 
     @Override
-    protected DerivationParameter<X509CertificateChainConfig, DirectoryStringType> generateValue(DirectoryStringType selectedValue) {
+    protected DerivationParameter<X509CertificateChainConfig, DirectoryStringType>
+        generateValue(DirectoryStringType selectedValue) {
         return new CNTypeParameter(getParameterScope(), selectedValue);
     }
 }

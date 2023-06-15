@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage;
 
 import de.rub.nds.anvilcore.context.AnvilContext;
@@ -34,7 +43,8 @@ public class KeyUsageFlagParameter extends BooleanCertificateSpecificParameter {
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        KeyUsageExtensionConfig extensionConfig = (KeyUsageExtensionConfig) certificateConfig.extension(ExtensionType.KEY_USAGE);
+        KeyUsageExtensionConfig extensionConfig =
+            (KeyUsageExtensionConfig) certificateConfig.extension(ExtensionType.KEY_USAGE);
         extensionConfig.setFlag(getBitPosition(), getSelectedValue());
     }
 
@@ -45,9 +55,12 @@ public class KeyUsageFlagParameter extends BooleanCertificateSpecificParameter {
 
     @Override
     public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
-        // Entity certificates may be required to have digitalSignature bit set (e.g. if verifier adapter uses client authentication)
+        // Entity certificates may be required to have digitalSignature bit set (e.g. if verifier adapter uses client
+        // authentication)
         if (getParameterScope().isEntity() && bitPosition == KeyUsageExtensionConfig.DIGITAL_SIGNATURE) {
-            FeatureReport featureReport = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getFeatureReport();
+            FeatureReport featureReport =
+                ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate())
+                    .getFeatureReport();
             if (featureReport.isDigitalSignatureKeyUsageRequired()) {
                 return Collections.singletonList(generateValue(true));
             }
@@ -64,10 +77,8 @@ public class KeyUsageFlagParameter extends BooleanCertificateSpecificParameter {
     @Override
     public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
         // Only model if corresponding ExtensionPresent parameter is true
-        return Collections.singletonMap(
-                getScopedIdentifier(X509AnvilParameterType.EXT_KEY_USAGE_PRESENT),
-                CommonConstraints::enabledByParameterCondition
-        );
+        return Collections.singletonMap(getScopedIdentifier(X509AnvilParameterType.EXT_KEY_USAGE_PRESENT),
+            CommonConstraints::enabledByParameterCondition);
     }
 
     public int getBitPosition() {

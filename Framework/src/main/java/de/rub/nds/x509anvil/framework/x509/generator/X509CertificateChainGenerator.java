@@ -37,7 +37,8 @@ public class X509CertificateChainGenerator {
         }
 
         X509CertificateConfig previousConfig = null;
-        for (X509CertificateConfig certificateConfig : X509CertificateConfigUtil.expandCertificateConfigs(certificateChainConfig)) {
+        for (X509CertificateConfig certificateConfig : X509CertificateConfigUtil
+            .expandCertificateConfigs(certificateChainConfig)) {
             generateSingleCertificate(certificateConfig, previousConfig);
             previousConfig = certificateConfig;
         }
@@ -49,7 +50,8 @@ public class X509CertificateChainGenerator {
 
     private void generateSingleCertificate(X509CertificateConfig config, X509CertificateConfig signerConfig)
         throws CertificateGeneratorException {
-        X509CertificateGenerator x509CertificateGenerator = new X509CertificateGenerator(config, signerConfig, certificateModifiers);
+        X509CertificateGenerator x509CertificateGenerator =
+            new X509CertificateGenerator(config, signerConfig, certificateModifiers);
         x509CertificateGenerator.generateCertificate();
         this.generatedCertificates.add(x509CertificateGenerator.retrieveX509Certificate());
     }

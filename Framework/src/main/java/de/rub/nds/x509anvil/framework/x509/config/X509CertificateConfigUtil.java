@@ -35,7 +35,8 @@ import java.util.Iterator;
 import java.util.UUID;
 
 public class X509CertificateConfigUtil {
-    public static X509CertificateConfig getDefaultCertificateConfig(String certificateName, boolean selfSigned, CertificateChainPosType chainPosType) {
+    public static X509CertificateConfig getDefaultCertificateConfig(String certificateName, boolean selfSigned,
+        CertificateChainPosType chainPosType) {
         X509CertificateConfig config = new X509CertificateConfig();
 
         config.setCertificateName(certificateName);
@@ -68,11 +69,13 @@ public class X509CertificateConfigUtil {
         return config;
     }
 
-    public static X509CertificateConfig getDefaultCaCertificateConfig(String certificateName, boolean selfSigned, CertificateChainPosType chainPosType) {
+    public static X509CertificateConfig getDefaultCaCertificateConfig(String certificateName, boolean selfSigned,
+        CertificateChainPosType chainPosType) {
         X509CertificateConfig config = getDefaultCertificateConfig(certificateName, selfSigned, chainPosType);
 
         config.setExtensionsPresent(true);
-        BasicConstraintsExtensionConfig basicConstraints = (BasicConstraintsExtensionConfig) config.extension(ExtensionType.BASIC_CONSTRAINTS);
+        BasicConstraintsExtensionConfig basicConstraints =
+            (BasicConstraintsExtensionConfig) config.extension(ExtensionType.BASIC_CONSTRAINTS);
         basicConstraints.setPresent(true);
         basicConstraints.setCa(true);
         basicConstraints.setPathLenConstraintPresent(false);
@@ -86,7 +89,8 @@ public class X509CertificateConfigUtil {
 
     public static X509CertificateChainConfig createBasicConfig(int chainLength) {
         X509CertificateChainConfig x509CertificateChainConfig = new X509CertificateChainConfig();
-        x509CertificateChainConfig.initializeChain(chainLength, 1, ContextHelper.getContextDelegate().getTestConfig().getUseStaticRootCertificate());
+        x509CertificateChainConfig.initializeChain(chainLength, 1,
+            ContextHelper.getContextDelegate().getTestConfig().getUseStaticRootCertificate());
         return x509CertificateChainConfig;
     }
 
@@ -103,7 +107,8 @@ public class X509CertificateConfigUtil {
         }
     }
 
-    public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String privateKeyFile) throws IOException, InvalidKeySpecException {
+    public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String privateKeyFile)
+        throws IOException, InvalidKeySpecException {
         X509Parser x509Parser = new X509Parser(new File(staticCertificateFile));
         X509Certificate staticRootCertificate = x509Parser.parse();
         staticRootCertificate.setKeyFile(new File(privateKeyFile));
@@ -118,7 +123,8 @@ public class X509CertificateConfigUtil {
         return new BigInteger(uuid.toString().replace("-", ""), 16);
     }
 
-    public static Iterable<X509CertificateConfig> expandCertificateConfigs(X509CertificateChainConfig certificateChainConfig) {
+    public static Iterable<X509CertificateConfig>
+        expandCertificateConfigs(X509CertificateChainConfig certificateChainConfig) {
         return () -> new Iterator<X509CertificateConfig>() {
             private int currentIndex = 0;
 
@@ -132,21 +138,18 @@ public class X509CertificateConfigUtil {
                 int i = currentIndex++;
                 if (i == 0) {
                     return certificateChainConfig.getRootCertificateConfig();
-                }
-                else if (i > 0 && i < certificateChainConfig.getChainLength() - 1) {
+                } else if (i > 0 && i < certificateChainConfig.getChainLength() - 1) {
                     if (i - 1 < certificateChainConfig.getIntermediateCertsModeled()) {
                         // Intermediate certificate is modeled, return config
                         return certificateChainConfig.getIntermediateCertificateConfigs().get(i - 1);
-                    }
-                    else {
+                    } else {
                         // Intermediate certificate is not modeled, copy config of last modeled intermediate cert
-                        return certificateChainConfig.getIntermediateCertificateConfigs().get(certificateChainConfig.getIntermediateCertsModeled()-1);
+                        return certificateChainConfig.getIntermediateCertificateConfigs()
+                            .get(certificateChainConfig.getIntermediateCertsModeled() - 1);
                     }
-                }
-                else if (i == certificateChainConfig.getChainLength() - 1) {
+                } else if (i == certificateChainConfig.getChainLength() - 1) {
                     return certificateChainConfig.getEntityCertificateConfig();
-                }
-                else {
+                } else {
                     throw new IndexOutOfBoundsException();
                 }
             }

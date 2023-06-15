@@ -45,8 +45,9 @@ public class VersionParameter extends CertificateSpecificParameter<Integer> {
             return Collections.singletonList(generateValue(2));
         }
         List<DerivationParameter> parameterValues = new ArrayList<>();
-        List<Integer> supportedVersions = ((X509AnvilContextDelegate) AnvilContext.getInstance()
-                .getApplicationSpecificContextDelegate()).getFeatureReport().getSupportedVersions();
+        List<Integer> supportedVersions =
+            ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate())
+                .getFeatureReport().getSupportedVersions();
         for (Integer version : supportedVersions) {
             parameterValues.add(generateValue(version));
         }

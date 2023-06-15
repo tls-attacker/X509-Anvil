@@ -27,13 +27,13 @@ public class X509CertificateConfig {
     private CertificateChainPosType certificateChainPosType;
     private boolean isStatic;
     private X509Certificate staticX509Certificate;
-    private boolean isSharedConfig = false;     // If this config is used for multiple certificates in a chain
+    private boolean isSharedConfig = false; // If this config is used for multiple certificates in a chain
     private int sharedId = 0;
     private boolean selfSigned;
     private KeyType keyType;
     private int keyLength;
     private KeyPair keyPair;
-    private HashAlgorithm hashAlgorithm;        // Hash algorithm used when signing another certificate with privkey
+    private HashAlgorithm hashAlgorithm; // Hash algorithm used when signing another certificate with privkey
 
     private Integer version;
     private BigInteger serialNumber;
@@ -252,7 +252,8 @@ public class X509CertificateConfig {
 
     public ExtensionConfig extension(ExtensionType extensionType) {
         if (!extensions.containsKey(extensionType)) {
-            throw new IllegalArgumentException("No extension config registered for extension type " + extensionType.name());
+            throw new IllegalArgumentException(
+                "No extension config registered for extension type " + extensionType.name());
         }
         return extensions.get(extensionType);
     }

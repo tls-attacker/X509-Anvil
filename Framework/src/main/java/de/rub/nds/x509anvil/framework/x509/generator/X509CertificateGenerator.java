@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.x509.generator;
 
 import de.rub.nds.asn1.Asn1Encodable;
@@ -27,7 +36,7 @@ public class X509CertificateGenerator {
     private final List<X509CertificateModifier> certificateModifiers = new ArrayList<>();
 
     public X509CertificateGenerator(X509CertificateConfig certificateConfig, X509CertificateConfig issuerConfig,
-                                    List<X509CertificateModifier> certificateModifiers) {
+        List<X509CertificateModifier> certificateModifiers) {
         this.certificateConfig = certificateConfig;
         this.previousConfig = issuerConfig;
         this.certificateModifiers.addAll(certificateModifiers);
@@ -77,7 +86,8 @@ public class X509CertificateGenerator {
         subjectKeyInfo.setIdentifier("keyInfo");
         subjectKeyInfo.setType("KeyInfo");
         try {
-            subjectKeyInfo.setKeyBytes(PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPublic().getEncoded(), "PUBLIC KEY"));
+            subjectKeyInfo.setKeyBytes(
+                PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPublic().getEncoded(), "PUBLIC KEY"));
         } catch (IOException e) {
             throw new CertificateGeneratorException("Unable to encode key in PEM format", e);
         }
@@ -94,12 +104,14 @@ public class X509CertificateGenerator {
         byte[] privateKeyForSignature;
         try {
             if (certificateConfig.isSelfSigned()) {
-                privateKeyForSignature = PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
+                privateKeyForSignature =
+                    PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
             } else {
                 if (previousConfig.isStatic()) {
                     privateKeyForSignature = previousConfig.getStaticX509Certificate().getKeyInfo().getKeyBytes();
                 } else {
-                    privateKeyForSignature = PemUtil.encodeKeyAsPem(previousConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
+                    privateKeyForSignature =
+                        PemUtil.encodeKeyAsPem(previousConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
                 }
             }
         } catch (IOException e) {
@@ -182,8 +194,8 @@ public class X509CertificateGenerator {
             if (previousConfig.isStatic()) {
                 // Copy subject field
                 try {
-                    Asn1Encodable subject = X509Util.getAsn1ElementByIdentifierPath(previousConfig.getStaticX509Certificate(),
-                            "tbsCertificate", "subject");
+                    Asn1Encodable subject = X509Util.getAsn1ElementByIdentifierPath(
+                        previousConfig.getStaticX509Certificate(), "tbsCertificate", "subject");
                     if (!(subject instanceof Asn1Sequence)) {
                         throw new CertificateGeneratorException("Unable to copy subject field of static certificate");
                     }
@@ -192,15 +204,13 @@ public class X509CertificateGenerator {
 
                     tbsCertificate.addChild(issuerAsn1);
                     return;
-                }
-                catch (IllegalArgumentException | XMLStreamException | JAXBException | IOException e) {
+                } catch (IllegalArgumentException | XMLStreamException | JAXBException | IOException e) {
                     throw new CertificateGeneratorException("Unable to copy subject field of static certificate", e);
                 }
             } else {
                 issuer = previousConfig.getSubject();
             }
         }
-
 
         Asn1Sequence issuerAsn1 = issuer.getAsn1Structure("issuer");
         if (!certificateConfig.isSelfSigned() && previousConfig.isSharedConfig()) {
@@ -211,11 +221,10 @@ public class X509CertificateGenerator {
             }
             if (cn instanceof Asn1PrimitivePrintableString) {
                 ((Asn1PrimitivePrintableString) cn).setValue(
-                        ((Asn1PrimitivePrintableString) cn).getValue() + "_" + (previousConfig.getSharedId() - 1));
-            }
-            else if (cn instanceof Asn1PrimitiveUtf8String) {
-                ((Asn1PrimitiveUtf8String) cn).setValue(
-                        ((Asn1PrimitiveUtf8String) cn).getValue() + "_" + (previousConfig.getSharedId() - 1));
+                    ((Asn1PrimitivePrintableString) cn).getValue() + "_" + (previousConfig.getSharedId() - 1));
+            } else if (cn instanceof Asn1PrimitiveUtf8String) {
+                ((Asn1PrimitiveUtf8String) cn)
+                    .setValue(((Asn1PrimitiveUtf8String) cn).getValue() + "_" + (previousConfig.getSharedId() - 1));
             }
         }
         tbsCertificate.addChild(issuerAsn1);
@@ -231,9 +240,11 @@ public class X509CertificateGenerator {
                 throw new CertificateGeneratorException("Shared cert has no subject CN");
             }
             if (cn instanceof Asn1PrimitivePrintableString) {
-                ((Asn1PrimitivePrintableString) cn).setValue(((Asn1PrimitivePrintableString) cn).getValue() + "_" + certificateConfig.getSharedId());
+                ((Asn1PrimitivePrintableString) cn)
+                    .setValue(((Asn1PrimitivePrintableString) cn).getValue() + "_" + certificateConfig.getSharedId());
             } else if (cn instanceof Asn1PrimitiveUtf8String) {
-                ((Asn1PrimitiveUtf8String) cn).setValue(((Asn1PrimitiveUtf8String) cn).getValue() + "_" + certificateConfig.getSharedId());
+                ((Asn1PrimitiveUtf8String) cn)
+                    .setValue(((Asn1PrimitiveUtf8String) cn).getValue() + "_" + certificateConfig.getSharedId());
             }
             certificateConfig.setSharedId(certificateConfig.getSharedId() + 1);
         }

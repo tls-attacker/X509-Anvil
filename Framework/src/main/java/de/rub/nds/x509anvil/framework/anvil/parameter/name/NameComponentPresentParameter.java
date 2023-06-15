@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter.name;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -12,13 +21,15 @@ public class NameComponentPresentParameter extends BooleanCertificateSpecificPar
     private final String nameComponentOid;
     private final String value;
 
-    public NameComponentPresentParameter(ParameterIdentifier parameterIdentifier, String nameComponentOid, String value) {
+    public NameComponentPresentParameter(ParameterIdentifier parameterIdentifier, String nameComponentOid,
+        String value) {
         super(parameterIdentifier);
         this.nameComponentOid = nameComponentOid;
         this.value = value;
     }
 
-    public NameComponentPresentParameter(Boolean selectedValue, ParameterIdentifier parameterIdentifier, String nameComponentOid, String value) {
+    public NameComponentPresentParameter(Boolean selectedValue, ParameterIdentifier parameterIdentifier,
+        String nameComponentOid, String value) {
         super(selectedValue, parameterIdentifier);
         this.nameComponentOid = nameComponentOid;
         this.value = value;

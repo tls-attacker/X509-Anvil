@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.featureextraction.probe;
 
 import de.rub.nds.anvilcore.context.AnvilContext;
@@ -36,8 +45,8 @@ public abstract class ExtensionProbe implements Probe {
             addExtensionToConfig(baseConfig);
             boolean resultValid = testCertificateChain(baseConfig, createValidExtensionModifier());
             // FIXME
-            //boolean resultInvalid = testCertificateChain(baseConfig, createInvalidExtensionModifier());
-            //return new ExtensionProbeResult(extensionType, resultValid && !resultInvalid);
+            // boolean resultInvalid = testCertificateChain(baseConfig, createInvalidExtensionModifier());
+            // return new ExtensionProbeResult(extensionType, resultValid && !resultInvalid);
             return new ExtensionProbeResult(extensionType, resultValid);
         } catch (VerifierException | CertificateGeneratorException e) {
             throw new ProbeException("Unable to execute probe", e);
@@ -45,18 +54,25 @@ public abstract class ExtensionProbe implements Probe {
     }
 
     protected abstract X509CertificateChainConfig prepareBaseConfig();
+
     protected abstract void addExtensionToConfig(X509CertificateChainConfig config);
+
     protected abstract X509CertificateModifier createValidExtensionModifier();
+
     protected abstract X509CertificateModifier createInvalidExtensionModifier();
 
-    protected boolean testCertificateChain(X509CertificateChainConfig config, X509CertificateModifier modifier) throws CertificateGeneratorException, VerifierException {
+    protected boolean testCertificateChain(X509CertificateChainConfig config, X509CertificateModifier modifier)
+        throws CertificateGeneratorException, VerifierException {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         certificateChainGenerator.addModifier(modifier);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
 
-        TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
-        VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(), testConfig.getVerifierAdapterConfig());
+        TestConfig testConfig =
+            ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate())
+                .getTestConfig();
+        VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
+            testConfig.getVerifierAdapterConfig());
         VerifierResult verifierResult = verifierAdapter.invokeVerifier(certificateChain, config);
         return verifierResult.isValid();
     }

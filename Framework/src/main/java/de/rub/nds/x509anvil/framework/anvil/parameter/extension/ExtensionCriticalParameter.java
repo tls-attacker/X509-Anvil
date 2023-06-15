@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter.extension;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -18,13 +27,15 @@ public class ExtensionCriticalParameter extends BooleanCertificateSpecificParame
     private final ExtensionType extensionType;
     private final X509AnvilParameterType extensionPresentType;
 
-    public ExtensionCriticalParameter(ParameterIdentifier parameterIdentifier, ExtensionType extensionType, X509AnvilParameterType extensionPresentType) {
+    public ExtensionCriticalParameter(ParameterIdentifier parameterIdentifier, ExtensionType extensionType,
+        X509AnvilParameterType extensionPresentType) {
         super(parameterIdentifier);
         this.extensionType = extensionType;
         this.extensionPresentType = extensionPresentType;
     }
 
-    public ExtensionCriticalParameter(Boolean selectedValue, ParameterIdentifier parameterIdentifier, ExtensionType extensionType, X509AnvilParameterType extensionPresentType) {
+    public ExtensionCriticalParameter(Boolean selectedValue, ParameterIdentifier parameterIdentifier,
+        ExtensionType extensionType, X509AnvilParameterType extensionPresentType) {
         super(selectedValue, parameterIdentifier);
         this.extensionType = extensionType;
         this.extensionPresentType = extensionPresentType;
@@ -32,7 +43,8 @@ public class ExtensionCriticalParameter extends BooleanCertificateSpecificParame
 
     @Override
     protected DerivationParameter<X509CertificateChainConfig, Boolean> generateValue(Boolean selectedValue) {
-        return new ExtensionCriticalParameter(selectedValue, getParameterIdentifier(), extensionType, extensionPresentType);
+        return new ExtensionCriticalParameter(selectedValue, getParameterIdentifier(), extensionType,
+            extensionPresentType);
     }
 
     @Override
@@ -43,10 +55,8 @@ public class ExtensionCriticalParameter extends BooleanCertificateSpecificParame
     @Override
     public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
         // Only model if corresponding ExtensionPresent parameter is true
-        return Collections.singletonMap(
-                getScopedIdentifier(extensionPresentType),
-                CommonConstraints::enabledByParameterCondition
-        );
+        return Collections.singletonMap(getScopedIdentifier(extensionPresentType),
+            CommonConstraints::enabledByParameterCondition);
     }
 
     @Override

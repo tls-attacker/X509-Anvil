@@ -31,7 +31,6 @@ import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
 
-
 public class X509AnvilParameterFactory extends ParameterFactory {
     @Override
     public DerivationParameter getInstance(ParameterIdentifier parameterIdentifier) {
@@ -53,17 +52,23 @@ public class X509AnvilParameterFactory extends ParameterFactory {
             case CN_TYPE:
                 return new CNTypeParameter(parameterIdentifier.getParameterScope());
             case NC_COUNTRY_NAME_PRESENT:
-                return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.COUNTRY_NAME, "DE");
+                return new NameComponentPresentParameter(parameterIdentifier,
+                    AttributeTypeObjectIdentifiers.COUNTRY_NAME, "DE");
             case NC_STATE_PROVINCE_PRESENT:
-                return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.STATE_OR_PROVINCE_NAME, "NRW");
+                return new NameComponentPresentParameter(parameterIdentifier,
+                    AttributeTypeObjectIdentifiers.STATE_OR_PROVINCE_NAME, "NRW");
             case NC_LOCALITY_PRESENT:
-                return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.LOCALITY_NAME, "Paderborn");
+                return new NameComponentPresentParameter(parameterIdentifier,
+                    AttributeTypeObjectIdentifiers.LOCALITY_NAME, "Paderborn");
             case NC_ORGANIZATION_PRESENT:
-                return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.ORGANIZATION_NAME, "UPB");
+                return new NameComponentPresentParameter(parameterIdentifier,
+                    AttributeTypeObjectIdentifiers.ORGANIZATION_NAME, "UPB");
             case NC_ORGANIZATIONAL_UNIT_PRESENT:
-                return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.ORGANIZATIONAL_UNIT_NAME, "CS");
+                return new NameComponentPresentParameter(parameterIdentifier,
+                    AttributeTypeObjectIdentifiers.ORGANIZATIONAL_UNIT_NAME, "CS");
             case NC_SERIAL_NUMBER_PRESENT:
-                return new NameComponentPresentParameter(parameterIdentifier, AttributeTypeObjectIdentifiers.SERIAL_NUMBER, "SERIAL:A3:B4:1337");
+                return new NameComponentPresentParameter(parameterIdentifier,
+                    AttributeTypeObjectIdentifiers.SERIAL_NUMBER, "SERIAL:A3:B4:1337");
             case DOMAIN_COMPONENTS_PRESENT:
                 return new DomainComponentsPresentParameter(parameterIdentifier.getParameterScope());
             case ISSUER_UNIQUE_ID_PRESENT:
@@ -81,7 +86,8 @@ public class X509AnvilParameterFactory extends ParameterFactory {
             case EXT_BASIC_CONSTRAINTS_PRESENT:
                 return new BasicConstraintsPresentParameter(parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_CRITICAL:
-                return new ExtensionCriticalParameter(parameterIdentifier, ExtensionType.BASIC_CONSTRAINTS, X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT);
+                return new ExtensionCriticalParameter(parameterIdentifier, ExtensionType.BASIC_CONSTRAINTS,
+                    X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT);
             case EXT_BASIC_CONSTRAINTS_CA:
                 return new BasicConstraintsCaParameter(parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT:
@@ -91,7 +97,8 @@ public class X509AnvilParameterFactory extends ParameterFactory {
             case EXT_KEY_USAGE_PRESENT:
                 return new KeyUsagePresentParameter(parameterIdentifier.getParameterScope());
             case EXT_KEY_USAGE_CRITICAL:
-                return new ExtensionCriticalParameter(parameterIdentifier, ExtensionType.KEY_USAGE, X509AnvilParameterType.EXT_KEY_USAGE_PRESENT);
+                return new ExtensionCriticalParameter(parameterIdentifier, ExtensionType.KEY_USAGE,
+                    X509AnvilParameterType.EXT_KEY_USAGE_PRESENT);
             case EXT_KEY_USAGE_DIGITAL_SIGNATURE:
                 return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.DIGITAL_SIGNATURE);
 //            case EXT_KEY_USAGE_NON_REPUDIATION:
@@ -115,7 +122,8 @@ public class X509AnvilParameterFactory extends ParameterFactory {
             case EXT_SUBJECT_KEY_IDENTIFIER_PRESENT:
                 return new SubjectKeyIdentifierPresentParameter(parameterIdentifier.getParameterScope());
             default:
-                throw new IllegalArgumentException("Unknown parameter identifier " + parameterIdentifier.getParameterType().toString());
+                throw new IllegalArgumentException(
+                    "Unknown parameter identifier " + parameterIdentifier.getParameterType().toString());
         }
     }
 

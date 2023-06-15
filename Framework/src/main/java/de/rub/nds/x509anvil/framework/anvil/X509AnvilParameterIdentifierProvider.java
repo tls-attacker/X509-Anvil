@@ -23,7 +23,8 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
     @Override
     protected List<ParameterIdentifier> getAllParameterIdentifiers(DerivationScope derivationScope) {
         int maxChainLength = AnnotationUtil.resolveMaxChainLength(derivationScope.getExtensionContext());
-        int intermediateCertsModeled = AnnotationUtil.resolveIntermediateCertsModeled(derivationScope.getExtensionContext());
+        int intermediateCertsModeled =
+            AnnotationUtil.resolveIntermediateCertsModeled(derivationScope.getExtensionContext());
         int numCertificateScopes = Integer.min(maxChainLength, 2 + intermediateCertsModeled);
 
         List<ParameterIdentifier> parameterIdentifiers = new ArrayList<>();
@@ -39,14 +40,16 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
         // Parameters for intermediate certificates
         for (int i = 0; i < numCertificateScopes - 2; i++) {
             for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
-                parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.createIntermediateScope(i)));
+                parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType,
+                    X509AnvilParameterScope.createIntermediateScope(i)));
             }
         }
 
         // Parameters for entity certificate
         if (numCertificateScopes >= 2) {
             for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
-                parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ENTITY));
+                parameterIdentifiers
+                    .add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ENTITY));
             }
         }
 
@@ -55,24 +58,17 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
 
     public static List<X509AnvilParameterType> getModeledParameterTypes() {
         if (true) {
-            return Arrays.stream(X509AnvilParameterType.values())
-                    .filter(t -> t != X509AnvilParameterType.CHAIN_LENGTH)
-                    .filter(t -> !t.name().startsWith("EXT_KEY_USAGE"))
-                    .filter(t -> !t.name().contains("UNIQUE"))
-                    .filter(t -> !t.name().contains("NC"))
-                    .collect(Collectors.toList());
+            return Arrays.stream(X509AnvilParameterType.values()).filter(t -> t != X509AnvilParameterType.CHAIN_LENGTH)
+                .filter(t -> !t.name().startsWith("EXT_KEY_USAGE")).filter(t -> !t.name().contains("UNIQUE"))
+                .filter(t -> !t.name().contains("NC")).collect(Collectors.toList());
         }
 
-        List<X509AnvilParameterType> modeledParameterTypes = new ArrayList<>(Arrays.asList(
-                X509AnvilParameterType.VERSION,
-                X509AnvilParameterType.EXTENSIONS_PRESENT,
-                X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT,
-                X509AnvilParameterType.SUBJECT_UNIQUE_ID
-        ));
+        List<X509AnvilParameterType> modeledParameterTypes =
+            new ArrayList<>(Arrays.asList(X509AnvilParameterType.VERSION, X509AnvilParameterType.EXTENSIONS_PRESENT,
+                X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT, X509AnvilParameterType.SUBJECT_UNIQUE_ID));
 
-        Arrays.stream(X509AnvilParameterType.values())
-                .filter(t -> t.name().startsWith("EXT_BASIC_CONSTRAINTS"))
-                .collect(Collectors.toCollection(() -> modeledParameterTypes));
+        Arrays.stream(X509AnvilParameterType.values()).filter(t -> t.name().startsWith("EXT_BASIC_CONSTRAINTS"))
+            .collect(Collectors.toCollection(() -> modeledParameterTypes));
 
         return modeledParameterTypes;
     }

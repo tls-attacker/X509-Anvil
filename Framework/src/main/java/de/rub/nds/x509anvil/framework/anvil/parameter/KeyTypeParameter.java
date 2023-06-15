@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.context.AnvilContext;
@@ -20,7 +29,7 @@ import java.util.stream.Collectors;
 public class KeyTypeParameter extends CertificateSpecificParameter<KeyTypeLengthPair> {
 
     public KeyTypeParameter(ParameterScope parameterScope) {
-        super (new ParameterIdentifier(X509AnvilParameterType.KEY_TYPE, parameterScope), KeyTypeLengthPair.class);
+        super(new ParameterIdentifier(X509AnvilParameterType.KEY_TYPE, parameterScope), KeyTypeLengthPair.class);
     }
 
     public KeyTypeParameter(ParameterScope parameterScope, KeyTypeLengthPair value) {
@@ -29,22 +38,23 @@ public class KeyTypeParameter extends CertificateSpecificParameter<KeyTypeLength
     }
 
     @Override
-    protected DerivationParameter<X509CertificateChainConfig, KeyTypeLengthPair> generateValue(KeyTypeLengthPair selectedValue) {
+    protected DerivationParameter<X509CertificateChainConfig, KeyTypeLengthPair>
+        generateValue(KeyTypeLengthPair selectedValue) {
         return new KeyTypeParameter(getParameterIdentifier().getParameterScope(), selectedValue);
     }
 
     @Override
     protected List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
-        FeatureReport featureReport = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getFeatureReport();
+        FeatureReport featureReport =
+            ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate())
+                .getFeatureReport();
         List<KeyTypeLengthPair> supportedKeyLength;
         if (getParameterScope().isEntity()) {
             supportedKeyLength = featureReport.getSupportedEntityKeyLengths();
         } else {
             supportedKeyLength = featureReport.getSupportedKeyLengths();
         }
-        return supportedKeyLength.stream()
-                .map(this::generateValue)
-                .collect(Collectors.toList());
+        return supportedKeyLength.stream().map(this::generateValue).collect(Collectors.toList());
     }
 
     @Override
@@ -52,7 +62,7 @@ public class KeyTypeParameter extends CertificateSpecificParameter<KeyTypeLength
         certificateConfig.setKeyType(getSelectedValue().getKeyType());
         certificateConfig.setKeyLength(getSelectedValue().getKeyLength());
         KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(getSelectedValue().getKeyType(),
-                certificateConfig.getCertificateName(), getSelectedValue().getKeyLength());
+            certificateConfig.getCertificateName(), getSelectedValue().getKeyLength());
         certificateConfig.setKeyPair(keyPair);
     }
 }

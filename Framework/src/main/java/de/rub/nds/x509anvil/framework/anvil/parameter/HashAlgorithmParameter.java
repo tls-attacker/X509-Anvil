@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.context.AnvilContext;
@@ -26,7 +35,7 @@ import java.util.stream.Collectors;
 public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlgorithm> {
 
     public HashAlgorithmParameter(ParameterScope parameterScope) {
-        super (new ParameterIdentifier(X509AnvilParameterType.HASH_ALGORITHM, parameterScope), HashAlgorithm.class);
+        super(new ParameterIdentifier(X509AnvilParameterType.HASH_ALGORITHM, parameterScope), HashAlgorithm.class);
     }
 
     public HashAlgorithmParameter(ParameterScope parameterScope, HashAlgorithm value) {
@@ -35,21 +44,22 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
     }
 
     @Override
-    protected DerivationParameter<X509CertificateChainConfig, HashAlgorithm> generateValue(HashAlgorithm selectedValue) {
+    protected DerivationParameter<X509CertificateChainConfig, HashAlgorithm>
+        generateValue(HashAlgorithm selectedValue) {
         return new HashAlgorithmParameter(getParameterIdentifier().getParameterScope(), selectedValue);
     }
 
     @Override
     protected List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
-        FeatureReport featureReport = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getFeatureReport();
+        FeatureReport featureReport =
+            ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate())
+                .getFeatureReport();
         if (getParameterScope().isEntity()) {
-            return featureReport.getSupportedEntityHashAlgorithms().stream()
-                    .map(this::generateValue)
-                    .collect(Collectors.toList());
-        }
-        return featureReport.getSupportedHashAlgorithms().stream()
-                .map(this::generateValue)
+            return featureReport.getSupportedEntityHashAlgorithms().stream().map(this::generateValue)
                 .collect(Collectors.toList());
+        }
+        return featureReport.getSupportedHashAlgorithms().stream().map(this::generateValue)
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -62,7 +72,9 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
         List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
 
         // We need to build constraints for any unsupported keytype-hashalgo combinations
-        FeatureReport featureReport = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getFeatureReport();
+        FeatureReport featureReport =
+            ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate())
+                .getFeatureReport();
         List<KeyType> supportedKeyTypes;
         List<HashAlgorithm> supportedHashAlgorithms;
         if (getParameterScope().isEntity()) {
@@ -73,51 +85,54 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
             supportedHashAlgorithms = featureReport.getSupportedHashAlgorithms();
         }
 
-
         for (KeyType keyType : supportedKeyTypes) {
             for (HashAlgorithm hashAlgorithm : supportedHashAlgorithms) {
                 try {
-                    SignatureAlgorithm resultingSignatureAlgorithm = SignatureAlgorithm.fromKeyHashCombination(keyType, hashAlgorithm);
-                    if (getParameterScope().isEntity() && !featureReport.entityAlgorithmSupported(resultingSignatureAlgorithm)
-                            || !getParameterScope().isEntity() && !featureReport.algorithmSupported(resultingSignatureAlgorithm)) {
-                        defaultConstraints.add(createSignatureAlgorithmExclusionConstraint(keyType, hashAlgorithm, derivationScope));
+                    SignatureAlgorithm resultingSignatureAlgorithm =
+                        SignatureAlgorithm.fromKeyHashCombination(keyType, hashAlgorithm);
+                    if (getParameterScope().isEntity()
+                        && !featureReport.entityAlgorithmSupported(resultingSignatureAlgorithm)
+                        || !getParameterScope().isEntity()
+                            && !featureReport.algorithmSupported(resultingSignatureAlgorithm)) {
+                        defaultConstraints
+                            .add(createSignatureAlgorithmExclusionConstraint(keyType, hashAlgorithm, derivationScope));
                     }
                 } catch (IllegalArgumentException e) {
                     // Signature algorithm does not exist (i.e. not supported by X509-Anvil)
-                    defaultConstraints.add(createSignatureAlgorithmExclusionConstraint(keyType, hashAlgorithm, derivationScope));
+                    defaultConstraints
+                        .add(createSignatureAlgorithmExclusionConstraint(keyType, hashAlgorithm, derivationScope));
                 }
             }
         }
 
-        defaultConstraints.add(ValueRestrictionConstraintBuilder.init("DSA and RSA512 do not work with SHA512 or SHA384", derivationScope)
-                .target(this)
-                .requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
+        defaultConstraints.add(
+            ValueRestrictionConstraintBuilder.init("DSA and RSA512 do not work with SHA512 or SHA384", derivationScope)
+                .target(this).requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
                 .restrictValues(Arrays.asList(HashAlgorithm.SHA512, HashAlgorithm.SHA384))
                 .condition((target, requiredParameters) -> {
-                    KeyTypeLengthPair keyTypeLengthPair = (KeyTypeLengthPair) ConstraintHelper.getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE)).getSelectedValue();
+                    KeyTypeLengthPair keyTypeLengthPair = (KeyTypeLengthPair) ConstraintHelper
+                        .getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
+                        .getSelectedValue();
                     if (keyTypeLengthPair == null) {
                         return false;
                     }
-                    return (keyTypeLengthPair.getKeyType() == KeyType.DSA || keyTypeLengthPair.getKeyType() == KeyType.RSA) && keyTypeLengthPair.getKeyLength() < 1024;
-                })
-                .get()
-        );
+                    return (keyTypeLengthPair.getKeyType() == KeyType.DSA
+                        || keyTypeLengthPair.getKeyType() == KeyType.RSA) && keyTypeLengthPair.getKeyLength() < 1024;
+                }).get());
 
         return defaultConstraints;
     }
 
-    public ConditionalConstraint createSignatureAlgorithmExclusionConstraint(KeyType keyType, HashAlgorithm hashAlgorithm, DerivationScope derivationScope) {
+    public ConditionalConstraint createSignatureAlgorithmExclusionConstraint(KeyType keyType,
+        HashAlgorithm hashAlgorithm, DerivationScope derivationScope) {
         return ValueRestrictionConstraintBuilder
-                .init("Target does not support " + keyType.name() + " with " + hashAlgorithm.name(), derivationScope)
-                .target(this)
-                .requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
-                .restrictValues(Collections.singletonList(hashAlgorithm))
-                .condition((target, requiredParameters) -> {
-                    KeyTypeLengthPair selectedKeyTypeLengthPair = (KeyTypeLengthPair) ConstraintHelper
-                            .getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
-                            .getSelectedValue();
-                    return selectedKeyTypeLengthPair != null && selectedKeyTypeLengthPair.getKeyType() == keyType;
-                })
-                .get();
+            .init("Target does not support " + keyType.name() + " with " + hashAlgorithm.name(), derivationScope)
+            .target(this).requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
+            .restrictValues(Collections.singletonList(hashAlgorithm)).condition((target, requiredParameters) -> {
+                KeyTypeLengthPair selectedKeyTypeLengthPair = (KeyTypeLengthPair) ConstraintHelper
+                    .getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
+                    .getSelectedValue();
+                return selectedKeyTypeLengthPair != null && selectedKeyTypeLengthPair.getKeyType() == keyType;
+            }).get();
     }
 }

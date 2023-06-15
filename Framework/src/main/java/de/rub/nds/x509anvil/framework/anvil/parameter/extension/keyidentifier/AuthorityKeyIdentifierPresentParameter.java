@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyidentifier;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -15,11 +24,14 @@ import java.util.List;
 public class AuthorityKeyIdentifierPresentParameter extends ExtensionPresentParameter {
 
     public AuthorityKeyIdentifierPresentParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.EXT_AUTHORITY_KEY_IDENTIFIER_PRESENT, parameterScope), ExtensionType.AUTHORITY_KEY_IDENTIFIER);
+        super(new ParameterIdentifier(X509AnvilParameterType.EXT_AUTHORITY_KEY_IDENTIFIER_PRESENT, parameterScope),
+            ExtensionType.AUTHORITY_KEY_IDENTIFIER);
     }
 
     public AuthorityKeyIdentifierPresentParameter(Boolean selectedValue, ParameterScope parameterScope) {
-        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.EXT_AUTHORITY_KEY_IDENTIFIER_PRESENT, parameterScope), ExtensionType.AUTHORITY_KEY_IDENTIFIER);
+        super(selectedValue,
+            new ParameterIdentifier(X509AnvilParameterType.EXT_AUTHORITY_KEY_IDENTIFIER_PRESENT, parameterScope),
+            ExtensionType.AUTHORITY_KEY_IDENTIFIER);
     }
 
     @Override

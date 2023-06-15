@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -25,7 +34,8 @@ public class NotAfterParameter extends CertificateSpecificParameter<NotAfterValu
     }
 
     @Override
-    protected DerivationParameter<X509CertificateChainConfig, NotAfterValue> generateValue(NotAfterValue selectedValue) {
+    protected DerivationParameter<X509CertificateChainConfig, NotAfterValue>
+        generateValue(NotAfterValue selectedValue) {
         return new NotAfterParameter(selectedValue, this.getParameterIdentifier().getParameterScope());
     }
 

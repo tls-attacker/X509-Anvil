@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.x509.config.extension;
 
 import de.rub.nds.asn1.encoder.Asn1EncoderForX509;
@@ -17,14 +26,15 @@ public class SubjectKeyIdentifierExtensionConfig extends ExtensionConfig {
         super(ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER, "subjectKeyIdentifier");
     }
 
-
     @Override
-    public Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig, X509CertificateConfig previousConfig) {
+    public Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
+        X509CertificateConfig previousConfig) {
         Asn1PrimitiveOctetString subjectKeyIdentifierAsn1 = new Asn1PrimitiveOctetString();
         subjectKeyIdentifierAsn1.setIdentifier("subjectKeyIdentifier");
         try {
             JcaX509ExtensionUtils jcaX509ExtensionUtils = new JcaX509ExtensionUtils();
-            SubjectKeyIdentifier subjectKeyIdentifier = jcaX509ExtensionUtils.createSubjectKeyIdentifier(certificateConfig.getKeyPair().getPublic());
+            SubjectKeyIdentifier subjectKeyIdentifier =
+                jcaX509ExtensionUtils.createSubjectKeyIdentifier(certificateConfig.getKeyPair().getPublic());
             subjectKeyIdentifierAsn1.setValue(subjectKeyIdentifier.getKeyIdentifier());
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException(e);

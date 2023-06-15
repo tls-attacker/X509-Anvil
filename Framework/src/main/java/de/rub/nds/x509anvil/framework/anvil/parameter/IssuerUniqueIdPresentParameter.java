@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -37,8 +46,8 @@ public class IssuerUniqueIdPresentParameter extends BooleanCertificateSpecificPa
     public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
         List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
         // Unique IDs are only allowed in v2 and v3 certificates
-        defaultConstraints.add(CommonConstraints.valuesNotAllowedForVersions(Collections.singletonList(0), derivationScope,
-                this, Collections.singletonList(true)));
+        defaultConstraints.add(CommonConstraints.valuesNotAllowedForVersions(Collections.singletonList(0),
+            derivationScope, this, Collections.singletonList(true)));
         return defaultConstraints;
     }
 }

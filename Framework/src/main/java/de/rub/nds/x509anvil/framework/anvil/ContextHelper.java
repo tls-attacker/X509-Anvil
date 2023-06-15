@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil;
 
 import de.rub.nds.anvilcore.context.AnvilContext;
@@ -19,7 +28,8 @@ public class ContextHelper {
         Registry.getInstance();
         AnvilFactoryRegistry.get().addParameterTypes(X509AnvilParameterType.values(), new X509AnvilParameterFactory());
         AnvilFactoryRegistry.get().setParameterIdentifierProvider(new X509AnvilParameterIdentifierProvider());
-        AnvilContext.getInstance().setApplicationSpecificContextDelegate(new X509AnvilContextDelegate(new TestConfig()));
+        AnvilContext.getInstance()
+            .setApplicationSpecificContextDelegate(new X509AnvilContextDelegate(new TestConfig()));
         AnvilContext.getInstance().setTestStrength(2);
 
         FeatureReport report = FeatureExtractor.scanFeatures();

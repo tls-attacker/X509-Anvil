@@ -17,8 +17,7 @@ public class TestConfig {
     // TODO: Use JCommander for config parameters
 
     private VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_CLIENT_AUTH;
-    private VerifierAdapterConfig verifierAdapterConfig =
-        new TlsClientAuthVerifierAdapterConfig("localhost", 4433);
+    private VerifierAdapterConfig verifierAdapterConfig = new TlsClientAuthVerifierAdapterConfig("localhost", 4433);
     private Boolean useStaticRootCertificate = true;
     private String staticRootCertificateFile = "resources/static-root/root-cert.pem";
     private String staticRootPrivateKeyFile = "resources/static-root/private-key.pem";

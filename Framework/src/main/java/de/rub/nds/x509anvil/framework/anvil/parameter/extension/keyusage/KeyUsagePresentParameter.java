@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -15,11 +24,13 @@ import java.util.List;
 public class KeyUsagePresentParameter extends ExtensionPresentParameter {
 
     public KeyUsagePresentParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.EXT_KEY_USAGE_PRESENT, parameterScope), ExtensionType.KEY_USAGE);
+        super(new ParameterIdentifier(X509AnvilParameterType.EXT_KEY_USAGE_PRESENT, parameterScope),
+            ExtensionType.KEY_USAGE);
     }
 
     public KeyUsagePresentParameter(Boolean selectedValue, ParameterScope parameterScope) {
-        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.EXT_KEY_USAGE_PRESENT, parameterScope), ExtensionType.KEY_USAGE);
+        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.EXT_KEY_USAGE_PRESENT, parameterScope),
+            ExtensionType.KEY_USAGE);
     }
 
     @Override

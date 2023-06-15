@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil;
 
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
@@ -19,15 +28,12 @@ public class X509AnvilParameterScope extends ParameterScope {
     public static X509AnvilParameterScope fromUniqueIdentifier(String uniqueIdentifier) {
         if (uniqueIdentifier.equals("root")) {
             return ROOT;
-        }
-        else if (uniqueIdentifier.equals("entity")) {
+        } else if (uniqueIdentifier.equals("entity")) {
             return ENTITY;
-        }
-        else if (uniqueIdentifier.startsWith("inter")) {
+        } else if (uniqueIdentifier.startsWith("inter")) {
             int intermediateIndex = Integer.parseInt(uniqueIdentifier.replace("inter", ""));
             return new X509AnvilParameterScope(INTER_CHAIN_OFFSET + intermediateIndex);
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Unable to parse scope identifier " + uniqueIdentifier);
         }
     }
@@ -40,11 +46,9 @@ public class X509AnvilParameterScope extends ParameterScope {
     public String getUniqueScopeIdentifier() {
         if (chainPosition == ROOT_CHAIN_POS) {
             return "root";
-        }
-        else if (chainPosition == ENTITY_CHAIN_POS) {
+        } else if (chainPosition == ENTITY_CHAIN_POS) {
             return "entity";
-        }
-        else {
+        } else {
             return "inter" + (chainPosition - INTER_CHAIN_OFFSET);
         }
     }
@@ -75,11 +79,9 @@ public class X509AnvilParameterScope extends ParameterScope {
     public boolean isModeled(int chainLength) {
         if (isRoot()) {
             return chainLength >= 1;
-        }
-        else if (isEntity()) {
+        } else if (isEntity()) {
             return chainLength >= 2;
-        }
-        else {
+        } else {
             return chainLength >= getIntermediateIndex() + 3;
         }
     }

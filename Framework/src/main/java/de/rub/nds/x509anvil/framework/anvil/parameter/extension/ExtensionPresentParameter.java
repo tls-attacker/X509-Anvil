@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter.extension;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -22,7 +31,8 @@ public class ExtensionPresentParameter extends BooleanCertificateSpecificParamet
         this.extensionType = extensionType;
     }
 
-    public ExtensionPresentParameter(Boolean selectedValue, ParameterIdentifier parameterIdentifier, ExtensionType extensionType) {
+    public ExtensionPresentParameter(Boolean selectedValue, ParameterIdentifier parameterIdentifier,
+        ExtensionType extensionType) {
         super(selectedValue, parameterIdentifier);
         this.extensionType = extensionType;
     }
@@ -40,10 +50,8 @@ public class ExtensionPresentParameter extends BooleanCertificateSpecificParamet
     @Override
     public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
         // Don't model extension if extensions sequence is not present
-        return Collections.singletonMap(
-                getScopedIdentifier(X509AnvilParameterType.EXTENSIONS_PRESENT),
-                CommonConstraints::enabledByParameterCondition
-        );
+        return Collections.singletonMap(getScopedIdentifier(X509AnvilParameterType.EXTENSIONS_PRESENT),
+            CommonConstraints::enabledByParameterCondition);
     }
 
     public ExtensionType getExtensionType() {

@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter.extension;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -18,16 +27,19 @@ import java.util.function.Predicate;
 public class UnknownNonCriticalExtensionPresentParameter extends BooleanCertificateSpecificParameter {
 
     public UnknownNonCriticalExtensionPresentParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.EXT_UNKNOWN_NONCRITICAL_EXTENSION_PRESENT, parameterScope));
+        super(
+            new ParameterIdentifier(X509AnvilParameterType.EXT_UNKNOWN_NONCRITICAL_EXTENSION_PRESENT, parameterScope));
     }
 
     public UnknownNonCriticalExtensionPresentParameter(Boolean selectedValue, ParameterScope parameterScope) {
-        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.EXT_UNKNOWN_NONCRITICAL_EXTENSION_PRESENT, parameterScope));
+        super(selectedValue,
+            new ParameterIdentifier(X509AnvilParameterType.EXT_UNKNOWN_NONCRITICAL_EXTENSION_PRESENT, parameterScope));
     }
 
     @Override
     protected DerivationParameter<X509CertificateChainConfig, Boolean> generateValue(Boolean selectedValue) {
-        return new UnknownNonCriticalExtensionPresentParameter(selectedValue, getParameterIdentifier().getParameterScope());
+        return new UnknownNonCriticalExtensionPresentParameter(selectedValue,
+            getParameterIdentifier().getParameterScope());
     }
 
     @Override
@@ -39,10 +51,8 @@ public class UnknownNonCriticalExtensionPresentParameter extends BooleanCertific
     @Override
     public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
         // Don't model extension if extensions sequence is not present
-        return Collections.singletonMap(
-                getScopedIdentifier(X509AnvilParameterType.EXTENSIONS_PRESENT),
-                CommonConstraints::enabledByParameterCondition
-        );
+        return Collections.singletonMap(getScopedIdentifier(X509AnvilParameterType.EXTENSIONS_PRESENT),
+            CommonConstraints::enabledByParameterCondition);
     }
 
     @Override

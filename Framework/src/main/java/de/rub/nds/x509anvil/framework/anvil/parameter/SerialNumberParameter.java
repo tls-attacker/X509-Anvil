@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -32,11 +41,17 @@ public class SerialNumberParameter extends CertificateSpecificParameter<BigInteg
     public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter> parameterValues = new ArrayList<>();
         parameterValues.add(generateValue(BigInteger.valueOf(1))); // Smallest valid serial number
-        parameterValues.add(generateValue(new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16))); // Biggest valid serial number (20 octets)
+        parameterValues.add(generateValue(new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16))); // Biggest
+                                                                                                            // valid
+                                                                                                            // serial
+                                                                                                            // number
+                                                                                                            // (20
+                                                                                                            // octets)
 
         // TODO: These values must be handled gracefully but do not have to be accepted
         parameterValues.add(generateValue(BigInteger.valueOf(-1)));
-        parameterValues.add(generateValue(new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16)));
+        parameterValues.add(generateValue(
+            new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16)));
         return parameterValues;
     }
 

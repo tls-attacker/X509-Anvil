@@ -50,10 +50,13 @@ public class ChainLengthParameter extends X509AnvilDerivationParameter<Integer> 
     @Override
     public void preProcessConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
         // We need to set the chain length before other parameters access the config
-        int intermediateCertsModeled = AnnotationUtil.resolveIntermediateCertsModeled(derivationScope.getExtensionContext());
-        config.initializeChain(getSelectedValue(), intermediateCertsModeled, AnnotationUtil.resolveStaticRoot(derivationScope.getExtensionContext()));
+        int intermediateCertsModeled =
+            AnnotationUtil.resolveIntermediateCertsModeled(derivationScope.getExtensionContext());
+        config.initializeChain(getSelectedValue(), intermediateCertsModeled,
+            AnnotationUtil.resolveStaticRoot(derivationScope.getExtensionContext()));
     }
 
     @Override
-    public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {}
+    public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
+    }
 }

@@ -40,7 +40,8 @@ public abstract class ExtensionConfig {
         this.critical = critical;
     }
 
-    public Asn1Sequence getAsn1Structure(X509CertificateConfig certificateConfig, X509CertificateConfig previousConfig) throws CertificateGeneratorException {
+    public Asn1Sequence getAsn1Structure(X509CertificateConfig certificateConfig, X509CertificateConfig previousConfig)
+        throws CertificateGeneratorException {
         Asn1Sequence extensionAsn1 = new Asn1Sequence();
         extensionAsn1.setIdentifier(name);
 
@@ -63,5 +64,6 @@ public abstract class ExtensionConfig {
         return extensionAsn1;
     }
 
-    protected abstract Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig, X509CertificateConfig previousConfig) throws CertificateGeneratorException;
+    protected abstract Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
+        X509CertificateConfig previousConfig) throws CertificateGeneratorException;
 }

@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.featureextraction;
 
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
@@ -30,7 +39,6 @@ public class FeatureExtractor {
             throw new UnsupportedFeatureException("Target verifier does not support certificates of version 3");
         }
 
-
         // Probe support for basic constraints extension
         Probe basicConstraintsProbe = new BasicConstraintsExtensionProbe();
         ExtensionProbeResult basicConstraintsProbeResult = (ExtensionProbeResult) basicConstraintsProbe.execute();
@@ -40,12 +48,12 @@ public class FeatureExtractor {
         featureReport.addSupportedExtension(ExtensionType.BASIC_CONSTRAINTS);
         featureReport.addProbeResult(basicConstraintsProbeResult);
 
-
         // Probe support for signature algorithms (entity)
         List<SignatureAlgorithm> supportedEntityAlgorithms = new ArrayList<>();
         for (SignatureAlgorithm algorithm : SignatureAlgorithm.values()) {
             Probe entitySignatureAlgorithmProbe = new EntitySignatureAlgorithmProbe(algorithm);
-            SignatureAlgorithmProbeResult signatureAlgorithmProbeResult = (SignatureAlgorithmProbeResult) entitySignatureAlgorithmProbe.execute();
+            SignatureAlgorithmProbeResult signatureAlgorithmProbeResult =
+                (SignatureAlgorithmProbeResult) entitySignatureAlgorithmProbe.execute();
             if (signatureAlgorithmProbeResult.isSupported()) {
                 supportedEntityAlgorithms.add(algorithm);
             }
@@ -54,14 +62,16 @@ public class FeatureExtractor {
         featureReport.setSupportedEntityAlgorithms(supportedEntityAlgorithms);
 
         if (supportedEntityAlgorithms.isEmpty()) {
-            throw new UnsupportedFeatureException("Target verifier does not support any of the implemented signature algorithms for entity certificates");
+            throw new UnsupportedFeatureException(
+                "Target verifier does not support any of the implemented signature algorithms for entity certificates");
         }
 
         // Probe support for key lengths (for entity certs)
         List<KeyTypeLengthPair> supportedEntityKeyLengths = new ArrayList<>();
         for (KeyType keyType : featureReport.getSupportedEntityKeyTypes()) {
             for (int keyLength : KeyTypeLengthPair.getKeyLengths(keyType)) {
-                SignatureAlgorithm signatureAlgorithm = featureReport.getSupportedEntityAlgorithms().stream().filter(a -> a.getKeyType() == keyType).findFirst().get();
+                SignatureAlgorithm signatureAlgorithm = featureReport.getSupportedEntityAlgorithms().stream()
+                    .filter(a -> a.getKeyType() == keyType).findFirst().get();
                 Probe keyLengthProbe = new KeyLengthProbe(signatureAlgorithm, keyLength, true);
                 KeyLengthProbeResult signatureAlgorithmProbeResult = (KeyLengthProbeResult) keyLengthProbe.execute();
                 if (signatureAlgorithmProbeResult.isSupported()) {
@@ -71,12 +81,12 @@ public class FeatureExtractor {
         }
         featureReport.setSupportedEntityKeyLengths(supportedEntityKeyLengths);
 
-
         // Probe support for signature algorithms (non-entity)
         List<SignatureAlgorithm> supportedAlgorithms = new ArrayList<>();
         for (SignatureAlgorithm algorithm : SignatureAlgorithm.values()) {
             Probe signatureAlgorithmProbe = new SignatureAlgorithmProbe(algorithm);
-            SignatureAlgorithmProbeResult signatureAlgorithmProbeResult = (SignatureAlgorithmProbeResult) signatureAlgorithmProbe.execute();
+            SignatureAlgorithmProbeResult signatureAlgorithmProbeResult =
+                (SignatureAlgorithmProbeResult) signatureAlgorithmProbe.execute();
             if (signatureAlgorithmProbeResult.isSupported()) {
                 supportedAlgorithms.add(algorithm);
             }
@@ -85,14 +95,16 @@ public class FeatureExtractor {
         featureReport.setSupportedAlgorithms(supportedAlgorithms);
 
         if (supportedAlgorithms.isEmpty()) {
-            throw new UnsupportedFeatureException("Target verifier does not support any of the implemented signature algorithms");
+            throw new UnsupportedFeatureException(
+                "Target verifier does not support any of the implemented signature algorithms");
         }
 
         // Probe support for key lengths (for non-entity certs)
         List<KeyTypeLengthPair> supportedKeyLengths = new ArrayList<>();
         for (KeyType keyType : featureReport.getSupportedKeyTypes()) {
             for (int keyLength : KeyTypeLengthPair.getKeyLengths(keyType)) {
-                SignatureAlgorithm signatureAlgorithm = featureReport.getSupportedAlgorithms().stream().filter(a -> a.getKeyType() == keyType).findFirst().get();
+                SignatureAlgorithm signatureAlgorithm = featureReport.getSupportedAlgorithms().stream()
+                    .filter(a -> a.getKeyType() == keyType).findFirst().get();
                 Probe keyLengthProbe = new KeyLengthProbe(signatureAlgorithm, keyLength, false);
                 KeyLengthProbeResult signatureAlgorithmProbeResult = (KeyLengthProbeResult) keyLengthProbe.execute();
                 if (signatureAlgorithmProbeResult.isSupported()) {
@@ -101,7 +113,6 @@ public class FeatureExtractor {
             }
         }
         featureReport.setSupportedKeyLengths(supportedKeyLengths);
-
 
         // Probe support for key usage extension
         Probe keyUsageProbe = new KeyUsageExtensionProbe();
@@ -115,7 +126,7 @@ public class FeatureExtractor {
             // Probe whether the digitalSignature key usage is required for entity certificates
             Probe digitalSignatureRequiredProbe = new DigitalSignatureKeyUsageRequired();
             DigitalSignatureKeyUsageRequiredProbeResult requiredProbeResult =
-                    (DigitalSignatureKeyUsageRequiredProbeResult) digitalSignatureRequiredProbe.execute();
+                (DigitalSignatureKeyUsageRequiredProbeResult) digitalSignatureRequiredProbe.execute();
             if (requiredProbeResult.isRequired()) {
                 featureReport.setDigitalSignatureKeyUsageRequired(true);
             }

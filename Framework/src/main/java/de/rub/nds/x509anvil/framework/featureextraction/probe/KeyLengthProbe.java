@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.featureextraction.probe;
 
 import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
@@ -23,7 +32,8 @@ public class KeyLengthProbe extends SimpleProbe {
 
     @Override
     protected X509CertificateChainConfig prepareConfig() {
-        X509CertificateChainConfig x509CertificateChainConfig = X509CertificateConfigUtil.createBasicConfig(isEntity ? 2 : 3);
+        X509CertificateChainConfig x509CertificateChainConfig =
+            X509CertificateConfigUtil.createBasicConfig(isEntity ? 2 : 3);
 
         X509CertificateConfig certificateConfig;
         if (isEntity) {
@@ -34,7 +44,8 @@ public class KeyLengthProbe extends SimpleProbe {
         certificateConfig.setKeyType(signatureAlgorithm.getKeyType());
         certificateConfig.setHashAlgorithm(signatureAlgorithm.getHashAlgorithm());
         certificateConfig.setKeyLength(keyLength);
-        KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getKeyType(), certificateConfig.getCertificateName(), keyLength);
+        KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getKeyType(),
+            certificateConfig.getCertificateName(), keyLength);
         certificateConfig.setKeyPair(keyPair);
         return x509CertificateChainConfig;
     }

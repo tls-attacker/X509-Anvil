@@ -34,25 +34,21 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
     public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
         List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
         if (!certificateisAlwaysModeled(derivationScope)) {
-            AggregatedEnableConstraint<T> aggregatedEnableConstraint = AggregatedEnableConstraintBuilder.<T>init(derivationScope)
-                    .constrain(this)
-                    .condition(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH), this::certificateParameterScopeModeled)
-                    .conditions(getAdditionalEnableConditions())
-                    .defaultValue(getDefaultDisabledValue(derivationScope))
+            AggregatedEnableConstraint<T> aggregatedEnableConstraint =
+                AggregatedEnableConstraintBuilder.<T>init(derivationScope).constrain(this)
+                    .condition(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH),
+                        this::certificateParameterScopeModeled)
+                    .conditions(getAdditionalEnableConditions()).defaultValue(getDefaultDisabledValue(derivationScope))
                     .get();
             defaultConstraints.add(aggregatedEnableConstraint);
-        }
-        else if (canBeDisabled(derivationScope)) {
-            AggregatedEnableConstraint<T> aggregatedEnableConstraint = AggregatedEnableConstraintBuilder.<T>init(derivationScope)
-                    .constrain(this)
-                    .conditions(getAdditionalEnableConditions())
-                    .defaultValue(getDefaultDisabledValue(derivationScope))
-                    .get();
+        } else if (canBeDisabled(derivationScope)) {
+            AggregatedEnableConstraint<T> aggregatedEnableConstraint = AggregatedEnableConstraintBuilder
+                .<T>init(derivationScope).constrain(this).conditions(getAdditionalEnableConditions())
+                .defaultValue(getDefaultDisabledValue(derivationScope)).get();
             defaultConstraints.add(aggregatedEnableConstraint);
         }
         return defaultConstraints;
     }
-
 
     @Override
     public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
@@ -61,14 +57,15 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
         }
     }
 
-    protected abstract void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope);
-
+    protected abstract void applyToCertificateConfig(X509CertificateConfig certificateConfig,
+        DerivationScope derivationScope);
 
     @Override
     public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter> parameterValues = new ArrayList<>();
         // A value of null (or a default value) is used whenever we don't want to model this parameter at all
-        if ((!certificateisAlwaysModeled(derivationScope) || canBeDisabled(derivationScope)) && getDefaultDisabledValue(derivationScope) == null) {
+        if ((!certificateisAlwaysModeled(derivationScope) || canBeDisabled(derivationScope))
+            && getDefaultDisabledValue(derivationScope) == null) {
             parameterValues.add(generateValue(null));
         }
         parameterValues.addAll(getNonNullParameterValues(derivationScope));
@@ -112,8 +109,7 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
     }
 
     /**
-     * Returns true if the corresponding certificate is always modeled for the selected minChainLength
-     * setting.
+     * Returns true if the corresponding certificate is always modeled for the selected minChainLength setting.
      */
     public boolean certificateisAlwaysModeled(DerivationScope derivationScope) {
         int minChainLength = AnnotationUtil.resolveMinChainLength(derivationScope.getExtensionContext());

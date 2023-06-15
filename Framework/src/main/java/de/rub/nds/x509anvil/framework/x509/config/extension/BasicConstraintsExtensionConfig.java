@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.x509.config.extension;
 
 import de.rub.nds.asn1.encoder.Asn1EncoderForX509;
@@ -52,10 +61,11 @@ public class BasicConstraintsExtensionConfig extends ExtensionConfig {
     }
 
     @Override
-    public Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig, X509CertificateConfig previousConfig) {
+    public Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
+        X509CertificateConfig previousConfig) {
         Asn1Sequence basicConstraintsAsn1 = new Asn1Sequence();
 
-        Asn1Boolean caAsn1 =  new Asn1Boolean();
+        Asn1Boolean caAsn1 = new Asn1Boolean();
         caAsn1.setIdentifier("ca");
         caAsn1.setValue(ca);
         basicConstraintsAsn1.addChild(caAsn1);

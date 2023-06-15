@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -16,12 +25,14 @@ import java.util.function.Predicate;
 public abstract class UniqueIdParameter extends CertificateSpecificParameter<BitString> {
     private final X509AnvilParameterType uniqueIdPresentParameterType;
 
-    public UniqueIdParameter(ParameterIdentifier parameterIdentifier, X509AnvilParameterType uniqueIdPresentParameterType) {
+    public UniqueIdParameter(ParameterIdentifier parameterIdentifier,
+        X509AnvilParameterType uniqueIdPresentParameterType) {
         super(parameterIdentifier, BitString.class);
         this.uniqueIdPresentParameterType = uniqueIdPresentParameterType;
     }
 
-    public UniqueIdParameter(BitString selectedValue, ParameterIdentifier parameterIdentifier, X509AnvilParameterType uniqueIdPresentParameterType) {
+    public UniqueIdParameter(BitString selectedValue, ParameterIdentifier parameterIdentifier,
+        X509AnvilParameterType uniqueIdPresentParameterType) {
         this(parameterIdentifier, uniqueIdPresentParameterType);
         setSelectedValue(selectedValue);
     }
@@ -30,7 +41,7 @@ public abstract class UniqueIdParameter extends CertificateSpecificParameter<Bit
     public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter> values = new ArrayList<>();
         values.add(generateValue(new BitString(new byte[0])));
-        values.add(generateValue(new BitString(new byte[]{0x0,0x1,0x2,(byte)0xff}, 3)));
+        values.add(generateValue(new BitString(new byte[] { 0x0, 0x1, 0x2, (byte) 0xff }, 3)));
         byte[] bytes = new byte[64];
         for (byte b = 0; b < 64; b++) {
             bytes[b] = b;
@@ -43,10 +54,8 @@ public abstract class UniqueIdParameter extends CertificateSpecificParameter<Bit
     public Map<ParameterIdentifier, Predicate<DerivationParameter>> getAdditionalEnableConditions() {
         Map<ParameterIdentifier, Predicate<DerivationParameter>> additionalConditions = new HashMap<>();
         // Model parameter only if corresponding UniqueIdPresent parameter is true
-        additionalConditions.put(
-                getScopedIdentifier(uniqueIdPresentParameterType),
-                CommonConstraints::enabledByParameterCondition
-        );
+        additionalConditions.put(getScopedIdentifier(uniqueIdPresentParameterType),
+            CommonConstraints::enabledByParameterCondition);
         return additionalConditions;
     }
 

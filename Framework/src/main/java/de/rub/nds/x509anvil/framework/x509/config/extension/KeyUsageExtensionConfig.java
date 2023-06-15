@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.x509.config.extension;
 
 import de.rub.nds.asn1.encoder.Asn1EncoderForX509;
@@ -19,7 +28,7 @@ public class KeyUsageExtensionConfig extends ExtensionConfig {
     public static int KEY_CERT_SIGN = 4;
     public static int CRL_SIGN = 2;
     public static int ENCIPHER_ONLY = 1;
-    public static int DECIPHER_ONLY = 128<<8;
+    public static int DECIPHER_ONLY = 128 << 8;
 
     private final byte[] flags = new byte[2];
 
@@ -31,7 +40,7 @@ public class KeyUsageExtensionConfig extends ExtensionConfig {
         if (flag <= 128) {
             return (flags[0] & flag) == flag;
         } else {
-            return (flags[1] & (flag>>8)) == flag>>8;
+            return (flags[1] & (flag >> 8)) == flag >> 8;
         }
     }
 
@@ -44,9 +53,9 @@ public class KeyUsageExtensionConfig extends ExtensionConfig {
             }
         } else {
             if (value) {
-                flags[1] |= flag>>8;
+                flags[1] |= flag >> 8;
             } else {
-                flags[1] &= ~(flag>>8);
+                flags[1] &= ~(flag >> 8);
             }
         }
     }
@@ -148,14 +157,14 @@ public class KeyUsageExtensionConfig extends ExtensionConfig {
     }
 
     public boolean isDecipherOnly() {
-        return (flags[1] & (DECIPHER_ONLY>>8)) == (DECIPHER_ONLY>>8);
+        return (flags[1] & (DECIPHER_ONLY >> 8)) == (DECIPHER_ONLY >> 8);
     }
 
     public void setDecipherOnly(boolean decipherOnly) {
         if (decipherOnly) {
-            flags[1] |= (DECIPHER_ONLY>>8);
+            flags[1] |= (DECIPHER_ONLY >> 8);
         } else {
-            flags[1] &= ~(DECIPHER_ONLY>>8);
+            flags[1] &= ~(DECIPHER_ONLY >> 8);
         }
     }
 
@@ -169,7 +178,8 @@ public class KeyUsageExtensionConfig extends ExtensionConfig {
     }
 
     @Override
-    protected Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig, X509CertificateConfig previousConfig) throws CertificateGeneratorException {
+    protected Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
+        X509CertificateConfig previousConfig) throws CertificateGeneratorException {
         Asn1PrimitiveBitString keyUsageAsn1 = new Asn1PrimitiveBitString();
         keyUsageAsn1.setIdentifier("keyUsage");
         keyUsageAsn1.setValue(flags);

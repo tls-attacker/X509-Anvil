@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ *
+ * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.x509.config.extension;
 
 import de.rub.nds.asn1.encoder.Asn1EncoderForX509;
@@ -17,10 +26,11 @@ public class UnknownExtensionConfig extends ExtensionConfig {
     }
 
     @Override
-    protected Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig, X509CertificateConfig previousConfig) throws CertificateGeneratorException {
+    protected Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
+        X509CertificateConfig previousConfig) throws CertificateGeneratorException {
         Asn1PrimitiveBitString unknownExtAsn1 = new Asn1PrimitiveBitString();
         unknownExtAsn1.setIdentifier("unknownExtension");
-        unknownExtAsn1.setValue(new byte[] {0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70});
+        unknownExtAsn1.setValue(new byte[] { 0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70 });
 
         byte[] derEncoded = Asn1EncoderForX509.encode(new Linker(new HashMap<>()), unknownExtAsn1);
         Asn1PrimitiveOctetString extensionValue = new Asn1PrimitiveOctetString();

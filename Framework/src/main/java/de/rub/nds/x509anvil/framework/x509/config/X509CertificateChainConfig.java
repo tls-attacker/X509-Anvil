@@ -35,7 +35,6 @@ public class X509CertificateChainConfig implements AnvilConfig {
 
     private boolean initialized = false;
 
-
     public void initializeChain(int chainLength, int intermediateCertsModeled, boolean staticRoot) {
         if (initialized) {
             throw new IllegalStateException("Config is already initialized");
@@ -44,29 +43,30 @@ public class X509CertificateChainConfig implements AnvilConfig {
         this.chainLength = chainLength;
         this.intermediateCertsModeled = intermediateCertsModeled;
 
-        TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
+        TestConfig testConfig =
+            ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate())
+                .getTestConfig();
         this.staticRoot = staticRoot;
-
 
         if (staticRoot) {
             try {
-                rootCertificateConfig = X509CertificateConfigUtil.loadStaticCertificateConfig(testConfig.getStaticRootCertificateFile(), testConfig.getStaticRootPrivateKeyFile());
-            }
-            catch (IOException | InvalidKeySpecException e) {
+                rootCertificateConfig = X509CertificateConfigUtil.loadStaticCertificateConfig(
+                    testConfig.getStaticRootCertificateFile(), testConfig.getStaticRootPrivateKeyFile());
+            } catch (IOException | InvalidKeySpecException e) {
                 LOGGER.error("Unable to load static root certificate and its private key", e);
                 throw new IllegalArgumentException("Unable to load static root certificate and its private key", e);
             }
-        }
-        else {
+        } else {
             // We need to generate our own root
-            rootCertificateConfig = X509CertificateConfigUtil.getDefaultCaCertificateConfig("cert_root", true, CertificateChainPosType.ROOT);
+            rootCertificateConfig = X509CertificateConfigUtil.getDefaultCaCertificateConfig("cert_root", true,
+                CertificateChainPosType.ROOT);
         }
 
         // Generate configs for intermediate certificates
         for (int i = 0; i < chainLength - 2; i++) {
             if (i < intermediateCertsModeled) {
-                X509CertificateConfig config = X509CertificateConfigUtil
-                        .getDefaultCaCertificateConfig("cert_intermediate_" + i,false, CertificateChainPosType.INTERMEDIATE);
+                X509CertificateConfig config = X509CertificateConfigUtil.getDefaultCaCertificateConfig(
+                    "cert_intermediate_" + i, false, CertificateChainPosType.INTERMEDIATE);
                 if (i == intermediateCertsModeled - 1 && intermediateCertsModeled < chainLength - 2) {
                     config.setSharedConfig(true);
                 }
@@ -77,9 +77,9 @@ public class X509CertificateChainConfig implements AnvilConfig {
         // Generate entity config
         if (chainLength == 1) {
             entityCertificateConfig = rootCertificateConfig;
-        }
-        else {
-            entityCertificateConfig = X509CertificateConfigUtil.getDefaultCertificateConfig("cert_entity", false, CertificateChainPosType.ENTITY);
+        } else {
+            entityCertificateConfig = X509CertificateConfigUtil.getDefaultCertificateConfig("cert_entity", false,
+                CertificateChainPosType.ENTITY);
         }
 
         initialized = true;
@@ -125,12 +125,10 @@ public class X509CertificateChainConfig implements AnvilConfig {
 
         if (chainLength == 0) {
             return certificateConfigList;
-        }
-        else if (chainLength == 1) {
+        } else if (chainLength == 1) {
             certificateConfigList.add(rootCertificateConfig);
             return certificateConfigList;
-        }
-        else {
+        } else {
             certificateConfigList.add(rootCertificateConfig);
             certificateConfigList.addAll(intermediateCertificateConfigs);
             certificateConfigList.add(entityCertificateConfig);
