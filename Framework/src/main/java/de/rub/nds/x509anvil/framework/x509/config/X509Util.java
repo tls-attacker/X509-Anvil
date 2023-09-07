@@ -136,7 +136,8 @@ public class X509Util {
         }
 
         // Encode length field for entire chain
-        writeUint24(lengthField, byteArrayOutputStream);
+        // TODO: done by tls attacker?
+        //  writeUint24(lengthField, byteArrayOutputStream);
 
         for (byte[] encodedCertificate : encodedCertificates) {
             // Encode length field for single certificate
