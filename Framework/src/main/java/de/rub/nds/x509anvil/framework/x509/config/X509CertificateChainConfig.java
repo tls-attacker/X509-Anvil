@@ -1,18 +1,15 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.x509.config;
 
-import de.rub.nds.anvilcore.context.AnvilContext;
-import de.rub.nds.anvilcore.model.config.AnvilConfig;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.TestConfig;
-import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
 import de.rub.nds.x509anvil.framework.constants.CertificateChainPosType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +19,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class X509CertificateChainConfig implements AnvilConfig {
+public class X509CertificateChainConfig {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private int chainLength;
@@ -43,9 +40,7 @@ public class X509CertificateChainConfig implements AnvilConfig {
         this.chainLength = chainLength;
         this.intermediateCertsModeled = intermediateCertsModeled;
 
-        TestConfig testConfig =
-            ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate())
-                .getTestConfig();
+        TestConfig testConfig = ContextHelper.getTestConfig();
         this.staticRoot = staticRoot;
 
         if (staticRoot) {

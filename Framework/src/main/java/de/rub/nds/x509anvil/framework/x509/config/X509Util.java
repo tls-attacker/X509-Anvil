@@ -1,24 +1,25 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.Asn1Encodable;
 import de.rub.nds.asn1.model.*;
 import de.rub.nds.asn1.parser.Asn1Parser;
 import de.rub.nds.asn1.parser.IntermediateAsn1Field;
+import de.rub.nds.tlsattacker.core.certificate.CertificateByteChooser;
 import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.config.model.DirectoryStringType;
 import de.rub.nds.x509attacker.constants.X509CertChainOutFormat;
-import de.rub.nds.x509attacker.x509.X509Certificate;
-import de.rub.nds.x509attacker.x509.X509CertificateChain;
+import de.rub.nds.x509attacker.filesystem.CertificateBytes;
+import de.rub.nds.x509attacker.x509.model.X509Certificate;
+import de.rub.nds.x509attacker.x509.model.X509CertificateChain;
 
 import javax.security.cert.CertificateException;
 import java.io.ByteArrayOutputStream;
@@ -123,7 +124,7 @@ public class X509Util {
         return cert.getPublicKey();
     }
 
-    public static byte[] encodeCertificateChainForTls(List<X509Certificate> certificates) throws IOException {
+    public static List<CertificateBytes> encodeCertificateChainForTls(List<X509Certificate> certificates) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         List<byte[]> encodedCertificates = new ArrayList<>();
         int lengthField = 0;
@@ -137,7 +138,7 @@ public class X509Util {
 
         // Encode length field for entire chain
         // TODO: done by tls attacker?
-        //  writeUint24(lengthField, byteArrayOutputStream);
+        // writeUint24(lengthField, byteArrayOutputStream);
 
         for (byte[] encodedCertificate : encodedCertificates) {
             // Encode length field for single certificate

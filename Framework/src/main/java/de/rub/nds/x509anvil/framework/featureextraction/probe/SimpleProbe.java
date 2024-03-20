@@ -1,17 +1,16 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.featureextraction.probe;
 
 import de.rub.nds.anvilcore.context.AnvilContext;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.TestConfig;
-import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapter;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterFactory;
@@ -22,7 +21,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.NopX509CertificateModifier;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
-import de.rub.nds.x509attacker.x509.X509Certificate;
+import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import java.util.List;
 
@@ -40,9 +39,7 @@ public abstract class SimpleProbe implements Probe {
         }
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
 
-        TestConfig testConfig =
-            ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate())
-                .getTestConfig();
+        TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
         try {

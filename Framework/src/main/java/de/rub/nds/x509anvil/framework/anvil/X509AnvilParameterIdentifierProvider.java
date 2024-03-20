@@ -1,27 +1,32 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.anvil;
 
+import de.rub.nds.anvilcore.context.AnvilContext;
+import de.rub.nds.anvilcore.model.DefaultModelTypes;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.ParameterIdentifierProvider;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierProvider {
-    @Override
-    protected List<ParameterIdentifier> getAllParameterIdentifiers(DerivationScope derivationScope) {
+
+    private static List<ParameterIdentifier> allParameterIdentifiers;
+
+    private List<ParameterIdentifier> generateAllParameterIdentifiersWithDerivationScope(DerivationScope derivationScope) {
         int maxChainLength = AnnotationUtil.resolveMaxChainLength(derivationScope.getExtensionContext());
         int intermediateCertsModeled =
             AnnotationUtil.resolveIntermediateCertsModeled(derivationScope.getExtensionContext());
@@ -57,19 +62,33 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
     }
 
     public static List<X509AnvilParameterType> getModeledParameterTypes() {
-        if (true) {
-            return Arrays.stream(X509AnvilParameterType.values()).filter(t -> t != X509AnvilParameterType.CHAIN_LENGTH)
-                .filter(t -> !t.name().startsWith("EXT_KEY_USAGE")).filter(t -> !t.name().contains("UNIQUE"))
-                .filter(t -> !t.name().contains("NC")).collect(Collectors.toList());
+        return Arrays.stream(X509AnvilParameterType.values()).filter(t -> t != X509AnvilParameterType.CHAIN_LENGTH)
+            .filter(t -> !t.name().startsWith("EXT_KEY_USAGE")).filter(t -> !t.name().contains("UNIQUE"))
+            .filter(t -> !t.name().contains("NC")).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<ParameterIdentifier> getModelParameterIdentifiers(DerivationScope derivationScope) {
+        String modelType = derivationScope.getModelType();
+        if (modelType.equals(DefaultModelTypes.ALL_PARAMETERS)) {
+            return getAllParameterIdentifiers(derivationScope);
         }
+        return Collections.emptyList();
+    }
 
-        List<X509AnvilParameterType> modeledParameterTypes =
-            new ArrayList<>(Arrays.asList(X509AnvilParameterType.VERSION, X509AnvilParameterType.EXTENSIONS_PRESENT,
-                X509AnvilParameterType.SUBJECT_UNIQUE_ID_PRESENT, X509AnvilParameterType.SUBJECT_UNIQUE_ID));
+    public static List<ParameterIdentifier> getAllParameterIdentifiers(DerivationScope derivationScope) {
+        if (allParameterIdentifiers == null) {
+            allParameterIdentifiers =
+                    ((X509AnvilParameterIdentifierProvider)AnvilContext.getInstance()
+                            .getParameterIdentifierProvider())
+                            .generateAllParameterIdentifiersWithDerivationScope(derivationScope);
+        }
+        return allParameterIdentifiers;
+    }
 
-        Arrays.stream(X509AnvilParameterType.values()).filter(t -> t.name().startsWith("EXT_BASIC_CONSTRAINTS"))
-            .collect(Collectors.toCollection(() -> modeledParameterTypes));
-
-        return modeledParameterTypes;
+    @Override
+    public List<ParameterIdentifier> generateAllParameterIdentifiers() {
+        throw new NotImplementedException("Currently only implemented with DerivationScope provided.");
     }
 }

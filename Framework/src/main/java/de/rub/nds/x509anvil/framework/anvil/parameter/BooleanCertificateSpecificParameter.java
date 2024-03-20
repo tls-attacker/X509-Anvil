@@ -1,17 +1,17 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +28,8 @@ public abstract class BooleanCertificateSpecificParameter extends CertificateSpe
     }
 
     @Override
-    public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
-        List<DerivationParameter> parameterValues = new ArrayList<>();
+    public List<DerivationParameter<X509CertificateChainConfig, Boolean>> getNonNullParameterValues(DerivationScope derivationScope) {
+        List<DerivationParameter<X509CertificateChainConfig, Boolean>> parameterValues = new ArrayList<>();
         parameterValues.add(generateValue(false));
         parameterValues.add(generateValue(true));
         return parameterValues;

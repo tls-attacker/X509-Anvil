@@ -1,12 +1,11 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.anvil;
 
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -25,7 +24,7 @@ public class X509TestRunnerResolver implements ParameterResolver {
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
         throws ParameterResolutionException {
-        if (!extensionContext.getTestMethod().isPresent()) {
+        if (extensionContext.getTestMethod().isEmpty()) {
             return null;
         }
         return new X509VerifierRunner(extensionContext);

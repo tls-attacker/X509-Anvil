@@ -14,41 +14,35 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <junit.minor-version>7.0</junit.minor-version>
-        <junit.jupiter.version>5.${junit.minor-version}</junit.jupiter.version>
-        <junit.platform.version>1.${junit.minor-version}</junit.platform.version>
-        <x509attacker.version>2.0.1-SNAPSHOT</x509attacker.version>
-        <!-- tlsattacker.version>3.9.0-SNAPSHOT</tlsattacker.version -->
+        <buildYear>2024</buildYear>
+        <toolkit.common.protocolattacker.version>1.1.0</toolkit.common.protocolattacker.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>de.rub.nds</groupId>
-            <artifactId>Anvil-Core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>anvil-core</artifactId>
         </dependency>
         <dependency>
             <groupId>de.rub.nds</groupId>
             <artifactId>x509-attacker</artifactId>
-            <version>${x509attacker.version}</version>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>de.rub.nds.tls</groupId>
+            <artifactId>coffee4j-anvil-engine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.rub.nds.tls</groupId>
+            <artifactId>coffee4j-anvil-junit-jupiter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.rub.nds.tls</groupId>
+            <artifactId>coffee4j-anvil-model</artifactId>
         </dependency>
         <dependency>
             <groupId>de.rub.nds.tls.attacker</groupId>
             <artifactId>tls-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.rwth.swc.coffee4j</groupId>
-            <artifactId>coffee4j-engine</artifactId>
-            <version>1.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>de.rwth.swc.coffee4j</groupId>
-            <artifactId>coffee4j-junit-jupiter</artifactId>
-            <version>1.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>de.rwth.swc.coffee4j</groupId>
-            <artifactId>coffee4j-model</artifactId>
-            <version>1.0.6</version>
+            <version>6.0.0</version>
         </dependency>
 
         <dependency>
@@ -59,7 +53,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.1</version>
+            <version>4.11</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

@@ -1,12 +1,11 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.context.AnvilContext;
@@ -17,7 +16,7 @@ import de.rub.nds.anvilcore.model.constraint.ValueRestrictionConstraintBuilder;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
-import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
@@ -51,9 +50,7 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
 
     @Override
     protected List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
-        FeatureReport featureReport =
-            ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate())
-                .getFeatureReport();
+        FeatureReport featureReport = ContextHelper.getFeatureReport();
         if (getParameterScope().isEntity()) {
             return featureReport.getSupportedEntityHashAlgorithms().stream().map(this::generateValue)
                 .collect(Collectors.toList());
@@ -72,9 +69,7 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
         List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
 
         // We need to build constraints for any unsupported keytype-hashalgo combinations
-        FeatureReport featureReport =
-            ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate())
-                .getFeatureReport();
+        FeatureReport featureReport = ContextHelper.getFeatureReport();
         List<KeyType> supportedKeyTypes;
         List<HashAlgorithm> supportedHashAlgorithms;
         if (getParameterScope().isEntity()) {

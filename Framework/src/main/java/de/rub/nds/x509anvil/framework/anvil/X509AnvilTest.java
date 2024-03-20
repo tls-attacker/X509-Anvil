@@ -1,18 +1,16 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.anvil;
 
-import de.rub.nds.anvilcore.junit.CombinatorialAnvilTest;
+import de.rub.nds.anvilcore.junit.AnvilTestBaseClass;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.ParameterCombination;
-import de.rub.nds.anvilcore.model.config.ConfigContainer;
 import de.rub.nds.x509anvil.framework.featureextraction.UnsupportedFeatureException;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeException;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -27,22 +25,22 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
     // EnforcedSenderRestrictionConditionExtension.class,
     // ValueConstraintsConditionExtension.class,
     X509TestRunnerResolver.class })
-public class X509AnvilTest extends CombinatorialAnvilTest {
+public class X509AnvilTest extends AnvilTestBaseClass {
     protected static final Logger LOGGER = LogManager.getLogger();
 
     protected ParameterCombination parameterCombination;
 
     @BeforeAll
     public static void initialize() throws UnsupportedFeatureException, ProbeException {
-        ContextHelper.initializedContext();
+        ContextHelper.initializeContext();
     }
 
     public X509CertificateChainConfig prepareConfig(ArgumentsAccessor argumentsAccessor,
         X509VerifierRunner testRunner) {
         X509CertificateChainConfig config = initializeConfig();
         parameterCombination =
-            ParameterCombination.fromArgumentsAccessor(argumentsAccessor, new DerivationScope(extensionContext));
-        parameterCombination.applyToConfig(ConfigContainer.fromConfig(X509CertificateChainConfig.class, config));
+            ParameterCombination.fromArgumentsAccessor(argumentsAccessor, DerivationScope.fromExtensionContext(extensionContext));
+        parameterCombination.applyToConfig(config);
         testRunner.setPreparedConfig(config);
         testRunner.setParameterCombination(parameterCombination);
         return config;

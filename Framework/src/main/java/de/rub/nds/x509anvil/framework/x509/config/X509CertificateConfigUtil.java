@@ -1,12 +1,11 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
@@ -23,7 +22,7 @@ import de.rub.nds.x509anvil.framework.x509.config.model.AttributeTypeAndValue;
 import de.rub.nds.x509anvil.framework.x509.config.model.Name;
 import de.rub.nds.x509anvil.framework.x509.config.model.RelativeDistinguishedName;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
-import de.rub.nds.x509attacker.x509.X509Certificate;
+import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,7 +89,7 @@ public class X509CertificateConfigUtil {
     public static X509CertificateChainConfig createBasicConfig(int chainLength) {
         X509CertificateChainConfig x509CertificateChainConfig = new X509CertificateChainConfig();
         x509CertificateChainConfig.initializeChain(chainLength, 1,
-            ContextHelper.getContextDelegate().getTestConfig().getUseStaticRootCertificate());
+            ContextHelper.getTestConfig().getUseStaticRootCertificate());
         return x509CertificateChainConfig;
     }
 

@@ -1,12 +1,11 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.annotation;
 
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
@@ -27,7 +26,7 @@ public class AnnotationUtil {
     public static int resolveMaxChainLength(ExtensionContext extensionContext) {
         ChainLength chainLengthAnnotation = resolveChainLengthAnnotation(extensionContext);
         if (chainLengthAnnotation == null) {
-            return ContextHelper.getContextDelegate().getTestConfig().getDefaultMaxChainLength();
+            return ContextHelper.getTestConfig().getDefaultMaxChainLength();
         }
         return chainLengthAnnotation.maxLength();
     }
@@ -35,7 +34,7 @@ public class AnnotationUtil {
     public static int resolveMinChainLength(ExtensionContext extensionContext) {
         ChainLength chainLengthAnnotation = resolveChainLengthAnnotation(extensionContext);
         if (chainLengthAnnotation == null) {
-            return ContextHelper.getContextDelegate().getTestConfig().getDefaultMinChainLength();
+            return ContextHelper.getTestConfig().getDefaultMinChainLength();
         }
         return chainLengthAnnotation.minLength();
     }
@@ -43,7 +42,7 @@ public class AnnotationUtil {
     public static int resolveIntermediateCertsModeled(ExtensionContext extensionContext) {
         ChainLength chainLengthAnnotation = resolveChainLengthAnnotation(extensionContext);
         if (chainLengthAnnotation == null) {
-            return ContextHelper.getContextDelegate().getTestConfig().getDefaultIntermediateCertsModeled();
+            return ContextHelper.getTestConfig().getDefaultIntermediateCertsModeled();
         }
         return chainLengthAnnotation.intermediateCertsModeled();
     }
@@ -58,7 +57,7 @@ public class AnnotationUtil {
         Method testMethod = extensionContext.getRequiredTestMethod();
         StaticRoot staticRootAnnotation = testMethod.getAnnotation(StaticRoot.class);
         if (staticRootAnnotation == null) {
-            return ContextHelper.getContextDelegate().getTestConfig().getUseStaticRootCertificate();
+            return ContextHelper.getTestConfig().getUseStaticRootCertificate();
         }
         return staticRootAnnotation.value();
     }

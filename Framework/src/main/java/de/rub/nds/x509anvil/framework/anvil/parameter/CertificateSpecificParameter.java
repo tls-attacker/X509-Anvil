@@ -1,12 +1,11 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -21,7 +20,10 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivationParameter<T> {
@@ -61,8 +63,8 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
         DerivationScope derivationScope);
 
     @Override
-    public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
-        List<DerivationParameter> parameterValues = new ArrayList<>();
+    public List<DerivationParameter<X509CertificateChainConfig, T>> getParameterValues(DerivationScope derivationScope) {
+        List<DerivationParameter<X509CertificateChainConfig, T>> parameterValues = new ArrayList<>();
         // A value of null (or a default value) is used whenever we don't want to model this parameter at all
         if ((!certificateisAlwaysModeled(derivationScope) || canBeDisabled(derivationScope))
             && getDefaultDisabledValue(derivationScope) == null) {
@@ -72,7 +74,7 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
         return parameterValues;
     }
 
-    protected abstract List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope);
+    protected abstract List<DerivationParameter<X509CertificateChainConfig, T>> getNonNullParameterValues(DerivationScope derivationScope);
 
     /**
      * Override method to add additional enable conditions
@@ -81,7 +83,7 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
         return Collections.emptyMap();
     }
 
-    private boolean certificateParameterScopeModeled(DerivationParameter chainLengthParameter) {
+    private boolean certificateParameterScopeModeled(DerivationParameter<X509CertificateChainConfig, T> chainLengthParameter) {
         if (!(chainLengthParameter instanceof ChainLengthParameter)) {
             throw new IllegalArgumentException("Unexpected parameter type, expected ChainLengthParameter");
         }

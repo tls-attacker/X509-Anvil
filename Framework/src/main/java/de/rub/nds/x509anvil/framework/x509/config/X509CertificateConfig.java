@@ -1,12 +1,11 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.x509anvil.framework.constants.*;
@@ -14,7 +13,7 @@ import de.rub.nds.x509anvil.framework.x509.config.extension.*;
 import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
 import de.rub.nds.x509anvil.framework.x509.config.model.Name;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
-import de.rub.nds.x509attacker.x509.X509Certificate;
+import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import java.math.BigInteger;
 import java.security.KeyPair;

@@ -1,12 +1,11 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.context.AnvilContext;
@@ -14,7 +13,7 @@ import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
-import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.constants.KeyTypeLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
@@ -44,10 +43,8 @@ public class KeyTypeParameter extends CertificateSpecificParameter<KeyTypeLength
     }
 
     @Override
-    protected List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
-        FeatureReport featureReport =
-            ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate())
-                .getFeatureReport();
+    protected List<DerivationParameter<X509CertificateChainConfig, KeyTypeLengthPair>> getNonNullParameterValues(DerivationScope derivationScope) {
+        FeatureReport featureReport = ContextHelper.getFeatureReport();
         List<KeyTypeLengthPair> supportedKeyLength;
         if (getParameterScope().isEntity()) {
             supportedKeyLength = featureReport.getSupportedEntityKeyLengths();

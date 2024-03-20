@@ -1,6 +1,6 @@
 ${project.name} - ${description}
-
+<p>
 Copyright ${startYear}-${year} ${owner}
-
+<p>
 Licensed under ${licenseName}
 ${licenseURL}

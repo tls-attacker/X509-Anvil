@@ -12,7 +12,7 @@ public class TestUtils {
      * Returns a supported signature algorithm oid that does not match the actually used algorithm
      */
     public static String getNonMatchingAlgorithmOid(SignatureAlgorithm actualAlgorithm) {
-        FeatureReport featureReport = ContextHelper.getContextDelegate().getFeatureReport();
+        FeatureReport featureReport = ContextHelper.getFeatureReport();
         SignatureAlgorithm nonMatchingSignatureAlgorithm = featureReport.getSupportedAlgorithms().stream()
                 .filter(a -> a != actualAlgorithm)
                 .findFirst()

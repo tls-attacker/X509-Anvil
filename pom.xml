@@ -5,7 +5,7 @@
     <parent>
         <groupId>de.rub.nds</groupId>
         <artifactId>protocol-toolkit-bom</artifactId>
-        <version>3.5.2</version>
+        <version>3.5.17-anvilJ</version>
     </parent>
 
     <groupId>de.rub.nds.x509test</groupId>
@@ -22,19 +22,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <junit.minor-version>7.0</junit.minor-version>
-        <junit.jupiter.version>5.${junit.minor-version}</junit.jupiter.version>
-        <junit.platform.version>1.${junit.minor-version}</junit.platform.version>
-        <x509attacker.version>2.0.1-SNAPSHOT</x509attacker.version>
-        <!--tlsattacker.version>3.8.0-SNAPSHOT</tlsattacker.version-->
         <skip.signature>true</skip.signature>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>de.rub.nds</groupId>
-            <artifactId>x509-attacker</artifactId>
-            <version>${x509attacker.version}</version>
-        </dependency>
-    </dependencies>
 </project>

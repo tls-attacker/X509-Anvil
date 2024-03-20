@@ -1,12 +1,11 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -36,11 +35,11 @@ public class ChainLengthParameter extends X509AnvilDerivationParameter<Integer> 
     }
 
     @Override
-    public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter<X509CertificateChainConfig, Integer>> getParameterValues(DerivationScope derivationScope) {
         int minChainLength = AnnotationUtil.resolveMinChainLength(derivationScope.getExtensionContext());
         int maxChainLength = AnnotationUtil.resolveMaxChainLength(derivationScope.getExtensionContext());
 
-        List<DerivationParameter> parameterValues = new ArrayList<>();
+        List<DerivationParameter<X509CertificateChainConfig, Integer>> parameterValues = new ArrayList<>();
         for (int i = minChainLength; i <= maxChainLength; i++) {
             parameterValues.add(this.generateValue(i));
         }
