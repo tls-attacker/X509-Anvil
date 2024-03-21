@@ -6,14 +6,13 @@
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
+
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.Asn1Encodable;
 import de.rub.nds.asn1.model.*;
 import de.rub.nds.asn1.parser.Asn1Parser;
 import de.rub.nds.asn1.parser.IntermediateAsn1Field;
-import de.rub.nds.tlsattacker.core.certificate.CertificateByteChooser;
-import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.config.model.DirectoryStringType;
 import de.rub.nds.x509attacker.constants.X509CertChainOutFormat;
@@ -33,7 +32,7 @@ import java.util.List;
 
 public class X509Util {
     public static Asn1Encodable getAsn1ElementByIdentifierPath(X509Certificate x509Certificate, String... identifiers) {
-        Asn1Encodable currentAsn1Encodable = x509Certificate.getCertificate();
+        Asn1Encodable currentAsn1Encodable = (Asn1Encodable) x509Certificate;
 
         for (String identifier : identifiers) {
             if (currentAsn1Encodable instanceof Asn1Container) {
@@ -49,7 +48,7 @@ public class X509Util {
     }
 
     public static Asn1Encodable getAsn1ElementByIdentifierPath(Asn1Container asn1Container, String... identifiers) {
-        Asn1Encodable currentAsn1Encodable = asn1Container;
+        Asn1Encodable currentAsn1Encodable = (Asn1Encodable) asn1Container;
         for (String identifier : identifiers) {
             if (currentAsn1Encodable instanceof Asn1Container) {
                 currentAsn1Encodable = ((Asn1Container) currentAsn1Encodable).getChildren().stream()
@@ -83,43 +82,45 @@ public class X509Util {
 
     public static KeyPair retrieveKeyPairFromX509Certificate(X509Certificate x509Certificate) {
         try {
-            PrivateKey privateKey = retrievePrivateKeyFromKeyInfo(x509Certificate.getKeyInfo());
-            PublicKey publicKey = retrievePublicKeyFromSubjectPublicKeyInfo(x509Certificate, privateKey.getAlgorithm());
+            PrivateKey privateKey = retrievePrivateKeyFromCertificate(x509Certificate);
+            PublicKey publicKey = retrievePublicKeyFromSubjectPublicKeyInfo(x509Certificate);
             return new KeyPair(publicKey, privateKey);
         } catch (CertificateException | InvalidKeySpecException e) {
             throw new IllegalArgumentException("Unable to retrieve key pair from x509Certificate", e);
         }
     }
 
-    public static PrivateKey retrievePrivateKeyFromKeyInfo(KeyInfo privateKeyInfo) throws InvalidKeySpecException {
-        byte[] privateKeyBytes = PemUtil.pemToDer(privateKeyInfo.getKeyBytes());
+    public static PrivateKey retrievePrivateKeyFromCertificate(X509Certificate x509Certificate)
+        throws InvalidKeySpecException {
+        byte[] privateKeyBytes = x509Certificate.getContent().getValue();
 
         KeyFactory keyFactory;
         try {
-            switch (privateKeyInfo.getKeyType()) {
+            switch (x509Certificate.getPublicKey().getX509PublicKeyType()) {
                 case RSA:
                     keyFactory = KeyFactory.getInstance("RSA");
                     break;
                 case DSA:
                     keyFactory = KeyFactory.getInstance("DSA");
                     break;
-                case ECDSA:
+                case ECDH_ECDSA:
                     keyFactory = KeyFactory.getInstance("EC");
                     break;
                 default:
                     throw new IllegalArgumentException("Unsupported key type");
             }
         } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("No key factory for key type " + privateKeyInfo.getKeyType().name());
+            throw new IllegalStateException(
+                "No key factory for key type " + x509Certificate.getPublicKey().getX509PublicKeyType().name());
         }
 
         return keyFactory.generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
     }
 
-    public static PublicKey retrievePublicKeyFromSubjectPublicKeyInfo(X509Certificate x509Certificate, String algorithm)
+    public static PublicKey retrievePublicKeyFromSubjectPublicKeyInfo(X509Certificate x509Certificate)
         throws CertificateException {
         // TODO: This is a workaround because using the Asn1-Tool classes didn't work
-        byte[] certBytes = x509Certificate.getEncodedCertificate();
+        byte[] certBytes = x509Certificate.getContent().getValue();
         javax.security.cert.X509Certificate cert = javax.security.cert.X509Certificate.getInstance(certBytes);
         return cert.getPublicKey();
     }
@@ -132,7 +133,7 @@ public class X509Util {
 
         for (int i = certificates.size() - 1; i >= 0; i--) {
             X509Certificate certificate = certificates.get(i);
-            byte[] encodedCertificate = certificate.getEncodedCertificate();
+            byte[] encodedCertificate = certificate.getContent().getValue();
             lengthField += encodedCertificate.length + 3; // 24 bit length field
             encodedCertificates.add(encodedCertificate);
         }
@@ -239,12 +240,12 @@ public class X509Util {
             case PRINTABLE:
                 Asn1PrimitivePrintableString primitivePrintableString = new Asn1PrimitivePrintableString();
                 primitivePrintableString.setValue(value);
-                return primitivePrintableString;
+                return (Asn1Encodable) primitivePrintableString;
             case UTF8:
             default:
                 Asn1PrimitiveUtf8String utf8String = new Asn1PrimitiveUtf8String();
                 utf8String.setValue(value);
-                return utf8String;
+                return (Asn1Encodable) utf8String;
         }
     }
 }

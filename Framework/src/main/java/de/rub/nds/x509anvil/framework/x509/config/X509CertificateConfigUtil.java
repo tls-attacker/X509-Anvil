@@ -6,6 +6,7 @@
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
+
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
@@ -14,13 +15,13 @@ import de.rub.nds.x509anvil.framework.constants.CertificateChainPosType;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
-import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
-import de.rub.nds.x509anvil.framework.x509.config.model.AttributeTypeAndValue;
-import de.rub.nds.x509anvil.framework.x509.config.model.Name;
-import de.rub.nds.x509anvil.framework.x509.config.model.RelativeDistinguishedName;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
+import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
+import de.rub.nds.x509attacker.x509.model.Name;
+import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import de.rub.nds.x509attacker.x509.parser.X509Parser;
 
@@ -54,13 +55,14 @@ public class X509CertificateConfigUtil {
         config.setNotAfterTimeType(TimeType.UTC_TIME);
         config.setNotAfterValue("320101000000Z");
 
+        // TODO: identifier?
         Name subject = new Name();
         RelativeDistinguishedName commonNameDN = new RelativeDistinguishedName();
         Asn1PrimitivePrintableString commonName = new Asn1PrimitivePrintableString();
         commonName.setValue(certificateName);
         commonNameDN.addAttributeTypeAndValue(
-            new AttributeTypeAndValue(AttributeTypeObjectIdentifiers.COMMON_NAME, commonName));
-        subject.addRelativeDistinguishedName(commonNameDN);
+            new AttributeTypeAndValue(id, X500AttributeType.COMMON_NAME, commonName.getValue()));
+        subject.addRelativeDistinguishedNames(commonNameDN);
         config.setSubject(subject);
 
         config.setExtensionsPresent(false);
