@@ -1,8 +1,8 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
+ * <p>
  * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
@@ -38,8 +38,8 @@ public class X509AnvilTest extends AnvilTestBaseClass {
     public X509CertificateChainConfig prepareConfig(ArgumentsAccessor argumentsAccessor,
         X509VerifierRunner testRunner) {
         X509CertificateChainConfig config = initializeConfig();
-        parameterCombination =
-            ParameterCombination.fromArgumentsAccessor(argumentsAccessor, DerivationScope.fromExtensionContext(extensionContext));
+        parameterCombination = ParameterCombination.fromArgumentsAccessor(argumentsAccessor,
+            DerivationScope.fromExtensionContext(extensionContext));
         parameterCombination.applyToConfig(config);
         testRunner.setPreparedConfig(config);
         testRunner.setParameterCombination(parameterCombination);

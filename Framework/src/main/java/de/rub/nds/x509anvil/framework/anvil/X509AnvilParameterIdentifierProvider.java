@@ -1,8 +1,8 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
+ * <p>
  * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
@@ -26,7 +26,8 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
 
     private static List<ParameterIdentifier> allParameterIdentifiers;
 
-    private List<ParameterIdentifier> generateAllParameterIdentifiersWithDerivationScope(DerivationScope derivationScope) {
+    private List<ParameterIdentifier>
+        generateAllParameterIdentifiersWithDerivationScope(DerivationScope derivationScope) {
         int maxChainLength = AnnotationUtil.resolveMaxChainLength(derivationScope.getExtensionContext());
         int intermediateCertsModeled =
             AnnotationUtil.resolveIntermediateCertsModeled(derivationScope.getExtensionContext());
@@ -80,9 +81,8 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
     public static List<ParameterIdentifier> getAllParameterIdentifiers(DerivationScope derivationScope) {
         if (allParameterIdentifiers == null) {
             allParameterIdentifiers =
-                    ((X509AnvilParameterIdentifierProvider)AnvilContext.getInstance()
-                            .getParameterIdentifierProvider())
-                            .generateAllParameterIdentifiersWithDerivationScope(derivationScope);
+                ((X509AnvilParameterIdentifierProvider) AnvilContext.getInstance().getParameterIdentifierProvider())
+                    .generateAllParameterIdentifiersWithDerivationScope(derivationScope);
         }
         return allParameterIdentifiers;
     }

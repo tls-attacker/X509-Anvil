@@ -1,8 +1,8 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
+ * <p>
  * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
@@ -63,7 +63,8 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
         DerivationScope derivationScope);
 
     @Override
-    public List<DerivationParameter<X509CertificateChainConfig, T>> getParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter<X509CertificateChainConfig, T>>
+        getParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter<X509CertificateChainConfig, T>> parameterValues = new ArrayList<>();
         // A value of null (or a default value) is used whenever we don't want to model this parameter at all
         if ((!certificateisAlwaysModeled(derivationScope) || canBeDisabled(derivationScope))
@@ -74,7 +75,8 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
         return parameterValues;
     }
 
-    protected abstract List<DerivationParameter<X509CertificateChainConfig, T>> getNonNullParameterValues(DerivationScope derivationScope);
+    protected abstract List<DerivationParameter<X509CertificateChainConfig, T>>
+        getNonNullParameterValues(DerivationScope derivationScope);
 
     /**
      * Override method to add additional enable conditions
@@ -83,7 +85,8 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
         return Collections.emptyMap();
     }
 
-    private boolean certificateParameterScopeModeled(DerivationParameter<X509CertificateChainConfig, T> chainLengthParameter) {
+    private boolean
+        certificateParameterScopeModeled(DerivationParameter<X509CertificateChainConfig, T> chainLengthParameter) {
         if (!(chainLengthParameter instanceof ChainLengthParameter)) {
             throw new IllegalArgumentException("Unexpected parameter type, expected ChainLengthParameter");
         }

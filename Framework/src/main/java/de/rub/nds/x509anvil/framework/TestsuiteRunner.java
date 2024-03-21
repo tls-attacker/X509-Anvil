@@ -1,27 +1,22 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
+ * <p>
  * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 package de.rub.nds.x509anvil.framework;
 
-import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.junit.extension.AnvilTestWatcher;
-import de.rub.nds.anvilcore.junit.reporting.AnvilTestExecutionListener;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.TestConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.platform.engine.TestSource;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
-import org.junit.platform.engine.support.descriptor.MethodSource;
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.TestExecutionListener;
-import org.junit.platform.launcher.TestPlan;
 import org.junit.platform.launcher.core.LauncherConfig;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;

@@ -1,8 +1,8 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
+ * <p>
  * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
@@ -39,7 +39,8 @@ public class SubjectKeyIdentifierPresentParameter extends ExtensionPresentParame
     }
 
     @Override
-    public List<DerivationParameter<X509CertificateChainConfig, Boolean>> getNonNullParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter<X509CertificateChainConfig, Boolean>>
+        getNonNullParameterValues(DerivationScope derivationScope) {
         // SubjectKeyIdentifier must be present for CA certificates
         if (!getParameterScope().isEntity()) {
             return Collections.singletonList(generateValue(true));

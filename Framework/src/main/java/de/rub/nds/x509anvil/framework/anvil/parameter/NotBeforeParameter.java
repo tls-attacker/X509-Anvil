@@ -1,8 +1,8 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
+ * <p>
  * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
@@ -39,7 +39,8 @@ public class NotBeforeParameter extends CertificateSpecificParameter<NotBeforeVa
     }
 
     @Override
-    public List<DerivationParameter<X509CertificateChainConfig, NotBeforeValue>> getNonNullParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter<X509CertificateChainConfig, NotBeforeValue>>
+        getNonNullParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter<X509CertificateChainConfig, NotBeforeValue>> parameterValues = new ArrayList<>();
         for (NotBeforeValue value : NotBeforeValue.values()) {
             parameterValues.add(generateValue(value));

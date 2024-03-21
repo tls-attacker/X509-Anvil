@@ -1,14 +1,13 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
+ * <p>
  * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 package de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage;
 
-import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
@@ -53,7 +52,8 @@ public class KeyUsageFlagParameter extends BooleanCertificateSpecificParameter {
     }
 
     @Override
-    public List<DerivationParameter<X509CertificateChainConfig, Boolean>> getNonNullParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter<X509CertificateChainConfig, Boolean>>
+        getNonNullParameterValues(DerivationScope derivationScope) {
         // Entity certificates may be required to have digitalSignature bit set (e.g. if verifier adapter uses client
         // authentication)
         if (getParameterScope().isEntity() && bitPosition == KeyUsageExtensionConfig.DIGITAL_SIGNATURE) {

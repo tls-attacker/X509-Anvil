@@ -1,8 +1,8 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
+ * <p>
  * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
@@ -28,7 +28,8 @@ public abstract class BooleanCertificateSpecificParameter extends CertificateSpe
     }
 
     @Override
-    public List<DerivationParameter<X509CertificateChainConfig, Boolean>> getNonNullParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter<X509CertificateChainConfig, Boolean>>
+        getNonNullParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter<X509CertificateChainConfig, Boolean>> parameterValues = new ArrayList<>();
         parameterValues.add(generateValue(false));
         parameterValues.add(generateValue(true));

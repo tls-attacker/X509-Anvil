@@ -1,8 +1,8 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
+ * <p>
  * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
@@ -124,7 +124,8 @@ public class X509Util {
         return cert.getPublicKey();
     }
 
-    public static List<CertificateBytes> encodeCertificateChainForTls(List<X509Certificate> certificates) throws IOException {
+    public static List<CertificateBytes> encodeCertificateChainForTls(List<X509Certificate> certificates)
+        throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         List<byte[]> encodedCertificates = new ArrayList<>();
         int lengthField = 0;

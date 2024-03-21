@@ -1,8 +1,8 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
+ * <p>
  * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
@@ -14,9 +14,7 @@ import de.rub.nds.x509anvil.framework.featureextraction.FeatureExtractor;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509anvil.framework.featureextraction.UnsupportedFeatureException;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeException;
-import de.rub.nds.x509attacker.registry.Registry;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.junit.Test;
 
 import java.security.Security;
 
@@ -29,10 +27,10 @@ public class ContextHelper {
 
     private static synchronized void setContext() throws UnsupportedFeatureException, ProbeException {
         Security.addProvider(new BouncyCastleProvider());
-        Registry.getInstance();
         testConfig = new TestConfig();
         AnvilContext.createInstance(new AnvilTestConfig(), "", new X509AnvilParameterIdentifierProvider());
-        // AnvilFactoryRegistry.get().addParameterTypes(X509AnvilParameterType.values(), new X509AnvilParameterFactory());
+        // AnvilFactoryRegistry.get().addParameterTypes(X509AnvilParameterType.values(), new
+        // X509AnvilParameterFactory());
         // AnvilFactoryRegistry.get().setParameterIdentifierProvider(new X509AnvilParameterIdentifierProvider());
         // AnvilContext.getInstance().setTestStrength(2);
 
