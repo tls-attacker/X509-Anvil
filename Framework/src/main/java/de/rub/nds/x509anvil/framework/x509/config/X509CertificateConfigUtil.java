@@ -9,7 +9,6 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
-import de.rub.nds.asn1.parser.X509Parser;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.constants.CertificateChainPosType;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
@@ -23,6 +22,7 @@ import de.rub.nds.x509anvil.framework.x509.config.model.Name;
 import de.rub.nds.x509anvil.framework.x509.config.model.RelativeDistinguishedName;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
+import de.rub.nds.x509attacker.x509.parser.X509Parser;
 
 import java.io.File;
 import java.io.IOException;

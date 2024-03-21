@@ -267,12 +267,12 @@ public class X509CertificateConfig {
 
     public SignatureAlgorithm getSignatureAlgorithm() {
         if (isStatic) {
-            switch (staticX509Certificate.getKeyInfo().getKeyType()) {
+            switch (staticX509Certificate.getPublicKey().getX509PublicKeyType()) {
                 case RSA:
                     return SignatureAlgorithm.RSA_SHA256;
                 case DSA:
                     return SignatureAlgorithm.DSA_SHA256;
-                case ECDSA:
+                case ECDH_ECDSA:
                 default:
                     return SignatureAlgorithm.ECDSA_SHA256;
             }
