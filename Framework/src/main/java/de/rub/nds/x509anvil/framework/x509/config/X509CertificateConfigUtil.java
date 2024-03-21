@@ -111,7 +111,7 @@ public class X509CertificateConfigUtil {
     public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String privateKeyFile)
         throws IOException, InvalidKeySpecException {
         X509Parser x509Parser = new X509Parser(new File(staticCertificateFile));
-        X509Certificate staticRootCertificate = x509Parser.parse();
+        X509Certificate staticRootCertificate = X509Parser.parse();
         staticRootCertificate.setKeyFile(new File(privateKeyFile));
         X509CertificateConfig staticX509CertificateConfig = new X509CertificateConfig();
         staticX509CertificateConfig.setStatic(true);

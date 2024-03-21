@@ -49,7 +49,8 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
     }
 
     @Override
-    protected List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
+    protected List<DerivationParameter<X509CertificateChainConfig, HashAlgorithm>>
+        getNonNullParameterValues(DerivationScope derivationScope) {
         FeatureReport featureReport = ContextHelper.getFeatureReport();
         if (getParameterScope().isEntity()) {
             return featureReport.getSupportedEntityHashAlgorithms().stream().map(this::generateValue)

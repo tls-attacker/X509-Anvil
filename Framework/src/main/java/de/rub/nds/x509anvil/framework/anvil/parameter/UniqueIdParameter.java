@@ -43,7 +43,7 @@ public abstract class UniqueIdParameter extends CertificateSpecificParameter<Bit
         getNonNullParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter<X509CertificateChainConfig, BitString>> values = new ArrayList<>();
         values.add(generateValue(new BitString(new byte[0])));
-        values.add(generateValue(new BitString(new byte[] { 0x0, 0x1, 0x2, (byte) 0xff }, 3)));
+        values.add(generateValue(new BitString(new byte[] { 0x0, 0x1, 0x2, (byte) 0xff }, (byte) 3)));
         byte[] bytes = new byte[64];
         for (byte b = 0; b < 64; b++) {
             bytes[b] = b;

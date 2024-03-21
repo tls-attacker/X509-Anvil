@@ -14,9 +14,9 @@ import java.util.Objects;
 
 public class BitString {
     private byte[] bytes;
-    private int unusedBits;
+    private byte unusedBits;
 
-    public BitString(byte[] bytes, int unusedBits) {
+    public BitString(byte[] bytes, byte unusedBits) {
         this.bytes = bytes;
         this.unusedBits = unusedBits;
     }
@@ -34,11 +34,11 @@ public class BitString {
         this.bytes = bytes;
     }
 
-    public int getUnusedBits() {
+    public byte getUnusedBits() {
         return unusedBits;
     }
 
-    public void setUnusedBits(int unusedBits) {
+    public void setUnusedBits(byte unusedBits) {
         this.unusedBits = unusedBits;
     }
 

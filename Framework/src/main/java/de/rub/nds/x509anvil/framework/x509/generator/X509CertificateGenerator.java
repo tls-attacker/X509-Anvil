@@ -16,10 +16,9 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.*;
-import de.rub.nds.x509attacker.x509.model.X509Certificate;
+import de.rub.nds.x509attacker.x509.model.*;
+import de.rub.nds.x509attacker.x509.model.publickey.PublicKeyBitString;
 
-import jakarta.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -29,9 +28,6 @@ import java.util.List;
 public class X509CertificateGenerator {
     private final X509CertificateConfig certificateConfig;
     private final X509CertificateConfig previousConfig;
-
-    private Asn1Sequence tbsCertificate;
-    private Asn1Sequence certificateAsn1;
     private X509Certificate x509Certificate;
     private final List<X509CertificateModifier> certificateModifiers = new ArrayList<>();
 
@@ -56,44 +52,18 @@ public class X509CertificateGenerator {
             this.x509Certificate = certificateConfig.getStaticX509Certificate();
             return;
         }
+        this.x509Certificate = new X509Certificate("certificate"); // create basic x509 cert
+        setValuesInTbsCertificate();
 
-        generateTbsCertificate();
-
-        certificateAsn1 = new Asn1Sequence();
-        certificateAsn1.setIdentifier("certificate");
-        certificateAsn1.addChild(tbsCertificate);
-        generateSignatureAlgorithm();
-
-        Asn1PrimitiveBitString signatureField = new Asn1PrimitiveBitString();
-        signatureField.setIdentifier("signatureValue");
-        certificateAsn1.addChild(signatureField);
-
-        // Set signature info
-        SignatureInfo signatureInfo = new SignatureInfo();
-        signatureInfo.setIdentifier("signatureInfo");
-        signatureInfo.setType("SignatureInfo");
-        signatureInfo.setToBeSignedIdentifiers(Collections.singletonList("/certificate/tbsCertificate"));
-        signatureInfo.setSignatureValueTargetIdentifier("/certificate/signatureValue");
-        if (certificateConfig.isSelfSigned()) {
-            signatureInfo.setSignatureAlgorithmOidValue(certificateConfig.getSignatureAlgorithmOid());
-        } else {
-            signatureInfo.setSignatureAlgorithmOidValue(previousConfig.getSignatureAlgorithmOid());
-        }
-        signatureInfo.setParameters(new Asn1Null());
+        setSignatureAlgorithm();
 
         // Set subject key info
-        KeyInfo subjectKeyInfo = new KeyInfo();
-        subjectKeyInfo.setIdentifier("keyInfo");
-        subjectKeyInfo.setType("KeyInfo");
         try {
-            subjectKeyInfo.setKeyBytes(
-                PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPublic().getEncoded(), "PUBLIC KEY"));
+            byte[] key = PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPublic().getEncoded(), "PUBLIC KEY");
+            x509Certificate.getTbsCertificate().getSubjectPublicKeyInfo(); // TODO: set key somehow?
         } catch (IOException e) {
-            throw new CertificateGeneratorException("Unable to encode key in PEM format", e);
+            throw new CertificateGeneratorException("Unable to encode public key as pem", e);
         }
-
-        // Create certificate
-        x509Certificate = new X509Certificate(certificateAsn1, signatureInfo, subjectKeyInfo);
 
         // Call certificate modifiers
         for (X509CertificateModifier certificateModifier : certificateModifiers) {
@@ -108,6 +78,7 @@ public class X509CertificateGenerator {
                     PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
             } else {
                 if (previousConfig.isStatic()) {
+                    // TODO: Where is the key located now?
                     privateKeyForSignature = previousConfig.getStaticX509Certificate().getKeyInfo().getKeyBytes();
                 } else {
                     privateKeyForSignature =
@@ -117,12 +88,14 @@ public class X509CertificateGenerator {
         } catch (IOException e) {
             throw new CertificateGeneratorException("Unable to encode private key as pem", e);
         }
+        // TODO: Somehow set private key for signature?
 
         KeyInfo signingKeyInfo = new KeyInfo();
         signingKeyInfo.setIdentifier("signingKeyInfo");
         signingKeyInfo.setType("KeyInfo");
         signingKeyInfo.setKeyBytes(privateKeyForSignature);
         x509Certificate.signCertificate(signingKeyInfo);
+        // TODO: Is this needed or done automatically?
     }
 
     public X509Certificate retrieveX509Certificate() throws CertificateGeneratorException {
@@ -132,107 +105,82 @@ public class X509CertificateGenerator {
         return x509Certificate;
     }
 
-    private void generateTbsCertificate() throws CertificateGeneratorException {
-        this.tbsCertificate = new Asn1Sequence();
-        tbsCertificate.setIdentifier("tbsCertificate");
-
-        generateVersion();
-        generateSerialNumber();
-        generateTbsSignature();
-        generateIssuer();
-        generateValidity();
-        generateSubject();
-        generateSubjectPublicKeyInfo();
-        generateUniqueIdentifiers();
+    private void setValuesInTbsCertificate() throws CertificateGeneratorException {
+        setVersion();
+        setSerialNumber();
+        setSignature();
+        setIssuer();
+        setValidity();
+        setSubject();
+        setUniqueIdentifiers();
         generateExtensions();
     }
 
-    private void generateVersion() {
+    private void setVersion() {
         // Do not encode v1 (default value)
         if (certificateConfig.getVersion() != 0) {
-            Asn1Explicit versionExplicitWrapper = new Asn1Explicit();
-            versionExplicitWrapper.setIdentifier("explicitversion");
-            versionExplicitWrapper.setOffset(0);
-            Asn1Integer version = new Asn1Integer();
-            version.setIdentifier("version");
+            Version version = new Version("version");
             version.setValue(BigInteger.valueOf(certificateConfig.getVersion()));
-            versionExplicitWrapper.addChild(version);
-            tbsCertificate.addChild(versionExplicitWrapper);
+            this.x509Certificate.getTbsCertificate().setVersion(new X509Explicit<>("explicitversion", 0, version));
         }
     }
 
-    private void generateSerialNumber() {
-        Asn1Integer serialNumber = new Asn1Integer();
-        serialNumber.setIdentifier("serialNumber");
+    private void setSerialNumber() {
+        Asn1Integer serialNumber = new Asn1Integer("serialNumber");
         serialNumber.setValue(certificateConfig.getSerialNumber());
-        tbsCertificate.addChild(serialNumber);
+        x509Certificate.getTbsCertificate().setSerialNumber(serialNumber);
     }
 
-    private void generateTbsSignature() throws CertificateGeneratorException {
-        Asn1Sequence signature = new Asn1Sequence();
-        signature.setIdentifier("signature");
-
-        Asn1ObjectIdentifier algorithm = new Asn1ObjectIdentifier();
-        algorithm.setIdentifier("algorithm");
+    private void setSignature() throws CertificateGeneratorException {
+        Asn1ObjectIdentifier algorithm = new Asn1ObjectIdentifier("algorithm");
         if (certificateConfig.isSelfSigned()) {
             algorithm.setValue(certificateConfig.getSignatureAlgorithmOid());
         } else {
             algorithm.setValue(previousConfig.getSignatureAlgorithmOid());
         }
-        signature.addChild(algorithm);
+        x509Certificate.getTbsCertificate().getSignature().setAlgorithm(algorithm);
 
         // TODO no parameters, null parameter, parameters....
-
-        tbsCertificate.addChild(signature);
     }
 
-    private void generateIssuer() throws CertificateGeneratorException {
+    private void setIssuer() throws CertificateGeneratorException {
         Name issuer;
         if (certificateConfig.isSelfSigned()) {
             issuer = certificateConfig.getSubject();
+            x509Certificate.getTbsCertificate().setIssuer(issuer);
         } else {
             if (previousConfig.isStatic()) {
                 // Copy subject field
                 try {
-                    Asn1Encodable subject = X509Util.getAsn1ElementByIdentifierPath(
-                        previousConfig.getStaticX509Certificate(), "tbsCertificate", "subject");
-                    if (!(subject instanceof Asn1Sequence)) {
-                        throw new CertificateGeneratorException("Unable to copy subject field of static certificate");
-                    }
-                    Asn1Encodable issuerAsn1 = subject.getCopy();
-                    issuerAsn1.setIdentifier("issuer");
+                    Name subject = previousConfig.getStaticX509Certificate().getTbsCertificate().getSubject();
 
-                    tbsCertificate.addChild(issuerAsn1);
-                    return;
-                } catch (IllegalArgumentException | XMLStreamException | JAXBException | IOException e) {
+                    x509Certificate.getTbsCertificate().setIssuer(subject);
+                } catch (IllegalArgumentException e) {
                     throw new CertificateGeneratorException("Unable to copy subject field of static certificate", e);
                 }
             } else {
-                issuer = previousConfig.getSubject();
+                if (!certificateConfig.isSelfSigned() && previousConfig.isSharedConfig()) {
+                    issuer = previousConfig.getSubject();
+                    Asn1Encodable cn = X509Util.getCnFromName(issuer);
+                    // TODO create if null
+                    if (cn == null) {
+                        throw new CertificateGeneratorException("Shared cert has no subject CN");
+                    }
+                    if (cn instanceof Asn1PrimitivePrintableString) {
+                        ((Asn1PrimitivePrintableString) cn).setValue(
+                            ((Asn1PrimitivePrintableString) cn).getValue() + "_" + (previousConfig.getSharedId() - 1));
+                    } else if (cn instanceof Asn1PrimitiveUtf8String) {
+                        ((Asn1PrimitiveUtf8String) cn).setValue(
+                            ((Asn1PrimitiveUtf8String) cn).getValue() + "_" + (previousConfig.getSharedId() - 1));
+                    }
+                    x509Certificate.getTbsCertificate().setIssuer(issuer);
+                }
             }
         }
-
-        Asn1Sequence issuerAsn1 = issuer.getAsn1Structure("issuer");
-        if (!certificateConfig.isSelfSigned() && previousConfig.isSharedConfig()) {
-            Asn1Encodable cn = X509Util.getCnFromName(issuerAsn1);
-            // TODO create if null
-            if (cn == null) {
-                throw new CertificateGeneratorException("Shared cert has no subject CN");
-            }
-            if (cn instanceof Asn1PrimitivePrintableString) {
-                ((Asn1PrimitivePrintableString) cn).setValue(
-                    ((Asn1PrimitivePrintableString) cn).getValue() + "_" + (previousConfig.getSharedId() - 1));
-            } else if (cn instanceof Asn1PrimitiveUtf8String) {
-                ((Asn1PrimitiveUtf8String) cn)
-                    .setValue(((Asn1PrimitiveUtf8String) cn).getValue() + "_" + (previousConfig.getSharedId() - 1));
-            }
-        }
-        tbsCertificate.addChild(issuerAsn1);
     }
 
-    private void generateSubject() throws CertificateGeneratorException {
-        Asn1Sequence subject = certificateConfig.getSubject().getAsn1Structure("subject");
-        tbsCertificate.addChild(subject);
+    private void setSubject() throws CertificateGeneratorException {
+        Asn1Sequence subject = certificateConfig.getSubject();
         if (certificateConfig.isSharedConfig()) {
             Asn1Encodable cn = X509Util.getCnFromName(subject);
             // TODO create if null
@@ -250,73 +198,53 @@ public class X509CertificateGenerator {
         }
     }
 
-    private void generateValidity() {
-        Asn1Sequence validity = new Asn1Sequence();
-        validity.setIdentifier("validity");
+    private void setValidity() {
+        Validity validity = new Validity("validity");
 
         if (certificateConfig.getNotBeforeTimeType() == TimeType.UTC_TIME) {
             Asn1PrimitiveUtcTime utcTime = new Asn1PrimitiveUtcTime();
             utcTime.setIdentifier("notBefore");
             utcTime.setValue(certificateConfig.getNotBeforeValue());
-            validity.addChild(utcTime);
+            // TODO: How does Time work?
+            validity.setNotBefore(utcTime);
         } else if (certificateConfig.getNotBeforeTimeType() == TimeType.GENERALIZED_TIME) {
             Asn1PrimitiveGeneralizedTime generalTime = new Asn1PrimitiveGeneralizedTime();
             generalTime.setIdentifier("notBefore");
             generalTime.setValue(certificateConfig.getNotBeforeValue());
-            validity.addChild(generalTime);
+            validity.setNotBefore(generalTime);
         }
 
         if (certificateConfig.getNotAfterTimeType() == TimeType.UTC_TIME) {
             Asn1PrimitiveUtcTime utcTime = new Asn1PrimitiveUtcTime();
             utcTime.setIdentifier("notAfter");
             utcTime.setValue(certificateConfig.getNotAfterValue());
-            validity.addChild(utcTime);
+            validity.setNotAfter(utcTime);
         } else if (certificateConfig.getNotAfterTimeType() == TimeType.GENERALIZED_TIME) {
             Asn1PrimitiveGeneralizedTime generalTime = new Asn1PrimitiveGeneralizedTime();
             generalTime.setIdentifier("notAfter");
             generalTime.setValue(certificateConfig.getNotAfterValue());
-            validity.addChild(generalTime);
+            validity.setNotAfter(generalTime);
         }
-        tbsCertificate.addChild(validity);
+        x509Certificate.getTbsCertificate().setValidity(validity);
     }
 
-    private void generateSubjectPublicKeyInfo() {
-        // Create empty subject public key info and let X509-Attacker fill in the data
-        Asn1Sequence subjectPublicKeyInfo = new Asn1Sequence();
-        subjectPublicKeyInfo.setIdentifier("subjectPublicKeyInfo");
-        subjectPublicKeyInfo.setType("SubjectPublicKeyInfo");
-        subjectPublicKeyInfo.setAttribute("fromIdentifier", "/keyInfo");
-        tbsCertificate.addChild(subjectPublicKeyInfo);
-    }
-
-    private void generateUniqueIdentifiers() {
+    private void setUniqueIdentifiers() {
         if (certificateConfig.isIssuerUniqueIdPresent()) {
-            Asn1Implicit issuerUniqueIdImplicit = new Asn1Implicit();
-            issuerUniqueIdImplicit.setIdentifier("implicitIssuerUniqueId");
-            issuerUniqueIdImplicit.setOffset(1);
-
-            Asn1PrimitiveBitString issuerUniqueIdBitString = new Asn1PrimitiveBitString();
-            issuerUniqueIdBitString.setValue(certificateConfig.getIssuerUniqueId().getBytes());
+            Asn1BitString issuerUniqueIdBitString = new Asn1BitString("issuerUniqueID", 1);
+            issuerUniqueIdBitString.setContent(certificateConfig.getIssuerUniqueId().getBytes());
             issuerUniqueIdBitString.setUnusedBits(certificateConfig.getIssuerUniqueId().getUnusedBits());
-            issuerUniqueIdBitString.setIdentifier("issuerUniqueID");
-            issuerUniqueIdImplicit.addChild(issuerUniqueIdBitString);
-            tbsCertificate.addChild(issuerUniqueIdImplicit);
+            x509Certificate.getTbsCertificate().setIssuerUniqueId(issuerUniqueIdBitString);
         }
 
         if (certificateConfig.isSubjectUniqueIdPresent()) {
-            Asn1Implicit subjectUniqueIdImplicit = new Asn1Implicit();
-            subjectUniqueIdImplicit.setIdentifier("implicitSubjectUniqueId");
-            subjectUniqueIdImplicit.setOffset(2);
-
-            Asn1PrimitiveBitString subjectUniqueIdBitString = new Asn1PrimitiveBitString();
-            subjectUniqueIdBitString.setValue(certificateConfig.getSubjectUniqueId().getBytes());
+            Asn1BitString subjectUniqueIdBitString = new Asn1BitString("subjectUniqueID", 2);
+            subjectUniqueIdBitString.setContent(certificateConfig.getSubjectUniqueId().getBytes());
             subjectUniqueIdBitString.setUnusedBits(certificateConfig.getSubjectUniqueId().getUnusedBits());
-            subjectUniqueIdBitString.setIdentifier("subjectUniqueID");
-            subjectUniqueIdImplicit.addChild(subjectUniqueIdBitString);
-            tbsCertificate.addChild(subjectUniqueIdImplicit);
+            x509Certificate.getTbsCertificate().setSubjectUniqueId(subjectUniqueIdBitString);
         }
     }
 
+    // TODO: understand extensions
     private void generateExtensions() throws CertificateGeneratorException {
         Asn1Sequence extensionsAsn1 = new Asn1Sequence();
         extensionsAsn1.setIdentifier("extensions");
@@ -336,21 +264,13 @@ public class X509CertificateGenerator {
         }
     }
 
-    private void generateSignatureAlgorithm() {
-        Asn1Sequence signatureAlgorithm = new Asn1Sequence();
-        signatureAlgorithm.setIdentifier("signatureAlgorithm");
-
-        // Generate signature algorithm oid
-        Asn1ObjectIdentifier signatureAlgorithmOid = new Asn1ObjectIdentifier();
-        signatureAlgorithmOid.setIdentifier("algorithm");
+    private void setSignatureAlgorithm() {
+        CertificateSignatureAlgorithmIdentifier algorithm = new CertificateSignatureAlgorithmIdentifier("algorithm");
         if (certificateConfig.isSelfSigned()) {
-            signatureAlgorithmOid.setValue(certificateConfig.getSignatureAlgorithmOid());
+            algorithm.setContent(certificateConfig.getSignatureAlgorithmOid().getBytes());
         } else {
-            signatureAlgorithmOid.setValue(previousConfig.getSignatureAlgorithmOid());
+            algorithm.setContent(previousConfig.getSignatureAlgorithmOid().getBytes());
         }
-        signatureAlgorithm.addChild(signatureAlgorithmOid);
-        // TODO: Parameters
-
-        certificateAsn1.addChild(signatureAlgorithm);
+        x509Certificate.setSignatureAlgorithmIdentifier(algorithm);
     }
 }
