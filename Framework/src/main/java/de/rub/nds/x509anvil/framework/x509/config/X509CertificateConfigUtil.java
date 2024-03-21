@@ -18,6 +18,7 @@ import de.rub.nds.x509anvil.framework.constants.KeyType;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
+import de.rub.nds.x509attacker.constants.NameType;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
 import de.rub.nds.x509attacker.x509.model.Name;
@@ -55,13 +56,12 @@ public class X509CertificateConfigUtil {
         config.setNotAfterTimeType(TimeType.UTC_TIME);
         config.setNotAfterValue("320101000000Z");
 
-        // TODO: identifier?
-        Name subject = new Name();
-        RelativeDistinguishedName commonNameDN = new RelativeDistinguishedName();
+        Name subject = new Name("name", NameType.SUBJECT);
+        RelativeDistinguishedName commonNameDN = new RelativeDistinguishedName("relativeDistinguishedName");
         Asn1PrimitivePrintableString commonName = new Asn1PrimitivePrintableString();
         commonName.setValue(certificateName);
         commonNameDN.addAttributeTypeAndValue(
-            new AttributeTypeAndValue(id, X500AttributeType.COMMON_NAME, commonName.getValue()));
+            new AttributeTypeAndValue("attributeTypeAndValue", X500AttributeType.COMMON_NAME, commonName.getValue()));
         subject.addRelativeDistinguishedNames(commonNameDN);
         config.setSubject(subject);
 
