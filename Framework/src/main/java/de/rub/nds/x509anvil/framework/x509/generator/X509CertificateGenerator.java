@@ -15,14 +15,13 @@ import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
-import de.rub.nds.x509anvil.framework.x509.config.model.*;
+import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
+import de.rub.nds.x509attacker.constants.TimeContextHint;
 import de.rub.nds.x509attacker.x509.model.*;
-import de.rub.nds.x509attacker.x509.model.publickey.PublicKeyBitString;
 
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class X509CertificateGenerator {
@@ -60,7 +59,8 @@ public class X509CertificateGenerator {
         // Set subject key info
         try {
             byte[] key = PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPublic().getEncoded(), "PUBLIC KEY");
-            x509Certificate.getTbsCertificate().getSubjectPublicKeyInfo(); // TODO: set key somehow?
+            x509Certificate.getTbsCertificate().setSubjectPublicKeyInfo();
+            x509Certificate.getTbsCertificate().getSubjectPublicKeyInfo().setSubjectPublicKeyBitString(key); // TODO: set key somehow?
         } catch (IOException e) {
             throw new CertificateGeneratorException("Unable to encode public key as pem", e);
         }
@@ -89,6 +89,10 @@ public class X509CertificateGenerator {
             throw new CertificateGeneratorException("Unable to encode private key as pem", e);
         }
         // TODO: Somehow set private key for signature?
+
+        //TODO: Create signature?
+        x509Certificate.getSignatureComputations().setToBeSignedBytes(x509Certificate.getTbsCertificate().getContent());
+        x509Certificate.getSignatureComputations().setSignatureBytes(todo);//needed?
 
         KeyInfo signingKeyInfo = new KeyInfo();
         signingKeyInfo.setIdentifier("signingKeyInfo");
@@ -202,28 +206,39 @@ public class X509CertificateGenerator {
         Validity validity = new Validity("validity");
 
         if (certificateConfig.getNotBeforeTimeType() == TimeType.UTC_TIME) {
+            Time time = new Time("validity", TimeContextHint.NOT_BEFORE);
             Asn1PrimitiveUtcTime utcTime = new Asn1PrimitiveUtcTime();
             utcTime.setIdentifier("notBefore");
             utcTime.setValue(certificateConfig.getNotBeforeValue());
-            // TODO: How does Time work?
-            validity.setNotBefore(utcTime);
+            time.setValue(certificateConfig.getNotBeforeValue());
+            //TODO: how to select choice in time for UTC?
+            validity.setNotBefore(time);
         } else if (certificateConfig.getNotBeforeTimeType() == TimeType.GENERALIZED_TIME) {
+            Time time = new Time("validity", TimeContextHint.NOT_BEFORE);
             Asn1PrimitiveGeneralizedTime generalTime = new Asn1PrimitiveGeneralizedTime();
             generalTime.setIdentifier("notBefore");
             generalTime.setValue(certificateConfig.getNotBeforeValue());
-            validity.setNotBefore(generalTime);
+            //TODO: how to select choice in time for generalized time?
+            time.setValue(certificateConfig.getNotBeforeValue());
+            validity.setNotBefore(time);
         }
 
         if (certificateConfig.getNotAfterTimeType() == TimeType.UTC_TIME) {
+            Time time = new Time("validity", TimeContextHint.NOT_AFTER);
             Asn1PrimitiveUtcTime utcTime = new Asn1PrimitiveUtcTime();
             utcTime.setIdentifier("notAfter");
             utcTime.setValue(certificateConfig.getNotAfterValue());
-            validity.setNotAfter(utcTime);
+            //TODO: how to select choice in time for UTC?
+            time.setValue(certificateConfig.getNotAfterValue());
+            validity.setNotAfter(time);
         } else if (certificateConfig.getNotAfterTimeType() == TimeType.GENERALIZED_TIME) {
+            Time time = new Time("validity", TimeContextHint.NOT_AFTER);
             Asn1PrimitiveGeneralizedTime generalTime = new Asn1PrimitiveGeneralizedTime();
             generalTime.setIdentifier("notAfter");
             generalTime.setValue(certificateConfig.getNotAfterValue());
-            validity.setNotAfter(generalTime);
+            //TODO: how to select choice in time for generalized time?
+            time.setValue(certificateConfig.getNotAfterValue());
+            validity.setNotAfter(time);
         }
         x509Certificate.getTbsCertificate().setValidity(validity);
     }
@@ -244,7 +259,7 @@ public class X509CertificateGenerator {
         }
     }
 
-    // TODO: understand extensions
+    // TODO: fix extensions
     private void generateExtensions() throws CertificateGeneratorException {
         Asn1Sequence extensionsAsn1 = new Asn1Sequence();
         extensionsAsn1.setIdentifier("extensions");
