@@ -12,6 +12,7 @@ package de.rub.nds.x509anvil.framework.x509.config.extension;
 import de.rub.nds.asn1.model.*;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509attacker.x509.model.Extension;
 
 public abstract class ExtensionConfig {
     private final String extensionId;
@@ -40,30 +41,27 @@ public abstract class ExtensionConfig {
         this.critical = critical;
     }
 
-    public Asn1Sequence getAsn1Structure(X509CertificateConfig certificateConfig, X509CertificateConfig previousConfig)
-        throws CertificateGeneratorException {
-        Asn1Sequence extensionAsn1 = new Asn1Sequence();
-        extensionAsn1.setIdentifier(name);
+    public Extension getExtensionFromConfig(X509CertificateConfig certificateConfig,
+        X509CertificateConfig previousConfig) throws CertificateGeneratorException {
+        Extension extensionAsn1 = new Extension(name);
 
-        Asn1ObjectIdentifier extnIdAsn1 = new Asn1ObjectIdentifier();
-        extnIdAsn1.setIdentifier("extnId");
+        Asn1ObjectIdentifier extnIdAsn1 = new Asn1ObjectIdentifier("extnId");
         extnIdAsn1.setValue(extensionId);
-        extensionAsn1.addChild(extnIdAsn1);
+        extensionAsn1.setExtnID(extnIdAsn1);
 
         if (critical) {
-            Asn1Boolean criticalAsn1 = new Asn1Boolean();
-            criticalAsn1.setIdentifier("critical");
+            Asn1Boolean criticalAsn1 = new Asn1Boolean("critical");
             criticalAsn1.setValue(critical);
-            extensionAsn1.addChild(criticalAsn1);
+            extensionAsn1.setCritical(criticalAsn1);
         }
 
-        Asn1PrimitiveOctetString extnValueAsn1 = getContentAsn1Structure(certificateConfig, previousConfig);
+        Asn1OctetString extnValueAsn1 = getContentAsn1Structure(certificateConfig, previousConfig);
         extnValueAsn1.setIdentifier("extnValue");
-        extensionAsn1.addChild(extnValueAsn1);
+        extensionAsn1.setExtnValue(extnValueAsn1);
 
         return extensionAsn1;
     }
 
-    protected abstract Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
+    protected abstract Asn1OctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
         X509CertificateConfig previousConfig) throws CertificateGeneratorException;
 }

@@ -20,7 +20,6 @@ import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectI
 import de.rub.nds.x509anvil.framework.x509.config.model.DirectoryStringType;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
-import de.rub.nds.x509anvil.suite.tests.util.Constraints;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 

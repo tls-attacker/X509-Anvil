@@ -37,7 +37,8 @@ public class BasicConstraintsCaParameter extends BooleanCertificateSpecificParam
     }
 
     @Override
-    public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter<X509CertificateChainConfig, Boolean>>
+        getNonNullParameterValues(DerivationScope derivationScope) {
         // Ca must be set for intermediate certificates
         if (getParameterScope().isIntermediate()) {
             return Collections.singletonList(generateValue(true));

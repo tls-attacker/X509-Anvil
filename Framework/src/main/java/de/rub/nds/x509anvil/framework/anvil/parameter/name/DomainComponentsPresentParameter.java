@@ -13,10 +13,16 @@ import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
+import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class DomainComponentsPresentParameter extends BooleanCertificateSpecificParameter {
 
@@ -31,7 +37,13 @@ public class DomainComponentsPresentParameter extends BooleanCertificateSpecific
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
         if (getSelectedValue()) {
-            certificateConfig.getSubject().addDomainComponents("de", "rub", "nds", "x509anvil");
+            List<Pair<X500AttributeType, String>> name = new LinkedList<>();
+            name.add(new Pair<>(X500AttributeType.COMMON_NAME, "x509anvil"));
+            name.add(new Pair<>(X500AttributeType.ORGANISATION_UNIT_NAME, "nds"));
+            name.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "rub"));
+            name.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "de"));
+            RelativeDistinguishedName commonNameDN = new RelativeDistinguishedName("relativeDistinguishedName", name);
+            certificateConfig.getSubject().addRelativeDistinguishedNames(commonNameDN);
         }
     }
 

@@ -9,8 +9,8 @@
 
 package de.rub.nds.x509anvil.framework.x509.config.extension;
 
+import de.rub.nds.asn1.model.Asn1OctetString;
 import de.rub.nds.asn1.model.Asn1PrimitiveBitString;
-import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
@@ -22,7 +22,7 @@ public class UnknownExtensionConfig extends ExtensionConfig {
     }
 
     @Override
-    protected Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
+    protected Asn1OctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
         X509CertificateConfig previousConfig) {
         Asn1PrimitiveBitString unknownExtAsn1 = new Asn1PrimitiveBitString();
         unknownExtAsn1.setIdentifier("unknownExtension");
@@ -30,7 +30,7 @@ public class UnknownExtensionConfig extends ExtensionConfig {
         Asn1FieldSerializer serializer = new Asn1FieldSerializer(unknownExtAsn1);
 
         byte[] derEncoded = serializer.serialize();
-        Asn1PrimitiveOctetString extensionValue = new Asn1PrimitiveOctetString();
+        Asn1OctetString extensionValue = new Asn1OctetString("unknownExtension");
         extensionValue.setValue(derEncoded);
         return extensionValue;
     }

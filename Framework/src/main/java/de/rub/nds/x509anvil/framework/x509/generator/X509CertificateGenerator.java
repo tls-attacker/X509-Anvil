@@ -60,7 +60,9 @@ public class X509CertificateGenerator {
         try {
             byte[] key = PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPublic().getEncoded(), "PUBLIC KEY");
             x509Certificate.getTbsCertificate().setSubjectPublicKeyInfo();
-            x509Certificate.getTbsCertificate().getSubjectPublicKeyInfo().setSubjectPublicKeyBitString(key); // TODO: set key somehow?
+            x509Certificate.getTbsCertificate().getSubjectPublicKeyInfo().setSubjectPublicKeyBitString(key); // TODO:
+                                                                                                             // set key
+                                                                                                             // somehow?
         } catch (IOException e) {
             throw new CertificateGeneratorException("Unable to encode public key as pem", e);
         }
@@ -90,10 +92,11 @@ public class X509CertificateGenerator {
         }
         // TODO: Somehow set private key for signature?
 
-        //TODO: Create signature?
+        // TODO: Create signature?
         x509Certificate.getSignatureComputations().setToBeSignedBytes(x509Certificate.getTbsCertificate().getContent());
-        x509Certificate.getSignatureComputations().setSignatureBytes(todo);//needed?
+        x509Certificate.getSignatureComputations().setSignatureBytes(todo);// needed?
 
+        // TODO: This was removed. Where is it now?
         KeyInfo signingKeyInfo = new KeyInfo();
         signingKeyInfo.setIdentifier("signingKeyInfo");
         signingKeyInfo.setType("KeyInfo");
@@ -166,7 +169,7 @@ public class X509CertificateGenerator {
                 if (!certificateConfig.isSelfSigned() && previousConfig.isSharedConfig()) {
                     issuer = previousConfig.getSubject();
                     Asn1Encodable cn = X509Util.getCnFromName(issuer);
-                    // TODO create if null
+                    // TODO: create if null (old TODO)
                     if (cn == null) {
                         throw new CertificateGeneratorException("Shared cert has no subject CN");
                     }
@@ -211,14 +214,14 @@ public class X509CertificateGenerator {
             utcTime.setIdentifier("notBefore");
             utcTime.setValue(certificateConfig.getNotBeforeValue());
             time.setValue(certificateConfig.getNotBeforeValue());
-            //TODO: how to select choice in time for UTC?
+            // TODO: how to select choice in time for UTC?
             validity.setNotBefore(time);
         } else if (certificateConfig.getNotBeforeTimeType() == TimeType.GENERALIZED_TIME) {
             Time time = new Time("validity", TimeContextHint.NOT_BEFORE);
             Asn1PrimitiveGeneralizedTime generalTime = new Asn1PrimitiveGeneralizedTime();
             generalTime.setIdentifier("notBefore");
             generalTime.setValue(certificateConfig.getNotBeforeValue());
-            //TODO: how to select choice in time for generalized time?
+            // TODO: how to select choice in time for generalized time?
             time.setValue(certificateConfig.getNotBeforeValue());
             validity.setNotBefore(time);
         }
@@ -228,7 +231,7 @@ public class X509CertificateGenerator {
             Asn1PrimitiveUtcTime utcTime = new Asn1PrimitiveUtcTime();
             utcTime.setIdentifier("notAfter");
             utcTime.setValue(certificateConfig.getNotAfterValue());
-            //TODO: how to select choice in time for UTC?
+            // TODO: how to select choice in time for UTC?
             time.setValue(certificateConfig.getNotAfterValue());
             validity.setNotAfter(time);
         } else if (certificateConfig.getNotAfterTimeType() == TimeType.GENERALIZED_TIME) {
@@ -236,7 +239,7 @@ public class X509CertificateGenerator {
             Asn1PrimitiveGeneralizedTime generalTime = new Asn1PrimitiveGeneralizedTime();
             generalTime.setIdentifier("notAfter");
             generalTime.setValue(certificateConfig.getNotAfterValue());
-            //TODO: how to select choice in time for generalized time?
+            // TODO: how to select choice in time for generalized time?
             time.setValue(certificateConfig.getNotAfterValue());
             validity.setNotAfter(time);
         }
@@ -259,23 +262,18 @@ public class X509CertificateGenerator {
         }
     }
 
-    // TODO: fix extensions
     private void generateExtensions() throws CertificateGeneratorException {
-        Asn1Sequence extensionsAsn1 = new Asn1Sequence();
-        extensionsAsn1.setIdentifier("extensions");
+        Extensions extensions = new Extensions("extensions");
         for (ExtensionConfig extensionConfig : certificateConfig.getExtensions().values()) {
             if (extensionConfig.isPresent()) {
-                Asn1Encodable extensionAsn1 = extensionConfig.getAsn1Structure(certificateConfig, previousConfig);
-                extensionsAsn1.addChild(extensionAsn1);
+                Extension extension = extensionConfig.getExtensionFromConfig(certificateConfig, previousConfig);
+                extensions.addExtension(extension);
             }
         }
 
-        if (extensionsAsn1.getChildren().size() > 0 && certificateConfig.isExtensionsPresent()) {
-            Asn1Explicit explicitExtensions = new Asn1Explicit();
-            explicitExtensions.setIdentifier("explicitExtensions");
-            explicitExtensions.setOffset(3);
-            explicitExtensions.addChild(extensionsAsn1);
-            tbsCertificate.addChild(explicitExtensions);
+        if (!extensions.getExtensionList().isEmpty() && certificateConfig.isExtensionsPresent()) {
+            X509Explicit<Extensions> explicitExtensions = new X509Explicit<>("extensionsExplicit", 3, extensions);
+            x509Certificate.getTbsCertificate().setExplicitExtensions(explicitExtensions);
         }
     }
 

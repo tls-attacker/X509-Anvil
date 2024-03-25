@@ -14,7 +14,6 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.suite.tests.util.Constraints;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 

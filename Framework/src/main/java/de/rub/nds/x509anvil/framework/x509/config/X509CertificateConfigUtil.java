@@ -24,7 +24,7 @@ import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
-import de.rub.nds.x509attacker.x509.parser.X509Parser;
+import de.rub.nds.x509attacker.x509.parser.X509CertificateParser;
 
 import java.io.File;
 import java.io.IOException;
@@ -110,8 +110,7 @@ public class X509CertificateConfigUtil {
 
     public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String privateKeyFile)
         throws IOException, InvalidKeySpecException {
-        X509Parser x509Parser = new X509Parser(new File(staticCertificateFile));
-        X509Certificate staticRootCertificate = X509Parser.parse();
+        X509Certificate staticRootCertificate = X509CertificateParser.parse(new File(staticCertificateFile));
         staticRootCertificate.setKeyFile(new File(privateKeyFile));
         X509CertificateConfig staticX509CertificateConfig = new X509CertificateConfig();
         staticX509CertificateConfig.setStatic(true);

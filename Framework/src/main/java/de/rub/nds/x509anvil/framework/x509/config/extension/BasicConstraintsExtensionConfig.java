@@ -13,6 +13,7 @@ import de.rub.nds.asn1.model.*;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
+import de.rub.nds.x509attacker.x509.model.extensions.BasicConstraints;
 
 import java.math.BigInteger;
 
@@ -59,26 +60,24 @@ public class BasicConstraintsExtensionConfig extends ExtensionConfig {
     }
 
     @Override
-    public Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
+    public Asn1OctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
         X509CertificateConfig previousConfig) {
-        Asn1Sequence basicConstraintsAsn1 = new Asn1Sequence();
+        BasicConstraints basicConstraintsAsn1 = new BasicConstraints("basicConstraints");
 
-        Asn1Boolean caAsn1 = new Asn1Boolean();
-        caAsn1.setIdentifier("ca");
+        Asn1Boolean caAsn1 = new Asn1Boolean("ca");
         caAsn1.setValue(ca);
-        basicConstraintsAsn1.addChild(caAsn1);
+        basicConstraintsAsn1.setCa(caAsn1);
 
         if (pathLenConstraintPresent) {
-            Asn1Integer pathLenConstraintAsn1 = new Asn1Integer();
-            pathLenConstraintAsn1.setIdentifier("pathLenConstraint");
+            Asn1Integer pathLenConstraintAsn1 = new Asn1Integer("pathLenConstraint");
             pathLenConstraintAsn1.setValue(BigInteger.valueOf(pathLenConstraint));
-            basicConstraintsAsn1.addChild(pathLenConstraintAsn1);
+            basicConstraintsAsn1.setPathLenConstraint(pathLenConstraintAsn1);
         }
 
         Asn1FieldSerializer serializer = new Asn1FieldSerializer(basicConstraintsAsn1);
         byte[] derEncoded = serializer.serialize();
 
-        Asn1PrimitiveOctetString extensionValue = new Asn1PrimitiveOctetString();
+        Asn1OctetString extensionValue = new Asn1OctetString("pathLen");
         extensionValue.setValue(derEncoded);
         return extensionValue;
     }

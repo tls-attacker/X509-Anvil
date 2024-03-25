@@ -9,7 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.featureextraction.probe;
 
-import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
+import de.rub.nds.asn1.model.Asn1Field;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -52,10 +52,9 @@ public class BasicConstraintsExtensionProbe extends ExtensionProbe {
     protected X509CertificateModifier createInvalidExtensionModifier() {
         return (certificate, config, previousConfig) -> {
             if (config == chainConfig.getEntityCertificateConfig()) {
-                Asn1PrimitiveOctetString extensionValue =
-                    (Asn1PrimitiveOctetString) X509Util.getAsn1ElementByIdentifierPath(certificate, "tbsCertificate",
-                        "explicitExtensions", "extensions", "basicConstraints", "extnValue");
-                extensionValue.setValue(new byte[] { 0x05, 0x00 });
+                Asn1Field extensionValue = (Asn1Field) X509Util.getAsn1ElementByIdentifierPath(certificate,
+                    "tbsCertificate", "explicitExtensions", "extensions", "basicConstraints", "extnValue");
+                extensionValue.setContent(new byte[] { 0x05, 0x00 });
             }
         };
     }

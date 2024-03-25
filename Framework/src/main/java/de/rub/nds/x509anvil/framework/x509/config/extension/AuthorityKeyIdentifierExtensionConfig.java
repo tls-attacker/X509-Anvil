@@ -9,7 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.x509.config.extension;
 
-import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
+import de.rub.nds.asn1.model.Asn1OctetString;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
 import org.bouncycastle.asn1.x509.AuthorityKeyIdentifier;
@@ -25,7 +25,7 @@ public class AuthorityKeyIdentifierExtensionConfig extends ExtensionConfig {
     }
 
     @Override
-    public Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
+    public Asn1OctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
         X509CertificateConfig previousConfig) {
         byte[] derEncoded;
         try {
@@ -36,7 +36,7 @@ public class AuthorityKeyIdentifierExtensionConfig extends ExtensionConfig {
         } catch (NoSuchAlgorithmException | IOException e) {
             throw new RuntimeException("Unable to encode authority key identifier", e);
         }
-        Asn1PrimitiveOctetString extensionValue = new Asn1PrimitiveOctetString();
+        Asn1OctetString extensionValue = new Asn1OctetString("authorityKeyId");
         extensionValue.setValue(derEncoded);
         return extensionValue;
     }
