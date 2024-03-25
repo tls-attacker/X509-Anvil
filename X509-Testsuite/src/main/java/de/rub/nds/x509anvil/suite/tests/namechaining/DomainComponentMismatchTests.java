@@ -30,7 +30,7 @@ public class DomainComponentMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.domain_components_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "inter0.domain_components_present", method = "enabled")
     @AnvilTest
     public void domainComponentMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);

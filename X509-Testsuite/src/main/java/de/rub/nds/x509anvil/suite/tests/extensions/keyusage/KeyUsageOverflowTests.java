@@ -32,8 +32,8 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "entity.ext_key_usage_present", clazz = Constraints.class, method = "enabled")
-    @AnvilTest(description = "Appends an additional bit to the key usage bit string")
+    @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
+    @AnvilTest()
     public void keyUsageOverflowAppend1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(true, (byte) 128, 6));
@@ -44,8 +44,8 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.ext_key_usage_present", clazz = Constraints.class, method = "enabled")
-    @AnvilTest(description = "Appends an additional bit to the key usage bit string")
+    @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
+    @AnvilTest()
     public void keyUsageOverflowAppend1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(false, (byte) 128, 6));
@@ -56,8 +56,8 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "entity.ext_key_usage_present", clazz = Constraints.class, method = "enabled")
-    @AnvilTest(description = "Appends an additional bit to the key usage bit string")
+    @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
+    @AnvilTest()
     public void keyUsageOverflowAppend0Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(true, (byte) 0, 6));
@@ -68,8 +68,8 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.ext_key_usage_present", clazz = Constraints.class, method = "enabled")
-    @AnvilTest(description = "Appends an additional bit to the key usage bit string")
+    @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
+    @AnvilTest()
     public void keyUsageOverflowAppend0Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(false, (byte) 0, 6));

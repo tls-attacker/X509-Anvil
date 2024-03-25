@@ -27,7 +27,7 @@ public class CountryMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_country_name_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "inter0.nc_country_name_present", method = "enabled")
     @AnvilTest
     public void countryMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);

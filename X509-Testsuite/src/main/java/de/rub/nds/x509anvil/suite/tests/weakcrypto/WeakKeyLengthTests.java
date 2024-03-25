@@ -20,11 +20,11 @@ import java.security.NoSuchAlgorithmException;
 
 public class WeakKeyLengthTests extends X509AnvilTest {
 
-    @AnvilTest(description = "Check whether verifier accepts signatures computed with a 512-bit RSA key")
+    @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @ValueConstraint(identifier = "inter0.key_type", clazz = Constraints.class, method = "allowRsa")
-    @ValueConstraint(identifier = "inter0.hash_algorithm", clazz = Constraints.class, method = "restrictHashForRsa512")    //Sha-512/SHA-384 digests are too big for RSA-512
+    @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
+    @ValueConstraint(identifier = "inter0.hash_algorithm", method = "restrictHashForRsa512")    //Sha-512/SHA-384 digests are too big for RSA-512
     public void weak512BitRsaKey(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         certificateChainConfig.getIntermediateConfig(0).setKeyPair(
@@ -33,10 +33,10 @@ public class WeakKeyLengthTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @AnvilTest(description = "Check whether verifier accepts signatures computed with a 1024-bit RSA key")
+    @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @ValueConstraint(identifier = "inter0.key_type", clazz = Constraints.class, method = "allowRsa")
+    @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
     public void weak1024BitRsaKey(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         certificateChainConfig.getIntermediateConfig(0).setKeyPair(
@@ -45,10 +45,10 @@ public class WeakKeyLengthTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @AnvilTest(description = "Check whether verifier accepts signatures computed with a 1024-bit DSA key")
+    @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @ValueConstraint(identifier = "inter0.key_type", clazz = Constraints.class, method = "allowDsa")
+    @ValueConstraint(identifier = "inter0.key_type", method = "allowDsa")
     public void weak1024BitDsaKey(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         certificateChainConfig.getIntermediateConfig(0).setKeyPair(

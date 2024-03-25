@@ -27,7 +27,7 @@ public class InterCertWithoutKeyCertSignTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.ext_key_usage_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
     @AnvilTest
     public void intermediateCertWithCaNotSet(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);

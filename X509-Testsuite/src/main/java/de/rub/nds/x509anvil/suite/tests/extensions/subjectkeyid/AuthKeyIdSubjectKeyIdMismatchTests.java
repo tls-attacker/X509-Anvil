@@ -20,7 +20,6 @@ import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
-import de.rub.nds.x509anvil.suite.tests.util.Constraints;
 import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
@@ -33,8 +32,8 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", clazz = Constraints.class, method = "enabled")
-    @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
     public void keyIdMismatchEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, authKeyMismatch(true));
@@ -48,7 +47,7 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_authority_key_identifier_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "inter0.ext_authority_key_identifier_present", method = "enabled")
     public void keyIdMismatchIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, authKeyMismatch(false));

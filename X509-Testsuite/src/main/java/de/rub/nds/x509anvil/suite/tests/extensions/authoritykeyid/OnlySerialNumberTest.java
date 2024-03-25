@@ -21,7 +21,6 @@ import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
-import de.rub.nds.x509anvil.suite.tests.util.Constraints;
 import org.bouncycastle.asn1.x509.AuthorityKeyIdentifier;
 import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
 import org.junit.jupiter.api.Assertions;
@@ -37,8 +36,8 @@ public class OnlySerialNumberTest extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", clazz = Constraints.class, method = "enabled")
-    @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
     public void missingKeyIdentifierEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, serialWithoutIssuerModifier(true));

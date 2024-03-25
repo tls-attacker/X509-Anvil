@@ -24,7 +24,7 @@ public class Version1CertWithExtensionsTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "entity.extensions_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "entity.extensions_present", method = "enabled")
     @AnvilTest
     public void version1CertWithExtensionsEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
@@ -38,7 +38,7 @@ public class Version1CertWithExtensionsTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.extensions_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "inter0.extensions_present", method = "enabled")
     @AnvilTest
     public void version1CertWithExtensionsIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);

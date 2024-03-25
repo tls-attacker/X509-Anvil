@@ -32,8 +32,8 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "entity.ext_key_usage_critical", clazz = Constraints.class, method = "enabled")
-    @AnvilTest(description = "Encode a TRUE value using a value 0 < value < 0xFF")
+    @ValueConstraint(identifier = "entity.ext_key_usage_critical", method = "enabled")
+    @AnvilTest()
     public void booleanRepresentationEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(config, nonFFTrueBooleanModifier(true));
@@ -45,8 +45,8 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.ext_key_usage_critical", clazz = Constraints.class, method = "enabled")
-    @AnvilTest(description = "Encode a TRUE value using a value 0 < value < 0xFF")
+    @ValueConstraint(identifier = "inter0.ext_key_usage_critical", method = "enabled")
+    @AnvilTest()
     public void booleanRepresentationIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(config, nonFFTrueBooleanModifier(false));
@@ -59,8 +59,8 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "entity.version", clazz = Constraints.class, method = "allowVersion1")
-    @AnvilTest(description = "Explicitly encode version 1 field")
+    @ValueConstraint(identifier = "entity.version", method = "allowVersion1")
+    @AnvilTest()
     public void explicitVersion1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
         config.getEntityCertificateConfig().setVersion(2);  // Set version to 3 to make modification easier
@@ -73,8 +73,8 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.version", clazz = Constraints.class, method = "allowVersion1")
-    @AnvilTest(description = "Explicitly encode version 1 field")
+    @ValueConstraint(identifier = "inter0.version", method = "allowVersion1")
+    @AnvilTest()
     public void explicitVersion1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
         config.getIntermediateConfig(0).setVersion(2);  // Set version to 3 to make modification easier

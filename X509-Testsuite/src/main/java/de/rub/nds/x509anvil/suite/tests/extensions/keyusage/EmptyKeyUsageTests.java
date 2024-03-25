@@ -26,7 +26,7 @@ public class EmptyKeyUsageTests extends X509AnvilTest {
         @SeverityLevel(Severity.WARNING)
         @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
         @TestStrength(2)
-        @ValueConstraint(identifier = "entity.ext_key_usage_present", clazz = Constraints.class, method = "enabled")
+        @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
         @AnvilTest
         public void emptyKeyUsageEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
                 X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);

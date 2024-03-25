@@ -30,8 +30,8 @@ public class DomainComponentCaseInsensitiveTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.domain_components_present", clazz = Constraints.class, method = "enabled")
-    @AnvilTest(description = "Tests whether the matching procedure is case-insensitive")
+    @ValueConstraint(identifier = "inter0.domain_components_present", method = "enabled")
+    @AnvilTest()
     public void switchedCaseDomainComponentTest(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, domainComponentCaseSwitchModifier());

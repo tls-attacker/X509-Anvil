@@ -32,7 +32,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest(description = "CN with the same value but different types should still match")
+    @AnvilTest()
     public void typeMismatchCn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.COMMON_NAME));
@@ -45,8 +45,8 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_country_name_present", clazz = Constraints.class, method = "enabled")
-    @AnvilTest(description = "Country with the same value but different types should still match")
+    @ValueConstraint(identifier = "inter0.nc_country_name_present", method = "enabled")
+    @AnvilTest()
     public void typeMismatchCountry(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.COUNTRY_NAME));
@@ -59,8 +59,8 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_organization_present", clazz = Constraints.class, method = "enabled")
-    @AnvilTest(description = "Organization with the same value but different types should still match")
+    @ValueConstraint(identifier = "inter0.nc_organization_present", method = "enabled")
+    @AnvilTest()
     public void typeMismatchOrganization(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.ORGANIZATION_NAME));
@@ -73,8 +73,8 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_organizational_unit_present", clazz = Constraints.class, method = "enabled")
-    @AnvilTest(description = "OrganizationalUnit with the same value but different types should still match")
+    @ValueConstraint(identifier = "inter0.nc_organizational_unit_present", method = "enabled")
+    @AnvilTest()
     public void typeMismatchOrganizationalUnit(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.ORGANIZATIONAL_UNIT_NAME));
@@ -87,8 +87,8 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_organization_present", clazz = Constraints.class, method = "enabled")
-    @AnvilTest(description = "DN Qualifier with the same value but different types should still match")
+    @ValueConstraint(identifier = "inter0.nc_organization_present", method = "enabled")
+    @AnvilTest()
     public void typeMismatchDnQualifier(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         chainConfig.getIntermediateConfig(0).getSubject().addNameComponent(AttributeTypeObjectIdentifiers.DN_QUALIFIER, "dnq", DirectoryStringType.PRINTABLE);
@@ -102,8 +102,8 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_state_province_present", clazz = Constraints.class, method = "enabled")
-    @AnvilTest(description = "State or Province with the same value but different types should still match")
+    @ValueConstraint(identifier = "inter0.nc_state_province_present", method = "enabled")
+    @AnvilTest()
     public void typeMismatchStateProvince(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.STATE_OR_PROVINCE_NAME));
@@ -116,8 +116,8 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_serial_number_present", clazz = Constraints.class, method = "enabled")
-    @AnvilTest(description = "Serial number with the same value but different types should still match")
+    @ValueConstraint(identifier = "inter0.nc_serial_number_present", method = "enabled")
+    @AnvilTest()
     public void typeMismatchSerialNumber(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.SERIAL_NUMBER));

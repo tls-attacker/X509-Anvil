@@ -25,8 +25,8 @@ public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "entity.issuer_unique_id_present", clazz = Constraints.class, method = "disabled")
-    @ValueConstraint(identifier = "entity.version", clazz = Constraints.class, method = "allowVersion1")
+    @ValueConstraint(identifier = "entity.issuer_unique_id_present", method = "disabled")
+    @ValueConstraint(identifier = "entity.version", method = "allowVersion1")
     @AnvilTest
     public void issuerUniqueIdPresentInV1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
@@ -41,7 +41,7 @@ public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.issuer_unique_id_present", clazz = Constraints.class, method = "disabled")
+    @ValueConstraint(identifier = "inter0.issuer_unique_id_present", method = "disabled")
     @AnvilTest
     public void issuerUniqueIdPresentInV1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);

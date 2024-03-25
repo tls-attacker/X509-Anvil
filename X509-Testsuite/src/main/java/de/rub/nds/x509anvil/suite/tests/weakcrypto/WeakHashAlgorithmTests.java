@@ -18,10 +18,10 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class WeakHashAlgorithmTests extends X509AnvilTest {
 
-    @AnvilTest(description = "Check whether verifier accepts signatures computed with insecure hash algorithm MD2")
+    @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @ValueConstraint(identifier = "inter0.key_type", clazz = Constraints.class, method = "allowRsa")
+    @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
     public void weakHashMd2(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         certificateChainConfig.getIntermediateConfig(0).setHashAlgorithm(HashAlgorithm.MD2);
@@ -29,10 +29,10 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @AnvilTest(description = "Check whether verifier accepts signatures computed with insecure hash algorithm MD4")
+    @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @ValueConstraint(identifier = "inter0.key_type", clazz = Constraints.class, method = "allowRsa")
+    @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
     public void weakHashMd4(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         certificateChainConfig.getIntermediateConfig(0).setHashAlgorithm(HashAlgorithm.MD4);
@@ -40,10 +40,10 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @AnvilTest(description = "Check whether verifier accepts signatures computed with insecure hash algorithm MD5")
+    @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @ValueConstraint(identifier = "inter0.key_type", clazz = Constraints.class, method = "allowRsa")
+    @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
     public void weakHashMd5(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         certificateChainConfig.getIntermediateConfig(0).setHashAlgorithm(HashAlgorithm.MD5);
@@ -51,7 +51,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @AnvilTest(description = "Check whether verifier accepts signatures computed with insecure hash algorithm SHA1")
+    @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     public void weakHashSha1(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

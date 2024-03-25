@@ -31,7 +31,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "entity.ext_key_usage_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
     public void duplicateIdenticalEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, Modifiers.duplicateIdenticalExtensionModifier(true, ExtensionObjectIdentifiers.KEY_USAGE));
@@ -43,7 +43,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_key_usage_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
     public void duplicateIdenticalIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, Modifiers.duplicateIdenticalExtensionModifier(false, ExtensionObjectIdentifiers.KEY_USAGE));
@@ -55,7 +55,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "entity.ext_key_usage_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
     public void duplicateDifferentEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, Modifiers.duplicateDifferentExtensionModifier(true,
@@ -68,7 +68,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_key_usage_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
     public void duplicateDifferentIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, Modifiers.duplicateDifferentExtensionModifier(false,

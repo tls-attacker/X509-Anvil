@@ -29,7 +29,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "entity.ext_subject_key_identifier_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "entity.ext_subject_key_identifier_present", method = "enabled")
     public void duplicateIdenticalEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, Modifiers.duplicateIdenticalExtensionModifier(true, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
@@ -41,7 +41,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
     public void duplicateIdenticalIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, Modifiers.duplicateIdenticalExtensionModifier(false, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
@@ -53,7 +53,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "entity.ext_subject_key_identifier_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "entity.ext_subject_key_identifier_present", method = "enabled")
     public void duplicateDifferentEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, Modifiers.duplicateDifferentExtensionModifier(true,
@@ -66,7 +66,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
     public void duplicateDifferentIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(chainConfig, Modifiers.duplicateDifferentExtensionModifier(false,
