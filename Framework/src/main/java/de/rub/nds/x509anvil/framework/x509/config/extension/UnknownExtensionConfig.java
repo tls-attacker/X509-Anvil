@@ -11,11 +11,9 @@ package de.rub.nds.x509anvil.framework.x509.config.extension;
 
 import de.rub.nds.asn1.model.Asn1PrimitiveBitString;
 import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
+import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
-import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-
-import java.util.HashMap;
 
 public class UnknownExtensionConfig extends ExtensionConfig {
 
@@ -25,12 +23,13 @@ public class UnknownExtensionConfig extends ExtensionConfig {
 
     @Override
     protected Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
-        X509CertificateConfig previousConfig) throws CertificateGeneratorException {
+        X509CertificateConfig previousConfig) {
         Asn1PrimitiveBitString unknownExtAsn1 = new Asn1PrimitiveBitString();
         unknownExtAsn1.setIdentifier("unknownExtension");
         unknownExtAsn1.setValue(new byte[] { 0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70 });
+        Asn1FieldSerializer serializer = new Asn1FieldSerializer(unknownExtAsn1);
 
-        byte[] derEncoded = Asn1EncoderForX509.encode(new Linker(new HashMap<>()), unknownExtAsn1);
+        byte[] derEncoded = serializer.serialize();
         Asn1PrimitiveOctetString extensionValue = new Asn1PrimitiveOctetString();
         extensionValue.setValue(derEncoded);
         return extensionValue;

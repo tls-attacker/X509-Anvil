@@ -11,11 +11,9 @@ package de.rub.nds.x509anvil.framework.x509.config.extension;
 
 import de.rub.nds.asn1.model.Asn1PrimitiveBitString;
 import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
+import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
-import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-
-import java.util.HashMap;
 
 public class KeyUsageExtensionConfig extends ExtensionConfig {
     public static int DIGITAL_SIGNATURE = 128;
@@ -177,13 +175,14 @@ public class KeyUsageExtensionConfig extends ExtensionConfig {
 
     @Override
     protected Asn1PrimitiveOctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
-        X509CertificateConfig previousConfig) throws CertificateGeneratorException {
+        X509CertificateConfig previousConfig) {
         Asn1PrimitiveBitString keyUsageAsn1 = new Asn1PrimitiveBitString();
         keyUsageAsn1.setIdentifier("keyUsage");
         keyUsageAsn1.setValue(flags);
         keyUsageAsn1.setUnusedBits(7);
 
-        byte[] derEncoded = Asn1EncoderForX509.encode(new Linker(new HashMap<>()), keyUsageAsn1);
+        Asn1FieldSerializer serializer = new Asn1FieldSerializer(keyUsageAsn1);
+        byte[] derEncoded = serializer.serialize();
         Asn1PrimitiveOctetString extensionValue = new Asn1PrimitiveOctetString();
         extensionValue.setValue(derEncoded);
         return extensionValue;

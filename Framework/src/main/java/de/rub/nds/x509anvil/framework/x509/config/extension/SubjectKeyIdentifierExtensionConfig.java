@@ -10,13 +10,13 @@
 package de.rub.nds.x509anvil.framework.x509.config.extension;
 
 import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
+import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
 import org.bouncycastle.asn1.x509.SubjectKeyIdentifier;
 import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 
 public class SubjectKeyIdentifierExtensionConfig extends ExtensionConfig {
 
@@ -38,7 +38,8 @@ public class SubjectKeyIdentifierExtensionConfig extends ExtensionConfig {
             throw new IllegalStateException(e);
         }
 
-        byte[] derEncoded = Asn1EncoderForX509.encode(new Linker(new HashMap<>()), subjectKeyIdentifierAsn1);
+        Asn1FieldSerializer serializer = new Asn1FieldSerializer(subjectKeyIdentifierAsn1);
+        byte[] derEncoded = serializer.serialize();
 
         Asn1PrimitiveOctetString extensionValue = new Asn1PrimitiveOctetString();
         extensionValue.setValue(derEncoded);

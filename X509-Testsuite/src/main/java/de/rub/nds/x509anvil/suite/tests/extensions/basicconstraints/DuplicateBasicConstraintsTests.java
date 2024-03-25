@@ -3,13 +3,13 @@ package de.rub.nds.x509anvil.suite.tests.extensions.basicconstraints;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
-import de.rub.nds.asn1.encoder.Asn1EncoderForX509;
 import de.rub.nds.asn1.model.Asn1Boolean;
 import de.rub.nds.asn1.model.Asn1Integer;
 import de.rub.nds.asn1.model.Asn1Sequence;
+import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
@@ -23,12 +23,10 @@ import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExte
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.suite.tests.util.Constraints;
 import de.rub.nds.x509anvil.suite.tests.util.Modifiers;
-import de.rub.nds.x509attacker.linker.Linker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 import java.math.BigInteger;
-import java.util.HashMap;
 
 public class DuplicateBasicConstraintsTests extends X509AnvilTest {
 
@@ -95,6 +93,7 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
             basicConstraintsAsn1.addChild(pathLenConstraintAsn1);
         }
 
-        return Asn1EncoderForX509.encode(new Linker(new HashMap<>()), basicConstraintsAsn1);
+        Asn1FieldSerializer serializer = new Asn1FieldSerializer(basicConstraintsAsn1);
+        return serializer.serialize();
     }
 }

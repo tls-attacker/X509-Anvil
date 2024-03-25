@@ -3,13 +3,13 @@ package de.rub.nds.x509anvil.suite.tests.extensions.authoritykeyid;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
-import de.rub.nds.asn1.encoder.Asn1EncoderForX509;
 import de.rub.nds.asn1.model.Asn1Implicit;
 import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
 import de.rub.nds.asn1.model.Asn1Sequence;
+import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
@@ -21,11 +21,8 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.suite.tests.util.Constraints;
 import de.rub.nds.x509anvil.suite.tests.util.Modifiers;
 import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
-import de.rub.nds.x509attacker.linker.Linker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
-
-import java.util.HashMap;
 
 public class DuplicateAuthKeyIdTests extends X509AnvilTest {
 
@@ -86,6 +83,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
         keyId.setValue(TestUtils.createByteArray(20));
         keyIdImplicit.addChild(keyId);
         authorityKeyIdentifier.addChild(keyIdImplicit);
-        return Asn1EncoderForX509.encode(new Linker(new HashMap<>()), authorityKeyIdentifier);
+        Asn1FieldSerializer serializer = new Asn1FieldSerializer(authorityKeyIdentifier);
+        return serializer.serialize();
     }
 }
