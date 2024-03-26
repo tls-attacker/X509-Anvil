@@ -60,7 +60,7 @@ public class X509CertificateGenerator {
         // Set subject key info
         try {
             byte[] key = PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPublic().getEncoded(), "PUBLIC KEY");
-            SubjectPublicKeyInfo subjectPublicKeyInfo =  new SubjectPublicKeyInfo("subject_key");
+            SubjectPublicKeyInfo subjectPublicKeyInfo = new SubjectPublicKeyInfo("subject_key");
             PublicKeyBitString publicKeyBitString = new PublicKeyBitString("public_key");
             publicKeyBitString.setContent(key);
             subjectPublicKeyInfo.setSubjectPublicKeyBitString(publicKeyBitString);
@@ -149,7 +149,7 @@ public class X509CertificateGenerator {
         }
         x509Certificate.getTbsCertificate().getSignature().setAlgorithm(algorithm);
 
-        // TODO no parameters, null parameter, parameters....
+        // TODO (old) no parameters, null parameter, parameters....
     }
 
     private void setIssuer() throws CertificateGeneratorException {
