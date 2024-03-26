@@ -42,7 +42,7 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
 
     static {
         Config config = new Config();
-        config.setAutoSelectCertificate(false);
+        config.setAutoAdjustCertificate(false);
         config.setDefaultClientConnection(new OutboundConnection("client", 4433, "localhost"));
         config.setClientAuthentication(true);
 

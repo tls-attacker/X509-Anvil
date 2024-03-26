@@ -47,8 +47,8 @@ public class NameComponentPresentParameter extends BooleanCertificateSpecificPar
         if (getSelectedValue()) {
             List<Pair<X500AttributeType, String>> name = new LinkedList<>();
             name.add(new Pair<>(Arrays.stream(X500AttributeType.values())
-                    .filter(x500AttributeType -> x500AttributeType.getOid().toString().equals(nameComponentOid))
-                    .collect(Collectors.toList()).get(0), value));
+                .filter(x500AttributeType -> x500AttributeType.getOid().toString().equals(nameComponentOid))
+                .collect(Collectors.toList()).get(0), value));
             RelativeDistinguishedName nameToAdd = new RelativeDistinguishedName("relativeDistinguishedName", name);
             certificateConfig.getSubject().addRelativeDistinguishedNames(nameToAdd);
         }

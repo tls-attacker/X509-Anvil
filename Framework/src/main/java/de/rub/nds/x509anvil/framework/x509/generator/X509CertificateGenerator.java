@@ -17,6 +17,7 @@ import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509attacker.constants.TimeContextHint;
 import de.rub.nds.x509attacker.x509.model.*;
+import de.rub.nds.x509attacker.x509.model.publickey.PublicKeyBitString;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.IOException;
@@ -59,10 +60,11 @@ public class X509CertificateGenerator {
         // Set subject key info
         try {
             byte[] key = PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPublic().getEncoded(), "PUBLIC KEY");
-            x509Certificate.getTbsCertificate().setSubjectPublicKeyInfo();
-            x509Certificate.getTbsCertificate().getSubjectPublicKeyInfo().setSubjectPublicKeyBitString(key); // TODO:
-                                                                                                             // set key
-                                                                                                             // somehow?
+            SubjectPublicKeyInfo subjectPublicKeyInfo =  new SubjectPublicKeyInfo("subject_key");
+            PublicKeyBitString publicKeyBitString = new PublicKeyBitString("public_key");
+            publicKeyBitString.setContent(key);
+            subjectPublicKeyInfo.setSubjectPublicKeyBitString(publicKeyBitString);
+            x509Certificate.getTbsCertificate().setSubjectPublicKeyInfo(subjectPublicKeyInfo);
         } catch (IOException e) {
             throw new CertificateGeneratorException("Unable to encode public key as pem", e);
         }
