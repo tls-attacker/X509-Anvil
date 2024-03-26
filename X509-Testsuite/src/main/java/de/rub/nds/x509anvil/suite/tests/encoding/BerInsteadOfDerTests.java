@@ -19,10 +19,12 @@ import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509attacker.x509.model.Extension;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 import java.math.BigInteger;
+import java.util.stream.Collectors;
 
 public class BerInsteadOfDerTests extends X509AnvilTest {
 
@@ -85,8 +87,8 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     private static X509CertificateModifier nonFFTrueBooleanModifier(boolean entity) {
         return (certificate, config, previousConfig) -> {
             if (entity && config.isEntity() || !entity && config.isIntermediate()) {
-                Asn1Sequence keyUsageExtension = X509Util.getExtensionByOid(certificate, ExtensionObjectIdentifiers.KEY_USAGE);
-                Asn1Boolean critical = (Asn1Boolean) keyUsageExtension.getChildren().get(1);
+                Extension keyUsageExtension = X509Util.getExtensionByOid(certificate, ExtensionObjectIdentifiers.KEY_USAGE);
+                Asn1Boolean critical = keyUsageExtension.getCritical();
                 critical.setContent(new byte[]{0x01});
             }
         };
@@ -95,9 +97,7 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     private static X509CertificateModifier explicitVersion1Modifier(boolean entity) {
         return (certificate, config, previousConfig) -> {
             if (entity && config.isEntity() || !entity && config.isIntermediate()) {
-                Asn1Integer version = (Asn1Integer) X509Util.getAsn1ElementByIdentifierPath(certificate,
-                        "tbsCertificate", "explicitversion", "version");
-                version.setValue(BigInteger.valueOf(0));
+                certificate.getTbsCertificate().getVersion().getInnerField().setValue(BigInteger.valueOf(0));
             }
         };
     }

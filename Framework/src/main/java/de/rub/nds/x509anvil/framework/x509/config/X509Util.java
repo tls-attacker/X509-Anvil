@@ -14,7 +14,9 @@ import de.rub.nds.asn1.model.*;
 import de.rub.nds.asn1.parser.Asn1Parser;
 import de.rub.nds.asn1.parser.IntermediateAsn1Field;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
+import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
+import de.rub.nds.x509attacker.x509.model.Extension;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import javax.security.cert.CertificateException;
@@ -26,6 +28,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class X509Util {
     public static Asn1Encodable getAsn1ElementByIdentifierPath(X509Certificate x509Certificate, String... identifiers) {
@@ -44,37 +47,15 @@ public class X509Util {
         return currentAsn1Encodable;
     }
 
-    public static Asn1Encodable getAsn1ElementByIdentifierPath(Asn1Container asn1Container, String... identifiers) {
-        Asn1Encodable currentAsn1Encodable = (Asn1Encodable) asn1Container;
-        for (String identifier : identifiers) {
-            if (currentAsn1Encodable instanceof Asn1Container) {
-                currentAsn1Encodable = ((Asn1Container) currentAsn1Encodable).getChildren().stream()
-                    .filter(encodable -> encodable.getIdentifier().equals(identifier)).findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(
-                        "Could not find " + identifier + " in " + String.join("/", identifiers)));
-            } else {
-                throw new IllegalArgumentException(identifier + " is not a container");
-            }
+    public static Extension getExtensionByOid(X509Certificate x509Certificate, String oid) {
+        try {
+            return x509Certificate.getTbsCertificate().getExplicitExtensions().getInnerField().getExtensionList().stream()
+                    .filter(extension -> extension.getExtnID().getValue().getValue().equals(oid))
+                    .collect(Collectors.toList())
+                    .get(0);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("Extensions not found");
         }
-        return currentAsn1Encodable;
-    }
-
-    public static Asn1Sequence getExtensionByOid(X509Certificate x509Certificate, String oid) {
-        Asn1Sequence extensionsAsn1 = (Asn1Sequence) getAsn1ElementByIdentifierPath(x509Certificate, "tbsCertificate",
-            "explicitExtensions", "extensions");
-        for (Asn1Encodable child : extensionsAsn1.getChildren()) {
-            if (!(child instanceof Asn1Sequence)) {
-                throw new IllegalArgumentException("Unexpected Asn1 Tag while searching for extension");
-            }
-            Asn1Sequence extension = (Asn1Sequence) child;
-            if (extension.getChildren().get(0) instanceof Asn1ObjectIdentifier) {
-                Asn1ObjectIdentifier extnId = (Asn1ObjectIdentifier) extension.getChildren().get(0);
-                if (extnId.getValue().equals(oid)) {
-                    return extension;
-                }
-            }
-        }
-        throw new IllegalArgumentException("Extensions not found");
     }
 
     public static KeyPair retrieveKeyPairFromX509Certificate(X509Certificate x509Certificate) {

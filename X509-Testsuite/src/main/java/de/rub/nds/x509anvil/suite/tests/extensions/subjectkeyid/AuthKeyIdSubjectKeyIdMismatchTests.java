@@ -4,6 +4,7 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.asn1.model.Asn1Implicit;
+import de.rub.nds.asn1.model.Asn1OctetString;
 import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
 import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
@@ -21,6 +22,7 @@ import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdent
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
 import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
+import de.rub.nds.x509attacker.x509.model.Extension;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -57,17 +59,8 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
     public static X509CertificateModifier authKeyMismatch(boolean entity) {
         return (certificate, config, previousConfig) -> {
             if (entity && config.isEntity() || !entity && config.isIntermediate()) {
-                Asn1Sequence extension = X509Util.getExtensionByOid(certificate, ExtensionObjectIdentifiers.AUTHORITY_KEY_IDENTIFIER);
-                Asn1PrimitiveOctetString extnValue;
-                if (extension.getChildren().get(1) instanceof Asn1PrimitiveOctetString) {
-                    extnValue = (Asn1PrimitiveOctetString) extension.getChildren().get(1);
-                }
-                else if (extension.getChildren().get(2) instanceof Asn1PrimitiveOctetString) {
-                    extnValue = (Asn1PrimitiveOctetString) extension.getChildren().get(2);
-                }
-                else {
-                    throw new RuntimeException("Extension has no value");
-                }
+                Extension extension = X509Util.getExtensionByOid(certificate, ExtensionObjectIdentifiers.AUTHORITY_KEY_IDENTIFIER);
+                Asn1OctetString extnValue = extension.getExtnValue();
 
                 Asn1Sequence authorityKeyIdentifier = new Asn1Sequence();
                 Asn1PrimitiveOctetString keyIdentifier = new Asn1PrimitiveOctetString();

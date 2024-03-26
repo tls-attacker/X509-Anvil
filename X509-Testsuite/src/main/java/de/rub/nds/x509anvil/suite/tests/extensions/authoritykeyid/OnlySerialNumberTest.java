@@ -3,10 +3,7 @@ package de.rub.nds.x509anvil.suite.tests.extensions.authoritykeyid;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
-import de.rub.nds.asn1.model.Asn1Implicit;
-import de.rub.nds.asn1.model.Asn1Integer;
-import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
-import de.rub.nds.asn1.model.Asn1Sequence;
+import de.rub.nds.asn1.model.*;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -21,7 +18,8 @@ import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
-import org.bouncycastle.asn1.x509.AuthorityKeyIdentifier;
+import de.rub.nds.x509attacker.x509.model.Extension;
+import de.rub.nds.x509attacker.x509.model.extensions.AuthorityKeyIdentifier;
 import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
@@ -48,19 +46,10 @@ public class OnlySerialNumberTest extends X509AnvilTest {
     public static X509CertificateModifier serialWithoutIssuerModifier(boolean entity) {
         return (certificate, config, previousConfig) -> {
             if (entity && config.isEntity() || !entity && config.isIntermediate()) {
-                Asn1Sequence extension = X509Util.getExtensionByOid(certificate, ExtensionObjectIdentifiers.AUTHORITY_KEY_IDENTIFIER);
-                Asn1PrimitiveOctetString extnValue;
-                if (extension.getChildren().get(1) instanceof Asn1PrimitiveOctetString) {
-                    extnValue = (Asn1PrimitiveOctetString) extension.getChildren().get(1);
-                }
-                else if (extension.getChildren().get(2) instanceof Asn1PrimitiveOctetString) {
-                    extnValue = (Asn1PrimitiveOctetString) extension.getChildren().get(2);
-                }
-                else {
-                    throw new RuntimeException("Extension has no value");
-                }
+                Extension extension = X509Util.getExtensionByOid(certificate, ExtensionObjectIdentifiers.AUTHORITY_KEY_IDENTIFIER);
+                Asn1OctetString extnValue = extension.getExtnValue();
 
-                Asn1Sequence authorityKeyIdentifierAsn1 = new Asn1Sequence();
+                Asn1Sequence authorityKeyIdentifierAsn1 = new AuthorityKeyIdentifier("withoutIssuer");
 
                 Asn1Implicit keyIdImplicit = new Asn1Implicit();
                 keyIdImplicit.setOffset(0);
@@ -70,7 +59,7 @@ public class OnlySerialNumberTest extends X509AnvilTest {
 
                 try {
                     JcaX509ExtensionUtils jcaX509ExtensionUtils = new JcaX509ExtensionUtils();
-                    AuthorityKeyIdentifier authorityKeyIdentifier = jcaX509ExtensionUtils.createAuthorityKeyIdentifier(previousConfig.getKeyPair().getPublic());
+                    org.bouncycastle.asn1.x509.AuthorityKeyIdentifier authorityKeyIdentifier = jcaX509ExtensionUtils.createAuthorityKeyIdentifier(previousConfig.getKeyPair().getPublic());
                     keyIdentifierAsn1.setValue(authorityKeyIdentifier.getKeyIdentifier());
                 } catch (NoSuchAlgorithmException e) {
                     throw new RuntimeException(e);
