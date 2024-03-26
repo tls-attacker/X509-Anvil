@@ -16,7 +16,6 @@ import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
-import de.rub.nds.x509anvil.framework.x509.config.model.DirectoryStringType;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 

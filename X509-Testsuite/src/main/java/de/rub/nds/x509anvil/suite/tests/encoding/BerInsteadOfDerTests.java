@@ -4,8 +4,6 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.asn1.model.Asn1Boolean;
-import de.rub.nds.asn1.model.Asn1Integer;
-import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -24,7 +22,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 import java.math.BigInteger;
-import java.util.stream.Collectors;
 
 public class BerInsteadOfDerTests extends X509AnvilTest {
 

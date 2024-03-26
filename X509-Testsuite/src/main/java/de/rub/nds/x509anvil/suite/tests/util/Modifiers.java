@@ -6,9 +6,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
 
 import de.rub.nds.x509attacker.x509.model.Extension;
-import jakarta.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
-import java.io.IOException;
+
 import java.math.BigInteger;
 import java.util.Arrays;
 

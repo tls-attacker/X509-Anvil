@@ -5,8 +5,6 @@ import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.asn1.model.Asn1OctetString;
 import de.rub.nds.asn1.model.Asn1PrimitiveBitString;
-import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
-import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
