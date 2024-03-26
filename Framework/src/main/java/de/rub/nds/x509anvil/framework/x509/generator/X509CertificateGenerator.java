@@ -18,6 +18,7 @@ import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509attacker.constants.TimeContextHint;
 import de.rub.nds.x509attacker.x509.model.*;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -168,18 +169,16 @@ public class X509CertificateGenerator {
             } else {
                 if (!certificateConfig.isSelfSigned() && previousConfig.isSharedConfig()) {
                     issuer = previousConfig.getSubject();
-                    Asn1Encodable cn = X509Util.getCnFromName(issuer);
-                    // TODO: create if null (old TODO)
+                    RelativeDistinguishedName cn = X509Util.getCnFromName(issuer);
+
                     if (cn == null) {
                         throw new CertificateGeneratorException("Shared cert has no subject CN");
                     }
-                    if (cn instanceof Asn1PrimitivePrintableString) {
-                        ((Asn1PrimitivePrintableString) cn).setValue(
-                            ((Asn1PrimitivePrintableString) cn).getValue() + "_" + (previousConfig.getSharedId() - 1));
-                    } else if (cn instanceof Asn1PrimitiveUtf8String) {
-                        ((Asn1PrimitiveUtf8String) cn).setValue(
-                            ((Asn1PrimitiveUtf8String) cn).getValue() + "_" + (previousConfig.getSharedId() - 1));
-                    }
+                    Asn1OctetString asn1PrintableString = new Asn1OctetString("new_cn");
+                    asn1PrintableString.setValue(
+                        ArrayUtils.addAll(cn.getAttributeTypeAndValueList().get(0).getValue().getContent().getValue(),
+                            ("_" + (previousConfig.getSharedId() - 1)).getBytes()));
+
                     x509Certificate.getTbsCertificate().setIssuer(issuer);
                 }
             }
@@ -187,20 +186,19 @@ public class X509CertificateGenerator {
     }
 
     private void setSubject() throws CertificateGeneratorException {
-        Asn1Sequence subject = certificateConfig.getSubject();
+        Name subject = certificateConfig.getSubject();
         if (certificateConfig.isSharedConfig()) {
-            Asn1Encodable cn = X509Util.getCnFromName(subject);
-            // TODO create if null
+            RelativeDistinguishedName cn = X509Util.getCnFromName(subject);
+
             if (cn == null) {
                 throw new CertificateGeneratorException("Shared cert has no subject CN");
             }
-            if (cn instanceof Asn1PrimitivePrintableString) {
-                ((Asn1PrimitivePrintableString) cn)
-                    .setValue(((Asn1PrimitivePrintableString) cn).getValue() + "_" + certificateConfig.getSharedId());
-            } else if (cn instanceof Asn1PrimitiveUtf8String) {
-                ((Asn1PrimitiveUtf8String) cn)
-                    .setValue(((Asn1PrimitiveUtf8String) cn).getValue() + "_" + certificateConfig.getSharedId());
-            }
+            Asn1OctetString asn1PrintableString = new Asn1OctetString("new_cn");
+            asn1PrintableString
+                .setValue(ArrayUtils.addAll(cn.getAttributeTypeAndValueList().get(0).getValue().getContent().getValue(),
+                    ("_" + (previousConfig.getSharedId() - 1)).getBytes()));
+
+            x509Certificate.getTbsCertificate().setSubject(subject);
             certificateConfig.setSharedId(certificateConfig.getSharedId() + 1);
         }
     }

@@ -2,10 +2,8 @@ package de.rub.nds.x509anvil.suite.tests.namechaining;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
-import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
-import de.rub.nds.asn1.model.Asn1Sequence;
-import de.rub.nds.asn1.model.Asn1Set;
+import de.rub.nds.asn1.model.*;
+import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -19,8 +17,15 @@ import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
+import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
+import de.rub.nds.x509attacker.x509.model.Name;
+import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class AttributeNumberMismatchTests extends X509AnvilTest {
 
@@ -52,9 +57,8 @@ public class AttributeNumberMismatchTests extends X509AnvilTest {
     private static X509CertificateModifier missingAttributeModifier() {
         return (certificate, config, previousConfig) -> {
             if (config.isIntermediate()) {
-                Asn1Sequence subjectAsn1 = (Asn1Sequence) X509Util.getAsn1ElementByIdentifierPath(certificate,
-                        "tbsCertificate", "subject");
-                Asn1Set cnRdn = X509Util.getRdnFromName(subjectAsn1, AttributeTypeObjectIdentifiers.COMMON_NAME);
+                Name subject = certificate.getTbsCertificate().getSubject();
+                RelativeDistinguishedName cnRdn = X509Util.getRdnFromName(subject, AttributeTypeObjectIdentifiers.COMMON_NAME);
                 addAttributeToCn(cnRdn);
             }
         };
@@ -64,22 +68,24 @@ public class AttributeNumberMismatchTests extends X509AnvilTest {
     private static X509CertificateModifier additionalAttributeModifier() {
         return (certificate, config, previousConfig) -> {
             if (config.isEntity()) {
-                Asn1Sequence issuerAsn1 = (Asn1Sequence) X509Util.getAsn1ElementByIdentifierPath(certificate,
-                        "tbsCertificate", "issuer");
-                Asn1Set cnRdn = X509Util.getRdnFromName(issuerAsn1, AttributeTypeObjectIdentifiers.COMMON_NAME);
+                Name issuer = certificate.getTbsCertificate().getIssuer();
+                RelativeDistinguishedName cnRdn = X509Util.getRdnFromName(issuer, AttributeTypeObjectIdentifiers.COMMON_NAME);
                 addAttributeToCn(cnRdn);
             }
         };
     }
 
-    private static void addAttributeToCn(Asn1Set cn) {
-        Asn1Sequence cnAttribute = new Asn1Sequence();
-        Asn1ObjectIdentifier type = new Asn1ObjectIdentifier();
-        type.setValue(AttributeTypeObjectIdentifiers.COMMON_NAME);
-        cnAttribute.addChild(type);
-        Asn1PrimitivePrintableString value = new Asn1PrimitivePrintableString();
-        value.setValue("additional-cn");
-        cnAttribute.addChild(value);
-        cn.addChild(cnAttribute);
+    private static void addAttributeToCn(RelativeDistinguishedName cn) {
+        AttributeTypeAndValue attributeTypeAndValue = new AttributeTypeAndValue("additional-cn");
+
+        Asn1ObjectIdentifier asn1ObjectIdentifier = new Asn1ObjectIdentifier("cn");
+        asn1ObjectIdentifier.setValue(AttributeTypeObjectIdentifiers.COMMON_NAME);
+        attributeTypeAndValue.setType(asn1ObjectIdentifier);
+
+        Asn1OctetString asn1OctetString = new Asn1OctetString("additional-cn");
+        asn1OctetString.setValue("additional-cn".getBytes());
+        attributeTypeAndValue.setValue(asn1OctetString);
+
+        cn.addAttributeTypeAndValue(attributeTypeAndValue);
     }
 }

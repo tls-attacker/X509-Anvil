@@ -96,7 +96,7 @@ public class Modifiers {
                 Asn1Sequence extensionSequence = (Asn1Sequence) X509Util.getAsn1ElementByIdentifierPath(certificate,
                         "tbsCertificate", "explicitExtensions", "extensions");
                 Asn1Sequence extension = null;
-                extension = (Asn1Sequence) X509Util.getExtensionByOid(certificate, extensionOid);
+                extension = X509Util.getExtensionByOid(certificate, extensionOid);
 
                 extension.setIdentifier(extension.getIdentifier() + "_copy");
 

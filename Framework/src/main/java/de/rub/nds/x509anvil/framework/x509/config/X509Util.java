@@ -10,13 +10,15 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.Asn1Encodable;
-import de.rub.nds.asn1.model.*;
-import de.rub.nds.asn1.parser.Asn1Parser;
-import de.rub.nds.asn1.parser.IntermediateAsn1Field;
+import de.rub.nds.asn1.model.Asn1Container;
+import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
+import de.rub.nds.asn1.model.Asn1Sequence;
+import de.rub.nds.asn1.model.Asn1Set;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
-import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
 import de.rub.nds.x509attacker.x509.model.Extension;
+import de.rub.nds.x509attacker.x509.model.Name;
+import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import javax.security.cert.CertificateException;
@@ -28,6 +30,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class X509Util {
@@ -49,10 +52,9 @@ public class X509Util {
 
     public static Extension getExtensionByOid(X509Certificate x509Certificate, String oid) {
         try {
-            return x509Certificate.getTbsCertificate().getExplicitExtensions().getInnerField().getExtensionList().stream()
-                    .filter(extension -> extension.getExtnID().getValue().getValue().equals(oid))
-                    .collect(Collectors.toList())
-                    .get(0);
+            return x509Certificate.getTbsCertificate().getExplicitExtensions().getInnerField().getExtensionList()
+                .stream().filter(extension -> extension.getExtnID().getValue().getValue().equals(oid))
+                .collect(Collectors.toList()).get(0);
         } catch (IndexOutOfBoundsException e) {
             throw new IllegalArgumentException("Extensions not found");
         }
@@ -139,54 +141,27 @@ public class X509Util {
         outputStream.write((byte) value);
     }
 
-    public static byte[] extractKeyBytesFromSubjectPublicKeyInfo(byte[] subjectPublicKeyInfoBytes) {
-        Asn1Parser asn1Parser = new Asn1Parser(subjectPublicKeyInfoBytes, false);
-        List<IntermediateAsn1Field> intermediateAsn1Fields = asn1Parser.parseIntermediateFields();
-        // TODO Error handling
-        return intermediateAsn1Fields.get(0).getChildren().get(1).getContent();
-    }
-
     public static void exportCertificates(List<X509Certificate> certificateChain, String directory) {
         X509CertificateChain x509CertificateChain = new X509CertificateChain(certificateChain);
         x509CertificateChain.writeCertificateChainToFile(directory, X509CertChainOutFormat.CHAIN_ALL_IND_ROOT_TO_LEAF);
     }
 
-    public static Asn1Encodable getCnFromName(Asn1Sequence name) {
-        for (Asn1Encodable child : name.getChildren()) {
-            if (child instanceof Asn1Set) {
-                Asn1Set relativeDistinguishedName = (Asn1Set) child;
-                for (Asn1Encodable rdnchild : relativeDistinguishedName.getChildren()) {
-                    if (rdnchild instanceof Asn1Sequence) {
-                        Asn1Sequence attributeTypeAndValue = (Asn1Sequence) rdnchild;
-                        Asn1Encodable objectId = attributeTypeAndValue.getChildren().get(0);
-                        if (objectId instanceof Asn1ObjectIdentifier) {
-                            if (((Asn1ObjectIdentifier) objectId).getValue()
-                                .equals(AttributeTypeObjectIdentifiers.COMMON_NAME)) {
-                                return attributeTypeAndValue.getChildren().get(1);
-                            }
-                        }
-                    }
-                }
+    public static RelativeDistinguishedName getCnFromName(Name name) {
+        for (RelativeDistinguishedName relativeDistinguishedName : name.getRelativeDistinguishedNames()) {
+            if (relativeDistinguishedName.getAttributeTypeAndValueList().stream()
+                .anyMatch(attributeTypeAndValue -> Objects.equals(attributeTypeAndValue.getType().getValue().getValue(),
+                    AttributeTypeObjectIdentifiers.COMMON_NAME))) {
+                return relativeDistinguishedName;
             }
         }
         return null;
     }
 
-    public static Asn1Set getRdnFromName(Asn1Sequence name, String oid) {
-        for (Asn1Encodable child : name.getChildren()) {
-            if (child instanceof Asn1Set) {
-                Asn1Set relativeDistinguishedName = (Asn1Set) child;
-                for (Asn1Encodable rdnchild : relativeDistinguishedName.getChildren()) {
-                    if (rdnchild instanceof Asn1Sequence) {
-                        Asn1Sequence attributeTypeAndValue = (Asn1Sequence) rdnchild;
-                        Asn1Encodable objectId = attributeTypeAndValue.getChildren().get(0);
-                        if (objectId instanceof Asn1ObjectIdentifier) {
-                            if (((Asn1ObjectIdentifier) objectId).getValue().equals(oid)) {
-                                return relativeDistinguishedName;
-                            }
-                        }
-                    }
-                }
+    public static RelativeDistinguishedName getRdnFromName(Name name, String oid) {
+        for (RelativeDistinguishedName relativeDistinguishedName : name.getRelativeDistinguishedNames()) {
+            if (relativeDistinguishedName.getAttributeTypeAndValueList().stream().anyMatch(
+                attributeTypeAndValue -> Objects.equals(attributeTypeAndValue.getType().getValue().getValue(), oid))) {
+                return relativeDistinguishedName;
             }
         }
         return null;
