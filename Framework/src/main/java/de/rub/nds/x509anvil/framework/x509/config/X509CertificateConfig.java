@@ -18,6 +18,7 @@ import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import java.math.BigInteger;
 import java.security.KeyPair;
+import java.security.PrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,8 @@ public class X509CertificateConfig {
     private CertificateChainPosType certificateChainPosType;
     private boolean isStatic;
     private X509Certificate staticX509Certificate;
+
+    private PrivateKey staticCertificatePrivateKey;
     private boolean isSharedConfig = false; // If this config is used for multiple certificates in a chain
     private int sharedId = 0;
     private boolean selfSigned;
@@ -100,6 +103,14 @@ public class X509CertificateConfig {
     public void setStaticX509Certificate(X509Certificate staticX509Certificate) throws InvalidKeySpecException {
         this.staticX509Certificate = staticX509Certificate;
         this.keyPair = X509Util.retrieveKeyPairFromX509Certificate(staticX509Certificate);
+    }
+
+    public PrivateKey getStaticCertificatePrivateKey() {
+        return staticCertificatePrivateKey;
+    }
+
+    public void setStaticCertificatePrivateKey(PrivateKey staticCertificatePrivateKey) {
+        this.staticCertificatePrivateKey = staticCertificatePrivateKey;
     }
 
     public boolean isSharedConfig() {

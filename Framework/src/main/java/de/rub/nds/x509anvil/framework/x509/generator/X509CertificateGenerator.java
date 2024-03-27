@@ -10,18 +10,29 @@
 package de.rub.nds.x509anvil.framework.x509.generator;
 
 import de.rub.nds.asn1.model.*;
+import de.rub.nds.asn1.parser.ParserHelper;
+import de.rub.nds.protocol.constants.SignatureAlgorithm;
+import de.rub.nds.protocol.crypto.key.PrivateKeyContainer;
+import de.rub.nds.protocol.crypto.key.RsaPrivateKey;
+import de.rub.nds.protocol.crypto.signature.SignatureCalculator;
+import de.rub.nds.x509anvil.framework.constants.KeyType;
 import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509attacker.constants.TimeContextHint;
+import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 import de.rub.nds.x509attacker.x509.model.*;
 import de.rub.nds.x509attacker.x509.model.publickey.PublicKeyBitString;
+import de.rub.nds.x509attacker.x509.serializer.X509Asn1FieldSerializer;
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,36 +86,51 @@ public class X509CertificateGenerator {
         }
 
         // Sign certificate
-        byte[] privateKeyForSignature;
-        try {
-            if (certificateConfig.isSelfSigned()) {
-                privateKeyForSignature =
-                    PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
-            } else {
-                if (previousConfig.isStatic()) {
-                    // TODO: Where is the key located now?
-                    privateKeyForSignature = previousConfig.getStaticX509Certificate().getKeyInfo().getKeyBytes();
-                } else {
-                    privateKeyForSignature =
-                        PemUtil.encodeKeyAsPem(previousConfig.getKeyPair().getPrivate().getEncoded(), "PRIVATE KEY");
-                }
-            }
-        } catch (IOException e) {
-            throw new CertificateGeneratorException("Unable to encode private key as pem", e);
+        RsaPrivateKey privateKeyForSignature;
+        X509CertificateConfig configToConsider;
+        if (certificateConfig.isSelfSigned()) {
+            configToConsider = certificateConfig;
+        } else {
+            configToConsider = previousConfig;
         }
-        // TODO: Somehow set private key for signature?
+        // TODO: keep difference when static certificate?
+        if (configToConsider.getKeyType() != KeyType.RSA) {
+            throw new CertificateGeneratorException("Can only generate RSA signatures for now");
+        } else {
+            if (certificateConfig.isStatic()) {
+                privateKeyForSignature = (RsaPrivateKey) configToConsider.getStaticCertificatePrivateKey();
+            } else {
+                privateKeyForSignature = (RsaPrivateKey) configToConsider.getKeyPair().getPrivate();
+            }
+        }
 
-        // TODO: Create signature?
-        x509Certificate.getSignatureComputations().setToBeSignedBytes(x509Certificate.getTbsCertificate().getContent());
-        x509Certificate.getSignatureComputations().setSignatureBytes(todo);// needed?
 
-        // TODO: This was removed. Where is it now?
-        KeyInfo signingKeyInfo = new KeyInfo();
-        signingKeyInfo.setIdentifier("signingKeyInfo");
-        signingKeyInfo.setType("KeyInfo");
-        signingKeyInfo.setKeyBytes(privateKeyForSignature);
-        x509Certificate.signCertificate(signingKeyInfo);
-        // TODO: Is this needed or done automatically?
+        SignatureCalculator signatureCalculator = new SignatureCalculator();
+
+        X509SignatureAlgorithm signatureAlgorithm = x509Certificate.getX509SignatureAlgorithm();
+        if (x509Certificate.getSignatureComputations() == null) {
+            x509Certificate.setSignatureComputations(
+                    signatureCalculator.createSignatureComputations(
+                            signatureAlgorithm.getSignatureAlgorithm()));
+        }
+
+        byte[] toBeSigned = new X509Asn1FieldSerializer(x509Certificate.getTbsCertificate()).serialize();
+        signatureCalculator.computeSignature(
+                x509Certificate.getSignatureComputations(),
+                getPrivateKeyForAlgorithm(signatureAlgorithm.getSignatureAlgorithm(), privateKeyForSignature),
+                toBeSigned,
+                signatureAlgorithm.getSignatureAlgorithm(),
+                signatureAlgorithm.getHashAlgorithm());
+
+        // parse to ASN.1 bit string
+        ParserHelper.parseAsn1BitString(
+                x509Certificate.getSignature(),
+                new BufferedInputStream(
+                        new ByteArrayInputStream(
+                                x509Certificate.getSignatureComputations().getSignatureBytes().getValue()
+                        )
+                )
+        );
     }
 
     public X509Certificate retrieveX509Certificate() throws CertificateGeneratorException {
@@ -284,5 +310,17 @@ public class X509CertificateGenerator {
             algorithm.setContent(previousConfig.getSignatureAlgorithmOid().getBytes());
         }
         x509Certificate.setSignatureAlgorithmIdentifier(algorithm);
+    }
+
+    private PrivateKeyContainer getPrivateKeyForAlgorithm(SignatureAlgorithm signatureAlgorithm, RsaPrivateKey privateKey) {
+        switch (signatureAlgorithm) {
+            case RSA_PKCS1:
+            case RSA_SSA_PSS:
+                return new RsaPrivateKey(
+                        privateKey.getModulus(), privateKey.getPrivateExponent());
+            default:
+                throw new UnsupportedOperationException(
+                        "The keytype \"" + signatureAlgorithm.name() + "\" is not implemented yet");
+        }
     }
 }

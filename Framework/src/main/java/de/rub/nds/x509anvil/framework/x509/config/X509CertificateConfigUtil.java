@@ -15,22 +15,25 @@ import de.rub.nds.x509anvil.framework.constants.CertificateChainPosType;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.KeyType;
+import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
+import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.constants.NameType;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
+import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import de.rub.nds.x509attacker.x509.parser.X509CertificateParser;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Iterator;
 import java.util.UUID;
@@ -110,9 +113,16 @@ public class X509CertificateConfigUtil {
 
     public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String privateKeyFile)
         throws IOException, InvalidKeySpecException {
-        X509Certificate staticRootCertificate = X509CertificateParser.parse(new File(staticCertificateFile));
-        staticRootCertificate.setKeyFile(new File(privateKeyFile));
+        X509Certificate staticRootCertificate = new X509Certificate("staticCertificate");
+        X509CertificateParser parser = new X509CertificateParser(
+                new X509Chooser(
+                        new de.rub.nds.x509attacker.config.X509CertificateConfig(), new X509Context()
+                ), staticRootCertificate);
+        parser.parse(new BufferedInputStream(new FileInputStream(staticCertificateFile)));
+
+        PrivateKey privateKey = de.rub.nds.x509attacker.signatureengine.keyparsers.PemUtil.readPrivateKey(new File(privateKeyFile));
         X509CertificateConfig staticX509CertificateConfig = new X509CertificateConfig();
+        staticX509CertificateConfig.setStaticCertificatePrivateKey(privateKey);
         staticX509CertificateConfig.setStatic(true);
         staticX509CertificateConfig.setStaticX509Certificate(staticRootCertificate);
         return staticX509CertificateConfig;
