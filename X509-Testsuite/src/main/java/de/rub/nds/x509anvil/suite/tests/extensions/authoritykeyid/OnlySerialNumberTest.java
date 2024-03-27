@@ -67,7 +67,7 @@ public class OnlySerialNumberTest extends X509AnvilTest {
 
                 Asn1Implicit serialImplicit = new Asn1Implicit();
                 serialImplicit.setOffset(2);
-                Asn1Integer serialAsn1 = new Asn1Integer();
+                Asn1Integer serialAsn1 = new Asn1Integer("serial");
                 serialImplicit.addChild(serialAsn1);
                 serialAsn1.setValue(previousConfig.getSerialNumber());
                 authorityKeyIdentifierAsn1.addChild(serialImplicit);

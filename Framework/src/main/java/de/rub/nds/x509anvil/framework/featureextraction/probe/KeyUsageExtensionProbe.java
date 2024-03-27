@@ -54,12 +54,7 @@ public class KeyUsageExtensionProbe extends ExtensionProbe {
     protected X509CertificateModifier createInvalidExtensionModifier() {
         return (certificate, config, previousConfig) -> {
             if (config == chainConfig.getEntityCertificateConfig()) {
-                certificate.getTbsCertificate().getExplicitExtensions().getInnerField().getExtensionList()
-                    .forEach(extension -> {
-                        if (extension.getExtnID().getValue().getValue().equals(KEY_USAGE)) {
-                            extension.setContent(new byte[] { 0x02, 0x01, (byte) 0xff });
-                        }
-                    });
+                X509Util.getExtensionByOid(certificate, KEY_USAGE).setContent(new byte[] { 0x02, 0x01, (byte) 0xff });
             }
         };
     }

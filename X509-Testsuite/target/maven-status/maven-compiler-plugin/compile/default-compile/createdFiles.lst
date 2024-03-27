@@ -1,1 +1,4 @@
+de/rub/nds/x509anvil/suite/tests/chain/DuplicateCertificateTests.class
+de/rub/nds/x509anvil/suite/tests/basicfields/issuer/EmptyDNTests.class
 de/rub/nds/x509anvil/suite/tests/basicfields/validity/NotYetValidTests.class
+de/rub/nds/x509anvil/suite/tests/extensions/subjectkeyid/AuthKeyIdSubjectKeyIdMismatchTests.class

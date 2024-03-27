@@ -12,6 +12,7 @@ package de.rub.nds.x509anvil.framework.featureextraction.probe;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
+import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.NopX509CertificateModifier;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
@@ -52,12 +53,7 @@ public class BasicConstraintsExtensionProbe extends ExtensionProbe {
     protected X509CertificateModifier createInvalidExtensionModifier() {
         return (certificate, config, previousConfig) -> {
             if (config == chainConfig.getEntityCertificateConfig()) {
-                certificate.getTbsCertificate().getExplicitExtensions().getInnerField().getExtensionList()
-                    .forEach(extension -> {
-                        if (extension.getExtnID().getValue().getValue().equals(BASIC_CONSTRAINTS)) {
-                            extension.setContent(new byte[] { 0x05, 0x00 });
-                        }
-                    });
+                X509Util.getExtensionByOid(certificate, BASIC_CONSTRAINTS).setContent(new byte[] { 0x05, 0x00 });
             }
         };
     }

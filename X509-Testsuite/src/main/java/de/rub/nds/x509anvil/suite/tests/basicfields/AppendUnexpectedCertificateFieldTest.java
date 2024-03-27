@@ -16,6 +16,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
 import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -55,7 +56,7 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
 
         Asn1PrimitiveOctetString octetString = new Asn1PrimitiveOctetString();
         octetString.setValue(TestUtils.createByteArray(8));
-        generatedCertificates.get(1).getCertificate().addChild(octetString);
+        generatedCertificates.get(1).getTbsCertificate().setEncodedChildren(ArrayUtils.addAll(generatedCertificates.get(1).getTbsCertificate().getEncodedChildren().getValue(), octetString.getContent().getValue()));
 
         VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
         Assertions.assertFalse(result.isValid());

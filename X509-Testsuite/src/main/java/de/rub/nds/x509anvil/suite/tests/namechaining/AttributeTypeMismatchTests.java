@@ -20,6 +20,7 @@ import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectI
 import de.rub.nds.x509anvil.framework.x509.config.model.DirectoryStringType;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509attacker.x509.model.Name;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -126,9 +127,8 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     private static X509CertificateModifier nameComponentTypeSwitchModifier(String oid) {
         return (certificate, config, previousConfig) -> {
             if (config.isEntity()) {
-                Asn1Sequence subjectAsn1 = (Asn1Sequence) X509Util.getAsn1ElementByIdentifierPath(certificate,
-                        "tbsCertificate", "issuer");
-                Asn1Sequence attribute = X509Util.getAttributeFromName(subjectAsn1, oid);
+                Name issuer = certificate.getTbsCertificate().getIssuer();;
+                Asn1Sequence attribute = X509Util.getAttributeFromName(issuer, oid);
                 if (attribute.getChildren().get(1) instanceof Asn1PrimitivePrintableString) {
                     Asn1PrimitivePrintableString printableString = (Asn1PrimitivePrintableString) attribute.getChildren().get(1);
                     attribute.getChildren().remove(1);

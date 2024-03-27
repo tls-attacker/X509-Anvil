@@ -23,6 +23,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
 import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
 import de.rub.nds.x509attacker.x509.model.Extension;
+import de.rub.nds.x509attacker.x509.model.extensions.AuthorityKeyIdentifier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -62,13 +63,10 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
                 Extension extension = X509Util.getExtensionByOid(certificate, ExtensionObjectIdentifiers.AUTHORITY_KEY_IDENTIFIER);
                 Asn1OctetString extnValue = extension.getExtnValue();
 
-                Asn1Sequence authorityKeyIdentifier = new Asn1Sequence();
-                Asn1PrimitiveOctetString keyIdentifier = new Asn1PrimitiveOctetString();
+                AuthorityKeyIdentifier authorityKeyIdentifier = new AuthorityKeyIdentifier("auth_key");
+                Asn1OctetString keyIdentifier = new Asn1OctetString("key");
                 keyIdentifier.setValue(TestUtils.createByteArray(20));
-                Asn1Implicit implicitWrapper = new Asn1Implicit();
-                implicitWrapper.setOffset(0);
-                implicitWrapper.addChild(keyIdentifier);
-                authorityKeyIdentifier.addChild(implicitWrapper);
+                authorityKeyIdentifier.setKeyIdentifier(keyIdentifier);
                 Asn1FieldSerializer serializer = new Asn1FieldSerializer(authorityKeyIdentifier);
                 byte[] derEncoded = serializer.serialize();
                 extnValue.setValue(derEncoded);

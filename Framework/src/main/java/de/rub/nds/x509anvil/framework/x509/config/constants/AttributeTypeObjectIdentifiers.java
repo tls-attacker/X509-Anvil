@@ -33,5 +33,6 @@ public class AttributeTypeObjectIdentifiers {
 
     public static final String KEY_USAGE = "2.5.29.15";
     public static final String BASIC_CONSTRAINTS = "2.5.29.19";
+    public static final String SIGNATURE_ALGORITHM = "1.3.36.3.3";
 
 }
