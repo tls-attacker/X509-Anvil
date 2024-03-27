@@ -15,7 +15,9 @@ import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
 import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.asn1.model.Asn1Set;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
+import de.rub.nds.x509attacker.filesystem.CertificateFileWriter;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
+import de.rub.nds.x509attacker.x509.X509CertificateChainBuilder;
 import de.rub.nds.x509attacker.x509.model.Extension;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
@@ -23,6 +25,7 @@ import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import javax.security.cert.CertificateException;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.security.*;
@@ -101,7 +104,29 @@ public class X509Util {
 
     public static void exportCertificates(List<X509Certificate> certificateChain, String directory) {
         X509CertificateChain x509CertificateChain = new X509CertificateChain(certificateChain);
-        x509CertificateChain.writeCertificateChainToFile(directory, X509CertChainOutFormat.CHAIN_ALL_IND_ROOT_TO_LEAF);
+        if (x509CertificateChain.size() >= 1) {
+            writeCertificate(directory, "root_cert", x509CertificateChain.getCertificateList().get(0));
+        }
+        if (x509CertificateChain.size() >= 2) {
+            writeCertificate(directory, "leaf_cert",
+                x509CertificateChain.getCertificateList().get(x509CertificateChain.size() - 1));
+        }
+        if (x509CertificateChain.size() >= 3) {
+            x509CertificateChain.getCertificateList().subList(1, x509CertificateChain.size() - 1)
+                .forEach(x -> writeCertificate(directory, "inter_cert_" + (certificateChain.indexOf(x) - 1), x));
+        }
+    }
+
+    private static void writeCertificate(String directory, String filename, X509Certificate certificate) {
+        try {
+            String certificateFileName = filename + ".pem";
+            CertificateFileWriter certificateFileWriter =
+                new CertificateFileWriter(new File(directory + "/" + certificateFileName));
+            certificateFileWriter.writeCertificate(certificate.getContent().getValue());
+            certificateFileWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException("Error writing Certificate to PEM: " + e);
+        }
     }
 
     public static RelativeDistinguishedName getCnFromName(Name name) {
