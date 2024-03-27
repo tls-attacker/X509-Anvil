@@ -15,10 +15,12 @@ de/rub/nds/x509anvil/framework/anvil/X509AnvilParameterType.class
 de/rub/nds/x509anvil/framework/constants/HashAlgorithm.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/SimpleProbe.class
 de/rub/nds/x509anvil/framework/anvil/parameter/IssuerUniqueIdParameter.class
+de/rub/nds/x509anvil/framework/x509/generator/X509CertificateGenerator.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/SignatureAlgorithmProbe.class
 de/rub/nds/x509anvil/framework/anvil/parameter/BooleanCertificateSpecificParameter.class
 de/rub/nds/x509anvil/framework/constants/Severity.class
 de/rub/nds/x509anvil/framework/x509/config/X509CertificateChainConfig.class
+de/rub/nds/x509anvil/framework/x509/generator/X509CertificateGenerator$1.class
 de/rub/nds/x509anvil/framework/x509/generator/X509CertificateModifier.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/result/ExtensionProbeResult.class
 de/rub/nds/x509anvil/framework/constants/CertificateChainPosType.class

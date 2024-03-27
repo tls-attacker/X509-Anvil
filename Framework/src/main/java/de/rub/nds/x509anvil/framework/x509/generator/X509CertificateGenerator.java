@@ -104,33 +104,22 @@ public class X509CertificateGenerator {
             }
         }
 
-
         SignatureCalculator signatureCalculator = new SignatureCalculator();
 
         X509SignatureAlgorithm signatureAlgorithm = x509Certificate.getX509SignatureAlgorithm();
         if (x509Certificate.getSignatureComputations() == null) {
             x509Certificate.setSignatureComputations(
-                    signatureCalculator.createSignatureComputations(
-                            signatureAlgorithm.getSignatureAlgorithm()));
+                signatureCalculator.createSignatureComputations(signatureAlgorithm.getSignatureAlgorithm()));
         }
 
         byte[] toBeSigned = new X509Asn1FieldSerializer(x509Certificate.getTbsCertificate()).serialize();
-        signatureCalculator.computeSignature(
-                x509Certificate.getSignatureComputations(),
-                getPrivateKeyForAlgorithm(signatureAlgorithm.getSignatureAlgorithm(), privateKeyForSignature),
-                toBeSigned,
-                signatureAlgorithm.getSignatureAlgorithm(),
-                signatureAlgorithm.getHashAlgorithm());
+        signatureCalculator.computeSignature(x509Certificate.getSignatureComputations(),
+            getPrivateKeyForAlgorithm(signatureAlgorithm.getSignatureAlgorithm(), privateKeyForSignature), toBeSigned,
+            signatureAlgorithm.getSignatureAlgorithm(), signatureAlgorithm.getHashAlgorithm());
 
         // parse to ASN.1 bit string
-        ParserHelper.parseAsn1BitString(
-                x509Certificate.getSignature(),
-                new BufferedInputStream(
-                        new ByteArrayInputStream(
-                                x509Certificate.getSignatureComputations().getSignatureBytes().getValue()
-                        )
-                )
-        );
+        ParserHelper.parseAsn1BitString(x509Certificate.getSignature(), new BufferedInputStream(
+            new ByteArrayInputStream(x509Certificate.getSignatureComputations().getSignatureBytes().getValue())));
     }
 
     public X509Certificate retrieveX509Certificate() throws CertificateGeneratorException {
@@ -312,15 +301,15 @@ public class X509CertificateGenerator {
         x509Certificate.setSignatureAlgorithmIdentifier(algorithm);
     }
 
-    private PrivateKeyContainer getPrivateKeyForAlgorithm(SignatureAlgorithm signatureAlgorithm, RsaPrivateKey privateKey) {
+    private PrivateKeyContainer getPrivateKeyForAlgorithm(SignatureAlgorithm signatureAlgorithm,
+        RsaPrivateKey privateKey) {
         switch (signatureAlgorithm) {
             case RSA_PKCS1:
             case RSA_SSA_PSS:
-                return new RsaPrivateKey(
-                        privateKey.getModulus(), privateKey.getPrivateExponent());
+                return new RsaPrivateKey(privateKey.getModulus(), privateKey.getPrivateExponent());
             default:
                 throw new UnsupportedOperationException(
-                        "The keytype \"" + signatureAlgorithm.name() + "\" is not implemented yet");
+                    "The keytype \"" + signatureAlgorithm.name() + "\" is not implemented yet");
         }
     }
 }

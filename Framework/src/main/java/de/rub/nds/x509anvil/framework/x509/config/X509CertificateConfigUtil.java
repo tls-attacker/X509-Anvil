@@ -115,12 +115,12 @@ public class X509CertificateConfigUtil {
         throws IOException, InvalidKeySpecException {
         X509Certificate staticRootCertificate = new X509Certificate("staticCertificate");
         X509CertificateParser parser = new X509CertificateParser(
-                new X509Chooser(
-                        new de.rub.nds.x509attacker.config.X509CertificateConfig(), new X509Context()
-                ), staticRootCertificate);
+            new X509Chooser(new de.rub.nds.x509attacker.config.X509CertificateConfig(), new X509Context()),
+            staticRootCertificate);
         parser.parse(new BufferedInputStream(new FileInputStream(staticCertificateFile)));
 
-        PrivateKey privateKey = de.rub.nds.x509attacker.signatureengine.keyparsers.PemUtil.readPrivateKey(new File(privateKeyFile));
+        PrivateKey privateKey =
+            de.rub.nds.x509attacker.signatureengine.keyparsers.PemUtil.readPrivateKey(new File(privateKeyFile));
         X509CertificateConfig staticX509CertificateConfig = new X509CertificateConfig();
         staticX509CertificateConfig.setStaticCertificatePrivateKey(privateKey);
         staticX509CertificateConfig.setStatic(true);
