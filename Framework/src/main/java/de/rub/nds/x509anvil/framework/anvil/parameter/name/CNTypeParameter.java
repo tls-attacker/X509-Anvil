@@ -17,6 +17,7 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
+import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.model.DirectoryStringType;
 
 import java.util.Arrays;
@@ -36,7 +37,7 @@ public class CNTypeParameter extends CertificateSpecificParameter<DirectoryStrin
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        certificateConfig.getSubject().setCn(certificateConfig.getCertificateName(), getSelectedValue());
+        X509Util.getCnFromName(certificateConfig.getSubject()).setContent(certificateConfig.getCertificateName().getBytes());
     }
 
     @Override
