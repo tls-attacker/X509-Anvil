@@ -110,17 +110,11 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         X509CertificateChainConfig chainConfig) throws VerifierException {
         X509CertificateConfig entityConfig = chainConfig.getEntityCertificateConfig();
         List<CertificateBytes> encodedCertificateChain = new LinkedList<>();
-        for (X509Certificate x509Certificate: certificatesChain) {
-            encodedCertificateChain.add(
-                    new CertificateBytes(
-                        x509Certificate.getSerializer(
-                                new X509Chooser(
-                                        new de.rub.nds.x509attacker.config.X509CertificateConfig(),
-                                        new X509Context()
-                                )
-                        ).serialize()
-                    )
-            );
+        for (X509Certificate x509Certificate : certificatesChain) {
+            encodedCertificateChain.add(new CertificateBytes(x509Certificate
+                .getSerializer(
+                    new X509Chooser(new de.rub.nds.x509attacker.config.X509CertificateConfig(), new X509Context()))
+                .serialize()));
         }
 
         defaultConfig.setDefaultExplicitCertificateChain(encodedCertificateChain);

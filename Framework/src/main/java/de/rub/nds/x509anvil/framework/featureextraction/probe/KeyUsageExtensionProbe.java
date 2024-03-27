@@ -17,6 +17,9 @@ import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.NopX509CertificateModifier;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509attacker.x509.model.extensions.KeyUsage;
+
+import static de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers.KEY_USAGE;
 
 public class KeyUsageExtensionProbe extends ExtensionProbe {
     private X509CertificateChainConfig chainConfig;
@@ -51,9 +54,12 @@ public class KeyUsageExtensionProbe extends ExtensionProbe {
     protected X509CertificateModifier createInvalidExtensionModifier() {
         return (certificate, config, previousConfig) -> {
             if (config == chainConfig.getEntityCertificateConfig()) {
-                Asn1Field extensionValue = (Asn1Field) X509Util.getAsn1ElementByIdentifierPath(certificate,
-                    "tbsCertificate", "explicitExtensions", "extensions", "keyUsage", "extnValue");
-                extensionValue.setContent(new byte[] { 0x02, 0x01, (byte) 0xff });
+                certificate.getTbsCertificate().getExplicitExtensions().getInnerField().getExtensionList()
+                    .forEach(extension -> {
+                        if (extension.getExtnID().getValue().getValue().equals(KEY_USAGE)) {
+                            extension.setContent(new byte[] { 0x02, 0x01, (byte) 0xff });
+                        }
+                    });
             }
         };
     }

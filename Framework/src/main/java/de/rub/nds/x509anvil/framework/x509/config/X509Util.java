@@ -34,22 +34,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class X509Util {
-    public static Asn1Encodable getAsn1ElementByIdentifierPath(X509Certificate x509Certificate, String... identifiers) {
-        Asn1Encodable currentAsn1Encodable = (Asn1Encodable) x509Certificate;
-
-        for (String identifier : identifiers) {
-            if (currentAsn1Encodable instanceof Asn1Container) {
-                currentAsn1Encodable = ((Asn1Container) currentAsn1Encodable).getChildren().stream()
-                    .filter(encodable -> encodable.getIdentifier().equals(identifier)).findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(
-                        "Could not find " + identifier + " in " + String.join("/", identifiers)));
-            } else {
-                throw new IllegalArgumentException(identifier + " is not a container");
-            }
-        }
-        return currentAsn1Encodable;
-    }
-
     public static Extension getExtensionByOid(X509Certificate x509Certificate, String oid) {
         try {
             return x509Certificate.getTbsCertificate().getExplicitExtensions().getInnerField().getExtensionList()
