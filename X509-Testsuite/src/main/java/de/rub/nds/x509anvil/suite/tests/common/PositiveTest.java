@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class PositiveTest extends X509AnvilTest {
-    @AnvilTest(description = "Positive test that covers all combinations provided by our model")
+    @AnvilTest()
     @ChainLength(minLength = 2, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     public void sampleTestCase(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

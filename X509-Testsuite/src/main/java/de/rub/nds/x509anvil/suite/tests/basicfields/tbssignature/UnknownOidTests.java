@@ -22,7 +22,7 @@ public class UnknownOidTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest(description = "Checks if the application rejects certificates where the signature algorithm in tbsCertificate.signature is unknown")
+    @AnvilTest()
     public void unknownOidEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.tbsSignatureUnknownOidModifier(true));
@@ -33,7 +33,7 @@ public class UnknownOidTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest(description = "Checks if the application rejects certificates where the signature algorithm in tbsCertificate.signature is unknown")
+    @AnvilTest()
     public void unknownOidIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.tbsSignatureUnknownOidModifier(false));

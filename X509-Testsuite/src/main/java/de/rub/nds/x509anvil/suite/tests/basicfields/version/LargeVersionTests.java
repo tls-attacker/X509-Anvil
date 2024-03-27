@@ -19,7 +19,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 public class LargeVersionTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
-    @AnvilTest(description = "Test very large illegal version value")
+    @AnvilTest()
     @TestStrength(2)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @IpmLimitations(identifiers = "entity.version")
@@ -30,7 +30,7 @@ public class LargeVersionTests extends X509AnvilTest {
     }
 
     @Specification(document = "RFC 5280", section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
-    @AnvilTest(description = "Test very large illegal version value")
+    @AnvilTest()
     @TestStrength(2)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @IpmLimitations(identifiers = "inter0.version")

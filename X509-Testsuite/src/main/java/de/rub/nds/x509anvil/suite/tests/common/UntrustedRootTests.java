@@ -17,7 +17,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 public class UntrustedRootTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280")
-    @AnvilTest(description = "Checks whether the verifying application rejects a chain when the root certificate is untrusted")
+    @AnvilTest()
     @StaticRoot(false)
     @ChainLength(minLength = 1, maxLength = 2, intermediateCertsModeled = 2)
     @TestStrength(2)
