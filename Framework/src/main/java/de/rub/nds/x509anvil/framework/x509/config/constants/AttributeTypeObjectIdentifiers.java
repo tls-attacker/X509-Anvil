@@ -32,6 +32,6 @@ public class AttributeTypeObjectIdentifiers {
     public static final String EMAIL_ADDRESS = "1.2.840.113549.1.9.1";
 
     public static final String KEY_USAGE = "2.5.29.15";
-    public static final String BASIC_CONSTRAINTS = "2.5.29.10";
+    public static final String BASIC_CONSTRAINTS = "2.5.29.19";
 
 }
