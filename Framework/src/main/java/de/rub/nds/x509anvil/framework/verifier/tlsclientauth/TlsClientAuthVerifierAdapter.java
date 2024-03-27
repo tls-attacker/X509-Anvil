@@ -26,11 +26,15 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
+import de.rub.nds.x509attacker.chooser.X509Chooser;
+import de.rub.nds.x509attacker.context.X509Context;
+import de.rub.nds.x509attacker.filesystem.CertificateBytes;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -105,14 +109,21 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
     public VerifierResult invokeVerifier(List<X509Certificate> certificatesChain,
         X509CertificateChainConfig chainConfig) throws VerifierException {
         X509CertificateConfig entityConfig = chainConfig.getEntityCertificateConfig();
-        try {
-            byte[] encodedChain = X509Util.encodeCertificateChainForTls(certificatesChain);
-            CertificateKeyPair certificateKeyPair = new CertificateKeyPair(encodedChain,
-                entityConfig.getKeyPair().getPrivate(), entityConfig.getKeyPair().getPublic());
-            defaultConfig.setDefaultExplicitCertificateKeyPair(certificateKeyPair);
-        } catch (IOException e) {
-            throw new VerifierException("Failed to encode certificate", e);
+        List<CertificateBytes> encodedCertificateChain = new LinkedList<>();
+        for (X509Certificate x509Certificate: certificatesChain) {
+            encodedCertificateChain.add(
+                    new CertificateBytes(
+                        x509Certificate.getSerializer(
+                                new X509Chooser(
+                                        new de.rub.nds.x509attacker.config.X509CertificateConfig(),
+                                        new X509Context()
+                                )
+                        ).serialize()
+                    )
+            );
         }
+
+        defaultConfig.setDefaultExplicitCertificateChain(encodedCertificateChain);
 
         defaultConfig.setDefaultSelectedSignatureAndHashAlgorithm(
             TlsAttackerUtil.translateSignatureAlgorithm(entityConfig.getSignatureAlgorithm()));
