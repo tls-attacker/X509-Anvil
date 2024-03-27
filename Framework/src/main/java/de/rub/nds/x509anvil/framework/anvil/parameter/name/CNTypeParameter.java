@@ -37,7 +37,8 @@ public class CNTypeParameter extends CertificateSpecificParameter<DirectoryStrin
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        X509Util.getCnFromName(certificateConfig.getSubject()).setContent(certificateConfig.getCertificateName().getBytes());
+        X509Util.getCnFromName(certificateConfig.getSubject())
+            .setContent(certificateConfig.getCertificateName().getBytes());
     }
 
     @Override
