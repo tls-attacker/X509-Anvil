@@ -28,8 +28,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers.BASIC_CONSTRAINTS;
-
 public class X509Util {
     public static Extension getExtensionByOid(X509Certificate x509Certificate, String oid) {
         try {

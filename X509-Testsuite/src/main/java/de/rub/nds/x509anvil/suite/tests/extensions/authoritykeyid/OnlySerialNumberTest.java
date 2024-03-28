@@ -49,13 +49,9 @@ public class OnlySerialNumberTest extends X509AnvilTest {
                 Extension extension = X509Util.getExtensionByOid(certificate, ExtensionObjectIdentifiers.AUTHORITY_KEY_IDENTIFIER);
                 Asn1OctetString extnValue = extension.getExtnValue();
 
-                Asn1Sequence authorityKeyIdentifierAsn1 = new AuthorityKeyIdentifier("withoutIssuer");
-
-                Asn1Implicit keyIdImplicit = new Asn1Implicit();
-                keyIdImplicit.setOffset(0);
-                Asn1PrimitiveOctetString keyIdentifierAsn1 = new Asn1PrimitiveOctetString();
-                keyIdImplicit.addChild(keyIdentifierAsn1);
-                authorityKeyIdentifierAsn1.addChild(keyIdImplicit);
+                AuthorityKeyIdentifier authorityKeyIdentifierAsn1 = new AuthorityKeyIdentifier("withoutIssuer");
+                Asn1OctetString keyIdentifierAsn1 = new Asn1OctetString("key");
+                authorityKeyIdentifierAsn1.setKeyIdentifier(keyIdentifierAsn1);
 
                 try {
                     JcaX509ExtensionUtils jcaX509ExtensionUtils = new JcaX509ExtensionUtils();
@@ -65,12 +61,9 @@ public class OnlySerialNumberTest extends X509AnvilTest {
                     throw new RuntimeException(e);
                 }
 
-                Asn1Implicit serialImplicit = new Asn1Implicit();
-                serialImplicit.setOffset(2);
                 Asn1Integer serialAsn1 = new Asn1Integer("serial");
-                serialImplicit.addChild(serialAsn1);
                 serialAsn1.setValue(previousConfig.getSerialNumber());
-                authorityKeyIdentifierAsn1.addChild(serialImplicit);
+                authorityKeyIdentifierAsn1.setAuthorityCertSerialNumber(serialAsn1);
 
                 Asn1FieldSerializer serializer = new Asn1FieldSerializer(authorityKeyIdentifierAsn1);
                 byte[] derEncoded = serializer.serialize();

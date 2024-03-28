@@ -25,7 +25,7 @@ public class SerialNumberNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noSerialNumberEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(true, "tbsCertificate", "serialNumber"));
+        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeSerialNumberModifier(true));
         Assertions.assertFalse(result.isValid());
     }
 
@@ -36,7 +36,7 @@ public class SerialNumberNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noSerialNumberIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(false, "tbsCertificate", "serialNumber"));
+        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeSerialNumberModifier(false));
         Assertions.assertFalse(result.isValid());
     }
 }

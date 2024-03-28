@@ -4,8 +4,8 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.asn1.model.Asn1Implicit;
+import de.rub.nds.asn1.model.Asn1OctetString;
 import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
-import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -20,6 +20,7 @@ import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdent
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.suite.tests.util.Modifiers;
 import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
+import de.rub.nds.x509attacker.x509.model.extensions.AuthorityKeyIdentifier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -76,12 +77,14 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
     }
 
     private static byte[] createDuplicateExtensionValue() {
-        Asn1Sequence authorityKeyIdentifier = new Asn1Sequence();
+        AuthorityKeyIdentifier authorityKeyIdentifier = new AuthorityKeyIdentifier("auth_dupe");
         Asn1Implicit keyIdImplicit = new Asn1Implicit();
         Asn1PrimitiveOctetString keyId = new Asn1PrimitiveOctetString();
         keyId.setValue(TestUtils.createByteArray(20));
         keyIdImplicit.addChild(keyId);
-        authorityKeyIdentifier.addChild(keyIdImplicit);
+        Asn1OctetString asn1OctetString = new Asn1OctetString("key");
+        asn1OctetString.setValue(keyIdImplicit.getContent());
+        authorityKeyIdentifier.setKeyIdentifier(asn1OctetString);
         Asn1FieldSerializer serializer = new Asn1FieldSerializer(authorityKeyIdentifier);
         return serializer.serialize();
     }

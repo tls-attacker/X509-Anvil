@@ -25,7 +25,7 @@ public class SubjectPublicKeyInfoNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noSubjectPublicKeyInfoEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(true, "tbsCertificate", "subjectPublicKeyInfo"));
+        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeSubjectPublicKeyInfo(true));
         Assertions.assertFalse(result.isValid());
     }
 
@@ -36,7 +36,7 @@ public class SubjectPublicKeyInfoNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noSubjectPublicKeyInfoIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(false, "tbsCertificate", "subjectPublicKeyInfo"));
+        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeSubjectPublicKeyInfo(false));
         Assertions.assertFalse(result.isValid());
     }
 }

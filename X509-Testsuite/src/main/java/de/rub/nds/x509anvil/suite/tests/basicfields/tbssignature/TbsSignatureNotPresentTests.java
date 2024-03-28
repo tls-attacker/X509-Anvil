@@ -25,7 +25,7 @@ public class TbsSignatureNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noSignatureEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(true, "tbsCertificate", "signature"));
+        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeTbsSignature(true));
         Assertions.assertFalse(result.isValid());
     }
 
@@ -36,7 +36,7 @@ public class TbsSignatureNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noSignatureIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(false, "tbsCertificate", "signature"));
+        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeTbsSignature(false));
         Assertions.assertFalse(result.isValid());
     }
 }

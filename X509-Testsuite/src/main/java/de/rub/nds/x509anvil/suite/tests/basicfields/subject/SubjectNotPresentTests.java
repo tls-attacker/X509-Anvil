@@ -25,7 +25,7 @@ public class SubjectNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noSubjectEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(true, "tbsCertificate", "subject"));
+        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeSubject(true));
         Assertions.assertFalse(result.isValid());
     }
 
@@ -36,7 +36,7 @@ public class SubjectNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noSubjectIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(false, "tbsCertificate", "subject"));
+        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeSubject(false));
         Assertions.assertFalse(result.isValid());
     }
 }

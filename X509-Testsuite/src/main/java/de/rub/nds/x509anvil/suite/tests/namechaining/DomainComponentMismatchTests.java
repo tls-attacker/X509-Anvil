@@ -4,10 +4,9 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.asn1.model.Asn1PrimitiveIa5String;
-import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
@@ -18,6 +17,8 @@ import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509attacker.x509.model.Name;
+import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -40,11 +41,10 @@ public class DomainComponentMismatchTests extends X509AnvilTest {
     private static X509CertificateModifier domainComponentMismatchModifier() {
         return (certificate, config, previousConfig) -> {
             if (config.isEntity()) {
-                Asn1Sequence subjectAsn1 = (Asn1Sequence) X509Util.getAsn1ElementByIdentifierPath(certificate,
-                        "tbsCertificate", "issuer");
-                Asn1Sequence attribute = X509Util.getAttributeFromName(subjectAsn1, AttributeTypeObjectIdentifiers.DOMAIN_COMPONENT);
-                if (attribute.getChildren().get(1) instanceof Asn1PrimitiveIa5String) {
-                    Asn1PrimitiveIa5String value = (Asn1PrimitiveIa5String) attribute.getChildren().get(1);
+                Name isser = certificate.getTbsCertificate().getIssuer();
+                RelativeDistinguishedName rdn = X509Util.getRdnFromName(isser, AttributeTypeObjectIdentifiers.DOMAIN_COMPONENT);
+                if (rdn.getChildren().get(1) instanceof Asn1PrimitiveIa5String) {
+                    Asn1PrimitiveIa5String value = (Asn1PrimitiveIa5String) rdn.getChildren().get(1);
                     value.setValue(value.getValue() + "_modified");
                 }
                 else {

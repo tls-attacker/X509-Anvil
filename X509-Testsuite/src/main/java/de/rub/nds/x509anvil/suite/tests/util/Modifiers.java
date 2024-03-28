@@ -4,11 +4,11 @@ import de.rub.nds.asn1.model.*;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
 
+import de.rub.nds.x509attacker.constants.NameType;
 import de.rub.nds.x509attacker.constants.TimeContextHint;
 import de.rub.nds.x509attacker.x509.model.*;
 
 import java.math.BigInteger;
-import java.util.Arrays;
 
 public class Modifiers {
 
@@ -100,9 +100,63 @@ public class Modifiers {
                 } else if (removeNotBefore) {
                     certificate.getTbsCertificate().getValidity().setNotBefore(new Time("empty", TimeContextHint.NOT_BEFORE));
                 } else {
-                    Validity validity = new Validity("empty");
-                    certificate.getTbsCertificate().setValidity(validity);
+                    Validity empty = new Validity("empty");
+                    certificate.getTbsCertificate().setValidity(empty);
                 }
+            }
+        };
+    }
+
+    public static X509CertificateModifier removeSerialNumberModifier(boolean entity) {
+        return (certificate, config, previousConfig) -> {
+            if (entity && config.isEntity() || !entity && config.isIntermediate()) {
+                Asn1Integer empty = new Asn1Integer("empty");
+                certificate.getTbsCertificate().setSerialNumber(empty);
+            }
+        };
+    }
+
+    public static X509CertificateModifier removeTbsSignature(boolean entity) {
+        return (certificate, config, previousConfig) -> {
+            if (entity && config.isEntity() || !entity && config.isIntermediate()) {
+                CertificateSignatureAlgorithmIdentifier empty = new CertificateSignatureAlgorithmIdentifier("empty");
+                certificate.getTbsCertificate().setSignature(empty);
+            }
+        };
+    }
+
+    public static X509CertificateModifier removeSubjectPublicKeyInfo(boolean entity) {
+        return (certificate, config, previousConfig) -> {
+            if (entity && config.isEntity() || !entity && config.isIntermediate()) {
+                SubjectPublicKeyInfo empty = new SubjectPublicKeyInfo("empty");
+                certificate.getTbsCertificate().setSubjectPublicKeyInfo(empty);
+            }
+        };
+    }
+
+    public static X509CertificateModifier removeSignatureAlgorithm(boolean entity) {
+        return (certificate, config, previousConfig) -> {
+            if (entity && config.isEntity() || !entity && config.isIntermediate()) {
+                CertificateSignatureAlgorithmIdentifier empty = new CertificateSignatureAlgorithmIdentifier("empty");
+                certificate.setSignatureAlgorithmIdentifier(empty);
+            }
+        };
+    }
+
+    public static X509CertificateModifier removeIssuer(boolean entity) {
+        return (certificate, config, previousConfig) -> {
+            if (entity && config.isEntity() || !entity && config.isIntermediate()) {
+                Name empty = new Name("empty", NameType.ISSUER);
+                certificate.getTbsCertificate().setIssuer(empty);
+            }
+        };
+    }
+
+    public static X509CertificateModifier removeSubject(boolean entity) {
+        return (certificate, config, previousConfig) -> {
+            if (entity && config.isEntity() || !entity && config.isIntermediate()) {
+                Name empty = new Name("empty", NameType.SUBJECT);
+                certificate.getTbsCertificate().setSubject(empty);
             }
         };
     }

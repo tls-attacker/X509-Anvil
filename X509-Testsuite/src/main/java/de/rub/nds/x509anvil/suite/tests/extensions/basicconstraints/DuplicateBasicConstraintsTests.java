@@ -5,7 +5,6 @@ import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.asn1.model.Asn1Boolean;
 import de.rub.nds.asn1.model.Asn1Integer;
-import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -22,6 +21,7 @@ import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdent
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.suite.tests.util.Modifiers;
+import de.rub.nds.x509attacker.x509.model.extensions.BasicConstraints;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -80,16 +80,15 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
     private static byte[] createDuplicateExtensionValue(X509CertificateConfig chainConfig) {
         boolean ca = !((BasicConstraintsExtensionConfig) chainConfig.extension(ExtensionType.BASIC_CONSTRAINTS)).isCa();
 
-        Asn1Sequence basicConstraintsAsn1 = new Asn1Sequence();
-        Asn1Boolean caAsn1 =  new Asn1Boolean();
+        BasicConstraints basicConstraintsAsn1 = new BasicConstraints("basicContraints");
+        Asn1Boolean caAsn1 =  new Asn1Boolean("ca");
         caAsn1.setValue(ca);
-        basicConstraintsAsn1.addChild(caAsn1);
+        basicConstraintsAsn1.setCa(caAsn1);
 
         if (ca) {
-            Asn1Integer pathLenConstraintAsn1 = new Asn1Integer();
-            pathLenConstraintAsn1.setIdentifier("pathLenConstraint");
+            Asn1Integer pathLenConstraintAsn1 = new Asn1Integer("pathLenConstraint");
             pathLenConstraintAsn1.setValue(BigInteger.valueOf(1));
-            basicConstraintsAsn1.addChild(pathLenConstraintAsn1);
+            basicConstraintsAsn1.setPathLenConstraint(pathLenConstraintAsn1);
         }
 
         Asn1FieldSerializer serializer = new Asn1FieldSerializer(basicConstraintsAsn1);

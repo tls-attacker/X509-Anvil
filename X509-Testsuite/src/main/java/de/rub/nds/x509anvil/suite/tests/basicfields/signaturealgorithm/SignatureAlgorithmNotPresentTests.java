@@ -25,7 +25,7 @@ public class SignatureAlgorithmNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noSignatureAlgorithmEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(true, "signatureAlgorithm"));
+        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeSignatureAlgorithm(true));
         Assertions.assertFalse(result.isValid());
     }
 
@@ -36,7 +36,7 @@ public class SignatureAlgorithmNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noSignatureAlgorithmIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(false, "signatureAlgorithm"));
+        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeSignatureAlgorithm(false));
         Assertions.assertFalse(result.isValid());
     }
 }

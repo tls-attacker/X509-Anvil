@@ -7,18 +7,18 @@ import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
 import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.asn1.model.Asn1Set;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509attacker.x509.model.Name;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -52,9 +52,8 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
     private static X509CertificateModifier missingRdnModifier() {
         return (certificate, config, previousConfig) -> {
             if (config.isIntermediate()) {
-                Asn1Sequence subjectAsn1 = (Asn1Sequence) X509Util.getAsn1ElementByIdentifierPath(certificate,
-                        "tbsCertificate", "subject");
-                addDnQualifierToName(subjectAsn1);
+                Name subject = certificate.getTbsCertificate().getSubject();
+                addDnQualifierToName(subject);
             }
         };
     }
@@ -63,17 +62,16 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
     private static X509CertificateModifier additionalRdnModifier() {
         return (certificate, config, previousConfig) -> {
             if (config.isEntity()) {
-                Asn1Sequence issuerAsn1 = (Asn1Sequence) X509Util.getAsn1ElementByIdentifierPath(certificate,
-                        "tbsCertificate", "issuer");
-                addDnQualifierToName(issuerAsn1);
+                Name issuer = certificate.getTbsCertificate().getIssuer();
+                addDnQualifierToName(issuer);
             }
         };
     }
 
-    private static void addDnQualifierToName(Asn1Sequence name) {
+    private static void addDnQualifierToName(Name name) {
         Asn1Set rdn = new Asn1Set();
         Asn1Sequence attributeTypeAndName = new Asn1Sequence();
-        Asn1ObjectIdentifier type = new Asn1ObjectIdentifier();
+        Asn1ObjectIdentifier type = new Asn1ObjectIdentifier("type");
         type.setValue(AttributeTypeObjectIdentifiers.DN_QUALIFIER);
         attributeTypeAndName.addChild(type);
         Asn1PrimitivePrintableString value = new Asn1PrimitivePrintableString();

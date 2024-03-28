@@ -4,15 +4,14 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
 import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
@@ -35,9 +34,7 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        Asn1ObjectIdentifier signatureAlgorithmAsn1 = (Asn1ObjectIdentifier) X509Util.getAsn1ElementByIdentifierPath(
-                generatedCertificates.get(generatedCertificates.size()-1),
-                "signatureAlgorithm", "algorithm");
+        Asn1ObjectIdentifier signatureAlgorithmAsn1 = generatedCertificates.get(generatedCertificates.size()-1).getTbsCertificate().getSignature().getAlgorithm();
         signatureAlgorithmAsn1.setValue(TestUtils.getNonMatchingAlgorithmOid(certificateChainConfig.getIssuerConfigOf(
                 certificateChainConfig.getEntityCertificateConfig()).getSignatureAlgorithm()));
         VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
@@ -55,9 +52,7 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        Asn1ObjectIdentifier signatureAlgorithmAsn1 = (Asn1ObjectIdentifier) X509Util.getAsn1ElementByIdentifierPath(
-                generatedCertificates.get(generatedCertificates.size()-2),
-                "signatureAlgorithm", "algorithm");
+        Asn1ObjectIdentifier signatureAlgorithmAsn1 = generatedCertificates.get(generatedCertificates.size()-2).getTbsCertificate().getSignature().getAlgorithm();
         signatureAlgorithmAsn1.setValue(TestUtils.getNonMatchingAlgorithmOid(certificateChainConfig.getIssuerConfigOf(
                 certificateChainConfig.getIntermediateConfig(0)).getSignatureAlgorithm()));
         VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);

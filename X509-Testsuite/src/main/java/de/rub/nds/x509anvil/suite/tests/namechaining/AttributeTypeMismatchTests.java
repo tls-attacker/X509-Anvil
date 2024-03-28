@@ -5,10 +5,9 @@ import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
 import de.rub.nds.asn1.model.Asn1PrimitiveUtf8String;
-import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
@@ -21,6 +20,7 @@ import de.rub.nds.x509anvil.framework.x509.config.model.DirectoryStringType;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
 import de.rub.nds.x509attacker.x509.model.Name;
+import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -128,7 +128,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
         return (certificate, config, previousConfig) -> {
             if (config.isEntity()) {
                 Name issuer = certificate.getTbsCertificate().getIssuer();;
-                Asn1Sequence attribute = X509Util.getAttributeFromName(issuer, oid);
+                RelativeDistinguishedName attribute = X509Util.getRdnFromName(issuer, oid);
                 if (attribute.getChildren().get(1) instanceof Asn1PrimitivePrintableString) {
                     Asn1PrimitivePrintableString printableString = (Asn1PrimitivePrintableString) attribute.getChildren().get(1);
                     attribute.getChildren().remove(1);

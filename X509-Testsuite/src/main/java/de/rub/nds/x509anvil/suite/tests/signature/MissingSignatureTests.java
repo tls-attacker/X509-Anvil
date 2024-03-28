@@ -2,6 +2,7 @@ package de.rub.nds.x509anvil.suite.tests.signature;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
+import de.rub.nds.asn1.model.Asn1BitString;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -33,7 +34,8 @@ public class MissingSignatureTests extends X509AnvilTest {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        generatedCertificates.get(generatedCertificates.size() - 1).getCertificate().getChildren().remove(2);
+        Asn1BitString empty = new Asn1BitString("empty");
+        generatedCertificates.get(generatedCertificates.size() - 1).setSignature(empty);
         VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -50,7 +52,8 @@ public class MissingSignatureTests extends X509AnvilTest {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        generatedCertificates.get(1).getCertificate().getChildren().remove(2);
+        Asn1BitString empty = new Asn1BitString("empty");
+        generatedCertificates.get(1).setSignature(empty);
         VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -67,7 +70,8 @@ public class MissingSignatureTests extends X509AnvilTest {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        generatedCertificates.get(0).getCertificate().getChildren().remove(2);
+        Asn1BitString empty = new Asn1BitString("empty");
+        generatedCertificates.get(0).setSignature(empty);
         VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
