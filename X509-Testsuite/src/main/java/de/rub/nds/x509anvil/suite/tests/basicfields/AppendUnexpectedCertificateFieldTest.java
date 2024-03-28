@@ -37,7 +37,7 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
 
         Asn1PrimitiveOctetString octetString = new Asn1PrimitiveOctetString();
         octetString.setValue(TestUtils.createByteArray(8));
-        generatedCertificates.get(generatedCertificates.size() - 1).getCertificate().addChild(octetString);
+        generatedCertificates.get(generatedCertificates.size() - 1).getTbsCertificate().setEncodedChildren(ArrayUtils.addAll(generatedCertificates.get(1).getTbsCertificate().getEncodedChildren().getValue(), octetString.getContent().getValue()));
 
         VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
         Assertions.assertFalse(result.isValid());

@@ -4,9 +4,8 @@ import de.rub.nds.asn1.model.*;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
 
-import de.rub.nds.x509attacker.x509.model.Extension;
-import de.rub.nds.x509attacker.x509.model.Name;
-import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
+import de.rub.nds.x509attacker.constants.TimeContextHint;
+import de.rub.nds.x509attacker.x509.model.*;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -89,6 +88,21 @@ public class Modifiers {
                 RelativeDistinguishedName rdn = X509Util.getRdnFromName(issuer, oid);
                 Asn1PrintableString asn1PrintableString = (Asn1PrintableString) rdn.getAttributeTypeAndValueList().get(0).getValue();
                 asn1PrintableString.setValue(asn1PrintableString.getValue().getValue() + "_modified");
+            }
+        };
+    }
+
+    public static X509CertificateModifier removeValidityModifier(boolean entity, boolean removeNotAfter, boolean removeNotBefore) {
+        return (certificate, config, previousConfig) -> {
+            if (entity && config.isEntity() || !entity && config.isIntermediate()) {
+                if (removeNotAfter) {
+                    certificate.getTbsCertificate().getValidity().setNotAfter(new Time("empty", TimeContextHint.NOT_AFTER));
+                } else if (removeNotBefore) {
+                    certificate.getTbsCertificate().getValidity().setNotBefore(new Time("empty", TimeContextHint.NOT_BEFORE));
+                } else {
+                    Validity validity = new Validity("empty");
+                    certificate.getTbsCertificate().setValidity(validity);
+                }
             }
         };
     }

@@ -18,6 +18,7 @@ import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectI
 import de.rub.nds.x509anvil.framework.x509.config.model.DirectoryStringType;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509attacker.x509.model.Name;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -44,11 +45,10 @@ public class RdnOrderMismatchTests extends X509AnvilTest {
     private static X509CertificateModifier reverseRdnsOrderModifier() {
         return (certificate, config, previousConfig) -> {
             if (config.isEntity()) {
-                Asn1Sequence subjectAsn1 = (Asn1Sequence) X509Util.getAsn1ElementByIdentifierPath(certificate,
-                        "tbsCertificate", "issuer");
-                List<Asn1Encodable> shallowCopy = subjectAsn1.getChildren().subList(0, subjectAsn1.getChildren().size());
+                Name issuer = certificate.getTbsCertificate().getIssuer();
+                List<Asn1Encodable> shallowCopy = issuer.getChildren().subList(0, issuer.getChildren().size());
                 Collections.reverse(shallowCopy);
-                subjectAsn1.setChildren(shallowCopy);
+                issuer.setChildren(shallowCopy);
             }
         };
     }

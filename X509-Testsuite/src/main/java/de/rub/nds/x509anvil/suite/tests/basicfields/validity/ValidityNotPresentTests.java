@@ -25,7 +25,7 @@ public class ValidityNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noValidityEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(true, "tbsCertificate", "validity"));
+        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeValidityModifier(true, false, false));
         Assertions.assertFalse(result.isValid());
     }
 
@@ -36,7 +36,7 @@ public class ValidityNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noValidityIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(false, "tbsCertificate", "validity"));
+        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeValidityModifier(false, false, false));
         Assertions.assertFalse(result.isValid());
     }
 }

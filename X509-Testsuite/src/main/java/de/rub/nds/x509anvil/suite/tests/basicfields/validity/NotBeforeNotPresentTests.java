@@ -25,7 +25,7 @@ public class NotBeforeNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noNotBeforeEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(true, "tbsCertificate", "validity", "notBefore"));
+        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeValidityModifier(true, false, true));
         Assertions.assertFalse(result.isValid());
     }
 
@@ -36,7 +36,7 @@ public class NotBeforeNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noNotBeforeIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(false, "tbsCertificate", "validity", "notBefore"));
+        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeValidityModifier(false, false, true));
         Assertions.assertFalse(result.isValid());
     }
 }
