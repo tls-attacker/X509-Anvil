@@ -3,8 +3,8 @@ package de.rub.nds.x509anvil.suite.tests.namechaining;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
-import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
-import de.rub.nds.asn1.model.Asn1PrimitiveUtf8String;
+import de.rub.nds.asn1.model.Asn1PrintableString;
+import de.rub.nds.asn1.model.Asn1Utf8String;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -16,9 +16,9 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
-import de.rub.nds.x509anvil.framework.x509.config.model.DirectoryStringType;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 import org.junit.jupiter.api.Assertions;
@@ -91,7 +91,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @AnvilTest()
     public void typeMismatchDnQualifier(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).getSubject().addNameComponent(AttributeTypeObjectIdentifiers.DN_QUALIFIER, "dnq", DirectoryStringType.PRINTABLE);
+        X509Util.addDnQualifierToName(chainConfig.getIntermediateConfig(0).getSubject());
         VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.DN_QUALIFIER));
         Assertions.assertTrue(result.isValid());
     }
@@ -127,23 +127,19 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     private static X509CertificateModifier nameComponentTypeSwitchModifier(String oid) {
         return (certificate, config, previousConfig) -> {
             if (config.isEntity()) {
-                Name issuer = certificate.getTbsCertificate().getIssuer();;
-                RelativeDistinguishedName attribute = X509Util.getRdnFromName(issuer, oid);
-                if (attribute.getChildren().get(1) instanceof Asn1PrimitivePrintableString) {
-                    Asn1PrimitivePrintableString printableString = (Asn1PrimitivePrintableString) attribute.getChildren().get(1);
-                    attribute.getChildren().remove(1);
-                    Asn1PrimitiveUtf8String utf8String = new Asn1PrimitiveUtf8String();
-                    utf8String.setValue(printableString.getValue());
-                    attribute.addChild(utf8String);
-                }
-                else if (attribute.getChildren().get(1) instanceof Asn1PrimitiveUtf8String) {
-                    Asn1PrimitiveUtf8String utf8String = (Asn1PrimitiveUtf8String) attribute.getChildren().get(1);
-                    attribute.getChildren().remove(1);
-                    Asn1PrimitiveUtf8String printableString = new Asn1PrimitiveUtf8String();
-                    printableString.setValue(utf8String.getValue());
-                    attribute.addChild(printableString);
-                }
-                else {
+                Name issuer = certificate.getTbsCertificate().getIssuer();
+                RelativeDistinguishedName rdn = X509Util.getRdnFromName(issuer, oid);
+
+                AttributeTypeAndValue attributeTypeAndValue = rdn.getAttributeTypeAndValueList().get(0);
+                if (attributeTypeAndValue.getValue() instanceof Asn1PrintableString) {
+                    Asn1Utf8String asn1Utf8String = new Asn1Utf8String("wrong");
+                    asn1Utf8String.setValue(attributeTypeAndValue.getStringValueOfValue());
+                    attributeTypeAndValue.setValue(asn1Utf8String);
+                } else if (attributeTypeAndValue.getValue() instanceof Asn1Utf8String) {
+                    Asn1PrintableString asn1PrintableString = new Asn1PrintableString("wrong");
+                    asn1PrintableString.setValue(attributeTypeAndValue.getStringValueOfValue());
+                    attributeTypeAndValue.setValue(asn1PrintableString);
+                } else {
                     throw new RuntimeException("Could not change name component with oid " + oid);
                 }
             }

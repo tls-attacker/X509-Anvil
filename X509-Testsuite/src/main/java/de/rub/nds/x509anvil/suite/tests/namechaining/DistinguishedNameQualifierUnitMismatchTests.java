@@ -12,9 +12,11 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
-import de.rub.nds.x509anvil.framework.x509.config.model.DirectoryStringType;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.suite.tests.util.Modifiers;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
+import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
+import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -29,7 +31,9 @@ public class DistinguishedNameQualifierUnitMismatchTests extends X509AnvilTest {
     @AnvilTest
     public void distinguishedNameQualifierMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).getSubject().addNameComponent(AttributeTypeObjectIdentifiers.DN_QUALIFIER, "dnq", DirectoryStringType.PRINTABLE);
+        RelativeDistinguishedName rdn = new RelativeDistinguishedName("rdn");
+        rdn.addAttributeTypeAndValue(new AttributeTypeAndValue("dnq", X500AttributeType.DN_QUALIFIER, "dnq"));
+        chainConfig.getIntermediateConfig(0).getSubject().addRelativeDistinguishedNames(rdn);
         VerifierResult result = testRunner.execute(chainConfig, Modifiers.nameComponentMismatchModifier(AttributeTypeObjectIdentifiers.DN_QUALIFIER));
         Assertions.assertFalse(result.isValid());
     }

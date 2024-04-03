@@ -4,7 +4,6 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.asn1.model.Asn1PrimitiveIa5String;
-import de.rub.nds.asn1.model.Asn1Sequence;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -18,6 +17,8 @@ import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509attacker.x509.model.Name;
+import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -40,16 +41,12 @@ public class DomainComponentCaseInsensitiveTests extends X509AnvilTest {
     private static X509CertificateModifier domainComponentCaseSwitchModifier() {
         return (certificate, config, previousConfig) -> {
             if (config.isEntity()) {
-                Asn1Sequence subjectAsn1 = (Asn1Sequence) X509Util.getAsn1ElementByIdentifierPath(certificate,
-                        "tbsCertificate", "issuer");
-                Asn1Sequence attribute = X509Util.getAttributeFromName(subjectAsn1, AttributeTypeObjectIdentifiers.DOMAIN_COMPONENT);
-                if (attribute.getChildren().get(1) instanceof Asn1PrimitiveIa5String) {
-                    Asn1PrimitiveIa5String value = (Asn1PrimitiveIa5String) attribute.getChildren().get(1);
-                    value.setValue(value.getValue().toUpperCase());
-                }
-                else {
-                    throw new RuntimeException("Could not change domain component");
-                }
+                Name issuer = certificate.getTbsCertificate().getIssuer();
+                RelativeDistinguishedName rdn = X509Util.getRdnFromName(issuer, AttributeTypeObjectIdentifiers.DOMAIN_COMPONENT);
+                String oldName = rdn.getAttributeTypeAndValueList().get(0).getStringValueOfValue();
+                Asn1PrimitiveIa5String asn1PrimitiveIa5String = new Asn1PrimitiveIa5String();
+                asn1PrimitiveIa5String.setValue(oldName.toUpperCase());
+                rdn.getAttributeTypeAndValueList().get(0).setValue(asn1PrimitiveIa5String);
             }
         };
     }

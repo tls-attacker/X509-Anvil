@@ -9,13 +9,11 @@
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
+import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509attacker.filesystem.CertificateFileWriter;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
-import de.rub.nds.x509attacker.x509.model.Extension;
-import de.rub.nds.x509attacker.x509.model.Name;
-import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
-import de.rub.nds.x509attacker.x509.model.X509Certificate;
+import de.rub.nds.x509attacker.x509.model.*;
 
 import javax.security.cert.CertificateException;
 import java.io.File;
@@ -133,5 +131,15 @@ public class X509Util {
             }
         }
         return null;
+    }
+
+    public static void addDnQualifierToName(Name name) {
+        RelativeDistinguishedName newRdn = new RelativeDistinguishedName("new_dnq");
+        AttributeTypeAndValue attributeTypeAndValue = new AttributeTypeAndValue("dnq");
+        Asn1ObjectIdentifier asn1ObjectIdentifier = new Asn1ObjectIdentifier("dnq");
+        asn1ObjectIdentifier.setValue(AttributeTypeObjectIdentifiers.DN_QUALIFIER);
+        attributeTypeAndValue.setType(asn1ObjectIdentifier);
+        newRdn.addAttributeTypeAndValue(attributeTypeAndValue);
+        name.addRelativeDistinguishedNames(newRdn);
     }
 }

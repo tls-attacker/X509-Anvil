@@ -2,10 +2,6 @@ package de.rub.nds.x509anvil.suite.tests.namechaining;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
-import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
-import de.rub.nds.asn1.model.Asn1Sequence;
-import de.rub.nds.asn1.model.Asn1Set;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -15,12 +11,13 @@ import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
 import de.rub.nds.x509attacker.x509.model.Name;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+
+import static de.rub.nds.x509anvil.framework.x509.config.X509Util.addDnQualifierToName;
 
 public class RdnNumberMismatchTests extends X509AnvilTest {
 
@@ -66,19 +63,5 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
                 addDnQualifierToName(issuer);
             }
         };
-    }
-
-    private static void addDnQualifierToName(Name name) {
-        Asn1Set rdn = new Asn1Set();
-        Asn1Sequence attributeTypeAndName = new Asn1Sequence();
-        Asn1ObjectIdentifier type = new Asn1ObjectIdentifier("type");
-        type.setValue(AttributeTypeObjectIdentifiers.DN_QUALIFIER);
-        attributeTypeAndName.addChild(type);
-        Asn1PrimitivePrintableString value = new Asn1PrimitivePrintableString();
-        value.setValue("dnq");
-        attributeTypeAndName.addChild(value);
-        rdn.addChild(attributeTypeAndName);
-
-        name.addChild(rdn);
     }
 }

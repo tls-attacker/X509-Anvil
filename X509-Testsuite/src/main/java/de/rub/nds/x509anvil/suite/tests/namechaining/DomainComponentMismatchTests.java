@@ -41,15 +41,12 @@ public class DomainComponentMismatchTests extends X509AnvilTest {
     private static X509CertificateModifier domainComponentMismatchModifier() {
         return (certificate, config, previousConfig) -> {
             if (config.isEntity()) {
-                Name isser = certificate.getTbsCertificate().getIssuer();
-                RelativeDistinguishedName rdn = X509Util.getRdnFromName(isser, AttributeTypeObjectIdentifiers.DOMAIN_COMPONENT);
-                if (rdn.getChildren().get(1) instanceof Asn1PrimitiveIa5String) {
-                    Asn1PrimitiveIa5String value = (Asn1PrimitiveIa5String) rdn.getChildren().get(1);
-                    value.setValue(value.getValue() + "_modified");
-                }
-                else {
-                    throw new RuntimeException("Could not change domain component");
-                }
+                Name issuer = certificate.getTbsCertificate().getIssuer();
+                RelativeDistinguishedName rdn = X509Util.getRdnFromName(issuer, AttributeTypeObjectIdentifiers.DOMAIN_COMPONENT);
+                String oldName = rdn.getAttributeTypeAndValueList().get(0).getStringValueOfValue();
+                Asn1PrimitiveIa5String asn1PrimitiveIa5String = new Asn1PrimitiveIa5String();
+                asn1PrimitiveIa5String.setValue(oldName + "_modified");
+                rdn.getAttributeTypeAndValueList().get(0).setValue(asn1PrimitiveIa5String);
             }
         };
     }

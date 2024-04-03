@@ -3,9 +3,7 @@ package de.rub.nds.x509anvil.suite.tests.extensions.authoritykeyid;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
-import de.rub.nds.asn1.model.Asn1Implicit;
 import de.rub.nds.asn1.model.Asn1OctetString;
-import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -78,13 +76,9 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
 
     private static byte[] createDuplicateExtensionValue() {
         AuthorityKeyIdentifier authorityKeyIdentifier = new AuthorityKeyIdentifier("auth_dupe");
-        Asn1Implicit keyIdImplicit = new Asn1Implicit();
-        Asn1PrimitiveOctetString keyId = new Asn1PrimitiveOctetString();
+        Asn1OctetString keyId = new Asn1OctetString("new_key");
         keyId.setValue(TestUtils.createByteArray(20));
-        keyIdImplicit.addChild(keyId);
-        Asn1OctetString asn1OctetString = new Asn1OctetString("key");
-        asn1OctetString.setValue(keyIdImplicit.getContent());
-        authorityKeyIdentifier.setKeyIdentifier(asn1OctetString);
+        authorityKeyIdentifier.setKeyIdentifier(keyId);
         Asn1FieldSerializer serializer = new Asn1FieldSerializer(authorityKeyIdentifier);
         return serializer.serialize();
     }
