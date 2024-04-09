@@ -29,11 +29,9 @@ public class ContextHelper {
     private static synchronized void setContext() throws UnsupportedFeatureException, ProbeException {
         Security.addProvider(new BouncyCastleProvider());
         testConfig = new TestConfig();
-        AnvilContext.createInstance(new AnvilTestConfig(), "", new X509AnvilParameterIdentifierProvider());
-        // AnvilFactoryRegistry.get().addParameterTypes(X509AnvilParameterType.values(), new
-        // X509AnvilParameterFactory());
-        // AnvilFactoryRegistry.get().setParameterIdentifierProvider(new X509AnvilParameterIdentifierProvider());
-        // AnvilContext.getInstance().setTestStrength(2);
+        AnvilTestConfig anvilTestConfig = new AnvilTestConfig();
+        anvilTestConfig.setStrength(2);
+        AnvilContext.createInstance(anvilTestConfig, "", new X509AnvilParameterIdentifierProvider());
 
         featureReport = FeatureExtractor.scanFeatures();
     }

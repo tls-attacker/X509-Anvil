@@ -1,0 +1,8 @@
+{
+  "empty_dn": {
+    "description": "Empty domain name for issuer",
+    "severityLevels": {
+      "SOME_LEVEL": 42
+    }
+  }
+}

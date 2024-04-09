@@ -24,7 +24,7 @@ public class EmptyDNTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest
+    @AnvilTest(id = "empty_dn")
     public void emptyDn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         chainConfig.getIntermediateConfig(0).getSubject().setRelativeDistinguishedNames(Collections.singletonList(new RelativeDistinguishedName("empty")));
