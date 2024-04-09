@@ -22,6 +22,7 @@ import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.constants.NameType;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.context.X509Context;
+import de.rub.nds.x509attacker.filesystem.CertificateIo;
 import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
@@ -113,11 +114,10 @@ public class X509CertificateConfigUtil {
     public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String privateKeyFile)
         throws IOException, InvalidKeySpecException {
         X509Certificate staticRootCertificate = new X509Certificate("staticCertificate");
-        //TODO: Fix parsing? expected SEQUENCE(16) but found RELATIVE_OID (13) for TagNumber
         X509CertificateParser parser = new X509CertificateParser(
             new X509Chooser(new de.rub.nds.x509attacker.config.X509CertificateConfig(), new X509Context()),
             staticRootCertificate);
-        parser.parse(new BufferedInputStream(new FileInputStream(staticCertificateFile)));
+        parser.parse(new BufferedInputStream(new ByteArrayInputStream(CertificateIo.readPemCertificateByteList(new FileInputStream(staticCertificateFile)).get(0).getBytes())));
 
         PrivateKey privateKey =
             de.rub.nds.x509attacker.signatureengine.keyparsers.PemUtil.readPrivateKey(new File(privateKeyFile));
