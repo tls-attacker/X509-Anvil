@@ -10,7 +10,10 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
+import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
+import de.rub.nds.x509attacker.chooser.X509Chooser;
+import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.filesystem.CertificateFileWriter;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
 import de.rub.nds.x509attacker.x509.model.*;
@@ -22,6 +25,7 @@ import java.io.OutputStream;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -37,13 +41,13 @@ public class X509Util {
         }
     }
 
-    public static KeyPair retrieveKeyPairFromX509Certificate(X509Certificate x509Certificate) {
+    public static KeyPair retrieveKeyPairFromX509Certificate(X509Certificate x509Certificate, X509CertificateConfig x509CertificateConfig) {
         try {
-            PrivateKey privateKey = retrievePrivateKeyFromCertificate(x509Certificate);
-            PublicKey publicKey = retrievePublicKeyFromSubjectPublicKeyInfo(x509Certificate);
+            PrivateKey privateKey = x509CertificateConfig.getStaticCertificatePrivateKey();
+            PublicKey publicKey =  KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(x509Certificate.getPublicKey().getEncoded(new X509Chooser(new de.rub.nds.x509attacker.config.X509CertificateConfig(), new X509Context()))));
             return new KeyPair(publicKey, privateKey);
-        } catch (CertificateException | InvalidKeySpecException e) {
-            throw new IllegalArgumentException("Unable to retrieve key pair from x509Certificate", e);
+        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 

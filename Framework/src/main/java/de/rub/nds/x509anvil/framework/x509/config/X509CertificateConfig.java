@@ -102,7 +102,7 @@ public class X509CertificateConfig {
 
     public void setStaticX509Certificate(X509Certificate staticX509Certificate) throws InvalidKeySpecException {
         this.staticX509Certificate = staticX509Certificate;
-        this.keyPair = X509Util.retrieveKeyPairFromX509Certificate(staticX509Certificate);
+        this.keyPair = X509Util.retrieveKeyPairFromX509Certificate(staticX509Certificate, this);
     }
 
     public PrivateKey getStaticCertificatePrivateKey() {
