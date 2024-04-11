@@ -17,6 +17,7 @@ import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.filesystem.CertificateFileWriter;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
 import de.rub.nds.x509attacker.x509.model.*;
+import de.rub.nds.x509attacker.x509.model.publickey.X509RsaPublicKey;
 
 import javax.security.cert.CertificateException;
 import java.io.File;
@@ -25,6 +26,7 @@ import java.io.OutputStream;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.RSAPublicKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.List;
 import java.util.Objects;
@@ -44,7 +46,9 @@ public class X509Util {
     public static KeyPair retrieveKeyPairFromX509Certificate(X509Certificate x509Certificate, X509CertificateConfig x509CertificateConfig) {
         try {
             PrivateKey privateKey = x509CertificateConfig.getStaticCertificatePrivateKey();
-            PublicKey publicKey =  KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(x509Certificate.getPublicKey().getEncoded(new X509Chooser(new de.rub.nds.x509attacker.config.X509CertificateConfig(), new X509Context()))));
+            X509RsaPublicKey extractedPublicKey = ((X509RsaPublicKey) x509Certificate.getPublicKey());
+            // PublicKey publicKey =  KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(x509Certificate.getPublicKey().getEncoded(new X509Chooser(new de.rub.nds.x509attacker.config.X509CertificateConfig(), new X509Context()))));
+            PublicKey publicKey =  KeyFactory.getInstance("RSA").generatePublic(new RSAPublicKeySpec(extractedPublicKey.getModulus().getValue().getValue(), extractedPublicKey.getPublicExponent().getValue().getValue()));
             return new KeyPair(publicKey, privateKey);
         } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
