@@ -3,7 +3,7 @@ package de.rub.nds.x509anvil.suite.tests.extensions.keyusage;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
-import de.rub.nds.asn1.model.Asn1PrimitiveBitString;
+import de.rub.nds.asn1.model.Asn1BitString;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -81,9 +81,9 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
         val[0] = (byte) (~keyUsage[0] & 0xFF);
         val[1] = (byte) (~keyUsage[1] & 0xFF);
 
-        Asn1PrimitiveBitString keyUsageAsn1 = new Asn1PrimitiveBitString();
-        keyUsageAsn1.setValue(val);
-        keyUsageAsn1.setUnusedBits(7);
+        Asn1BitString keyUsageAsn1 = new Asn1BitString("keyUsage");
+        keyUsageAsn1.setUsedBits(val);
+        keyUsageAsn1.setUnusedBits((byte) 7);
 
         Asn1FieldSerializer serializer = new Asn1FieldSerializer(keyUsageAsn1);
         return serializer.serialize();

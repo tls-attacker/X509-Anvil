@@ -9,8 +9,11 @@
 
 package de.rub.nds.x509anvil.framework.featureextraction;
 
+import de.rub.nds.protocol.constants.HashAlgorithm;
+import de.rub.nds.protocol.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.*;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
+import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,10 +21,10 @@ import java.util.stream.Collectors;
 public class FeatureReport {
     private final List<ProbeResult> probeResults = new ArrayList<>();
     private List<Integer> supportedVersions = new ArrayList<>();
-    private List<SignatureAlgorithm> supportedAlgorithms = new ArrayList<>();
-    private List<SignatureAlgorithm> supportedEntityAlgorithms = new ArrayList<>();
-    private List<KeyTypeLengthPair> supportedKeyLengths = new ArrayList<>();
-    private List<KeyTypeLengthPair> supportedEntityKeyLengths = new ArrayList<>();
+    private List<X509SignatureAlgorithm> supportedAlgorithms = new ArrayList<>();
+    private List<X509SignatureAlgorithm> supportedEntityAlgorithms = new ArrayList<>();
+    private List<SignatureAlgorithmLengthPair> supportedKeyLengths = new ArrayList<>();
+    private List<SignatureAlgorithmLengthPair> supportedEntityKeyLengths = new ArrayList<>();
     private List<ExtensionType> supportedExtensions = new ArrayList<>();
     private boolean digitalSignatureKeyUsageRequired;
 
@@ -53,36 +56,36 @@ public class FeatureReport {
         return supportedVersions.contains(2);
     }
 
-    public List<SignatureAlgorithm> getSupportedAlgorithms() {
+    public List<X509SignatureAlgorithm> getSupportedAlgorithms() {
         return supportedAlgorithms;
     }
 
-    public void setSupportedAlgorithms(List<SignatureAlgorithm> supportedAlgorithms) {
+    public void setSupportedAlgorithms(List<X509SignatureAlgorithm> supportedAlgorithms) {
         this.supportedAlgorithms = supportedAlgorithms;
     }
 
-    public boolean algorithmSupported(SignatureAlgorithm algorithm) {
+    public boolean algorithmSupported(X509SignatureAlgorithm algorithm) {
         return supportedAlgorithms.contains(algorithm);
     }
 
-    public boolean entityAlgorithmSupported(SignatureAlgorithm algorithm) {
+    public boolean entityAlgorithmSupported(X509SignatureAlgorithm algorithm) {
         return supportedEntityAlgorithms.contains(algorithm);
     }
 
-    public boolean keyTypeSupported(KeyType keyType) {
-        return supportedAlgorithms.stream().anyMatch(a -> a.getKeyType().equals(keyType));
+    public boolean keyTypeSupported(SignatureAlgorithm keyType) {
+        return supportedAlgorithms.stream().anyMatch(a -> a.getSignatureAlgorithm().equals(keyType));
     }
 
-    public boolean entityKeyTypeSupported(KeyType keyType) {
-        return supportedEntityAlgorithms.stream().anyMatch(a -> a.getKeyType().equals(keyType));
+    public boolean entityKeyTypeSupported(SignatureAlgorithm keyType) {
+        return supportedEntityAlgorithms.stream().anyMatch(a -> a.getSignatureAlgorithm().equals(keyType));
     }
 
-    public List<KeyType> getSupportedKeyTypes() {
-        return Arrays.stream(KeyType.values()).filter(this::keyTypeSupported).collect(Collectors.toList());
+    public List<SignatureAlgorithm> getSupportedKeyTypes() {
+        return Arrays.stream(SignatureAlgorithm.values()).filter(this::keyTypeSupported).collect(Collectors.toList());
     }
 
-    public List<KeyType> getSupportedEntityKeyTypes() {
-        return Arrays.stream(KeyType.values()).filter(this::entityKeyTypeSupported).collect(Collectors.toList());
+    public List<SignatureAlgorithm> getSupportedEntityKeyTypes() {
+        return Arrays.stream(SignatureAlgorithm.values()).filter(this::entityKeyTypeSupported).collect(Collectors.toList());
     }
 
     public boolean hashAlgorithmSupported(HashAlgorithm hashAlgorithm) {
@@ -102,19 +105,19 @@ public class FeatureReport {
             .collect(Collectors.toList());
     }
 
-    public List<KeyTypeLengthPair> getSupportedKeyLengths() {
+    public List<SignatureAlgorithmLengthPair> getSupportedKeyLengths() {
         return supportedKeyLengths;
     }
 
-    public void setSupportedKeyLengths(List<KeyTypeLengthPair> supportedKeyLengths) {
+    public void setSupportedKeyLengths(List<SignatureAlgorithmLengthPair> supportedKeyLengths) {
         this.supportedKeyLengths = supportedKeyLengths;
     }
 
-    public List<KeyTypeLengthPair> getSupportedEntityKeyLengths() {
+    public List<SignatureAlgorithmLengthPair> getSupportedEntityKeyLengths() {
         return supportedEntityKeyLengths;
     }
 
-    public void setSupportedEntityKeyLengths(List<KeyTypeLengthPair> supportedEntityKeyLengths) {
+    public void setSupportedEntityKeyLengths(List<SignatureAlgorithmLengthPair> supportedEntityKeyLengths) {
         this.supportedEntityKeyLengths = supportedEntityKeyLengths;
     }
 
@@ -148,11 +151,11 @@ public class FeatureReport {
             + "Supported extensions: " + supportedExtensions;
     }
 
-    public List<SignatureAlgorithm> getSupportedEntityAlgorithms() {
+    public List<X509SignatureAlgorithm> getSupportedEntityAlgorithms() {
         return supportedEntityAlgorithms;
     }
 
-    public void setSupportedEntityAlgorithms(List<SignatureAlgorithm> supportedEntityAlgorithms) {
+    public void setSupportedEntityAlgorithms(List<X509SignatureAlgorithm> supportedEntityAlgorithms) {
         this.supportedEntityAlgorithms = supportedEntityAlgorithms;
     }
 }

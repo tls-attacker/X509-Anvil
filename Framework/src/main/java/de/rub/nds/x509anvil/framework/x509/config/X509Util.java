@@ -9,25 +9,22 @@
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
+import de.rub.nds.asn1.model.Asn1Integer;
 import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
-import de.rub.nds.x509anvil.framework.util.PemUtil;
+import de.rub.nds.protocol.crypto.key.PrivateKeyContainer;
+import de.rub.nds.protocol.crypto.key.RsaPrivateKey;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
-import de.rub.nds.x509attacker.chooser.X509Chooser;
-import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.filesystem.CertificateFileWriter;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
 import de.rub.nds.x509attacker.x509.model.*;
 import de.rub.nds.x509attacker.x509.model.publickey.X509RsaPublicKey;
 
-import javax.security.cert.CertificateException;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.RSAPublicKeySpec;
-import java.security.spec.X509EncodedKeySpec;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -43,61 +40,31 @@ public class X509Util {
         }
     }
 
-    public static KeyPair retrieveKeyPairFromX509Certificate(X509Certificate x509Certificate, X509CertificateConfig x509CertificateConfig) {
-        try {
-            PrivateKey privateKey = x509CertificateConfig.getStaticCertificatePrivateKey();
-            X509RsaPublicKey extractedPublicKey = ((X509RsaPublicKey) x509Certificate.getPublicKey());
-            // PublicKey publicKey =  KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(x509Certificate.getPublicKey().getEncoded(new X509Chooser(new de.rub.nds.x509attacker.config.X509CertificateConfig(), new X509Context()))));
-            PublicKey publicKey =  KeyFactory.getInstance("RSA").generatePublic(new RSAPublicKeySpec(extractedPublicKey.getModulus().getValue().getValue(), extractedPublicKey.getPublicExponent().getValue().getValue()));
-            return new KeyPair(publicKey, privateKey);
-        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+    static PrivateKeyContainer containerFromPrivateKey(PrivateKey privateKey) {
+        if (privateKey instanceof RSAPrivateKey) {
+            RSAPrivateKey castedKey = (RSAPrivateKey) privateKey;
+            return new RsaPrivateKey(castedKey.getPrivateExponent(), castedKey.getModulus());
+        } else {
+            throw new UnsupportedOperationException("Private keys of type " + privateKey.getAlgorithm() + " not supported yet. Only RSA supported.");
         }
     }
 
-    public static PrivateKey retrievePrivateKeyFromCertificate(X509Certificate x509Certificate)
-        throws InvalidKeySpecException {
-        byte[] privateKeyBytes = x509Certificate.getContent().getValue();
+    public static X509RsaPublicKey containerFromPublicKey(PublicKey publicKey) {
+        if (publicKey instanceof RSAPublicKey) {
+            RSAPublicKey castedKey = (RSAPublicKey) publicKey;
+            X509RsaPublicKey x509RsaPublicKey = new X509RsaPublicKey("publicKey");
 
-        KeyFactory keyFactory;
-        try {
-            switch (x509Certificate.getPublicKey().getX509PublicKeyType()) {
-                case RSA:
-                    keyFactory = KeyFactory.getInstance("RSA");
-                    break;
-                case DSA:
-                    keyFactory = KeyFactory.getInstance("DSA");
-                    break;
-                case ECDH_ECDSA:
-                    keyFactory = KeyFactory.getInstance("EC");
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unsupported key type");
-            }
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException(
-                "No key factory for key type " + x509Certificate.getPublicKey().getX509PublicKeyType().name());
+            Asn1Integer exponent = new Asn1Integer("exponent");
+            exponent.setValue(castedKey.getPublicExponent());
+            x509RsaPublicKey.setPublicExponent(exponent);
+
+            Asn1Integer modulus = new Asn1Integer("modulus");
+            modulus.setValue(castedKey.getModulus());
+            x509RsaPublicKey.setModulus(modulus);
+            return x509RsaPublicKey;
+        } else {
+            throw new UnsupportedOperationException("Private keys of type " + publicKey.getAlgorithm() + " not supported yet. Only RSA supported.");
         }
-
-        return keyFactory.generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
-    }
-
-    public static PublicKey retrievePublicKeyFromSubjectPublicKeyInfo(X509Certificate x509Certificate)
-        throws CertificateException {
-        // TODO: This is a workaround because using the Asn1-Tool classes didn't work
-        byte[] certBytes = x509Certificate.getContent().getValue();
-        javax.security.cert.X509Certificate cert = javax.security.cert.X509Certificate.getInstance(certBytes);
-        return cert.getPublicKey();
-    }
-
-    private static void writeUint24(int value, OutputStream outputStream) throws IOException {
-        if ((value & 16777215) != value) {
-            throw new IOException("Certificate chain too large for 24 bit length field");
-        }
-
-        outputStream.write((byte) (value >>> 16));
-        outputStream.write((byte) (value >>> 8));
-        outputStream.write((byte) value);
     }
 
     public static void exportCertificates(List<X509Certificate> certificateChain, String directory) {

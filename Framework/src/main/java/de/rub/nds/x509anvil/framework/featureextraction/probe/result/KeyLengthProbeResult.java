@@ -9,15 +9,15 @@
 
 package de.rub.nds.x509anvil.framework.featureextraction.probe.result;
 
-import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeType;
+import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 
 public class KeyLengthProbeResult extends FeatureSupportedProbeResult {
-    private final SignatureAlgorithm signatureAlgorithm;
+    private final X509SignatureAlgorithm signatureAlgorithm;
     private final int keyLength;
     private final boolean isEntity;
 
-    public KeyLengthProbeResult(SignatureAlgorithm signatureAlgorithm, int keyLength, boolean isEntity,
+    public KeyLengthProbeResult(X509SignatureAlgorithm signatureAlgorithm, int keyLength, boolean isEntity,
         boolean supported) {
         super(ProbeType.KEY_LENGTH, supported);
         this.signatureAlgorithm = signatureAlgorithm;
@@ -25,7 +25,7 @@ public class KeyLengthProbeResult extends FeatureSupportedProbeResult {
         this.isEntity = isEntity;
     }
 
-    public SignatureAlgorithm getSignatureAlgorithm() {
+    public X509SignatureAlgorithm getSignatureAlgorithm() {
         return signatureAlgorithm;
     }
 

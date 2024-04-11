@@ -3,7 +3,7 @@ package de.rub.nds.x509anvil.suite.tests.extensions.subjectkeyid;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
-import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
+import de.rub.nds.asn1.model.Asn1OctetString;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -74,7 +74,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
     }
 
     private static byte[] createDuplicateExtensionValue() {
-        Asn1PrimitiveOctetString subjectKeyId = new Asn1PrimitiveOctetString();
+        Asn1OctetString subjectKeyId = new Asn1OctetString("subjectKeyId");
         subjectKeyId.setValue(TestUtils.createByteArray(20));
         Asn1FieldSerializer serializer = new Asn1FieldSerializer(subjectKeyId);
         return serializer.serialize();

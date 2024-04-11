@@ -31,7 +31,7 @@ public class AuthorityKeyIdentifierExtensionConfig extends ExtensionConfig {
         try {
             JcaX509ExtensionUtils jcaX509ExtensionUtils = new JcaX509ExtensionUtils();
             AuthorityKeyIdentifier authorityKeyIdentifier =
-                jcaX509ExtensionUtils.createAuthorityKeyIdentifier(previousConfig.getKeyPair().getPublic());
+                jcaX509ExtensionUtils.createAuthorityKeyIdentifier(previousConfig.getPublicKeyJavaFormat());
             derEncoded = authorityKeyIdentifier.getEncoded();
         } catch (NoSuchAlgorithmException | IOException e) {
             throw new RuntimeException("Unable to encode authority key identifier", e);

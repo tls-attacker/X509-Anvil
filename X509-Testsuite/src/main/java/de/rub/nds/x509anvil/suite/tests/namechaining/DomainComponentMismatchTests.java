@@ -3,7 +3,7 @@ package de.rub.nds.x509anvil.suite.tests.namechaining;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
-import de.rub.nds.asn1.model.Asn1PrimitiveIa5String;
+import de.rub.nds.asn1.model.Asn1Ia5String;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -44,7 +44,7 @@ public class DomainComponentMismatchTests extends X509AnvilTest {
                 Name issuer = certificate.getTbsCertificate().getIssuer();
                 RelativeDistinguishedName rdn = X509Util.getRdnFromName(issuer, AttributeTypeObjectIdentifiers.DOMAIN_COMPONENT);
                 String oldName = rdn.getAttributeTypeAndValueList().get(0).getStringValueOfValue();
-                Asn1PrimitiveIa5String asn1PrimitiveIa5String = new Asn1PrimitiveIa5String();
+                Asn1Ia5String asn1PrimitiveIa5String = new Asn1Ia5String("domainComponent");
                 asn1PrimitiveIa5String.setValue(oldName + "_modified");
                 rdn.getAttributeTypeAndValueList().get(0).setValue(asn1PrimitiveIa5String);
             }

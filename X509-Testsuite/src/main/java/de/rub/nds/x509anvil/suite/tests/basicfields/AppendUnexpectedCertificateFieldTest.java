@@ -2,7 +2,7 @@ package de.rub.nds.x509anvil.suite.tests.basicfields;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
+import de.rub.nds.asn1.model.Asn1OctetString;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -35,7 +35,7 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
 
-        Asn1PrimitiveOctetString octetString = new Asn1PrimitiveOctetString();
+        Asn1OctetString octetString = new Asn1OctetString("unexpectedField");
         octetString.setValue(TestUtils.createByteArray(8));
         generatedCertificates.get(generatedCertificates.size() - 1).getTbsCertificate().setEncodedChildren(ArrayUtils.addAll(generatedCertificates.get(1).getTbsCertificate().getEncodedChildren().getValue(), octetString.getContent().getValue()));
 
@@ -54,7 +54,7 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
 
-        Asn1PrimitiveOctetString octetString = new Asn1PrimitiveOctetString();
+        Asn1OctetString octetString = new Asn1OctetString("unexpectedField");
         octetString.setValue(TestUtils.createByteArray(8));
         generatedCertificates.get(1).getTbsCertificate().setEncodedChildren(ArrayUtils.addAll(generatedCertificates.get(1).getTbsCertificate().getEncodedChildren().getValue(), octetString.getContent().getValue()));
 

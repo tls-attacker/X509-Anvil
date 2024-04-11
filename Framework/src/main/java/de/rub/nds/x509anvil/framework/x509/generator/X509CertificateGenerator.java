@@ -9,28 +9,32 @@
 
 package de.rub.nds.x509anvil.framework.x509.generator;
 
+import de.rub.nds.asn1.constants.TagClass;
+import de.rub.nds.asn1.constants.TagConstructed;
+import de.rub.nds.asn1.constants.UniversalTagNumber;
 import de.rub.nds.asn1.model.*;
 import de.rub.nds.asn1.parser.ParserHelper;
+import de.rub.nds.asn1.preparator.Asn1PreparatorHelper;
 import de.rub.nds.protocol.constants.SignatureAlgorithm;
 import de.rub.nds.protocol.crypto.key.PrivateKeyContainer;
 import de.rub.nds.protocol.crypto.key.RsaPrivateKey;
 import de.rub.nds.protocol.crypto.signature.SignatureCalculator;
-import de.rub.nds.x509anvil.framework.constants.KeyType;
-import de.rub.nds.x509anvil.framework.util.PemUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
+import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.constants.TimeContextHint;
 import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 import de.rub.nds.x509attacker.x509.model.*;
 import de.rub.nds.x509attacker.x509.model.publickey.PublicKeyBitString;
+import de.rub.nds.x509attacker.x509.preparator.TbsCertificatePreparator;
+import de.rub.nds.x509attacker.x509.preparator.X509Asn1FieldPreparator;
 import de.rub.nds.x509attacker.x509.serializer.X509Asn1FieldSerializer;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,16 +72,11 @@ public class X509CertificateGenerator {
         setSignatureAlgorithm();
 
         // Set subject key info
-        try {
-            byte[] key = PemUtil.encodeKeyAsPem(certificateConfig.getKeyPair().getPublic().getEncoded(), "PUBLIC KEY");
-            SubjectPublicKeyInfo subjectPublicKeyInfo = new SubjectPublicKeyInfo("subject_key");
-            PublicKeyBitString publicKeyBitString = new PublicKeyBitString("public_key");
-            publicKeyBitString.setContent(key);
-            subjectPublicKeyInfo.setSubjectPublicKeyBitString(publicKeyBitString);
-            x509Certificate.getTbsCertificate().setSubjectPublicKeyInfo(subjectPublicKeyInfo);
-        } catch (IOException e) {
-            throw new CertificateGeneratorException("Unable to encode public key as pem", e);
-        }
+        SubjectPublicKeyInfo subjectPublicKeyInfo = new SubjectPublicKeyInfo("subject_key");
+        PublicKeyBitString publicKeyBitString = new PublicKeyBitString("public_key");
+        publicKeyBitString.setX509PublicKeyContent(certificateConfig.getPublicKey());
+        subjectPublicKeyInfo.setSubjectPublicKeyBitString(publicKeyBitString);
+        x509Certificate.getTbsCertificate().setSubjectPublicKeyInfo(subjectPublicKeyInfo);
 
         // Call certificate modifiers
         for (X509CertificateModifier certificateModifier : certificateModifiers) {
@@ -85,36 +84,41 @@ public class X509CertificateGenerator {
         }
 
         // Sign certificate
-        RsaPrivateKey privateKeyForSignature;
+        PrivateKeyContainer privateKeyForSignature;
         X509CertificateConfig configToConsider;
         if (certificateConfig.isSelfSigned()) {
             configToConsider = certificateConfig;
         } else {
             configToConsider = previousConfig;
         }
+
         // TODO: keep difference when static certificate?
-        if (configToConsider.getKeyType() != KeyType.RSA) {
+        /* if (configToConsider.getKeyType() != KeyType.RSA && !configToConsider.isStatic()) {
             throw new CertificateGeneratorException("Can only generate RSA signatures for now");
         } else {
-            if (certificateConfig.isStatic()) {
-                privateKeyForSignature = (RsaPrivateKey) configToConsider.getStaticCertificatePrivateKey();
-            } else {
-                privateKeyForSignature = (RsaPrivateKey) configToConsider.getKeyPair().getPrivate();
-            }
-        }
+            privateKeyForSignature = (RsaPrivateKey) configToConsider.getStaticCertificatePrivateKey();
+        } */
 
+        privateKeyForSignature = configToConsider.getStaticCertificatePrivateKey();
         SignatureCalculator signatureCalculator = new SignatureCalculator();
 
-        X509SignatureAlgorithm signatureAlgorithm = x509Certificate.getX509SignatureAlgorithm();
+        X509SignatureAlgorithm signatureAlgorithm = configToConsider.getSignatureAlgorithm();
         if (x509Certificate.getSignatureComputations() == null) {
             x509Certificate.setSignatureComputations(
                 signatureCalculator.createSignatureComputations(signatureAlgorithm.getSignatureAlgorithm()));
         }
 
+        // TODO: continue here
+        Asn1PreparatorHelper.prepareAfterContent(x509Certificate.getTbsCertificate());
+        TbsCertificatePreparator certificatePreparator = new TbsCertificatePreparator(new X509Chooser(), x509Certificate);
         byte[] toBeSigned = new X509Asn1FieldSerializer(x509Certificate.getTbsCertificate()).serialize();
-        signatureCalculator.computeSignature(x509Certificate.getSignatureComputations(),
-            getPrivateKeyForAlgorithm(signatureAlgorithm.getSignatureAlgorithm(), privateKeyForSignature), toBeSigned,
-            signatureAlgorithm.getSignatureAlgorithm(), signatureAlgorithm.getHashAlgorithm());
+        signatureCalculator.computeSignature(
+                x509Certificate.getSignatureComputations(),
+                privateKeyForSignature,
+                toBeSigned,
+                signatureAlgorithm.getSignatureAlgorithm(),
+                signatureAlgorithm.getHashAlgorithm()
+        );
 
         // parse to ASN.1 bit string
         ParserHelper.parseAsn1BitString(x509Certificate.getSignature(), new BufferedInputStream(
@@ -223,36 +227,36 @@ public class X509CertificateGenerator {
 
         if (certificateConfig.getNotBeforeTimeType() == TimeType.UTC_TIME) {
             Time time = new Time("validity", TimeContextHint.NOT_BEFORE);
-            Asn1PrimitiveUtcTime utcTime = new Asn1PrimitiveUtcTime();
+            time.makeSelection(TagClass.UNIVERSAL, TagConstructed.PRIMITIVE.getBooleanValue(), UniversalTagNumber.UTCTIME.getIntValue());
+            Asn1UtcTime utcTime = new Asn1UtcTime("utcTime");
             utcTime.setIdentifier("notBefore");
             utcTime.setValue(certificateConfig.getNotBeforeValue());
             time.setValue(certificateConfig.getNotBeforeValue());
-            // TODO: how to select choice in time for UTC?
             validity.setNotBefore(time);
         } else if (certificateConfig.getNotBeforeTimeType() == TimeType.GENERALIZED_TIME) {
             Time time = new Time("validity", TimeContextHint.NOT_BEFORE);
-            Asn1PrimitiveGeneralizedTime generalTime = new Asn1PrimitiveGeneralizedTime();
+            time.makeSelection(TagClass.UNIVERSAL, TagConstructed.PRIMITIVE.getBooleanValue(), UniversalTagNumber.GENERALIZEDTIME.getIntValue());
+            Asn1GeneralizedTime generalTime = new Asn1GeneralizedTime("generalTime");
             generalTime.setIdentifier("notBefore");
             generalTime.setValue(certificateConfig.getNotBeforeValue());
-            // TODO: how to select choice in time for generalized time?
             time.setValue(certificateConfig.getNotBeforeValue());
             validity.setNotBefore(time);
         }
 
         if (certificateConfig.getNotAfterTimeType() == TimeType.UTC_TIME) {
             Time time = new Time("validity", TimeContextHint.NOT_AFTER);
-            Asn1PrimitiveUtcTime utcTime = new Asn1PrimitiveUtcTime();
+            time.makeSelection(TagClass.UNIVERSAL, TagConstructed.PRIMITIVE.getBooleanValue(), UniversalTagNumber.UTCTIME.getIntValue());
+            Asn1UtcTime utcTime = new Asn1UtcTime("utcTime");
             utcTime.setIdentifier("notAfter");
             utcTime.setValue(certificateConfig.getNotAfterValue());
-            // TODO: how to select choice in time for UTC?
             time.setValue(certificateConfig.getNotAfterValue());
             validity.setNotAfter(time);
         } else if (certificateConfig.getNotAfterTimeType() == TimeType.GENERALIZED_TIME) {
             Time time = new Time("validity", TimeContextHint.NOT_AFTER);
-            Asn1PrimitiveGeneralizedTime generalTime = new Asn1PrimitiveGeneralizedTime();
+            time.makeSelection(TagClass.UNIVERSAL, TagConstructed.PRIMITIVE.getBooleanValue(), UniversalTagNumber.GENERALIZEDTIME.getIntValue());
+            Asn1GeneralizedTime generalTime = new Asn1GeneralizedTime("generalTime");
             generalTime.setIdentifier("notAfter");
             generalTime.setValue(certificateConfig.getNotAfterValue());
-            // TODO: how to select choice in time for generalized time?
             time.setValue(certificateConfig.getNotAfterValue());
             validity.setNotAfter(time);
         }
@@ -298,17 +302,5 @@ public class X509CertificateGenerator {
             algorithm.setContent(previousConfig.getSignatureAlgorithmOid().getBytes());
         }
         x509Certificate.setSignatureAlgorithmIdentifier(algorithm);
-    }
-
-    private PrivateKeyContainer getPrivateKeyForAlgorithm(SignatureAlgorithm signatureAlgorithm,
-        RsaPrivateKey privateKey) {
-        switch (signatureAlgorithm) {
-            case RSA_PKCS1:
-            case RSA_SSA_PSS:
-                return new RsaPrivateKey(privateKey.getModulus(), privateKey.getPrivateExponent());
-            default:
-                throw new UnsupportedOperationException(
-                    "The keytype \"" + signatureAlgorithm.name() + "\" is not implemented yet");
-        }
     }
 }

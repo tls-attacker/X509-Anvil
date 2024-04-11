@@ -9,20 +9,20 @@
 
 package de.rub.nds.x509anvil.framework.featureextraction.probe;
 
-import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.SignatureAlgorithmProbeResult;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
+import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 
 import java.security.KeyPair;
 
 public class EntitySignatureAlgorithmProbe extends SimpleProbe {
-    private final SignatureAlgorithm signatureAlgorithm;
+    private final X509SignatureAlgorithm signatureAlgorithm;
 
-    public EntitySignatureAlgorithmProbe(SignatureAlgorithm signatureAlgorithm) {
+    public EntitySignatureAlgorithmProbe(X509SignatureAlgorithm signatureAlgorithm) {
         this.signatureAlgorithm = signatureAlgorithm;
     }
 
@@ -30,11 +30,10 @@ public class EntitySignatureAlgorithmProbe extends SimpleProbe {
     protected X509CertificateChainConfig prepareConfig() {
         X509CertificateChainConfig x509CertificateChainConfig = X509CertificateConfigUtil.createBasicConfig(2);
         X509CertificateConfig entity = x509CertificateChainConfig.getEntityCertificateConfig();
-        entity.setKeyType(signatureAlgorithm.getKeyType());
-        entity.setHashAlgorithm(signatureAlgorithm.getHashAlgorithm());
+        entity.setSignatureAlgorithm(signatureAlgorithm);
         KeyPair keyPair =
-            X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getKeyType(), entity.getCertificateName());
-        entity.setKeyPair(keyPair);
+            X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getSignatureAlgorithm(), entity.getCertificateName());
+        entity.applyKeyPair(keyPair);
         return x509CertificateChainConfig;
     }
 

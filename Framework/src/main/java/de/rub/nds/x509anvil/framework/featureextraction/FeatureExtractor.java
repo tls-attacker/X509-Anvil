@@ -9,12 +9,12 @@
 
 package de.rub.nds.x509anvil.framework.featureextraction;
 
+import de.rub.nds.protocol.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
-import de.rub.nds.x509anvil.framework.constants.KeyType;
-import de.rub.nds.x509anvil.framework.constants.KeyTypeLengthPair;
-import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithm;
+import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithmLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.*;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.*;
+import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +49,8 @@ public class FeatureExtractor {
         featureReport.addProbeResult(basicConstraintsProbeResult);
 
         // Probe support for signature algorithms (entity)
-        List<SignatureAlgorithm> supportedEntityAlgorithms = new ArrayList<>();
-        for (SignatureAlgorithm algorithm : SignatureAlgorithm.values()) {
+        List<X509SignatureAlgorithm> supportedEntityAlgorithms = new ArrayList<>();
+        for (X509SignatureAlgorithm algorithm : X509SignatureAlgorithm.values()) {
             Probe entitySignatureAlgorithmProbe = new EntitySignatureAlgorithmProbe(algorithm);
             SignatureAlgorithmProbeResult signatureAlgorithmProbeResult =
                 (SignatureAlgorithmProbeResult) entitySignatureAlgorithmProbe.execute();
@@ -67,23 +67,23 @@ public class FeatureExtractor {
         }
 
         // Probe support for key lengths (for entity certs)
-        List<KeyTypeLengthPair> supportedEntityKeyLengths = new ArrayList<>();
-        for (KeyType keyType : featureReport.getSupportedEntityKeyTypes()) {
-            for (int keyLength : KeyTypeLengthPair.getKeyLengths(keyType)) {
-                SignatureAlgorithm signatureAlgorithm = featureReport.getSupportedEntityAlgorithms().stream()
-                    .filter(a -> a.getKeyType() == keyType).findFirst().get();
-                Probe keyLengthProbe = new KeyLengthProbe(signatureAlgorithm, keyLength, true);
+        List<SignatureAlgorithmLengthPair> supportedEntityKeyLengths = new ArrayList<>();
+        for (SignatureAlgorithm signatureAlgorithm : featureReport.getSupportedEntityKeyTypes()) {
+            for (int keyLength : SignatureAlgorithmLengthPair.getKeyLengths(signatureAlgorithm)) {
+                X509SignatureAlgorithm x509signatureAlgorithm = featureReport.getSupportedEntityAlgorithms().stream()
+                    .filter(a -> a.getSignatureAlgorithm() == signatureAlgorithm).findFirst().get();
+                Probe keyLengthProbe = new KeyLengthProbe(x509signatureAlgorithm, keyLength, true);
                 KeyLengthProbeResult signatureAlgorithmProbeResult = (KeyLengthProbeResult) keyLengthProbe.execute();
                 if (signatureAlgorithmProbeResult.isSupported()) {
-                    supportedEntityKeyLengths.add(KeyTypeLengthPair.get(keyType, keyLength));
+                    supportedEntityKeyLengths.add(SignatureAlgorithmLengthPair.get(signatureAlgorithm, keyLength));
                 }
             }
         }
         featureReport.setSupportedEntityKeyLengths(supportedEntityKeyLengths);
 
         // Probe support for signature algorithms (non-entity)
-        List<SignatureAlgorithm> supportedAlgorithms = new ArrayList<>();
-        for (SignatureAlgorithm algorithm : SignatureAlgorithm.values()) {
+        List<X509SignatureAlgorithm> supportedAlgorithms = new ArrayList<>();
+        for (X509SignatureAlgorithm algorithm : X509SignatureAlgorithm.values()) {
             Probe signatureAlgorithmProbe = new SignatureAlgorithmProbe(algorithm);
             SignatureAlgorithmProbeResult signatureAlgorithmProbeResult =
                 (SignatureAlgorithmProbeResult) signatureAlgorithmProbe.execute();
@@ -100,15 +100,15 @@ public class FeatureExtractor {
         }
 
         // Probe support for key lengths (for non-entity certs)
-        List<KeyTypeLengthPair> supportedKeyLengths = new ArrayList<>();
-        for (KeyType keyType : featureReport.getSupportedKeyTypes()) {
-            for (int keyLength : KeyTypeLengthPair.getKeyLengths(keyType)) {
-                SignatureAlgorithm signatureAlgorithm = featureReport.getSupportedAlgorithms().stream()
-                    .filter(a -> a.getKeyType() == keyType).findFirst().get();
-                Probe keyLengthProbe = new KeyLengthProbe(signatureAlgorithm, keyLength, false);
+        List<SignatureAlgorithmLengthPair> supportedKeyLengths = new ArrayList<>();
+        for (SignatureAlgorithm signatureAlgorithm : featureReport.getSupportedKeyTypes()) {
+            for (int keyLength : SignatureAlgorithmLengthPair.getKeyLengths(signatureAlgorithm)) {
+                X509SignatureAlgorithm x509SignatureAlgorithm = featureReport.getSupportedAlgorithms().stream()
+                    .filter(a -> a.getSignatureAlgorithm() == signatureAlgorithm).findFirst().get();
+                Probe keyLengthProbe = new KeyLengthProbe(x509SignatureAlgorithm, keyLength, false);
                 KeyLengthProbeResult signatureAlgorithmProbeResult = (KeyLengthProbeResult) keyLengthProbe.execute();
                 if (signatureAlgorithmProbeResult.isSupported()) {
-                    supportedKeyLengths.add(KeyTypeLengthPair.get(keyType, keyLength));
+                    supportedKeyLengths.add(SignatureAlgorithmLengthPair.get(signatureAlgorithm, keyLength));
                 }
             }
         }

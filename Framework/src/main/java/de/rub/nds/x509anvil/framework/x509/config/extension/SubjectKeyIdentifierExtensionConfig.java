@@ -10,7 +10,6 @@
 package de.rub.nds.x509anvil.framework.x509.config.extension;
 
 import de.rub.nds.asn1.model.Asn1OctetString;
-import de.rub.nds.asn1.model.Asn1PrimitiveOctetString;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
@@ -28,12 +27,12 @@ public class SubjectKeyIdentifierExtensionConfig extends ExtensionConfig {
     @Override
     public Asn1OctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
         X509CertificateConfig previousConfig) {
-        Asn1PrimitiveOctetString subjectKeyIdentifierAsn1 = new Asn1PrimitiveOctetString();
+        Asn1OctetString subjectKeyIdentifierAsn1 = new Asn1OctetString("subjectKeyIdentifierAsn1");
         subjectKeyIdentifierAsn1.setIdentifier("subjectKeyIdentifier");
         try {
             JcaX509ExtensionUtils jcaX509ExtensionUtils = new JcaX509ExtensionUtils();
             SubjectKeyIdentifier subjectKeyIdentifier =
-                jcaX509ExtensionUtils.createSubjectKeyIdentifier(certificateConfig.getKeyPair().getPublic());
+                jcaX509ExtensionUtils.createSubjectKeyIdentifier(certificateConfig.getPublicKeyJavaFormat());
             subjectKeyIdentifierAsn1.setValue(subjectKeyIdentifier.getKeyIdentifier());
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException(e);

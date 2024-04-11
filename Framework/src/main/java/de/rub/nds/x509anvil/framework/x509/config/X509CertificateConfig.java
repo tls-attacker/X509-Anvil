@@ -9,17 +9,24 @@
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
+import de.rub.nds.protocol.constants.HashAlgorithm;
+import de.rub.nds.protocol.constants.SignatureAlgorithm;
+import de.rub.nds.protocol.crypto.key.PrivateKeyContainer;
 import de.rub.nds.x509anvil.framework.constants.*;
 import de.rub.nds.x509anvil.framework.x509.config.extension.*;
 import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
+import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
+import de.rub.nds.x509attacker.x509.model.publickey.PublicKeyContent;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.math.BigInteger;
 import java.security.KeyPair;
-import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,16 +35,13 @@ public class X509CertificateConfig {
     private CertificateChainPosType certificateChainPosType;
     private boolean isStatic;
     private X509Certificate staticX509Certificate;
-
-    private PrivateKey staticCertificatePrivateKey;
+    private PrivateKeyContainer staticCertificatePrivateKey;
+    private PublicKeyContent publicKey;
+    private PublicKey publicKeyJavaFormat;
     private boolean isSharedConfig = false; // If this config is used for multiple certificates in a chain
     private int sharedId = 0;
     private boolean selfSigned;
-    private KeyType keyType;
-    private int keyLength;
-    private KeyPair keyPair;
-    private HashAlgorithm hashAlgorithm; // Hash algorithm used when signing another certificate with privkey
-
+    private X509SignatureAlgorithm signatureAlgorithm;
     private Integer version;
     private BigInteger serialNumber;
     private TimeType notBeforeTimeType;
@@ -58,6 +62,12 @@ public class X509CertificateConfig {
         extensions.put(ExtensionType.BASIC_CONSTRAINTS, new BasicConstraintsExtensionConfig());
         extensions.put(ExtensionType.KEY_USAGE, new KeyUsageExtensionConfig());
         extensions.put(ExtensionType.UNKNOWN_EXTENSION, new UnknownExtensionConfig());
+    }
+
+    public void applyKeyPair(KeyPair keyPair) {
+        this.setPublicKeyJavaFormat(keyPair.getPublic());
+        this.setPublicKey(X509Util.containerFromPublicKey(keyPair.getPublic()));
+        this.setStaticCertificatePrivateKey(X509Util.containerFromPrivateKey(keyPair.getPrivate()));
     }
 
     public String getCertificateName() {
@@ -102,14 +112,15 @@ public class X509CertificateConfig {
 
     public void setStaticX509Certificate(X509Certificate staticX509Certificate) throws InvalidKeySpecException {
         this.staticX509Certificate = staticX509Certificate;
-        this.keyPair = X509Util.retrieveKeyPairFromX509Certificate(staticX509Certificate, this);
+        this.publicKey = staticX509Certificate.getPublicKey();
+        this.signatureAlgorithm = staticX509Certificate.getX509SignatureAlgorithm();
     }
 
-    public PrivateKey getStaticCertificatePrivateKey() {
+    public PrivateKeyContainer getStaticCertificatePrivateKey() {
         return staticCertificatePrivateKey;
     }
 
-    public void setStaticCertificatePrivateKey(PrivateKey staticCertificatePrivateKey) {
+    public void setStaticCertificatePrivateKey(PrivateKeyContainer staticCertificatePrivateKey) {
         this.staticCertificatePrivateKey = staticCertificatePrivateKey;
     }
 
@@ -129,36 +140,24 @@ public class X509CertificateConfig {
         this.sharedId = sharedId;
     }
 
-    public KeyType getKeyType() {
-        return keyType;
+    public void setSignatureAlgorithm(X509SignatureAlgorithm signatureAlgorithm) {
+        this.signatureAlgorithm = signatureAlgorithm;
     }
 
-    public void setKeyType(KeyType keyType) {
-        this.keyType = keyType;
+    public PublicKeyContent getPublicKey() {
+        return publicKey;
     }
 
-    public int getKeyLength() {
-        return keyLength;
+    public void setPublicKey(PublicKeyContent publicKey) {
+        this.publicKey = publicKey;
     }
 
-    public void setKeyLength(int keyLength) {
-        this.keyLength = keyLength;
+    public PublicKey getPublicKeyJavaFormat() {
+        return publicKeyJavaFormat;
     }
 
-    public KeyPair getKeyPair() {
-        return keyPair;
-    }
-
-    public void setKeyPair(KeyPair keyPair) {
-        this.keyPair = keyPair;
-    }
-
-    public HashAlgorithm getHashAlgorithm() {
-        return hashAlgorithm;
-    }
-
-    public void setHashAlgorithm(HashAlgorithm hashAlgorithm) {
-        this.hashAlgorithm = hashAlgorithm;
+    public void setPublicKeyJavaFormat(PublicKey publicKeyJavaFormat) {
+        this.publicKeyJavaFormat = publicKeyJavaFormat;
     }
 
     public boolean isSelfSigned() {
@@ -277,23 +276,28 @@ public class X509CertificateConfig {
         this.extensionsPresent = extensionsPresent;
     }
 
-    public SignatureAlgorithm getSignatureAlgorithm() {
-        if (isStatic) {
-            switch (staticX509Certificate.getPublicKey().getX509PublicKeyType()) {
-                case RSA:
-                    return SignatureAlgorithm.RSA_SHA256;
-                case DSA:
-                    return SignatureAlgorithm.DSA_SHA256;
-                case ECDH_ECDSA:
-                default:
-                    return SignatureAlgorithm.ECDSA_SHA256;
-            }
-        }
-
-        return SignatureAlgorithm.fromKeyHashCombination(keyType, hashAlgorithm);
+    public X509SignatureAlgorithm getSignatureAlgorithm() {
+        return signatureAlgorithm;
     }
 
     public String getSignatureAlgorithmOid() {
-        return getSignatureAlgorithm().getOid();
+        return getSignatureAlgorithm().getOid().toString();
     }
+
+    public void amendSignatureAlgorithm(SignatureAlgorithm signatureAlgorithm) {
+        if (this.signatureAlgorithm == null) {
+            throw new UnsupportedOperationException("Cannot amend SignatureAlgorithm if None");
+        }
+        HashAlgorithm hashAlgorithm = this.signatureAlgorithm.getHashAlgorithm();
+        this.signatureAlgorithm = Arrays.stream(X509SignatureAlgorithm.values()).filter(x -> x.getSignatureAlgorithm() == signatureAlgorithm && x.getHashAlgorithm() == hashAlgorithm).findFirst().orElseThrow();
+    }
+
+    public void amendSignatureAlgorithm(HashAlgorithm hashAlgorithm) {
+        if (this.signatureAlgorithm == null) {
+            throw new UnsupportedOperationException("Cannot amend SignatureAlgorithm if None");
+        }
+        SignatureAlgorithm signatureAlgorithm = this.signatureAlgorithm.getSignatureAlgorithm();
+        this.signatureAlgorithm = Arrays.stream(X509SignatureAlgorithm.values()).filter(x -> x.getSignatureAlgorithm() == signatureAlgorithm && x.getHashAlgorithm() == hashAlgorithm).findFirst().orElseThrow();
+    }
+
 }

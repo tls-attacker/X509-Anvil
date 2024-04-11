@@ -15,7 +15,7 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
-import de.rub.nds.x509anvil.framework.constants.KeyTypeLengthPair;
+import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithmLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -25,28 +25,28 @@ import java.security.KeyPair;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class KeyTypeParameter extends CertificateSpecificParameter<KeyTypeLengthPair> {
+public class SignatureParameter extends CertificateSpecificParameter<SignatureAlgorithmLengthPair> {
 
-    public KeyTypeParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.KEY_TYPE, parameterScope), KeyTypeLengthPair.class);
+    public SignatureParameter(ParameterScope parameterScope) {
+        super(new ParameterIdentifier(X509AnvilParameterType.KEY_TYPE, parameterScope), SignatureAlgorithmLengthPair.class);
     }
 
-    public KeyTypeParameter(ParameterScope parameterScope, KeyTypeLengthPair value) {
+    public SignatureParameter(ParameterScope parameterScope, SignatureAlgorithmLengthPair value) {
         this(parameterScope);
         setSelectedValue(value);
     }
 
     @Override
-    protected DerivationParameter<X509CertificateChainConfig, KeyTypeLengthPair>
-        generateValue(KeyTypeLengthPair selectedValue) {
-        return new KeyTypeParameter(getParameterIdentifier().getParameterScope(), selectedValue);
+    protected DerivationParameter<X509CertificateChainConfig, SignatureAlgorithmLengthPair>
+        generateValue(SignatureAlgorithmLengthPair selectedValue) {
+        return new SignatureParameter(getParameterIdentifier().getParameterScope(), selectedValue);
     }
 
     @Override
-    protected List<DerivationParameter<X509CertificateChainConfig, KeyTypeLengthPair>>
+    protected List<DerivationParameter<X509CertificateChainConfig, SignatureAlgorithmLengthPair>>
         getNonNullParameterValues(DerivationScope derivationScope) {
         FeatureReport featureReport = ContextHelper.getFeatureReport();
-        List<KeyTypeLengthPair> supportedKeyLength;
+        List<SignatureAlgorithmLengthPair> supportedKeyLength;
         if (getParameterScope().isEntity()) {
             supportedKeyLength = featureReport.getSupportedEntityKeyLengths();
         } else {
@@ -57,10 +57,9 @@ public class KeyTypeParameter extends CertificateSpecificParameter<KeyTypeLength
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        certificateConfig.setKeyType(getSelectedValue().getKeyType());
-        certificateConfig.setKeyLength(getSelectedValue().getKeyLength());
-        KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(getSelectedValue().getKeyType(),
+        certificateConfig.amendSignatureAlgorithm(getSelectedValue().getSignatureAlgorithm());
+        KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(getSelectedValue().getSignatureAlgorithm(),
             certificateConfig.getCertificateName(), getSelectedValue().getKeyLength());
-        certificateConfig.setKeyPair(keyPair);
+        certificateConfig.applyKeyPair(keyPair);
     }
 }

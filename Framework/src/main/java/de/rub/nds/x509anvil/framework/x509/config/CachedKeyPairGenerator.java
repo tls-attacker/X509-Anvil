@@ -9,6 +9,9 @@
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
+import de.rub.nds.protocol.constants.SignatureAlgorithm;
+import jdk.jshell.spi.ExecutionControl;
+
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -23,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CachedKeyPairGenerator {
     private static final Map<String, KeyPair> keyPairCache = new ConcurrentHashMap<>();
 
-    public static KeyPair retrieveKeyPair(String identifier, String algorithm, int keySize)
+    public static KeyPair retrieveKeyPair(String identifier, SignatureAlgorithm algorithm, int keySize)
         throws NoSuchAlgorithmException {
         String hashKey = identifier + ":" + algorithm + ":" + keySize;
 
@@ -32,8 +35,27 @@ public class CachedKeyPairGenerator {
                 return keyPairCache.get(hashKey);
             }
         }
+        String javaName = "";
+        switch (algorithm) {
+            case RSA_PKCS1:
+            case RSA_SSA_PSS:
+                javaName = "RSA";
+                break;
+            case DSA:
+                javaName = "DSA";
+                break;
+            case ECDSA:
+                javaName = "ECDSA";
+                break;
+            case ED25519:
+            case ED448:
+            case GOSTR34102001:
+            case GOSTR34102012_256:
+            case GOSTR34102012_512:
+                throw new UnsupportedOperationException("Algorithm" + algorithm.getHumanReadable() + " not implemented.");
+        }
         // Need to generate new key pair
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(algorithm);
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(javaName);
         keyPairGenerator.initialize(keySize);
         return attemptGeneratingKeyPair(keyPairGenerator, hashKey);
     }

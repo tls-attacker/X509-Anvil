@@ -3,8 +3,8 @@ package de.rub.nds.x509anvil.suite.tests.extensions.keyusage;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
+import de.rub.nds.asn1.model.Asn1BitString;
 import de.rub.nds.asn1.model.Asn1OctetString;
-import de.rub.nds.asn1.model.Asn1PrimitiveBitString;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -35,7 +35,7 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @AnvilTest()
     public void keyUsageOverflowAppend1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(true, (byte) 128, 6));
+        VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(true, (byte) 128, (byte) 6));
         Assertions.assertFalse(result.isValid());
     }
 
@@ -47,7 +47,7 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @AnvilTest()
     public void keyUsageOverflowAppend1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(false, (byte) 128, 6));
+        VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(false, (byte) 128, (byte) 6));
         Assertions.assertFalse(result.isValid());
     }
 
@@ -59,7 +59,7 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @AnvilTest()
     public void keyUsageOverflowAppend0Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(true, (byte) 0, 6));
+        VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(true, (byte) 0, (byte) 6));
         Assertions.assertFalse(result.isValid());
     }
 
@@ -71,11 +71,11 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @AnvilTest()
     public void keyUsageOverflowAppend0Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(false, (byte) 0, 6));
+        VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(false, (byte) 0, (byte) 6));
         Assertions.assertFalse(result.isValid());
     }
 
-    X509CertificateModifier keyUsageOverflowModifier(boolean entity, byte bitmask, int unusedBits) {
+    X509CertificateModifier keyUsageOverflowModifier(boolean entity, byte bitmask, byte unusedBits) {
         return (certificate, config, previousConfig) -> {
             if (entity && config.isEntity() || !entity && config.isIntermediate()) {
                 Extension extension = X509Util.getExtensionByOid(certificate, ExtensionObjectIdentifiers.KEY_USAGE);
@@ -84,8 +84,8 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
                 byte[] flags = ((KeyUsageExtensionConfig) config.extension(ExtensionType.KEY_USAGE)).getFlags();
                 flags[1] |= bitmask;
 
-                Asn1PrimitiveBitString keyUsageAsn1 = new Asn1PrimitiveBitString();
-                keyUsageAsn1.setValue(flags);
+                Asn1BitString keyUsageAsn1 = new Asn1BitString("keyUsage");
+                keyUsageAsn1.setUsedBits(flags);
                 keyUsageAsn1.setUnusedBits(unusedBits);
 
                 Asn1FieldSerializer serializer = new Asn1FieldSerializer(keyUsageAsn1);

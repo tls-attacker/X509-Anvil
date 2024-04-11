@@ -9,18 +9,18 @@
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
-import de.rub.nds.asn1.model.Asn1PrimitivePrintableString;
+import de.rub.nds.asn1.model.Asn1PrintableString;
+import de.rub.nds.protocol.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.constants.CertificateChainPosType;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
-import de.rub.nds.x509anvil.framework.constants.HashAlgorithm;
-import de.rub.nds.x509anvil.framework.constants.KeyType;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.constants.NameType;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
+import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.filesystem.CertificateIo;
 import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
@@ -45,10 +45,9 @@ public class X509CertificateConfigUtil {
 
         config.setCertificateName(certificateName);
         config.setCertificateChainPosType(chainPosType);
-        config.setKeyType(KeyType.RSA);
-        config.setKeyLength(2048);
-        config.setHashAlgorithm(HashAlgorithm.SHA256);
-        config.setKeyPair(generateKeyPair(KeyType.RSA, certificateName, 2048));
+        config.setSignatureAlgorithm(X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION);
+        KeyPair keyPair = generateKeyPair(SignatureAlgorithm.RSA_PKCS1, certificateName, 2048);
+        config.applyKeyPair(keyPair);
         config.setSelfSigned(selfSigned);
 
         config.setVersion(2);
@@ -61,10 +60,10 @@ public class X509CertificateConfigUtil {
 
         Name subject = new Name("name", NameType.SUBJECT);
         RelativeDistinguishedName commonNameDN = new RelativeDistinguishedName("relativeDistinguishedName");
-        Asn1PrimitivePrintableString commonName = new Asn1PrimitivePrintableString();
+        Asn1PrintableString commonName = new Asn1PrintableString("commonName");
         commonName.setValue(certificateName);
         commonNameDN.addAttributeTypeAndValue(
-            new AttributeTypeAndValue("attributeTypeAndValue", X500AttributeType.COMMON_NAME, commonName.getValue()));
+            new AttributeTypeAndValue("attributeTypeAndValue", X500AttributeType.COMMON_NAME, commonName.getValue().getValue()));
         subject.addRelativeDistinguishedNames(commonNameDN);
         config.setSubject(subject);
 
@@ -98,14 +97,14 @@ public class X509CertificateConfigUtil {
         return x509CertificateChainConfig;
     }
 
-    public static KeyPair generateKeyPair(KeyType keyType, String keyPairIdentifier) {
-        int defaultKeySize = keyType == KeyType.ECDSA ? 256 : 2048;
-        return generateKeyPair(keyType, keyPairIdentifier, defaultKeySize);
+    public static KeyPair generateKeyPair(SignatureAlgorithm signatureAlgorithm, String keyPairIdentifier) {
+        int defaultKeySize = signatureAlgorithm == SignatureAlgorithm.ECDSA ? 256 : 2048;
+        return generateKeyPair(signatureAlgorithm, keyPairIdentifier, defaultKeySize);
     }
 
-    public static KeyPair generateKeyPair(KeyType keyType, String keyPairIdentifier, int keyLength) {
+    public static KeyPair generateKeyPair(SignatureAlgorithm signatureAlgorithm, String keyPairIdentifier, int keyLength) {
         try {
-            return CachedKeyPairGenerator.retrieveKeyPair(keyPairIdentifier, keyType.name(), keyLength);
+            return CachedKeyPairGenerator.retrieveKeyPair(keyPairIdentifier, signatureAlgorithm, keyLength);
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException("This should not happen");
         }
@@ -122,7 +121,7 @@ public class X509CertificateConfigUtil {
         PrivateKey privateKey =
             de.rub.nds.x509attacker.signatureengine.keyparsers.PemUtil.readPrivateKey(new File(privateKeyFile));
         X509CertificateConfig staticX509CertificateConfig = new X509CertificateConfig();
-        staticX509CertificateConfig.setStaticCertificatePrivateKey(privateKey);
+        staticX509CertificateConfig.setStaticCertificatePrivateKey(X509Util.containerFromPrivateKey(privateKey));
         staticX509CertificateConfig.setStatic(true);
         staticX509CertificateConfig.setStaticX509Certificate(staticRootCertificate);
         return staticX509CertificateConfig;
