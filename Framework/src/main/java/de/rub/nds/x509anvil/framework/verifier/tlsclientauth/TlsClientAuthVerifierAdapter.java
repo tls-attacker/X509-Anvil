@@ -29,6 +29,7 @@ import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.filesystem.CertificateBytes;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
+import de.rub.nds.x509attacker.x509.preparator.TbsCertificatePreparator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,9 +110,17 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         X509CertificateConfig entityConfig = chainConfig.getEntityCertificateConfig();
         List<CertificateBytes> encodedCertificateChain = new LinkedList<>();
         for (X509Certificate x509Certificate : certificatesChain) {
-            encodedCertificateChain.add(new CertificateBytes(x509Certificate
+            de.rub.nds.x509attacker.config.X509CertificateConfig config = new de.rub.nds.x509attacker.config.X509CertificateConfig();
+            config.setIncludeIssuerUniqueId(true);
+            config.setIncludeSubjectUniqueId(true);
+            // TODO: add extensions
+            x509Certificate.getTbsCertificate().setExplicitExtensions(null);
+            // config.setIncludeExtensions(true);
+            TbsCertificatePreparator certificatePreparator = new TbsCertificatePreparator(new X509Chooser(config, new X509Context()), x509Certificate.getTbsCertificate());
+            certificatePreparator.prepare();
+            encodedCertificateChain.add(new CertificateBytes(x509Certificate.getTbsCertificate()
                 .getSerializer(
-                    new X509Chooser(new de.rub.nds.x509attacker.config.X509CertificateConfig(), new X509Context()))
+                    new X509Chooser(config, new X509Context()))
                 .serialize()));
         }
 

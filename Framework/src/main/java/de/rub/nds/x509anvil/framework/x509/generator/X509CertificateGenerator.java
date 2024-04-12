@@ -13,11 +13,7 @@ import de.rub.nds.asn1.constants.TagClass;
 import de.rub.nds.asn1.constants.TagConstructed;
 import de.rub.nds.asn1.constants.UniversalTagNumber;
 import de.rub.nds.asn1.model.*;
-import de.rub.nds.asn1.parser.ParserHelper;
-import de.rub.nds.asn1.preparator.Asn1PreparatorHelper;
-import de.rub.nds.protocol.constants.SignatureAlgorithm;
 import de.rub.nds.protocol.crypto.key.PrivateKeyContainer;
-import de.rub.nds.protocol.crypto.key.RsaPrivateKey;
 import de.rub.nds.protocol.crypto.signature.SignatureCalculator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
@@ -26,15 +22,13 @@ import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.constants.TimeContextHint;
 import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
+import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.x509.model.*;
 import de.rub.nds.x509attacker.x509.model.publickey.PublicKeyBitString;
 import de.rub.nds.x509attacker.x509.preparator.TbsCertificatePreparator;
-import de.rub.nds.x509attacker.x509.preparator.X509Asn1FieldPreparator;
 import de.rub.nds.x509attacker.x509.serializer.X509Asn1FieldSerializer;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,9 +102,14 @@ public class X509CertificateGenerator {
                 signatureCalculator.createSignatureComputations(signatureAlgorithm.getSignatureAlgorithm()));
         }
 
-        // TODO: continue here
-        Asn1PreparatorHelper.prepareAfterContent(x509Certificate.getTbsCertificate());
-        TbsCertificatePreparator certificatePreparator = new TbsCertificatePreparator(new X509Chooser(), x509Certificate);
+        de.rub.nds.x509attacker.config.X509CertificateConfig config = new de.rub.nds.x509attacker.config.X509CertificateConfig();
+        config.setIncludeIssuerUniqueId(true);
+        config.setIncludeSubjectUniqueId(true);
+        // TODO: add extensions
+        x509Certificate.getTbsCertificate().setExplicitExtensions(null);
+        // config.setIncludeExtensions(true);
+        TbsCertificatePreparator certificatePreparator = new TbsCertificatePreparator(new X509Chooser(config, new X509Context()), x509Certificate.getTbsCertificate());
+        certificatePreparator.prepare();
         byte[] toBeSigned = new X509Asn1FieldSerializer(x509Certificate.getTbsCertificate()).serialize();
         signatureCalculator.computeSignature(
                 x509Certificate.getSignatureComputations(),
@@ -119,10 +118,8 @@ public class X509CertificateGenerator {
                 signatureAlgorithm.getSignatureAlgorithm(),
                 signatureAlgorithm.getHashAlgorithm()
         );
-
-        // parse to ASN.1 bit string
-        ParserHelper.parseAsn1BitString(x509Certificate.getSignature(), new BufferedInputStream(
-            new ByteArrayInputStream(x509Certificate.getSignatureComputations().getSignatureBytes().getValue())));
+        Asn1BitString signatureBytes = new Asn1BitString("signature");
+        signatureBytes.setUsedBits(x509Certificate.getSignatureComputations().getSignatureBytes().getValue());
     }
 
     public X509Certificate retrieveX509Certificate() throws CertificateGeneratorException {
