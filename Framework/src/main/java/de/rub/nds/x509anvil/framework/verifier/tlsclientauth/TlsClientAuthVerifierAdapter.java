@@ -116,9 +116,8 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
             // TODO: add extensions
             x509Certificate.getTbsCertificate().setExplicitExtensions(null);
             // config.setIncludeExtensions(true);
-            TbsCertificatePreparator certificatePreparator = new TbsCertificatePreparator(new X509Chooser(config, new X509Context()), x509Certificate.getTbsCertificate());
-            certificatePreparator.prepare();
-            encodedCertificateChain.add(new CertificateBytes(x509Certificate.getTbsCertificate()
+            x509Certificate.getPreparator(new X509Chooser(config, new X509Context())).prepare();
+            encodedCertificateChain.add(new CertificateBytes(x509Certificate
                 .getSerializer(
                     new X509Chooser(config, new X509Context()))
                 .serialize()));
