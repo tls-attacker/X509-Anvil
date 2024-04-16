@@ -113,6 +113,13 @@ public class X509CertificateConfigUtil {
     public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String privateKeyFile)
         throws IOException, InvalidKeySpecException {
         X509Certificate staticRootCertificate = new X509Certificate("staticCertificate");
+        // dirty hack to accommodate for serializing
+        if (staticRootCertificate.getTbsCertificate().getIssuerUniqueId().getUsedBits() == null) {
+            staticRootCertificate.getTbsCertificate().setIssuerUniqueId(null);
+        }
+        if (staticRootCertificate.getTbsCertificate().getSubjectUniqueId().getUsedBits() == null) {
+            staticRootCertificate.getTbsCertificate().setSubjectUniqueId(null);
+        }
         X509CertificateParser parser = new X509CertificateParser(
             new X509Chooser(new de.rub.nds.x509attacker.config.X509CertificateConfig(), new X509Context()),
             staticRootCertificate);

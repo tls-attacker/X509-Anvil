@@ -31,10 +31,7 @@ import de.rub.nds.x509attacker.filesystem.CertificateBytes;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import de.rub.nds.x509attacker.x509.preparator.TbsCertificatePreparator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
@@ -109,10 +106,11 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         X509CertificateChainConfig chainConfig) throws VerifierException {
         X509CertificateConfig entityConfig = chainConfig.getEntityCertificateConfig();
         List<CertificateBytes> encodedCertificateChain = new LinkedList<>();
+        Collections.reverse(certificatesChain);
         for (X509Certificate x509Certificate : certificatesChain) {
             de.rub.nds.x509attacker.config.X509CertificateConfig config = new de.rub.nds.x509attacker.config.X509CertificateConfig();
-            config.setIncludeIssuerUniqueId(true);
-            config.setIncludeSubjectUniqueId(true);
+            // config.setIncludeIssuerUniqueId(true);
+            // config.setIncludeSubjectUniqueId(true);
             // TODO: add extensions
             x509Certificate.getTbsCertificate().setExplicitExtensions(null);
             // config.setIncludeExtensions(true);

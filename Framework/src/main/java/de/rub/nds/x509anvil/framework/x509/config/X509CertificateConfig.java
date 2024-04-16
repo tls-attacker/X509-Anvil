@@ -16,6 +16,7 @@ import de.rub.nds.x509anvil.framework.constants.*;
 import de.rub.nds.x509anvil.framework.x509.config.extension.*;
 import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
+import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;

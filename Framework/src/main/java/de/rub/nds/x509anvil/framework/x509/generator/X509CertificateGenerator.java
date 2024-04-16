@@ -13,6 +13,10 @@ import de.rub.nds.asn1.constants.TagClass;
 import de.rub.nds.asn1.constants.TagConstructed;
 import de.rub.nds.asn1.constants.UniversalTagNumber;
 import de.rub.nds.asn1.model.*;
+import de.rub.nds.modifiablevariable.ModifiableVariable;
+import de.rub.nds.modifiablevariable.ModifiableVariableFactory;
+import de.rub.nds.modifiablevariable.bytearray.ByteArrayExplicitValueModification;
+import de.rub.nds.modifiablevariable.bytearray.ModifiableByteArray;
 import de.rub.nds.protocol.crypto.key.PrivateKeyContainer;
 import de.rub.nds.protocol.crypto.signature.SignatureCalculator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
@@ -21,6 +25,7 @@ import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.constants.TimeContextHint;
+import de.rub.nds.x509attacker.constants.ValidityEncoding;
 import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.x509.model.*;
@@ -103,14 +108,14 @@ public class X509CertificateGenerator {
         }
 
         de.rub.nds.x509attacker.config.X509CertificateConfig config = new de.rub.nds.x509attacker.config.X509CertificateConfig();
-        config.setIncludeIssuerUniqueId(true);
-        config.setIncludeSubjectUniqueId(true);
+        config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+        config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+        config.setNotAfter();
         // TODO: add extensions
         x509Certificate.getTbsCertificate().setExplicitExtensions(null);
         // config.setIncludeExtensions(true);
-        TbsCertificatePreparator certificatePreparator = new TbsCertificatePreparator(new X509Chooser(config, new X509Context()), x509Certificate.getTbsCertificate());
-        certificatePreparator.prepare();
-        byte[] toBeSigned = new X509Asn1FieldSerializer(x509Certificate.getTbsCertificate()).serialize();
+        x509Certificate.getTbsCertificate().getPreparator(new X509Chooser(config, new X509Context())).prepare();
+        byte[] toBeSigned = x509Certificate.getTbsCertificate().getSerializer(new X509Chooser(config, new X509Context())).serialize();
         signatureCalculator.computeSignature(
                 x509Certificate.getSignatureComputations(),
                 privateKeyForSignature,
@@ -118,8 +123,12 @@ public class X509CertificateGenerator {
                 signatureAlgorithm.getSignatureAlgorithm(),
                 signatureAlgorithm.getHashAlgorithm()
         );
-        Asn1BitString signatureBytes = new Asn1BitString("signature");
-        signatureBytes.setUsedBits(x509Certificate.getSignatureComputations().getSignatureBytes().getValue());
+        // override values set by preparator
+        x509Certificate.getSignature().setUsedBits(ModifiableVariableFactory.safelySetValue(x509Certificate.getSignature().getUsedBits(), new byte[] {}));
+        x509Certificate.getSignature().getUsedBits().setModification(
+                new ByteArrayExplicitValueModification(
+                    x509Certificate.getSignatureComputations().getSignatureBytes().getValue()
+                ));
     }
 
     public X509Certificate retrieveX509Certificate() throws CertificateGeneratorException {
@@ -254,10 +263,10 @@ public class X509CertificateGenerator {
             Asn1GeneralizedTime generalTime = new Asn1GeneralizedTime("generalTime");
             generalTime.setIdentifier("notAfter");
             generalTime.setValue(certificateConfig.getNotAfterValue());
+            x509Certificate.getTbsCertificate().getValidity().getNotBefore().getContent().setModification(new ByteArrayExplicitValueModification(generalTime.getValue().getValue().getBytes()));
             time.setValue(certificateConfig.getNotAfterValue());
             validity.setNotAfter(time);
         }
-        x509Certificate.getTbsCertificate().setValidity(validity);
     }
 
     private void setUniqueIdentifiers() {
@@ -266,6 +275,8 @@ public class X509CertificateGenerator {
             issuerUniqueIdBitString.setContent(certificateConfig.getIssuerUniqueId().getBytes());
             issuerUniqueIdBitString.setUnusedBits(certificateConfig.getIssuerUniqueId().getUnusedBits());
             x509Certificate.getTbsCertificate().setIssuerUniqueId(issuerUniqueIdBitString);
+        } else {
+            x509Certificate.getTbsCertificate().setIssuerUniqueId(null);
         }
 
         if (certificateConfig.isSubjectUniqueIdPresent()) {
@@ -273,6 +284,8 @@ public class X509CertificateGenerator {
             subjectUniqueIdBitString.setContent(certificateConfig.getSubjectUniqueId().getBytes());
             subjectUniqueIdBitString.setUnusedBits(certificateConfig.getSubjectUniqueId().getUnusedBits());
             x509Certificate.getTbsCertificate().setSubjectUniqueId(subjectUniqueIdBitString);
+        } else {
+            x509Certificate.getTbsCertificate().setSubjectUniqueId(null);
         }
     }
 
