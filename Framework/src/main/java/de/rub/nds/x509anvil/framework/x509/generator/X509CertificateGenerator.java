@@ -108,9 +108,10 @@ public class X509CertificateGenerator {
         }
 
         de.rub.nds.x509attacker.config.X509CertificateConfig config = new de.rub.nds.x509attacker.config.X509CertificateConfig();
-        config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-        config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-        config.setNotAfter();
+        //TODO: Chooser?
+        //config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+        //config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+        //config.setNotAfter();
         // TODO: add extensions
         x509Certificate.getTbsCertificate().setExplicitExtensions(null);
         // config.setIncludeExtensions(true);
