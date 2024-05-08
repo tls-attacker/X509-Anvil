@@ -108,6 +108,7 @@ public class X509CertificateGenerator {
         }
 
         de.rub.nds.x509attacker.config.X509CertificateConfig config = new de.rub.nds.x509attacker.config.X509CertificateConfig();
+        config.setVersion(x509Certificate.getX509Version());
         //TODO: Chooser?
         //config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
         //config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
@@ -151,12 +152,9 @@ public class X509CertificateGenerator {
     }
 
     private void setVersion() {
-        // Do not encode v1 (default value)
-        if (certificateConfig.getVersion() != 0) {
             Version version = new Version("version");
             version.setValue(BigInteger.valueOf(certificateConfig.getVersion()));
             this.x509Certificate.getTbsCertificate().setVersion(new X509Explicit<>("explicitversion", 0, version));
-        }
     }
 
     private void setSerialNumber() {

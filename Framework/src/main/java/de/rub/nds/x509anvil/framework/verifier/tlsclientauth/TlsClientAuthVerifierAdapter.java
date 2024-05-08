@@ -112,6 +112,7 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
             de.rub.nds.x509attacker.config.X509CertificateConfig config = new de.rub.nds.x509attacker.config.X509CertificateConfig();
             config.setIncludeIssuerUniqueId(true);
             config.setIncludeSubjectUniqueId(true);
+            config.setVersion(x509Certificate.getX509Version());
             // TODO: add extensions
             x509Certificate.getTbsCertificate().setExplicitExtensions(null);
             // TODO: Fix config or propagate choser?
