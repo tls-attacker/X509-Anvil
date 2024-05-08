@@ -35,6 +35,9 @@ import de.rub.nds.x509attacker.x509.preparator.TbsCertificatePreparator;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static de.rub.nds.x509anvil.framework.x509.config.model.TimeType.GENERALIZED_TIME;
+import static de.rub.nds.x509anvil.framework.x509.config.model.TimeType.UTC_TIME;
+
 public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
 
     private static final Config defaultConfig;
@@ -109,7 +112,8 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         List<CertificateBytes> encodedCertificateChain = new LinkedList<>();
         Collections.reverse(certificatesChain);
         for (X509Certificate x509Certificate : certificatesChain) {
-            de.rub.nds.x509attacker.config.X509CertificateConfig config = new de.rub.nds.x509attacker.config.X509CertificateConfig();
+            de.rub.nds.x509attacker.config.X509CertificateConfig config =
+                new de.rub.nds.x509attacker.config.X509CertificateConfig();
             config.setIncludeIssuerUniqueId(true);
             config.setIncludeSubjectUniqueId(true);
             config.setVersion(x509Certificate.getX509Version());
@@ -119,11 +123,14 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
             // config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
             // config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
             // config.setIncludeExtensions(true);
+
+            // Set Validity Time Types
+            config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
+            config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
+
             x509Certificate.getPreparator(new X509Chooser(config, new X509Context())).prepare();
-            encodedCertificateChain.add(new CertificateBytes(x509Certificate
-                .getSerializer(
-                    new X509Chooser(config, new X509Context()))
-                .serialize()));
+            encodedCertificateChain.add(new CertificateBytes(
+                x509Certificate.getSerializer(new X509Chooser(config, new X509Context())).serialize()));
         }
 
         defaultConfig.setDefaultExplicitCertificateChain(encodedCertificateChain);
