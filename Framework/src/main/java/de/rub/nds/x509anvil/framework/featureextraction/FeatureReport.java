@@ -85,7 +85,8 @@ public class FeatureReport {
     }
 
     public List<SignatureAlgorithm> getSupportedEntityKeyTypes() {
-        return Arrays.stream(SignatureAlgorithm.values()).filter(this::entityKeyTypeSupported).collect(Collectors.toList());
+        return Arrays.stream(SignatureAlgorithm.values()).filter(this::entityKeyTypeSupported)
+            .collect(Collectors.toList());
     }
 
     public boolean hashAlgorithmSupported(HashAlgorithm hashAlgorithm) {

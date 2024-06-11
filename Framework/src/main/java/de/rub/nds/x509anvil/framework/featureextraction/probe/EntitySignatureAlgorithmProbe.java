@@ -31,8 +31,8 @@ public class EntitySignatureAlgorithmProbe extends SimpleProbe {
         X509CertificateChainConfig x509CertificateChainConfig = X509CertificateConfigUtil.createBasicConfig(2);
         X509CertificateConfig entity = x509CertificateChainConfig.getEntityCertificateConfig();
         entity.setSignatureAlgorithm(signatureAlgorithm);
-        KeyPair keyPair =
-            X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getSignatureAlgorithm(), entity.getCertificateName());
+        KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getSignatureAlgorithm(),
+            entity.getCertificateName());
         entity.applyKeyPair(keyPair);
         return x509CertificateChainConfig;
     }

@@ -31,8 +31,8 @@ public class SignatureAlgorithmProbe extends SimpleProbe {
         X509CertificateChainConfig x509CertificateChainConfig = X509CertificateConfigUtil.createBasicConfig(3);
         X509CertificateConfig ca = x509CertificateChainConfig.getIntermediateCertificateConfigs().get(0);
         ca.setSignatureAlgorithm(signatureAlgorithm);
-        KeyPair keyPair =
-            X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getSignatureAlgorithm(), ca.getCertificateName());
+        KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getSignatureAlgorithm(),
+            ca.getCertificateName());
         ca.applyKeyPair(keyPair);
         return x509CertificateChainConfig;
     }

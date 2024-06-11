@@ -71,13 +71,12 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
 
         FeatureReport featureReport = ContextHelper.getFeatureReport();
 
-        for (X509SignatureAlgorithm signatureAlgorithm: featureReport.getSupportedAlgorithms()){
-            if (getParameterScope().isEntity()
-                    && !featureReport.entityAlgorithmSupported(signatureAlgorithm)
-                    || !getParameterScope().isEntity()
-                    && !featureReport.algorithmSupported(signatureAlgorithm)) {
+        for (X509SignatureAlgorithm signatureAlgorithm : featureReport.getSupportedAlgorithms()) {
+            if (getParameterScope().isEntity() && !featureReport.entityAlgorithmSupported(signatureAlgorithm)
+                || !getParameterScope().isEntity() && !featureReport.algorithmSupported(signatureAlgorithm)) {
                 defaultConstraints
-                        .add(createSignatureAlgorithmExclusionConstraint(signatureAlgorithm.getSignatureAlgorithm(), signatureAlgorithm.getHashAlgorithm(), derivationScope));
+                    .add(createSignatureAlgorithmExclusionConstraint(signatureAlgorithm.getSignatureAlgorithm(),
+                        signatureAlgorithm.getHashAlgorithm(), derivationScope));
             }
         }
 
@@ -86,14 +85,16 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
                 .target(this).requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
                 .restrictValues(Arrays.asList(HashAlgorithm.SHA512, HashAlgorithm.SHA384))
                 .condition((target, requiredParameters) -> {
-                    SignatureAlgorithmLengthPair signatureAlgorithmLengthPair = (SignatureAlgorithmLengthPair) ConstraintHelper
-                        .getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
-                        .getSelectedValue();
+                    SignatureAlgorithmLengthPair signatureAlgorithmLengthPair =
+                        (SignatureAlgorithmLengthPair) ConstraintHelper
+                            .getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
+                            .getSelectedValue();
                     if (signatureAlgorithmLengthPair == null) {
                         return false;
                     }
                     return (signatureAlgorithmLengthPair.getSignatureAlgorithm() == SignatureAlgorithm.DSA
-                        || signatureAlgorithmLengthPair.getSignatureAlgorithm() == SignatureAlgorithm.RSA_PKCS1) && signatureAlgorithmLengthPair.getKeyLength() < 1024;
+                        || signatureAlgorithmLengthPair.getSignatureAlgorithm() == SignatureAlgorithm.RSA_PKCS1)
+                        && signatureAlgorithmLengthPair.getKeyLength() < 1024;
                 }).get());
 
         return defaultConstraints;
@@ -102,13 +103,16 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
     public ConditionalConstraint createSignatureAlgorithmExclusionConstraint(SignatureAlgorithm signatureAlgorithm,
         HashAlgorithm hashAlgorithm, DerivationScope derivationScope) {
         return ValueRestrictionConstraintBuilder
-            .init("Target does not support " + signatureAlgorithm.name() + " with " + hashAlgorithm.name(), derivationScope)
+            .init("Target does not support " + signatureAlgorithm.name() + " with " + hashAlgorithm.name(),
+                derivationScope)
             .target(this).requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
             .restrictValues(Collections.singletonList(hashAlgorithm)).condition((target, requiredParameters) -> {
-                SignatureAlgorithmLengthPair selectedSignatureAlgorithmLengthPair = (SignatureAlgorithmLengthPair) ConstraintHelper
-                    .getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
-                    .getSelectedValue();
-                return selectedSignatureAlgorithmLengthPair != null && selectedSignatureAlgorithmLengthPair.getSignatureAlgorithm() == signatureAlgorithm;
+                SignatureAlgorithmLengthPair selectedSignatureAlgorithmLengthPair =
+                    (SignatureAlgorithmLengthPair) ConstraintHelper
+                        .getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
+                        .getSelectedValue();
+                return selectedSignatureAlgorithmLengthPair != null
+                    && selectedSignatureAlgorithmLengthPair.getSignatureAlgorithm() == signatureAlgorithm;
             }).get();
     }
 }

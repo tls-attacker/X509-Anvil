@@ -92,11 +92,11 @@ public class X509CertificateGenerator {
         }
 
         // TODO: keep difference when static certificate?
-        /* if (configToConsider.getKeyType() != KeyType.RSA && !configToConsider.isStatic()) {
-            throw new CertificateGeneratorException("Can only generate RSA signatures for now");
-        } else {
-            privateKeyForSignature = (RsaPrivateKey) configToConsider.getStaticCertificatePrivateKey();
-        } */
+        /*
+         * if (configToConsider.getKeyType() != KeyType.RSA && !configToConsider.isStatic()) { throw new
+         * CertificateGeneratorException("Can only generate RSA signatures for now"); } else { privateKeyForSignature =
+         * (RsaPrivateKey) configToConsider.getStaticCertificatePrivateKey(); }
+         */
 
         privateKeyForSignature = configToConsider.getStaticCertificatePrivateKey();
         SignatureCalculator signatureCalculator = new SignatureCalculator();
@@ -107,28 +107,24 @@ public class X509CertificateGenerator {
                 signatureCalculator.createSignatureComputations(signatureAlgorithm.getSignatureAlgorithm()));
         }
 
-        de.rub.nds.x509attacker.config.X509CertificateConfig config = new de.rub.nds.x509attacker.config.X509CertificateConfig();
+        de.rub.nds.x509attacker.config.X509CertificateConfig config =
+            new de.rub.nds.x509attacker.config.X509CertificateConfig();
         config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
         config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-        config.setNotAfter();
+        // TODO: add default not before and not after
         // TODO: add extensions
         x509Certificate.getTbsCertificate().setExplicitExtensions(null);
         // config.setIncludeExtensions(true);
         x509Certificate.getTbsCertificate().getPreparator(new X509Chooser(config, new X509Context())).prepare();
-        byte[] toBeSigned = x509Certificate.getTbsCertificate().getSerializer(new X509Chooser(config, new X509Context())).serialize();
-        signatureCalculator.computeSignature(
-                x509Certificate.getSignatureComputations(),
-                privateKeyForSignature,
-                toBeSigned,
-                signatureAlgorithm.getSignatureAlgorithm(),
-                signatureAlgorithm.getHashAlgorithm()
-        );
+        byte[] toBeSigned =
+            x509Certificate.getTbsCertificate().getSerializer(new X509Chooser(config, new X509Context())).serialize();
+        signatureCalculator.computeSignature(x509Certificate.getSignatureComputations(), privateKeyForSignature,
+            toBeSigned, signatureAlgorithm.getSignatureAlgorithm(), signatureAlgorithm.getHashAlgorithm());
         // override values set by preparator
-        x509Certificate.getSignature().setUsedBits(ModifiableVariableFactory.safelySetValue(x509Certificate.getSignature().getUsedBits(), new byte[] {}));
-        x509Certificate.getSignature().getUsedBits().setModification(
-                new ByteArrayExplicitValueModification(
-                    x509Certificate.getSignatureComputations().getSignatureBytes().getValue()
-                ));
+        x509Certificate.getSignature().setUsedBits(
+            ModifiableVariableFactory.safelySetValue(x509Certificate.getSignature().getUsedBits(), new byte[] {}));
+        x509Certificate.getSignature().getUsedBits().setModification(new ByteArrayExplicitValueModification(
+            x509Certificate.getSignatureComputations().getSignatureBytes().getValue()));
     }
 
     public X509Certificate retrieveX509Certificate() throws CertificateGeneratorException {
@@ -233,7 +229,8 @@ public class X509CertificateGenerator {
 
         if (certificateConfig.getNotBeforeTimeType() == TimeType.UTC_TIME) {
             Time time = new Time("validity", TimeContextHint.NOT_BEFORE);
-            time.makeSelection(TagClass.UNIVERSAL, TagConstructed.PRIMITIVE.getBooleanValue(), UniversalTagNumber.UTCTIME.getIntValue());
+            time.makeSelection(TagClass.UNIVERSAL, TagConstructed.PRIMITIVE.getBooleanValue(),
+                UniversalTagNumber.UTCTIME.getIntValue());
             Asn1UtcTime utcTime = new Asn1UtcTime("utcTime");
             utcTime.setIdentifier("notBefore");
             utcTime.setValue(certificateConfig.getNotBeforeValue());
@@ -241,7 +238,8 @@ public class X509CertificateGenerator {
             validity.setNotBefore(time);
         } else if (certificateConfig.getNotBeforeTimeType() == TimeType.GENERALIZED_TIME) {
             Time time = new Time("validity", TimeContextHint.NOT_BEFORE);
-            time.makeSelection(TagClass.UNIVERSAL, TagConstructed.PRIMITIVE.getBooleanValue(), UniversalTagNumber.GENERALIZEDTIME.getIntValue());
+            time.makeSelection(TagClass.UNIVERSAL, TagConstructed.PRIMITIVE.getBooleanValue(),
+                UniversalTagNumber.GENERALIZEDTIME.getIntValue());
             Asn1GeneralizedTime generalTime = new Asn1GeneralizedTime("generalTime");
             generalTime.setIdentifier("notBefore");
             generalTime.setValue(certificateConfig.getNotBeforeValue());
@@ -251,7 +249,8 @@ public class X509CertificateGenerator {
 
         if (certificateConfig.getNotAfterTimeType() == TimeType.UTC_TIME) {
             Time time = new Time("validity", TimeContextHint.NOT_AFTER);
-            time.makeSelection(TagClass.UNIVERSAL, TagConstructed.PRIMITIVE.getBooleanValue(), UniversalTagNumber.UTCTIME.getIntValue());
+            time.makeSelection(TagClass.UNIVERSAL, TagConstructed.PRIMITIVE.getBooleanValue(),
+                UniversalTagNumber.UTCTIME.getIntValue());
             Asn1UtcTime utcTime = new Asn1UtcTime("utcTime");
             utcTime.setIdentifier("notAfter");
             utcTime.setValue(certificateConfig.getNotAfterValue());
@@ -259,11 +258,13 @@ public class X509CertificateGenerator {
             validity.setNotAfter(time);
         } else if (certificateConfig.getNotAfterTimeType() == TimeType.GENERALIZED_TIME) {
             Time time = new Time("validity", TimeContextHint.NOT_AFTER);
-            time.makeSelection(TagClass.UNIVERSAL, TagConstructed.PRIMITIVE.getBooleanValue(), UniversalTagNumber.GENERALIZEDTIME.getIntValue());
+            time.makeSelection(TagClass.UNIVERSAL, TagConstructed.PRIMITIVE.getBooleanValue(),
+                UniversalTagNumber.GENERALIZEDTIME.getIntValue());
             Asn1GeneralizedTime generalTime = new Asn1GeneralizedTime("generalTime");
             generalTime.setIdentifier("notAfter");
             generalTime.setValue(certificateConfig.getNotAfterValue());
-            x509Certificate.getTbsCertificate().getValidity().getNotBefore().getContent().setModification(new ByteArrayExplicitValueModification(generalTime.getValue().getValue().getBytes()));
+            x509Certificate.getTbsCertificate().getValidity().getNotBefore().getContent()
+                .setModification(new ByteArrayExplicitValueModification(generalTime.getValue().getValue().getBytes()));
             time.setValue(certificateConfig.getNotAfterValue());
             validity.setNotAfter(time);
         }

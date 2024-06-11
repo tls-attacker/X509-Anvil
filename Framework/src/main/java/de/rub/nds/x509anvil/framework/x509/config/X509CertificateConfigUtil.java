@@ -62,8 +62,8 @@ public class X509CertificateConfigUtil {
         RelativeDistinguishedName commonNameDN = new RelativeDistinguishedName("relativeDistinguishedName");
         Asn1PrintableString commonName = new Asn1PrintableString("commonName");
         commonName.setValue(certificateName);
-        commonNameDN.addAttributeTypeAndValue(
-            new AttributeTypeAndValue("attributeTypeAndValue", X500AttributeType.COMMON_NAME, commonName.getValue().getValue()));
+        commonNameDN.addAttributeTypeAndValue(new AttributeTypeAndValue("attributeTypeAndValue",
+            X500AttributeType.COMMON_NAME, commonName.getValue().getValue()));
         subject.addRelativeDistinguishedNames(commonNameDN);
         config.setSubject(subject);
 
@@ -102,7 +102,8 @@ public class X509CertificateConfigUtil {
         return generateKeyPair(signatureAlgorithm, keyPairIdentifier, defaultKeySize);
     }
 
-    public static KeyPair generateKeyPair(SignatureAlgorithm signatureAlgorithm, String keyPairIdentifier, int keyLength) {
+    public static KeyPair generateKeyPair(SignatureAlgorithm signatureAlgorithm, String keyPairIdentifier,
+        int keyLength) {
         try {
             return CachedKeyPairGenerator.retrieveKeyPair(keyPairIdentifier, signatureAlgorithm, keyLength);
         } catch (NoSuchAlgorithmException e) {
@@ -123,7 +124,8 @@ public class X509CertificateConfigUtil {
         X509CertificateParser parser = new X509CertificateParser(
             new X509Chooser(new de.rub.nds.x509attacker.config.X509CertificateConfig(), new X509Context()),
             staticRootCertificate);
-        parser.parse(new BufferedInputStream(new ByteArrayInputStream(CertificateIo.readPemCertificateByteList(new FileInputStream(staticCertificateFile)).get(0).getBytes())));
+        parser.parse(new BufferedInputStream(new ByteArrayInputStream(
+            CertificateIo.readPemCertificateByteList(new FileInputStream(staticCertificateFile)).get(0).getBytes())));
 
         PrivateKey privateKey =
             de.rub.nds.x509attacker.signatureengine.keyparsers.PemUtil.readPrivateKey(new File(privateKeyFile));

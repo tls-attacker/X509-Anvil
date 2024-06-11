@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<licensePluginReport goal="FORMAT" timestamp="1712646794080">
+<licensePluginReport goal="FORMAT" timestamp="1718088186181">
     <module artifactId="Framework" groupId="de.rub.nds.x509test" version="1.0-SNAPSHOT"/>
     <files>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/TestsuiteRunner.java" result="NOOP"/>
@@ -26,10 +26,10 @@
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/HashAlgorithmParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/IssuerUniqueIdParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/IssuerUniqueIdPresentParameter.java" result="NOOP"/>
-        <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/KeyTypeParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/NotAfterParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/NotBeforeParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/SerialNumberParameter.java" result="NOOP"/>
+        <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/SignatureParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/SubjectUniqueIdParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/SubjectUniqueIdPresentParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/UniqueIdParameter.java" result="NOOP"/>
@@ -54,11 +54,8 @@
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/value/NotBeforeValue.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/CertificateChainPosType.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/ExtensionType.java" result="NOOP"/>
-        <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/HashAlgorithm.java" result="NOOP"/>
-        <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/KeyType.java" result="NOOP"/>
-        <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/KeyTypeLengthPair.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/Severity.java" result="NOOP"/>
-        <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/SignatureAlgorithm.java" result="NOOP"/>
+        <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/SignatureAlgorithmLengthPair.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/FeatureExtractor.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/FeatureReport.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/UnsupportedFeatureException.java" result="NOOP"/>
@@ -106,7 +103,6 @@
         <file path="src/main/java/de/rub/nds/x509anvil/framework/x509/config/extension/SubjectKeyIdentifierExtensionConfig.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/x509/config/extension/UnknownExtensionConfig.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/x509/config/model/AlgorithmParametersType.java" result="NOOP"/>
-        <file path="src/main/java/de/rub/nds/x509anvil/framework/x509/config/model/Asn1Structure.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/x509/config/model/BitString.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/x509/config/model/DirectoryStringType.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/x509/config/model/TimeType.java" result="NOOP"/>

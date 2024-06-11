@@ -28,7 +28,8 @@ import java.util.stream.Collectors;
 public class SignatureParameter extends CertificateSpecificParameter<SignatureAlgorithmLengthPair> {
 
     public SignatureParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.KEY_TYPE, parameterScope), SignatureAlgorithmLengthPair.class);
+        super(new ParameterIdentifier(X509AnvilParameterType.KEY_TYPE, parameterScope),
+            SignatureAlgorithmLengthPair.class);
     }
 
     public SignatureParameter(ParameterScope parameterScope, SignatureAlgorithmLengthPair value) {

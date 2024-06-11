@@ -290,7 +290,9 @@ public class X509CertificateConfig {
             throw new UnsupportedOperationException("Cannot amend SignatureAlgorithm if None");
         }
         HashAlgorithm hashAlgorithm = this.signatureAlgorithm.getHashAlgorithm();
-        this.signatureAlgorithm = Arrays.stream(X509SignatureAlgorithm.values()).filter(x -> x.getSignatureAlgorithm() == signatureAlgorithm && x.getHashAlgorithm() == hashAlgorithm).findFirst().orElseThrow();
+        this.signatureAlgorithm = Arrays.stream(X509SignatureAlgorithm.values())
+            .filter(x -> x.getSignatureAlgorithm() == signatureAlgorithm && x.getHashAlgorithm() == hashAlgorithm)
+            .findFirst().orElseThrow();
     }
 
     public void amendSignatureAlgorithm(HashAlgorithm hashAlgorithm) {
@@ -298,7 +300,9 @@ public class X509CertificateConfig {
             throw new UnsupportedOperationException("Cannot amend SignatureAlgorithm if None");
         }
         SignatureAlgorithm signatureAlgorithm = this.signatureAlgorithm.getSignatureAlgorithm();
-        this.signatureAlgorithm = Arrays.stream(X509SignatureAlgorithm.values()).filter(x -> x.getSignatureAlgorithm() == signatureAlgorithm && x.getHashAlgorithm() == hashAlgorithm).findFirst().orElseThrow();
+        this.signatureAlgorithm = Arrays.stream(X509SignatureAlgorithm.values())
+            .filter(x -> x.getSignatureAlgorithm() == signatureAlgorithm && x.getHashAlgorithm() == hashAlgorithm)
+            .findFirst().orElseThrow();
     }
 
 }

@@ -54,8 +54,8 @@ public enum SignatureAlgorithmLengthPair {
     }
 
     public static SignatureAlgorithmLengthPair get(SignatureAlgorithm signatureAlgorithm, int keyLength) {
-        return Arrays.stream(SignatureAlgorithmLengthPair.values()).filter(p -> p.signatureAlgorithm == signatureAlgorithm && p.keyLength == keyLength)
-            .findFirst()
+        return Arrays.stream(SignatureAlgorithmLengthPair.values())
+            .filter(p -> p.signatureAlgorithm == signatureAlgorithm && p.keyLength == keyLength).findFirst()
             .orElseThrow(() -> new IllegalArgumentException("KeyType - length combination is not supported"));
     }
 }

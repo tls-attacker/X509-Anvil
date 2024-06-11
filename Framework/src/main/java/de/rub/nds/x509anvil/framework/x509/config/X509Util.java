@@ -45,7 +45,8 @@ public class X509Util {
             RSAPrivateKey castedKey = (RSAPrivateKey) privateKey;
             return new RsaPrivateKey(castedKey.getPrivateExponent(), castedKey.getModulus());
         } else {
-            throw new UnsupportedOperationException("Private keys of type " + privateKey.getAlgorithm() + " not supported yet. Only RSA supported.");
+            throw new UnsupportedOperationException(
+                "Private keys of type " + privateKey.getAlgorithm() + " not supported yet. Only RSA supported.");
         }
     }
 
@@ -63,7 +64,8 @@ public class X509Util {
             x509RsaPublicKey.setModulus(modulus);
             return x509RsaPublicKey;
         } else {
-            throw new UnsupportedOperationException("Private keys of type " + publicKey.getAlgorithm() + " not supported yet. Only RSA supported.");
+            throw new UnsupportedOperationException(
+                "Private keys of type " + publicKey.getAlgorithm() + " not supported yet. Only RSA supported.");
         }
     }
 

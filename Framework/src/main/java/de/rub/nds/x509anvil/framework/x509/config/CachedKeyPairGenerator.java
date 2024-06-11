@@ -52,7 +52,8 @@ public class CachedKeyPairGenerator {
             case GOSTR34102001:
             case GOSTR34102012_256:
             case GOSTR34102012_512:
-                throw new UnsupportedOperationException("Algorithm" + algorithm.getHumanReadable() + " not implemented.");
+                throw new UnsupportedOperationException(
+                    "Algorithm" + algorithm.getHumanReadable() + " not implemented.");
         }
         // Need to generate new key pair
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(javaName);
