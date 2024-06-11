@@ -109,11 +109,34 @@ public class X509CertificateGenerator {
 
         de.rub.nds.x509attacker.config.X509CertificateConfig config =
             new de.rub.nds.x509attacker.config.X509CertificateConfig();
-        config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-        config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-        // TODO: add default not before and not after
+        config.setVersion(x509Certificate.getX509Version());
+
+        // TODO: Chooser?
+        // config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+        // config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+        // config.setNotAfter();
+
         // TODO: add extensions
+
         x509Certificate.getTbsCertificate().setExplicitExtensions(null);
+
+        // Set Validity Time Types
+        switch (certificateConfig.getNotBeforeTimeType()) {
+            case UTC_TIME:
+                config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
+                break;
+            case GENERALIZED_TIME:
+                config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+                break;
+        }
+        switch (certificateConfig.getNotAfterTimeType()) {
+            case UTC_TIME:
+                config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
+                break;
+            case GENERALIZED_TIME:
+                config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+                break;
+        }
         // config.setIncludeExtensions(true);
         x509Certificate.getTbsCertificate().getPreparator(new X509Chooser(config, new X509Context())).prepare();
         byte[] toBeSigned =
@@ -146,12 +169,9 @@ public class X509CertificateGenerator {
     }
 
     private void setVersion() {
-        // Do not encode v1 (default value)
-        if (certificateConfig.getVersion() != 0) {
-            Version version = new Version("version");
-            version.setValue(BigInteger.valueOf(certificateConfig.getVersion()));
-            this.x509Certificate.getTbsCertificate().setVersion(new X509Explicit<>("explicitversion", 0, version));
-        }
+        Version version = new Version("version");
+        version.setValue(BigInteger.valueOf(certificateConfig.getVersion()));
+        this.x509Certificate.getTbsCertificate().setVersion(new X509Explicit<>("explicitversion", 0, version));
     }
 
     private void setSerialNumber() {
@@ -268,6 +288,7 @@ public class X509CertificateGenerator {
             time.setValue(certificateConfig.getNotAfterValue());
             validity.setNotAfter(time);
         }
+        x509Certificate.getTbsCertificate().setValidity(validity);
     }
 
     private void setUniqueIdentifiers() {

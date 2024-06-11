@@ -9,6 +9,7 @@ de/rub/nds/x509anvil/framework/anvil/X509AnvilParameterType.class
 de/rub/nds/x509anvil/framework/x509/config/X509CertificateConfigUtil$1.class
 de/rub/nds/x509anvil/framework/verifier/CliVerifierAdapter.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/result/KeyLengthProbeResult.class
+de/rub/nds/x509anvil/framework/x509/generator/X509CertificateGenerator$1.class
 de/rub/nds/x509anvil/framework/x509/config/X509CertificateChainConfig.class
 de/rub/nds/x509anvil/framework/x509/config/extension/BasicConstraintsExtensionConfig.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/ExtensionProbe.class

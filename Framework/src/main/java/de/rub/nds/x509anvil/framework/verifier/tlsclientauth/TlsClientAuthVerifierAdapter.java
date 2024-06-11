@@ -26,6 +26,7 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
+import de.rub.nds.x509attacker.constants.ValidityEncoding;
 import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.filesystem.CertificateBytes;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
@@ -33,6 +34,9 @@ import de.rub.nds.x509attacker.x509.preparator.TbsCertificatePreparator;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static de.rub.nds.x509anvil.framework.x509.config.model.TimeType.GENERALIZED_TIME;
+import static de.rub.nds.x509anvil.framework.x509.config.model.TimeType.UTC_TIME;
 
 public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
 
@@ -110,11 +114,20 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         for (X509Certificate x509Certificate : certificatesChain) {
             de.rub.nds.x509attacker.config.X509CertificateConfig config =
                 new de.rub.nds.x509attacker.config.X509CertificateConfig();
-            // config.setIncludeIssuerUniqueId(true);
-            // config.setIncludeSubjectUniqueId(true);
+            config.setIncludeIssuerUniqueId(true);
+            config.setIncludeSubjectUniqueId(true);
+            config.setVersion(x509Certificate.getX509Version());
             // TODO: add extensions
             x509Certificate.getTbsCertificate().setExplicitExtensions(null);
+            // TODO: Fix config or propagate choser?
+            // config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+            // config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
             // config.setIncludeExtensions(true);
+
+            // Set Validity Time Types
+            config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
+            config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
+
             x509Certificate.getPreparator(new X509Chooser(config, new X509Context())).prepare();
             encodedCertificateChain.add(new CertificateBytes(
                 x509Certificate.getSerializer(new X509Chooser(config, new X509Context())).serialize()));
