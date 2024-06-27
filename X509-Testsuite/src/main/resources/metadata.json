@@ -4,5 +4,11 @@
     "severityLevels": {
       "SOME_LEVEL": 42
     }
+  },
+  "no_subject_leaf": {
+    "description": "No subject in leaf",
+    "severityLevels": {
+      "SOME_LEVEL": 42
+    }
   }
 }
