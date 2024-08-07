@@ -16,14 +16,18 @@ import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.model.DirectoryStringType;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Sets the DirectoryStringType of the subject
+ * TODO: not implemented in x509 attacker yet
+ */
 public class CNTypeParameter extends CertificateSpecificParameter<DirectoryStringType> {
 
     public CNTypeParameter(ParameterScope parameterScope) {

@@ -12,8 +12,8 @@ package de.rub.nds.x509anvil.framework.x509.config.extension;
 import de.rub.nds.asn1.model.Asn1BitString;
 import de.rub.nds.asn1.model.Asn1OctetString;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 
 public class KeyUsageExtensionConfig extends ExtensionConfig {
     public static int DIGITAL_SIGNATURE = 128;
@@ -175,7 +175,7 @@ public class KeyUsageExtensionConfig extends ExtensionConfig {
 
     @Override
     protected Asn1OctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
-        X509CertificateConfig previousConfig) {
+                                                      X509CertificateConfig previousConfig) {
         Asn1BitString keyUsageAsn1 = new Asn1BitString("keyUsageAsn1");
         keyUsageAsn1.setIdentifier("keyUsage");
         keyUsageAsn1.setUsedBits(flags);

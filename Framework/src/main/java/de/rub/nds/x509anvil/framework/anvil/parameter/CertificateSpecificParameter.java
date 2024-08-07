@@ -19,7 +19,7 @@ import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,7 +61,7 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
     }
 
     protected abstract void applyToCertificateConfig(X509CertificateConfig certificateConfig,
-        DerivationScope derivationScope);
+                                                     DerivationScope derivationScope);
 
     @Override
     public List<DerivationParameter<X509CertificateChainConfig, T>>

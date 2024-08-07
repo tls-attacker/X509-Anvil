@@ -9,9 +9,11 @@
 
 package de.rub.nds.x509anvil.framework.x509.generator;
 
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
+import de.rub.nds.x509attacker.chooser.X509Chooser;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import java.util.ArrayList;
@@ -50,9 +52,11 @@ public class X509CertificateChainGenerator {
 
     private void generateSingleCertificate(X509CertificateConfig config, X509CertificateConfig signerConfig)
         throws CertificateGeneratorException {
-        X509CertificateGenerator x509CertificateGenerator =
-            new X509CertificateGenerator(config, signerConfig, certificateModifiers);
-        x509CertificateGenerator.generateCertificate();
-        this.generatedCertificates.add(x509CertificateGenerator.retrieveX509Certificate());
+        // X509CertificateGenerator x509CertificateGenerator =
+        //     new X509CertificateGenerator(config, signerConfig, certificateModifiers);
+        // this.generatedCertificates.add(x509CertificateGenerator.generateCertificate());
+        X509Certificate certificate = new X509Certificate("cert");
+        this.generatedCertificates.add(certificate);
+        certificate.getPreparator(new X509Chooser(config, new X509Context())).prepare();
     }
 }

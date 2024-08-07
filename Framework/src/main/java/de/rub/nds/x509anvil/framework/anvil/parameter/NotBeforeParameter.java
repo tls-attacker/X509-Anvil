@@ -16,8 +16,11 @@ import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.value.NotBeforeValue;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.constants.ValidityEncoding;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,20 +56,20 @@ public class NotBeforeParameter extends CertificateSpecificParameter<NotBeforeVa
     public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
         switch (getSelectedValue()) {
             case UTC_TIME:
-                certificateConfig.setNotBeforeTimeType(TimeType.UTC_TIME);
-                certificateConfig.setNotBeforeValue("220101000000Z");
+                certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
+                certificateConfig.setNotAfter(new DateTime(2022, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
             case UTC_TIME_EARLIEST:
-                certificateConfig.setNotBeforeTimeType(TimeType.UTC_TIME);
-                certificateConfig.setNotBeforeValue("500101000000Z");
+                certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
+                certificateConfig.setNotAfter(new DateTime(1950, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
             case GENERALIZED_TIME:
-                certificateConfig.setNotBeforeTimeType(TimeType.GENERALIZED_TIME);
-                certificateConfig.setNotBeforeValue("20220101000000Z");
+                certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+                certificateConfig.setNotAfter(new DateTime(2022, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
             case GENERALIZED_TIME_BEFORE_1950:
-                certificateConfig.setNotBeforeTimeType(TimeType.GENERALIZED_TIME);
-                certificateConfig.setNotBeforeValue("19400101000000Z");
+                certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+                certificateConfig.setNotAfter(new DateTime(1940, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
         }
     }

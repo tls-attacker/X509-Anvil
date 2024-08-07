@@ -11,8 +11,8 @@ package de.rub.nds.x509anvil.framework.x509.config.extension;
 
 import de.rub.nds.asn1.model.Asn1OctetString;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import org.bouncycastle.asn1.x509.SubjectKeyIdentifier;
 import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
 
@@ -26,7 +26,7 @@ public class SubjectKeyIdentifierExtensionConfig extends ExtensionConfig {
 
     @Override
     public Asn1OctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
-        X509CertificateConfig previousConfig) {
+                                                   X509CertificateConfig previousConfig) {
         Asn1OctetString subjectKeyIdentifierAsn1 = new Asn1OctetString("subjectKeyIdentifierAsn1");
         subjectKeyIdentifierAsn1.setIdentifier("subjectKeyIdentifier");
         try {

@@ -9,53 +9,40 @@
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
-import de.rub.nds.asn1.model.Asn1PrintableString;
 import de.rub.nds.protocol.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
-import de.rub.nds.x509anvil.framework.constants.CertificateChainPosType;
-import de.rub.nds.x509anvil.framework.constants.ExtensionType;
-import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
-import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
-import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
-import de.rub.nds.x509attacker.chooser.X509Chooser;
-import de.rub.nds.x509attacker.constants.NameType;
-import de.rub.nds.x509attacker.constants.X500AttributeType;
-import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
-import de.rub.nds.x509attacker.context.X509Context;
-import de.rub.nds.x509attacker.filesystem.CertificateIo;
-import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
-import de.rub.nds.x509attacker.x509.model.Name;
-import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
-import de.rub.nds.x509attacker.x509.model.X509Certificate;
-import de.rub.nds.x509attacker.x509.parser.X509CertificateParser;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.constants.*;
+import org.apache.commons.lang3.NotImplementedException;
 
-import java.io.*;
 import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.spec.InvalidKeySpecException;
 import java.util.Iterator;
 import java.util.UUID;
 
 public class X509CertificateConfigUtil {
-    public static X509CertificateConfig getDefaultCertificateConfig(String certificateName, boolean selfSigned,
-        CertificateChainPosType chainPosType) {
+    public static X509CertificateConfig getDefaultCertificateConfig(boolean selfSigned,
+                                                                    CertificateChainPositionType chainPosType) {
         X509CertificateConfig config = new X509CertificateConfig();
+        config.setSerialNumber(generateUniqueSerialNumber());
 
-        config.setCertificateName(certificateName);
-        config.setCertificateChainPosType(chainPosType);
+        // TODO: re-evaluate where this should be set
+        config.setChainPosition(chainPosType);
+        config.setSelfSigned(selfSigned);
+
+        /*
+        all default values on config
+
         config.setSignatureAlgorithm(X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION);
         KeyPair keyPair = generateKeyPair(SignatureAlgorithm.RSA_PKCS1, certificateName, 2048);
         config.applyKeyPair(keyPair);
-        config.setSelfSigned(selfSigned);
+        config.setVersion(new BigInteger("2"));
 
-        config.setVersion(2);
-        config.setSerialNumber(generateUniqueSerialNumber());
 
-        config.setNotBeforeTimeType(TimeType.UTC_TIME);
-        config.setNotBeforeValue("220101000000Z");
-        config.setNotAfterTimeType(TimeType.UTC_TIME);
+        config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
+        config.setNotBefore(DAte"220101000000Z");
+        config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
         config.setNotAfterValue("320101000000Z");
 
         Name subject = new Name("name", NameType.SUBJECT);
@@ -66,16 +53,20 @@ public class X509CertificateConfigUtil {
             X500AttributeType.COMMON_NAME, commonName.getValue().getValue()));
         subject.addRelativeDistinguishedNames(commonNameDN);
         config.setSubject(subject);
+        */
 
-        config.setExtensionsPresent(false);
+        config.setIncludeExtensions(false);
 
         return config;
     }
 
-    public static X509CertificateConfig getDefaultCaCertificateConfig(String certificateName, boolean selfSigned,
-        CertificateChainPosType chainPosType) {
-        X509CertificateConfig config = getDefaultCertificateConfig(certificateName, selfSigned, chainPosType);
+    public static X509CertificateConfig getDefaultCaCertificateConfig(boolean selfSigned,
+                                                                           CertificateChainPositionType chainPosType) {
+        X509CertificateConfig config = getDefaultCertificateConfig(selfSigned, chainPosType);
 
+        throw new NotImplementedException("extensions not supported yet");
+
+        /*
         config.setExtensionsPresent(true);
         BasicConstraintsExtensionConfig basicConstraints =
             (BasicConstraintsExtensionConfig) config.extension(ExtensionType.BASIC_CONSTRAINTS);
@@ -87,7 +78,7 @@ public class X509CertificateConfigUtil {
         keyUsage.setPresent(true);
         keyUsage.setKeyCertSign(true);
 
-        return config;
+        return config; */
     }
 
     public static X509CertificateChainConfig createBasicConfig(int chainLength) {
@@ -111,6 +102,8 @@ public class X509CertificateConfigUtil {
         }
     }
 
+    // TODO: seems unnecessary now
+    /*
     public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String privateKeyFile)
         throws IOException, InvalidKeySpecException {
         X509Certificate staticRootCertificate = new X509Certificate("staticCertificate");
@@ -135,6 +128,7 @@ public class X509CertificateConfigUtil {
         staticX509CertificateConfig.setStaticX509Certificate(staticRootCertificate);
         return staticX509CertificateConfig;
     }
+    */
 
     public static BigInteger generateUniqueSerialNumber() {
         UUID uuid = UUID.randomUUID();
@@ -143,7 +137,7 @@ public class X509CertificateConfigUtil {
 
     public static Iterable<X509CertificateConfig>
         expandCertificateConfigs(X509CertificateChainConfig certificateChainConfig) {
-        return () -> new Iterator<X509CertificateConfig>() {
+        return () -> new Iterator<>() {
             private int currentIndex = 0;
 
             @Override

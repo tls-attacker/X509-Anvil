@@ -16,12 +16,10 @@ import de.rub.nds.x509anvil.framework.constants.*;
 import de.rub.nds.x509anvil.framework.x509.config.extension.*;
 import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
-import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import de.rub.nds.x509attacker.x509.model.publickey.PublicKeyContent;
-import org.apache.commons.lang3.NotImplementedException;
 
 import java.math.BigInteger;
 import java.security.KeyPair;
@@ -31,7 +29,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class X509CertificateConfig {
+public class AnvilX509CertificateConfig {
     private String certificateName;
     private CertificateChainPosType certificateChainPosType;
     private boolean isStatic;
@@ -57,7 +55,7 @@ public class X509CertificateConfig {
     private boolean extensionsPresent = true;
     private final Map<ExtensionType, ExtensionConfig> extensions = new HashMap<>();
 
-    public X509CertificateConfig() {
+    public AnvilX509CertificateConfig() {
         extensions.put(ExtensionType.AUTHORITY_KEY_IDENTIFIER, new AuthorityKeyIdentifierExtensionConfig());
         extensions.put(ExtensionType.SUBJECT_KEY_IDENTIFIER, new SubjectKeyIdentifierExtensionConfig());
         extensions.put(ExtensionType.BASIC_CONSTRAINTS, new BasicConstraintsExtensionConfig());

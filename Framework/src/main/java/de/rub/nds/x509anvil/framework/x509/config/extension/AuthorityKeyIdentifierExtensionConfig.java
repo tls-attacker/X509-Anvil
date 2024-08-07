@@ -10,8 +10,8 @@
 package de.rub.nds.x509anvil.framework.x509.config.extension;
 
 import de.rub.nds.asn1.model.Asn1OctetString;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import org.bouncycastle.asn1.x509.AuthorityKeyIdentifier;
 import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
 
@@ -26,7 +26,7 @@ public class AuthorityKeyIdentifierExtensionConfig extends ExtensionConfig {
 
     @Override
     public Asn1OctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
-        X509CertificateConfig previousConfig) {
+                                                   X509CertificateConfig previousConfig) {
         byte[] derEncoded;
         try {
             JcaX509ExtensionUtils jcaX509ExtensionUtils = new JcaX509ExtensionUtils();

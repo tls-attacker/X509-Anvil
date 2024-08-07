@@ -18,7 +18,8 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.x509.model.Extension;
 
 import java.util.Collections;
 import java.util.Map;
@@ -44,8 +45,9 @@ public class UnknownNonCriticalExtensionPresentParameter extends BooleanCertific
 
     @Override
     public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        certificateConfig.extension(ExtensionType.UNKNOWN_EXTENSION).setPresent(getSelectedValue());
-        certificateConfig.extension(ExtensionType.UNKNOWN_EXTENSION).setCritical(false);
+        // certificateConfig.extension(ExtensionType.UNKNOWN_EXTENSION).setPresent(getSelectedValue());
+        // certificateConfig.extension(ExtensionType.UNKNOWN_EXTENSION).setCritical(false);
+        certificateConfig.addExtensions((Extension) null);
     }
 
     @Override

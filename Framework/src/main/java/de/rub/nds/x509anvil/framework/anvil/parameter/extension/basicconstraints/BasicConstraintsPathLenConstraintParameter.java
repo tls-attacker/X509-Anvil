@@ -23,8 +23,9 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParamet
 import de.rub.nds.x509anvil.framework.anvil.parameter.ChainLengthParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.x509.model.Extension;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,9 +70,10 @@ public class BasicConstraintsPathLenConstraintParameter extends CertificateSpeci
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        BasicConstraintsExtensionConfig extensionConfig =
-            (BasicConstraintsExtensionConfig) certificateConfig.extension(ExtensionType.BASIC_CONSTRAINTS);
-        extensionConfig.setPathLenConstraint(getSelectedValue());
+        // BasicConstraintsExtensionConfig extensionConfig =
+        //     (BasicConstraintsExtensionConfig) certificateConfig.extension(ExtensionType.BASIC_CONSTRAINTS);
+        // extensionConfig.setPathLenConstraint(getSelectedValue());
+        certificateConfig.addExtensions((Extension) null);
     }
 
     @Override

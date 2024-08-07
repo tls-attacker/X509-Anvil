@@ -15,7 +15,7 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 
@@ -24,38 +24,36 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Adds a certain Name Component to the Subject.
+ */
 public class NameComponentPresentParameter extends BooleanCertificateSpecificParameter {
-    private final String nameComponentOid;
+    private final X500AttributeType nameComponent;
     private final String value;
 
-    public NameComponentPresentParameter(ParameterIdentifier parameterIdentifier, String nameComponentOid,
+    public NameComponentPresentParameter(ParameterIdentifier parameterIdentifier, X500AttributeType nameComponent,
         String value) {
         super(parameterIdentifier);
-        this.nameComponentOid = nameComponentOid;
+        this.nameComponent = nameComponent;
         this.value = value;
     }
 
     public NameComponentPresentParameter(Boolean selectedValue, ParameterIdentifier parameterIdentifier,
-        String nameComponentOid, String value) {
+        X500AttributeType nameComponent, String value) {
         super(selectedValue, parameterIdentifier);
-        this.nameComponentOid = nameComponentOid;
+        this.nameComponent = nameComponent;
         this.value = value;
     }
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
         if (getSelectedValue()) {
-            List<Pair<X500AttributeType, String>> name = new LinkedList<>();
-            name.add(new Pair<>(Arrays.stream(X500AttributeType.values())
-                .filter(x500AttributeType -> x500AttributeType.getOid().toString().equals(nameComponentOid))
-                .collect(Collectors.toList()).get(0), value));
-            RelativeDistinguishedName nameToAdd = new RelativeDistinguishedName("relativeDistinguishedName", name);
-            certificateConfig.getSubject().addRelativeDistinguishedNames(nameToAdd);
+            certificateConfig.getSubject().add(new Pair<>(nameComponent, value));
         }
     }
 
     @Override
     protected DerivationParameter<X509CertificateChainConfig, Boolean> generateValue(Boolean selectedValue) {
-        return new NameComponentPresentParameter(selectedValue, getParameterIdentifier(), nameComponentOid, value);
+        return new NameComponentPresentParameter(selectedValue, getParameterIdentifier(), nameComponent, value);
     }
 }

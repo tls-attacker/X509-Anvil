@@ -15,8 +15,8 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 
 public class IssuerUniqueIdParameter extends UniqueIdParameter {
 
@@ -37,6 +37,6 @@ public class IssuerUniqueIdParameter extends UniqueIdParameter {
 
     @Override
     public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        certificateConfig.setIssuerUniqueId(getSelectedValue());
+        certificateConfig.setDefaultIssuerUniqueId(getSelectedValue().getBytes());
     }
 }

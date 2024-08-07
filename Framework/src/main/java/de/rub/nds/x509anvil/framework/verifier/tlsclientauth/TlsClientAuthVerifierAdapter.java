@@ -24,19 +24,15 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierAdapter;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.ValidityEncoding;
 import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.filesystem.CertificateBytes;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
-import de.rub.nds.x509attacker.x509.preparator.TbsCertificatePreparator;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static de.rub.nds.x509anvil.framework.x509.config.model.TimeType.GENERALIZED_TIME;
-import static de.rub.nds.x509anvil.framework.x509.config.model.TimeType.UTC_TIME;
 
 public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
 
@@ -135,8 +131,12 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
 
         defaultConfig.setDefaultExplicitCertificateChain(encodedCertificateChain);
 
-        defaultConfig.setDefaultSelectedSignatureAndHashAlgorithm(
-            TlsAttackerUtil.translateSignatureAlgorithm(entityConfig.getSignatureAlgorithm()));
+        try {
+            defaultConfig.setDefaultSelectedSignatureAndHashAlgorithm(
+                    TlsAttackerUtil.translateSignatureAlgorithm(entityConfig.getDefaultSignatureAlgorithm()));
+        } catch (VerifierException e) {
+            return new VerifierResult(false);
+        }
         defaultConfig.setAutoAdjustSignatureAndHashAlgorithm(false);
 
         // Execute workflow

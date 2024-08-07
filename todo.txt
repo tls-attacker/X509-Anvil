@@ -1,0 +1,3 @@
+- what about keys?
+- implement extensions with configs in certificate config
+- reimplement certificate generation

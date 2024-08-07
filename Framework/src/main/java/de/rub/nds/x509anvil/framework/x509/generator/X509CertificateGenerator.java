@@ -13,30 +13,28 @@ import de.rub.nds.asn1.constants.TagClass;
 import de.rub.nds.asn1.constants.TagConstructed;
 import de.rub.nds.asn1.constants.UniversalTagNumber;
 import de.rub.nds.asn1.model.*;
-import de.rub.nds.modifiablevariable.ModifiableVariable;
 import de.rub.nds.modifiablevariable.ModifiableVariableFactory;
 import de.rub.nds.modifiablevariable.bytearray.ByteArrayExplicitValueModification;
-import de.rub.nds.modifiablevariable.bytearray.ModifiableByteArray;
 import de.rub.nds.protocol.crypto.key.PrivateKeyContainer;
 import de.rub.nds.protocol.crypto.signature.SignatureCalculator;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.TimeContextHint;
 import de.rub.nds.x509attacker.constants.ValidityEncoding;
 import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.x509.model.*;
 import de.rub.nds.x509attacker.x509.model.publickey.PublicKeyBitString;
-import de.rub.nds.x509attacker.x509.preparator.TbsCertificatePreparator;
-import de.rub.nds.x509attacker.x509.serializer.X509Asn1FieldSerializer;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
+// TODO: I hope we can delete all of this when generating certificates with the attacker config, preparator, and serializer...
 
 public class X509CertificateGenerator {
     private final X509CertificateConfig certificateConfig;
@@ -45,7 +43,7 @@ public class X509CertificateGenerator {
     private final List<X509CertificateModifier> certificateModifiers = new ArrayList<>();
 
     public X509CertificateGenerator(X509CertificateConfig certificateConfig, X509CertificateConfig issuerConfig,
-        List<X509CertificateModifier> certificateModifiers) {
+                                    List<X509CertificateModifier> certificateModifiers) {
         this.certificateConfig = certificateConfig;
         this.previousConfig = issuerConfig;
         this.certificateModifiers.addAll(certificateModifiers);
@@ -60,11 +58,13 @@ public class X509CertificateGenerator {
         certificateModifiers.add(certificateModifier);
     }
 
-    public void generateCertificate() throws CertificateGeneratorException {
+    public X509Certificate generateCertificate() throws CertificateGeneratorException {
         if (certificateConfig.isStatic()) {
             this.x509Certificate = certificateConfig.getStaticX509Certificate();
-            return;
+            return this.x509Certificate;
         }
+
+        // TODO: probably replace everything from here with config and serializer
         this.x509Certificate = new X509Certificate("certificate"); // create basic x509 cert
         setValuesInTbsCertificate();
 
@@ -107,8 +107,8 @@ public class X509CertificateGenerator {
                 signatureCalculator.createSignatureComputations(signatureAlgorithm.getSignatureAlgorithm()));
         }
 
-        de.rub.nds.x509attacker.config.X509CertificateConfig config =
-            new de.rub.nds.x509attacker.config.X509CertificateConfig();
+        X509CertificateConfig config =
+            new X509CertificateConfig();
         config.setVersion(x509Certificate.getX509Version());
 
         // TODO: Chooser?
@@ -148,12 +148,7 @@ public class X509CertificateGenerator {
             ModifiableVariableFactory.safelySetValue(x509Certificate.getSignature().getUsedBits(), new byte[] {}));
         x509Certificate.getSignature().getUsedBits().setModification(new ByteArrayExplicitValueModification(
             x509Certificate.getSignatureComputations().getSignatureBytes().getValue()));
-    }
 
-    public X509Certificate retrieveX509Certificate() throws CertificateGeneratorException {
-        if (x509Certificate == null) {
-            throw new CertificateGeneratorException("Certificate is not generated yet");
-        }
         return x509Certificate;
     }
 
@@ -165,7 +160,7 @@ public class X509CertificateGenerator {
         setValidity();
         setSubject();
         setUniqueIdentifiers();
-        generateExtensions();
+        // TODO: implement extensions in x509-attacker generateExtensions();
     }
 
     private void setVersion() {

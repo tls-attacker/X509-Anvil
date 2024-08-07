@@ -18,8 +18,9 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.x509.model.Extension;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,9 +46,10 @@ public class BasicConstraintsPathLenConstraintPresentParameter extends BooleanCe
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        BasicConstraintsExtensionConfig extensionConfig =
-            (BasicConstraintsExtensionConfig) certificateConfig.extension(ExtensionType.BASIC_CONSTRAINTS);
-        extensionConfig.setPathLenConstraintPresent(getSelectedValue());
+        // BasicConstraintsExtensionConfig extensionConfig =
+        //     (BasicConstraintsExtensionConfig) certificateConfig.extension(ExtensionType.BASIC_CONSTRAINTS);
+        // extensionConfig.setPathLenConstraintPresent(getSelectedValue());
+        certificateConfig.addExtensions((Extension) null);
     }
 
     @Override

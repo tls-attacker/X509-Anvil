@@ -11,7 +11,8 @@ package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.TestConfig;
-import de.rub.nds.x509anvil.framework.constants.CertificateChainPosType;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.constants.CertificateChainPositionType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,7 +26,9 @@ public class X509CertificateChainConfig {
 
     private int chainLength;
     private int intermediateCertsModeled;
-    private boolean staticRoot;
+
+    // TODO: can this be removed? before a static file was read for static root and a certificate generated for not static root. I think we can use the config now for all cases(?)
+    // private boolean staticRoot;
 
     private X509CertificateConfig rootCertificateConfig = null;
     private final List<X509CertificateConfig> intermediateCertificateConfigs = new ArrayList<>();
@@ -33,7 +36,7 @@ public class X509CertificateChainConfig {
 
     private boolean initialized = false;
 
-    public void initializeChain(int chainLength, int intermediateCertsModeled, boolean staticRoot) {
+    public void initializeChain(int chainLength, int intermediateCertsModeled) {
         if (initialized) {
             throw new IllegalStateException("Config is already initialized");
         }
@@ -42,8 +45,11 @@ public class X509CertificateChainConfig {
         this.intermediateCertsModeled = intermediateCertsModeled;
 
         TestConfig testConfig = ContextHelper.getTestConfig();
-        this.staticRoot = staticRoot;
 
+        // TODO: only used in one instance, probably generate certificate once and cache, if annotation present generate new one?
+        // this.staticRoot = staticRoot;
+
+        /*
         if (staticRoot) {
             try {
                 rootCertificateConfig = X509CertificateConfigUtil.loadStaticCertificateConfig(
@@ -54,18 +60,20 @@ public class X509CertificateChainConfig {
             }
         } else {
             // We need to generate our own root
-            rootCertificateConfig = X509CertificateConfigUtil.getDefaultCaCertificateConfig("cert_root", true,
-                CertificateChainPosType.ROOT);
+            rootCertificateConfig = X509CertificateConfigUtil.getDefaultCaCertificateConfig(true,
+                CertificateChainPositionType.ROOT);
         }
+        */
+        rootCertificateConfig = X509CertificateConfigUtil.getDefaultCaCertificateConfig(true, CertificateChainPositionType.ROOT);
 
         // Generate configs for intermediate certificates
         for (int i = 0; i < chainLength - 2; i++) {
             if (i < intermediateCertsModeled) {
-                X509CertificateConfig config = X509CertificateConfigUtil.getDefaultCaCertificateConfig(
-                    "cert_intermediate_" + i, false, CertificateChainPosType.INTERMEDIATE);
-                if (i == intermediateCertsModeled - 1 && intermediateCertsModeled < chainLength - 2) {
-                    config.setSharedConfig(true);
-                }
+                X509CertificateConfig config = X509CertificateConfigUtil.getDefaultCaCertificateConfig(false, CertificateChainPositionType.INTERMEDIATE);
+                // TODO: can be deleted?
+                // if (i == intermediateCertsModeled - 1 && intermediateCertsModeled < chainLength - 2) {
+                //     config.setSharedConfig(true);
+                // }
                 intermediateCertificateConfigs.add(config);
             }
         }
@@ -74,8 +82,8 @@ public class X509CertificateChainConfig {
         if (chainLength == 1) {
             entityCertificateConfig = rootCertificateConfig;
         } else {
-            entityCertificateConfig = X509CertificateConfigUtil.getDefaultCertificateConfig("cert_entity", false,
-                CertificateChainPosType.ENTITY);
+            entityCertificateConfig = X509CertificateConfigUtil.getDefaultCertificateConfig(false,
+                CertificateChainPositionType.ENTITY);
         }
 
         initialized = true;
@@ -135,10 +143,6 @@ public class X509CertificateChainConfig {
 
     public int getIntermediateCertsModeled() {
         return intermediateCertsModeled;
-    }
-
-    public boolean isStaticRoot() {
-        return staticRoot;
     }
 
     public boolean isInitialized() {

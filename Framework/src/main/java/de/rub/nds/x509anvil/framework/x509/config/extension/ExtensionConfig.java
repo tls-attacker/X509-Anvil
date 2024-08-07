@@ -9,9 +9,11 @@
 
 package de.rub.nds.x509anvil.framework.x509.config.extension;
 
-import de.rub.nds.asn1.model.*;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
+import de.rub.nds.asn1.model.Asn1Boolean;
+import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
+import de.rub.nds.asn1.model.Asn1OctetString;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.x509.model.Extension;
 
 public abstract class ExtensionConfig {
@@ -42,7 +44,7 @@ public abstract class ExtensionConfig {
     }
 
     public Extension getExtensionFromConfig(X509CertificateConfig certificateConfig,
-        X509CertificateConfig previousConfig) throws CertificateGeneratorException {
+                                            X509CertificateConfig previousConfig) throws CertificateGeneratorException {
         Extension extensionAsn1 = new Extension(name);
 
         Asn1ObjectIdentifier extnIdAsn1 = new Asn1ObjectIdentifier("extnId");
@@ -63,5 +65,5 @@ public abstract class ExtensionConfig {
     }
 
     protected abstract Asn1OctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
-        X509CertificateConfig previousConfig) throws CertificateGeneratorException;
+                                                               X509CertificateConfig previousConfig) throws CertificateGeneratorException;
 }

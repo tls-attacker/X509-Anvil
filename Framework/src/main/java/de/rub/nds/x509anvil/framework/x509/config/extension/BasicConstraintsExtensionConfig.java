@@ -9,10 +9,12 @@
 
 package de.rub.nds.x509anvil.framework.x509.config.extension;
 
-import de.rub.nds.asn1.model.*;
+import de.rub.nds.asn1.model.Asn1Boolean;
+import de.rub.nds.asn1.model.Asn1Integer;
+import de.rub.nds.asn1.model.Asn1OctetString;
 import de.rub.nds.asn1.serializer.Asn1FieldSerializer;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.x509.model.extensions.BasicConstraints;
 
 import java.math.BigInteger;
@@ -61,7 +63,7 @@ public class BasicConstraintsExtensionConfig extends ExtensionConfig {
 
     @Override
     public Asn1OctetString getContentAsn1Structure(X509CertificateConfig certificateConfig,
-        X509CertificateConfig previousConfig) {
+                                                   X509CertificateConfig previousConfig) {
         BasicConstraints basicConstraintsAsn1 = new BasicConstraints("basicConstraints");
 
         Asn1Boolean caAsn1 = new Asn1Boolean("ca");

@@ -17,7 +17,7 @@ import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +39,7 @@ public class SubjectUniqueIdPresentParameter extends BooleanCertificateSpecificP
 
     @Override
     public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        certificateConfig.setSubjectUniqueIdPresent(getSelectedValue());
+        certificateConfig.setIncludeSubjectUniqueId(getSelectedValue());
     }
 
     @Override

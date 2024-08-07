@@ -29,6 +29,7 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.name.NameComponentPresentP
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
 
 public class X509AnvilParameterFactory {
 
@@ -52,22 +53,22 @@ public class X509AnvilParameterFactory {
                 return new CNTypeParameter(parameterIdentifier.getParameterScope());
             case NC_COUNTRY_NAME_PRESENT:
                 return new NameComponentPresentParameter(parameterIdentifier,
-                    AttributeTypeObjectIdentifiers.COUNTRY_NAME, "DE");
+                        X500AttributeType.COUNTRY_NAME, "DE");
             case NC_STATE_PROVINCE_PRESENT:
                 return new NameComponentPresentParameter(parameterIdentifier,
-                    AttributeTypeObjectIdentifiers.STATE_OR_PROVINCE_NAME, "NRW");
+                    X500AttributeType.STATE_OR_PROVINCE_NAME, "NRW");
             case NC_LOCALITY_PRESENT:
                 return new NameComponentPresentParameter(parameterIdentifier,
-                    AttributeTypeObjectIdentifiers.LOCALITY_NAME, "Paderborn");
+                    X500AttributeType.LOCALITY, "Paderborn");
             case NC_ORGANIZATION_PRESENT:
                 return new NameComponentPresentParameter(parameterIdentifier,
-                    AttributeTypeObjectIdentifiers.ORGANIZATION_NAME, "UPB");
+                    X500AttributeType.ORGANISATION_NAME, "UPB");
             case NC_ORGANIZATIONAL_UNIT_PRESENT:
                 return new NameComponentPresentParameter(parameterIdentifier,
-                    AttributeTypeObjectIdentifiers.ORGANIZATIONAL_UNIT_NAME, "CS");
+                    X500AttributeType.ORGANISATION_UNIT_NAME, "CS");
             case NC_SERIAL_NUMBER_PRESENT:
                 return new NameComponentPresentParameter(parameterIdentifier,
-                    AttributeTypeObjectIdentifiers.SERIAL_NUMBER, "SERIAL:A3:B4:1337");
+                    X500AttributeType.SERIAL_NUMBER, "SERIAL:A3:B4:1337");
             case DOMAIN_COMPONENTS_PRESENT:
                 return new DomainComponentsPresentParameter(parameterIdentifier.getParameterScope());
             case ISSUER_UNIQUE_ID_PRESENT:

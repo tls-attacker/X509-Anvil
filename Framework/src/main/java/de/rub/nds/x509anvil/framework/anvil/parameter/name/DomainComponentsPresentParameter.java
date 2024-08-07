@@ -17,13 +17,16 @@ import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * If true, includes the organisation details in the subject, compared to only its name.
+ */
 public class DomainComponentsPresentParameter extends BooleanCertificateSpecificParameter {
 
     public DomainComponentsPresentParameter(ParameterScope parameterScope) {
@@ -37,13 +40,12 @@ public class DomainComponentsPresentParameter extends BooleanCertificateSpecific
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
         if (getSelectedValue()) {
-            List<Pair<X500AttributeType, String>> name = new LinkedList<>();
-            name.add(new Pair<>(X500AttributeType.COMMON_NAME, "x509anvil"));
-            name.add(new Pair<>(X500AttributeType.ORGANISATION_UNIT_NAME, "nds"));
-            name.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "rub"));
-            name.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "de"));
-            RelativeDistinguishedName commonNameDN = new RelativeDistinguishedName("relativeDistinguishedName", name);
-            certificateConfig.getSubject().addRelativeDistinguishedNames(commonNameDN);
+            List<Pair<X500AttributeType, String>> subject = new LinkedList<>();
+            subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "tls-attacker.com"));
+            subject.add(new Pair<>(X500AttributeType.ORGANISATION_UNIT_NAME, "syssec"));
+            subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "upb"));
+            subject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "de"));
+            certificateConfig.setSubject(subject);
         }
     }
 
