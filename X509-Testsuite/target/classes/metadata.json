@@ -2,7 +2,13 @@
   "empty_dn": {
     "description": "Empty domain name for issuer",
     "severityLevels": {
-      "SOME_LEVEL": 42
+      "TEST_LEVEL": 42
+    }
+  },
+  "no_subject_leaf": {
+    "description": "No subject in leaf",
+    "severityLevels": {
+      "TEST_LEVEL": 42
     }
   }
 }

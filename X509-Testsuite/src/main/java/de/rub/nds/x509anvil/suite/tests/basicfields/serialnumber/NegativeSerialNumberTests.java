@@ -28,7 +28,7 @@ public class NegativeSerialNumberTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @IpmLimitations(identifiers = "entity.serial_number")
-    @AnvilTest
+    @AnvilTest(id = "negative_serial_number_entity")
     public void negativeSerialNumberEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalSerialNumberModifier(true, BigInteger.valueOf(-1337)));
