@@ -59,8 +59,7 @@ public class SignatureParameter extends CertificateSpecificParameter<SignatureAl
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
         certificateConfig.amendSignatureAlgorithm(getSelectedValue().getSignatureAlgorithm());
-        KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(getSelectedValue().getSignatureAlgorithm(),
-            certificateConfig.getCertificateName(), getSelectedValue().getKeyLength());
+        KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(getSelectedValue().getSignatureAlgorithm(), getSelectedValue().getKeyLength());
         certificateConfig.applyKeyPair(keyPair);
     }
 }

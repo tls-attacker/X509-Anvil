@@ -36,6 +36,7 @@ import java.util.List;
 
 // TODO: I hope we can delete all of this when generating certificates with the attacker config, preparator, and serializer...
 
+/*
 public class X509CertificateGenerator {
     private final X509CertificateConfig certificateConfig;
     private final X509CertificateConfig previousConfig;
@@ -92,11 +93,11 @@ public class X509CertificateGenerator {
         }
 
         // TODO: keep difference when static certificate?
-        /*
-         * if (configToConsider.getKeyType() != KeyType.RSA && !configToConsider.isStatic()) { throw new
-         * CertificateGeneratorException("Can only generate RSA signatures for now"); } else { privateKeyForSignature =
-         * (RsaPrivateKey) configToConsider.getStaticCertificatePrivateKey(); }
-         */
+
+         // if (configToConsider.getKeyType() != KeyType.RSA && !configToConsider.isStatic()) { throw new
+         // CertificateGeneratorException("Can only generate RSA signatures for now"); } else { privateKeyForSignature =
+         // (RsaPrivateKey) configToConsider.getStaticCertificatePrivateKey(); }
+
 
         privateKeyForSignature = configToConsider.getStaticCertificatePrivateKey();
         SignatureCalculator signatureCalculator = new SignatureCalculator();
@@ -331,3 +332,4 @@ public class X509CertificateGenerator {
         x509Certificate.setSignatureAlgorithmIdentifier(algorithm);
     }
 }
+*/

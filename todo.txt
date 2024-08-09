@@ -1,3 +1,6 @@
-- what about keys?
+- what about keys?	
+	- write generator in protocol attacker
 - implement extensions with configs in certificate config
 - reimplement certificate generation
+- move chain config to attacker
+- add string type for subject and issuer in cert config

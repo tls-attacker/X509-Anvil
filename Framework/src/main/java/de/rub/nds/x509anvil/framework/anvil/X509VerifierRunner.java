@@ -68,7 +68,7 @@ public class X509VerifierRunner {
         TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
-        return verifierAdapter.invokeVerifier(certificateList, config);
+        return verifierAdapter.invokeVerifier(certificateList);
     }
 
     public VerifierResult execute(X509CertificateChainConfig config, X509CertificateModifier modifier)
@@ -82,7 +82,7 @@ public class X509VerifierRunner {
         TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
-        return verifierAdapter.invokeVerifier(certificateList, config);
+        return verifierAdapter.invokeVerifier(certificateList);
     }
 
     public VerifierResult execute(List<X509Certificate> certificateList, X509CertificateChainConfig config)
@@ -92,6 +92,6 @@ public class X509VerifierRunner {
         TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
-        return verifierAdapter.invokeVerifier(certificateList, config);
+        return verifierAdapter.invokeVerifier(certificateList);
     }
 }

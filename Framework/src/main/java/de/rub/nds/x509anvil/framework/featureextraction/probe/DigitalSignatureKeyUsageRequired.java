@@ -64,7 +64,7 @@ public class DigitalSignatureKeyUsageRequired implements Probe {
         TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
-        return verifierAdapter.invokeVerifier(certificateChain, config);
+        return verifierAdapter.invokeVerifier(certificateChain);
     }
 
     public boolean probeWithoutFlagSet() throws VerifierException, CertificateGeneratorException {

@@ -83,20 +83,18 @@ public class X509CertificateConfigUtil {
 
     public static X509CertificateChainConfig createBasicConfig(int chainLength) {
         X509CertificateChainConfig x509CertificateChainConfig = new X509CertificateChainConfig();
-        x509CertificateChainConfig.initializeChain(chainLength, 1,
-            ContextHelper.getTestConfig().getUseStaticRootCertificate());
+        x509CertificateChainConfig.initializeChain(chainLength, 1);
         return x509CertificateChainConfig;
     }
 
-    public static KeyPair generateKeyPair(SignatureAlgorithm signatureAlgorithm, String keyPairIdentifier) {
+    public static KeyPair generateKeyPair(SignatureAlgorithm signatureAlgorithm) {
         int defaultKeySize = signatureAlgorithm == SignatureAlgorithm.ECDSA ? 256 : 2048;
-        return generateKeyPair(signatureAlgorithm, keyPairIdentifier, defaultKeySize);
+        return generateKeyPair(signatureAlgorithm, defaultKeySize);
     }
 
-    public static KeyPair generateKeyPair(SignatureAlgorithm signatureAlgorithm, String keyPairIdentifier,
-        int keyLength) {
+    public static KeyPair generateKeyPair(SignatureAlgorithm signatureAlgorithm, int keyLength) {
         try {
-            return CachedKeyPairGenerator.retrieveKeyPair(keyPairIdentifier, signatureAlgorithm, keyLength);
+            return CachedKeyPairGenerator.retrieveKeyPair(signatureAlgorithm, keyLength);
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException("This should not happen");
         }

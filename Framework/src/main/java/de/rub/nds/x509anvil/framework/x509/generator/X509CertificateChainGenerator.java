@@ -55,6 +55,18 @@ public class X509CertificateChainGenerator {
         // X509CertificateGenerator x509CertificateGenerator =
         //     new X509CertificateGenerator(config, signerConfig, certificateModifiers);
         // this.generatedCertificates.add(x509CertificateGenerator.generateCertificate());
+
+        // set signature signing keys to keys from signer config unless self-signed
+        if (signerConfig != null && !config.isSelfSigned()) {
+            config.setDefaultIssuerDsaPrivateKey(signerConfig.getDefaultIssuerDsaPrivateKey());
+            config.setDefaultIssuerDsaPublicKey(signerConfig.getDefaultIssuerDsaPublicKey());
+            config.setDefaultIssuerRsaModulus(signerConfig.getDefaultIssuerRsaModulus());
+            config.setDefaultIssuerRsaPrivateKey(signerConfig.getDefaultIssuerRsaPrivateKey());
+            config.setDefaultIssuerRsaPublicKey(signerConfig.getDefaultIssuerRsaPublicKey());
+            config.setDefaultIssuerEcPrivateKey(signerConfig.getDefaultIssuerEcPrivateKey());
+            config.setDefaultIssuerECPublicKey(signerConfig.getDefaultIssuerECPublicKey());
+            config.setDefaultIssuerPublicKeyType(signerConfig.getDefaultIssuerPublicKeyType());
+        }
         X509Certificate certificate = new X509Certificate("cert");
         this.generatedCertificates.add(certificate);
         certificate.getPreparator(new X509Chooser(config, new X509Context())).prepare();

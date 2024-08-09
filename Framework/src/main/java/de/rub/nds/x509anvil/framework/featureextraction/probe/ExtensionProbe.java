@@ -70,7 +70,7 @@ public abstract class ExtensionProbe implements Probe {
         TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
-        VerifierResult verifierResult = verifierAdapter.invokeVerifier(certificateChain, config);
+        VerifierResult verifierResult = verifierAdapter.invokeVerifier(certificateChain);
         return verifierResult.isValid();
     }
 }

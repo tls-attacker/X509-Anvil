@@ -28,7 +28,7 @@ public class WeakKeyLengthTests extends X509AnvilTest {
     public void weak512BitRsaKey(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         certificateChainConfig.getIntermediateConfig(0).applyKeyPair(
-                CachedKeyPairGenerator.retrieveKeyPair("weak-rsa-key", SignatureAlgorithm.RSA_PKCS1, 512));
+                CachedKeyPairGenerator.retrieveKeyPair(SignatureAlgorithm.RSA_PKCS1, 512));
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -40,7 +40,7 @@ public class WeakKeyLengthTests extends X509AnvilTest {
     public void weak1024BitRsaKey(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         certificateChainConfig.getIntermediateConfig(0).applyKeyPair(
-                CachedKeyPairGenerator.retrieveKeyPair("weak-rsa-key", SignatureAlgorithm.RSA_PKCS1, 1024));
+                CachedKeyPairGenerator.retrieveKeyPair(SignatureAlgorithm.RSA_PKCS1, 1024));
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -52,7 +52,7 @@ public class WeakKeyLengthTests extends X509AnvilTest {
     public void weak1024BitDsaKey(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         certificateChainConfig.getIntermediateConfig(0).applyKeyPair(
-                CachedKeyPairGenerator.retrieveKeyPair("weak-dsa-key", SignatureAlgorithm.RSA_PKCS1, 1024));
+                CachedKeyPairGenerator.retrieveKeyPair(SignatureAlgorithm.RSA_PKCS1, 1024));
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }

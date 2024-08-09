@@ -31,7 +31,6 @@ import java.util.Map;
 
 public class AnvilX509CertificateConfig {
     private String certificateName;
-    private CertificateChainPosType certificateChainPosType;
     private boolean isStatic;
     private X509Certificate staticX509Certificate;
     private PrivateKeyContainer staticCertificatePrivateKey;
@@ -67,34 +66,6 @@ public class AnvilX509CertificateConfig {
         this.setPublicKeyJavaFormat(keyPair.getPublic());
         this.setPublicKey(X509Util.containerFromPublicKey(keyPair.getPublic()));
         this.setStaticCertificatePrivateKey(X509Util.containerFromPrivateKey(keyPair.getPrivate()));
-    }
-
-    public String getCertificateName() {
-        return certificateName;
-    }
-
-    public void setCertificateName(String certificateName) {
-        this.certificateName = certificateName;
-    }
-
-    public CertificateChainPosType getCertificateChainPosType() {
-        return certificateChainPosType;
-    }
-
-    public boolean isRoot() {
-        return certificateChainPosType == CertificateChainPosType.ROOT;
-    }
-
-    public boolean isIntermediate() {
-        return certificateChainPosType == CertificateChainPosType.INTERMEDIATE;
-    }
-
-    public boolean isEntity() {
-        return certificateChainPosType == CertificateChainPosType.ENTITY;
-    }
-
-    public void setCertificateChainPosType(CertificateChainPosType certificateChainPosType) {
-        this.certificateChainPosType = certificateChainPosType;
     }
 
     public boolean isStatic() {

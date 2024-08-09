@@ -102,14 +102,12 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
     }
 
     @Override
-    public VerifierResult invokeVerifier(List<X509Certificate> certificatesChain,
-        X509CertificateChainConfig chainConfig) throws VerifierException {
-        X509CertificateConfig entityConfig = chainConfig.getEntityCertificateConfig();
+    public VerifierResult invokeVerifier(List<X509Certificate> certificatesChain) {
         List<CertificateBytes> encodedCertificateChain = new LinkedList<>();
         Collections.reverse(certificatesChain);
         for (X509Certificate x509Certificate : certificatesChain) {
-            de.rub.nds.x509attacker.config.X509CertificateConfig config =
-                new de.rub.nds.x509attacker.config.X509CertificateConfig();
+            /*
+            X509CertificateConfig config = new X509CertificateConfig();
             config.setIncludeIssuerUniqueId(true);
             config.setIncludeSubjectUniqueId(true);
             config.setVersion(x509Certificate.getX509Version());
@@ -123,17 +121,19 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
             // Set Validity Time Types
             config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
             config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
+            */
 
-            x509Certificate.getPreparator(new X509Chooser(config, new X509Context())).prepare();
+            // TODO: already prepared in chain generator?
+            // x509Certificate.getPreparator(new X509Chooser(config, new X509Context())).prepare();
             encodedCertificateChain.add(new CertificateBytes(
-                x509Certificate.getSerializer(new X509Chooser(config, new X509Context())).serialize()));
+                x509Certificate.getSerializer(new X509Chooser(null, new X509Context())).serialize()));
         }
 
         defaultConfig.setDefaultExplicitCertificateChain(encodedCertificateChain);
 
         try {
             defaultConfig.setDefaultSelectedSignatureAndHashAlgorithm(
-                    TlsAttackerUtil.translateSignatureAlgorithm(entityConfig.getDefaultSignatureAlgorithm()));
+                    TlsAttackerUtil.translateSignatureAlgorithm(certificatesChain.get(0).getX509SignatureAlgorithm()));
         } catch (VerifierException e) {
             return new VerifierResult(false);
         }
