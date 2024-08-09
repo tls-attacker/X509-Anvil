@@ -19,6 +19,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.model.DirectoryStringType;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,34 +27,32 @@ import java.util.stream.Collectors;
 
 /**
  * Sets the DirectoryStringType of the subject
- * TODO: not implemented in x509 attacker yet
  */
-public class CNTypeParameter extends CertificateSpecificParameter<DirectoryStringType> {
+public class CNTypeParameter extends CertificateSpecificParameter<DirectoryStringChoiceType> {
 
     public CNTypeParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.CN_TYPE, parameterScope), DirectoryStringType.class);
+        super(new ParameterIdentifier(X509AnvilParameterType.CN_TYPE, parameterScope), DirectoryStringChoiceType.class);
     }
 
-    public CNTypeParameter(ParameterScope parameterScope, DirectoryStringType selectedValue) {
-        super(new ParameterIdentifier(X509AnvilParameterType.CN_TYPE, parameterScope), DirectoryStringType.class);
+    public CNTypeParameter(ParameterScope parameterScope, DirectoryStringChoiceType selectedValue) {
+        super(new ParameterIdentifier(X509AnvilParameterType.CN_TYPE, parameterScope), DirectoryStringChoiceType.class);
         setSelectedValue(selectedValue);
     }
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        X509Util.getCnFromName(certificateConfig.getSubject())
-            .setContent(certificateConfig.getCertificateName().getBytes());
+        certificateConfig.setDefaultDirectoryStringType(getSelectedValue());
     }
 
     @Override
-    protected List<DerivationParameter<X509CertificateChainConfig, DirectoryStringType>>
+    protected List<DerivationParameter<X509CertificateChainConfig, DirectoryStringChoiceType>>
         getNonNullParameterValues(DerivationScope derivationScope) {
-        return Arrays.stream(DirectoryStringType.values()).map(this::generateValue).collect(Collectors.toList());
+        return Arrays.stream(DirectoryStringChoiceType.values()).map(this::generateValue).collect(Collectors.toList());
     }
 
     @Override
-    protected DerivationParameter<X509CertificateChainConfig, DirectoryStringType>
-        generateValue(DirectoryStringType selectedValue) {
+    protected DerivationParameter<X509CertificateChainConfig, DirectoryStringChoiceType>
+        generateValue(DirectoryStringChoiceType selectedValue) {
         return new CNTypeParameter(getParameterScope(), selectedValue);
     }
 }
