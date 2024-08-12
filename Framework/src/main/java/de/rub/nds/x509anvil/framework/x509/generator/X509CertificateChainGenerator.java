@@ -57,6 +57,8 @@ public class X509CertificateChainGenerator {
         // this.generatedCertificates.add(x509CertificateGenerator.generateCertificate());
 
         // set signature signing keys to keys from signer config unless self-signed
+
+        // TODO: necessary? should be sufficient to encode has chain using x509 attacker
         if (signerConfig != null && !config.isSelfSigned()) {
             config.setDefaultIssuerDsaPrivateKey(signerConfig.getDefaultIssuerDsaPrivateKey());
             config.setDefaultIssuerDsaPublicKey(signerConfig.getDefaultIssuerDsaPublicKey());

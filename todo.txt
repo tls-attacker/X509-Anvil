@@ -1,6 +1,6 @@
 - what about keys?	
-	- write generator in protocol attacker
+	- add ec keys in config
+	- write generator in protocol attacker !!!!!
 - implement extensions with configs in certificate config
-- reimplement certificate generation
-- move chain config to attacker
-- add string type for subject and issuer in cert config
+- reimplement certificate generation (probably already done? check if keys are copied correctly)
+- move chain config to attacker (not too important rn)
