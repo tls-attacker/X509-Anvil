@@ -14,6 +14,7 @@ import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
 import de.rub.nds.protocol.crypto.key.PrivateKeyContainer;
 import de.rub.nds.protocol.crypto.key.RsaPrivateKey;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
+import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
 import de.rub.nds.x509attacker.filesystem.CertificateFileWriter;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
 import de.rub.nds.x509attacker.x509.model.*;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+// TODO: what is even needed anymore?
 public class X509Util {
     public static Extension getExtensionByOid(X509Certificate x509Certificate, String oid) {
         try {
@@ -112,7 +114,7 @@ public class X509Util {
 
     public static void addDnQualifierToName(Name name) {
         RelativeDistinguishedName newRdn = new RelativeDistinguishedName("new_dnq");
-        AttributeTypeAndValue attributeTypeAndValue = new AttributeTypeAndValue("dnq");
+        AttributeTypeAndValue attributeTypeAndValue = new AttributeTypeAndValue("dnq", DirectoryStringChoiceType.PRINTABLE_STRING);
         Asn1ObjectIdentifier asn1ObjectIdentifier = new Asn1ObjectIdentifier("dnq");
         asn1ObjectIdentifier.setValue(AttributeTypeObjectIdentifiers.DN_QUALIFIER);
         attributeTypeAndValue.setType(asn1ObjectIdentifier);

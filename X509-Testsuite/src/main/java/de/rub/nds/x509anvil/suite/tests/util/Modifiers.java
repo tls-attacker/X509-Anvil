@@ -152,7 +152,7 @@ public class Modifiers {
         };
     }
 
-    public static X509CertificateModifier removeSubject(boolean entity) {
+    public static X509CertificateModifier removSubject(boolean entity) {
         return (certificate, config, previousConfig) -> {
             if (entity && config.isEntity() || !entity && config.isIntermediate()) {
                 Name empty = new Name("empty", NameType.SUBJECT);

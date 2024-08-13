@@ -14,6 +14,8 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
+import java.math.BigInteger;
+
 public class Version1IntermediateCertTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "6.1.4.  Preparation for Certificate i+1",
@@ -24,10 +26,10 @@ public class Version1IntermediateCertTests extends X509AnvilTest {
     @AnvilTest
     public void version1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        certificateChainConfig.getIntermediateConfig(0).setVersion(0);
-        certificateChainConfig.getIntermediateConfig(0).setExtensionsPresent(false);
-        certificateChainConfig.getIntermediateConfig(0).setIssuerUniqueIdPresent(false);
-        certificateChainConfig.getIntermediateConfig(0).setSubjectUniqueIdPresent(false);
+        certificateChainConfig.getIntermediateConfig(0).setVersion(new BigInteger("0"));
+        certificateChainConfig.getIntermediateConfig(0).setIncludeExtensions(false);
+        certificateChainConfig.getIntermediateConfig(0).setIncludeIssuerUniqueId(false);
+        certificateChainConfig.getIntermediateConfig(0).setIncludeSubjectUniqueId(false);
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -40,8 +42,8 @@ public class Version1IntermediateCertTests extends X509AnvilTest {
     @AnvilTest
     public void version2Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        certificateChainConfig.getIntermediateConfig(0).setVersion(1);
-        certificateChainConfig.getIntermediateConfig(0).setExtensionsPresent(false);
+        certificateChainConfig.getIntermediateConfig(0).setVersion(new BigInteger("1"));
+        certificateChainConfig.getIntermediateConfig(0).setIncludeExtensions(false);
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }

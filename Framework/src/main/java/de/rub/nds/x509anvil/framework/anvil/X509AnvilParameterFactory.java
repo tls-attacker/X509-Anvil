@@ -27,8 +27,6 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.name.CNTypeParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.name.DomainComponentsPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.name.NameComponentPresentParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
-import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
-import de.rub.nds.x509anvil.framework.x509.config.extension.KeyUsageExtensionConfig;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 
 public class X509AnvilParameterFactory {

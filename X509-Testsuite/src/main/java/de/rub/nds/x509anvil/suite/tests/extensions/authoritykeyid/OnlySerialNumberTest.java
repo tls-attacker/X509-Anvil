@@ -55,8 +55,9 @@ public class OnlySerialNumberTest extends X509AnvilTest {
 
                 try {
                     JcaX509ExtensionUtils jcaX509ExtensionUtils = new JcaX509ExtensionUtils();
-                    org.bouncycastle.asn1.x509.AuthorityKeyIdentifier authorityKeyIdentifier = jcaX509ExtensionUtils.createAuthorityKeyIdentifier(previousConfig.getPublicKeyJavaFormat());
-                    keyIdentifierAsn1.setValue(authorityKeyIdentifier.getKeyIdentifier());
+                    // TODO: fix with implemented config
+                    // org.bouncycastle.asn1.x509.AuthorityKeyIdentifier authorityKeyIdentifier = jcaX509ExtensionUtils.createAuthorityKeyIdentifier(previousConfig.getPublicKeyJavaFormat());
+                    // keyIdentifierAsn1.setValue(authorityKeyIdentifier.getKeyIdentifier());
                 } catch (NoSuchAlgorithmException e) {
                     throw new RuntimeException(e);
                 }

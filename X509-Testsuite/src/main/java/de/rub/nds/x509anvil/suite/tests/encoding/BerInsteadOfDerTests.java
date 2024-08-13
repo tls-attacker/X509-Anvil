@@ -61,7 +61,7 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @AnvilTest()
     public void explicitVersion1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
-        config.getEntityCertificateConfig().setVersion(2);  // Set version to 3 to make modification easier
+        config.getEntityCertificateConfig().setVersion(new BigInteger("2"));  // Set version to 3 to make modification easier
         VerifierResult result = testRunner.execute(config, explicitVersion1Modifier(true));
         Assertions.assertFalse(result.isValid());
     }

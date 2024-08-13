@@ -14,6 +14,9 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
+import de.rub.nds.x509attacker.config.extension.UnknownConfig;
+import de.rub.nds.x509attacker.constants.X509ExtensionType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -27,7 +30,10 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
     @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
     public void criticalAuthorityKeyIdEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getEntityCertificateConfig().extension(ExtensionType.AUTHORITY_KEY_IDENTIFIER).setCritical(true);
+        // TODO: Fix to correct config once implemented
+        ExtensionConfig authorityKeyIdentifier = new UnknownConfig(X509ExtensionType.AUTHORITY_KEY_IDENTIFIER.getOid(), "authority_key_identifier");
+        authorityKeyIdentifier.setCritical(true);
+        chainConfig.getEntityCertificateConfig().addExtensions(authorityKeyIdentifier);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -40,7 +46,10 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.ext_authority_key_identifier_present", method = "enabled")
     public void criticalAuthorityKeyIdIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).extension(ExtensionType.AUTHORITY_KEY_IDENTIFIER).setCritical(true);
+        // TODO: Fix to correct config once implemented
+        ExtensionConfig authorityKeyIdentifier = new UnknownConfig(X509ExtensionType.AUTHORITY_KEY_IDENTIFIER.getOid(), "authority_key_identifier");
+        authorityKeyIdentifier.setCritical(true);
+        chainConfig.getIntermediateConfig(0).addExtensions(authorityKeyIdentifier);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }

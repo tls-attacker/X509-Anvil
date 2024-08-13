@@ -25,7 +25,8 @@ public class SubjectNotPresentTests extends X509AnvilTest {
     @AnvilTest(id = "no_subject_leaf")
     public void noSubjectEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeSubject(true));
+        chainConfig.getEntityCertificateConfig().setIncludeSubjectUniqueId(false);
+        VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -36,7 +37,8 @@ public class SubjectNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noSubjectIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeSubject(false));
+        chainConfig.getIntermediateConfig(0).setIncludeSubjectUniqueId(false);
+        VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
 }

@@ -21,6 +21,8 @@ import java.util.List;
 
 public class X509CertificateChainGenerator {
     private final X509CertificateChainConfig certificateChainConfig;
+
+    // TODO: should be used, but can probably also simplified
     private final List<X509CertificateModifier> certificateModifiers = new ArrayList<>();
 
     private final List<X509Certificate> generatedCertificates = new ArrayList<>();

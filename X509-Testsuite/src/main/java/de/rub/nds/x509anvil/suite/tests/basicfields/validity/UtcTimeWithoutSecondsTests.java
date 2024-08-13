@@ -12,8 +12,10 @@ import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509attacker.constants.ValidityEncoding;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -27,8 +29,8 @@ public class UtcTimeWithoutSecondsTests extends X509AnvilTest {
     @AnvilTest
     public void notBeforeEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getEntityCertificateConfig().setNotBeforeValue("2001010000Z");
-        chainConfig.getEntityCertificateConfig().setNotBeforeTimeType(TimeType.UTC_TIME);
+        chainConfig.getEntityCertificateConfig().setNotBefore(new DateTime(2001, 1, 0, 0, 0));
+        chainConfig.getEntityCertificateConfig().setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -41,8 +43,8 @@ public class UtcTimeWithoutSecondsTests extends X509AnvilTest {
     @AnvilTest
     public void notBeforeIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).setNotBeforeValue("2001010000Z");
-        chainConfig.getIntermediateConfig(0).setNotBeforeTimeType(TimeType.UTC_TIME);
+        chainConfig.getIntermediateConfig(0).setNotBefore(new DateTime(2001, 1, 0, 0, 0));
+        chainConfig.getIntermediateConfig(0).setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -55,8 +57,8 @@ public class UtcTimeWithoutSecondsTests extends X509AnvilTest {
     @AnvilTest
     public void notAfterEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getEntityCertificateConfig().setNotAfterValue("3001010000Z");
-        chainConfig.getEntityCertificateConfig().setNotAfterTimeType(TimeType.UTC_TIME);
+        chainConfig.getEntityCertificateConfig().setNotAfter(new DateTime(2030, 1, 0, 0, 0));
+        chainConfig.getEntityCertificateConfig().setDefaultNotAfterEncoding(ValidityEncoding.UTC);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -69,8 +71,8 @@ public class UtcTimeWithoutSecondsTests extends X509AnvilTest {
     @AnvilTest
     public void notAfterIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).setNotAfterValue("3001010000Z");
-        chainConfig.getIntermediateConfig(0).setNotAfterTimeType(TimeType.UTC_TIME);
+        chainConfig.getIntermediateConfig(0).setNotAfter(new DateTime(2030, 1, 0, 0, 0));
+        chainConfig.getIntermediateConfig(0).setDefaultNotAfterEncoding(ValidityEncoding.UTC);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }

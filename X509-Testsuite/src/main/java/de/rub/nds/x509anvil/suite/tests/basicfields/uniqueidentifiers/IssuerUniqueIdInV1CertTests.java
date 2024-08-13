@@ -12,10 +12,11 @@ import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+
+import java.math.BigInteger;
 
 public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
 
@@ -29,8 +30,8 @@ public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
     @AnvilTest
     public void issuerUniqueIdPresentInV1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getEntityCertificateConfig().setIssuerUniqueIdPresent(true);
-        chainConfig.getEntityCertificateConfig().setIssuerUniqueId(new BitString(new byte[] {0x0, 0x1, 0x2, 0x3}));
+        chainConfig.getEntityCertificateConfig().setIncludeIssuerUniqueId(true);
+        chainConfig.getEntityCertificateConfig().setDefaultIssuerUniqueId(new byte[] {0x0, 0x1, 0x2, 0x3});
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -44,9 +45,9 @@ public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
     @AnvilTest
     public void issuerUniqueIdPresentInV1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).setIssuerUniqueIdPresent(true);
-        chainConfig.getIntermediateConfig(0).setIssuerUniqueId(new BitString(new byte[] {0x0, 0x1, 0x2, 0x3}));
-        chainConfig.getIntermediateConfig(0).setVersion(0);
+        chainConfig.getIntermediateConfig(0).setIncludeIssuerUniqueId(true);
+        chainConfig.getIntermediateConfig(0).setDefaultIssuerUniqueId(new byte[] {0x0, 0x1, 0x2, 0x3});
+        chainConfig.getIntermediateConfig(0).setVersion(new BigInteger("0"));
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }

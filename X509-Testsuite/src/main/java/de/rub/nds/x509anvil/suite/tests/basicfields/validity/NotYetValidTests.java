@@ -12,8 +12,9 @@ import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509attacker.constants.ValidityEncoding;
+import org.joda.time.DateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -27,8 +28,8 @@ public class NotYetValidTests extends X509AnvilTest {
     @AnvilTest
     public void notYetValidUtcEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getEntityCertificateConfig().setNotBeforeValue("400101000000Z");
-        chainConfig.getEntityCertificateConfig().setNotBeforeTimeType(TimeType.UTC_TIME);
+        chainConfig.getEntityCertificateConfig().setNotBefore(new DateTime(2040, 1, 1, 0, 0, 0));
+        chainConfig.getEntityCertificateConfig().setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -41,8 +42,8 @@ public class NotYetValidTests extends X509AnvilTest {
     @AnvilTest
     public void notYetValidGeneralizedEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getEntityCertificateConfig().setNotBeforeValue("20400101000000Z");
-        chainConfig.getEntityCertificateConfig().setNotBeforeTimeType(TimeType.GENERALIZED_TIME);
+        chainConfig.getEntityCertificateConfig().setNotBefore(new DateTime(2040, 1, 1, 0, 0, 0));
+        chainConfig.getEntityCertificateConfig().setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -55,8 +56,8 @@ public class NotYetValidTests extends X509AnvilTest {
     @AnvilTest
     public void notYetValidUtcIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).setNotBeforeValue("400101000000Z");
-        chainConfig.getIntermediateConfig(0).setNotBeforeTimeType(TimeType.UTC_TIME);
+        chainConfig.getIntermediateConfig(0).setNotBefore(new DateTime(2040, 1, 1, 0, 0, 0));
+        chainConfig.getIntermediateConfig(0).setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -69,8 +70,8 @@ public class NotYetValidTests extends X509AnvilTest {
     @AnvilTest
     public void notYetValidGeneralizedIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).setNotBeforeValue("20400101000000Z");
-        chainConfig.getIntermediateConfig(0).setNotBeforeTimeType(TimeType.GENERALIZED_TIME);
+        chainConfig.getIntermediateConfig(0).setNotBefore(new DateTime(2040, 1, 1, 0, 0, 0));
+        chainConfig.getIntermediateConfig(0).setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }

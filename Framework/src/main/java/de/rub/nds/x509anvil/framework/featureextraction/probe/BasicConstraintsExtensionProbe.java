@@ -12,12 +12,9 @@ package de.rub.nds.x509anvil.framework.featureextraction.probe;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
-import de.rub.nds.x509anvil.framework.x509.config.X509Util;
-import de.rub.nds.x509anvil.framework.x509.config.extension.BasicConstraintsExtensionConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.NopX509CertificateModifier;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
-
-import static de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers.BASIC_CONSTRAINTS;
+import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 
 public class BasicConstraintsExtensionProbe extends ExtensionProbe {
     private X509CertificateChainConfig chainConfig;
@@ -34,13 +31,13 @@ public class BasicConstraintsExtensionProbe extends ExtensionProbe {
 
     @Override
     protected void addExtensionToConfig(X509CertificateChainConfig config) {
-        config.getEntityCertificateConfig().setExtensionsPresent(true);
-        BasicConstraintsExtensionConfig extensionConfig = (BasicConstraintsExtensionConfig) config
-            .getEntityCertificateConfig().extension(ExtensionType.BASIC_CONSTRAINTS);
+        config.getEntityCertificateConfig().setIncludeExtensions(true);
+        BasicConstraintsConfig extensionConfig = new BasicConstraintsConfig();
         extensionConfig.setPresent(true);
         extensionConfig.setCritical(true);
         extensionConfig.setCa(true);
         extensionConfig.setPathLenConstraintPresent(false);
+        config.getEntityCertificateConfig().addExtensions(extensionConfig);
     }
 
     @Override
@@ -49,6 +46,8 @@ public class BasicConstraintsExtensionProbe extends ExtensionProbe {
         return new NopX509CertificateModifier();
     }
 
+    // TODO: no usage?
+    /*
     @Override
     protected X509CertificateModifier createInvalidExtensionModifier() {
         return (certificate, config, previousConfig) -> {
@@ -57,4 +56,5 @@ public class BasicConstraintsExtensionProbe extends ExtensionProbe {
             }
         };
     }
+     */
 }

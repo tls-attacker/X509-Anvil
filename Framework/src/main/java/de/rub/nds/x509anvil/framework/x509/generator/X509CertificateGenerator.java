@@ -9,31 +9,6 @@
 
 package de.rub.nds.x509anvil.framework.x509.generator;
 
-import de.rub.nds.asn1.constants.TagClass;
-import de.rub.nds.asn1.constants.TagConstructed;
-import de.rub.nds.asn1.constants.UniversalTagNumber;
-import de.rub.nds.asn1.model.*;
-import de.rub.nds.modifiablevariable.ModifiableVariableFactory;
-import de.rub.nds.modifiablevariable.bytearray.ByteArrayExplicitValueModification;
-import de.rub.nds.protocol.crypto.key.PrivateKeyContainer;
-import de.rub.nds.protocol.crypto.signature.SignatureCalculator;
-import de.rub.nds.x509anvil.framework.x509.config.X509Util;
-import de.rub.nds.x509anvil.framework.x509.config.extension.ExtensionConfig;
-import de.rub.nds.x509anvil.framework.x509.config.model.TimeType;
-import de.rub.nds.x509attacker.chooser.X509Chooser;
-import de.rub.nds.x509attacker.config.X509CertificateConfig;
-import de.rub.nds.x509attacker.constants.TimeContextHint;
-import de.rub.nds.x509attacker.constants.ValidityEncoding;
-import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
-import de.rub.nds.x509attacker.context.X509Context;
-import de.rub.nds.x509attacker.x509.model.*;
-import de.rub.nds.x509attacker.x509.model.publickey.PublicKeyBitString;
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-
 // TODO: I hope we can delete all of this when generating certificates with the attacker config, preparator, and serializer...
 
 /*
