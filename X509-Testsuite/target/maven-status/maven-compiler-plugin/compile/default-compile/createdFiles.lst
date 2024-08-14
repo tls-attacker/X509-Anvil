@@ -46,7 +46,6 @@ de/rub/nds/x509anvil/suite/tests/util/Constraints.class
 de/rub/nds/x509anvil/suite/tests/basicfields/uniqueidentifiers/IssuerUniqueIdInV1CertTests.class
 de/rub/nds/x509anvil/suite/tests/chain/Version1IntermediateCertTests.class
 de/rub/nds/x509anvil/suite/tests/signature/MissingSignatureTests.class
-de/rub/nds/x509anvil/suite/tests/util/Modifiers.class
 de/rub/nds/x509anvil/suite/tests/basicfields/version/InvalidPositiveVersionTests.class
 de/rub/nds/x509anvil/suite/tests/basicfields/validity/UtcTimeWithoutSecondsTests.class
 de/rub/nds/x509anvil/suite/tests/basicfields/version/NegativeVersionTests.class
@@ -71,7 +70,6 @@ de/rub/nds/x509anvil/suite/tests/basicfields/issuer/NoDNTests.class
 de/rub/nds/x509anvil/suite/tests/basicfields/signaturealgorithm/SignatureAlgorithmNotPresentTests.class
 de/rub/nds/x509anvil/suite/tests/extensions/keyusage/KeyUsageOverflowTests.class
 de/rub/nds/x509anvil/suite/tests/extensions/basicconstraints/InterCertWithCaNotSetTests.class
-de/rub/nds/x509anvil/suite/tests/basicfields/tbssignature/UnknownOidTests.class
 de/rub/nds/x509anvil/suite/tests/weakcrypto/WeakKeyLengthTests.class
 de/rub/nds/x509anvil/suite/tests/namechaining/RdnNumberMismatchTests.class
 de/rub/nds/x509anvil/suite/tests/basicfields/AppendUnexpectedCertificateFieldTest.class

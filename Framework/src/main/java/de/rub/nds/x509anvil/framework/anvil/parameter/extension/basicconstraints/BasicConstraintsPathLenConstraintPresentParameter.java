@@ -22,7 +22,6 @@ import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
-import de.rub.nds.x509attacker.x509.model.Extension;
 
 import java.util.HashMap;
 import java.util.Map;

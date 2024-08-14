@@ -11,13 +11,12 @@ public class TestUtils {
     /**
      * Returns a supported signature algorithm oid that does not match the actually used algorithm
      */
-    public static String getNonMatchingAlgorithmOid(X509SignatureAlgorithm actualAlgorithm) {
+    public static X509SignatureAlgorithm getNonMatchingAlgorithmOid(X509SignatureAlgorithm actualAlgorithm) {
         FeatureReport featureReport = ContextHelper.getFeatureReport();
-        X509SignatureAlgorithm nonMatchingSignatureAlgorithm = featureReport.getSupportedAlgorithms().stream()
+        return featureReport.getSupportedAlgorithms().stream()
                 .filter(a -> a != actualAlgorithm)
                 .findFirst()
                 .orElseThrow(() -> new JUnitException("No other algorithm supported"));
-        return nonMatchingSignatureAlgorithm.getOid().toString();
     }
 
     public static BigInteger createBigInteger(int byteLength) {

@@ -21,7 +21,6 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
-import de.rub.nds.x509attacker.x509.model.Extension;
 
 import java.util.Collections;
 import java.util.List;

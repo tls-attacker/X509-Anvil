@@ -10,7 +10,6 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.protocol.constants.SignatureAlgorithm;
-import jdk.jshell.spi.ExecutionControl;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPair;

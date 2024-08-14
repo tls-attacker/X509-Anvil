@@ -13,7 +13,6 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
-import de.rub.nds.x509anvil.suite.tests.util.Modifiers;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
@@ -27,13 +26,13 @@ public class UnknownOidTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void unknownOidEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void unknownOidTbsEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         generatedCertificates.get(generatedCertificates.size()-1).getTbsCertificate().getSignature().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
-        VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -42,13 +41,43 @@ public class UnknownOidTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void unknownOidIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void unknownOidTbsIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         generatedCertificates.get(generatedCertificates.size()-2).getTbsCertificate().getSignature().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
-        VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
+        VerifierResult result = testRunner.execute(generatedCertificates);
+        Assertions.assertFalse(result.isValid());
+    }
+
+    @Specification(document = "RFC 5280", section = "4.1.2.3.  Signature")
+    @SeverityLevel(Severity.ERROR)
+    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @TestStrength(2)
+    @AnvilTest()
+    public void unknownOidCertEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+        X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
+        certificateChainGenerator.generateCertificateChain();
+        List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
+        generatedCertificates.get(generatedCertificates.size()-1).getSignatureAlgorithmIdentifier().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
+        VerifierResult result = testRunner.execute(generatedCertificates);
+        Assertions.assertFalse(result.isValid());
+    }
+
+    @Specification(document = "RFC 5280", section = "4.1.2.3.  Signature")
+    @SeverityLevel(Severity.ERROR)
+    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @TestStrength(2)
+    @AnvilTest()
+    public void unknownOidCertIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+        X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
+        certificateChainGenerator.generateCertificateChain();
+        List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
+        generatedCertificates.get(generatedCertificates.size()-2).getSignatureAlgorithmIdentifier().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -57,14 +86,14 @@ public class UnknownOidTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void unknownOidInBothFieldsEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void unknownOidTbsAndCertEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
-        certificateChainGenerator.addModifier(Modifiers.tbsSignatureUnknownOidModifier(true));
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
+        generatedCertificates.get(generatedCertificates.size()-1).getSignatureAlgorithmIdentifier().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
         generatedCertificates.get(generatedCertificates.size()-1).getTbsCertificate().getSignature().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
-        VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -73,14 +102,14 @@ public class UnknownOidTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void unknownOidInBothFieldsIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void unknownOidTbsAndCertIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
-        certificateChainGenerator.addModifier(Modifiers.tbsSignatureUnknownOidModifier(false));
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
+        generatedCertificates.get(generatedCertificates.size()-2).getSignatureAlgorithmIdentifier().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
         generatedCertificates.get(generatedCertificates.size()-2).getTbsCertificate().getSignature().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
-        VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 }

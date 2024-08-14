@@ -19,7 +19,6 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecific
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
-import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 
 import java.util.LinkedList;
 import java.util.List;

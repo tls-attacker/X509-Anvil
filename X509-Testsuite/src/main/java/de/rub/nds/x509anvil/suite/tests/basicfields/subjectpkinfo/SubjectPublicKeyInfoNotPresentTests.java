@@ -12,7 +12,6 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.suite.tests.util.Modifiers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -25,7 +24,8 @@ public class SubjectPublicKeyInfoNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noSubjectPublicKeyInfoEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeSubjectPublicKeyInfo(true));
+        chainConfig.getEntityCertificateConfig().setIncludeSubjectPublicKeyInfo(false);
+        VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -36,7 +36,8 @@ public class SubjectPublicKeyInfoNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noSubjectPublicKeyInfoIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeSubjectPublicKeyInfo(false));
+        chainConfig.getIntermediateConfig(0).setIncludeSubjectPublicKeyInfo(false);
+        VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
 }

@@ -39,7 +39,7 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
         octetString.setValue(TestUtils.createByteArray(8));
         generatedCertificates.get(generatedCertificates.size() - 1).getTbsCertificate().setEncodedChildren(ArrayUtils.addAll(generatedCertificates.get(1).getTbsCertificate().getEncodedChildren().getValue(), octetString.getContent().getValue()));
 
-        VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -58,7 +58,7 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
         octetString.setValue(TestUtils.createByteArray(8));
         generatedCertificates.get(1).getTbsCertificate().setEncodedChildren(ArrayUtils.addAll(generatedCertificates.get(1).getTbsCertificate().getEncodedChildren().getValue(), octetString.getContent().getValue()));
 
-        VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 }

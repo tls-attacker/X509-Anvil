@@ -31,7 +31,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
         certificateChain.add(0, certificateChain.get(0));
-        VerifierResult result = testRunner.execute(certificateChain, certificateChainConfig);
+        VerifierResult result = testRunner.execute(certificateChain);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -46,7 +46,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
         certificateChain.add(1, certificateChain.get(1));
-        VerifierResult result = testRunner.execute(certificateChain, certificateChainConfig);
+        VerifierResult result = testRunner.execute(certificateChain);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -61,7 +61,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
         certificateChain.add(certificateChain.get(certificateChain.size()-1));
-        VerifierResult result = testRunner.execute(certificateChain, certificateChainConfig);
+        VerifierResult result = testRunner.execute(certificateChain);
         Assertions.assertFalse(result.isValid());
     }
 }

@@ -14,12 +14,8 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
-import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
-import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
-
-import java.util.Collections;
 
 public class EmptyDNTests extends X509AnvilTest {
 

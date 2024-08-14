@@ -15,8 +15,6 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
-import java.util.Collections;
-
 public class NoDNTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.2.4. Issuer", text = "The issuer field MUST contain a non-empty distinguished name (DN).")

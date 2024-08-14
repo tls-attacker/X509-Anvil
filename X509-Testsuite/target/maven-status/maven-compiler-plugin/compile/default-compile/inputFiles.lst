@@ -14,7 +14,6 @@
 /home/niklas/Documents/tls-attackah/x509-Anvil/X509-Testsuite/src/main/java/de/rub/nds/x509anvil/suite/tests/basicfields/subjectpkinfo/SubjectPublicKeyInfoNotPresentTests.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/X509-Testsuite/src/main/java/de/rub/nds/x509anvil/suite/tests/basicfields/tbssignature/TbsSignatureMismatchTests.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/X509-Testsuite/src/main/java/de/rub/nds/x509anvil/suite/tests/basicfields/tbssignature/TbsSignatureNotPresentTests.java
-/home/niklas/Documents/tls-attackah/x509-Anvil/X509-Testsuite/src/main/java/de/rub/nds/x509anvil/suite/tests/basicfields/tbssignature/UnknownOidTests.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/X509-Testsuite/src/main/java/de/rub/nds/x509anvil/suite/tests/basicfields/uniqueidentifiers/IssuerUniqueIdInV1CertTests.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/X509-Testsuite/src/main/java/de/rub/nds/x509anvil/suite/tests/basicfields/uniqueidentifiers/SubjectUniqueIdInV1CertTests.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/X509-Testsuite/src/main/java/de/rub/nds/x509anvil/suite/tests/basicfields/validity/ExpiredTests.java
@@ -79,7 +78,6 @@
 /home/niklas/Documents/tls-attackah/x509-Anvil/X509-Testsuite/src/main/java/de/rub/nds/x509anvil/suite/tests/signature/MissingSignatureTests.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/X509-Testsuite/src/main/java/de/rub/nds/x509anvil/suite/tests/signature/NullSignatureTests.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/X509-Testsuite/src/main/java/de/rub/nds/x509anvil/suite/tests/util/Constraints.java
-/home/niklas/Documents/tls-attackah/x509-Anvil/X509-Testsuite/src/main/java/de/rub/nds/x509anvil/suite/tests/util/Modifiers.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/X509-Testsuite/src/main/java/de/rub/nds/x509anvil/suite/tests/util/TestUtils.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/X509-Testsuite/src/main/java/de/rub/nds/x509anvil/suite/tests/weakcrypto/WeakHashAlgorithmTests.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/X509-Testsuite/src/main/java/de/rub/nds/x509anvil/suite/tests/weakcrypto/WeakKeyLengthTests.java

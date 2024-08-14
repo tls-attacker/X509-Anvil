@@ -11,10 +11,10 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.suite.tests.util.Modifiers;
-import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+
+import java.math.BigInteger;
 
 public class LargeVersionTests extends X509AnvilTest {
 
@@ -25,7 +25,8 @@ public class LargeVersionTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "entity.version")
     public void largeVersionEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalVersionModifier(true, TestUtils.createBigInteger(256)));
+        certificateChainConfig.getEntityCertificateConfig().setVersion(new BigInteger("256"));
+        VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -36,7 +37,8 @@ public class LargeVersionTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "inter0.version")
     public void largeVersionIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalVersionModifier(false, TestUtils.createBigInteger(256)));
+        certificateChainConfig.getEntityCertificateConfig().setVersion(new BigInteger("256"));
+        VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
 }

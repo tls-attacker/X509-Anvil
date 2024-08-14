@@ -9,7 +9,6 @@
 
 package de.rub.nds.x509anvil.framework.verifier;
 
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import java.util.List;

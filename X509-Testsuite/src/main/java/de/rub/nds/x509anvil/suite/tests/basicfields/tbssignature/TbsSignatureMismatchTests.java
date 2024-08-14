@@ -12,7 +12,7 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.suite.tests.util.Modifiers;
+import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -26,7 +26,11 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
     @AnvilTest
     public void tbsSignatureDoesntMatchAlgorithmEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.tbsSignatureMismatchModifier(true));
+        certificateChainConfig.getEntityCertificateConfig().setSignatureAlgorithm(
+                TestUtils.getNonMatchingAlgorithmOid(
+                        certificateChainConfig.getIssuerConfigOf(
+                                certificateChainConfig.getEntityCertificateConfig()).getDefaultSignatureAlgorithm()));
+        VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -38,7 +42,11 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
     @AnvilTest
     public void tbsSignatureDoesntMatchAlgorithmIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.tbsSignatureMismatchModifier(false));
+        certificateChainConfig.getIntermediateConfig(0).setSignatureAlgorithm(
+                TestUtils.getNonMatchingAlgorithmOid(
+                        certificateChainConfig.getIssuerConfigOf(
+                                certificateChainConfig.getIntermediateConfig(0)).getDefaultSignatureAlgorithm()));
+        VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
 }

@@ -85,8 +85,7 @@ public class X509VerifierRunner {
         return verifierAdapter.invokeVerifier(certificateList);
     }
 
-    public VerifierResult execute(List<X509Certificate> certificateList, X509CertificateChainConfig config)
-        throws VerifierException {
+    public VerifierResult execute(List<X509Certificate> certificateList) throws VerifierException {
         X509Util.exportCertificates(certificateList, "resources/out");
 
         TestConfig testConfig = ContextHelper.getTestConfig();

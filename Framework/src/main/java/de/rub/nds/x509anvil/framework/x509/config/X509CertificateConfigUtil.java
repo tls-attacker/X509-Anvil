@@ -10,12 +10,15 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.protocol.constants.SignatureAlgorithm;
-import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
+import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
-import de.rub.nds.x509attacker.constants.*;
-import org.apache.commons.lang3.NotImplementedException;
+import de.rub.nds.x509attacker.constants.CertificateChainPositionType;
+import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
+import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.platform.commons.JUnitException;
 
 import java.math.BigInteger;
 import java.security.KeyPair;
@@ -105,11 +108,6 @@ public class X509CertificateConfigUtil {
         return x509CertificateChainConfig;
     }
 
-    public static KeyPair generateKeyPair(SignatureAlgorithm signatureAlgorithm) {
-        int defaultKeySize = signatureAlgorithm == SignatureAlgorithm.ECDSA ? 256 : 2048;
-        return generateKeyPair(signatureAlgorithm, defaultKeySize);
-    }
-
     public static KeyPair generateKeyPair(SignatureAlgorithm signatureAlgorithm, int keyLength) {
         try {
             return CachedKeyPairGenerator.retrieveKeyPair(signatureAlgorithm, keyLength);
@@ -175,5 +173,15 @@ public class X509CertificateConfigUtil {
                 }
             }
         };
+    }
+
+    public static void modifyAttributeAndValuePair(X509CertificateConfig config, X500AttributeType type) {
+        try {
+            Pair<X500AttributeType, String> cnPair =
+                config.getDefaultIssuer().stream().filter(x -> x.getLeftElement() == type).findFirst().orElseThrow();
+            cnPair.setRightElement(cnPair.getRightElement() + "_modified");
+        } catch (NoSuchElementException e) {
+            throw new JUnitException(e.getMessage());
+        }
     }
 }

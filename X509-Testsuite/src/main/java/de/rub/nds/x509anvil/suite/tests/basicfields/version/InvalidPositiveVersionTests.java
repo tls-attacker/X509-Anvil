@@ -11,7 +11,6 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.suite.tests.util.Modifiers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -26,7 +25,8 @@ public class InvalidPositiveVersionTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "entity.version")
     public void invalidVersion4Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalVersionModifier(true, BigInteger.valueOf(3)));
+        certificateChainConfig.getEntityCertificateConfig().setVersion(BigInteger.valueOf(3));
+        VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -37,7 +37,8 @@ public class InvalidPositiveVersionTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "inter0.version")
     public void invalidVersion4Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(certificateChainConfig, Modifiers.illegalVersionModifier(false, BigInteger.valueOf(3)));
+        certificateChainConfig.getIntermediateConfig(0).setVersion(BigInteger.valueOf(3));
+        VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
 }

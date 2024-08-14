@@ -9,23 +9,15 @@
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
-import de.rub.nds.asn1.model.Asn1Integer;
 import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
-import de.rub.nds.protocol.crypto.key.PrivateKeyContainer;
-import de.rub.nds.protocol.crypto.key.RsaPrivateKey;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
 import de.rub.nds.x509attacker.filesystem.CertificateFileWriter;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
 import de.rub.nds.x509attacker.x509.model.*;
-import de.rub.nds.x509attacker.x509.model.publickey.X509RsaPublicKey;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -39,35 +31,6 @@ public class X509Util {
                 .collect(Collectors.toList()).get(0);
         } catch (IndexOutOfBoundsException e) {
             throw new IllegalArgumentException("Extensions not found");
-        }
-    }
-
-    static PrivateKeyContainer containerFromPrivateKey(PrivateKey privateKey) {
-        if (privateKey instanceof RSAPrivateKey) {
-            RSAPrivateKey castedKey = (RSAPrivateKey) privateKey;
-            return new RsaPrivateKey(castedKey.getPrivateExponent(), castedKey.getModulus());
-        } else {
-            throw new UnsupportedOperationException(
-                "Private keys of type " + privateKey.getAlgorithm() + " not supported yet. Only RSA supported.");
-        }
-    }
-
-    public static X509RsaPublicKey containerFromPublicKey(PublicKey publicKey) {
-        if (publicKey instanceof RSAPublicKey) {
-            RSAPublicKey castedKey = (RSAPublicKey) publicKey;
-            X509RsaPublicKey x509RsaPublicKey = new X509RsaPublicKey("publicKey");
-
-            Asn1Integer exponent = new Asn1Integer("exponent");
-            exponent.setValue(castedKey.getPublicExponent());
-            x509RsaPublicKey.setPublicExponent(exponent);
-
-            Asn1Integer modulus = new Asn1Integer("modulus");
-            modulus.setValue(castedKey.getModulus());
-            x509RsaPublicKey.setModulus(modulus);
-            return x509RsaPublicKey;
-        } else {
-            throw new UnsupportedOperationException(
-                "Private keys of type " + publicKey.getAlgorithm() + " not supported yet. Only RSA supported.");
         }
     }
 
@@ -96,10 +59,6 @@ public class X509Util {
         } catch (IOException e) {
             throw new RuntimeException("Error writing Certificate to PEM: " + e);
         }
-    }
-
-    public static RelativeDistinguishedName getCnFromName(Name name) {
-        return getRdnFromName(name, AttributeTypeObjectIdentifiers.COMMON_NAME);
     }
 
     public static RelativeDistinguishedName getRdnFromName(Name name, String oid) {
