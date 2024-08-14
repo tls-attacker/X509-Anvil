@@ -16,6 +16,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
 import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
@@ -71,7 +72,7 @@ public class AttributeNumberMismatchTests extends X509AnvilTest {
     }
 
     private static void addAttributeToCn(RelativeDistinguishedName cn) {
-        AttributeTypeAndValue attributeTypeAndValue = new AttributeTypeAndValue("additional-cn");
+        AttributeTypeAndValue attributeTypeAndValue = new AttributeTypeAndValue("additional-cn", DirectoryStringChoiceType.PRINTABLE_STRING);
 
         Asn1ObjectIdentifier asn1ObjectIdentifier = new Asn1ObjectIdentifier("cn");
         asn1ObjectIdentifier.setValue(AttributeTypeObjectIdentifiers.COMMON_NAME);

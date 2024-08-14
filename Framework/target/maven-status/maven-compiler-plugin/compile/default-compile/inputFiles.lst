@@ -1,5 +1,4 @@
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/extension/ExtensionPresentParameter.java
-/home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/extension/UnknownExtensionConfig.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/TestsuiteRunner.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/NotAfterParameter.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/constants/ExtensionObjectIdentifiers.java
@@ -9,7 +8,6 @@
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/generator/CertificateGeneratorException.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/constants/AttributeTypeObjectIdentifiers.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/BasicConstraintsExtensionProbe.java
-/home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/model/AlgorithmParametersType.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/ProbeType.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/verifier/VerifierException.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/IssuerUniqueIdPresentParameter.java
@@ -27,7 +25,6 @@
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/SubjectUniqueIdParameter.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/CommonConstraints.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/X509TestRunnerResolver.java
-/home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/extension/BasicConstraintsExtensionConfig.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/annotation/ChainLength.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/ChainPositionUtil.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/extension/basicconstraints/BasicConstraintsPathLenConstraintPresentParameter.java
@@ -35,7 +32,6 @@
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/X509AnvilParameterType.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/constants/Severity.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/featureextraction/UnsupportedFeatureException.java
-/home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/model/DirectoryStringType.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/verifier/VerifierAdapter.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/KeyUsageExtensionProbe.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/result/SignatureAlgorithmProbeResult.java
@@ -48,21 +44,17 @@
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/X509AnvilParameterFactory.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/verifier/VerifierAdapterType.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/HashAlgorithmParameter.java
-/home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/extension/ExtensionConfig.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/BooleanCertificateSpecificParameter.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/value/NotAfterValue.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/verifier/VerifierResult.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/ProbeException.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/generator/X509CertificateModifier.java
-/home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/X509CertificateConfig.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/IssuerUniqueIdParameter.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/X509CertificateChainConfig.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/constants/ExtensionType.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/TestConfig.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/verifier/CliVerifierAdapter.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/EntitySignatureAlgorithmProbe.java
-/home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/model/BitString.java
-/home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/constants/CertificateChainPosType.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/result/VersionProbeResult.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/annotation/Specification.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/KeyLengthProbe.java
@@ -71,10 +63,8 @@
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/extension/UnknownNonCriticalExtensionPresentParameter.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/VersionParameter.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/extension/basicconstraints/BasicConstraintsPathLenConstraintParameter.java
-/home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/extension/KeyUsageExtensionConfig.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/featureextraction/FeatureExtractor.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/extension/basicconstraints/BasicConstraintsCaParameter.java
-/home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/model/TimeType.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/X509VerifierRunner.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/generator/NopX509CertificateModifier.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/CachedKeyPairGenerator.java
@@ -82,7 +72,6 @@
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/result/DigitalSignatureKeyUsageRequiredProbeResult.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/SerialNumberParameter.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/result/ExtensionProbeResult.java
-/home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/extension/SubjectKeyIdentifierExtensionConfig.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/DigitalSignatureKeyUsageRequired.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/extension/keyidentifier/AuthorityKeyIdentifierPresentParameter.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/verifier/VerifierAdapterFactory.java
@@ -97,7 +86,6 @@
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/UniqueIdParameter.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/extension/ExtensionCriticalParameter.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/X509AnvilParameterIdentifierProvider.java
-/home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/x509/config/extension/AuthorityKeyIdentifierExtensionConfig.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/SimpleProbe.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/util/PemUtil.java
 /home/niklas/Documents/tls-attackah/x509-Anvil/Framework/src/main/java/de/rub/nds/x509anvil/framework/anvil/X509AnvilTest.java

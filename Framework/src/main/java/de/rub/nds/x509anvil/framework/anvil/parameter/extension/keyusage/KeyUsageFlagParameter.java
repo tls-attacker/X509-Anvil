@@ -12,6 +12,7 @@ package de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
+import de.rub.nds.asn1.oid.ObjectIdentifier;
 import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
@@ -19,6 +20,7 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecific
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.config.extension.UnknownConfig;
 import de.rub.nds.x509attacker.x509.model.Extension;
 
 import java.util.Collections;
@@ -41,10 +43,8 @@ public class KeyUsageFlagParameter extends BooleanCertificateSpecificParameter {
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        // KeyUsageExtensionConfig extensionConfig =
-        //     (KeyUsageExtensionConfig) certificateConfig.extension(ExtensionType.KEY_USAGE);
-        // extensionConfig.setFlag(getBitPosition(), getSelectedValue());
-        certificateConfig.addExtensions((Extension) null);
+        // TODO: when implement in attacker
+        certificateConfig.addExtensions(new UnknownConfig(new ObjectIdentifier("0"), "keyusageflag"));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class KeyUsageFlagParameter extends BooleanCertificateSpecificParameter {
         getNonNullParameterValues(DerivationScope derivationScope) {
         // Entity certificates may be required to have digitalSignature bit set (e.g. if verifier adapter uses client
         // authentication)
-        if (getParameterScope().isEntity() && bitPosition == KeyUsageExtensionConfig.DIGITAL_SIGNATURE) {
+        if (getParameterScope().isEntity() && bitPosition == 0) { // TODO: KeyUsageExtensionConfig.DIGITAL_SIGNATURE) {
             FeatureReport featureReport = ContextHelper.getFeatureReport();
             if (featureReport.isDigitalSignatureKeyUsageRequired()) {
                 return Collections.singletonList(generateValue(true));
@@ -65,7 +65,7 @@ public class KeyUsageFlagParameter extends BooleanCertificateSpecificParameter {
         }
 
         // CA certificates are required to assert keyCertSign if key usage extension is present
-        if (!getParameterScope().isEntity() && bitPosition == KeyUsageExtensionConfig.KEY_CERT_SIGN) {
+        if (!getParameterScope().isEntity() && bitPosition == 0) {// TODO: KeyUsageExtensionConfig.KEY_CERT_SIGN) {
             return Collections.singletonList(generateValue(true));
         }
 

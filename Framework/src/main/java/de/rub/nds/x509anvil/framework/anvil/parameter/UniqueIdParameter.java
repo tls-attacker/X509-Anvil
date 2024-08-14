@@ -15,7 +15,6 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.model.BitString;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,32 +22,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public abstract class UniqueIdParameter extends CertificateSpecificParameter<BitString> {
+public abstract class UniqueIdParameter extends CertificateSpecificParameter<byte[]> {
     private final X509AnvilParameterType uniqueIdPresentParameterType;
 
     public UniqueIdParameter(ParameterIdentifier parameterIdentifier,
         X509AnvilParameterType uniqueIdPresentParameterType) {
-        super(parameterIdentifier, BitString.class);
+        super(parameterIdentifier, byte[].class);
         this.uniqueIdPresentParameterType = uniqueIdPresentParameterType;
     }
 
-    public UniqueIdParameter(BitString selectedValue, ParameterIdentifier parameterIdentifier,
+    public UniqueIdParameter(byte[] selectedValue, ParameterIdentifier parameterIdentifier,
         X509AnvilParameterType uniqueIdPresentParameterType) {
         this(parameterIdentifier, uniqueIdPresentParameterType);
         setSelectedValue(selectedValue);
     }
 
     @Override
-    public List<DerivationParameter<X509CertificateChainConfig, BitString>>
+    public List<DerivationParameter<X509CertificateChainConfig, byte[]>>
         getNonNullParameterValues(DerivationScope derivationScope) {
-        List<DerivationParameter<X509CertificateChainConfig, BitString>> values = new ArrayList<>();
-        values.add(generateValue(new BitString(new byte[0])));
-        values.add(generateValue(new BitString(new byte[] { 0x0, 0x1, 0x2, (byte) 0xff }, (byte) 3)));
+        List<DerivationParameter<X509CertificateChainConfig, byte[]>> values = new ArrayList<>();
+        values.add(generateValue(new byte[0]));
+        values.add(generateValue(new byte[] { 0x0, 0x1, 0x2, (byte) 0xff }));
         byte[] bytes = new byte[64];
         for (byte b = 0; b < 64; b++) {
             bytes[b] = b;
         }
-        values.add(generateValue(new BitString(bytes)));
+        values.add(generateValue(bytes));
         return values;
     }
 

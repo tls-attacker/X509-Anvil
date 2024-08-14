@@ -55,7 +55,7 @@ public class X509CertificateChainGenerator {
     private void generateSingleCertificate(X509CertificateConfig config, X509CertificateConfig signerConfig)
         throws CertificateGeneratorException {
         // X509CertificateGenerator x509CertificateGenerator =
-        //     new X509CertificateGenerator(config, signerConfig, certificateModifiers);
+        // new X509CertificateGenerator(config, signerConfig, certificateModifiers);
         // this.generatedCertificates.add(x509CertificateGenerator.generateCertificate());
 
         // set signature signing keys to keys from signer config unless self-signed

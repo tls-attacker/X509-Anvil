@@ -26,8 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CachedKeyPairGenerator {
     private static final Map<String, KeyPair> keyPairCache = new ConcurrentHashMap<>();
 
-    public static KeyPair retrieveKeyPair(SignatureAlgorithm algorithm, int keySize)
-        throws NoSuchAlgorithmException {
+    public static KeyPair retrieveKeyPair(SignatureAlgorithm algorithm, int keySize) throws NoSuchAlgorithmException {
         String hashKey = algorithm + ":" + keySize;
 
         synchronized (keyPairCache) {

@@ -33,7 +33,7 @@ public class EntitySignatureAlgorithmProbe extends SimpleProbe {
         entity.setSignatureAlgorithm(signatureAlgorithm);
         // TODO: should be unnecessary as correct key already present
         // KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getSignatureAlgorithm(),
-            // entity.getCertificateName());
+        // entity.getCertificateName());
         // entity.applyKeyPair(keyPair);
         return x509CertificateChainConfig;
     }

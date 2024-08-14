@@ -17,7 +17,11 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
+import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
+import de.rub.nds.x509attacker.constants.X509ExtensionType;
 import de.rub.nds.x509attacker.x509.model.Extension;
 
 import java.util.Collections;
@@ -50,8 +54,9 @@ public class ExtensionCriticalParameter extends BooleanCertificateSpecificParame
 
     @Override
     public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        // certificateConfig.extension(extensionType).setCritical(getSelectedValue());
-        certificateConfig.addExtensions((Extension) null);
+        ExtensionConfig config =
+            X509CertificateConfigUtil.getExtensionConfig(certificateConfig, X509ExtensionType.BASIC_CONSTRAINTS);
+        config.setCritical(getSelectedValue());
     }
 
     @Override

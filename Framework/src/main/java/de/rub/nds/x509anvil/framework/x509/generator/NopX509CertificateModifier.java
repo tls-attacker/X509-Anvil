@@ -15,6 +15,6 @@ import de.rub.nds.x509attacker.x509.model.X509Certificate;
 public class NopX509CertificateModifier implements X509CertificateModifier {
     @Override
     public void beforeSigning(X509Certificate certificate, X509CertificateConfig config,
-                              X509CertificateConfig previousConfig) {
+        X509CertificateConfig previousConfig) {
     }
 }

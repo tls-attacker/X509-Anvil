@@ -12,7 +12,11 @@ import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
+import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
+import de.rub.nds.x509attacker.constants.X509ExtensionType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -27,13 +31,12 @@ public class InsufficientPathLenTests extends X509AnvilTest {
     @AnvilTest
     public void insufficientPathLenChainLength4(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        BasicConstraintsExtensionConfig basicConstraintsExtensionConfig = (BasicConstraintsExtensionConfig)
-                chainConfig.getIntermediateConfig(0).extension(ExtensionType.BASIC_CONSTRAINTS);
-        basicConstraintsExtensionConfig.setPresent(true);
-        basicConstraintsExtensionConfig.setCa(true);
-        basicConstraintsExtensionConfig.setPathLenConstraintPresent(true);
-        basicConstraintsExtensionConfig.setPathLenConstraint(0);
-        chainConfig.getIntermediateConfig(0).extension(ExtensionType.BASIC_CONSTRAINTS).setPresent(true);
+        BasicConstraintsConfig config = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(chainConfig.getIntermediateConfig(0), X509ExtensionType.BASIC_CONSTRAINTS);
+        config.setPresent(true);
+        config.setCa(true);
+        config.setPathLenConstraint(0);
+        config.setIncludeCA(DefaultEncodingRule.ENCODE);
+        config.setIncludePathLenConstraint(DefaultEncodingRule.ENCODE);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -47,13 +50,12 @@ public class InsufficientPathLenTests extends X509AnvilTest {
     @AnvilTest
     public void insufficientPathLenChainLength5(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        BasicConstraintsExtensionConfig basicConstraintsExtensionConfig = (BasicConstraintsExtensionConfig)
-                chainConfig.getIntermediateConfig(0).extension(ExtensionType.BASIC_CONSTRAINTS);
-        basicConstraintsExtensionConfig.setPresent(true);
-        basicConstraintsExtensionConfig.setCa(true);
-        basicConstraintsExtensionConfig.setPathLenConstraintPresent(true);
-        basicConstraintsExtensionConfig.setPathLenConstraint(1);
-        chainConfig.getIntermediateConfig(0).extension(ExtensionType.BASIC_CONSTRAINTS).setPresent(true);
+        BasicConstraintsConfig config = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(chainConfig.getIntermediateConfig(0), X509ExtensionType.BASIC_CONSTRAINTS);
+        config.setPresent(true);
+        config.setCa(true);
+        config.setPathLenConstraint(1);
+        config.setIncludeCA(DefaultEncodingRule.ENCODE);
+        config.setIncludePathLenConstraint(DefaultEncodingRule.ENCODE);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -67,13 +69,12 @@ public class InsufficientPathLenTests extends X509AnvilTest {
     @AnvilTest
     public void insufficientPathLenChainLength10(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        BasicConstraintsExtensionConfig basicConstraintsExtensionConfig = (BasicConstraintsExtensionConfig)
-                chainConfig.getIntermediateConfig(0).extension(ExtensionType.BASIC_CONSTRAINTS);
-        basicConstraintsExtensionConfig.setPresent(true);
-        basicConstraintsExtensionConfig.setCa(true);
-        basicConstraintsExtensionConfig.setPathLenConstraintPresent(true);
-        basicConstraintsExtensionConfig.setPathLenConstraint(6);
-        chainConfig.getIntermediateConfig(0).extension(ExtensionType.BASIC_CONSTRAINTS).setPresent(true);
+        BasicConstraintsConfig config = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(chainConfig.getIntermediateConfig(0), X509ExtensionType.BASIC_CONSTRAINTS);
+        config.setPresent(true);
+        config.setCa(true);
+        config.setPathLenConstraint(6);
+        config.setIncludeCA(DefaultEncodingRule.ENCODE);
+        config.setIncludePathLenConstraint(DefaultEncodingRule.ENCODE);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }

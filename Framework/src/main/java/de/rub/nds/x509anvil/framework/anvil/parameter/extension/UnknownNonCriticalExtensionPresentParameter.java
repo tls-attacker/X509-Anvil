@@ -13,12 +13,14 @@ import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.asn1.oid.ObjectIdentifier;
 import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.config.extension.UnknownConfig;
 import de.rub.nds.x509attacker.x509.model.Extension;
 
 import java.util.Collections;
@@ -45,9 +47,9 @@ public class UnknownNonCriticalExtensionPresentParameter extends BooleanCertific
 
     @Override
     public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        // certificateConfig.extension(ExtensionType.UNKNOWN_EXTENSION).setPresent(getSelectedValue());
-        // certificateConfig.extension(ExtensionType.UNKNOWN_EXTENSION).setCritical(false);
-        certificateConfig.addExtensions((Extension) null);
+        UnknownConfig config = new UnknownConfig(new ObjectIdentifier("1.2.3.4.5.6.7"), "unknown");
+        config.setCritical(false);
+        config.setPresent(true);
     }
 
     @Override

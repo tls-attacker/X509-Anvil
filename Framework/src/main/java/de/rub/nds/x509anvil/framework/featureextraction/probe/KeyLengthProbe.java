@@ -43,7 +43,8 @@ public class KeyLengthProbe extends SimpleProbe {
         }
         certificateConfig.setSignatureAlgorithm(signatureAlgorithm);
         // TODO: fix key generation with given key length
-        KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getSignatureAlgorithm(), keyLength);
+        KeyPair keyPair =
+            X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getSignatureAlgorithm(), keyLength);
         certificateConfig.applyKeyPair(keyPair);
         return x509CertificateChainConfig;
     }

@@ -60,7 +60,7 @@ public abstract class ExtensionProbe implements Probe {
 
     // TODO: unused
     /*
-    protected abstract X509CertificateModifier createInvalidExtensionModifier();
+     * protected abstract X509CertificateModifier createInvalidExtensionModifier();
      */
 
     protected boolean testCertificateChain(X509CertificateChainConfig config, X509CertificateModifier modifier)

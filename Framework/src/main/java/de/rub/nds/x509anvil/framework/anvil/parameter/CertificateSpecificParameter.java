@@ -61,7 +61,7 @@ public abstract class CertificateSpecificParameter<T> extends X509AnvilDerivatio
     }
 
     protected abstract void applyToCertificateConfig(X509CertificateConfig certificateConfig,
-                                                     DerivationScope derivationScope);
+        DerivationScope derivationScope);
 
     @Override
     public List<DerivationParameter<X509CertificateChainConfig, T>>

@@ -15,6 +15,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.NopX509CertificateModifier;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import org.apache.commons.lang3.NotImplementedException;
 
 import static de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers.KEY_USAGE;
 
@@ -33,12 +34,15 @@ public class KeyUsageExtensionProbe extends ExtensionProbe {
 
     @Override
     protected void addExtensionToConfig(X509CertificateChainConfig config) {
-        config.getEntityCertificateConfig().setExtensionsPresent(true);
-        KeyUsageExtensionConfig extensionConfig =
-            (KeyUsageExtensionConfig) config.getEntityCertificateConfig().extension(ExtensionType.KEY_USAGE);
-        extensionConfig.setPresent(true);
-        extensionConfig.setCritical(true);
-        extensionConfig.setDigitalSignature(true);
+        // TODO: re-implement
+        /*
+         * config.getEntityCertificateConfig().setExtensionsPresent(true); KeyUsageExtensionConfig extensionConfig =
+         * (KeyUsageExtensionConfig) config.getEntityCertificateConfig().extension(ExtensionType.KEY_USAGE);
+         * extensionConfig.setPresent(true); extensionConfig.setCritical(true);
+         * extensionConfig.setDigitalSignature(true);
+         */
+
+        throw new NotImplementedException("KeyUsageExtension not implemented yet");
     }
 
     @Override
@@ -47,12 +51,10 @@ public class KeyUsageExtensionProbe extends ExtensionProbe {
         return new NopX509CertificateModifier();
     }
 
-    @Override
-    protected X509CertificateModifier createInvalidExtensionModifier() {
-        return (certificate, config, previousConfig) -> {
-            if (config == chainConfig.getEntityCertificateConfig()) {
-                X509Util.getExtensionByOid(certificate, KEY_USAGE).setContent(new byte[] { 0x02, 0x01, (byte) 0xff });
-            }
-        };
-    }
+    // TODO: unused?
+    /*
+     * @Override protected X509CertificateModifier createInvalidExtensionModifier() { return (certificate, config,
+     * previousConfig) -> { if (config == chainConfig.getEntityCertificateConfig()) {
+     * X509Util.getExtensionByOid(certificate, KEY_USAGE).setContent(new byte[] { 0x02, 0x01, (byte) 0xff }); } }; }
+     */
 }

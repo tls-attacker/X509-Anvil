@@ -27,7 +27,8 @@ public class X509CertificateChainConfig {
     private int chainLength;
     private int intermediateCertsModeled;
 
-    // TODO: can this be removed? before a static file was read for static root and a certificate generated for not static root. I think we can use the config now for all cases(?)
+    // TODO: can this be removed? before a static file was read for static root and a certificate generated for not
+    // static root. I think we can use the config now for all cases(?)
     // private boolean staticRoot;
 
     private X509CertificateConfig rootCertificateConfig = null;
@@ -46,33 +47,29 @@ public class X509CertificateChainConfig {
 
         TestConfig testConfig = ContextHelper.getTestConfig();
 
-        // TODO: only used in one instance, probably generate certificate once and cache, if annotation present generate new one?
+        // TODO: only used in one instance, probably generate certificate once and cache, if annotation present generate
+        // new one?
         // this.staticRoot = staticRoot;
 
         /*
-        if (staticRoot) {
-            try {
-                rootCertificateConfig = X509CertificateConfigUtil.loadStaticCertificateConfig(
-                    testConfig.getStaticRootCertificateFile(), testConfig.getStaticRootPrivateKeyFile());
-            } catch (IOException | InvalidKeySpecException e) {
-                LOGGER.error("Unable to load static root certificate and its private key", e);
-                throw new IllegalArgumentException("Unable to load static root certificate and its private key", e);
-            }
-        } else {
-            // We need to generate our own root
-            rootCertificateConfig = X509CertificateConfigUtil.getDefaultCaCertificateConfig(true,
-                CertificateChainPositionType.ROOT);
-        }
-        */
-        rootCertificateConfig = X509CertificateConfigUtil.getDefaultCaCertificateConfig(true, CertificateChainPositionType.ROOT);
+         * if (staticRoot) { try { rootCertificateConfig = X509CertificateConfigUtil.loadStaticCertificateConfig(
+         * testConfig.getStaticRootCertificateFile(), testConfig.getStaticRootPrivateKeyFile()); } catch (IOException |
+         * InvalidKeySpecException e) { LOGGER.error("Unable to load static root certificate and its private key", e);
+         * throw new IllegalArgumentException("Unable to load static root certificate and its private key", e); } } else
+         * { // We need to generate our own root rootCertificateConfig =
+         * X509CertificateConfigUtil.getDefaultCaCertificateConfig(true, CertificateChainPositionType.ROOT); }
+         */
+        rootCertificateConfig =
+            X509CertificateConfigUtil.getDefaultCaCertificateConfig(true, CertificateChainPositionType.ROOT);
 
         // Generate configs for intermediate certificates
         for (int i = 0; i < chainLength - 2; i++) {
             if (i < intermediateCertsModeled) {
-                X509CertificateConfig config = X509CertificateConfigUtil.getDefaultCaCertificateConfig(false, CertificateChainPositionType.INTERMEDIATE);
+                X509CertificateConfig config = X509CertificateConfigUtil.getDefaultCaCertificateConfig(false,
+                    CertificateChainPositionType.INTERMEDIATE);
                 // TODO: can be deleted?
                 // if (i == intermediateCertsModeled - 1 && intermediateCertsModeled < chainLength - 2) {
-                //     config.setSharedConfig(true);
+                // config.setSharedConfig(true);
                 // }
                 intermediateCertificateConfigs.add(config);
             }
@@ -82,8 +79,8 @@ public class X509CertificateChainConfig {
         if (chainLength == 1) {
             entityCertificateConfig = rootCertificateConfig;
         } else {
-            entityCertificateConfig = X509CertificateConfigUtil.getDefaultCertificateConfig(false,
-                CertificateChainPositionType.ENTITY);
+            entityCertificateConfig =
+                X509CertificateConfigUtil.getDefaultCertificateConfig(false, CertificateChainPositionType.ENTITY);
         }
 
         initialized = true;

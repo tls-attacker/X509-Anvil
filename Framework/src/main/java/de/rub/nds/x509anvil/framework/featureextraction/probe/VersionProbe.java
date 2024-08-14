@@ -15,6 +15,8 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 
+import java.math.BigInteger;
+
 public class VersionProbe extends SimpleProbe {
     private final int version;
 
@@ -25,7 +27,7 @@ public class VersionProbe extends SimpleProbe {
     @Override
     public X509CertificateChainConfig prepareConfig() {
         X509CertificateChainConfig x509CertificateChainConfig = X509CertificateConfigUtil.createBasicConfig(2);
-        x509CertificateChainConfig.getEntityCertificateConfig().setVersion(version);
+        x509CertificateChainConfig.getEntityCertificateConfig().setVersion(BigInteger.valueOf(version));
         return x509CertificateChainConfig;
     }
 

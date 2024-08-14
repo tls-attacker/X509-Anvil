@@ -2,6 +2,7 @@ package de.rub.nds.x509anvil.suite.tests.namechaining;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
+import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -34,9 +35,7 @@ public class RdnOrderMismatchTests extends X509AnvilTest {
     public void rdnOrderMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
         // Add dnq just to make sure that there are at least 2 rdns
-        RelativeDistinguishedName rdn = new RelativeDistinguishedName("rdn");
-        rdn.addAttributeTypeAndValue(new AttributeTypeAndValue("dnq", X500AttributeType.DN_QUALIFIER, "dnq"));
-        chainConfig.getIntermediateConfig(0).getSubject().addRelativeDistinguishedNames(rdn);
+        chainConfig.getIntermediateConfig(0).getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq"));
         VerifierResult result = testRunner.execute(chainConfig, reverseRdnsOrderModifier());
         Assertions.assertFalse(result.isValid());
     }

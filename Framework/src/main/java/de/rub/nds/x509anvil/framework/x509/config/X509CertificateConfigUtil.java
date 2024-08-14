@@ -12,48 +12,57 @@ package de.rub.nds.x509anvil.framework.x509.config;
 import de.rub.nds.protocol.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
+import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
 import de.rub.nds.x509attacker.constants.*;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
-import java.util.Iterator;
-import java.util.UUID;
+import java.util.*;
 
 public class X509CertificateConfigUtil {
     public static X509CertificateConfig getDefaultCertificateConfig(boolean selfSigned,
-                                                                    CertificateChainPositionType chainPosType) {
+        CertificateChainPositionType chainPosType) {
         X509CertificateConfig config = new X509CertificateConfig();
         config.setSerialNumber(generateUniqueSerialNumber());
 
-        // TODO: re-evaluate where this should be set
         config.setChainPosition(chainPosType);
         config.setSelfSigned(selfSigned);
 
+        // add all necessary extensions
+        List<ExtensionConfig> extensionConfigList = new ArrayList<>();
+
+        BasicConstraintsConfig basicConstraintsConfig = new BasicConstraintsConfig();
+        basicConstraintsConfig.setCa(chainPosType != CertificateChainPositionType.ENTITY);
+        basicConstraintsConfig.setPathLenConstraint(5);
+        basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.FOLLOW_DEFAULT);
+        basicConstraintsConfig.setIncludePathLenConstraint(DefaultEncodingRule.FOLLOW_DEFAULT);
+
+        extensionConfigList.add(basicConstraintsConfig);
+
+        config.setExtensions(extensionConfigList);
+        config.setIncludeExtensions(true);
+        // TODO: decide on which extensions should be set and which not, probably clear list in attacker
         /*
-        all default values on config
-
-        config.setSignatureAlgorithm(X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION);
-        KeyPair keyPair = generateKeyPair(SignatureAlgorithm.RSA_PKCS1, certificateName, 2048);
-        config.applyKeyPair(keyPair);
-        config.setVersion(new BigInteger("2"));
-
-
-        config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
-        config.setNotBefore(DAte"220101000000Z");
-        config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
-        config.setNotAfterValue("320101000000Z");
-
-        Name subject = new Name("name", NameType.SUBJECT);
-        RelativeDistinguishedName commonNameDN = new RelativeDistinguishedName("relativeDistinguishedName");
-        Asn1PrintableString commonName = new Asn1PrintableString("commonName");
-        commonName.setValue(certificateName);
-        commonNameDN.addAttributeTypeAndValue(new AttributeTypeAndValue("attributeTypeAndValue",
-            X500AttributeType.COMMON_NAME, commonName.getValue().getValue()));
-        subject.addRelativeDistinguishedNames(commonNameDN);
-        config.setSubject(subject);
-        */
+         * all default values on config
+         * 
+         * config.setSignatureAlgorithm(X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION); KeyPair keyPair =
+         * generateKeyPair(SignatureAlgorithm.RSA_PKCS1, certificateName, 2048); config.applyKeyPair(keyPair);
+         * config.setVersion(new BigInteger("2"));
+         * 
+         * 
+         * config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC); config.setNotBefore(DAte"220101000000Z");
+         * config.setDefaultNotAfterEncoding(ValidityEncoding.UTC); config.setNotAfterValue("320101000000Z");
+         * 
+         * Name subject = new Name("name", NameType.SUBJECT); RelativeDistinguishedName commonNameDN = new
+         * RelativeDistinguishedName("relativeDistinguishedName"); Asn1PrintableString commonName = new
+         * Asn1PrintableString("commonName"); commonName.setValue(certificateName);
+         * commonNameDN.addAttributeTypeAndValue(new AttributeTypeAndValue("attributeTypeAndValue",
+         * X500AttributeType.COMMON_NAME, commonName.getValue().getValue()));
+         * subject.addRelativeDistinguishedNames(commonNameDN); config.setSubject(subject);
+         */
 
         config.setIncludeExtensions(false);
 
@@ -61,24 +70,33 @@ public class X509CertificateConfigUtil {
     }
 
     public static X509CertificateConfig getDefaultCaCertificateConfig(boolean selfSigned,
-                                                                           CertificateChainPositionType chainPosType) {
+        CertificateChainPositionType chainPosType) {
         X509CertificateConfig config = getDefaultCertificateConfig(selfSigned, chainPosType);
-
-        throw new NotImplementedException("extensions not supported yet");
+        return config;
+        // TODO: any extensions to set?
 
         /*
-        config.setExtensionsPresent(true);
-        BasicConstraintsExtensionConfig basicConstraints =
-            (BasicConstraintsExtensionConfig) config.extension(ExtensionType.BASIC_CONSTRAINTS);
-        basicConstraints.setPresent(true);
-        basicConstraints.setCa(true);
-        basicConstraints.setPathLenConstraintPresent(false);
+         * config.setExtensionsPresent(true); BasicConstraintsExtensionConfig basicConstraints =
+         * (BasicConstraintsExtensionConfig) config.extension(ExtensionType.BASIC_CONSTRAINTS);
+         * basicConstraints.setPresent(true); basicConstraints.setCa(true);
+         * basicConstraints.setPathLenConstraintPresent(false);
+         * 
+         * KeyUsageExtensionConfig keyUsage = (KeyUsageExtensionConfig) config.extension(ExtensionType.KEY_USAGE);
+         * keyUsage.setPresent(true); keyUsage.setKeyCertSign(true);
+         * 
+         * return config;
+         */
+    }
 
-        KeyUsageExtensionConfig keyUsage = (KeyUsageExtensionConfig) config.extension(ExtensionType.KEY_USAGE);
-        keyUsage.setPresent(true);
-        keyUsage.setKeyCertSign(true);
-
-        return config; */
+    /**
+     * Returns the first extension config in the given config that matches the given extensionType. Returns null if
+     * extension not found.
+     */
+    public static ExtensionConfig getExtensionConfig(X509CertificateConfig certificateConfig,
+        X509ExtensionType extensionType) {
+        return certificateConfig.getExtensions().stream()
+            .filter(x -> X509ExtensionType.decodeFromOidBytes(x.getExtensionId().getEncoded()) == extensionType)
+            .findFirst().orElse(null);
     }
 
     public static X509CertificateChainConfig createBasicConfig(int chainLength) {
@@ -102,31 +120,24 @@ public class X509CertificateConfigUtil {
 
     // TODO: seems unnecessary now
     /*
-    public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String privateKeyFile)
-        throws IOException, InvalidKeySpecException {
-        X509Certificate staticRootCertificate = new X509Certificate("staticCertificate");
-        // dirty hack to accommodate for serializing
-        if (staticRootCertificate.getTbsCertificate().getIssuerUniqueId().getUsedBits() == null) {
-            staticRootCertificate.getTbsCertificate().setIssuerUniqueId(null);
-        }
-        if (staticRootCertificate.getTbsCertificate().getSubjectUniqueId().getUsedBits() == null) {
-            staticRootCertificate.getTbsCertificate().setSubjectUniqueId(null);
-        }
-        X509CertificateParser parser = new X509CertificateParser(
-            new X509Chooser(new de.rub.nds.x509attacker.config.X509CertificateConfig(), new X509Context()),
-            staticRootCertificate);
-        parser.parse(new BufferedInputStream(new ByteArrayInputStream(
-            CertificateIo.readPemCertificateByteList(new FileInputStream(staticCertificateFile)).get(0).getBytes())));
-
-        PrivateKey privateKey =
-            de.rub.nds.x509attacker.signatureengine.keyparsers.PemUtil.readPrivateKey(new File(privateKeyFile));
-        X509CertificateConfig staticX509CertificateConfig = new X509CertificateConfig();
-        staticX509CertificateConfig.setStaticCertificatePrivateKey(X509Util.containerFromPrivateKey(privateKey));
-        staticX509CertificateConfig.setStatic(true);
-        staticX509CertificateConfig.setStaticX509Certificate(staticRootCertificate);
-        return staticX509CertificateConfig;
-    }
-    */
+     * public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String
+     * privateKeyFile) throws IOException, InvalidKeySpecException { X509Certificate staticRootCertificate = new
+     * X509Certificate("staticCertificate"); // dirty hack to accommodate for serializing if
+     * (staticRootCertificate.getTbsCertificate().getIssuerUniqueId().getUsedBits() == null) {
+     * staticRootCertificate.getTbsCertificate().setIssuerUniqueId(null); } if
+     * (staticRootCertificate.getTbsCertificate().getSubjectUniqueId().getUsedBits() == null) {
+     * staticRootCertificate.getTbsCertificate().setSubjectUniqueId(null); } X509CertificateParser parser = new
+     * X509CertificateParser( new X509Chooser(new de.rub.nds.x509attacker.config.X509CertificateConfig(), new
+     * X509Context()), staticRootCertificate); parser.parse(new BufferedInputStream(new ByteArrayInputStream(
+     * CertificateIo.readPemCertificateByteList(new FileInputStream(staticCertificateFile)).get(0).getBytes())));
+     * 
+     * PrivateKey privateKey = de.rub.nds.x509attacker.signatureengine.keyparsers.PemUtil.readPrivateKey(new
+     * File(privateKeyFile)); X509CertificateConfig staticX509CertificateConfig = new X509CertificateConfig();
+     * staticX509CertificateConfig.setStaticCertificatePrivateKey(X509Util.containerFromPrivateKey(privateKey));
+     * staticX509CertificateConfig.setStatic(true);
+     * staticX509CertificateConfig.setStaticX509Certificate(staticRootCertificate); return staticX509CertificateConfig;
+     * }
+     */
 
     public static BigInteger generateUniqueSerialNumber() {
         UUID uuid = UUID.randomUUID();

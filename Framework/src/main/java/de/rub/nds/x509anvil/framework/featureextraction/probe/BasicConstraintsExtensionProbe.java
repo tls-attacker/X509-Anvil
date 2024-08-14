@@ -15,6 +15,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.NopX509CertificateModifier;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
+import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 
 public class BasicConstraintsExtensionProbe extends ExtensionProbe {
     private X509CertificateChainConfig chainConfig;
@@ -36,7 +37,7 @@ public class BasicConstraintsExtensionProbe extends ExtensionProbe {
         extensionConfig.setPresent(true);
         extensionConfig.setCritical(true);
         extensionConfig.setCa(true);
-        extensionConfig.setPathLenConstraintPresent(false);
+        extensionConfig.setIncludePathLenConstraint(DefaultEncodingRule.OMIT);
         config.getEntityCertificateConfig().addExtensions(extensionConfig);
     }
 
@@ -48,13 +49,8 @@ public class BasicConstraintsExtensionProbe extends ExtensionProbe {
 
     // TODO: no usage?
     /*
-    @Override
-    protected X509CertificateModifier createInvalidExtensionModifier() {
-        return (certificate, config, previousConfig) -> {
-            if (config == chainConfig.getEntityCertificateConfig()) {
-                X509Util.getExtensionByOid(certificate, BASIC_CONSTRAINTS).setContent(new byte[] { 0x05, 0x00 });
-            }
-        };
-    }
+     * @Override protected X509CertificateModifier createInvalidExtensionModifier() { return (certificate, config,
+     * previousConfig) -> { if (config == chainConfig.getEntityCertificateConfig()) {
+     * X509Util.getExtensionByOid(certificate, BASIC_CONSTRAINTS).setContent(new byte[] { 0x05, 0x00 }); } }; }
      */
 }

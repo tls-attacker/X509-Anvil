@@ -50,23 +50,21 @@ public class X509AnvilParameterFactory {
             case CN_TYPE:
                 return new CNTypeParameter(parameterIdentifier.getParameterScope());
             case NC_COUNTRY_NAME_PRESENT:
-                return new NameComponentPresentParameter(parameterIdentifier,
-                        X500AttributeType.COUNTRY_NAME, "DE");
+                return new NameComponentPresentParameter(parameterIdentifier, X500AttributeType.COUNTRY_NAME, "DE");
             case NC_STATE_PROVINCE_PRESENT:
-                return new NameComponentPresentParameter(parameterIdentifier,
-                    X500AttributeType.STATE_OR_PROVINCE_NAME, "NRW");
+                return new NameComponentPresentParameter(parameterIdentifier, X500AttributeType.STATE_OR_PROVINCE_NAME,
+                    "NRW");
             case NC_LOCALITY_PRESENT:
-                return new NameComponentPresentParameter(parameterIdentifier,
-                    X500AttributeType.LOCALITY, "Paderborn");
+                return new NameComponentPresentParameter(parameterIdentifier, X500AttributeType.LOCALITY, "Paderborn");
             case NC_ORGANIZATION_PRESENT:
-                return new NameComponentPresentParameter(parameterIdentifier,
-                    X500AttributeType.ORGANISATION_NAME, "UPB");
+                return new NameComponentPresentParameter(parameterIdentifier, X500AttributeType.ORGANISATION_NAME,
+                    "UPB");
             case NC_ORGANIZATIONAL_UNIT_PRESENT:
-                return new NameComponentPresentParameter(parameterIdentifier,
-                    X500AttributeType.ORGANISATION_UNIT_NAME, "CS");
+                return new NameComponentPresentParameter(parameterIdentifier, X500AttributeType.ORGANISATION_UNIT_NAME,
+                    "CS");
             case NC_SERIAL_NUMBER_PRESENT:
-                return new NameComponentPresentParameter(parameterIdentifier,
-                    X500AttributeType.SERIAL_NUMBER, "SERIAL:A3:B4:1337");
+                return new NameComponentPresentParameter(parameterIdentifier, X500AttributeType.SERIAL_NUMBER,
+                    "SERIAL:A3:B4:1337");
             case DOMAIN_COMPONENTS_PRESENT:
                 return new DomainComponentsPresentParameter(parameterIdentifier.getParameterScope());
             case ISSUER_UNIQUE_ID_PRESENT:
@@ -98,17 +96,20 @@ public class X509AnvilParameterFactory {
                 return new ExtensionCriticalParameter(parameterIdentifier, ExtensionType.KEY_USAGE,
                     X509AnvilParameterType.EXT_KEY_USAGE_PRESENT);
             case EXT_KEY_USAGE_DIGITAL_SIGNATURE:
-                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.DIGITAL_SIGNATURE);
+                return new KeyUsageFlagParameter(parameterIdentifier, 0);// TODO
+                                                                         // KeyUsageExtensionConfig.DIGITAL_SIGNATURE);
 //            case EXT_KEY_USAGE_NON_REPUDIATION:
 //                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.NON_REPUDIATION);
             case EXT_KEY_USAGE_KEY_ENCIPHERMENT:
-                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.KEY_ENCIPHERMENT);
+                return new KeyUsageFlagParameter(parameterIdentifier, 0);// TODO
+                                                                         // KeyUsageExtensionConfig.KEY_ENCIPHERMENT);
             case EXT_KEY_USAGE_DATA_ENCIPHERMENT:
-                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.DATA_ENCIPHERMENT);
+                return new KeyUsageFlagParameter(parameterIdentifier, 0);// TODO
+                                                                         // KeyUsageExtensionConfig.DATA_ENCIPHERMENT);
             case EXT_KEY_USAGE_KEY_AGREEMENT:
-                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.KEY_AGREEMENT);
+                return new KeyUsageFlagParameter(parameterIdentifier, 0);// TODO KeyUsageExtensionConfig.KEY_AGREEMENT);
             case EXT_KEY_USAGE_KEY_CERT_SIGN:
-                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.KEY_CERT_SIGN);
+                return new KeyUsageFlagParameter(parameterIdentifier, 0);// TODO KeyUsageExtensionConfig.KEY_CERT_SIGN);
 //            case EXT_KEY_USAGE_CRL_SIGN:
 //                return new KeyUsageFlagParameter(parameterIdentifier, KeyUsageExtensionConfig.CRL_SIGN);
 //            case EXT_KEY_USAGE_ENCIPHER_ONLY:

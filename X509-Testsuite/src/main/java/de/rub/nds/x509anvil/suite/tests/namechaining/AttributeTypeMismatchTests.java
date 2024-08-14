@@ -5,6 +5,7 @@ import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.asn1.model.Asn1PrintableString;
 import de.rub.nds.asn1.model.Asn1Utf8String;
+import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -18,6 +19,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
@@ -91,7 +93,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @AnvilTest()
     public void typeMismatchDnQualifier(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        X509Util.addDnQualifierToName(chainConfig.getIntermediateConfig(0).getSubject());
+        chainConfig.getIntermediateConfig(0).getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "new_dn"));
         VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.DN_QUALIFIER));
         Assertions.assertTrue(result.isValid());
     }

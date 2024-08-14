@@ -107,21 +107,16 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         Collections.reverse(certificatesChain);
         for (X509Certificate x509Certificate : certificatesChain) {
             /*
-            X509CertificateConfig config = new X509CertificateConfig();
-            config.setIncludeIssuerUniqueId(true);
-            config.setIncludeSubjectUniqueId(true);
-            config.setVersion(x509Certificate.getX509Version());
-            // TODO: add extensions
-            x509Certificate.getTbsCertificate().setExplicitExtensions(null);
-            // TODO: Fix config or propagate choser?
-            // config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-            // config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-            // config.setIncludeExtensions(true);
-
-            // Set Validity Time Types
-            config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
-            config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
-            */
+             * X509CertificateConfig config = new X509CertificateConfig(); config.setIncludeIssuerUniqueId(true);
+             * config.setIncludeSubjectUniqueId(true); config.setVersion(x509Certificate.getX509Version()); // TODO: add
+             * extensions x509Certificate.getTbsCertificate().setExplicitExtensions(null); // TODO: Fix config or
+             * propagate choser? // config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC); //
+             * config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC); //
+             * config.setIncludeExtensions(true);
+             * 
+             * // Set Validity Time Types config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
+             * config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
+             */
 
             // TODO: already prepared in chain generator?
             // x509Certificate.getPreparator(new X509Chooser(config, new X509Context())).prepare();
@@ -133,7 +128,7 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
 
         try {
             defaultConfig.setDefaultSelectedSignatureAndHashAlgorithm(
-                    TlsAttackerUtil.translateSignatureAlgorithm(certificatesChain.get(0).getX509SignatureAlgorithm()));
+                TlsAttackerUtil.translateSignatureAlgorithm(certificatesChain.get(0).getX509SignatureAlgorithm()));
         } catch (VerifierException e) {
             return new VerifierResult(false);
         }

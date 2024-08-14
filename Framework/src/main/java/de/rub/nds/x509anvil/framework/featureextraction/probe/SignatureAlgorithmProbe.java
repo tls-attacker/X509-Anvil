@@ -33,7 +33,7 @@ public class SignatureAlgorithmProbe extends SimpleProbe {
         ca.setSignatureAlgorithm(signatureAlgorithm);
         // TODO: should be unnecessary with default keys
         // KeyPair keyPair = X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getSignatureAlgorithm(),
-        //     ca.getCertificateName());
+        // ca.getCertificateName());
         // ca.applyKeyPair(keyPair);
         return x509CertificateChainConfig;
     }

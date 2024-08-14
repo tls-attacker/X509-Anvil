@@ -10,6 +10,9 @@ import de.rub.nds.x509attacker.x509.model.*;
 
 import java.math.BigInteger;
 
+/**
+ * TODO: Probably delete all
+ */
 public class Modifiers {
 
     public static X509CertificateModifier illegalVersionModifier(boolean entity, BigInteger version) {
@@ -31,7 +34,7 @@ public class Modifiers {
     public static X509CertificateModifier tbsSignatureMismatchModifier(boolean entity) {
         return (certificate, config, previousConfig) -> {
             if (entity && config.isEntity() || !entity && config.isIntermediate()) {
-                certificate.getTbsCertificate().getSignature().getAlgorithm().setValue(TestUtils.getNonMatchingAlgorithmOid(previousConfig.getSignatureAlgorithm()));
+                certificate.getTbsCertificate().getSignature().getAlgorithm().setValue(TestUtils.getNonMatchingAlgorithmOid(previousConfig.getDefaultSignatureAlgorithm()));
             }
         };
     }
