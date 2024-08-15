@@ -37,7 +37,7 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        X509Util.getExtensionByOid(generatedCertificates.get(generatedCertificates.size()-1), X509ExtensionType.KEY_USAGE.getOid().toString()).getCritical().setContent(new byte[] {0x01});
+        X509Util.getExtensionByOid(generatedCertificates.get(generatedCertificates.size()-1), X509ExtensionType.KEY_USAGE).getCritical().setContent(new byte[] {0x01});
         VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
@@ -54,7 +54,7 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        X509Util.getExtensionByOid(generatedCertificates.get(generatedCertificates.size()-2), X509ExtensionType.KEY_USAGE.getOid().toString()).getCritical().setContent(new byte[] {0x01});
+        X509Util.getExtensionByOid(generatedCertificates.get(generatedCertificates.size()-2), X509ExtensionType.KEY_USAGE).getCritical().setContent(new byte[] {0x01});
         VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }

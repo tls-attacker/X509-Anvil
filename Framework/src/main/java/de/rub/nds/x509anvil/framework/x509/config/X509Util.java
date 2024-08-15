@@ -10,8 +10,9 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
-import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
+import de.rub.nds.x509attacker.constants.X509ExtensionType;
 import de.rub.nds.x509attacker.filesystem.CertificateFileWriter;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
 import de.rub.nds.x509attacker.x509.model.*;
@@ -23,10 +24,12 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class X509Util {
-    public static Extension getExtensionByOid(X509Certificate x509Certificate, String oid) {
+    public static Extension getExtensionByOid(X509Certificate x509Certificate, X509ExtensionType extensionType) {
         try {
             return x509Certificate.getTbsCertificate().getExplicitExtensions().getInnerField().getExtensionList()
-                .stream().filter(extension -> extension.getExtnID().getValue().getValue().equals(oid))
+                .stream()
+                .filter(
+                    extension -> extension.getExtnID().getValue().getValue().equals(extensionType.getOid().toString()))
                 .collect(Collectors.toList()).get(0);
         } catch (IndexOutOfBoundsException e) {
             throw new IllegalArgumentException("Extensions not found");
@@ -60,10 +63,10 @@ public class X509Util {
         }
     }
 
-    public static RelativeDistinguishedName getRdnFromName(Name name, String oid) {
+    public static RelativeDistinguishedName getRdnFromName(Name name, X500AttributeType oid) {
         for (RelativeDistinguishedName relativeDistinguishedName : name.getRelativeDistinguishedNames()) {
             if (relativeDistinguishedName.getAttributeTypeAndValueList().stream().anyMatch(
-                attributeTypeAndValue -> Objects.equals(attributeTypeAndValue.getType().getValue().getValue(), oid))) {
+                attributeTypeAndValue -> Objects.equals(attributeTypeAndValue.getAttributeTypeConfig(), oid))) {
                 return relativeDistinguishedName;
             }
         }
@@ -75,7 +78,7 @@ public class X509Util {
         AttributeTypeAndValue attributeTypeAndValue =
             new AttributeTypeAndValue("dnq", DirectoryStringChoiceType.PRINTABLE_STRING);
         Asn1ObjectIdentifier asn1ObjectIdentifier = new Asn1ObjectIdentifier("dnq");
-        asn1ObjectIdentifier.setValue(AttributeTypeObjectIdentifiers.DN_QUALIFIER);
+        asn1ObjectIdentifier.setValue(X500AttributeType.DN_QUALIFIER.getOid().toString());
         attributeTypeAndValue.setType(asn1ObjectIdentifier);
         newRdn.addAttributeTypeAndValue(attributeTypeAndValue);
         name.addRelativeDistinguishedNames(newRdn);

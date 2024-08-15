@@ -11,15 +11,12 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
-import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
-import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateModifier;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class DomainComponentCaseInsensitiveTests extends X509AnvilTest {
@@ -39,7 +36,7 @@ public class DomainComponentCaseInsensitiveTests extends X509AnvilTest {
     private static X509CertificateModifier domainComponentCaseSwitchModifier() {
         return (certificate) -> {
             Name issuer = certificate.getTbsCertificate().getIssuer();
-            RelativeDistinguishedName rdn = X509Util.getRdnFromName(issuer, AttributeTypeObjectIdentifiers.DOMAIN_COMPONENT);
+            RelativeDistinguishedName rdn = X509Util.getRdnFromName(issuer, X500AttributeType.DOMAIN_COMPONENT);
             String oldName = rdn.getAttributeTypeAndValueList().get(0).getStringValueOfValue();
             Asn1Ia5String asn1PrimitiveIa5String = new Asn1Ia5String("domainComponent");
             asn1PrimitiveIa5String.setValue(oldName.toUpperCase());

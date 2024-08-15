@@ -12,16 +12,12 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
-import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
-import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateModifier;
+import de.rub.nds.x509attacker.constants.X509ExtensionType;
 import de.rub.nds.x509attacker.x509.model.Extension;
 import de.rub.nds.x509attacker.x509.model.extensions.AuthorityKeyIdentifier;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class MissingKeyIdTests extends X509AnvilTest {
@@ -50,7 +46,7 @@ public class MissingKeyIdTests extends X509AnvilTest {
 
     public static X509CertificateModifier missingKeyIdentifierModifier() {
         return (certificate) -> {
-            Extension extension = X509Util.getExtensionByOid(certificate, ExtensionObjectIdentifiers.AUTHORITY_KEY_IDENTIFIER);
+            Extension extension = X509Util.getExtensionByOid(certificate, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
             Asn1OctetString extnValue = extension.getExtnValue();
 
             Asn1Sequence authorityKeyIdentifier = new AuthorityKeyIdentifier("missing");

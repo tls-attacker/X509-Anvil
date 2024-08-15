@@ -22,7 +22,6 @@ de/rub/nds/x509anvil/framework/featureextraction/probe/ProbeType.class
 de/rub/nds/x509anvil/framework/anvil/parameter/extension/ExtensionPresentParameter.class
 de/rub/nds/x509anvil/framework/x509/generator/X509CertificateChainGenerator.class
 de/rub/nds/x509anvil/framework/anvil/parameter/X509AnvilDerivationParameter.class
-de/rub/nds/x509anvil/framework/x509/config/constants/AttributeTypeObjectIdentifiers.class
 de/rub/nds/x509anvil/framework/anvil/X509TestRunnerResolver.class
 de/rub/nds/x509anvil/framework/x509/config/X509CertificateConfigUtil.class
 de/rub/nds/x509anvil/framework/annotation/StaticRoot.class
@@ -67,7 +66,6 @@ de/rub/nds/x509anvil/framework/anvil/parameter/SerialNumberParameter.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/VersionProbe.class
 de/rub/nds/x509anvil/framework/anvil/parameter/name/DomainComponentsPresentParameter.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/KeyUsageExtensionProbe.class
-de/rub/nds/x509anvil/framework/x509/config/constants/ExtensionObjectIdentifiers.class
 de/rub/nds/x509anvil/framework/anvil/X509AnvilParameterFactory.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/result/ProbeResult.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/Probe.class
