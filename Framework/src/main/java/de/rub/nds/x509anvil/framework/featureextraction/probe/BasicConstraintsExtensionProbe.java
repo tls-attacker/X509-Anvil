@@ -12,8 +12,7 @@ package de.rub.nds.x509anvil.framework.featureextraction.probe;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
-import de.rub.nds.x509anvil.framework.x509.generator.NopX509CertificateModifier;
-import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 
@@ -40,17 +39,4 @@ public class BasicConstraintsExtensionProbe extends ExtensionProbe {
         extensionConfig.setIncludePathLenConstraint(DefaultEncodingRule.OMIT);
         config.getEntityCertificateConfig().addExtensions(extensionConfig);
     }
-
-    @Override
-    protected X509CertificateModifier createValidExtensionModifier() {
-        // Extension is already valid
-        return new NopX509CertificateModifier();
-    }
-
-    // TODO: no usage?
-    /*
-     * @Override protected X509CertificateModifier createInvalidExtensionModifier() { return (certificate, config,
-     * previousConfig) -> { if (config == chainConfig.getEntityCertificateConfig()) {
-     * X509Util.getExtensionByOid(certificate, BASIC_CONSTRAINTS).setContent(new byte[] { 0x05, 0x00 }); } }; }
-     */
 }

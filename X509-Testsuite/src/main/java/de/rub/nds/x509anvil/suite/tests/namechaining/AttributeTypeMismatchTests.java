@@ -18,7 +18,8 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateModifier;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
 import de.rub.nds.x509attacker.x509.model.Name;
@@ -36,9 +37,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest()
     public void typeMismatchCn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.COMMON_NAME));
-        Assertions.assertTrue(result.isValid());
+        assertValid(argumentsAccessor, testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.COMMON_NAME));
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -50,9 +49,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.nc_country_name_present", method = "enabled")
     @AnvilTest()
     public void typeMismatchCountry(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.COUNTRY_NAME));
-        Assertions.assertTrue(result.isValid());
+        assertValid(argumentsAccessor, testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.COUNTRY_NAME));
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -64,9 +61,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.nc_organization_present", method = "enabled")
     @AnvilTest()
     public void typeMismatchOrganization(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.ORGANIZATION_NAME));
-        Assertions.assertTrue(result.isValid());
+        assertValid(argumentsAccessor, testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.ORGANISATION_NAME));
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -78,9 +73,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.nc_organizational_unit_present", method = "enabled")
     @AnvilTest()
     public void typeMismatchOrganizationalUnit(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.ORGANIZATIONAL_UNIT_NAME));
-        Assertions.assertTrue(result.isValid());
+        assertValid(argumentsAccessor, testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.ORGANISATION_UNIT_NAME));
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -92,10 +85,9 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.nc_organization_present", method = "enabled")
     @AnvilTest()
     public void typeMismatchDnQualifier(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "new_dn"));
-        VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.DN_QUALIFIER));
-        Assertions.assertTrue(result.isValid());
+        assertValid(argumentsAccessor, testRunner, true,
+                config -> config.getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "new_dn")),
+                nameComponentTypeSwitchModifier(X500AttributeType.DN_QUALIFIER));
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -107,9 +99,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.nc_state_province_present", method = "enabled")
     @AnvilTest()
     public void typeMismatchStateProvince(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.STATE_OR_PROVINCE_NAME));
-        Assertions.assertTrue(result.isValid());
+        assertValid(argumentsAccessor, testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.STATE_OR_PROVINCE_NAME));
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -121,29 +111,25 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.nc_serial_number_present", method = "enabled")
     @AnvilTest()
     public void typeMismatchSerialNumber(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, nameComponentTypeSwitchModifier(AttributeTypeObjectIdentifiers.SERIAL_NUMBER));
-        Assertions.assertTrue(result.isValid());
+        assertValid(argumentsAccessor, testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.SERIAL_NUMBER));
     }
 
-    private static X509CertificateModifier nameComponentTypeSwitchModifier(String oid) {
-        return (certificate, config, previousConfig) -> {
-            if (config.isEntity()) {
-                Name issuer = certificate.getTbsCertificate().getIssuer();
-                RelativeDistinguishedName rdn = X509Util.getRdnFromName(issuer, oid);
+    private static X509CertificateModifier nameComponentTypeSwitchModifier(X500AttributeType oid) {
+        return (certificate) -> {
+            Name issuer = certificate.getTbsCertificate().getIssuer();
+            RelativeDistinguishedName rdn = X509Util.getRdnFromName(issuer, oid.getOid().toString());
 
-                AttributeTypeAndValue attributeTypeAndValue = rdn.getAttributeTypeAndValueList().get(0);
-                if (attributeTypeAndValue.getValue() instanceof Asn1PrintableString) {
-                    Asn1Utf8String asn1Utf8String = new Asn1Utf8String("wrong");
-                    asn1Utf8String.setValue(attributeTypeAndValue.getStringValueOfValue());
-                    attributeTypeAndValue.setValue(asn1Utf8String);
-                } else if (attributeTypeAndValue.getValue() instanceof Asn1Utf8String) {
-                    Asn1PrintableString asn1PrintableString = new Asn1PrintableString("wrong");
-                    asn1PrintableString.setValue(attributeTypeAndValue.getStringValueOfValue());
-                    attributeTypeAndValue.setValue(asn1PrintableString);
-                } else {
-                    throw new RuntimeException("Could not change name component with oid " + oid);
-                }
+            AttributeTypeAndValue attributeTypeAndValue = rdn.getAttributeTypeAndValueList().get(0);
+            if (attributeTypeAndValue.getValue() instanceof Asn1PrintableString) {
+                Asn1Utf8String asn1Utf8String = new Asn1Utf8String("wrong");
+                asn1Utf8String.setValue(attributeTypeAndValue.getStringValueOfValue());
+                attributeTypeAndValue.setValue(asn1Utf8String);
+            } else if (attributeTypeAndValue.getValue() instanceof Asn1Utf8String) {
+                Asn1PrintableString asn1PrintableString = new Asn1PrintableString("wrong");
+                asn1PrintableString.setValue(attributeTypeAndValue.getStringValueOfValue());
+                attributeTypeAndValue.setValue(asn1PrintableString);
+            } else {
+                throw new RuntimeException("Could not change name component with oid " + oid);
             }
         };
     }

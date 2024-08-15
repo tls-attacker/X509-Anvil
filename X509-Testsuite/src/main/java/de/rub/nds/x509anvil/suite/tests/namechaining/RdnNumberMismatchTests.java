@@ -12,7 +12,8 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateModifier;
 import de.rub.nds.x509attacker.x509.model.Name;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
@@ -28,9 +29,7 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void missingRdn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, missingRdnModifier());
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, true, missingRdnModifier());
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -40,28 +39,22 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void additionalRdn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, additionalRdnModifier());
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, true, additionalRdnModifier());
     }
 
     // Ads an additional "distinguished name qualifier" to the intermediate's subject
     private static X509CertificateModifier missingRdnModifier() {
-        return (certificate, config, previousConfig) -> {
-            if (config.isIntermediate()) {
-                Name subject = certificate.getTbsCertificate().getSubject();
-                addDnQualifierToName(subject);
-            }
+        return (certificate) -> {
+            Name subject = certificate.getTbsCertificate().getSubject();
+            addDnQualifierToName(subject);
         };
     }
 
     // Ads an additional "distinguished name qualifier" to the entity's issuer
     private static X509CertificateModifier additionalRdnModifier() {
-        return (certificate, config, previousConfig) -> {
-            if (config.isEntity()) {
-                Name issuer = certificate.getTbsCertificate().getIssuer();
-                addDnQualifierToName(issuer);
-            }
+        return (certificate) -> {
+            Name issuer = certificate.getTbsCertificate().getIssuer();
+            addDnQualifierToName(issuer);
         };
     }
 }

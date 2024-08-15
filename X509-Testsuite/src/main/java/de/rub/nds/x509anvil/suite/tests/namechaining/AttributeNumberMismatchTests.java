@@ -15,8 +15,10 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateModifier;
 import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
@@ -32,9 +34,7 @@ public class AttributeNumberMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void missingAttribute(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, missingAttributeModifier());
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false, missingAttributeModifier());
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -44,30 +44,24 @@ public class AttributeNumberMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void additionalAttribute(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, additionalAttributeModifier());
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false, additionalAttributeModifier());
     }
 
     // Ads an additional "distinguished name qualifier" to the intermediate's subject
     private static X509CertificateModifier missingAttributeModifier() {
-        return (certificate, config, previousConfig) -> {
-            if (config.isIntermediate()) {
-                Name subject = certificate.getTbsCertificate().getSubject();
-                RelativeDistinguishedName cnRdn = X509Util.getRdnFromName(subject, AttributeTypeObjectIdentifiers.COMMON_NAME);
-                addAttributeToCn(cnRdn);
-            }
+        return (certificate) -> {
+            Name subject = certificate.getTbsCertificate().getSubject();
+            RelativeDistinguishedName cnRdn = X509Util.getRdnFromName(subject, AttributeTypeObjectIdentifiers.COMMON_NAME);
+            addAttributeToCn(cnRdn);
         };
     }
 
     // Ads an additional "distinguished name qualifier" to the entity's issuer
     private static X509CertificateModifier additionalAttributeModifier() {
-        return (certificate, config, previousConfig) -> {
-            if (config.isEntity()) {
-                Name issuer = certificate.getTbsCertificate().getIssuer();
-                RelativeDistinguishedName cnRdn = X509Util.getRdnFromName(issuer, AttributeTypeObjectIdentifiers.COMMON_NAME);
-                addAttributeToCn(cnRdn);
-            }
+        return (certificate) -> {
+            Name issuer = certificate.getTbsCertificate().getIssuer();
+            RelativeDistinguishedName cnRdn = X509Util.getRdnFromName(issuer, AttributeTypeObjectIdentifiers.COMMON_NAME);
+            addAttributeToCn(cnRdn);
         };
     }
 

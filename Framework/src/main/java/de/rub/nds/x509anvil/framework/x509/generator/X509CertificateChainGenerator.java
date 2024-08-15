@@ -11,6 +11,7 @@ package de.rub.nds.x509anvil.framework.x509.generator;
 
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.context.X509Context;
@@ -23,16 +24,11 @@ public class X509CertificateChainGenerator {
     private final X509CertificateChainConfig certificateChainConfig;
 
     // TODO: should be used, but can probably also simplified
-    private final List<X509CertificateModifier> certificateModifiers = new ArrayList<>();
 
     private final List<X509Certificate> generatedCertificates = new ArrayList<>();
 
     public X509CertificateChainGenerator(X509CertificateChainConfig certificateChainConfig) {
         this.certificateChainConfig = certificateChainConfig;
-    }
-
-    public void addModifier(X509CertificateModifier x509CertificateModifier) {
-        certificateModifiers.add(x509CertificateModifier);
     }
 
     public void generateCertificateChain() throws CertificateGeneratorException {

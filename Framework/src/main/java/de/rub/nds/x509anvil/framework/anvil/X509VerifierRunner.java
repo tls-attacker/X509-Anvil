@@ -18,7 +18,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
-import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -71,10 +71,10 @@ public class X509VerifierRunner {
         return verifierAdapter.invokeVerifier(certificateList);
     }
 
-    public VerifierResult execute(X509CertificateChainConfig config, X509CertificateModifier modifier)
+    // TODO: modifiers unset rn, switch all tests to new modifiers
+    public VerifierResult execute(X509CertificateChainConfig config, X509CertificateConfigModifier modifier)
         throws CertificateGeneratorException, VerifierException {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
-        certificateChainGenerator.addModifier(modifier);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateList = certificateChainGenerator.retrieveCertificateChain();
         X509Util.exportCertificates(certificateList, "resources/out");

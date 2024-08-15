@@ -17,6 +17,7 @@ de/rub/nds/x509anvil/framework/verifier/VerifierResult.class
 de/rub/nds/x509anvil/framework/x509/generator/CertificateGeneratorException.class
 de/rub/nds/x509anvil/framework/featureextraction/FeatureExtractor.class
 de/rub/nds/x509anvil/framework/verifier/VerifierException.class
+de/rub/nds/x509anvil/framework/x509/generator/modifier/X509CertificateModifier.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/ProbeType.class
 de/rub/nds/x509anvil/framework/anvil/parameter/extension/ExtensionPresentParameter.class
 de/rub/nds/x509anvil/framework/x509/generator/X509CertificateChainGenerator.class
@@ -36,7 +37,6 @@ de/rub/nds/x509anvil/framework/anvil/parameter/name/CNTypeParameter.class
 de/rub/nds/x509anvil/framework/anvil/parameter/NotAfterParameter$1.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/BasicConstraintsExtensionProbe.class
 de/rub/nds/x509anvil/framework/anvil/parameter/extension/basicconstraints/BasicConstraintsCriticalParameter.class
-de/rub/nds/x509anvil/framework/x509/generator/X509CertificateModifier.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/result/ExtensionProbeResult.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/EntitySignatureAlgorithmProbe.class
 de/rub/nds/x509anvil/framework/x509/config/CachedKeyPairGenerator$1.class
@@ -69,13 +69,13 @@ de/rub/nds/x509anvil/framework/anvil/parameter/name/DomainComponentsPresentParam
 de/rub/nds/x509anvil/framework/featureextraction/probe/KeyUsageExtensionProbe.class
 de/rub/nds/x509anvil/framework/x509/config/constants/ExtensionObjectIdentifiers.class
 de/rub/nds/x509anvil/framework/anvil/X509AnvilParameterFactory.class
-de/rub/nds/x509anvil/framework/x509/generator/NopX509CertificateModifier.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/result/ProbeResult.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/Probe.class
 de/rub/nds/x509anvil/framework/anvil/X509AnvilParameterIdentifierProvider.class
 de/rub/nds/x509anvil/framework/anvil/parameter/extension/UnknownNonCriticalExtensionPresentParameter.class
 de/rub/nds/x509anvil/framework/featureextraction/UnsupportedFeatureException.class
 de/rub/nds/x509anvil/framework/verifier/VerifierAdapterType.class
+de/rub/nds/x509anvil/framework/x509/generator/modifier/X509CertificateConfigModifier.class
 de/rub/nds/x509anvil/framework/featureextraction/probe/result/SignatureAlgorithmProbeResult.class
 de/rub/nds/x509anvil/framework/anvil/ContextHelper.class
 de/rub/nds/x509anvil/framework/anvil/X509AnvilTest.class

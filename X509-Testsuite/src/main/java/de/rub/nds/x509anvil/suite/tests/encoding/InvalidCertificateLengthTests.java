@@ -11,7 +11,8 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateModifier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -19,14 +20,14 @@ import java.math.BigInteger;
 
 public class InvalidCertificateLengthTests extends X509AnvilTest {
 
+    private static final int ADDITION = 1;
+
     @Specification(document = "RFC 5280")
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
     public void shortLengthTagEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(config, certificateLengthModifier(true,-1));
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(-ADDITION))));
     }
 
     @Specification(document = "RFC 5280")
@@ -34,9 +35,7 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest()
     public void shortLengthTagIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(config, certificateLengthModifier(false,-1));
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(-ADDITION))));
     }
 
     @Specification(document = "RFC 5280")
@@ -44,9 +43,7 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest()
     public void overflowingLengthTagEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(config, certificateLengthModifier(true,1));
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(ADDITION))));
     }
 
     @Specification(document = "RFC 5280")
@@ -54,16 +51,6 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest()
     public void overflowingLengthTagIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(config, certificateLengthModifier(false,1));
-        Assertions.assertFalse(result.isValid());
-    }
-
-    private static X509CertificateModifier certificateLengthModifier(boolean entity, int addition) {
-        return (certificate, config, previousConfig) -> {
-            if (entity && config.isEntity() || !entity && config.isIntermediate()) {
-                certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(addition)));
-            }
-        };
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(ADDITION))));
     }
 }

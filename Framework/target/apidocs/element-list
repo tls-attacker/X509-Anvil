@@ -18,3 +18,4 @@ de.rub.nds.x509anvil.framework.verifier.tlsclientauth
 de.rub.nds.x509anvil.framework.x509.config
 de.rub.nds.x509anvil.framework.x509.config.constants
 de.rub.nds.x509anvil.framework.x509.generator
+de.rub.nds.x509anvil.framework.x509.generator.modifier

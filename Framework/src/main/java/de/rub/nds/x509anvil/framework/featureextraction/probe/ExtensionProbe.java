@@ -20,9 +20,7 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.NopX509CertificateModifier;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
-import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import java.util.List;
@@ -38,11 +36,11 @@ public abstract class ExtensionProbe implements Probe {
     public ProbeResult execute() throws ProbeException {
         try {
             X509CertificateChainConfig baseConfig = prepareBaseConfig();
-            if (!testCertificateChain(baseConfig, new NopX509CertificateModifier())) {
+            if (!testCertificateChain(baseConfig)) {
                 throw new ProbeException("Base config is already invalid");
             }
             addExtensionToConfig(baseConfig);
-            boolean resultValid = testCertificateChain(baseConfig, createValidExtensionModifier());
+            boolean resultValid = testCertificateChain(baseConfig);
             // FIXME
             // boolean resultInvalid = testCertificateChain(baseConfig, createInvalidExtensionModifier());
             // return new ExtensionProbeResult(extensionType, resultValid && !resultInvalid);
@@ -56,17 +54,9 @@ public abstract class ExtensionProbe implements Probe {
 
     protected abstract void addExtensionToConfig(X509CertificateChainConfig config);
 
-    protected abstract X509CertificateModifier createValidExtensionModifier();
-
-    // TODO: unused
-    /*
-     * protected abstract X509CertificateModifier createInvalidExtensionModifier();
-     */
-
-    protected boolean testCertificateChain(X509CertificateChainConfig config, X509CertificateModifier modifier)
+    protected boolean testCertificateChain(X509CertificateChainConfig config)
         throws CertificateGeneratorException, VerifierException {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
-        certificateChainGenerator.addModifier(modifier);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
 

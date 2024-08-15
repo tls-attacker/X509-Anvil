@@ -13,7 +13,8 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateModifier;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
@@ -32,21 +33,15 @@ public class RdnOrderMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void rdnOrderMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        // Add dnq just to make sure that there are at least 2 rdns
-        chainConfig.getIntermediateConfig(0).getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq"));
-        VerifierResult result = testRunner.execute(chainConfig, reverseRdnsOrderModifier());
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false, config -> config.getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq")), reverseRdnsOrderModifier());
     }
 
     private static X509CertificateModifier reverseRdnsOrderModifier() {
-        return (certificate, config, previousConfig) -> {
-            if (config.isEntity()) {
-                Name issuer = certificate.getTbsCertificate().getIssuer();
-                List<RelativeDistinguishedName> shallowCopy = issuer.getRelativeDistinguishedNames().subList(0, issuer.getRelativeDistinguishedNames().size());
-                Collections.reverse(shallowCopy);
-                issuer.setRelativeDistinguishedNames(shallowCopy);
-            }
+        return (certificate) -> {
+            Name issuer = certificate.getTbsCertificate().getIssuer();
+            List<RelativeDistinguishedName> shallowCopy = issuer.getRelativeDistinguishedNames().subList(0, issuer.getRelativeDistinguishedNames().size());
+            Collections.reverse(shallowCopy);
+            issuer.setRelativeDistinguishedNames(shallowCopy);
         };
     }
 }

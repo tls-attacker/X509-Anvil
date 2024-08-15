@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-// TODO: what is even needed anymore?
 public class X509Util {
     public static Extension getExtensionByOid(X509Certificate x509Certificate, String oid) {
         try {

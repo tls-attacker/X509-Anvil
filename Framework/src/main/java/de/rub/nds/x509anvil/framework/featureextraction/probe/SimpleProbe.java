@@ -18,9 +18,7 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.NopX509CertificateModifier;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
-import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import java.util.List;
@@ -31,7 +29,6 @@ public abstract class SimpleProbe implements Probe {
     public ProbeResult execute() throws ProbeException {
         X509CertificateChainConfig config = prepareConfig();
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
-        certificateChainGenerator.addModifier(createModifier());
         try {
             certificateChainGenerator.generateCertificateChain();
         } catch (CertificateGeneratorException e) {
@@ -53,9 +50,5 @@ public abstract class SimpleProbe implements Probe {
     protected abstract X509CertificateChainConfig prepareConfig();
 
     protected abstract ProbeResult createResult(VerifierResult verifierResult);
-
-    protected X509CertificateModifier createModifier() {
-        return new NopX509CertificateModifier();
-    }
 
 }

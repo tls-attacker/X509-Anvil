@@ -7,11 +7,10 @@
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 
-package de.rub.nds.x509anvil.framework.x509.generator;
+package de.rub.nds.x509anvil.framework.x509.generator.modifier;
 
-import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 public interface X509CertificateModifier {
-    void beforeSigning(X509Certificate certificate, X509CertificateConfig config, X509CertificateConfig previousConfig);
+    void apply(X509Certificate config);
 }

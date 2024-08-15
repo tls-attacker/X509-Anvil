@@ -12,8 +12,7 @@ package de.rub.nds.x509anvil.framework.featureextraction.probe;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.generator.NopX509CertificateModifier;
-import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import org.apache.commons.lang3.NotImplementedException;
 
 public class KeyUsageExtensionProbe extends ExtensionProbe {
@@ -41,17 +40,4 @@ public class KeyUsageExtensionProbe extends ExtensionProbe {
 
         throw new NotImplementedException("KeyUsageExtension not implemented yet");
     }
-
-    @Override
-    protected X509CertificateModifier createValidExtensionModifier() {
-        // Extension is already valid
-        return new NopX509CertificateModifier();
-    }
-
-    // TODO: unused?
-    /*
-     * @Override protected X509CertificateModifier createInvalidExtensionModifier() { return (certificate, config,
-     * previousConfig) -> { if (config == chainConfig.getEntityCertificateConfig()) {
-     * X509Util.getExtensionByOid(certificate, KEY_USAGE).setContent(new byte[] { 0x02, 0x01, (byte) 0xff }); } }; }
-     */
 }

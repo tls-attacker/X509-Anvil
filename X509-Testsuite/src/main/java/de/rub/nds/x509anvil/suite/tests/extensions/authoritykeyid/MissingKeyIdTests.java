@@ -17,7 +17,8 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateModifier;
 import de.rub.nds.x509attacker.x509.model.Extension;
 import de.rub.nds.x509attacker.x509.model.extensions.AuthorityKeyIdentifier;
 import org.junit.jupiter.api.Assertions;
@@ -33,9 +34,7 @@ public class MissingKeyIdTests extends X509AnvilTest {
     @AnvilTest
     @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
     public void missingKeyIdentifierEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, missingKeyIdentifierModifier(true));
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, true, missingKeyIdentifierModifier());
     }
 
     @Specification(document = "RFC 5280", section = "4.2.1.1. Authority Key Identifier", text = "Conforming CAs MUST mark this extension as non-critical.")
@@ -45,21 +44,17 @@ public class MissingKeyIdTests extends X509AnvilTest {
     @AnvilTest
     @ValueConstraint(identifier = "inter0.ext_authority_key_identifier_present", method = "enabled")
     public void missingKeyIdentifierIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, missingKeyIdentifierModifier(false));
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false, missingKeyIdentifierModifier());
     }
 
 
-    public static X509CertificateModifier missingKeyIdentifierModifier(boolean entity) {
-        return (certificate, config, previousConfig) -> {
-            if (entity && config.isEntity() || !entity && config.isIntermediate()) {
-                Extension extension = X509Util.getExtensionByOid(certificate, ExtensionObjectIdentifiers.AUTHORITY_KEY_IDENTIFIER);
-                Asn1OctetString extnValue = extension.getExtnValue();
+    public static X509CertificateModifier missingKeyIdentifierModifier() {
+        return (certificate) -> {
+            Extension extension = X509Util.getExtensionByOid(certificate, ExtensionObjectIdentifiers.AUTHORITY_KEY_IDENTIFIER);
+            Asn1OctetString extnValue = extension.getExtnValue();
 
-                Asn1Sequence authorityKeyIdentifier = new AuthorityKeyIdentifier("missing");
-                extnValue.setValue(authorityKeyIdentifier.getContent());
-            }
+            Asn1Sequence authorityKeyIdentifier = new AuthorityKeyIdentifier("missing");
+            extnValue.setValue(authorityKeyIdentifier.getContent());
         };
     }
 }

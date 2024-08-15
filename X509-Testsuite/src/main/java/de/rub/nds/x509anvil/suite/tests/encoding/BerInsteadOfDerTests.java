@@ -3,7 +3,6 @@ package de.rub.nds.x509anvil.suite.tests.encoding;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.anvilcore.annotation.ValueConstraint;
-import de.rub.nds.asn1.model.Asn1Boolean;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -14,14 +13,15 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
-import de.rub.nds.x509anvil.framework.x509.config.constants.ExtensionObjectIdentifiers;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
-import de.rub.nds.x509attacker.x509.model.Extension;
+import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
+import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import de.rub.nds.x509attacker.constants.X509Version;
+import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
-import java.math.BigInteger;
+import java.util.List;
 
 public class BerInsteadOfDerTests extends X509AnvilTest {
 
@@ -34,7 +34,11 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @AnvilTest()
     public void booleanRepresentationEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(config, nonFFTrueBooleanModifier(true));
+        X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
+        certificateChainGenerator.generateCertificateChain();
+        List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
+        X509Util.getExtensionByOid(generatedCertificates.get(generatedCertificates.size()-1), X509ExtensionType.KEY_USAGE.getOid().toString()).getCritical().setContent(new byte[] {0x01});
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -47,7 +51,11 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @AnvilTest()
     public void booleanRepresentationIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(config, nonFFTrueBooleanModifier(false));
+        X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
+        certificateChainGenerator.generateCertificateChain();
+        List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
+        X509Util.getExtensionByOid(generatedCertificates.get(generatedCertificates.size()-2), X509ExtensionType.KEY_USAGE.getOid().toString()).getCritical().setContent(new byte[] {0x01});
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -61,8 +69,8 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @AnvilTest()
     public void explicitVersion1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
-        config.getEntityCertificateConfig().setVersion(new BigInteger("2"));  // Set version to 3 to make modification easier
-        VerifierResult result = testRunner.execute(config, explicitVersion1Modifier(true));
+        config.getEntityCertificateConfig().setVersion(X509Version.V1.getValue());
+        VerifierResult result = testRunner.execute(config);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -75,27 +83,8 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @AnvilTest()
     public void explicitVersion1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
-        config.getIntermediateConfig(0).setVersion(BigInteger.valueOf(2));  // Set version to 3 to make modification easier
-        VerifierResult result = testRunner.execute(config, explicitVersion1Modifier(false));
+        config.getIntermediateConfig(0).setVersion(X509Version.V1.getValue());
+        VerifierResult result = testRunner.execute(config);
         Assertions.assertFalse(result.isValid());
-    }
-
-
-    private static X509CertificateModifier nonFFTrueBooleanModifier(boolean entity) {
-        return (certificate, config, previousConfig) -> {
-            if (entity && config.isEntity() || !entity && config.isIntermediate()) {
-                Extension keyUsageExtension = X509Util.getExtensionByOid(certificate, ExtensionObjectIdentifiers.KEY_USAGE);
-                Asn1Boolean critical = keyUsageExtension.getCritical();
-                critical.setContent(new byte[]{0x01});
-            }
-        };
-    }
-
-    private static X509CertificateModifier explicitVersion1Modifier(boolean entity) {
-        return (certificate, config, previousConfig) -> {
-            if (entity && config.isEntity() || !entity && config.isIntermediate()) {
-                certificate.getTbsCertificate().getVersion().getInnerField().setValue(BigInteger.valueOf(0));
-            }
-        };
     }
 }
