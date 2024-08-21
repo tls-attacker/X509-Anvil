@@ -2,10 +2,12 @@
 	- add ec keys in config
 	- write generator in protocol attacker !!!!!
 	
-- fix modifiers in tests
 - extension tests
-- include extensions per default?
-- fix extension parsing tests
+- update all tests to use new modifiers
+
+- fix asn.1-attacker to be able to consider context specific tags
+
+- what about intermediate config always being 0?
 
 - reimplement certificate generation (probably already done? check if keys are copied correctly)
 - move chain config to attacker (not too important rn)

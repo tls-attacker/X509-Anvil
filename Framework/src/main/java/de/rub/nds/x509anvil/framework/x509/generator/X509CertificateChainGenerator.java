@@ -67,7 +67,7 @@ public class X509CertificateChainGenerator {
             config.setDefaultIssuerECPublicKey(signerConfig.getDefaultIssuerECPublicKey());
             config.setDefaultIssuerPublicKeyType(signerConfig.getDefaultIssuerPublicKeyType());
         }
-        X509Certificate certificate = new X509Certificate("cert");
+        X509Certificate certificate = new X509Certificate("cert", config);
         this.generatedCertificates.add(certificate);
         certificate.getPreparator(new X509Chooser(config, new X509Context())).prepare();
     }

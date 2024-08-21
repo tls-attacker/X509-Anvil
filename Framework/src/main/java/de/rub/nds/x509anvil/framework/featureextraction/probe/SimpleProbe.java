@@ -27,6 +27,7 @@ public abstract class SimpleProbe implements Probe {
 
     @Override
     public ProbeResult execute() throws ProbeException {
+        // dual config initialization here
         X509CertificateChainConfig config = prepareConfig();
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         try {
