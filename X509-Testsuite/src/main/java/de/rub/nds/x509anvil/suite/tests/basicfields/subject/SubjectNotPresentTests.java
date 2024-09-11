@@ -28,6 +28,12 @@ public class SubjectNotPresentTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void noSubjectEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config ->
+//        config.getEntityCertificateConfig().setIncludeSubjectUniqueId(false));
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
@@ -40,4 +46,10 @@ public class SubjectNotPresentTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void noSubjectIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config ->
+//        config.getIntermediateConfig(0).setIncludeSubjectUniqueId(false));
+//    }
+
 }

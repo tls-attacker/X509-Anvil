@@ -36,6 +36,12 @@ public class NegativeSerialNumberTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
+//    public void negativeSerialNumberEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config ->
+//        config.getEntityCertificateConfig().setSerialNumber(BigInteger.valueOf(-1337)));
+//    }
+
     @Specification(document = "RFC 5280", section = "4.1.2.1. Version",
             text = "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may " +
                     "issue certificates with serial numbers that are negative or zero.  Certificate users SHOULD be prepared to " +
@@ -51,4 +57,9 @@ public class NegativeSerialNumberTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void negativeSerialNumberEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config ->
+//        config.getIntermediateConfig(0).setSerialNumber(BigInteger.valueOf(-1337)));
+//    }
 }

@@ -28,4 +28,9 @@ public class NoDNTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void noDn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//                (X509CertificateConfigModifier) config -> config.getIntermediateConfig(0).getSubject().clear());
+//    }
+
 }

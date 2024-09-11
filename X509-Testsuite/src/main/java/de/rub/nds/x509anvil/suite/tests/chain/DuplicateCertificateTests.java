@@ -34,6 +34,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(certificateChain);
         Assertions.assertFalse(result.isValid());
     }
+//    TODO: These three
 
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "A certificate MUST NOT appear more than once in a prospective certification path.")
@@ -49,6 +50,10 @@ public class DuplicateCertificateTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(certificateChain);
         Assertions.assertFalse(result.isValid());
     }
+
+//    TODO: create a new assert method that accepts lists and check for the occurence of LIST functions
+
+
 
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "A certificate MUST NOT appear more than once in a prospective certification path.")

@@ -33,6 +33,12 @@ public class LargeSerialNumberTest extends X509AnvilTest {
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void largeSerialNumberEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config ->
+//        config.getEntityCertificateConfig().setSerialNumber(TestUtils.createBigInteger(256)));
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.1.2.1. Version",
             text = "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may " +
@@ -49,4 +55,10 @@ public class LargeSerialNumberTest extends X509AnvilTest {
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void largeSerialNumberIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config ->
+//        config.getIntermediateConfig(0).setSerialNumber(TestUtils.createBigInteger(256)));
+//    }
+
 }

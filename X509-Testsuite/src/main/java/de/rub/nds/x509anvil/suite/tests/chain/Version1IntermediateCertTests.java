@@ -34,6 +34,15 @@ public class Version1IntermediateCertTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
+//    public void version1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+//            config.getIntermediateConfig(0).setVersion(new BigInteger("0"));
+//            config.getIntermediateConfig(0).setIncludeExtensions(false);
+//            config.getIntermediateConfig(0).setIncludeIssuerUniqueId(false);
+//            config.getIntermediateConfig(0).setIncludeSubjectUniqueId(false);
+//        });
+//    }
+
     @Specification(document = "RFC 5280", section = "6.1.4.  Preparation for Certificate i+1",
             text = "If certificate i is a version 1 or version 2 certificate, then the application MUST either verify that " +
                     "certificate i is a CA certificate through out-of-band means or reject the certificate.")
@@ -47,4 +56,10 @@ public class Version1IntermediateCertTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void version2Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+//            config.getIntermediateConfig(0).setVersion(new BigInteger("1"));
+//            config.getIntermediateConfig(0).setIncludeExtensions(false);
+//        });
+//    }
 }

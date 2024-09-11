@@ -29,6 +29,9 @@ public class SelfSignedNonRootTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void selfSignedEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config -> config.setSelfSigned(true));
+//    }
 
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "for all x in {1, ..., n-1}, the subject of certificate x is the issuer of certificate x+1;")
@@ -41,4 +44,7 @@ public class SelfSignedNonRootTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void selfSignedIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config -> config.getIntermediateConfig(0).setSelfSigned(true));
+//    }
 }

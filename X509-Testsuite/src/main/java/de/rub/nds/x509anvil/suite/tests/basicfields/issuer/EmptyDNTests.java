@@ -33,4 +33,11 @@ public class EmptyDNTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void emptyDn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//                (X509CertificateConfigModifier) config -> {
+//                    config.getIntermediateConfig(0).getSubject().clear();
+//                    config.getIntermediateConfig(0).getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "empty"));
+//                });
+//    }
 }

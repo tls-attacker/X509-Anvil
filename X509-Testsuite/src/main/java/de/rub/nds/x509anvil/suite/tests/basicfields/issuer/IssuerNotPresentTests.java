@@ -28,6 +28,11 @@ public class IssuerNotPresentTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void noIssuerEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//               (X509CertificateConfigModifier) config -> config.getEntityCertificateConfig().setIncludeIssuerUniqueId(false));
+//   }
+
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
@@ -40,4 +45,8 @@ public class IssuerNotPresentTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
-}
+//    public void noIssuerIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> config.getIntermediateConfig(0).setIncludeIssuerUniqueId(false));
+//        }
+
+    }

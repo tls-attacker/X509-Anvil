@@ -33,6 +33,14 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void tbsSignatureDoesntMatchAlgorithmEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config ->
+//        config.getEntityCertificateConfig().setSignatureAlgorithm(
+//        TestUtils.getNonMatchingAlgorithmOid(
+//        config.getIssuerConfigOf(config.getEntityCertificateConfig()).getDefaultSignatureAlgorithm())));
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.1.2.3.  Signature",
             text = "This field MUST contain the same algorithm identifier as the signatureAlgorithm field in the sequence Certificate (Section 4.1.1.2).")
@@ -49,4 +57,12 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void tbsSignatureDoesntMatchAlgorithmIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config ->
+//        config.getIntermediateConfig(0).setSignatureAlgorithm(
+//        TestUtils.getNonMatchingAlgorithmOid(
+//        config.getIssuerConfigOf(config.getIntermediateConfig(0)).getDefaultSignatureAlgorithm())));
+//    }
+
 }

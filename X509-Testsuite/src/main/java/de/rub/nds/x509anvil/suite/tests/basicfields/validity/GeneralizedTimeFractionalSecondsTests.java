@@ -33,6 +33,7 @@ public class GeneralizedTimeFractionalSecondsTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    TO DO CHECK LOGIC
 
     @Specification(document = "RFC 5280", section = "4.1.2.5.2. GeneralizedTime", text = "GeneralizedTime values MUST NOT include fractional seconds.")
     @SeverityLevel(Severity.ERROR)

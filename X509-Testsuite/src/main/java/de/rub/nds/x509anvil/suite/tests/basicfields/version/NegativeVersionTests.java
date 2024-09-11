@@ -28,6 +28,11 @@ public class NegativeVersionTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
+//    public void negativeVersionEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config -> config.getEntityCertificateConfig().setVersion(BigInteger.valueOf(-1)));
+//    }
+
     @Specification(document = "RFC 5280", section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
     @AnvilTest()
     @TestStrength(2)
@@ -38,4 +43,8 @@ public class NegativeVersionTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void negativeVersionIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config -> config.getIntermediateConfig(0).setVersion(BigInteger.valueOf(-1)));
+//    }
 }

@@ -33,6 +33,13 @@ public class ExpiredTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void expiredUtcEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config -> {
+//        config.getEntityCertificateConfig().setNotAfter(new DateTime(2020, 1, 1, 0, 0, 0));
+//        config.getEntityCertificateConfig().setDefaultNotAfterEncoding(ValidityEncoding.UTC);
+//        });
+//    }
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
@@ -47,6 +54,13 @@ public class ExpiredTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void expiredGeneralizedEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config -> {
+//        config.getEntityCertificateConfig().setNotAfter(new DateTime(2020, 1, 1, 0, 0, 0));
+//        config.getEntityCertificateConfig().setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+//        });
+//    }
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
@@ -62,6 +76,14 @@ public class ExpiredTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
+//    public void expiredUtcIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config -> {
+//        config.getIntermediateConfig(0).setNotAfter(new DateTime(2001, 1, 1, 0, 0, 0));
+//        config.getIntermediateConfig(0).setDefaultNotAfterEncoding(ValidityEncoding.UTC);
+//        });
+//    }
+
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
@@ -75,4 +97,12 @@ public class ExpiredTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
-}
+
+//    public void expiredGeneralizedIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config -> {
+//        config.getIntermediateConfig(0).setNotAfter(new DateTime(2020, 1, 1, 0, 0, 0));
+//        config.getIntermediateConfig(0).setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+//        });
+
+    }

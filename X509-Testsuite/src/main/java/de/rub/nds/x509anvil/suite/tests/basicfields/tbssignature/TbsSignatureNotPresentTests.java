@@ -28,7 +28,11 @@ public class TbsSignatureNotPresentTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
-
+//    public void noSignatureEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config ->
+//        config.getEntityCertificateConfig().setIncludeTbsSignature(false));
+//    }
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
@@ -40,4 +44,9 @@ public class TbsSignatureNotPresentTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void noSignatureIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false,
+//        (X509CertificateConfigModifier) config ->
+//        config.getIntermediateConfig(0).setIncludeTbsSignature(false));
+//    }
 }
