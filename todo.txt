@@ -1,6 +1,5 @@
-- what about keys?	
-	- add ec keys in config
-	- write generator in protocol attacker !!!!!
+- copy subject keys as issuer keys to lower certificate
+- implement correct key generation using keys in attacker... especially for dsa and ecdsa
 	
 - extension tests
 - update all tests to use new modifiers

@@ -10,12 +10,14 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.protocol.constants.SignatureAlgorithm;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.AlgorithmParameterSpec;
+import java.security.spec.DSAGenParameterSpec;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

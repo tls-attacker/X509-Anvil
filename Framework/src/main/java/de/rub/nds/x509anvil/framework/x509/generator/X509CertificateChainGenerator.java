@@ -37,8 +37,7 @@ public class X509CertificateChainGenerator {
         }
 
         X509CertificateConfig previousConfig = null;
-        for (X509CertificateConfig certificateConfig : X509CertificateConfigUtil
-            .expandCertificateConfigs(certificateChainConfig)) {
+        for (X509CertificateConfig certificateConfig : certificateChainConfig.getCertificateConfigList()) {
             generateSingleCertificate(certificateConfig, previousConfig);
             previousConfig = certificateConfig;
         }
@@ -56,8 +55,8 @@ public class X509CertificateChainGenerator {
 
         // set signature signing keys to keys from signer config unless self-signed
 
-        // TODO: necessary? should be sufficient to encode has chain using x509 attacker
-        if (signerConfig != null && !config.isSelfSigned()) {
+        // TODO: necessary? should be sufficient to encode has chain using x509 attacker: probably not necessary
+        /* if (signerConfig != null && !config.isSelfSigned()) {
             config.setDefaultIssuerDsaPrivateKey(signerConfig.getDefaultIssuerDsaPrivateKey());
             config.setDefaultIssuerDsaPublicKey(signerConfig.getDefaultIssuerDsaPublicKey());
             config.setDefaultIssuerRsaModulus(signerConfig.getDefaultIssuerRsaModulus());
@@ -67,6 +66,7 @@ public class X509CertificateChainGenerator {
             config.setDefaultIssuerECPublicKey(signerConfig.getDefaultIssuerECPublicKey());
             config.setDefaultIssuerPublicKeyType(signerConfig.getDefaultIssuerPublicKeyType());
         }
+         */
         X509Certificate certificate = new X509Certificate("cert", config);
         this.generatedCertificates.add(certificate);
         certificate.getPreparator(new X509Chooser(config, new X509Context())).prepare();
