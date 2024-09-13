@@ -39,20 +39,6 @@ public class X509CertificateChainConfig {
         this.chainLength = chainLength;
         this.intermediateCertsModeled = intermediateCertsModeled;
 
-        TestConfig testConfig = ContextHelper.getTestConfig();
-
-        // TODO: only used in one instance, probably generate certificate once and cache, if annotation present generate
-        // new one?
-        // this.staticRoot = staticRoot;
-
-        /*
-         * if (staticRoot) { try { rootCertificateConfig = X509CertificateConfigUtil.loadStaticCertificateConfig(
-         * testConfig.getStaticRootCertificateFile(), testConfig.getStaticRootPrivateKeyFile()); } catch (IOException |
-         * InvalidKeySpecException e) { LOGGER.error("Unable to load static root certificate and its private key", e);
-         * throw new IllegalArgumentException("Unable to load static root certificate and its private key", e); } } else
-         * { // We need to generate our own root rootCertificateConfig =
-         * X509CertificateConfigUtil.getDefaultCaCertificateConfig(true, CertificateChainPositionType.ROOT); }
-         */
         rootCertificateConfig =
             X509CertificateConfigUtil.getDefaultCaCertificateConfig(true, CertificateChainPositionType.ROOT);
 
@@ -61,10 +47,6 @@ public class X509CertificateChainConfig {
             if (i < intermediateCertsModeled) {
                 X509CertificateConfig config = X509CertificateConfigUtil.getDefaultCaCertificateConfig(false,
                     CertificateChainPositionType.INTERMEDIATE);
-                // TODO: can be deleted?
-                // if (i == intermediateCertsModeled - 1 && intermediateCertsModeled < chainLength - 2) {
-                // config.setSharedConfig(true);
-                // }
                 intermediateCertificateConfigs.add(config);
             }
         }
