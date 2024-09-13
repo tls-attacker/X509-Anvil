@@ -17,12 +17,10 @@ import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithmLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
-import de.rub.nds.x509anvil.framework.x509.config.KeyPairGenerator;
+import de.rub.nds.x509anvil.framework.x509.config.CachedKeyPairGenerator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 
-import java.security.KeyPair;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,6 +58,6 @@ public class SignatureParameter extends CertificateSpecificParameter<SignatureAl
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
         certificateConfig.amendSignatureAlgorithm(getSelectedValue().getSignatureAlgorithm());
-        KeyPairGenerator.generateNewKeys(getSelectedValue(), certificateConfig);
+        CachedKeyPairGenerator.generateNewKeys(getSelectedValue(), certificateConfig);
     }
 }

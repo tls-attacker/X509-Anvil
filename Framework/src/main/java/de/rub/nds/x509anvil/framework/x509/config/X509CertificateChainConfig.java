@@ -25,10 +25,6 @@ public class X509CertificateChainConfig {
     private int chainLength;
     private int intermediateCertsModeled;
 
-    // TODO: can this be removed? before a static file was read for static root and a certificate generated for not
-    // static root. I think we can use the config now for all cases(?)
-    // private boolean staticRoot;
-
     private X509CertificateConfig rootCertificateConfig = null;
     private final List<X509CertificateConfig> intermediateCertificateConfigs = new ArrayList<>();
     private X509CertificateConfig entityCertificateConfig = null;

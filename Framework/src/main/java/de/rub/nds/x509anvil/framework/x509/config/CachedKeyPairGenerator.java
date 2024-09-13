@@ -1,93 +1,98 @@
-/**
- * Framework - A tool for creating arbitrary certificates
- * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- * <p>
- * Licensed under Apache License, Version 2.0
- * http://www.apache.org/licenses/LICENSE-2.0.txt
- */
-
 package de.rub.nds.x509anvil.framework.x509.config;
 
-import de.rub.nds.protocol.constants.SignatureAlgorithm;
+import de.rub.nds.protocol.crypto.key.*;
+import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithmLengthPair;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.constants.X509NamedCurve;
+import org.apache.commons.lang3.tuple.Pair;
 
-import java.security.InvalidAlgorithmParameterException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.AlgorithmParameterSpec;
-import java.security.spec.DSAGenParameterSpec;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static de.rub.nds.x509attacker.constants.X509NamedCurve.*;
+
+
 /**
- * Since generating fresh key pairs for every test case is really inefficient, we store and reuse key pairs.
+ * Wraps around the key Generator in the Protocol-Attacker. Caches generated keys to save runtime.
  */
 public class CachedKeyPairGenerator {
-    private static final Map<String, KeyPair> keyPairCache = new ConcurrentHashMap<>();
 
-    public static KeyPair retrieveKeyPair(SignatureAlgorithm algorithm, int keySize) throws NoSuchAlgorithmException {
-        String hashKey = algorithm + ":" + keySize;
+    private static final Map<SignatureAlgorithmLengthPair, Pair<RsaPublicKey, RsaPrivateKey>> rsaKeyPairCache = new ConcurrentHashMap<>();
+    private static final Map<SignatureAlgorithmLengthPair, DsaPublicKey> dsaPublicKeyCache = new ConcurrentHashMap<>();
+    private static final Map<SignatureAlgorithmLengthPair, EcdsaPublicKey> ecdsaPublicKeyCache = new ConcurrentHashMap<>();
 
-        synchronized (keyPairCache) {
-            if (keyPairCache.containsKey(hashKey)) {
-                return keyPairCache.get(hashKey);
-            }
+    public static long RANDOM_SEED = 123456789;
+    public static Random random = new Random(RANDOM_SEED);
+
+    public static void generateNewKeys(SignatureAlgorithmLengthPair algorithmLengthPair, X509CertificateConfig config) {
+
+        switch (algorithmLengthPair) {
+            case RSA_512:
+            case RSA_1024:
+            case DSA_2048:
+            case RSA_4096:
+                Pair<RsaPublicKey, RsaPrivateKey> keyPair;
+                synchronized (rsaKeyPairCache) {
+                    if (rsaKeyPairCache.containsKey(algorithmLengthPair)) {
+                        keyPair = rsaKeyPairCache.get(algorithmLengthPair);
+                    } else {
+                        keyPair = KeyGenerator.generateRsaKeys(config.getDefaultSubjectRsaPublicExponent(), algorithmLengthPair.getKeyLength(), random);
+                        rsaKeyPairCache.put(algorithmLengthPair, keyPair);
+                    }
+                }
+                config.setDefaultSubjectRsaModulus(keyPair.getLeft().getModulus());
+                config.setDefaultSubjectRsaPrivateKey(keyPair.getRight().getPrivateExponent());
+                break;
+            case DSA_512:
+            case DSA_1024:
+            case RSA_2048:
+            case DSA_3072:
+                DsaPublicKey dsaPublicKey;
+                synchronized (dsaPublicKeyCache) {
+                    if (dsaPublicKeyCache.containsKey(algorithmLengthPair)) {
+                        dsaPublicKey = dsaPublicKeyCache.get(algorithmLengthPair);
+                    } else {
+                        dsaPublicKey = KeyGenerator.generateDsaPublicKey(config.getDefaultSubjectDsaPrivateKeyX(), algorithmLengthPair.getKeyLength(), 160, random);
+                        dsaPublicKeyCache.put(algorithmLengthPair, dsaPublicKey);
+                    }
+                }
+                config.setDefaultSubjectDsaPrimeP(dsaPublicKey.getModulus());
+                config.setDefaultSubjectDsaGenerator(dsaPublicKey.getGenerator());
+                config.setDefaultSubjectDsaPrimeQ(dsaPublicKey.getQ());
+                config.setDefaultSubjectDsaPublicKey(dsaPublicKey.getY());
+                break;
+            case ECDSA_160:
+            case ECDSA_224:
+            case ECDSA_256:
+            case ECDSA_384:
+                config.setDefaultNamedCurve(curveFromAlgorithmLengthPair(algorithmLengthPair));
+                EcdsaPublicKey ecdsaPublicKey;
+                synchronized (ecdsaPublicKeyCache) {
+                    if (ecdsaPublicKeyCache.containsKey(algorithmLengthPair)) {
+                        ecdsaPublicKey = ecdsaPublicKeyCache.get(algorithmLengthPair);
+                    } else {
+                        ecdsaPublicKey = KeyGenerator.generateEcdsaPublicKey(config.getDefaultSubjectEcPrivateKey(), config.getDefaultNamedCurve().getParameters());
+                        ecdsaPublicKeyCache.put(algorithmLengthPair, ecdsaPublicKey);
+                    }
+                }
+                config.setDefaultSubjectEcPublicKey(ecdsaPublicKey.getPublicPoint());
+                break;
         }
-        String javaName = "";
-        switch (algorithm) {
-            case RSA_PKCS1:
-            case RSA_SSA_PSS:
-                javaName = "RSA";
-                break;
-            case DSA:
-                javaName = "DSA";
-                break;
-            case ECDSA:
-                javaName = "ECDSA";
-                break;
-            case ED25519:
-            case ED448:
-            case GOSTR34102001:
-            case GOSTR34102012_256:
-            case GOSTR34102012_512:
-                throw new UnsupportedOperationException(
-                    "Algorithm" + algorithm.getHumanReadable() + " not implemented.");
-        }
-        // Need to generate new key pair
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(javaName);
-        keyPairGenerator.initialize(keySize);
-        return attemptGeneratingKeyPair(keyPairGenerator, hashKey);
     }
 
-    public static KeyPair retrieveKeyPair(String identifier, String algorithm, AlgorithmParameterSpec params)
-        throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
-        String hashKey = identifier + ":" + algorithm + ":" + params;
-
-        synchronized (keyPairCache) {
-            if (keyPairCache.containsKey(hashKey)) {
-                return keyPairCache.get(hashKey);
-            }
+    private static X509NamedCurve curveFromAlgorithmLengthPair(SignatureAlgorithmLengthPair pair) {
+        switch (pair) {
+            case ECDSA_160:
+                return SECP160R1;
+            case ECDSA_224:
+                return SECP224R1;
+            case ECDSA_256:
+                return SECP256R1;
+            case ECDSA_384:
+                return SECP384R1;
+            default:
+                throw new UnsupportedOperationException("Algorithm " + pair + " has no curve!");
         }
-
-        // Need to generate new key pair
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(algorithm);
-        keyPairGenerator.initialize(params);
-        return attemptGeneratingKeyPair(keyPairGenerator, hashKey);
-    }
-
-    private static KeyPair attemptGeneratingKeyPair(KeyPairGenerator keyPairGenerator, String hashKey)
-        throws NoSuchAlgorithmException {
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
-
-        synchronized (keyPairCache) {
-            // Did another thread create the keypair in the meantime?
-            if (keyPairCache.containsKey(hashKey)) {
-                return keyPairCache.get(hashKey);
-            }
-            keyPairCache.put(hashKey, keyPair);
-        }
-        return keyPair;
     }
 }

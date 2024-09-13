@@ -9,15 +9,15 @@
 
 package de.rub.nds.x509anvil.framework.featureextraction.probe;
 
+import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithmLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.KeyLengthProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
+import de.rub.nds.x509anvil.framework.x509.config.CachedKeyPairGenerator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
-
-import java.security.KeyPair;
 
 public class KeyLengthProbe extends SimpleProbe {
     private final X509SignatureAlgorithm signatureAlgorithm;
@@ -42,10 +42,7 @@ public class KeyLengthProbe extends SimpleProbe {
             certificateConfig = x509CertificateChainConfig.getIntermediateCertificateConfigs().get(0);
         }
         certificateConfig.setSignatureAlgorithm(signatureAlgorithm);
-
-        KeyPair keyPair =
-            X509CertificateConfigUtil.generateKeyPair(signatureAlgorithm.getSignatureAlgorithm(), keyLength);
-        certificateConfig.setSubjectKeys(keyPair);
+        CachedKeyPairGenerator.generateNewKeys(SignatureAlgorithmLengthPair.get(signatureAlgorithm.getSignatureAlgorithm(), keyLength), certificateConfig);
         return x509CertificateChainConfig;
     }
 

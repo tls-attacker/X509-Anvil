@@ -108,17 +108,6 @@ public class X509CertificateConfigUtil {
         return x509CertificateChainConfig;
     }
 
-    public static KeyPair generateKeyPair(SignatureAlgorithm signatureAlgorithm, int keyLength) {
-
-        // TODO: continue here
-
-        /*try {
-            return CachedKeyPairGenerator.retrieveKeyPair(signatureAlgorithm, keyLength);
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("This should not happen");
-        }*/
-    }
-
     public static BigInteger generateUniqueSerialNumber() {
         UUID uuid = UUID.randomUUID();
         return new BigInteger(uuid.toString().replace("-", ""), 16);
