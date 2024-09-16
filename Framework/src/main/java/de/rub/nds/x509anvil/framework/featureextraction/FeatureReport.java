@@ -90,7 +90,7 @@ public class FeatureReport {
     }
 
     public boolean hashAlgorithmSupported(HashAlgorithm hashAlgorithm) {
-        return supportedAlgorithms.stream().anyMatch(a -> a.getHashAlgorithm().equals(hashAlgorithm));
+        return supportedAlgorithms.stream().anyMatch(a -> hashAlgorithm.equals(a.getHashAlgorithm()));
     }
 
     public boolean entityHashAlgorithmSupported(HashAlgorithm hashAlgorithm) {

@@ -18,8 +18,11 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterFactory;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import org.apache.commons.lang3.NotImplementedException;
 
@@ -43,16 +46,13 @@ public class DigitalSignatureKeyUsageRequired implements Probe {
     }
 
     private X509CertificateChainConfig prepareConfig(boolean digitalSignatureSet) {
-        // TODO: reimplement with extension in attacker
-        /*
-         * X509CertificateChainConfig config = X509CertificateConfigUtil.createBasicConfig(2);
-         * config.getEntityCertificateConfig().setExtensionsPresent(true); KeyUsageExtensionConfig extensionConfig =
-         * (KeyUsageExtensionConfig) config.getEntityCertificateConfig().extension(ExtensionType.KEY_USAGE);
-         * extensionConfig.setPresent(true); extensionConfig.setCritical(true);
-         * extensionConfig.setDataEncipherment(true); // At least one flag must be set
-         * extensionConfig.setDigitalSignature(digitalSignatureSet); return config;
-         */
-        throw new NotImplementedException("KeyUsageExtension not implemented yet");
+        X509CertificateChainConfig config = X509CertificateConfigUtil.createBasicConfig(2);
+        config.getEntityCertificateConfig().setIncludeExtensions(true);
+        KeyUsageConfig extensionConfig = new KeyUsageConfig();
+        extensionConfig.setPresent(true);
+        extensionConfig.setCritical(true);
+        config.getEntityCertificateConfig().addExtensions(extensionConfig);
+        return config;
     }
 
     private VerifierResult invokeVerifier(X509CertificateChainConfig config)

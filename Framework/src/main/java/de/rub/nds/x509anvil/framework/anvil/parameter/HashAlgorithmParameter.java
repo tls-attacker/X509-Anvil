@@ -103,7 +103,7 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
     public ConditionalConstraint createSignatureAlgorithmExclusionConstraint(SignatureAlgorithm signatureAlgorithm,
         HashAlgorithm hashAlgorithm, DerivationScope derivationScope) {
         return ValueRestrictionConstraintBuilder
-            .init("Target does not support " + signatureAlgorithm.name() + " with " + hashAlgorithm.name(),
+            .init("Target does not support " + signatureAlgorithm.name() + " with " + hashAlgorithm,
                 derivationScope)
             .target(this).requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
             .restrictValues(Collections.singletonList(hashAlgorithm)).condition((target, requiredParameters) -> {
