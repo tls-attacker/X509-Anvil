@@ -22,17 +22,12 @@ public class SubjectNotPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest(id = "no_subject_leaf")
+
     public void noSubjectEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getEntityCertificateConfig().setIncludeSubjectUniqueId(false);
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, true,
+        (X509CertificateConfigModifier) config ->
+        config.setIncludeSubjectUniqueId(false));
     }
-//    public void noSubjectEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false,
-//        (X509CertificateConfigModifier) config ->
-//        config.getEntityCertificateConfig().setIncludeSubjectUniqueId(false));
-//    }
 
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
@@ -40,16 +35,11 @@ public class SubjectNotPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
+
     public void noSubjectIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).setIncludeSubjectUniqueId(false);
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false,
+        (X509CertificateConfigModifier) config ->
+        config.setIncludeSubjectUniqueId(false));
     }
-//    public void noSubjectIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false,
-//        (X509CertificateConfigModifier) config ->
-//        config.getIntermediateConfig(0).setIncludeSubjectUniqueId(false));
-//    }
 
 }

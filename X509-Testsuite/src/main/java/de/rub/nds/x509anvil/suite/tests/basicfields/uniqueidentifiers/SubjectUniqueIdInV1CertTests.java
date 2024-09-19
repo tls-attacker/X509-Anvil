@@ -13,6 +13,8 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -28,20 +30,15 @@ public class SubjectUniqueIdInV1CertTests extends X509AnvilTest {
     @ValueConstraint(identifier = "entity.subject_unique_id_present", method = "disabled")
     @ValueConstraint(identifier = "entity.version", method = "allowVersion1")
     @AnvilTest
+
     public void subjectUniqueIdPresentInV1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getEntityCertificateConfig().setIncludeSubjectUniqueId(true);
-        chainConfig.getEntityCertificateConfig().setSubjectUniqueId(new byte[] {0x0, 0x1, 0x2, 0x3});
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, true,
+                (X509CertificateConfigModifier) config -> {
+                    config.setIncludeSubjectUniqueId(true);
+                    config.setSubjectUniqueId(new byte[] {0x0, 0x1, 0x2, 0x3});
+                });
     }
-//    public void subjectUniqueIdPresentInV1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false,
-//        (X509CertificateConfigModifier) config -> {
-//        config.getEntityCertificateConfig().setIncludeSubjectUniqueId(true);
-//        config.getEntityCertificateConfig().setSubjectUniqueId(new byte[] {0x0, 0x1, 0x2, 0x3});
-//        });
-//    }
+
     @Specification(document = "RFC 5280", section = "4.1.2.8. Unique Identifiers",
             text = "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).")
     @SeverityLevel(Severity.ERROR)
@@ -49,20 +46,15 @@ public class SubjectUniqueIdInV1CertTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.subject_unique_id_present", method = "disabled")
     @AnvilTest
+
     public void subjectUniqueIdPresentInV1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).setIncludeSubjectUniqueId(true);
-        chainConfig.getIntermediateConfig(0).setSubjectUniqueId(new byte[] {0x0, 0x1, 0x2, 0x3});
-        chainConfig.getIntermediateConfig(0).setVersion(new BigInteger("0"));
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false,
+                (X509CertificateConfigModifier) config -> {
+                    config.setIncludeSubjectUniqueId(true);
+                    config.setSubjectUniqueId(new byte[] {0x0, 0x1, 0x2, 0x3});
+                    config.setVersion(BigInteger.valueOf(0));
+                });
     }
-//    public void subjectUniqueIdPresentInV1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false,
-//        (X509CertificateConfigModifier) config -> {
-//        config.getIntermediateConfig(0).setIncludeSubjectUniqueId(true);
-//        config.getIntermediateConfig(0).setSubjectUniqueId(new byte[] {0x0, 0x1, 0x2, 0x3});
-//        config.getIntermediateConfig(0).setVersion(new BigInteger("0"));
-//        });
-//    }
+
+
 }

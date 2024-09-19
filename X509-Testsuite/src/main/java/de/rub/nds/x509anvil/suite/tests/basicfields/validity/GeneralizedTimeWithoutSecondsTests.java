@@ -13,6 +13,8 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
 import de.rub.nds.x509attacker.constants.ValidityEncoding;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.Assertions;
@@ -27,11 +29,11 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "entity.not_before")
     @AnvilTest
     public void notBeforeEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getEntityCertificateConfig().setNotBefore(new DateTime(2000, 1, 1, 0, 0, 0));
-        chainConfig.getEntityCertificateConfig().setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, true,
+                (X509CertificateConfigModifier) config -> {
+                    config.setNotBefore(new DateTime(2000, 1, 1, 0, 0, 0));
+                    config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
+                });
     }
 
     @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values [...] MUST include seconds")
@@ -41,11 +43,11 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "inter0.not_before")
     @AnvilTest
     public void notBeforeIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).setNotBefore(new DateTime(2000, 1, 1, 0, 0, 0));
-        chainConfig.getIntermediateConfig(0).setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false,
+                (X509CertificateConfigModifier) config -> {
+                    config.setNotBefore(new DateTime(2000, 1, 1, 0, 0, 0));
+                    config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
+                });
     }
 
     @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values [...] MUST include seconds")
@@ -55,11 +57,11 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "entity.not_after")
     @AnvilTest
     public void notAfterEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getEntityCertificateConfig().setNotAfter(new DateTime(2050, 1, 1, 0, 0, 0));
-        chainConfig.getEntityCertificateConfig().setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, true,
+                (X509CertificateConfigModifier) config -> {
+                    config.setNotAfter(new DateTime(2050, 1, 1, 0, 0, 0));
+                    config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
+                });
     }
 
     @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values [...] MUST include seconds")
@@ -69,10 +71,11 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "inter0.not_after")
     @AnvilTest
     public void notAfterIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).setNotAfter(new DateTime(2050, 1, 1, 0, 0, 0));
-        chainConfig.getIntermediateConfig(0).setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false,
+                (X509CertificateConfigModifier) config -> {
+                    config.setNotAfter(new DateTime(2050, 1, 1, 0, 0, 0));
+                    config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
+                });
     }
+
 }

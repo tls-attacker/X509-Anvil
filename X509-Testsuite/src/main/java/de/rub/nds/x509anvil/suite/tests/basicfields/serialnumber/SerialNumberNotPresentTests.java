@@ -23,16 +23,9 @@ public class SerialNumberNotPresentTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest()
     public void noSerialNumberEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getEntityCertificateConfig().setIncludeSerialNumber(false);
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> config.setIncludeSerialNumber(false));
     }
-//    public void noSerialNumberEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false,
-//        (X509CertificateConfigModifier) config ->
-//        config.getEntityCertificateConfig().setIncludeSerialNumber(false));
-//    }
+
 
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
@@ -40,16 +33,9 @@ public class SerialNumberNotPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
+
     public void noSerialNumberIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).setIncludeSerialNumber(false);
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> config.setIncludeSerialNumber(false));
     }
-//    public void noSerialNumberIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false,
-//        (X509CertificateConfigModifier) config ->
-//        config.getIntermediateConfig(0).setIncludeSerialNumber(false));
-//    }
 
 }

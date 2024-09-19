@@ -13,9 +13,12 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+
+import java.math.BigInteger;
 
 public class EmptyDNTests extends X509AnvilTest {
 
@@ -24,20 +27,11 @@ public class EmptyDNTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest(id = "empty_dn")
+
     public void emptyDn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).getSubject().clear();
-        // TODO: probably not the desired outcome, what does empty DN mean?
-        chainConfig.getIntermediateConfig(0).getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "empty"));
-        // chainConfig.getIntermediateConfig(0).getSubject().setRelativeDistinguishedNames(Collections.singletonList(new RelativeDistinguishedName("empty")));
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false,  (X509CertificateConfigModifier) config -> {config.getSubject().clear();
+            config.getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "empty"));
+                });
     }
-//    public void emptyDn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false,
-//                (X509CertificateConfigModifier) config -> {
-//                    config.getIntermediateConfig(0).getSubject().clear();
-//                    config.getIntermediateConfig(0).getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "empty"));
-//                });
-//    }
+
 }
