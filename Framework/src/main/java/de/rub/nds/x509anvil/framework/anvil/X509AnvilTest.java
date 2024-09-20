@@ -52,6 +52,7 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         ContextHelper.initializeContext();
     }
 
+    @Deprecated
     public X509CertificateChainConfig prepareConfig(ArgumentsAccessor argumentsAccessor,
         X509VerifierRunner testRunner) {
         X509CertificateChainConfig config = initializeConfig();
@@ -63,7 +64,6 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         return config;
     }
 
-    // TODO: this or other?
     public X509CertificateChainConfig prepareConfig(X509VerifierRunner testRunner) {
         X509CertificateChainConfig config = initializeConfig();
         AnvilTestCase testCase = AnvilTestCase.fromExtensionContext(extensionContext);

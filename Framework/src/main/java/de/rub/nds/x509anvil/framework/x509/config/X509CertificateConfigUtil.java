@@ -14,6 +14,7 @@ import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
+import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
 import de.rub.nds.x509attacker.constants.CertificateChainPositionType;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
@@ -37,13 +38,9 @@ public class X509CertificateConfigUtil {
         // add all necessary extensions
         List<ExtensionConfig> extensionConfigList = new ArrayList<>();
 
-        BasicConstraintsConfig basicConstraintsConfig = new BasicConstraintsConfig();
-        basicConstraintsConfig.setCa(chainPosType != CertificateChainPositionType.ENTITY);
-        basicConstraintsConfig.setPathLenConstraint(5);
-        basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.FOLLOW_DEFAULT);
-        basicConstraintsConfig.setIncludePathLenConstraint(DefaultEncodingRule.FOLLOW_DEFAULT);
-
+        BasicConstraintsConfig basicConstraintsConfig = getBasicConstraintsConfig(chainPosType);
         extensionConfigList.add(basicConstraintsConfig);
+
 
         config.setExtensions(extensionConfigList);
         config.setIncludeExtensions(true);
@@ -67,15 +64,19 @@ public class X509CertificateConfigUtil {
          * subject.addRelativeDistinguishedNames(commonNameDN); config.setSubject(subject);
          */
 
-        config.setIncludeExtensions(false);
-
         return config;
     }
 
     public static X509CertificateConfig getDefaultCaCertificateConfig(boolean selfSigned,
         CertificateChainPositionType chainPosType) {
         X509CertificateConfig config = getDefaultCertificateConfig(selfSigned, chainPosType);
-        return config;
+
+        KeyUsageConfig keyUsageConfig = new KeyUsageConfig();
+        keyUsageConfig.setKeyCertSign(true);
+        keyUsageConfig.setPresent(true);
+        keyUsageConfig.setCritical(true);
+        config.addExtensions(keyUsageConfig);
+
         // TODO: any extensions to set?
 
         /*
@@ -89,6 +90,20 @@ public class X509CertificateConfigUtil {
          * 
          * return config;
          */
+        return config;
+    }
+
+    private static BasicConstraintsConfig getBasicConstraintsConfig(CertificateChainPositionType chainPosType) {
+        BasicConstraintsConfig basicConstraintsConfig = new BasicConstraintsConfig();
+        basicConstraintsConfig.setPresent(true);
+        basicConstraintsConfig.setCritical(true);
+
+        basicConstraintsConfig.setCa(chainPosType != CertificateChainPositionType.ENTITY);
+        basicConstraintsConfig.setPathLenConstraint(5);
+        basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.FOLLOW_DEFAULT);
+        basicConstraintsConfig.setIncludePathLenConstraint(DefaultEncodingRule.FOLLOW_DEFAULT);
+
+        return basicConstraintsConfig;
     }
 
     /**

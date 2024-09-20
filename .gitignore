@@ -25,3 +25,6 @@ hs_err_pid*
 /target/
 
 .idea/*
+
+X509-Testsuite/results/*
+X509-Testsuite/resources/out/*
