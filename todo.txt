@@ -1,6 +1,8 @@
 - copy subject keys as issuer keys to lower certificate
 - implement correct key generation using keys in attacker... especially for dsa and ecdsa
-	
+
+- check for hash and signature algorithm support in conjunction and set both at the same time if supported
+
 - extension tests
 - update all tests to use new modifiers
 

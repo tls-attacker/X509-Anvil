@@ -15,7 +15,7 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
-import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithmLengthPair;
+import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509anvil.framework.x509.config.CachedKeyPairGenerator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -24,33 +24,33 @@ import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SignatureParameter extends CertificateSpecificParameter<SignatureAlgorithmLengthPair> {
+public class SignatureHashAndLengthParameter extends CertificateSpecificParameter<SignatureHashAlgorithmKeyLengthPair> {
 
-    public SignatureParameter(ParameterScope parameterScope) {
+    public SignatureHashAndLengthParameter(ParameterScope parameterScope) {
         super(new ParameterIdentifier(X509AnvilParameterType.KEY_TYPE, parameterScope),
-            SignatureAlgorithmLengthPair.class);
+                SignatureHashAlgorithmKeyLengthPair.class);
     }
 
-    public SignatureParameter(ParameterScope parameterScope, SignatureAlgorithmLengthPair value) {
+    public SignatureHashAndLengthParameter(ParameterScope parameterScope, SignatureHashAlgorithmKeyLengthPair value) {
         this(parameterScope);
         setSelectedValue(value);
     }
 
     @Override
-    protected DerivationParameter<X509CertificateChainConfig, SignatureAlgorithmLengthPair>
-        generateValue(SignatureAlgorithmLengthPair selectedValue) {
-        return new SignatureParameter(getParameterIdentifier().getParameterScope(), selectedValue);
+    protected DerivationParameter<X509CertificateChainConfig, SignatureHashAlgorithmKeyLengthPair>
+        generateValue(SignatureHashAlgorithmKeyLengthPair selectedValue) {
+        return new SignatureHashAndLengthParameter(getParameterIdentifier().getParameterScope(), selectedValue);
     }
 
     @Override
-    protected List<DerivationParameter<X509CertificateChainConfig, SignatureAlgorithmLengthPair>>
+    protected List<DerivationParameter<X509CertificateChainConfig, SignatureHashAlgorithmKeyLengthPair>>
         getNonNullParameterValues(DerivationScope derivationScope) {
         FeatureReport featureReport = ContextHelper.getFeatureReport();
-        List<SignatureAlgorithmLengthPair> supportedKeyLength;
+        List<SignatureHashAlgorithmKeyLengthPair> supportedKeyLength;
         if (getParameterScope().isEntity()) {
-            supportedKeyLength = featureReport.getSupportedEntityKeyLengths();
+            supportedKeyLength = featureReport.getSupportedEntityAlgorithmsAndKeyLengths();
         } else {
-            supportedKeyLength = featureReport.getSupportedKeyLengths();
+            supportedKeyLength = featureReport.getSupportedAlgorithmsAndKeyLengths();
         }
         return supportedKeyLength.stream().map(this::generateValue).collect(Collectors.toList());
     }

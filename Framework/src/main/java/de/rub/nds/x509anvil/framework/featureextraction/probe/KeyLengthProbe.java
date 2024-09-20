@@ -9,7 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.featureextraction.probe;
 
-import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithmLengthPair;
+import de.rub.nds.x509anvil.framework.constants.SignatureAndHashAlgorithmLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.KeyLengthProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
@@ -42,7 +42,7 @@ public class KeyLengthProbe extends SimpleProbe {
             certificateConfig = x509CertificateChainConfig.getIntermediateCertificateConfigs().get(0);
         }
         certificateConfig.setSignatureAlgorithm(signatureAlgorithm);
-        CachedKeyPairGenerator.generateNewKeys(SignatureAlgorithmLengthPair.get(signatureAlgorithm.getSignatureAlgorithm(), keyLength), certificateConfig);
+        CachedKeyPairGenerator.generateNewKeys(SignatureAndHashAlgorithmLengthPair.get(signatureAlgorithm.getSignatureAlgorithm(), keyLength), certificateConfig);
         return x509CertificateChainConfig;
     }
 

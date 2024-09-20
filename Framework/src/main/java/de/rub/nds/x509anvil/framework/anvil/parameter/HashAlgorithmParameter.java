@@ -20,7 +20,7 @@ import de.rub.nds.protocol.constants.HashAlgorithm;
 import de.rub.nds.protocol.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
-import de.rub.nds.x509anvil.framework.constants.SignatureAlgorithmLengthPair;
+import de.rub.nds.x509anvil.framework.constants.SignatureAndHashAlgorithmLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
@@ -85,8 +85,8 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
                 .target(this).requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
                 .restrictValues(Arrays.asList(HashAlgorithm.SHA512, HashAlgorithm.SHA384))
                 .condition((target, requiredParameters) -> {
-                    SignatureAlgorithmLengthPair signatureAlgorithmLengthPair =
-                        (SignatureAlgorithmLengthPair) ConstraintHelper
+                    SignatureAndHashAlgorithmLengthPair signatureAlgorithmLengthPair =
+                        (SignatureAndHashAlgorithmLengthPair) ConstraintHelper
                             .getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
                             .getSelectedValue();
                     if (signatureAlgorithmLengthPair == null) {
@@ -107,8 +107,8 @@ public class HashAlgorithmParameter extends CertificateSpecificParameter<HashAlg
                 derivationScope)
             .target(this).requiredParameter(getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
             .restrictValues(Collections.singletonList(hashAlgorithm)).condition((target, requiredParameters) -> {
-                SignatureAlgorithmLengthPair selectedSignatureAlgorithmLengthPair =
-                    (SignatureAlgorithmLengthPair) ConstraintHelper
+                SignatureAndHashAlgorithmLengthPair selectedSignatureAlgorithmLengthPair =
+                    (SignatureAndHashAlgorithmLengthPair) ConstraintHelper
                         .getParameterValue(requiredParameters, getScopedIdentifier(X509AnvilParameterType.KEY_TYPE))
                         .getSelectedValue();
                 return selectedSignatureAlgorithmLengthPair != null

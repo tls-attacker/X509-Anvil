@@ -40,7 +40,7 @@ public class X509AnvilParameterFactory {
             case SERIAL_NUMBER:
                 return new SerialNumberParameter(parameterIdentifier.getParameterScope());
             case KEY_TYPE:
-                return new SignatureParameter(parameterIdentifier.getParameterScope());
+                return new SignatureHashAndLengthParameter(parameterIdentifier.getParameterScope());
             case HASH_ALGORITHM:
                 return new HashAlgorithmParameter(parameterIdentifier.getParameterScope());
             case NOT_BEFORE:

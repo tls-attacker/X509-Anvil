@@ -9,13 +9,16 @@
 
 package de.rub.nds.x509anvil.framework.constants;
 
+import de.rub.nds.protocol.constants.HashAlgorithm;
 import de.rub.nds.protocol.constants.SignatureAlgorithm;
+import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum SignatureAlgorithmLengthPair {
+public enum oldSignatureAndHashAlgorithmLengthPair {
+
     RSA_512(SignatureAlgorithm.RSA_PKCS1, 512),
     RSA_1024(SignatureAlgorithm.RSA_PKCS1, 1024),
     RSA_2048(SignatureAlgorithm.RSA_PKCS1, 2048),
@@ -32,11 +35,9 @@ public enum SignatureAlgorithmLengthPair {
     ECDSA_256(SignatureAlgorithm.ECDSA, 256),
     ECDSA_384(SignatureAlgorithm.ECDSA, 384),;
 
-    private final SignatureAlgorithm signatureAlgorithm;
     private final int keyLength;
 
-    SignatureAlgorithmLengthPair(SignatureAlgorithm signatureAlgorithm, int keyLength) {
-        this.signatureAlgorithm = signatureAlgorithm;
+    SignatureAndHashAlgorithmLengthPair(int keyLength) {
         this.keyLength = keyLength;
     }
 
@@ -49,12 +50,12 @@ public enum SignatureAlgorithmLengthPair {
     }
 
     public static List<Integer> getKeyLengths(SignatureAlgorithm keyType) {
-        return Arrays.stream(SignatureAlgorithmLengthPair.values()).filter(p -> p.signatureAlgorithm == keyType)
-            .map(SignatureAlgorithmLengthPair::getKeyLength).collect(Collectors.toList());
+        return Arrays.stream(SignatureAndHashAlgorithmLengthPair.values()).filter(p -> p.signatureAlgorithm == keyType)
+            .map(SignatureAndHashAlgorithmLengthPair::getKeyLength).collect(Collectors.toList());
     }
 
-    public static SignatureAlgorithmLengthPair get(SignatureAlgorithm signatureAlgorithm, int keyLength) {
-        return Arrays.stream(SignatureAlgorithmLengthPair.values())
+    public static SignatureAndHashAlgorithmLengthPair get(SignatureAlgorithm signatureAlgorithm, int keyLength) {
+        return Arrays.stream(SignatureAndHashAlgorithmLengthPair.values())
             .filter(p -> p.signatureAlgorithm == signatureAlgorithm && p.keyLength == keyLength).findFirst()
             .orElseThrow(() -> new IllegalArgumentException("KeyType - length combination is not supported"));
     }
