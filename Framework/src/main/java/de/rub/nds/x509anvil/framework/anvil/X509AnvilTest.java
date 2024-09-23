@@ -116,7 +116,7 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         if (entity) {
             config = certificateChainConfig.getEntityCertificateConfig();
         } else {
-            config = certificateChainConfig.getIntermediateConfig(0);
+            config = certificateChainConfig.getLastSigningConfig();
         }
         // apply modifications
         modifier.apply(config);
@@ -134,7 +134,7 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         if (entity) {
             config = certificateChainConfig.getEntityCertificateConfig();
         } else {
-            config = certificateChainConfig.getIntermediateConfig(0);
+            config = certificateChainConfig.getLastSigningConfig();
         }
         // apply modifications to config
         configModifier.apply(config);

@@ -79,7 +79,7 @@ public class CachedKeyPairGenerator {
     private static X509NamedCurve curveFromAlgorithmLengthPair(SignatureHashAlgorithmKeyLengthPair pair) {
         switch (pair.getKeyLength()) {
             // TODO: replace with constant
-            case 160:
+            case 192:
                 return SECP160R1;
             case 224:
                 return SECP224R1;

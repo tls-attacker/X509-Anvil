@@ -46,18 +46,18 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
     protected List<DerivationParameter<X509CertificateChainConfig, SignatureHashAlgorithmKeyLengthPair>>
         getNonNullParameterValues(DerivationScope derivationScope) {
         FeatureReport featureReport = ContextHelper.getFeatureReport();
-        List<SignatureHashAlgorithmKeyLengthPair> supportedKeyLength;
+        List<SignatureHashAlgorithmKeyLengthPair> signatureHashAlgorithmKeyLengthPairs;
         if (getParameterScope().isEntity()) {
-            supportedKeyLength = featureReport.getSupportedEntityAlgorithmsAndKeyLengths();
+            signatureHashAlgorithmKeyLengthPairs = featureReport.getSupportedSignatureHashAndKeyLengthPairsEntity();
         } else {
-            supportedKeyLength = featureReport.getSupportedAlgorithmsAndKeyLengths();
+            signatureHashAlgorithmKeyLengthPairs = featureReport.getSupportedSignatureHashAndKeyLengthPairsIntermediate();
         }
-        return supportedKeyLength.stream().map(this::generateValue).collect(Collectors.toList());
+        return signatureHashAlgorithmKeyLengthPairs.stream().map(this::generateValue).collect(Collectors.toList());
     }
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        certificateConfig.amendSignatureAlgorithm(getSelectedValue().getSignatureAlgorithm());
+        certificateConfig.setSignatureAlgorithm(getSelectedValue().getSignatureAndHashAlgorithm());
         CachedKeyPairGenerator.generateNewKeys(getSelectedValue(), certificateConfig);
     }
 }

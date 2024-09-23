@@ -9,13 +9,13 @@
 
 package de.rub.nds.x509anvil.framework.featureextraction;
 
-import de.rub.nds.protocol.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
-import de.rub.nds.x509anvil.framework.constants.SignatureAndHashAlgorithmLengthPair;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.*;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.result.*;
-import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
+import de.rub.nds.x509anvil.framework.featureextraction.probe.result.DigitalSignatureKeyUsageRequiredProbeResult;
+import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ExtensionProbeResult;
+import de.rub.nds.x509anvil.framework.featureextraction.probe.result.SignatureAlgorithmProbeResult;
+import de.rub.nds.x509anvil.framework.featureextraction.probe.result.VersionProbeResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class FeatureExtractor {
         // Probe support for signature algorithms (entity + intermediate)
         scanForSignatureHashAndKeyLengthAlgorithms(featureReport, true);
 
-        scanForSignatureHashAndKeyLengthAlgorithmsEntity(featureReport, false);
+        scanForSignatureHashAndKeyLengthAlgorithms(featureReport, false);
 
         return featureReport;
     }
@@ -90,27 +90,38 @@ public class FeatureExtractor {
         }
     }
 
-    private static void scanForSignatureAlgorithmsEntity(FeatureReport featureReport)
+    private static void scanForSignatureHashAndKeyLengthAlgorithms(FeatureReport featureReport, boolean entity)
             throws ProbeException, UnsupportedFeatureException {
         List<SignatureHashAlgorithmKeyLengthPair> signatureHashAlgorithmKeyLengthPairs = new ArrayList<>();
 
         // produce all combinations of X509SignatureAlgorithm and the key pairs
         // evaluate combination
 
-        for (X509SignatureAlgorithm algorithm : X509SignatureAlgorithm.values()) {
-            Probe entitySignatureAlgorithmProbe = new SignatureHashAndKeyLengthProbe(algorithm);
+        for (SignatureHashAlgorithmKeyLengthPair algorithm : SignatureHashAlgorithmKeyLengthPair.generateAllPossibilities()) {
+            Probe signatureAlgorithmProbe = new SignatureHashAndKeyLengthProbe(algorithm, entity);
             SignatureAlgorithmProbeResult signatureAlgorithmProbeResult =
-                    (SignatureAlgorithmProbeResult) entitySignatureAlgorithmProbe.execute();
+                    (SignatureAlgorithmProbeResult) signatureAlgorithmProbe.execute();
             if (signatureAlgorithmProbeResult.isSupported()) {
-                supportedEntityAlgorithms.add(algorithm);
+                signatureHashAlgorithmKeyLengthPairs.add(algorithm);
             }
             featureReport.addProbeResult(signatureAlgorithmProbeResult);
         }
-        featureReport.setSupportedEntityAlgorithms(supportedEntityAlgorithms);
 
-        if (supportedEntityAlgorithms.isEmpty()) {
-            throw new UnsupportedFeatureException(
-                    "Target verifier does not support any of the implemented signature algorithms for entity certificates");
+        if (entity) {
+            featureReport.setSupportedSignatureHashAndKeyLengthPairsEntity(signatureHashAlgorithmKeyLengthPairs);
+        } else {
+            featureReport.setSupportedSignatureHashAndKeyLengthPairsIntermediate(signatureHashAlgorithmKeyLengthPairs);
+        }
+
+        if (signatureHashAlgorithmKeyLengthPairs.isEmpty()) {
+            if (entity) {
+                throw new UnsupportedFeatureException(
+                        "Target verifier does not support any of the implemented signature algorithms for entity certificates");
+            }
+            else {
+                throw new UnsupportedFeatureException(
+                        "Target verifier does not support any of the implemented signature algorithms for intermediate certificates");
+            }
         }
     }
 }

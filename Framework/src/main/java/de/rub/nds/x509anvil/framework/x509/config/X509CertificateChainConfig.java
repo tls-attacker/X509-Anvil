@@ -82,6 +82,14 @@ public class X509CertificateChainConfig {
         return intermediateCertificateConfigs.get(index);
     }
 
+    public X509CertificateConfig getLastSigningConfig() {
+        if (!intermediateCertificateConfigs.isEmpty()) {
+            return getIntermediateConfig(0);
+        } else {
+            return rootCertificateConfig;
+        }
+    }
+
     public X509CertificateConfig getIssuerConfigOf(X509CertificateConfig subject) {
         List<X509CertificateConfig> certificateConfigList = getCertificateConfigList();
         if (!certificateConfigList.contains(subject)) {

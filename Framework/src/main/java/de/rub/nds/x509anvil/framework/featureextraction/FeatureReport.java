@@ -9,22 +9,19 @@
 
 package de.rub.nds.x509anvil.framework.featureextraction;
 
-import de.rub.nds.protocol.constants.HashAlgorithm;
-import de.rub.nds.protocol.constants.SignatureAlgorithm;
-import de.rub.nds.x509anvil.framework.anvil.parameter.SignatureHashAndLengthParameter;
 import de.rub.nds.x509anvil.framework.constants.*;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
-import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class FeatureReport {
     private final List<ProbeResult> probeResults = new ArrayList<>();
     private List<Integer> supportedVersions = new ArrayList<>();
     private List<ExtensionType> supportedExtensions = new ArrayList<>();
 
-    private List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairs = new ArrayList<>();
+    private List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsEntity = new ArrayList<>();
+
+    private List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate = new ArrayList<>();
     private boolean digitalSignatureKeyUsageRequired;
 
     public List<ProbeResult> getProbeResults() {
@@ -78,17 +75,25 @@ public class FeatureReport {
         this.digitalSignatureKeyUsageRequired = digitalSignatureKeyUsageRequired;
     }
 
-    public List<SignatureHashAlgorithmKeyLengthPair> getSupportedSignatureHashAndKeyLengthPairs() {
-        return supportedSignatureHashAndKeyLengthPairs;
+    public List<SignatureHashAlgorithmKeyLengthPair> getSupportedSignatureHashAndKeyLengthPairsIntermediate() {
+        return supportedSignatureHashAndKeyLengthPairsIntermediate;
     }
 
-    public void setSupportedSignatureHashAndKeyLengthPairs(List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairs) {
-        this.supportedSignatureHashAndKeyLengthPairs = supportedSignatureHashAndKeyLengthPairs;
+    public void setSupportedSignatureHashAndKeyLengthPairsIntermediate(List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate) {
+        this.supportedSignatureHashAndKeyLengthPairsIntermediate = supportedSignatureHashAndKeyLengthPairsIntermediate;
+    }
+
+    public List<SignatureHashAlgorithmKeyLengthPair> getSupportedSignatureHashAndKeyLengthPairsEntity() {
+        return supportedSignatureHashAndKeyLengthPairsEntity;
+    }
+
+    public void setSupportedSignatureHashAndKeyLengthPairsEntity(List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate) {
+        this.supportedSignatureHashAndKeyLengthPairsEntity = supportedSignatureHashAndKeyLengthPairsIntermediate;
     }
 
     @Override
     public String toString() {
-        return "Supported versions: " + supportedVersions + "\n" + "Supported Signature and HashAlgorithm and Key Length triples: " + supportedSignatureHashAndKeyLengthPairs + "\n"
+        return "Supported versions: " + supportedVersions + "\n" + "Supported Signature and HashAlgorithm and Key Length triples: " + supportedSignatureHashAndKeyLengthPairsIntermediate + "\n"
             + "Supported extensions: " + supportedExtensions;
     }
 

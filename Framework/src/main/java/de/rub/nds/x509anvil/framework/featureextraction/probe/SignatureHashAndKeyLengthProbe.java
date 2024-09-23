@@ -35,7 +35,7 @@ public class SignatureHashAndKeyLengthProbe extends SimpleProbe {
         if (entity) {
             config = x509CertificateChainConfig.getEntityCertificateConfig();
         } else {
-            config = x509CertificateChainConfig.getIntermediateConfig(0);
+            config = x509CertificateChainConfig.getLastSigningConfig();
         }
         // set signature hash and key length
         // TODO: for RSA_PSS we always use the same hash algorithm
