@@ -29,6 +29,12 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void duplicateIdenticalEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, config ->
+//                testRunner.execute(config, Modifiers.duplicateIdenticalExtensionModifier(true, ExtensionObjectIdentifiers.KEY_USAGE))
+//        );
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
@@ -44,6 +50,12 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void duplicateIdenticalIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config ->
+//                testRunner.execute(config, Modifiers.duplicateIdenticalExtensionModifier(false, ExtensionObjectIdentifiers.KEY_USAGE))
+//        );
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
@@ -60,6 +72,13 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void duplicateDifferentEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, config ->
+//                testRunner.execute(config, Modifiers.duplicateDifferentExtensionModifier(true,
+//                        ExtensionObjectIdentifiers.KEY_USAGE, createDuplicateExtensionValue(config)))
+//        );
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
@@ -76,6 +95,13 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void duplicateDifferentIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config ->
+//                testRunner.execute(config, Modifiers.duplicateDifferentExtensionModifier(false,
+//                        ExtensionObjectIdentifiers.KEY_USAGE, createDuplicateExtensionValue(config)))
+//        );
+//    }
+
 
     // TODO: re-implement when extension implemented in attacker
         /*

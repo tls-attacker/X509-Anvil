@@ -31,6 +31,15 @@ public class V3CertWithUniqueIdsButNoExtnsTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void v3WithoutExtensionsWithSubjectUIdEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//            config.setVersion(3);
+//            config.setExtensionsPresent(false);
+//            config.setSubjectUniqueIdPresent(true);
+//            config.setSubjectUniqueId(new BitString(new byte[]{0, 1, 2, 3}));
+//        });
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.1.2.9. Extensions", text = "This field MUST only appear if the version is 3 (Section 4.1.2.1).")
     @SeverityLevel(Severity.INFORMATIONAL)
@@ -49,6 +58,15 @@ public class V3CertWithUniqueIdsButNoExtnsTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void v3WithoutExtensionsWithSubjectUIdIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//            config.setVersion(3);
+//            config.setExtensionsPresent(false);
+//            config.setSubjectUniqueIdPresent(true);
+//            config.setSubjectUniqueId(new BitString(new byte[]{0, 1, 2, 3}));
+//        });
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.1.2.9. Extensions", text = "This field MUST only appear if the version is 3 (Section 4.1.2.1).")
     @SeverityLevel(Severity.INFORMATIONAL)
@@ -67,6 +85,15 @@ public class V3CertWithUniqueIdsButNoExtnsTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void v3WithoutExtensionsWithIssuerUIdEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//            config.setVersion(3);
+//            config.setExtensionsPresent(false);
+//            config.setIssuerUniqueIdPresent(true);
+//            config.setIssuerUniqueId(new BitString(new byte[]{0, 1, 2, 3}));
+//        });
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.1.2.9. Extensions", text = "This field MUST only appear if the version is 3 (Section 4.1.2.1).")
     @SeverityLevel(Severity.INFORMATIONAL)
@@ -85,4 +112,13 @@ public class V3CertWithUniqueIdsButNoExtnsTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void v3WithoutExtensionsWithIssuerUIdIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//            config.setVersion(3);
+//            config.setExtensionsPresent(false);
+//            config.setIssuerUniqueIdPresent(true);
+//            config.setIssuerUniqueId(new BitString(new byte[]{0, 1, 2, 3}));
+//        });
+//    }
+
 }

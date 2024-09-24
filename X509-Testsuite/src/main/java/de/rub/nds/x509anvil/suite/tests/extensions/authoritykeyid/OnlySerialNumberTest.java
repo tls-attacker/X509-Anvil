@@ -29,6 +29,13 @@ public class OnlySerialNumberTest extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void missingKeyIdentifierEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//            // Placeholder for future extension implementation
+//            serialWithoutIssuerModifier(true); // Assuming serialWithoutIssuerModifier will be implemented
+//        });
+//    }
+
 
     @Specification(document = "RFC 5280", section = "A.2. Implicitly Tagged Module, 1988 Syntax",
             text = "authorityCertIssuer and authorityCertSerialNumber MUST both be present or both be absent")
@@ -45,6 +52,13 @@ public class OnlySerialNumberTest extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void missingKeyIdentifierIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//            // Placeholder for future extension implementation
+//            serialWithoutIssuerModifier(true); // Assuming serialWithoutIssuerModifier will be implemented
+//        });
+//    }
+
 
 
 // TODO: re-implement with extension

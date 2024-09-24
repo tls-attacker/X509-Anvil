@@ -34,6 +34,13 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void duplicateIdenticalEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config.getEntityCertificateConfig(), X509ExtensionType.BASIC_CONSTRAINTS);
+//            config.addExtensions(basicConstraintsConfig);
+//        });
+//    }
+//
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
@@ -47,6 +54,13 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void duplicateIdenticalIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
+//            config.addExtensions(basicConstraintsConfig);
+//        });
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
@@ -64,6 +78,15 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
+//    public void duplicateDifferentEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//            BasicConstraintsConfig oldConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
+//            BasicConstraintsConfig newConfig = new BasicConstraintsConfig();
+//            newConfig.setCa(!oldConfig.isCa());
+//            config.addExtensions(newConfig);
+//        });
+//    }
+
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 3, maxLength = 3)
@@ -78,4 +101,13 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void duplicateDifferentIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//            BasicConstraintsConfig oldConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
+//            BasicConstraintsConfig newConfig = new BasicConstraintsConfig();
+//            newConfig.setCa(!oldConfig.isCa());
+//            config.addExtensions(newConfig);
+//        });
+//    }
+
 }

@@ -31,6 +31,13 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void keyIdMismatchEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//            VerifierResult result = testRunner.execute(config, authKeyMismatch(true));
+//            return result;
+//        });
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.2.1.2. Subject Key Identifier",
             text = "In conforming CA certificates, the value of the subject key identifier MUST be the value placed in the key identifier " +
@@ -48,6 +55,13 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void keyIdMismatchIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//            VerifierResult result = testRunner.execute(config, authKeyMismatch(false));
+//            return result;
+//        });
+//    }
+
 
 
 // TODO: re-implement when extension implemented in attacker

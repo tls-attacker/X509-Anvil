@@ -35,4 +35,13 @@ public class InterCertWithoutKeyCertSignTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
         */
     }
+//    public void intermediateCertWithCaNotSet(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//            KeyUsageExtensionConfig keyUsageExtensionConfig = (KeyUsageExtensionConfig) config.extension(ExtensionType.KEY_USAGE);
+//            keyUsageExtensionConfig.setKeyCertSign(false);
+//            keyUsageExtensionConfig.setDigitalSignature(true);
+//            return testRunner.execute(config);
+//        });
+//    }
+
 }

@@ -29,6 +29,13 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void keyUsageOverflowAppend1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//            VerifierResult result = testRunner.execute(config, keyUsageOverflowModifier(true, (byte) 128, (byte) 6));
+//            return result;
+//        });
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
@@ -44,6 +51,12 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void keyUsageOverflowAppend1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//            VerifierResult result = testRunner.execute(config, keyUsageOverflowModifier(false, (byte) 128, (byte) 6));
+//            return result;
+//        });
+//    }
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
@@ -59,6 +72,13 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void keyUsageOverflowAppend0Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//            VerifierResult result = testRunner.execute(config, keyUsageOverflowModifier(true, (byte) 0, (byte) 6));
+//            return result;
+//        });
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
@@ -74,6 +94,13 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void keyUsageOverflowAppend0Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//            VerifierResult result = testRunner.execute(config, keyUsageOverflowModifier(false, (byte) 0, (byte) 6));
+//            return result;
+//        });
+//    }
+
 
     // TODO: re-implement when extension implemented in attacker
         /*

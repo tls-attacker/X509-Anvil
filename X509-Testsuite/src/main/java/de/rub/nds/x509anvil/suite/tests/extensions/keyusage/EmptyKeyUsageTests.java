@@ -33,4 +33,12 @@ public class EmptyKeyUsageTests extends X509AnvilTest {
                 Assertions.assertFalse(result.isValid());
                  */
         }
+//        public void emptyKeyUsageEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//                assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//                        KeyUsageExtensionConfig keyUsageExtensionConfig = (KeyUsageExtensionConfig) config.extension(ExtensionType.KEY_USAGE);
+//                        keyUsageExtensionConfig.unsetAllBits();
+//                        return testRunner.execute(config);
+//                });
+//        }
+
 }

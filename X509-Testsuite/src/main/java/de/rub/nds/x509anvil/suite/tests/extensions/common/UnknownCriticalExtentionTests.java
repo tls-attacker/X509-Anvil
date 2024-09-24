@@ -34,6 +34,15 @@ public class UnknownCriticalExtentionTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void unknownCriticalExtensionEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//            config.setVersion(2);
+//            config.setExtensionsPresent(true);
+//            config.extension(ExtensionType.UNKNOWN_EXTENSION).setPresent(true);
+//            config.extension(ExtensionType.UNKNOWN_EXTENSION).setCritical(true);
+//        });
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions",
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension it does not recognize")
@@ -54,4 +63,13 @@ public class UnknownCriticalExtentionTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void unknownCriticalExtensionIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//            config.setVersion(2);
+//            config.setExtensionsPresent(true);
+//            config.extension(ExtensionType.UNKNOWN_EXTENSION).setPresent(true);
+//            config.extension(ExtensionType.UNKNOWN_EXTENSION).setCritical(true);
+//        });
+//    }
+
 }

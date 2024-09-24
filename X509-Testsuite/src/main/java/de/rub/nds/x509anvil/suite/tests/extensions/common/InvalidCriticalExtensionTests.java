@@ -34,6 +34,12 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void invalidCriticalSubjectKeyIdentifierEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//            config.extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
+//        }, Modifiers.invalidExtensionValueModifier(true, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions",
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension [...] " +
@@ -54,4 +60,10 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void invalidCriticalSubjectKeyIdentifierIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//            config.extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
+//        }, Modifiers.invalidExtensionValueModifier(false, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
+//    }
+
 }

@@ -31,6 +31,13 @@ public class Version1CertWithExtensionsTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void version1CertWithExtensionsEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//            config.setVersion(0);
+//            config.extension(ExtensionType.KEY_USAGE).setPresent(true);
+//        });
+//    }
+
 
     @Specification(document = "RFC 5280", section = "4.1.2.9. Extensions", text = "This field MUST only appear if the version is 3 (Section 4.1.2.1).")
     @SeverityLevel(Severity.WARNING)
@@ -48,4 +55,11 @@ public class Version1CertWithExtensionsTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
          */
     }
+//    public void version1CertWithExtensionsIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//            config.setVersion(0);
+//            config.extension(ExtensionType.KEY_USAGE).setPresent(true);
+//        });
+//    }
+
 }
