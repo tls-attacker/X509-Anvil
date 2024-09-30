@@ -28,10 +28,14 @@ public class OrganizationalUnitMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.nc_organizational_unit_present", method = "enabled")
     @AnvilTest
+//    public void organizationalUnitMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+//        X509CertificateConfigUtil.modifyAttributeAndValuePair(chainConfig.getEntityCertificateConfig(), X500AttributeType.ORGANISATION_UNIT_NAME);
+//        VerifierResult result = testRunner.execute(chainConfig);
+//        Assertions.assertFalse(result.isValid());
+//    }
     public void organizationalUnitMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        X509CertificateConfigUtil.modifyAttributeAndValuePair(chainConfig.getEntityCertificateConfig(), X500AttributeType.ORGANISATION_UNIT_NAME);
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, true, modifyAttributeAndValuePair(config, X500AttributeType.ORGANISATION_UNIT_NAME));
     }
 }
+

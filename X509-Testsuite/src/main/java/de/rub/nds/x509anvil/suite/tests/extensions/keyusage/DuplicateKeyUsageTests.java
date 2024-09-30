@@ -30,7 +30,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
          */
     }
 //    public void duplicateIdenticalEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, config ->
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config ->
 //                testRunner.execute(config, Modifiers.duplicateIdenticalExtensionModifier(true, ExtensionObjectIdentifiers.KEY_USAGE))
 //        );
 //    }
@@ -51,7 +51,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
          */
     }
 //    public void duplicateIdenticalIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, config ->
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config ->
 //                testRunner.execute(config, Modifiers.duplicateIdenticalExtensionModifier(false, ExtensionObjectIdentifiers.KEY_USAGE))
 //        );
 //    }
@@ -73,7 +73,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
          */
     }
 //    public void duplicateDifferentEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, config ->
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config ->
 //                testRunner.execute(config, Modifiers.duplicateDifferentExtensionModifier(true,
 //                        ExtensionObjectIdentifiers.KEY_USAGE, createDuplicateExtensionValue(config)))
 //        );
@@ -96,7 +96,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
          */
     }
 //    public void duplicateDifferentIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, config ->
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config ->
 //                testRunner.execute(config, Modifiers.duplicateDifferentExtensionModifier(false,
 //                        ExtensionObjectIdentifiers.KEY_USAGE, createDuplicateExtensionValue(config)))
 //        );

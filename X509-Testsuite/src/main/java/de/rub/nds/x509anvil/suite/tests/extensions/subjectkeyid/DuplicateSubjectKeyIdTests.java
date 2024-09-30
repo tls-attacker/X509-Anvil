@@ -30,7 +30,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
          */
     }
 //    public void duplicateIdenticalEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
 //            VerifierResult result = testRunner.execute(config, Modifiers.duplicateIdenticalExtensionModifier(true, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
 //            return result;
 //        });
@@ -52,7 +52,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
          */
     }
 //    public void duplicateIdenticalIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
 //            VerifierResult result = testRunner.execute(config, Modifiers.duplicateIdenticalExtensionModifier(false, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
 //            return result;
 //        });
@@ -75,7 +75,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
          */
     }
 //    public void duplicateDifferentEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
 //            VerifierResult result = testRunner.execute(config, Modifiers.duplicateDifferentExtensionModifier(true, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER, createDuplicateExtensionValue()));
 //            return result;
 //        });
@@ -98,7 +98,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
          */
     }
 //    public void duplicateDifferentIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
 //            VerifierResult result = testRunner.execute(config, Modifiers.duplicateDifferentExtensionModifier(false, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER, createDuplicateExtensionValue()));
 //            return result;
 //        });

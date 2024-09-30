@@ -13,6 +13,8 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.CachedKeyPairGenerator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateModifier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -33,10 +35,8 @@ public class WeakKeyLengthTests extends X509AnvilTest {
 //        Assertions.assertFalse(result.isValid());
 //    }
     public void weak512BitRsaKey(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
-        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier)  config -> {
             config.applyKeyPair(CachedKeyPairGenerator.retrieveKeyPair(SignatureAlgorithm.RSA_PKCS1, 512));
-            VerifierResult result = testRunner.execute(config);
-            return result;
         });
     }
 
@@ -52,10 +52,8 @@ public class WeakKeyLengthTests extends X509AnvilTest {
 //        Assertions.assertFalse(result.isValid());
 //    }
     public void weak1024BitRsaKey(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
-        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
             config.applyKeyPair(CachedKeyPairGenerator.retrieveKeyPair(SignatureAlgorithm.RSA_PKCS1, 1024));
-            VerifierResult result = testRunner.execute(config);
-            return result;
         });
     }
 
@@ -72,10 +70,8 @@ public class WeakKeyLengthTests extends X509AnvilTest {
 //        Assertions.assertFalse(result.isValid());
 //    }
     public void weak1024BitDsaKey(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
-        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
             config.applyKeyPair(CachedKeyPairGenerator.retrieveKeyPair(SignatureAlgorithm.DSA, 1024));
-            VerifierResult result = testRunner.execute(config);
-            return result;
         });
     }
 

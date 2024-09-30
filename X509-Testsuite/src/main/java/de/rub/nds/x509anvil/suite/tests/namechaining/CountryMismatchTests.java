@@ -34,4 +34,10 @@ public class CountryMismatchTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void countryMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, modifyAttributeAndValuePair(X500AttributeType.COUNTRY_NAME));
+//    }
+
 }
+
+

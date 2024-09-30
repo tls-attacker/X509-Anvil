@@ -40,7 +40,7 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 //    public void criticalAuthorityKeyIdEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier )config -> {
 //            ExtensionConfig authorityKeyIdentifier = new UnknownConfig(X509ExtensionType.AUTHORITY_KEY_IDENTIFIER.getOid(), "authority_key_identifier");
 //            authorityKeyIdentifier.setCritical(true);
 //            config.addExtensions(authorityKeyIdentifier);
@@ -63,11 +63,11 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 //    public void criticalAuthorityKeyIdIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, false,(X509CertificateConfigModifier) config -> {
 //            ExtensionConfig authorityKeyIdentifier = new UnknownConfig(X509ExtensionType.AUTHORITY_KEY_IDENTIFIER.getOid(), "authority_key_identifier");
 //            authorityKeyIdentifier.setCritical(true);
 //            config.addExtensions(authorityKeyIdentifier);
 //        });
-    }
+//    }
 
 }

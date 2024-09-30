@@ -32,4 +32,11 @@ public class CnMismatchTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    public void cnMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, config -> X509CertificateConfigUtil.modifyAttributeAndValuePair(config, X500AttributeType.COMMON_NAME));
+//    }
+//OR
+//    public void cnMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, modifyAttributeAndValuePair(X500AttributeType.COMMON_NAME));
+//    }
 }

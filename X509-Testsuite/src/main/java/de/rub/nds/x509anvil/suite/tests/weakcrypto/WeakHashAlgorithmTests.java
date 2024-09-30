@@ -23,18 +23,12 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
-//    public void weakHashMd2(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-//        certificateChainConfig.getIntermediateConfig(0).amendSignatureAlgorithm(HashAlgorithm.MD2);
-//        VerifierResult result = testRunner.execute(certificateChainConfig);
-//        Assertions.assertFalse(result.isValid());
-//    }
+
     public void weakHashMd2(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.MD2);
-            VerifierResult result = testRunner.execute(config);
-            return result;
         });
+
     }
 
 
@@ -42,17 +36,10 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
-//    public void weakHashMd4(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-//        certificateChainConfig.getIntermediateConfig(0).amendSignatureAlgorithm(HashAlgorithm.MD4);
-//        VerifierResult result = testRunner.execute(certificateChainConfig);
-//        Assertions.assertFalse(result.isValid());
-//    }
+
     public void weakHashMd4(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.MD4);
-            VerifierResult result = testRunner.execute(config);
-            return result;
         });
     }
 
@@ -61,17 +48,10 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
-//    public void weakHashMd5(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-//        certificateChainConfig.getIntermediateConfig(0).amendSignatureAlgorithm(HashAlgorithm.MD5);
-//        VerifierResult result = testRunner.execute(certificateChainConfig);
-//        Assertions.assertFalse(result.isValid());
-//    }
+
     public void weakHashMd5(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.MD5);
-            VerifierResult result = testRunner.execute(config);
-            return result;
         });
     }
 
@@ -79,17 +59,10 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-//    public void weakHashSha1(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-//        certificateChainConfig.getIntermediateConfig(0).amendSignatureAlgorithm(HashAlgorithm.SHA1);
-//        VerifierResult result = testRunner.execute(certificateChainConfig);
-//        Assertions.assertFalse(result.isValid());
-//    }
+
     public void weakHashSha1(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.SHA1);
-            VerifierResult result = testRunner.execute(config);
-            return result;
         });
     }
 

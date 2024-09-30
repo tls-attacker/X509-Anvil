@@ -32,7 +32,7 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
          */
     }
 //    public void keyIdMismatchEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
 //            VerifierResult result = testRunner.execute(config, authKeyMismatch(true));
 //            return result;
 //        });
@@ -56,7 +56,7 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
          */
     }
 //    public void keyIdMismatchIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
 //            VerifierResult result = testRunner.execute(config, authKeyMismatch(false));
 //            return result;
 //        });

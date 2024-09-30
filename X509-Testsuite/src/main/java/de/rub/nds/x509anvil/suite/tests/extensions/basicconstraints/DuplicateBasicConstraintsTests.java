@@ -35,7 +35,7 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 //    public void duplicateIdenticalEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
 //            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config.getEntityCertificateConfig(), X509ExtensionType.BASIC_CONSTRAINTS);
 //            config.addExtensions(basicConstraintsConfig);
 //        });
@@ -55,7 +55,7 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 //    public void duplicateIdenticalIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
 //            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
 //            config.addExtensions(basicConstraintsConfig);
 //        });
@@ -79,7 +79,7 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
     }
 
 //    public void duplicateDifferentEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
 //            BasicConstraintsConfig oldConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
 //            BasicConstraintsConfig newConfig = new BasicConstraintsConfig();
 //            newConfig.setCa(!oldConfig.isCa());
@@ -102,7 +102,7 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 //    public void duplicateDifferentIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
 //            BasicConstraintsConfig oldConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
 //            BasicConstraintsConfig newConfig = new BasicConstraintsConfig();
 //            newConfig.setCa(!oldConfig.isCa());

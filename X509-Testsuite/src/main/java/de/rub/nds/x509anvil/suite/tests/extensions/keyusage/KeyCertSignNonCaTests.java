@@ -11,6 +11,7 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class KeyCertSignNonCaTests extends X509AnvilTest {
@@ -24,12 +25,20 @@ public class KeyCertSignNonCaTests extends X509AnvilTest {
     @ValueConstraint(identifier = "entity.ext_basic_constraints_ca", method = "disabled")
     @AnvilTest
     public void keyCertSignNonCaEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: re-implement when extension implemented in attacker
-        /*
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
-         */
+//        // TODO: re-implement when extension implemented in attacker
+//        /*
+//        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+//        VerifierResult result = testRunner.execute(chainConfig);
+//        Assertions.assertFalse(result.isValid());
+//         */
     }
-
+//    public void keyCertSignNonCaEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
+//            config.extension(ExtensionType.KEY_USAGE).setPresent(true);
+//            KeyUsageExtensionConfig keyUsageConfig = (KeyUsageExtensionConfig) config.extension(ExtensionType.KEY_USAGE);
+//            keyUsageConfig.setKeyCertSign(true);
+//            keyUsageConfig.setCa(false);
+//        });
+//
+//    }
 }

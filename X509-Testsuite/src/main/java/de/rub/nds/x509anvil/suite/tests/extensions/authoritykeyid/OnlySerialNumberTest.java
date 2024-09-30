@@ -30,7 +30,7 @@ public class OnlySerialNumberTest extends X509AnvilTest {
          */
     }
 //    public void missingKeyIdentifierEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
 //            // Placeholder for future extension implementation
 //            serialWithoutIssuerModifier(true); // Assuming serialWithoutIssuerModifier will be implemented
 //        });
@@ -53,7 +53,7 @@ public class OnlySerialNumberTest extends X509AnvilTest {
          */
     }
 //    public void missingKeyIdentifierIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
 //            // Placeholder for future extension implementation
 //            serialWithoutIssuerModifier(true); // Assuming serialWithoutIssuerModifier will be implemented
 //        });

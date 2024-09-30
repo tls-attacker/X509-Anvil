@@ -35,7 +35,7 @@ public class UnknownCriticalExtentionTests extends X509AnvilTest {
          */
     }
 //    public void unknownCriticalExtensionEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
 //            config.setVersion(2);
 //            config.setExtensionsPresent(true);
 //            config.extension(ExtensionType.UNKNOWN_EXTENSION).setPresent(true);
@@ -64,7 +64,7 @@ public class UnknownCriticalExtentionTests extends X509AnvilTest {
          */
     }
 //    public void unknownCriticalExtensionIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
 //            config.setVersion(2);
 //            config.setExtensionsPresent(true);
 //            config.extension(ExtensionType.UNKNOWN_EXTENSION).setPresent(true);

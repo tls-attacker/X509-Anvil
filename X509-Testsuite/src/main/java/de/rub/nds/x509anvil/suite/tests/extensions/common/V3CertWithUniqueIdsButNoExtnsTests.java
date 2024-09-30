@@ -32,7 +32,7 @@ public class V3CertWithUniqueIdsButNoExtnsTests extends X509AnvilTest {
          */
     }
 //    public void v3WithoutExtensionsWithSubjectUIdEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
 //            config.setVersion(3);
 //            config.setExtensionsPresent(false);
 //            config.setSubjectUniqueIdPresent(true);
@@ -59,7 +59,7 @@ public class V3CertWithUniqueIdsButNoExtnsTests extends X509AnvilTest {
          */
     }
 //    public void v3WithoutExtensionsWithSubjectUIdIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
 //            config.setVersion(3);
 //            config.setExtensionsPresent(false);
 //            config.setSubjectUniqueIdPresent(true);
@@ -86,7 +86,7 @@ public class V3CertWithUniqueIdsButNoExtnsTests extends X509AnvilTest {
          */
     }
 //    public void v3WithoutExtensionsWithIssuerUIdEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
 //            config.setVersion(3);
 //            config.setExtensionsPresent(false);
 //            config.setIssuerUniqueIdPresent(true);
@@ -113,7 +113,7 @@ public class V3CertWithUniqueIdsButNoExtnsTests extends X509AnvilTest {
          */
     }
 //    public void v3WithoutExtensionsWithIssuerUIdIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
 //            config.setVersion(3);
 //            config.setExtensionsPresent(false);
 //            config.setIssuerUniqueIdPresent(true);

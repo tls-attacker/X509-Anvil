@@ -39,6 +39,7 @@ public class InsufficientPathLenTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }
+//    TODO: These Three
 
     @Specification(document = "RFC 5280", section = "4.2.1.9. Basic Constraints",
             text = "In this case, it [the pathLenConstraint field] gives the maximum number of non-self-issued intermediate certificates that may " +

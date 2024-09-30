@@ -34,7 +34,7 @@ public class BasicConstraintsWithoutKeyCertSignTests extends X509AnvilTest {
          */
     }
 //    public void basicConstraintsWithoutKeyCert(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
 //            if (config.extension(ExtensionType.KEY_USAGE).isPresent()) {
 //                KeyUsageExtensionConfig keyUsageExtensionConfig = (KeyUsageExtensionConfig) config.extension(ExtensionType.KEY_USAGE);
 //                keyUsageExtensionConfig.setKeyCertSign(false);

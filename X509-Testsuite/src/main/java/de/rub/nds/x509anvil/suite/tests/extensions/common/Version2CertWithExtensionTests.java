@@ -32,7 +32,7 @@ public class Version2CertWithExtensionTests extends X509AnvilTest {
          */
     }
 //    public void version1CertWithExtensionsEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
 //            config.setVersion(1);
 //            config.extension(ExtensionType.KEY_USAGE).setPresent(true);
 //        });
@@ -56,7 +56,7 @@ public class Version2CertWithExtensionTests extends X509AnvilTest {
          */
     }
 //    public void version1CertWithExtensionsIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
 //            config.setVersion(1);
 //            config.extension(ExtensionType.KEY_USAGE).setPresent(true);
 //        });
