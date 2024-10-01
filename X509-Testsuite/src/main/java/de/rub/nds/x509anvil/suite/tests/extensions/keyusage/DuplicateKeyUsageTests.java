@@ -11,6 +11,7 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class DuplicateKeyUsageTests extends X509AnvilTest {
@@ -21,20 +22,16 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
-    public void duplicateIdenticalEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: re-implement when extension implemented in attacker
-        /*
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.duplicateIdenticalExtensionModifier(true, ExtensionObjectIdentifiers.KEY_USAGE));
-        Assertions.assertFalse(result.isValid());
-         */
-    }
-//    public void duplicateIdenticalEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config ->
-//                testRunner.execute(config, Modifiers.duplicateIdenticalExtensionModifier(true, ExtensionObjectIdentifiers.KEY_USAGE))
-//        );
-//    }
 
+    public void duplicateIdenticalEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+//     TODO: re-implement when extension implemented in attacker
+
+/*     assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config ->
+            Modifiers.duplicateIdenticalExtensionModifier(true, ExtensionObjectIdentifiers.KEY_USAGE)
+            );
+            */
+
+    }
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
@@ -44,17 +41,13 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
     public void duplicateIdenticalIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
-        /*
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.duplicateIdenticalExtensionModifier(false, ExtensionObjectIdentifiers.KEY_USAGE));
-        Assertions.assertFalse(result.isValid());
-         */
+
+ /*       assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config ->
+                Modifiers.duplicateIdenticalExtensionModifier(false, ExtensionObjectIdentifiers.KEY_USAGE)
+        );
+        */
     }
-//    public void duplicateIdenticalIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config ->
-//                testRunner.execute(config, Modifiers.duplicateIdenticalExtensionModifier(false, ExtensionObjectIdentifiers.KEY_USAGE))
-//        );
-//    }
+
 
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
@@ -63,21 +56,15 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
+
     public void duplicateDifferentEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
-        /*
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.duplicateDifferentExtensionModifier(true,
-                ExtensionObjectIdentifiers.KEY_USAGE, createDuplicateExtensionValue(chainConfig.getEntityCertificateConfig())));
-        Assertions.assertFalse(result.isValid());
-         */
+
+/*        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config ->
+                Modifiers.duplicateDifferentExtensionModifier(true,
+                        ExtensionObjectIdentifiers.KEY_USAGE, createDuplicateExtensionValue(config))
+        );*/
     }
-//    public void duplicateDifferentEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config ->
-//                testRunner.execute(config, Modifiers.duplicateDifferentExtensionModifier(true,
-//                        ExtensionObjectIdentifiers.KEY_USAGE, createDuplicateExtensionValue(config)))
-//        );
-//    }
 
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
@@ -88,19 +75,12 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
     public void duplicateDifferentIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
-        /*
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.duplicateDifferentExtensionModifier(false,
-                ExtensionObjectIdentifiers.KEY_USAGE, createDuplicateExtensionValue(chainConfig.getIntermediateConfig(0))));
-        Assertions.assertFalse(result.isValid());
-         */
+
+/*        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateModifier) config ->
+                Modifiers.duplicateDifferentExtensionModifier(false,
+                        ExtensionObjectIdentifiers.KEY_USAGE, createDuplicateExtensionValue(config))
+        );*/
     }
-//    public void duplicateDifferentIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config ->
-//                testRunner.execute(config, Modifiers.duplicateDifferentExtensionModifier(false,
-//                        ExtensionObjectIdentifiers.KEY_USAGE, createDuplicateExtensionValue(config)))
-//        );
-//    }
 
 
     // TODO: re-implement when extension implemented in attacker

@@ -24,17 +24,11 @@ public class OnlySerialNumberTest extends X509AnvilTest {
     @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
     public void missingKeyIdentifierEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement with extension
-        /* X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, serialWithoutIssuerModifier(true));
-        Assertions.assertFalse(result.isValid());
-         */
-    }
-//    public void missingKeyIdentifierEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
 //            // Placeholder for future extension implementation
-//            serialWithoutIssuerModifier(true); // Assuming serialWithoutIssuerModifier will be implemented
+//            serialWithoutIssuerModifier(true);
 //        });
-//    }
+    }
 
 
     @Specification(document = "RFC 5280", section = "A.2. Implicitly Tagged Module, 1988 Syntax",
@@ -46,18 +40,11 @@ public class OnlySerialNumberTest extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
     public void missingKeyIdentifierIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement with extension
-        /*
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, serialWithoutIssuerModifier(true));
-        Assertions.assertFalse(result.isValid());
-         */
-    }
-//    public void missingKeyIdentifierIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
 //            // Placeholder for future extension implementation
 //            serialWithoutIssuerModifier(true); // Assuming serialWithoutIssuerModifier will be implemented
 //        });
-//    }
+    }
 
 
 

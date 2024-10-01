@@ -23,14 +23,11 @@ public class UntrustedRootTests extends X509AnvilTest {
     @StaticRoot(false)
     @ChainLength(minLength = 1, maxLength = 2, intermediateCertsModeled = 2)
     @TestStrength(2)
-//    public void untrustedRootCertificate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
-//        VerifierResult result = testRunner.execute(config);
-//        Assertions.assertFalse(result.isValid());
-//    }
+
     public void untrustedRootCertificate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
             // No specific changes to config needed, assuming root is untrusted by default for this test case.
+//            TODO: Test to be updated
         });
     }
 

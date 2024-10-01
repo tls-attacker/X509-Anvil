@@ -26,20 +26,12 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
     @ValueConstraint(identifier = "entity.ext_subject_key_identifier_present", method = "enabled")
     @AnvilTest
     public void invalidCriticalSubjectKeyIdentifierEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: re-implement when extension implemented in attacker
-        /*
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getEntityCertificateConfig().extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
-        VerifierResult result = testRunner.execute(chainConfig,
-                Modifiers.invalidExtensionValueModifier(true, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
-        Assertions.assertFalse(result.isValid());
-         */
+      /*  assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier)  config -> {
+            //   TODO: re-implement when extension implemented in attacker
+            config.extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
+        }, Modifiers.invalidExtensionValueModifier(true, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
+       */
     }
-//    public void invalidCriticalSubjectKeyIdentifierEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier)  config -> {
-//            config.extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
-//        }, Modifiers.invalidExtensionValueModifier(true, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
-//    }
 
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions",
@@ -51,20 +43,14 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.extensions_present", method = "enabled")
     @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
     @AnvilTest
-    public void invalidCriticalSubjectKeyIdentifierIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: re-implement when extension implemented in attacker
-        /*
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
-        VerifierResult result = testRunner.execute(chainConfig,
-                Modifiers.invalidExtensionValueModifier(false, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
-        Assertions.assertFalse(result.isValid());
-         */
-    }
-//    public void invalidCriticalSubjectKeyIdentifierIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
-//            config.extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
-//        }, Modifiers.invalidExtensionValueModifier(false, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
-//    }
 
+    public void invalidCriticalSubjectKeyIdentifierIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    /*    assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+//            TODO: re-implement when extension implemented in attacker
+            config.extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
+        }, Modifiers.invalidExtensionValueModifier(false, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
+    }
+
+     */
+    }
 }

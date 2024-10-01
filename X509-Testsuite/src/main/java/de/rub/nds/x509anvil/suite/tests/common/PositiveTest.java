@@ -18,14 +18,11 @@ public class PositiveTest extends X509AnvilTest {
     @AnvilTest()
     @ChainLength(minLength = 2, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
-//    public void sampleTestCase(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
-//        VerifierResult result = testRunner.execute(config);
-//        Assertions.assertTrue(result.isValid());
-//    }
+
     public void sampleTestCase(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
+        assertValid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
             // No specific changes to config needed for this test, keeping the default valid case.
+//            TODO: Test to be updated
         });
     }
 

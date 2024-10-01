@@ -43,6 +43,7 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
+//    TODO: List Implementation in assertInvalid
 
     @Specification(document = "X.690", section = "11.1 Boolean values ",
             text = "If the encoding represents the boolean value TRUE, its single contents octet shall have all eight bits set to one")

@@ -32,7 +32,7 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
                         TestUtils.getNonMatchingAlgorithmOid(
                                 config.getIssuerConfigOf().getDefaultSignatureAlgorithm())));
     }
-//    TO-DO: check for Issuer config
+//    TODO: check for getIssuerConfigOf(), unable to access
 
 //    public void tbsSignatureDoesntMatchAlgorithmEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
