@@ -16,7 +16,6 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
-import java.math.BigInteger;
 
 public class SignatureAlgorithmNotPresentTests extends X509AnvilTest {
 

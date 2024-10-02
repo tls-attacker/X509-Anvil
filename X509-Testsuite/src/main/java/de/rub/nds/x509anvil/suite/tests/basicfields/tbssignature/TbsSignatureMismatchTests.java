@@ -27,22 +27,14 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
     @AnvilTest
 
     public void tbsSignatureDoesntMatchAlgorithmEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true,
-                (X509CertificateConfigModifier) config -> config.setSignatureAlgorithm(
-                        TestUtils.getNonMatchingAlgorithmOid(
-                                config.getIssuerConfigOf().getDefaultSignatureAlgorithm())));
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+        certificateChainConfig.getEntityCertificateConfig().setSignatureAlgorithm(
+                TestUtils.getNonMatchingAlgorithmOid(
+                        certificateChainConfig.getIssuerConfigOf(
+                                certificateChainConfig.getEntityCertificateConfig()).getDefaultSignatureAlgorithm()));
+        VerifierResult result = testRunner.execute(certificateChainConfig);
+        Assertions.assertFalse(result.isValid());
     }
-//    TODO: check for getIssuerConfigOf(), unable to access
-
-//    public void tbsSignatureDoesntMatchAlgorithmEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-//        certificateChainConfig.getEntityCertificateConfig().setSignatureAlgorithm(
-//                TestUtils.getNonMatchingAlgorithmOid(
-//                        certificateChainConfig.getIssuerConfigOf(
-//                                certificateChainConfig.getEntityCertificateConfig()).getDefaultSignatureAlgorithm()));
-//        VerifierResult result = testRunner.execute(certificateChainConfig);
-//        Assertions.assertFalse(result.isValid());
-//    }
 
     @Specification(document = "RFC 5280", section = "4.1.2.3.  Signature",
             text = "This field MUST contain the same algorithm identifier as the signatureAlgorithm field in the sequence Certificate (Section 4.1.1.2).")
@@ -51,18 +43,12 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void tbsSignatureDoesntMatchAlgorithmIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false,
-                (X509CertificateConfigModifier) config -> config.setSignatureAlgorithm(
-                        TestUtils.getNonMatchingAlgorithmOid(
-                                config.getIssuerConfig().getDefaultSignatureAlgorithm())));
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+        certificateChainConfig.getIntermediateConfig(0).setSignatureAlgorithm(
+                TestUtils.getNonMatchingAlgorithmOid(
+                        certificateChainConfig.getIssuerConfigOf(
+                                certificateChainConfig.getIntermediateConfig(0)).getDefaultSignatureAlgorithm()));
+        VerifierResult result = testRunner.execute(certificateChainConfig);
+        Assertions.assertFalse(result.isValid());
     }
-//    public void tbsSignatureDoesntMatchAlgorithmIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-//        certificateChainConfig.getIntermediateConfig(0).setSignatureAlgorithm(
-//                TestUtils.getNonMatchingAlgorithmOid(
-//                        certificateChainConfig.getIssuerConfigOf(
-//                                certificateChainConfig.getIntermediateConfig(0)).getDefaultSignatureAlgorithm()));
-//        VerifierResult result = testRunner.execute(certificateChainConfig);
-//        Assertions.assertFalse(result.isValid());
-//    }
 }

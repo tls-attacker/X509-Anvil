@@ -30,21 +30,11 @@ public class InterCertWithCaNotSetTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void intermediateCertWithCaNotSet(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        BasicConstraintsConfig config = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(chainConfig.getIntermediateConfig(0), X509ExtensionType.BASIC_CONSTRAINTS);
-        config.setPresent(true);
-        config.setCa(false);
-        config.setIncludeCA(DefaultEncodingRule.FOLLOW_DEFAULT);
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
-    }
-//      TODO: re-check
-//    public void intermediateCertWithCaNotSet(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier)  config -> {
-//            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) config.extension(ExtensionType.BASIC_CONSTRAINTS);
-//            basicConstraintsConfig.setPresent(true);
-//            basicConstraintsConfig.setCa(false);
-//            basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.FOLLOW_DEFAULT);
-//        });
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier)  config -> {
+            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) config.extension(ExtensionType.BASIC_CONSTRAINTS);
+            basicConstraintsConfig.setPresent(true);
+            basicConstraintsConfig.setCa(false);
+            basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.FOLLOW_DEFAULT);
+        });
 
 }

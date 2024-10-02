@@ -15,10 +15,10 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import java.math.BigInteger;
 
 public class InvalidPositiveVersionTests extends X509AnvilTest {
-
-
+    @TestStrength(2)
+    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @IpmLimitations(identifiers = "entity.version")
     public void invalidVersion4Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: amend other tests to look like this
         assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> config.setVersion(BigInteger.valueOf(3)));
     }
 

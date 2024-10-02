@@ -70,14 +70,8 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "entity.version", method = "allowVersion1")
     @AnvilTest()
-//    public void explicitVersion1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
-//        config.getEntityCertificateConfig().setVersion(X509Version.V1.getValue());
-//        VerifierResult result = testRunner.execute(config);
-//        Assertions.assertFalse(result.isValid());
-//    }
     public void explicitVersion1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, config -> { config.setVersion(X509Version.V1.getValue());
+        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> { config.setVersion(X509Version.V1.getValue());
         });
     }
 
@@ -89,14 +83,8 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.version", method = "allowVersion1")
     @AnvilTest()
-//    public void explicitVersion1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
-//        config.getIntermediateConfig(0).setVersion(X509Version.V1.getValue());
-//        VerifierResult result = testRunner.execute(config);
-//        Assertions.assertFalse(result.isValid());
-//    }
     public void explicitVersion1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, config -> {
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setVersion(X509Version.V1.getValue());
         });
     }
