@@ -14,6 +14,7 @@ import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
+import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
 import de.rub.nds.x509attacker.constants.CertificateChainPositionType;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
@@ -37,13 +38,9 @@ public class X509CertificateConfigUtil {
         // add all necessary extensions
         List<ExtensionConfig> extensionConfigList = new ArrayList<>();
 
-        BasicConstraintsConfig basicConstraintsConfig = new BasicConstraintsConfig();
-        basicConstraintsConfig.setCa(chainPosType != CertificateChainPositionType.ENTITY);
-        basicConstraintsConfig.setPathLenConstraint(5);
-        basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.FOLLOW_DEFAULT);
-        basicConstraintsConfig.setIncludePathLenConstraint(DefaultEncodingRule.FOLLOW_DEFAULT);
-
+        BasicConstraintsConfig basicConstraintsConfig = getBasicConstraintsConfig(chainPosType);
         extensionConfigList.add(basicConstraintsConfig);
+
 
         config.setExtensions(extensionConfigList);
         config.setIncludeExtensions(true);
@@ -67,15 +64,19 @@ public class X509CertificateConfigUtil {
          * subject.addRelativeDistinguishedNames(commonNameDN); config.setSubject(subject);
          */
 
-        config.setIncludeExtensions(false);
-
         return config;
     }
 
     public static X509CertificateConfig getDefaultCaCertificateConfig(boolean selfSigned,
         CertificateChainPositionType chainPosType) {
         X509CertificateConfig config = getDefaultCertificateConfig(selfSigned, chainPosType);
-        return config;
+
+        KeyUsageConfig keyUsageConfig = new KeyUsageConfig();
+        keyUsageConfig.setKeyCertSign(true);
+        keyUsageConfig.setPresent(true);
+        keyUsageConfig.setCritical(true);
+        config.addExtensions(keyUsageConfig);
+
         // TODO: any extensions to set?
 
         /*
@@ -89,6 +90,20 @@ public class X509CertificateConfigUtil {
          * 
          * return config;
          */
+        return config;
+    }
+
+    private static BasicConstraintsConfig getBasicConstraintsConfig(CertificateChainPositionType chainPosType) {
+        BasicConstraintsConfig basicConstraintsConfig = new BasicConstraintsConfig();
+        basicConstraintsConfig.setPresent(true);
+        basicConstraintsConfig.setCritical(true);
+
+        basicConstraintsConfig.setCa(chainPosType != CertificateChainPositionType.ENTITY);
+        basicConstraintsConfig.setPathLenConstraint(5);
+        basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.FOLLOW_DEFAULT);
+        basicConstraintsConfig.setIncludePathLenConstraint(DefaultEncodingRule.FOLLOW_DEFAULT);
+
+        return basicConstraintsConfig;
     }
 
     /**
@@ -108,71 +123,9 @@ public class X509CertificateConfigUtil {
         return x509CertificateChainConfig;
     }
 
-    public static KeyPair generateKeyPair(SignatureAlgorithm signatureAlgorithm, int keyLength) {
-        try {
-            return CachedKeyPairGenerator.retrieveKeyPair(signatureAlgorithm, keyLength);
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("This should not happen");
-        }
-    }
-
-    // TODO: seems unnecessary now
-    /*
-     * public static X509CertificateConfig loadStaticCertificateConfig(String staticCertificateFile, String
-     * privateKeyFile) throws IOException, InvalidKeySpecException { X509Certificate staticRootCertificate = new
-     * X509Certificate("staticCertificate"); // dirty hack to accommodate for serializing if
-     * (staticRootCertificate.getTbsCertificate().getIssuerUniqueId().getUsedBits() == null) {
-     * staticRootCertificate.getTbsCertificate().setIssuerUniqueId(null); } if
-     * (staticRootCertificate.getTbsCertificate().getSubjectUniqueId().getUsedBits() == null) {
-     * staticRootCertificate.getTbsCertificate().setSubjectUniqueId(null); } X509CertificateParser parser = new
-     * X509CertificateParser( new X509Chooser(new de.rub.nds.x509attacker.config.X509CertificateConfig(), new
-     * X509Context()), staticRootCertificate); parser.parse(new BufferedInputStream(new ByteArrayInputStream(
-     * CertificateIo.readPemCertificateByteList(new FileInputStream(staticCertificateFile)).get(0).getBytes())));
-     * 
-     * PrivateKey privateKey = de.rub.nds.x509attacker.signatureengine.keyparsers.PemUtil.readPrivateKey(new
-     * File(privateKeyFile)); X509CertificateConfig staticX509CertificateConfig = new X509CertificateConfig();
-     * staticX509CertificateConfig.setStaticCertificatePrivateKey(X509Util.containerFromPrivateKey(privateKey));
-     * staticX509CertificateConfig.setStatic(true);
-     * staticX509CertificateConfig.setStaticX509Certificate(staticRootCertificate); return staticX509CertificateConfig;
-     * }
-     */
-
     public static BigInteger generateUniqueSerialNumber() {
         UUID uuid = UUID.randomUUID();
         return new BigInteger(uuid.toString().replace("-", ""), 16);
-    }
-
-    public static Iterable<X509CertificateConfig>
-        expandCertificateConfigs(X509CertificateChainConfig certificateChainConfig) {
-        return () -> new Iterator<>() {
-            private int currentIndex = 0;
-
-            @Override
-            public boolean hasNext() {
-                return currentIndex < certificateChainConfig.getChainLength();
-            }
-
-            @Override
-            public X509CertificateConfig next() {
-                int i = currentIndex++;
-                if (i == 0) {
-                    return certificateChainConfig.getRootCertificateConfig();
-                } else if (i > 0 && i < certificateChainConfig.getChainLength() - 1) {
-                    if (i - 1 < certificateChainConfig.getIntermediateCertsModeled()) {
-                        // Intermediate certificate is modeled, return config
-                        return certificateChainConfig.getIntermediateCertificateConfigs().get(i - 1);
-                    } else {
-                        // Intermediate certificate is not modeled, copy config of last modeled intermediate cert
-                        return certificateChainConfig.getIntermediateCertificateConfigs()
-                            .get(certificateChainConfig.getIntermediateCertsModeled() - 1);
-                    }
-                } else if (i == certificateChainConfig.getChainLength() - 1) {
-                    return certificateChainConfig.getEntityCertificateConfig();
-                } else {
-                    throw new IndexOutOfBoundsException();
-                }
-            }
-        };
     }
 
     public static void modifyAttributeAndValuePair(X509CertificateConfig config, X500AttributeType type) {

@@ -9,18 +9,20 @@
 
 package de.rub.nds.x509anvil.framework.featureextraction.probe.result;
 
+import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeType;
+import de.rub.nds.x509anvil.framework.featureextraction.probe.SignatureHashAndKeyLengthProbe;
 import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 
 public class SignatureAlgorithmProbeResult extends FeatureSupportedProbeResult {
-    private final X509SignatureAlgorithm signatureAlgorithm;
+    private final SignatureHashAlgorithmKeyLengthPair signatureHashAlgorithmKeyLengthPair;
 
-    public SignatureAlgorithmProbeResult(X509SignatureAlgorithm signatureAlgorithm, boolean supported) {
+    public SignatureAlgorithmProbeResult(SignatureHashAlgorithmKeyLengthPair signatureHashAlgorithmKeyLengthPair, boolean supported) {
         super(ProbeType.SIGNATURE_ALGORITHM, supported);
-        this.signatureAlgorithm = signatureAlgorithm;
+        this.signatureHashAlgorithmKeyLengthPair = signatureHashAlgorithmKeyLengthPair;
     }
 
-    public X509SignatureAlgorithm getSignatureAlgorithm() {
-        return signatureAlgorithm;
+    public SignatureHashAlgorithmKeyLengthPair getSignatureAlgorithm() {
+        return signatureHashAlgorithmKeyLengthPair;
     }
 }

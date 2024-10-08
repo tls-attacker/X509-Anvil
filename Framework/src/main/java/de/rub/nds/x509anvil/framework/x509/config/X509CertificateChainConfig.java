@@ -25,10 +25,6 @@ public class X509CertificateChainConfig {
     private int chainLength;
     private int intermediateCertsModeled;
 
-    // TODO: can this be removed? before a static file was read for static root and a certificate generated for not
-    // static root. I think we can use the config now for all cases(?)
-    // private boolean staticRoot;
-
     private X509CertificateConfig rootCertificateConfig = null;
     private final List<X509CertificateConfig> intermediateCertificateConfigs = new ArrayList<>();
     private X509CertificateConfig entityCertificateConfig = null;
@@ -43,20 +39,6 @@ public class X509CertificateChainConfig {
         this.chainLength = chainLength;
         this.intermediateCertsModeled = intermediateCertsModeled;
 
-        TestConfig testConfig = ContextHelper.getTestConfig();
-
-        // TODO: only used in one instance, probably generate certificate once and cache, if annotation present generate
-        // new one?
-        // this.staticRoot = staticRoot;
-
-        /*
-         * if (staticRoot) { try { rootCertificateConfig = X509CertificateConfigUtil.loadStaticCertificateConfig(
-         * testConfig.getStaticRootCertificateFile(), testConfig.getStaticRootPrivateKeyFile()); } catch (IOException |
-         * InvalidKeySpecException e) { LOGGER.error("Unable to load static root certificate and its private key", e);
-         * throw new IllegalArgumentException("Unable to load static root certificate and its private key", e); } } else
-         * { // We need to generate our own root rootCertificateConfig =
-         * X509CertificateConfigUtil.getDefaultCaCertificateConfig(true, CertificateChainPositionType.ROOT); }
-         */
         rootCertificateConfig =
             X509CertificateConfigUtil.getDefaultCaCertificateConfig(true, CertificateChainPositionType.ROOT);
 
@@ -65,10 +47,6 @@ public class X509CertificateChainConfig {
             if (i < intermediateCertsModeled) {
                 X509CertificateConfig config = X509CertificateConfigUtil.getDefaultCaCertificateConfig(false,
                     CertificateChainPositionType.INTERMEDIATE);
-                // TODO: can be deleted?
-                // if (i == intermediateCertsModeled - 1 && intermediateCertsModeled < chainLength - 2) {
-                // config.setSharedConfig(true);
-                // }
                 intermediateCertificateConfigs.add(config);
             }
         }
@@ -102,6 +80,14 @@ public class X509CertificateChainConfig {
 
     public X509CertificateConfig getIntermediateConfig(int index) {
         return intermediateCertificateConfigs.get(index);
+    }
+
+    public X509CertificateConfig getLastSigningConfig() {
+        if (!intermediateCertificateConfigs.isEmpty()) {
+            return getIntermediateConfig(0);
+        } else {
+            return rootCertificateConfig;
+        }
     }
 
     public X509CertificateConfig getIssuerConfigOf(X509CertificateConfig subject) {

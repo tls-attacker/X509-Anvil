@@ -71,10 +71,6 @@ public class NotAfterParameter extends CertificateSpecificParameter<NotAfterValu
                 certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
                 certificateConfig.setNotAfter(new DateTime(2025, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
-            case NO_WELL_DEFINED_EXPIRATION:
-                certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-                certificateConfig.setNotAfter(new DateTime(9999, 12, 31, 59, 59, DateTimeZone.forID("UTC")));
-                break;
         }
     }
 }

@@ -9,23 +9,19 @@
 
 package de.rub.nds.x509anvil.framework.featureextraction;
 
-import de.rub.nds.protocol.constants.HashAlgorithm;
-import de.rub.nds.protocol.constants.SignatureAlgorithm;
 import de.rub.nds.x509anvil.framework.constants.*;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
-import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class FeatureReport {
     private final List<ProbeResult> probeResults = new ArrayList<>();
     private List<Integer> supportedVersions = new ArrayList<>();
-    private List<X509SignatureAlgorithm> supportedAlgorithms = new ArrayList<>();
-    private List<X509SignatureAlgorithm> supportedEntityAlgorithms = new ArrayList<>();
-    private List<SignatureAlgorithmLengthPair> supportedKeyLengths = new ArrayList<>();
-    private List<SignatureAlgorithmLengthPair> supportedEntityKeyLengths = new ArrayList<>();
     private List<ExtensionType> supportedExtensions = new ArrayList<>();
+
+    private List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsEntity = new ArrayList<>();
+
+    private List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate = new ArrayList<>();
     private boolean digitalSignatureKeyUsageRequired;
 
     public List<ProbeResult> getProbeResults() {
@@ -55,73 +51,6 @@ public class FeatureReport {
     public boolean version3Supported() {
         return supportedVersions.contains(2);
     }
-
-    public List<X509SignatureAlgorithm> getSupportedAlgorithms() {
-        return supportedAlgorithms;
-    }
-
-    public void setSupportedAlgorithms(List<X509SignatureAlgorithm> supportedAlgorithms) {
-        this.supportedAlgorithms = supportedAlgorithms;
-    }
-
-    public boolean algorithmSupported(X509SignatureAlgorithm algorithm) {
-        return supportedAlgorithms.contains(algorithm);
-    }
-
-    public boolean entityAlgorithmSupported(X509SignatureAlgorithm algorithm) {
-        return supportedEntityAlgorithms.contains(algorithm);
-    }
-
-    public boolean keyTypeSupported(SignatureAlgorithm keyType) {
-        return supportedAlgorithms.stream().anyMatch(a -> a.getSignatureAlgorithm().equals(keyType));
-    }
-
-    public boolean entityKeyTypeSupported(SignatureAlgorithm keyType) {
-        return supportedEntityAlgorithms.stream().anyMatch(a -> a.getSignatureAlgorithm().equals(keyType));
-    }
-
-    public List<SignatureAlgorithm> getSupportedKeyTypes() {
-        return Arrays.stream(SignatureAlgorithm.values()).filter(this::keyTypeSupported).collect(Collectors.toList());
-    }
-
-    public List<SignatureAlgorithm> getSupportedEntityKeyTypes() {
-        return Arrays.stream(SignatureAlgorithm.values()).filter(this::entityKeyTypeSupported)
-            .collect(Collectors.toList());
-    }
-
-    public boolean hashAlgorithmSupported(HashAlgorithm hashAlgorithm) {
-        return supportedAlgorithms.stream().anyMatch(a -> a.getHashAlgorithm().equals(hashAlgorithm));
-    }
-
-    public boolean entityHashAlgorithmSupported(HashAlgorithm hashAlgorithm) {
-        return supportedEntityAlgorithms.stream().anyMatch(a -> a.getHashAlgorithm().equals(hashAlgorithm));
-    }
-
-    public List<HashAlgorithm> getSupportedHashAlgorithms() {
-        return Arrays.stream(HashAlgorithm.values()).filter(this::hashAlgorithmSupported).collect(Collectors.toList());
-    }
-
-    public List<HashAlgorithm> getSupportedEntityHashAlgorithms() {
-        return Arrays.stream(HashAlgorithm.values()).filter(this::entityHashAlgorithmSupported)
-            .collect(Collectors.toList());
-    }
-
-    public List<SignatureAlgorithmLengthPair> getSupportedKeyLengths() {
-        return supportedKeyLengths;
-    }
-
-    public void setSupportedKeyLengths(List<SignatureAlgorithmLengthPair> supportedKeyLengths) {
-        this.supportedKeyLengths = supportedKeyLengths;
-    }
-
-    public List<SignatureAlgorithmLengthPair> getSupportedEntityKeyLengths() {
-        return supportedEntityKeyLengths;
-    }
-
-    public void setSupportedEntityKeyLengths(List<SignatureAlgorithmLengthPair> supportedEntityKeyLengths) {
-        this.supportedEntityKeyLengths = supportedEntityKeyLengths;
-    }
-
     public List<ExtensionType> getSupportedExtensions() {
         return supportedExtensions;
     }
@@ -146,17 +75,26 @@ public class FeatureReport {
         this.digitalSignatureKeyUsageRequired = digitalSignatureKeyUsageRequired;
     }
 
+    public List<SignatureHashAlgorithmKeyLengthPair> getSupportedSignatureHashAndKeyLengthPairsIntermediate() {
+        return supportedSignatureHashAndKeyLengthPairsIntermediate;
+    }
+
+    public void setSupportedSignatureHashAndKeyLengthPairsIntermediate(List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate) {
+        this.supportedSignatureHashAndKeyLengthPairsIntermediate = supportedSignatureHashAndKeyLengthPairsIntermediate;
+    }
+
+    public List<SignatureHashAlgorithmKeyLengthPair> getSupportedSignatureHashAndKeyLengthPairsEntity() {
+        return supportedSignatureHashAndKeyLengthPairsEntity;
+    }
+
+    public void setSupportedSignatureHashAndKeyLengthPairsEntity(List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate) {
+        this.supportedSignatureHashAndKeyLengthPairsEntity = supportedSignatureHashAndKeyLengthPairsIntermediate;
+    }
+
     @Override
     public String toString() {
-        return "Supported versions: " + supportedVersions + "\n" + "Supported algorithms: " + supportedAlgorithms + "\n"
+        return "Supported versions: " + supportedVersions + "\n" + "Supported Signature and HashAlgorithm and Key Length triples: " + supportedSignatureHashAndKeyLengthPairsIntermediate + "\n"
             + "Supported extensions: " + supportedExtensions;
     }
 
-    public List<X509SignatureAlgorithm> getSupportedEntityAlgorithms() {
-        return supportedEntityAlgorithms;
-    }
-
-    public void setSupportedEntityAlgorithms(List<X509SignatureAlgorithm> supportedEntityAlgorithms) {
-        this.supportedEntityAlgorithms = supportedEntityAlgorithms;
-    }
 }

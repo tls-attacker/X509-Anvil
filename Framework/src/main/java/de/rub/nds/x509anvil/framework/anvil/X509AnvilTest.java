@@ -9,9 +9,13 @@
 
 package de.rub.nds.x509anvil.framework.anvil;
 
+import de.rub.nds.anvilcore.coffee4j.model.ModelFromScope;
 import de.rub.nds.anvilcore.junit.AnvilTestBaseClass;
+import de.rub.nds.anvilcore.junit.extension.MethodConditionExtension;
+import de.rub.nds.anvilcore.junit.extension.ValueConstraintsConditionExtension;
 import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.ParameterCombination;
+import de.rub.nds.anvilcore.teststate.AnvilTestCase;
 import de.rub.nds.x509anvil.framework.featureextraction.UnsupportedFeatureException;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
@@ -27,15 +31,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 import java.util.List;
 
 @ExtendWith({
-    // MethodConditionExtension.class,
-    // EnforcedSenderRestrictionConditionExtension.class,
-    // ValueConstraintsConditionExtension.class,
+    MethodConditionExtension.class,
+    ValueConstraintsConditionExtension.class,
     X509TestRunnerResolver.class })
 public class X509AnvilTest extends AnvilTestBaseClass {
     protected static final Logger LOGGER = LogManager.getLogger();
@@ -47,11 +52,25 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         ContextHelper.initializeContext();
     }
 
+    @Deprecated
     public X509CertificateChainConfig prepareConfig(ArgumentsAccessor argumentsAccessor,
         X509VerifierRunner testRunner) {
         X509CertificateChainConfig config = initializeConfig();
         parameterCombination = ParameterCombination.fromArgumentsAccessor(argumentsAccessor,
             DerivationScope.fromExtensionContext(extensionContext));
+        parameterCombination.applyToConfig(config);
+        testRunner.setPreparedConfig(config);
+        testRunner.setParameterCombination(parameterCombination);
+        return config;
+    }
+
+    public X509CertificateChainConfig prepareConfig(X509VerifierRunner testRunner) {
+        X509CertificateChainConfig config = initializeConfig();
+        AnvilTestCase testCase = AnvilTestCase.fromExtensionContext(extensionContext);
+        parameterCombination = new ParameterCombination(
+                testCase.getParameterCombination().getParameterValues(),
+                testCase.getParameterCombination().getDerivationScope()
+        );
         parameterCombination.applyToConfig(config);
         testRunner.setPreparedConfig(config);
         testRunner.setParameterCombination(parameterCombination);
@@ -97,7 +116,7 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         if (entity) {
             config = certificateChainConfig.getEntityCertificateConfig();
         } else {
-            config = certificateChainConfig.getIntermediateConfig(0);
+            config = certificateChainConfig.getLastSigningConfig();
         }
         // apply modifications
         modifier.apply(config);
@@ -115,7 +134,7 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         if (entity) {
             config = certificateChainConfig.getEntityCertificateConfig();
         } else {
-            config = certificateChainConfig.getIntermediateConfig(0);
+            config = certificateChainConfig.getLastSigningConfig();
         }
         // apply modifications to config
         configModifier.apply(config);

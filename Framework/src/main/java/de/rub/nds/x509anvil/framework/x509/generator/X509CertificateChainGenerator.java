@@ -37,8 +37,7 @@ public class X509CertificateChainGenerator {
         }
 
         X509CertificateConfig previousConfig = null;
-        for (X509CertificateConfig certificateConfig : X509CertificateConfigUtil
-            .expandCertificateConfigs(certificateChainConfig)) {
+        for (X509CertificateConfig certificateConfig : certificateChainConfig.getCertificateConfigList()) {
             generateSingleCertificate(certificateConfig, previousConfig);
             previousConfig = certificateConfig;
         }
@@ -48,26 +47,30 @@ public class X509CertificateChainGenerator {
         return this.generatedCertificates;
     }
 
-    private void generateSingleCertificate(X509CertificateConfig config, X509CertificateConfig signerConfig)
-        throws CertificateGeneratorException {
-        // X509CertificateGenerator x509CertificateGenerator =
-        // new X509CertificateGenerator(config, signerConfig, certificateModifiers);
-        // this.generatedCertificates.add(x509CertificateGenerator.generateCertificate());
+    private void generateSingleCertificate(X509CertificateConfig config, X509CertificateConfig signerConfig) {
 
         // set signature signing keys to keys from signer config unless self-signed
 
-        // TODO: necessary? should be sufficient to encode has chain using x509 attacker
         if (signerConfig != null && !config.isSelfSigned()) {
-            config.setDefaultIssuerDsaPrivateKey(signerConfig.getDefaultIssuerDsaPrivateKey());
-            config.setDefaultIssuerDsaPublicKey(signerConfig.getDefaultIssuerDsaPublicKey());
-            config.setDefaultIssuerRsaModulus(signerConfig.getDefaultIssuerRsaModulus());
-            config.setDefaultIssuerRsaPrivateKey(signerConfig.getDefaultIssuerRsaPrivateKey());
-            config.setDefaultIssuerRsaPublicKey(signerConfig.getDefaultIssuerRsaPublicKey());
-            config.setDefaultIssuerEcPrivateKey(signerConfig.getDefaultIssuerEcPrivateKey());
-            config.setDefaultIssuerECPublicKey(signerConfig.getDefaultIssuerECPublicKey());
-            config.setDefaultIssuerPublicKeyType(signerConfig.getDefaultIssuerPublicKeyType());
+            // rsa
+            config.setDefaultIssuerRsaModulus(signerConfig.getDefaultSubjectRsaModulus());
+            config.setDefaultIssuerRsaPrivateKey(signerConfig.getDefaultSubjectRsaPrivateKey());
+            config.setDefaultIssuerRsaPublicKey(signerConfig.getDefaultSubjectRsaPublicKey());
+            // dsa
+            config.setDefaultIssuerDsaGenerator(signerConfig.getDefaultSubjectDsaGenerator());
+            config.setDefaultIssuerDsaPublicKey(signerConfig.getDefaultSubjectDsaPublicKey());
+            config.setDefaultIssuerDsaPrimeP(signerConfig.getDefaultSubjectDsaPrimeP());
+            config.setDefaultIssuerDsaPrimeQ(signerConfig.getDefaultSubjectDsaPrimeQ());
+            config.setDefaultIssuerDsaPrivateK(signerConfig.getDefaultSubjectDsaPrivateK());
+            config.setDefaultIssuerDsaPrivateKeyX(signerConfig.getDefaultIssuerDsaPrivateKeyX());
+            // ecdsa
+            config.setDefaultIssuerEcPrivateKey(signerConfig.getDefaultSubjectEcPrivateKey());
+            config.setDefaultIssuerEcPublicKey(signerConfig.getDefaultSubjectEcPublicKey());
+            config.setDefaultNamedCurve(signerConfig.getDefaultNamedCurve());
+            config.setDefaultEcPointFormat(signerConfig.getDefaultEcPointFormat());
+            config.setDefaultEcPrivateKeyK(signerConfig.getDefaultEcPrivateKeyK());
         }
-        X509Certificate certificate = new X509Certificate("cert");
+        X509Certificate certificate = new X509Certificate("cert", config);
         this.generatedCertificates.add(certificate);
         certificate.getPreparator(new X509Chooser(config, new X509Context())).prepare();
     }

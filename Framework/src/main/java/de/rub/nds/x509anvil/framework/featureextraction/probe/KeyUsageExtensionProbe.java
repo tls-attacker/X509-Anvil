@@ -13,6 +13,9 @@ import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
+import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
+import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import org.apache.commons.lang3.NotImplementedException;
 
 public class KeyUsageExtensionProbe extends ExtensionProbe {
@@ -30,14 +33,10 @@ public class KeyUsageExtensionProbe extends ExtensionProbe {
 
     @Override
     protected void addExtensionToConfig(X509CertificateChainConfig config) {
-        // TODO: re-implement
-        /*
-         * config.getEntityCertificateConfig().setExtensionsPresent(true); KeyUsageExtensionConfig extensionConfig =
-         * (KeyUsageExtensionConfig) config.getEntityCertificateConfig().extension(ExtensionType.KEY_USAGE);
-         * extensionConfig.setPresent(true); extensionConfig.setCritical(true);
-         * extensionConfig.setDigitalSignature(true);
-         */
-
-        throw new NotImplementedException("KeyUsageExtension not implemented yet");
+        config.getEntityCertificateConfig().setIncludeExtensions(true);
+        KeyUsageConfig extensionConfig = new KeyUsageConfig();
+        extensionConfig.setPresent(true);
+        extensionConfig.setCritical(true);
+        config.getEntityCertificateConfig().addExtensions(extensionConfig);
     }
 }
