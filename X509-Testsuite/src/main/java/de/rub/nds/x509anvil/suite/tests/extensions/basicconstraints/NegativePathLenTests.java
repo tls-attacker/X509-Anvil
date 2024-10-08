@@ -13,7 +13,6 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
@@ -29,14 +28,14 @@ public class NegativePathLenTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void negativePathLen(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
-            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
-            basicConstraintsConfig.setPresent(true);
-            basicConstraintsConfig.setCa(true);
-            basicConstraintsConfig.setPathLenConstraint(-5);
-            basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.ENCODE);
-            basicConstraintsConfig.setIncludePathLenConstraint(DefaultEncodingRule.ENCODE);
-        });
-
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        BasicConstraintsConfig config = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(chainConfig.getIntermediateConfig(0), X509ExtensionType.BASIC_CONSTRAINTS);
+        config.setPresent(true);
+        config.setCa(true);
+        config.setPathLenConstraint(-5);
+        config.setIncludeCA(DefaultEncodingRule.ENCODE);
+        config.setIncludePathLenConstraint(DefaultEncodingRule.ENCODE);
+        VerifierResult result = testRunner.execute(chainConfig);
+        Assertions.assertFalse(result.isValid());
     }
 }

@@ -15,8 +15,6 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
-import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
 import de.rub.nds.x509attacker.constants.X509Version;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
@@ -43,7 +41,6 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
-//    TODO: List Implementation in assertInvalid
 
     @Specification(document = "X.690", section = "11.1 Boolean values ",
             text = "If the encoding represents the boolean value TRUE, its single contents octet shall have all eight bits set to one")
@@ -71,10 +68,11 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @ValueConstraint(identifier = "entity.version", method = "allowVersion1")
     @AnvilTest()
     public void explicitVersion1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> { config.setVersion(X509Version.V1.getValue());
-        });
+        X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
+        config.getEntityCertificateConfig().setVersion(X509Version.V1.getValue());
+        VerifierResult result = testRunner.execute(config);
+        Assertions.assertFalse(result.isValid());
     }
-
 
     @Specification(document = "X.690", section = "11.5 Set and sequence components with default value",
             text = "The encoding of a set value or sequence value shall not include an encoding for any component value which is equal to its default value.")
@@ -84,9 +82,9 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.version", method = "allowVersion1")
     @AnvilTest()
     public void explicitVersion1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
-            config.setVersion(X509Version.V1.getValue());
-        });
+        X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
+        config.getIntermediateConfig(0).setVersion(X509Version.V1.getValue());
+        VerifierResult result = testRunner.execute(config);
+        Assertions.assertFalse(result.isValid());
     }
-
 }

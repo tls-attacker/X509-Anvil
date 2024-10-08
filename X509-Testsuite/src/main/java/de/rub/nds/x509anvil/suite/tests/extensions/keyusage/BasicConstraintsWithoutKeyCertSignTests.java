@@ -22,13 +22,15 @@ public class BasicConstraintsWithoutKeyCertSignTests extends X509AnvilTest {
     @AnvilTest
     public void basicConstraintsWithoutKeyCert(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
-/*        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
-            if (config.extension(ExtensionType.KEY_USAGE).isPresent()) {
-                KeyUsageExtensionConfig keyUsageExtensionConfig = (KeyUsageExtensionConfig) config.extension(ExtensionType.KEY_USAGE);
-                keyUsageExtensionConfig.setKeyCertSign(false);
-            }
-        });*/
+        /*
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        if (chainConfig.getEntityCertificateConfig().extension(ExtensionType.KEY_USAGE).isPresent()) {
+            KeyUsageExtensionConfig keyUsageExtensionConfig = (KeyUsageExtensionConfig)
+                    chainConfig.getEntityCertificateConfig().extension(ExtensionType.KEY_USAGE);
+            keyUsageExtensionConfig.setKeyCertSign(false);
+        }
+        VerifierResult result = testRunner.execute(chainConfig);
+        Assertions.assertFalse(result.isValid());
+         */
     }
-
 }
-

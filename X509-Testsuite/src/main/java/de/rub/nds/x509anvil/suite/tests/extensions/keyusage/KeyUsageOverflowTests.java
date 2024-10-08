@@ -11,8 +11,6 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateModifier;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class KeyUsageOverflowTests extends X509AnvilTest {
@@ -25,12 +23,12 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @AnvilTest()
     public void keyUsageOverflowAppend1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
-/*         assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
-            keyUsageOverflowModifier(true, (byte) 128, (byte) 6);
-        });
-*/
+        /*
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(true, (byte) 128, (byte) 6));
+        Assertions.assertFalse(result.isValid());
+         */
     }
-
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
@@ -40,12 +38,11 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @AnvilTest()
     public void keyUsageOverflowAppend1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
-/*
-
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
-            keyUsageOverflowModifier(false, (byte) 128, (byte) 6);
-        });
-*/
+        /*
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(false, (byte) 128, (byte) 6));
+        Assertions.assertFalse(result.isValid());
+         */
     }
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
@@ -56,13 +53,12 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @AnvilTest()
     public void keyUsageOverflowAppend0Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
-
-/*        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
-            keyUsageOverflowModifier(true, (byte) 0, (byte) 6);
-        });
-        */
+        /*
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(true, (byte) 0, (byte) 6));
+        Assertions.assertFalse(result.isValid());
+         */
     }
-
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
@@ -72,13 +68,12 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @AnvilTest()
     public void keyUsageOverflowAppend0Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
-
-/*        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
-            keyUsageOverflowModifier(false, (byte) 0, (byte) 6);
-        });
-        */
+        /*
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        VerifierResult result = testRunner.execute(chainConfig, keyUsageOverflowModifier(false, (byte) 0, (byte) 6));
+        Assertions.assertFalse(result.isValid());
+         */
     }
-
 
     // TODO: re-implement when extension implemented in attacker
         /*

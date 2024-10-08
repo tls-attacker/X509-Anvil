@@ -11,7 +11,6 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class InvalidCriticalExtensionTests extends X509AnvilTest {
@@ -26,13 +25,15 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
     @ValueConstraint(identifier = "entity.ext_subject_key_identifier_present", method = "enabled")
     @AnvilTest
     public void invalidCriticalSubjectKeyIdentifierEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-      /*  assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier)  config -> {
-            //   TODO: re-implement when extension implemented in attacker
-            config.extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
-        }, Modifiers.invalidExtensionValueModifier(true, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
-       */
+        // TODO: re-implement when extension implemented in attacker
+        /*
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        chainConfig.getEntityCertificateConfig().extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
+        VerifierResult result = testRunner.execute(chainConfig,
+                Modifiers.invalidExtensionValueModifier(true, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
+        Assertions.assertFalse(result.isValid());
+         */
     }
-
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions",
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension [...] " +
@@ -43,14 +44,14 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.extensions_present", method = "enabled")
     @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
     @AnvilTest
-
     public void invalidCriticalSubjectKeyIdentifierIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-    /*    assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
-//            TODO: re-implement when extension implemented in attacker
-            config.extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
-        }, Modifiers.invalidExtensionValueModifier(false, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
-    }
-
-     */
+        // TODO: re-implement when extension implemented in attacker
+        /*
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        chainConfig.getIntermediateConfig(0).extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
+        VerifierResult result = testRunner.execute(chainConfig,
+                Modifiers.invalidExtensionValueModifier(false, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
+        Assertions.assertFalse(result.isValid());
+         */
     }
 }

@@ -13,7 +13,6 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
@@ -28,9 +27,9 @@ public class CnMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void cnMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config ->
-                X509CertificateConfigUtil.modifyAttributeAndValuePair(config, X500AttributeType.COMMON_NAME)
-        );
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        X509CertificateConfigUtil.modifyAttributeAndValuePair(chainConfig.getEntityCertificateConfig(), X500AttributeType.COMMON_NAME);
+        VerifierResult result = testRunner.execute(chainConfig);
+        Assertions.assertFalse(result.isValid());
     }
-    }
-
+}

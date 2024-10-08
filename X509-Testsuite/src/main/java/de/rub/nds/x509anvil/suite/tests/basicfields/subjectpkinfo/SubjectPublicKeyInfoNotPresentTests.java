@@ -12,8 +12,6 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
-import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -24,11 +22,11 @@ public class SubjectPublicKeyInfoNotPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-
     public void noSubjectPublicKeyInfoEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true,
-        (X509CertificateConfigModifier) config ->
-        config.setIncludeSubjectPublicKeyInfo(false));
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        chainConfig.getEntityCertificateConfig().setIncludeSubjectPublicKeyInfo(false);
+        VerifierResult result = testRunner.execute(chainConfig);
+        Assertions.assertFalse(result.isValid());
     }
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
@@ -36,12 +34,10 @@ public class SubjectPublicKeyInfoNotPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-
     public void noSubjectPublicKeyInfoIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false,
-        (X509CertificateConfigModifier) config ->
-        config.setIncludeSubjectPublicKeyInfo(false));
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        chainConfig.getIntermediateConfig(0).setIncludeSubjectPublicKeyInfo(false);
+        VerifierResult result = testRunner.execute(chainConfig);
+        Assertions.assertFalse(result.isValid());
     }
-
-
 }

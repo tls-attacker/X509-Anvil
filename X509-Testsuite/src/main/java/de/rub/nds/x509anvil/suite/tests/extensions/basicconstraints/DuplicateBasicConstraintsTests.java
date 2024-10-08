@@ -14,7 +14,6 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
 import org.junit.jupiter.api.Assertions;
@@ -28,14 +27,13 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "entity.ext_basic_constraints_present", method = "enabled")
-
     public void duplicateIdenticalEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier)  config -> {
-            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
-            config.addExtensions(basicConstraintsConfig);
-        });
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        BasicConstraintsConfig config = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(chainConfig.getEntityCertificateConfig(), X509ExtensionType.BASIC_CONSTRAINTS);
+        chainConfig.getEntityCertificateConfig().addExtensions(config);
+        VerifierResult result = testRunner.execute(chainConfig);
+        Assertions.assertFalse(result.isValid());
     }
-
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
@@ -43,12 +41,12 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void duplicateIdenticalIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
-            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
-            config.addExtensions(basicConstraintsConfig);
-        });
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        BasicConstraintsConfig config = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(chainConfig.getIntermediateConfig(0), X509ExtensionType.BASIC_CONSTRAINTS);
+        chainConfig.getIntermediateConfig(0).addExtensions(config);
+        VerifierResult result = testRunner.execute(chainConfig);
+        Assertions.assertFalse(result.isValid());
     }
-
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
@@ -57,12 +55,13 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
     @AnvilTest
     @ValueConstraint(identifier = "entity.ext_basic_constraints_present", method = "enabled")
     public void duplicateDifferentEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
-            BasicConstraintsConfig oldConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
-            BasicConstraintsConfig newConfig = new BasicConstraintsConfig();
-            newConfig.setCa(!oldConfig.isCa());
-            config.addExtensions(newConfig);
-        });
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        BasicConstraintsConfig oldConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(chainConfig.getEntityCertificateConfig(), X509ExtensionType.BASIC_CONSTRAINTS);
+        BasicConstraintsConfig newConfig = new BasicConstraintsConfig();
+        newConfig.setCa(!oldConfig.isCa());
+        chainConfig.getEntityCertificateConfig().addExtensions(newConfig);
+        VerifierResult result = testRunner.execute(chainConfig);
+        Assertions.assertFalse(result.isValid());
     }
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
@@ -71,12 +70,12 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void duplicateDifferentIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
-            BasicConstraintsConfig oldConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
-            BasicConstraintsConfig newConfig = new BasicConstraintsConfig();
-            newConfig.setCa(!oldConfig.isCa());
-            config.addExtensions(newConfig);
-        });
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        BasicConstraintsConfig oldConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(chainConfig.getIntermediateConfig(0), X509ExtensionType.BASIC_CONSTRAINTS);
+        BasicConstraintsConfig newConfig = new BasicConstraintsConfig();
+        newConfig.setCa(!oldConfig.isCa());
+        chainConfig.getIntermediateConfig(0).addExtensions(newConfig);
+        VerifierResult result = testRunner.execute(chainConfig);
+        Assertions.assertFalse(result.isValid());
     }
-
 }

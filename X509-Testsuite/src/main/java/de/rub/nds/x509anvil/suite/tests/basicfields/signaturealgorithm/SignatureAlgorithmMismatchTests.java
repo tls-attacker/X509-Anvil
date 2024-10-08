@@ -49,8 +49,6 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-//    TODO: Implement List acception in assertInvalid?
-
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm",
             text = "This field MUST contain the same algorithm identifier as the signature field in the sequence tbsCertificate (Section 4.1.2.3).")
     @SeverityLevel(Severity.ERROR)

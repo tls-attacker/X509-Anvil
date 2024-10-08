@@ -11,7 +11,6 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
@@ -26,14 +25,12 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
     @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
     public void keyIdMismatchEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
-
-/*
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
-            authKeyMismatch(true);
-        });
-*/
+        /*
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        VerifierResult result = testRunner.execute(chainConfig, authKeyMismatch(true));
+        Assertions.assertFalse(result.isValid());
+         */
     }
-
 
     @Specification(document = "RFC 5280", section = "4.2.1.2. Subject Key Identifier",
             text = "In conforming CA certificates, the value of the subject key identifier MUST be the value placed in the key identifier " +
@@ -45,11 +42,12 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.ext_authority_key_identifier_present", method = "enabled")
     public void keyIdMismatchIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
-    /*    assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
-            authKeyMismatch(false);
-        });
-  */  }
-
+        /*
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        VerifierResult result = testRunner.execute(chainConfig, authKeyMismatch(false));
+        Assertions.assertFalse(result.isValid());
+         */
+    }
 
 
 // TODO: re-implement when extension implemented in attacker

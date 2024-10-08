@@ -11,7 +11,6 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class InterCertWithoutKeyCertSignTests extends X509AnvilTest {
@@ -26,15 +25,14 @@ public class InterCertWithoutKeyCertSignTests extends X509AnvilTest {
     @AnvilTest
     public void intermediateCertWithCaNotSet(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
-
-/*        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
-            KeyUsageExtensionConfig keyUsageExtensionConfig = (KeyUsageExtensionConfig)
-                    config.extension(ExtensionType.KEY_USAGE);
-            keyUsageExtensionConfig.setKeyCertSign(false);
-            keyUsageExtensionConfig.setDigitalSignature(true); // Just to make sure something is set to true
-        });
+        /*
+        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+        KeyUsageExtensionConfig keyUsageExtensionConfig = (KeyUsageExtensionConfig)
+                chainConfig.getIntermediateConfig(0).extension(ExtensionType.KEY_USAGE);
+        keyUsageExtensionConfig.setKeyCertSign(false);
+        keyUsageExtensionConfig.setDigitalSignature(true);  // Just to make sure something is set to true
+        VerifierResult result = testRunner.execute(chainConfig);
+        Assertions.assertFalse(result.isValid());
         */
     }
-
-
 }
