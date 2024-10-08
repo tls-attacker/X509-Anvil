@@ -35,6 +35,7 @@ public class UnknownOidTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
+    //    TODO: Implement List acception in assertInvalid?
 
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm and 4.1.2.3")
     @SeverityLevel(Severity.ERROR)

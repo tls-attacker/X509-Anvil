@@ -12,8 +12,9 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import org.junit.jupiter.api.Assertions;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+
 
 public class SelfSignedNonRootTests extends X509AnvilTest {
 
@@ -24,21 +25,17 @@ public class SelfSignedNonRootTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void selfSignedEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        certificateChainConfig.getEntityCertificateConfig().setSelfSigned(true);
-        VerifierResult result = testRunner.execute(certificateChainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier)config -> config.setSelfSigned(true));
     }
 
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "for all x in {1, ..., n-1}, the subject of certificate x is the issuer of certificate x+1;")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @TestStrength(2)
     @AnvilTest
     public void selfSignedIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        certificateChainConfig.getIntermediateConfig(0).setSelfSigned(true);
-        VerifierResult result = testRunner.execute(certificateChainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier)config -> config.setSelfSigned(true));
     }
+
 }
