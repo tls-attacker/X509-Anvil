@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.util;
 
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
+import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 import org.junit.platform.commons.JUnitException;
@@ -11,10 +12,10 @@ public class TestUtils {
     /**
      * Returns a supported signature algorithm oid that does not match the actually used algorithm
      */
-    public static X509SignatureAlgorithm getNonMatchingAlgorithmOid(X509SignatureAlgorithm actualAlgorithm) {
+    public static SignatureHashAlgorithmKeyLengthPair getNonMatchingAlgorithmOid(X509SignatureAlgorithm actualAlgorithm) {
         FeatureReport featureReport = ContextHelper.getFeatureReport();
-        return featureReport.getSupportedAlgorithms().stream()
-                .filter(a -> a != actualAlgorithm)
+        return featureReport.getSupportedSignatureHashAndKeyLengthPairsEntity().stream()
+                .filter(a -> a.getSignatureAlgorithm() != actualAlgorithm.getSignatureAlgorithm())
                 .findFirst()
                 .orElseThrow(() -> new JUnitException("No other algorithm supported"));
     }

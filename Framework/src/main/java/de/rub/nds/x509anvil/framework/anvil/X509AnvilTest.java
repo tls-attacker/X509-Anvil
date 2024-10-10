@@ -38,10 +38,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 import java.util.List;
 
-@ExtendWith({
-    MethodConditionExtension.class,
-    ValueConstraintsConditionExtension.class,
-    X509TestRunnerResolver.class })
+@ExtendWith({ MethodConditionExtension.class, ValueConstraintsConditionExtension.class, X509TestRunnerResolver.class })
 public class X509AnvilTest extends AnvilTestBaseClass {
     protected static final Logger LOGGER = LogManager.getLogger();
 
@@ -67,10 +64,8 @@ public class X509AnvilTest extends AnvilTestBaseClass {
     public X509CertificateChainConfig prepareConfig(X509VerifierRunner testRunner) {
         X509CertificateChainConfig config = initializeConfig();
         AnvilTestCase testCase = AnvilTestCase.fromExtensionContext(extensionContext);
-        parameterCombination = new ParameterCombination(
-                testCase.getParameterCombination().getParameterValues(),
-                testCase.getParameterCombination().getDerivationScope()
-        );
+        parameterCombination = new ParameterCombination(testCase.getParameterCombination().getParameterValues(),
+            testCase.getParameterCombination().getDerivationScope());
         parameterCombination.applyToConfig(config);
         testRunner.setPreparedConfig(config);
         testRunner.setParameterCombination(parameterCombination);

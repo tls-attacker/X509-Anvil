@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ * <p>
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * <p>
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.constants;
 
 import de.rub.nds.protocol.constants.HashAlgorithm;
@@ -35,20 +44,27 @@ public class SignatureHashAlgorithmKeyLengthPair {
     public static List<SignatureHashAlgorithmKeyLengthPair> generateAllPossibilities() {
         List<SignatureHashAlgorithmKeyLengthPair> pairs = new LinkedList<>();
 
-        for (X509SignatureAlgorithm signatureAlgorithm: X509SignatureAlgorithm.values()) {
+        for (X509SignatureAlgorithm signatureAlgorithm : X509SignatureAlgorithm.values()) {
             switch (signatureAlgorithm.getSignatureAlgorithm()) {
                 case RSA_PKCS1:
                 case RSA_SSA_PSS:
-                    pairs.addAll(Arrays.stream(RsaKeyLength.values()).map(length -> new SignatureHashAlgorithmKeyLengthPair(signatureAlgorithm, length.getLength())).collect(Collectors.toList()));
+                    pairs.addAll(Arrays.stream(RsaKeyLength.values())
+                        .map(length -> new SignatureHashAlgorithmKeyLengthPair(signatureAlgorithm, length.getLength()))
+                        .collect(Collectors.toList()));
                     break;
                 case DSA:
-                    pairs.addAll(Arrays.stream(DsaKeyLength.values()).map(length -> new SignatureHashAlgorithmKeyLengthPair(signatureAlgorithm, length.getLength())).collect(Collectors.toList()));
+                    pairs.addAll(Arrays.stream(DsaKeyLength.values())
+                        .map(length -> new SignatureHashAlgorithmKeyLengthPair(signatureAlgorithm, length.getLength()))
+                        .collect(Collectors.toList()));
                     break;
                 case ECDSA:
-                    pairs.addAll(Arrays.stream(EcdsaKeyLength.values()).map(length -> new SignatureHashAlgorithmKeyLengthPair(signatureAlgorithm, length.getLength())).collect(Collectors.toList()));
+                    pairs.addAll(Arrays.stream(EcdsaKeyLength.values())
+                        .map(length -> new SignatureHashAlgorithmKeyLengthPair(signatureAlgorithm, length.getLength()))
+                        .collect(Collectors.toList()));
                     break;
                 default:
-                    throw new UnsupportedOperationException("Algorithm " + signatureAlgorithm.getSignatureAlgorithm()  + " not supported.");
+                    throw new UnsupportedOperationException(
+                        "Algorithm " + signatureAlgorithm.getSignatureAlgorithm() + " not supported.");
             }
         }
         return pairs;
@@ -72,9 +88,7 @@ public class SignatureHashAlgorithmKeyLengthPair {
 
     @Override
     public String toString() {
-        return "SignatureHashAlgorithmKeyLengthPair{" +
-                "signatureAndHashAlgorithm=" + signatureAndHashAlgorithm +
-                ", keyLength=" + keyLength +
-                '}';
+        return "SignatureHashAlgorithmKeyLengthPair{" + "signatureAndHashAlgorithm=" + signatureAndHashAlgorithm
+            + ", keyLength=" + keyLength + '}';
     }
 }

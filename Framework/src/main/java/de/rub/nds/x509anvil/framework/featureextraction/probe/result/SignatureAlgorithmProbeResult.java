@@ -17,7 +17,8 @@ import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
 public class SignatureAlgorithmProbeResult extends FeatureSupportedProbeResult {
     private final SignatureHashAlgorithmKeyLengthPair signatureHashAlgorithmKeyLengthPair;
 
-    public SignatureAlgorithmProbeResult(SignatureHashAlgorithmKeyLengthPair signatureHashAlgorithmKeyLengthPair, boolean supported) {
+    public SignatureAlgorithmProbeResult(SignatureHashAlgorithmKeyLengthPair signatureHashAlgorithmKeyLengthPair,
+        boolean supported) {
         super(ProbeType.SIGNATURE_ALGORITHM, supported);
         this.signatureHashAlgorithmKeyLengthPair = signatureHashAlgorithmKeyLengthPair;
     }

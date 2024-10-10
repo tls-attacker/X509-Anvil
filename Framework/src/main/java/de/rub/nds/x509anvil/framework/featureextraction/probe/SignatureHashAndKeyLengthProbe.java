@@ -23,7 +23,8 @@ public class SignatureHashAndKeyLengthProbe extends SimpleProbe {
     private final SignatureHashAlgorithmKeyLengthPair signatureHashAlgorithmKeyLengthPair;
     private final boolean entity;
 
-    public SignatureHashAndKeyLengthProbe(SignatureHashAlgorithmKeyLengthPair signatureHashAlgorithmKeyLengthPair, boolean entity) {
+    public SignatureHashAndKeyLengthProbe(SignatureHashAlgorithmKeyLengthPair signatureHashAlgorithmKeyLengthPair,
+        boolean entity) {
         this.signatureHashAlgorithmKeyLengthPair = signatureHashAlgorithmKeyLengthPair;
         this.entity = entity;
     }

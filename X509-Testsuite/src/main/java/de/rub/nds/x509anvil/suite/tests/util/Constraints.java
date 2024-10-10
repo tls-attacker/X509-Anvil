@@ -2,7 +2,7 @@ package de.rub.nds.x509anvil.suite.tests.util;
 
 import de.rub.nds.protocol.constants.HashAlgorithm;
 import de.rub.nds.protocol.constants.SignatureAlgorithm;
-import de.rub.nds.x509anvil.framework.constants.SignatureAndHashAlgorithmLengthPair;
+import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 
 public class Constraints {
 
@@ -27,11 +27,12 @@ public class Constraints {
         return value.equals(0);
     }
 
-    public static boolean allowRsa(SignatureAndHashAlgorithmLengthPair value) {
+    // TODO: are these still enforced?
+    public static boolean allowRsa(SignatureHashAlgorithmKeyLengthPair value) {
         return value != null && value.getSignatureAlgorithm() == SignatureAlgorithm.RSA_PKCS1;
     }
 
-    public static boolean allowDsa(SignatureAndHashAlgorithmLengthPair value) {
+    public static boolean allowDsa(SignatureHashAlgorithmKeyLengthPair value) {
         return value != null && value.getSignatureAlgorithm() == SignatureAlgorithm.DSA;
     }
 

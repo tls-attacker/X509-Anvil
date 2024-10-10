@@ -41,7 +41,6 @@ public class X509CertificateConfigUtil {
         BasicConstraintsConfig basicConstraintsConfig = getBasicConstraintsConfig(chainPosType);
         extensionConfigList.add(basicConstraintsConfig);
 
-
         config.setExtensions(extensionConfigList);
         config.setIncludeExtensions(true);
         // TODO: decide on which extensions should be set and which not, probably clear list in attacker

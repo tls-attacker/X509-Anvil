@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ * <p>
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * <p>
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.protocol.crypto.key.*;
@@ -12,23 +21,27 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static de.rub.nds.x509attacker.constants.X509NamedCurve.*;
 
-
 /**
  * Wraps around the key Generator in the Protocol-Attacker. Caches generated keys to save runtime.
  */
 public class CachedKeyPairGenerator {
 
-    private static final Map<SignatureHashAlgorithmKeyLengthPair, Pair<RsaPublicKey, RsaPrivateKey>> rsaKeyPairCache = new ConcurrentHashMap<>();
-    private static final Map<SignatureHashAlgorithmKeyLengthPair, DsaPublicKey> dsaPublicKeyCache = new ConcurrentHashMap<>();
-    private static final Map<SignatureHashAlgorithmKeyLengthPair, EcdsaPublicKey> ecdsaPublicKeyCache = new ConcurrentHashMap<>();
+    private static final Map<SignatureHashAlgorithmKeyLengthPair, Pair<RsaPublicKey, RsaPrivateKey>> rsaKeyPairCache =
+        new ConcurrentHashMap<>();
+    private static final Map<SignatureHashAlgorithmKeyLengthPair, DsaPublicKey> dsaPublicKeyCache =
+        new ConcurrentHashMap<>();
+    private static final Map<SignatureHashAlgorithmKeyLengthPair, EcdsaPublicKey> ecdsaPublicKeyCache =
+        new ConcurrentHashMap<>();
 
     public static long RANDOM_SEED = 123456789;
     public static Random random = new Random(RANDOM_SEED);
 
     /**
-     * Produces keys for the given pair of signature algorithm, hash algorithm, and key length, also updates the given config with th produced key values.
+     * Produces keys for the given pair of signature algorithm, hash algorithm, and key length, also updates the given
+     * config with th produced key values.
      */
-    public static void generateNewKeys(SignatureHashAlgorithmKeyLengthPair algorithmLengthPair, X509CertificateConfig config) {
+    public static void generateNewKeys(SignatureHashAlgorithmKeyLengthPair algorithmLengthPair,
+        X509CertificateConfig config) {
 
         switch (algorithmLengthPair.getSignatureAlgorithm()) {
             case RSA_PKCS1:
@@ -38,7 +51,8 @@ public class CachedKeyPairGenerator {
                     if (rsaKeyPairCache.containsKey(algorithmLengthPair)) {
                         keyPair = rsaKeyPairCache.get(algorithmLengthPair);
                     } else {
-                        keyPair = KeyGenerator.generateRsaKeys(config.getDefaultSubjectRsaPublicExponent(), algorithmLengthPair.getKeyLength(), random);
+                        keyPair = KeyGenerator.generateRsaKeys(config.getDefaultSubjectRsaPublicExponent(),
+                            algorithmLengthPair.getKeyLength(), random);
                         rsaKeyPairCache.put(algorithmLengthPair, keyPair);
                     }
                 }
@@ -51,7 +65,8 @@ public class CachedKeyPairGenerator {
                     if (dsaPublicKeyCache.containsKey(algorithmLengthPair)) {
                         dsaPublicKey = dsaPublicKeyCache.get(algorithmLengthPair);
                     } else {
-                        dsaPublicKey = KeyGenerator.generateDsaPublicKey(config.getDefaultSubjectDsaPrivateKeyX(), algorithmLengthPair.getKeyLength(), 160, random);
+                        dsaPublicKey = KeyGenerator.generateDsaPublicKey(config.getDefaultSubjectDsaPrivateKeyX(),
+                            algorithmLengthPair.getKeyLength(), 160, random);
                         dsaPublicKeyCache.put(algorithmLengthPair, dsaPublicKey);
                     }
                 }
@@ -67,7 +82,8 @@ public class CachedKeyPairGenerator {
                     if (ecdsaPublicKeyCache.containsKey(algorithmLengthPair)) {
                         ecdsaPublicKey = ecdsaPublicKeyCache.get(algorithmLengthPair);
                     } else {
-                        ecdsaPublicKey = KeyGenerator.generateEcdsaPublicKey(config.getDefaultSubjectEcPrivateKey(), config.getDefaultNamedCurve().getParameters());
+                        ecdsaPublicKey = KeyGenerator.generateEcdsaPublicKey(config.getDefaultSubjectEcPrivateKey(),
+                            config.getDefaultNamedCurve().getParameters());
                         ecdsaPublicKeyCache.put(algorithmLengthPair, ecdsaPublicKey);
                     }
                 }

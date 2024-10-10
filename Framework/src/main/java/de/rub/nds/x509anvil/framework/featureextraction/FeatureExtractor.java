@@ -59,7 +59,6 @@ public class FeatureExtractor {
         }
     }
 
-
     private static void scanForBasicConstraintsExtension(FeatureReport featureReport)
         throws ProbeException, UnsupportedFeatureException {
         Probe basicConstraintsProbe = new BasicConstraintsExtensionProbe();
@@ -91,16 +90,17 @@ public class FeatureExtractor {
     }
 
     private static void scanForSignatureHashAndKeyLengthAlgorithms(FeatureReport featureReport, boolean entity)
-            throws ProbeException, UnsupportedFeatureException {
+        throws ProbeException, UnsupportedFeatureException {
         List<SignatureHashAlgorithmKeyLengthPair> signatureHashAlgorithmKeyLengthPairs = new ArrayList<>();
 
         // produce all combinations of X509SignatureAlgorithm and the key pairs
         // evaluate combination
 
-        for (SignatureHashAlgorithmKeyLengthPair algorithm : SignatureHashAlgorithmKeyLengthPair.generateAllPossibilities()) {
+        for (SignatureHashAlgorithmKeyLengthPair algorithm : SignatureHashAlgorithmKeyLengthPair
+            .generateAllPossibilities()) {
             Probe signatureAlgorithmProbe = new SignatureHashAndKeyLengthProbe(algorithm, entity);
             SignatureAlgorithmProbeResult signatureAlgorithmProbeResult =
-                    (SignatureAlgorithmProbeResult) signatureAlgorithmProbe.execute();
+                (SignatureAlgorithmProbeResult) signatureAlgorithmProbe.execute();
             if (signatureAlgorithmProbeResult.isSupported()) {
                 signatureHashAlgorithmKeyLengthPairs.add(algorithm);
             }
@@ -116,11 +116,10 @@ public class FeatureExtractor {
         if (signatureHashAlgorithmKeyLengthPairs.isEmpty()) {
             if (entity) {
                 throw new UnsupportedFeatureException(
-                        "Target verifier does not support any of the implemented signature algorithms for entity certificates");
-            }
-            else {
+                    "Target verifier does not support any of the implemented signature algorithms for entity certificates");
+            } else {
                 throw new UnsupportedFeatureException(
-                        "Target verifier does not support any of the implemented signature algorithms for intermediate certificates");
+                    "Target verifier does not support any of the implemented signature algorithms for intermediate certificates");
             }
         }
     }

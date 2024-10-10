@@ -26,10 +26,10 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
     @AnvilTest
     public void tbsSignatureDoesntMatchAlgorithmEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        certificateChainConfig.getEntityCertificateConfig().setSignatureAlgorithm(
+        certificateChainConfig.getEntityCertificateConfig().amendSignatureAlgorithm(
                 TestUtils.getNonMatchingAlgorithmOid(
                         certificateChainConfig.getIssuerConfigOf(
-                                certificateChainConfig.getEntityCertificateConfig()).getDefaultSignatureAlgorithm()));
+                                certificateChainConfig.getEntityCertificateConfig()).getDefaultSignatureAlgorithm()).getSignatureAlgorithm());
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -42,10 +42,10 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
     @AnvilTest
     public void tbsSignatureDoesntMatchAlgorithmIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        certificateChainConfig.getIntermediateConfig(0).setSignatureAlgorithm(
+        certificateChainConfig.getIntermediateConfig(0).amendSignatureAlgorithm(
                 TestUtils.getNonMatchingAlgorithmOid(
                         certificateChainConfig.getIssuerConfigOf(
-                                certificateChainConfig.getIntermediateConfig(0)).getDefaultSignatureAlgorithm()));
+                                certificateChainConfig.getIntermediateConfig(0)).getDefaultSignatureAlgorithm()).getSignatureAlgorithm());
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }

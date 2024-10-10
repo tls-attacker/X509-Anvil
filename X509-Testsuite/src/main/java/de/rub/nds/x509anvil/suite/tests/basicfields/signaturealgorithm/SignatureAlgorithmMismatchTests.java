@@ -42,7 +42,7 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
         Asn1ObjectIdentifier signatureAlgorithmAsn1 = generatedCertificates.get(generatedCertificates.size()-1).getTbsCertificate().getSignature().getAlgorithm();
 
         signatureAlgorithmAsn1.setValue(TestUtils.getNonMatchingAlgorithmOid(certificateChainConfig.getIssuerConfigOf(
-                certificateChainConfig.getEntityCertificateConfig()).getDefaultSignatureAlgorithm()).getOid().toString());
+                certificateChainConfig.getEntityCertificateConfig()).getDefaultSignatureAlgorithm()).getSignatureAndHashAlgorithm().getOid().toString());
 
         VerifierResult result = testRunner.execute(generatedCertificates);
 
@@ -62,7 +62,7 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         Asn1ObjectIdentifier signatureAlgorithmAsn1 = generatedCertificates.get(generatedCertificates.size()-2).getTbsCertificate().getSignature().getAlgorithm();
         signatureAlgorithmAsn1.setValue(TestUtils.getNonMatchingAlgorithmOid(certificateChainConfig.getIssuerConfigOf(
-                certificateChainConfig.getIntermediateConfig(0)).getDefaultSignatureAlgorithm()).getOid().toString());
+                certificateChainConfig.getIntermediateConfig(0)).getDefaultSignatureAlgorithm()).getSignatureAndHashAlgorithm().getOid().toString());
         VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }

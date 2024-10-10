@@ -28,7 +28,7 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
 
     public SignatureHashAndLengthParameter(ParameterScope parameterScope) {
         super(new ParameterIdentifier(X509AnvilParameterType.KEY_TYPE, parameterScope),
-                SignatureHashAlgorithmKeyLengthPair.class);
+            SignatureHashAlgorithmKeyLengthPair.class);
     }
 
     public SignatureHashAndLengthParameter(ParameterScope parameterScope, SignatureHashAlgorithmKeyLengthPair value) {
@@ -50,7 +50,8 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
         if (getParameterScope().isEntity()) {
             signatureHashAlgorithmKeyLengthPairs = featureReport.getSupportedSignatureHashAndKeyLengthPairsEntity();
         } else {
-            signatureHashAlgorithmKeyLengthPairs = featureReport.getSupportedSignatureHashAndKeyLengthPairsIntermediate();
+            signatureHashAlgorithmKeyLengthPairs =
+                featureReport.getSupportedSignatureHashAndKeyLengthPairsIntermediate();
         }
         return signatureHashAlgorithmKeyLengthPairs.stream().map(this::generateValue).collect(Collectors.toList());
     }

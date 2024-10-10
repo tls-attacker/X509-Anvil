@@ -21,7 +21,8 @@ public class FeatureReport {
 
     private List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsEntity = new ArrayList<>();
 
-    private List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate = new ArrayList<>();
+    private List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate =
+        new ArrayList<>();
     private boolean digitalSignatureKeyUsageRequired;
 
     public List<ProbeResult> getProbeResults() {
@@ -51,6 +52,7 @@ public class FeatureReport {
     public boolean version3Supported() {
         return supportedVersions.contains(2);
     }
+
     public List<ExtensionType> getSupportedExtensions() {
         return supportedExtensions;
     }
@@ -79,7 +81,8 @@ public class FeatureReport {
         return supportedSignatureHashAndKeyLengthPairsIntermediate;
     }
 
-    public void setSupportedSignatureHashAndKeyLengthPairsIntermediate(List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate) {
+    public void setSupportedSignatureHashAndKeyLengthPairsIntermediate(
+        List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate) {
         this.supportedSignatureHashAndKeyLengthPairsIntermediate = supportedSignatureHashAndKeyLengthPairsIntermediate;
     }
 
@@ -87,14 +90,17 @@ public class FeatureReport {
         return supportedSignatureHashAndKeyLengthPairsEntity;
     }
 
-    public void setSupportedSignatureHashAndKeyLengthPairsEntity(List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate) {
+    public void setSupportedSignatureHashAndKeyLengthPairsEntity(
+        List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate) {
         this.supportedSignatureHashAndKeyLengthPairsEntity = supportedSignatureHashAndKeyLengthPairsIntermediate;
     }
 
     @Override
     public String toString() {
-        return "Supported versions: " + supportedVersions + "\n" + "Supported Signature and HashAlgorithm and Key Length triples: " + supportedSignatureHashAndKeyLengthPairsIntermediate + "\n"
-            + "Supported extensions: " + supportedExtensions;
+        return "Supported versions: " + supportedVersions + "\n"
+            + "Supported Signature and HashAlgorithm and Key Length triples: "
+            + supportedSignatureHashAndKeyLengthPairsIntermediate + "\n" + "Supported extensions: "
+            + supportedExtensions;
     }
 
 }
