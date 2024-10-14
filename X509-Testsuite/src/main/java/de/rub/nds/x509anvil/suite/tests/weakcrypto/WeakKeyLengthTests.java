@@ -29,51 +29,33 @@ public class WeakKeyLengthTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
     @ValueConstraint(identifier = "inter0.hash_algorithm", method = "restrictHashForRsa512")    //Sha-512/SHA-384 digests are too big for RSA-512
     public void weak512BitRsaKey(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
-<<<<<<< HEAD
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier)  config -> {
-            config.applyKeyPair(CachedKeyPairGenerator.retrieveKeyPair(SignatureAlgorithm.RSA_PKCS1, 512));
-        });
-=======
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        CachedKeyPairGenerator.generateNewKeys(SignatureAndHashAlgorithmLengthPair.get(SignatureAlgorithm.RSA_PKCS1, 512), certificateChainConfig.getIntermediateConfig(0));
-        VerifierResult result = testRunner.execute(certificateChainConfig);
-        Assertions.assertFalse(result.isValid());
->>>>>>> refactor
-    }
-
-    @AnvilTest()
-    @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
-    public void weak1024BitRsaKey(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
-<<<<<<< HEAD
         assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
-            config.applyKeyPair(CachedKeyPairGenerator.retrieveKeyPair(SignatureAlgorithm.RSA_PKCS1, 1024));
+            config.applyKeyPair(CachedKeyPairGenerator.generateNewKeys.retrieveKeyPair(SignatureAlgorithm.RSA_PKCS1, 512));
         });
-=======
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        CachedKeyPairGenerator.generateNewKeys(SignatureAndHashAlgorithmLengthPair.get(SignatureAlgorithm.RSA_PKCS1, 1024), certificateChainConfig.getIntermediateConfig(0));
-        VerifierResult result = testRunner.execute(certificateChainConfig);
-        Assertions.assertFalse(result.isValid());
->>>>>>> refactor
+
+        @AnvilTest()
+        @SeverityLevel(Severity.CRITICAL)
+        @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+        @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
+        public void weak1024BitRsaKey (ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws
+        VerifierException, CertificateGeneratorException, NoSuchAlgorithmException
+        {
+            assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+                config.applyKeyPair(CachedKeyPairGenerator.generateNewKeys.retrieveKeyPair(SignatureAlgorithm.RSA_PKCS1, 1024));
+            });
+
+
+            @AnvilTest()
+            @SeverityLevel(Severity.CRITICAL)
+            @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+            @ValueConstraint(identifier = "inter0.key_type", method = "allowDsa")
+            public void weak1024BitDsaKey (ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws
+            VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
+            assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+                config.applyKeyPair(CachedKeyPairGenerator.generateNewKeys.retrieveKeyPair(SignatureAlgorithm.DSA, 1024));
+            });
+
+        }
+        }
     }
-
-
-    @AnvilTest()
-    @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @ValueConstraint(identifier = "inter0.key_type", method = "allowDsa")
-    public void weak1024BitDsaKey(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
-<<<<<<< HEAD
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
-            config.applyKeyPair(CachedKeyPairGenerator.retrieveKeyPair(SignatureAlgorithm.DSA, 1024));
-        });
-=======
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        CachedKeyPairGenerator.generateNewKeys(SignatureAndHashAlgorithmLengthPair.get(SignatureAlgorithm.DSA, 1024), certificateChainConfig.getIntermediateConfig(0));
-        VerifierResult result = testRunner.execute(certificateChainConfig);
-        Assertions.assertFalse(result.isValid());
->>>>>>> refactor
-    }
-
 }
