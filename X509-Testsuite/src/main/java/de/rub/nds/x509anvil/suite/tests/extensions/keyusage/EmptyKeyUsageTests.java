@@ -11,6 +11,7 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class EmptyKeyUsageTests extends X509AnvilTest {
@@ -24,13 +25,13 @@ public class EmptyKeyUsageTests extends X509AnvilTest {
         @AnvilTest
         public void emptyKeyUsageEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
                 // TODO: re-implement when extension implemented in attacker
-                /*
-                X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-                KeyUsageExtensionConfig keyUsageExtensionConfig = (KeyUsageExtensionConfig)
-                        chainConfig.getEntityCertificateConfig().extension(ExtensionType.KEY_USAGE);
-                keyUsageExtensionConfig.unsetAllBits();
-                VerifierResult result = testRunner.execute(chainConfig);
-                Assertions.assertFalse(result.isValid());
-                 */
+/*                assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
+                        KeyUsageExtensionConfig keyUsageExtensionConfig = (KeyUsageExtensionConfig)
+                                config.extension(ExtensionType.KEY_USAGE);
+                        keyUsageExtensionConfig.unsetAllBits();
+                });
+                */
         }
-}
+
+        }
+
