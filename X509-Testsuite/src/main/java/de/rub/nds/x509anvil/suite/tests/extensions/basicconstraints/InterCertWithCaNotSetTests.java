@@ -30,11 +30,12 @@ public class InterCertWithCaNotSetTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void intermediateCertWithCaNotSet(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier)  config -> {
-            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) config.extension(ExtensionType.BASIC_CONSTRAINTS);
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) config.getExtensionConfig(ExtensionType.BASIC_CONSTRAINTS);
             basicConstraintsConfig.setPresent(true);
             basicConstraintsConfig.setCa(false);
             basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.FOLLOW_DEFAULT);
         });
 
+    }
 }

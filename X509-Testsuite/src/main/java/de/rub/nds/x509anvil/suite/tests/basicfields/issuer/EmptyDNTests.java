@@ -29,22 +29,11 @@ public class EmptyDNTests extends X509AnvilTest {
     @AnvilTest(id = "empty_dn")
 
     public void emptyDn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-<<<<<<< HEAD
 //        TODO: What does "empty" actually mean?
-        assertInvalid(argumentsAccessor, testRunner, false,  (X509CertificateConfigModifier) config -> {config.getSubject().clear();
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+            config.getSubject().clear();
             config.getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "empty"));
-                });
-=======
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> config.getSubject().clear());
+        });
 
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).getSubject().clear();
-        // TODO: probably not the desired outcome, what does empty DN mean?
-        chainConfig.getIntermediateConfig(0).getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, ""));
-        // chainConfig.getIntermediateConfig(0).getSubject().setRelativeDistinguishedNames(Collections.singletonList(new RelativeDistinguishedName("empty")));
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
->>>>>>> refactor
     }
-
 }
