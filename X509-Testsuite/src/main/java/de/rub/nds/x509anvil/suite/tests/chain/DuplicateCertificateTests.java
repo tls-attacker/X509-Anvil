@@ -12,7 +12,7 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
-import de.rub.nds.x509attacker.x509.X509Certificate;
+import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -31,9 +31,10 @@ public class DuplicateCertificateTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
         certificateChain.add(0, certificateChain.get(0));
-        VerifierResult result = testRunner.execute(certificateChain, certificateChainConfig);
+        VerifierResult result = testRunner.execute(certificateChain);
         Assertions.assertFalse(result.isValid());
     }
+    //    TODO: create a new assert method that accepts lists and check for the occurrences of LIST functions?
 
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "A certificate MUST NOT appear more than once in a prospective certification path.")
@@ -46,9 +47,11 @@ public class DuplicateCertificateTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
         certificateChain.add(1, certificateChain.get(1));
-        VerifierResult result = testRunner.execute(certificateChain, certificateChainConfig);
+        VerifierResult result = testRunner.execute(certificateChain);
         Assertions.assertFalse(result.isValid());
     }
+
+
 
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "A certificate MUST NOT appear more than once in a prospective certification path.")
@@ -61,7 +64,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
         certificateChain.add(certificateChain.get(certificateChain.size()-1));
-        VerifierResult result = testRunner.execute(certificateChain, certificateChainConfig);
+        VerifierResult result = testRunner.execute(certificateChain);
         Assertions.assertFalse(result.isValid());
     }
 }

@@ -2,7 +2,7 @@ package de.rub.nds.x509anvil.suite.tests.signature;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.asn1.model.Asn1PrimitiveBitString;
+import de.rub.nds.asn1.model.Asn1BitString;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -14,7 +14,7 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
-import de.rub.nds.x509attacker.x509.X509Certificate;
+import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -34,10 +34,9 @@ public class InvalidSignatureTests extends X509AnvilTest {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        Asn1PrimitiveBitString signature = (Asn1PrimitiveBitString)
-                generatedCertificates.get(generatedCertificates.size()-1).getCertificate().getChildren().get(2);
-        signature.getValue()[32] = (byte) (~signature.getValue()[32] & 0xFF);
-        VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
+        Asn1BitString signature = generatedCertificates.get(generatedCertificates.size()-1).getSignature();
+        signature.getContent().getValue()[32] = (byte) (~signature.getContent().getValue()[32] & 0xFF);
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -53,9 +52,9 @@ public class InvalidSignatureTests extends X509AnvilTest {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        Asn1PrimitiveBitString signature = (Asn1PrimitiveBitString) generatedCertificates.get(1).getCertificate().getChildren().get(2);
-        signature.getValue()[32] = (byte) (~signature.getValue()[32] & 0xFF);
-        VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
+        Asn1BitString signature = generatedCertificates.get(1).getSignature();
+        signature.getContent().getValue()[32] = (byte) (~signature.getContent().getValue()[32] & 0xFF);
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -71,9 +70,9 @@ public class InvalidSignatureTests extends X509AnvilTest {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        Asn1PrimitiveBitString signature = (Asn1PrimitiveBitString) generatedCertificates.get(0).getCertificate().getChildren().get(2);
-        signature.getValue()[32] = (byte) (~signature.getValue()[32] & 0xFF);
-        VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
+        Asn1BitString signature = generatedCertificates.get(0).getSignature();
+        signature.getContent().getValue()[32] = (byte) (~signature.getContent().getValue()[32] & 0xFF);
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 }

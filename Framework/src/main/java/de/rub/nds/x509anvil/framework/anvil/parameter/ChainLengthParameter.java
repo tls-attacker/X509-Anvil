@@ -1,8 +1,8 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
@@ -36,11 +36,12 @@ public class ChainLengthParameter extends X509AnvilDerivationParameter<Integer> 
     }
 
     @Override
-    public List<DerivationParameter> getParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter<X509CertificateChainConfig, Integer>>
+        getParameterValues(DerivationScope derivationScope) {
         int minChainLength = AnnotationUtil.resolveMinChainLength(derivationScope.getExtensionContext());
         int maxChainLength = AnnotationUtil.resolveMaxChainLength(derivationScope.getExtensionContext());
 
-        List<DerivationParameter> parameterValues = new ArrayList<>();
+        List<DerivationParameter<X509CertificateChainConfig, Integer>> parameterValues = new ArrayList<>();
         for (int i = minChainLength; i <= maxChainLength; i++) {
             parameterValues.add(this.generateValue(i));
         }
@@ -50,10 +51,12 @@ public class ChainLengthParameter extends X509AnvilDerivationParameter<Integer> 
     @Override
     public void preProcessConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
         // We need to set the chain length before other parameters access the config
-        int intermediateCertsModeled = AnnotationUtil.resolveIntermediateCertsModeled(derivationScope.getExtensionContext());
-        config.initializeChain(getSelectedValue(), intermediateCertsModeled, AnnotationUtil.resolveStaticRoot(derivationScope.getExtensionContext()));
+        int intermediateCertsModeled =
+            AnnotationUtil.resolveIntermediateCertsModeled(derivationScope.getExtensionContext());
+        config.initializeChain(getSelectedValue(), intermediateCertsModeled);
     }
 
     @Override
-    public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {}
+    public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
+    }
 }

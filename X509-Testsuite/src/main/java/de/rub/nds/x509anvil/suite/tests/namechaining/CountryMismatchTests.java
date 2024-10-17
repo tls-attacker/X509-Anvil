@@ -12,10 +12,10 @@ import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.constants.AttributeTypeObjectIdentifiers;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.suite.tests.util.Constraints;
-import de.rub.nds.x509anvil.suite.tests.util.Modifiers;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -27,11 +27,15 @@ public class CountryMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_country_name_present", clazz = Constraints.class, method = "enabled")
+    @ValueConstraint(identifier = "inter0.nc_country_name_present", method = "enabled")
     @AnvilTest
     public void countryMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.nameComponentMismatchModifier(AttributeTypeObjectIdentifiers.COMMON_NAME));
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config ->
+                X509CertificateConfigUtil.modifyAttributeAndValuePair(config, X500AttributeType.COUNTRY_NAME)
+        );
     }
+
+
 }
+
+

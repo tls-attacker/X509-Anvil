@@ -1,14 +1,17 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 
 package de.rub.nds.x509anvil.framework.anvil;
 
+import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
+import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
+import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.anvilcore.model.parameter.ParameterType;
 
 import java.util.ArrayList;
@@ -20,7 +23,6 @@ public enum X509AnvilParameterType implements ParameterType {
     VERSION,
     SERIAL_NUMBER,
     KEY_TYPE,
-    HASH_ALGORITHM,
     NOT_BEFORE,
     NOT_AFTER,
     CN_TYPE,
@@ -55,19 +57,26 @@ public enum X509AnvilParameterType implements ParameterType {
     EXT_KEY_USAGE_PRESENT,
     EXT_KEY_USAGE_CRITICAL,
     EXT_KEY_USAGE_DIGITAL_SIGNATURE,
-    //EXT_KEY_USAGE_NON_REPUDIATION,
+    // EXT_KEY_USAGE_NON_REPUDIATION,
     EXT_KEY_USAGE_KEY_ENCIPHERMENT,
     EXT_KEY_USAGE_DATA_ENCIPHERMENT,
     EXT_KEY_USAGE_KEY_AGREEMENT,
     EXT_KEY_USAGE_KEY_CERT_SIGN,
-    //EXT_KEY_USAGE_CRL_SIGN,
-    //EXT_KEY_USAGE_ENCIPHER_ONLY,
-    //EXT_KEY_USAGE_DECIPHER_ONLY
+    // EXT_KEY_USAGE_CRL_SIGN,
+    // EXT_KEY_USAGE_ENCIPHER_ONLY,
+    // EXT_KEY_USAGE_DECIPHER_ONLY
     ;
 
+    // TODO: probably delete?
     public static List<X509AnvilParameterType> getCertificateSpecificTypes() {
-        List<X509AnvilParameterType> certificateSpecificTypes = new ArrayList<>(Arrays.asList(X509AnvilParameterType.values()));
+        List<X509AnvilParameterType> certificateSpecificTypes =
+            new ArrayList<>(Arrays.asList(X509AnvilParameterType.values()));
         certificateSpecificTypes.remove(X509AnvilParameterType.CHAIN_LENGTH);
         return certificateSpecificTypes;
+    }
+
+    @Override
+    public DerivationParameter getInstance(ParameterScope scope) {
+        return X509AnvilParameterFactory.getInstance(new ParameterIdentifier(this, scope));
     }
 }

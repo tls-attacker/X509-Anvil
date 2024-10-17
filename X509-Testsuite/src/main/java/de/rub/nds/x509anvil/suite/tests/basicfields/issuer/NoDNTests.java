@@ -12,10 +12,9 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
-
-import java.util.Collections;
 
 public class NoDNTests extends X509AnvilTest {
 
@@ -25,9 +24,8 @@ public class NoDNTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void noDn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).getSubject().setRelativeDistinguishedNames(Collections.emptyList());
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> config.getSubject().clear());
     }
+
+
 }

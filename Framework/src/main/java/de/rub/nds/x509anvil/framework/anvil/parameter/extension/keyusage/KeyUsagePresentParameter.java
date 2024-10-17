@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ * <p>
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * <p>
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -15,11 +24,13 @@ import java.util.List;
 public class KeyUsagePresentParameter extends ExtensionPresentParameter {
 
     public KeyUsagePresentParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.EXT_KEY_USAGE_PRESENT, parameterScope), ExtensionType.KEY_USAGE);
+        super(new ParameterIdentifier(X509AnvilParameterType.EXT_KEY_USAGE_PRESENT, parameterScope),
+            ExtensionType.KEY_USAGE);
     }
 
     public KeyUsagePresentParameter(Boolean selectedValue, ParameterScope parameterScope) {
-        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.EXT_KEY_USAGE_PRESENT, parameterScope), ExtensionType.KEY_USAGE);
+        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.EXT_KEY_USAGE_PRESENT, parameterScope),
+            ExtensionType.KEY_USAGE);
     }
 
     @Override
@@ -28,7 +39,8 @@ public class KeyUsagePresentParameter extends ExtensionPresentParameter {
     }
 
     @Override
-    public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter<X509CertificateChainConfig, Boolean>>
+        getNonNullParameterValues(DerivationScope derivationScope) {
         if (!getParameterScope().isEntity()) {
             return Collections.singletonList(generateValue(true));
         }

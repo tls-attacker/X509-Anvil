@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ * <p>
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * <p>
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter.name;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -7,38 +16,41 @@ import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
-import de.rub.nds.x509anvil.framework.x509.config.model.DirectoryStringType;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CNTypeParameter extends CertificateSpecificParameter<DirectoryStringType> {
+/**
+ * Sets the DirectoryStringType of the subject
+ */
+public class CNTypeParameter extends CertificateSpecificParameter<DirectoryStringChoiceType> {
 
     public CNTypeParameter(ParameterScope parameterScope) {
-        super(new ParameterIdentifier(X509AnvilParameterType.CN_TYPE, parameterScope), DirectoryStringType.class);
+        super(new ParameterIdentifier(X509AnvilParameterType.CN_TYPE, parameterScope), DirectoryStringChoiceType.class);
     }
 
-    public CNTypeParameter(ParameterScope parameterScope, DirectoryStringType selectedValue) {
-        super(new ParameterIdentifier(X509AnvilParameterType.CN_TYPE, parameterScope), DirectoryStringType.class);
+    public CNTypeParameter(ParameterScope parameterScope, DirectoryStringChoiceType selectedValue) {
+        super(new ParameterIdentifier(X509AnvilParameterType.CN_TYPE, parameterScope), DirectoryStringChoiceType.class);
         setSelectedValue(selectedValue);
     }
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        certificateConfig.getSubject().setCn(certificateConfig.getCertificateName(), getSelectedValue());
+        certificateConfig.setDefaultDirectoryStringType(getSelectedValue());
     }
 
     @Override
-    protected List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
-        return Arrays.stream(DirectoryStringType.values())
-                .map(this::generateValue)
-                .collect(Collectors.toList());
+    protected List<DerivationParameter<X509CertificateChainConfig, DirectoryStringChoiceType>>
+        getNonNullParameterValues(DerivationScope derivationScope) {
+        return Arrays.stream(DirectoryStringChoiceType.values()).map(this::generateValue).collect(Collectors.toList());
     }
 
     @Override
-    protected DerivationParameter<X509CertificateChainConfig, DirectoryStringType> generateValue(DirectoryStringType selectedValue) {
+    protected DerivationParameter<X509CertificateChainConfig, DirectoryStringChoiceType>
+        generateValue(DirectoryStringChoiceType selectedValue) {
         return new CNTypeParameter(getParameterScope(), selectedValue);
     }
 }

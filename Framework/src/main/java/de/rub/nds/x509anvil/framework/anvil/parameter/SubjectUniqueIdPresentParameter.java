@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ * <p>
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * <p>
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -8,7 +17,7 @@ import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,15 +39,15 @@ public class SubjectUniqueIdPresentParameter extends BooleanCertificateSpecificP
 
     @Override
     public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        certificateConfig.setSubjectUniqueIdPresent(getSelectedValue());
+        certificateConfig.setIncludeSubjectUniqueId(getSelectedValue());
     }
 
     @Override
     public List<ConditionalConstraint> getDefaultConditionalConstraints(DerivationScope derivationScope) {
         List<ConditionalConstraint> defaultConstraints = super.getDefaultConditionalConstraints(derivationScope);
         // Unique IDs are only allowed in v2 and v3 certificates
-        defaultConstraints.add(CommonConstraints.valuesNotAllowedForVersions(Collections.singletonList(0), derivationScope,
-                this, Collections.singletonList(true)));
+        defaultConstraints.add(CommonConstraints.valuesNotAllowedForVersions(Collections.singletonList(0),
+            derivationScope, this, Collections.singletonList(true)));
         return defaultConstraints;
     }
 }

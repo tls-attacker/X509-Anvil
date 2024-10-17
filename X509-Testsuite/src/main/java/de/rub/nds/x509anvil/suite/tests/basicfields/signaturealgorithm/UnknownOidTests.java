@@ -2,7 +2,6 @@ package de.rub.nds.x509anvil.suite.tests.basicfields.signaturealgorithm;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -12,11 +11,9 @@ import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
-import de.rub.nds.x509anvil.suite.tests.util.Modifiers;
-import de.rub.nds.x509attacker.x509.X509Certificate;
+import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -28,35 +25,60 @@ public class UnknownOidTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest(description = "Checks if the application rejects certificates where the signature algorithm in signatureAlgorithm or tbsCertificate.signature is unknown")
-    public void unknownOidEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    @AnvilTest()
+    public void unknownOidTbsEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        Asn1ObjectIdentifier signatureAlgorithmAsn1 = (Asn1ObjectIdentifier) X509Util.getAsn1ElementByIdentifierPath(
-                generatedCertificates.get(generatedCertificates.size()-1),
-                "signatureAlgorithm", "algorithm");
-        signatureAlgorithmAsn1.setValue("1.2.3.4.5.6.7.8");
-        VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
+        generatedCertificates.get(generatedCertificates.size()-1).getTbsCertificate().getSignature().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
+    //    TODO: Implement List acception in assertInvalid?
 
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm and 4.1.2.3")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest(description = "Checks if the application rejects certificates where the signature algorithm in signatureAlgorithm or tbsCertificate.signature is unknown")
-    public void unknownOidIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    @AnvilTest()
+    public void unknownOidTbsIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        Asn1ObjectIdentifier signatureAlgorithmAsn1 = (Asn1ObjectIdentifier) X509Util.getAsn1ElementByIdentifierPath(
-                generatedCertificates.get(generatedCertificates.size()-2),
-                "signatureAlgorithm", "algorithm");
-        signatureAlgorithmAsn1.setValue("1.2.3.4.5.6.7.8");
-        VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
+        generatedCertificates.get(generatedCertificates.size()-2).getTbsCertificate().getSignature().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
+        VerifierResult result = testRunner.execute(generatedCertificates);
+        Assertions.assertFalse(result.isValid());
+    }
+
+    @Specification(document = "RFC 5280", section = "4.1.2.3.  Signature")
+    @SeverityLevel(Severity.ERROR)
+    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @TestStrength(2)
+    @AnvilTest()
+    public void unknownOidCertEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+        X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
+        certificateChainGenerator.generateCertificateChain();
+        List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
+        generatedCertificates.get(generatedCertificates.size()-1).getSignatureAlgorithmIdentifier().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
+        VerifierResult result = testRunner.execute(generatedCertificates);
+        Assertions.assertFalse(result.isValid());
+    }
+
+    @Specification(document = "RFC 5280", section = "4.1.2.3.  Signature")
+    @SeverityLevel(Severity.ERROR)
+    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @TestStrength(2)
+    @AnvilTest()
+    public void unknownOidCertIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+        X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
+        certificateChainGenerator.generateCertificateChain();
+        List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
+        generatedCertificates.get(generatedCertificates.size()-2).getSignatureAlgorithmIdentifier().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -64,18 +86,15 @@ public class UnknownOidTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest(description = "Checks if the application rejects certificates where the signature algorithm in signatureAlgorithm or tbsCertificate.signature is unknown")
-    public void unknownOidInBothFieldsEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    @AnvilTest()
+    public void unknownOidTbsAndCertEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
-        certificateChainGenerator.addModifier(Modifiers.tbsSignatureUnknownOidModifier(true));
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        Asn1ObjectIdentifier signatureAlgorithmAsn1 = (Asn1ObjectIdentifier) X509Util.getAsn1ElementByIdentifierPath(
-                generatedCertificates.get(generatedCertificates.size()-1),
-                "signatureAlgorithm", "algorithm");
-        signatureAlgorithmAsn1.setValue("1.2.3.4.5.6.7.8");
-        VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
+        generatedCertificates.get(generatedCertificates.size()-1).getSignatureAlgorithmIdentifier().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
+        generatedCertificates.get(generatedCertificates.size()-1).getTbsCertificate().getSignature().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -83,18 +102,15 @@ public class UnknownOidTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest(description = "Checks if the application rejects certificates where the signature algorithm in signatureAlgorithm or tbsCertificate.signature is unknown")
-    public void unknownOidInBothFieldsIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    @AnvilTest()
+    public void unknownOidTbsAndCertIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
-        certificateChainGenerator.addModifier(Modifiers.tbsSignatureUnknownOidModifier(false));
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        Asn1ObjectIdentifier signatureAlgorithmAsn1 = (Asn1ObjectIdentifier) X509Util.getAsn1ElementByIdentifierPath(
-                generatedCertificates.get(generatedCertificates.size()-2),
-                "signatureAlgorithm", "algorithm");
-        signatureAlgorithmAsn1.setValue("1.2.3.4.5.6.7.8");
-        VerifierResult result = testRunner.execute(generatedCertificates, certificateChainConfig);
+        generatedCertificates.get(generatedCertificates.size()-2).getSignatureAlgorithmIdentifier().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
+        generatedCertificates.get(generatedCertificates.size()-2).getTbsCertificate().getSignature().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
+        VerifierResult result = testRunner.execute(generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 }

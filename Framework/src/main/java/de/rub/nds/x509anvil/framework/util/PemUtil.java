@@ -1,8 +1,8 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
@@ -30,9 +30,7 @@ public class PemUtil {
 
     public static byte[] pemToDer(byte[] pemBytes) {
         String pem = new String(pemBytes);
-        pem = pem.replaceAll("-----.+-----", "")
-                .replaceAll(System.lineSeparator(), "")
-                .replaceAll("\n","");
+        pem = pem.replaceAll("-----.+-----", "").replaceAll(System.lineSeparator(), "").replaceAll("\n", "");
         return Base64.getDecoder().decode(pem);
     }
 }

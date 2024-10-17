@@ -1,33 +1,29 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
-import de.rub.nds.anvilcore.context.AnvilContext;
-import de.rub.nds.anvilcore.model.config.AnvilConfig;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.TestConfig;
-import de.rub.nds.x509anvil.framework.anvil.X509AnvilContextDelegate;
-import de.rub.nds.x509anvil.framework.constants.CertificateChainPosType;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.constants.CertificateChainPositionType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class X509CertificateChainConfig implements AnvilConfig {
+public class X509CertificateChainConfig {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private int chainLength;
     private int intermediateCertsModeled;
-    private boolean staticRoot;
 
     private X509CertificateConfig rootCertificateConfig = null;
     private final List<X509CertificateConfig> intermediateCertificateConfigs = new ArrayList<>();
@@ -35,8 +31,7 @@ public class X509CertificateChainConfig implements AnvilConfig {
 
     private boolean initialized = false;
 
-
-    public void initializeChain(int chainLength, int intermediateCertsModeled, boolean staticRoot) {
+    public void initializeChain(int chainLength, int intermediateCertsModeled) {
         if (initialized) {
             throw new IllegalStateException("Config is already initialized");
         }
@@ -44,32 +39,14 @@ public class X509CertificateChainConfig implements AnvilConfig {
         this.chainLength = chainLength;
         this.intermediateCertsModeled = intermediateCertsModeled;
 
-        TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
-        this.staticRoot = staticRoot;
-
-
-        if (staticRoot) {
-            try {
-                rootCertificateConfig = X509CertificateConfigUtil.loadStaticCertificateConfig(testConfig.getStaticRootCertificateFile(), testConfig.getStaticRootPrivateKeyFile());
-            }
-            catch (IOException | InvalidKeySpecException e) {
-                LOGGER.error("Unable to load static root certificate and its private key", e);
-                throw new IllegalArgumentException("Unable to load static root certificate and its private key", e);
-            }
-        }
-        else {
-            // We need to generate our own root
-            rootCertificateConfig = X509CertificateConfigUtil.getDefaultCaCertificateConfig("cert_root", true, CertificateChainPosType.ROOT);
-        }
+        rootCertificateConfig =
+            X509CertificateConfigUtil.getDefaultCaCertificateConfig(true, CertificateChainPositionType.ROOT);
 
         // Generate configs for intermediate certificates
         for (int i = 0; i < chainLength - 2; i++) {
             if (i < intermediateCertsModeled) {
-                X509CertificateConfig config = X509CertificateConfigUtil
-                        .getDefaultCaCertificateConfig("cert_intermediate_" + i,false, CertificateChainPosType.INTERMEDIATE);
-                if (i == intermediateCertsModeled - 1 && intermediateCertsModeled < chainLength - 2) {
-                    config.setSharedConfig(true);
-                }
+                X509CertificateConfig config = X509CertificateConfigUtil.getDefaultCaCertificateConfig(false,
+                    CertificateChainPositionType.INTERMEDIATE);
                 intermediateCertificateConfigs.add(config);
             }
         }
@@ -77,9 +54,9 @@ public class X509CertificateChainConfig implements AnvilConfig {
         // Generate entity config
         if (chainLength == 1) {
             entityCertificateConfig = rootCertificateConfig;
-        }
-        else {
-            entityCertificateConfig = X509CertificateConfigUtil.getDefaultCertificateConfig("cert_entity", false, CertificateChainPosType.ENTITY);
+        } else {
+            entityCertificateConfig =
+                X509CertificateConfigUtil.getDefaultCertificateConfig(false, CertificateChainPositionType.ENTITY);
         }
 
         initialized = true;
@@ -105,6 +82,14 @@ public class X509CertificateChainConfig implements AnvilConfig {
         return intermediateCertificateConfigs.get(index);
     }
 
+    public X509CertificateConfig getLastSigningConfig() {
+        if (!intermediateCertificateConfigs.isEmpty()) {
+            return getIntermediateConfig(0);
+        } else {
+            return rootCertificateConfig;
+        }
+    }
+
     public X509CertificateConfig getIssuerConfigOf(X509CertificateConfig subject) {
         List<X509CertificateConfig> certificateConfigList = getCertificateConfigList();
         if (!certificateConfigList.contains(subject)) {
@@ -125,12 +110,10 @@ public class X509CertificateChainConfig implements AnvilConfig {
 
         if (chainLength == 0) {
             return certificateConfigList;
-        }
-        else if (chainLength == 1) {
+        } else if (chainLength == 1) {
             certificateConfigList.add(rootCertificateConfig);
             return certificateConfigList;
-        }
-        else {
+        } else {
             certificateConfigList.add(rootCertificateConfig);
             certificateConfigList.addAll(intermediateCertificateConfigs);
             certificateConfigList.add(entityCertificateConfig);
@@ -141,10 +124,6 @@ public class X509CertificateChainConfig implements AnvilConfig {
 
     public int getIntermediateCertsModeled() {
         return intermediateCertsModeled;
-    }
-
-    public boolean isStaticRoot() {
-        return staticRoot;
     }
 
     public boolean isInitialized() {

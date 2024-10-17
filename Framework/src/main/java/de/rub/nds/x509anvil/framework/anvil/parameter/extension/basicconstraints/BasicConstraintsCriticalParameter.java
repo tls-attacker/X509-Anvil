@@ -1,3 +1,12 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ * <p>
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * <p>
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
 package de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -16,12 +25,13 @@ public class BasicConstraintsCriticalParameter extends ExtensionCriticalParamete
 
     public BasicConstraintsCriticalParameter(ParameterScope parameterScope) {
         super(new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_CRITICAL, parameterScope),
-                ExtensionType.BASIC_CONSTRAINTS, X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT);
+            ExtensionType.BASIC_CONSTRAINTS, X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT);
     }
 
     public BasicConstraintsCriticalParameter(Boolean selectedValue, ParameterScope parameterScope) {
-        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_CRITICAL, parameterScope),
-                ExtensionType.BASIC_CONSTRAINTS, X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT);
+        super(selectedValue,
+            new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_CRITICAL, parameterScope),
+            ExtensionType.BASIC_CONSTRAINTS, X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT);
     }
 
     @Override
@@ -30,7 +40,8 @@ public class BasicConstraintsCriticalParameter extends ExtensionCriticalParamete
     }
 
     @Override
-    public List<DerivationParameter> getNonNullParameterValues(DerivationScope derivationScope) {
+    public List<DerivationParameter<X509CertificateChainConfig, Boolean>>
+        getNonNullParameterValues(DerivationScope derivationScope) {
         // BasicConstraints must be critical for CA
         if (!getParameterScope().isEntity()) {
             return Collections.singletonList(generateValue(true));

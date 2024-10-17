@@ -1,15 +1,14 @@
 /**
  * Framework - A tool for creating arbitrary certificates
- *
- * Copyright 2014-${year} Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- *
+ * <p>
+ * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 
 package de.rub.nds.x509anvil.framework.anvil;
 
-import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.ParameterCombination;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapter;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterFactory;
@@ -19,8 +18,8 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
-import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateModifier;
-import de.rub.nds.x509attacker.x509.X509Certificate;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -59,34 +58,39 @@ public class X509VerifierRunner {
         this.parameterCombination = parameterCombination;
     }
 
-    public VerifierResult execute(X509CertificateChainConfig config) throws CertificateGeneratorException, VerifierException {
+    public VerifierResult execute(X509CertificateChainConfig config)
+        throws CertificateGeneratorException, VerifierException {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateList = certificateChainGenerator.retrieveCertificateChain();
         X509Util.exportCertificates(certificateList, "resources/out");
 
-        TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
-        VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(), testConfig.getVerifierAdapterConfig());
-        return verifierAdapter.invokeVerifier(certificateList, config);
+        TestConfig testConfig = ContextHelper.getTestConfig();
+        VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
+            testConfig.getVerifierAdapterConfig());
+        return verifierAdapter.invokeVerifier(certificateList);
     }
 
-    public VerifierResult execute(X509CertificateChainConfig config, X509CertificateModifier modifier) throws CertificateGeneratorException, VerifierException {
+    // TODO: modifiers unset rn, switch all tests to new modifiers
+    public VerifierResult execute(X509CertificateChainConfig config, X509CertificateConfigModifier modifier)
+        throws CertificateGeneratorException, VerifierException {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
-        certificateChainGenerator.addModifier(modifier);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateList = certificateChainGenerator.retrieveCertificateChain();
         X509Util.exportCertificates(certificateList, "resources/out");
 
-        TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
-        VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(), testConfig.getVerifierAdapterConfig());
-        return verifierAdapter.invokeVerifier(certificateList, config);
+        TestConfig testConfig = ContextHelper.getTestConfig();
+        VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
+            testConfig.getVerifierAdapterConfig());
+        return verifierAdapter.invokeVerifier(certificateList);
     }
 
-    public VerifierResult execute(List<X509Certificate> certificateList, X509CertificateChainConfig config) throws VerifierException {
+    public VerifierResult execute(List<X509Certificate> certificateList) throws VerifierException {
         X509Util.exportCertificates(certificateList, "resources/out");
 
-        TestConfig testConfig = ((X509AnvilContextDelegate) AnvilContext.getInstance().getApplicationSpecificContextDelegate()).getTestConfig();
-        VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(), testConfig.getVerifierAdapterConfig());
-        return verifierAdapter.invokeVerifier(certificateList, config);
+        TestConfig testConfig = ContextHelper.getTestConfig();
+        VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
+            testConfig.getVerifierAdapterConfig());
+        return verifierAdapter.invokeVerifier(certificateList);
     }
 }

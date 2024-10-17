@@ -12,7 +12,8 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.suite.tests.util.Modifiers;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -22,21 +23,24 @@ public class NotAfterNotPresentTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest(description = "Test how verifier handles missing notAfter field")
+    @AnvilTest()
     public void noNotAfterEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(true, "tbsCertificate", "validity", "notAfter"));
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, true,
+                (X509CertificateConfigModifier) config -> {
+                    config.setIncludeNotAfter(false);
+                });
     }
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest(description = "Test how verifier handles missing notAfter field")
+    @AnvilTest()
     public void noNotAfterIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        VerifierResult result = testRunner.execute(chainConfig, Modifiers.removeFieldModifier(false, "tbsCertificate", "validity", "notAfter"));
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false,
+                (X509CertificateConfigModifier) config -> {
+                    config.setIncludeNotAfter(false);
+                });
     }
+
 }

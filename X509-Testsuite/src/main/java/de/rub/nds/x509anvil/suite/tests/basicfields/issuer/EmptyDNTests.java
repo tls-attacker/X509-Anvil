@@ -2,6 +2,7 @@ package de.rub.nds.x509anvil.suite.tests.basicfields.issuer;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
+import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -11,12 +12,13 @@ import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.model.RelativeDistinguishedName;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
-import java.util.Collections;
+import java.math.BigInteger;
 
 public class EmptyDNTests extends X509AnvilTest {
 
@@ -24,11 +26,13 @@ public class EmptyDNTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest
+    @AnvilTest(id = "empty_dn")
     public void emptyDn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
-        chainConfig.getIntermediateConfig(0).getSubject().setRelativeDistinguishedNames(Collections.singletonList(new RelativeDistinguishedName()));
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+//        TODO: What does "empty" actually mean?
+        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+            config.getSubject().clear();
+            config.getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "empty"));
+        });
+
     }
 }
