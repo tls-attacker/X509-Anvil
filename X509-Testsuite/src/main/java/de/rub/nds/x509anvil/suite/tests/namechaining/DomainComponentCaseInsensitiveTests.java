@@ -29,8 +29,8 @@ public class DomainComponentCaseInsensitiveTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.domain_components_present", method = "enabled")
     @AnvilTest()
-    public void switchedCaseDomainComponentTest(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, domainComponentCaseSwitchModifier());
+    public void switchedCaseDomainComponentTest(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, domainComponentCaseSwitchModifier());
     }
 
     private static X509CertificateModifier domainComponentCaseSwitchModifier() {

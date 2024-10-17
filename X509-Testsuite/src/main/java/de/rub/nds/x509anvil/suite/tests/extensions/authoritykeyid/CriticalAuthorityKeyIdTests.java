@@ -30,9 +30,9 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
-    public void criticalAuthorityKeyIdEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void criticalAuthorityKeyIdEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: Fix to correct config once implemented
-        /* assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier )config -> {
+        /* assertInvalid(testRunner, true, (X509CertificateConfigModifier )config -> {
             ExtensionConfig authorityKeyIdentifier = new UnknownConfig(X509ExtensionType.AUTHORITY_KEY_IDENTIFIER.getOid(), "authority_key_identifier");
             authorityKeyIdentifier.setCritical(true);
             config.addExtensions(authorityKeyIdentifier);
@@ -47,9 +47,9 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "inter0.ext_authority_key_identifier_present", method = "enabled")
-    public void criticalAuthorityKeyIdIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void criticalAuthorityKeyIdIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //           TODO: Fix to correct config once implemented
-     /*   assertInvalid(argumentsAccessor, testRunner, false,(X509CertificateConfigModifier) config -> {
+     /*   assertInvalid(testRunner, false,(X509CertificateConfigModifier) config -> {
             ExtensionConfig authorityKeyIdentifier = new UnknownConfig(X509ExtensionType.AUTHORITY_KEY_IDENTIFIER.getOid(), "authority_key_identifier");
             authorityKeyIdentifier.setCritical(true);
             config.addExtensions(authorityKeyIdentifier);

@@ -29,8 +29,8 @@ public class DomainComponentMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.domain_components_present", method = "enabled")
     @AnvilTest
-    public void domainComponentMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, domainComponentMismatchModifier());
+    public void domainComponentMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, domainComponentMismatchModifier());
     }
 
     private static X509CertificateModifier domainComponentMismatchModifier() {

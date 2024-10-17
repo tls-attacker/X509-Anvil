@@ -29,8 +29,8 @@ public class CountryMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.nc_country_name_present", method = "enabled")
     @AnvilTest
-    public void countryMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config ->
+    public void countryMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config ->
                 X509CertificateConfigUtil.modifyAttributeAndValuePair(config, X500AttributeType.COUNTRY_NAME)
         );
     }

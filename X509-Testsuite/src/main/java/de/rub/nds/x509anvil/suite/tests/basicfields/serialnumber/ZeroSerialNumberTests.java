@@ -30,8 +30,8 @@ public class ZeroSerialNumberTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "entity.serial_number")
     @AnvilTest
-    public void zeroSerialNumberEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true,
+    public void zeroSerialNumberEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> config.setSerialNumber(BigInteger.valueOf(-1337)));
     }
 
@@ -45,8 +45,8 @@ public class ZeroSerialNumberTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "inter0.serial_number")
     @AnvilTest
-    public void zeroSerialNumberIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false,
+    public void zeroSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> config.setSerialNumber(BigInteger.valueOf(-1337)));
     }
 

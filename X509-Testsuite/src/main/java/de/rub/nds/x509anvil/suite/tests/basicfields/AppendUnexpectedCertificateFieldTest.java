@@ -31,11 +31,11 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void appendUnexpectedFieldEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void appendUnexpectedFieldEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         Asn1OctetString octetString = new Asn1OctetString("unexpectedField");
         octetString.setValue(TestUtils.createByteArray(8));
 
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateModifier)  certificate ->
+        assertInvalid(testRunner, true, (X509CertificateModifier)  certificate ->
                 certificate.getTbsCertificate().setEncodedChildren(ArrayUtils.addAll(
                         certificate.getTbsCertificate().getEncodedChildren().getValue(),
                         octetString.getContent().getValue())));
@@ -46,11 +46,11 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void appendUnexpectedFieldIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void appendUnexpectedFieldIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         Asn1OctetString octetString = new Asn1OctetString("unexpectedField");
         octetString.setValue(TestUtils.createByteArray(8));
 
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateModifier)  certificate ->
+        assertInvalid(testRunner, false, (X509CertificateModifier)  certificate ->
                 certificate.getTbsCertificate().setEncodedChildren(ArrayUtils.addAll(
                         certificate.getTbsCertificate().getEncodedChildren().getValue(),
                         octetString.getContent().getValue())));

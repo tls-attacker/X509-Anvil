@@ -25,8 +25,8 @@ public class DuplicateCertificateTests extends X509AnvilTest {
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @AnvilTest
-    public void duplicateRoot(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void duplicateRoot(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
@@ -41,8 +41,8 @@ public class DuplicateCertificateTests extends X509AnvilTest {
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @AnvilTest
-    public void duplicateIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void duplicateIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
@@ -58,8 +58,8 @@ public class DuplicateCertificateTests extends X509AnvilTest {
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @AnvilTest
-    public void duplicateEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void duplicateEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();

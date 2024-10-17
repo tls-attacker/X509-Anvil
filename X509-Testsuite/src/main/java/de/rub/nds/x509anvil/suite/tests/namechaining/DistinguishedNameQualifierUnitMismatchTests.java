@@ -28,8 +28,8 @@ public class DistinguishedNameQualifierUnitMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void distinguishedNameQualifierMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void distinguishedNameQualifierMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig chainConfig = prepareConfig(testRunner);
         chainConfig.getLastSigningConfig().getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq"));
         X509CertificateConfigUtil.modifyAttributeAndValuePair(chainConfig.getEntityCertificateConfig(), X500AttributeType.DN_QUALIFIER);
         VerifierResult result = testRunner.execute(chainConfig);

@@ -24,11 +24,11 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
     @AnvilTest
     @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
     @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
-    public void keyIdMismatchEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void keyIdMismatchEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
 
 /*
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             authKeyMismatch(true);
         });
 */
@@ -43,9 +43,9 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "inter0.ext_authority_key_identifier_present", method = "enabled")
-    public void keyIdMismatchIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void keyIdMismatchIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
-    /*    assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+    /*    assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             authKeyMismatch(false);
         });
   */  }

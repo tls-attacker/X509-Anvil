@@ -31,8 +31,8 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void typeMismatchCn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertValid(argumentsAccessor, testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.COMMON_NAME));
+    public void typeMismatchCn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.COMMON_NAME));
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -43,8 +43,8 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.nc_country_name_present", method = "enabled")
     @AnvilTest()
-    public void typeMismatchCountry(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertValid(argumentsAccessor, testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.COUNTRY_NAME));
+    public void typeMismatchCountry(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.COUNTRY_NAME));
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -55,8 +55,8 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.nc_organization_present", method = "enabled")
     @AnvilTest()
-    public void typeMismatchOrganization(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertValid(argumentsAccessor, testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.ORGANISATION_NAME));
+    public void typeMismatchOrganization(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.ORGANISATION_NAME));
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -67,8 +67,8 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.nc_organizational_unit_present", method = "enabled")
     @AnvilTest()
-    public void typeMismatchOrganizationalUnit(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertValid(argumentsAccessor, testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.ORGANISATION_UNIT_NAME));
+    public void typeMismatchOrganizationalUnit(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.ORGANISATION_UNIT_NAME));
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -79,8 +79,8 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.nc_organization_present", method = "enabled")
     @AnvilTest()
-    public void typeMismatchDnQualifier(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertValid(argumentsAccessor, testRunner, true,
+    public void typeMismatchDnQualifier(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertValid(testRunner, true,
                 config -> config.getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "new_dn")),
                 nameComponentTypeSwitchModifier(X500AttributeType.DN_QUALIFIER));
     }
@@ -93,8 +93,8 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.nc_state_province_present", method = "enabled")
     @AnvilTest()
-    public void typeMismatchStateProvince(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertValid(argumentsAccessor, testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.STATE_OR_PROVINCE_NAME));
+    public void typeMismatchStateProvince(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.STATE_OR_PROVINCE_NAME));
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -105,8 +105,8 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.nc_serial_number_present", method = "enabled")
     @AnvilTest()
-    public void typeMismatchSerialNumber(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertValid(argumentsAccessor, testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.SERIAL_NUMBER));
+    public void typeMismatchSerialNumber(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.SERIAL_NUMBER));
     }
 
     private static X509CertificateModifier nameComponentTypeSwitchModifier(X500AttributeType oid) {

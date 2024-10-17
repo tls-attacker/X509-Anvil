@@ -27,9 +27,9 @@ public class EmptyDNTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest(id = "empty_dn")
-    public void emptyDn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void emptyDn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //        TODO: What does "empty" actually mean?
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.getSubject().clear();
             config.getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "empty"));
         });

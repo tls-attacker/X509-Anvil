@@ -21,10 +21,10 @@ public class Version1CertWithExtensionsTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "entity.extensions_present", method = "enabled")
     @AnvilTest
-    public void version1CertWithExtensionsEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void version1CertWithExtensionsEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //     TODO: re-implement when extension implemented in attacker
 
-/*        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
+/*        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             config.setVersion(0);
             config.extension(ExtensionType.KEY_USAGE).setPresent(true);
         });*/
@@ -37,10 +37,10 @@ public class Version1CertWithExtensionsTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.extensions_present", method = "enabled")
     @AnvilTest
-    public void version1CertWithExtensionsIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void version1CertWithExtensionsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
     // TODO: re-implement when extension implemented in attacker
 
-/*        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+/*        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setVersion(0);
             config.extension(ExtensionType.KEY_USAGE).setPresent(true);
         }); */

@@ -26,8 +26,8 @@ public class UnknownOidTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void unknownOidTbsEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void unknownOidTbsEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
@@ -42,8 +42,8 @@ public class UnknownOidTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void unknownOidTbsIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void unknownOidTbsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
@@ -57,8 +57,8 @@ public class UnknownOidTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void unknownOidCertEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void unknownOidCertEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
@@ -72,8 +72,8 @@ public class UnknownOidTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void unknownOidCertIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void unknownOidCertIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
@@ -87,8 +87,8 @@ public class UnknownOidTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void unknownOidTbsAndCertEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void unknownOidTbsAndCertEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
@@ -103,8 +103,8 @@ public class UnknownOidTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void unknownOidTbsAndCertIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void unknownOidTbsAndCertIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();

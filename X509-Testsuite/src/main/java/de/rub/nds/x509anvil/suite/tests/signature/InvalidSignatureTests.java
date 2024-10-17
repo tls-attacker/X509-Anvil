@@ -29,8 +29,8 @@ public class InvalidSignatureTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void invalidSignatureEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void invalidSignatureEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
@@ -47,8 +47,8 @@ public class InvalidSignatureTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void invalidSignatureIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void invalidSignatureIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
@@ -65,8 +65,8 @@ public class InvalidSignatureTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void invalidSignatureRoot(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void invalidSignatureRoot(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();

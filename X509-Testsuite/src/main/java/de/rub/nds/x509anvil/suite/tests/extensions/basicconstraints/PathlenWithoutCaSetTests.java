@@ -30,8 +30,8 @@ public class PathlenWithoutCaSetTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "entity.ext_basic_constraints_ca", method = "strictlyDisabled")
     @AnvilTest
-    public void pathlenWithoutCaSetEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+    public void pathlenWithoutCaSetEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
             basicConstraintsConfig.setPresent(true);
             basicConstraintsConfig.setCa(false);

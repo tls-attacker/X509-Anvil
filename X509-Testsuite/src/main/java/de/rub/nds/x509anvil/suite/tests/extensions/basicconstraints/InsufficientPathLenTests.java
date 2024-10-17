@@ -29,8 +29,8 @@ public class InsufficientPathLenTests extends X509AnvilTest {
     @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void insufficientPathLenChainLength4(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+    public void insufficientPathLenChainLength4(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
             basicConstraintsConfig.setPresent(true);
             basicConstraintsConfig.setCa(true);
@@ -47,8 +47,8 @@ public class InsufficientPathLenTests extends X509AnvilTest {
     @ChainLength(minLength = 5, maxLength = 5, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void insufficientPathLenChainLength5(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+    public void insufficientPathLenChainLength5(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
             basicConstraintsConfig.setPresent(true);
             basicConstraintsConfig.setCa(true);
@@ -65,8 +65,8 @@ public class InsufficientPathLenTests extends X509AnvilTest {
     @ChainLength(minLength = 10, maxLength = 10, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void insufficientPathLenChainLength10(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+    public void insufficientPathLenChainLength10(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
             basicConstraintsConfig.setPresent(true);
             basicConstraintsConfig.setCa(true);

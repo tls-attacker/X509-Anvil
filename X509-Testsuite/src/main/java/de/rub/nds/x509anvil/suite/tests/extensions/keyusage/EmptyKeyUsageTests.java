@@ -23,9 +23,9 @@ public class EmptyKeyUsageTests extends X509AnvilTest {
         @TestStrength(2)
         @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
         @AnvilTest
-        public void emptyKeyUsageEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        public void emptyKeyUsageEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
                 // TODO: re-implement when extension implemented in attacker
-/*                assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
+/*                assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
                         KeyUsageExtensionConfig keyUsageExtensionConfig = (KeyUsageExtensionConfig)
                                 config.extension(ExtensionType.KEY_USAGE);
                         keyUsageExtensionConfig.unsetAllBits();
