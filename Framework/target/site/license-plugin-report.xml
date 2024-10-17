@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<licensePluginReport goal="FORMAT" timestamp="1724136343476">
+<licensePluginReport goal="FORMAT" timestamp="1729086155355">
     <module artifactId="Framework" groupId="de.rub.nds.x509test" version="1.0-SNAPSHOT"/>
     <files>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/TestsuiteRunner.java" result="NOOP"/>
@@ -23,13 +23,12 @@
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/ChainLengthParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/ChainPositionUtil.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/ExtensionsPresentParameter.java" result="NOOP"/>
-        <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/HashAlgorithmParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/IssuerUniqueIdParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/IssuerUniqueIdPresentParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/NotAfterParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/NotBeforeParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/SerialNumberParameter.java" result="NOOP"/>
-        <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/SignatureParameter.java" result="NOOP"/>
+        <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/SignatureHashAndLengthParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/SubjectUniqueIdParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/SubjectUniqueIdPresentParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/UniqueIdParameter.java" result="NOOP"/>
@@ -52,22 +51,23 @@
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/name/NameComponentPresentParameter.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/value/NotAfterValue.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/anvil/parameter/value/NotBeforeValue.java" result="NOOP"/>
+        <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/DsaKeyLength.java" result="NOOP"/>
+        <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/EcdsaKeyLength.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/ExtensionType.java" result="NOOP"/>
+        <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/RsaKeyLength.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/Severity.java" result="NOOP"/>
-        <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/SignatureAlgorithmLengthPair.java" result="NOOP"/>
+        <file path="src/main/java/de/rub/nds/x509anvil/framework/constants/SignatureHashAlgorithmKeyLengthPair.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/FeatureExtractor.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/FeatureReport.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/UnsupportedFeatureException.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/BasicConstraintsExtensionProbe.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/DigitalSignatureKeyUsageRequired.java" result="NOOP"/>
-        <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/EntitySignatureAlgorithmProbe.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/ExtensionProbe.java" result="NOOP"/>
-        <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/KeyLengthProbe.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/KeyUsageExtensionProbe.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/Probe.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/ProbeException.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/ProbeType.java" result="NOOP"/>
-        <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/SignatureAlgorithmProbe.java" result="NOOP"/>
+        <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/SignatureHashAndKeyLengthProbe.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/SimpleProbe.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/VersionProbe.java" result="NOOP"/>
         <file path="src/main/java/de/rub/nds/x509anvil/framework/featureextraction/probe/result/DigitalSignatureKeyUsageRequiredProbeResult.java" result="NOOP"/>

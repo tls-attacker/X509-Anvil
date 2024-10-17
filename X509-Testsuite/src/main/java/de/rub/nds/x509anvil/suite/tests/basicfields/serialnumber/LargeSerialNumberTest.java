@@ -13,6 +13,7 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
@@ -27,11 +28,9 @@ public class LargeSerialNumberTest extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "entity.serial_number")
     @AnvilTest
-    public void largeSerialNumberEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        certificateChainConfig.getEntityCertificateConfig().setSerialNumber(TestUtils.createBigInteger(256));
-        VerifierResult result = testRunner.execute(certificateChainConfig);
-        Assertions.assertFalse(result.isValid());
+
+     public void largeSerialNumberEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> config.setSerialNumber(TestUtils.createBigInteger(256)));
     }
 
     @Specification(document = "RFC 5280", section = "4.1.2.1. Version",
@@ -43,10 +42,11 @@ public class LargeSerialNumberTest extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "inter0.serial_number")
     @AnvilTest
+
     public void largeSerialNumberIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        certificateChainConfig.getIntermediateConfig(0).setSerialNumber(TestUtils.createBigInteger(256));
-        VerifierResult result = testRunner.execute(certificateChainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(argumentsAccessor, testRunner, false,
+        (X509CertificateConfigModifier) config ->
+        config.setSerialNumber(TestUtils.createBigInteger(256)));
     }
+
 }
