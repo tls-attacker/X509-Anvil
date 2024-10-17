@@ -120,6 +120,29 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         assert expectValid == result.isValid();
     }
 
+    /**
+     * Tests whether the given certificate modification leads to the certificate being correctly rejected or accepted.
+     * Modifications apply to Configurations.
+     */
+    private void assertBoolean(X509VerifierRunner testRunner, boolean expectValid,
+                               boolean entity, X509CertificateConfigModifier modifier)
+            throws VerifierException, CertificateGeneratorException {
+        // generate chain config
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
+        X509CertificateConfig config;
+        // choose correct certificate config
+        if (entity) {
+            config = certificateChainConfig.getEntityCertificateConfig();
+        } else {
+            config = certificateChainConfig.getLastSigningConfig();
+        }
+        // apply modifications
+        modifier.apply(config);
+        VerifierResult result = testRunner.execute(certificateChainConfig);
+        // assert values are equal
+        assert expectValid == result.isValid();
+    }
+
     private void assertBoolean(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner, boolean expectValid,
         boolean entity, X509CertificateConfigModifier configModifier, X509CertificateModifier certificateModifier)
         throws VerifierException, CertificateGeneratorException {
@@ -155,6 +178,11 @@ public class X509AnvilTest extends AnvilTestBaseClass {
     public void assertValid(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner, boolean entity,
         X509CertificateConfigModifier modifier) throws VerifierException, CertificateGeneratorException {
         assertBoolean(argumentsAccessor, testRunner, true, entity, modifier);
+    }
+
+    public void assertValid(X509VerifierRunner testRunner, boolean entity,
+                             X509CertificateConfigModifier modifier) throws VerifierException, CertificateGeneratorException {
+        assertBoolean(testRunner, true, entity, modifier);
     }
 
     public void assertInvalid(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner, boolean entity,
