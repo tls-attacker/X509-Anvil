@@ -43,10 +43,10 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
     @AnvilTest
     public void tbsSignatureDoesntMatchAlgorithmIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
-        certificateChainConfig.getIntermediateConfig(0).amendSignatureAlgorithm(
+        certificateChainConfig.getLastSigningConfig().amendSignatureAlgorithm(
                 TestUtils.getNonMatchingAlgorithmOid(
                         certificateChainConfig.getIssuerConfigOf(
-                                certificateChainConfig.getIntermediateConfig(0)).getDefaultSignatureAlgorithm()).getSignatureAlgorithm());
+                                certificateChainConfig.getLastSigningConfig()).getDefaultSignatureAlgorithm()).getSignatureAlgorithm());
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
