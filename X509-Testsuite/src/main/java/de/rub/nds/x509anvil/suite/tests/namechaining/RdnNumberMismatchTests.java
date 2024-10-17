@@ -28,8 +28,8 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void missingRdn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, missingRdnModifier());
+    public void missingRdn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, missingRdnModifier());
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -38,8 +38,8 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void additionalRdn(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, additionalRdnModifier());
+    public void additionalRdn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, additionalRdnModifier());
     }
 
     // Ads an additional "distinguished name qualifier" to the intermediate's subject

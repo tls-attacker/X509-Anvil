@@ -29,8 +29,8 @@ public class OrganizationalUnitMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.nc_organizational_unit_present", method = "enabled")
     @AnvilTest
-    public void organizationalUnitMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config ->
+    public void organizationalUnitMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config ->
                 X509CertificateConfigUtil.modifyAttributeAndValuePair(config, X500AttributeType.ORGANISATION_UNIT_NAME)
         );
     }

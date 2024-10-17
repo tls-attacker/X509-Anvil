@@ -24,10 +24,10 @@ public class InterCertWithoutKeyCertSignTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
     @AnvilTest
-    public void intermediateCertWithCaNotSet(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void intermediateCertWithCaNotSet(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
 
-/*        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+/*        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             KeyUsageExtensionConfig keyUsageExtensionConfig = (KeyUsageExtensionConfig)
                     config.extension(ExtensionType.KEY_USAGE);
             keyUsageExtensionConfig.setKeyCertSign(false);

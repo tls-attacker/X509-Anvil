@@ -25,8 +25,8 @@ public class Version1IntermediateCertTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @AnvilTest
-    public void version1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+    public void version1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setVersion(new BigInteger("0"));
             config.setIncludeExtensions(false);
             config.setIncludeIssuerUniqueId(false);
@@ -40,8 +40,8 @@ public class Version1IntermediateCertTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @AnvilTest
-    public void version2Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+    public void version2Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setVersion(new BigInteger("1"));
             config.setIncludeExtensions(false);
         });

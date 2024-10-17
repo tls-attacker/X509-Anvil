@@ -22,9 +22,9 @@ public class UnknownCriticalExtentionTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = {"entity.version", "entity.extensions_present", "entity.ext_unknown_noncritical_extension_present"})
     @AnvilTest
-    public void unknownCriticalExtensionEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void unknownCriticalExtensionEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //   TODO: re-implement when extension is implemented
-        /*     assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
+        /*     assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             config.setVersion(2);
             config.setExtensionsPresent(true);
             config.extension(ExtensionType.UNKNOWN_EXTENSION).setPresent(true);
@@ -42,9 +42,9 @@ public class UnknownCriticalExtentionTests extends X509AnvilTest {
     @IpmLimitations(identifiers = {"inter0.version", "inter0.extensions_present", "inter0.ext_unknown_noncritical_extension_present"})
     @AnvilTest
 
-    public void unknownCriticalExtensionIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void unknownCriticalExtensionIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
-    /*    assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+    /*    assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setVersion(2);
             config.setExtensionsPresent(true);
             config.extension(ExtensionType.UNKNOWN_EXTENSION).setPresent(true);

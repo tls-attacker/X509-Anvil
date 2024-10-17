@@ -25,8 +25,8 @@ public class SubjectNotPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest(id = "no_subject_leaf")
-    public void noSubjectEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true,
+    public void noSubjectEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true,
         (X509CertificateConfigModifier) config ->
         config.setIncludeSubjectUniqueId(false));
     }
@@ -37,8 +37,8 @@ public class SubjectNotPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void noSubjectIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false,
+    public void noSubjectIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false,
         (X509CertificateConfigModifier) config ->
         config.setIncludeSubjectUniqueId(false));
     }

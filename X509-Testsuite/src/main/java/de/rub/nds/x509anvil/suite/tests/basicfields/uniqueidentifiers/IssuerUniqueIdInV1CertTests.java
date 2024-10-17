@@ -30,8 +30,8 @@ public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
     @ValueConstraint(identifier = "entity.issuer_unique_id_present", method = "disabled")
     @ValueConstraint(identifier = "entity.version", method = "allowVersion1")
     @AnvilTest
-    public void issuerUniqueIdPresentInV1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true,
+    public void issuerUniqueIdPresentInV1Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
                     config.setIncludeIssuerUniqueId(true);
                     config.setDefaultIssuerUniqueId(new byte[] {0x0, 0x1, 0x2, 0x3});
@@ -46,8 +46,8 @@ public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.issuer_unique_id_present", method = "disabled")
     @AnvilTest
-    public void issuerUniqueIdPresentInV1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false,
+    public void issuerUniqueIdPresentInV1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {
                     config.setIncludeIssuerUniqueId(true);
                     config.setDefaultIssuerUniqueId(new byte[] {0x0, 0x1, 0x2, 0x3});

@@ -22,10 +22,10 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
-    public void duplicateIdenticalEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void duplicateIdenticalEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //     TODO: re-implement when extension implemented in attacker
 
-/*     assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config ->
+/*     assertInvalid(testRunner, true, (X509CertificateConfigModifier) config ->
             Modifiers.duplicateIdenticalExtensionModifier(true, ExtensionObjectIdentifiers.KEY_USAGE)
             );
             */
@@ -38,10 +38,10 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
-    public void duplicateIdenticalIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
 
- /*       assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config ->
+ /*       assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
                 Modifiers.duplicateIdenticalExtensionModifier(false, ExtensionObjectIdentifiers.KEY_USAGE)
         );
         */
@@ -55,10 +55,10 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
-    public void duplicateDifferentEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void duplicateDifferentEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
 
-/*        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config ->
+/*        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config ->
                 Modifiers.duplicateDifferentExtensionModifier(true,
                         ExtensionObjectIdentifiers.KEY_USAGE, createDuplicateExtensionValue(config))
         );*/
@@ -71,10 +71,10 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
-    public void duplicateDifferentIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void duplicateDifferentIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
 
-/*        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateModifier) config ->
+/*        assertInvalid(testRunner, false, (X509CertificateModifier) config ->
                 Modifiers.duplicateDifferentExtensionModifier(false,
                         ExtensionObjectIdentifiers.KEY_USAGE, createDuplicateExtensionValue(config))
         );*/

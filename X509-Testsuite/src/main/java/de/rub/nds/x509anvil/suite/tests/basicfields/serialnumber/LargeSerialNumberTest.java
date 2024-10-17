@@ -29,8 +29,8 @@ public class LargeSerialNumberTest extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "entity.serial_number")
     @AnvilTest
-     public void largeSerialNumberEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> config.setSerialNumber(TestUtils.createBigInteger(256)));
+     public void largeSerialNumberEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setSerialNumber(TestUtils.createBigInteger(256)));
     }
 
     @Specification(document = "RFC 5280", section = "4.1.2.1. Version",
@@ -42,8 +42,8 @@ public class LargeSerialNumberTest extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "inter0.serial_number")
     @AnvilTest
-    public void largeSerialNumberIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false,
+    public void largeSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false,
         (X509CertificateConfigModifier) config ->
         config.setSerialNumber(TestUtils.createBigInteger(256)));
     }

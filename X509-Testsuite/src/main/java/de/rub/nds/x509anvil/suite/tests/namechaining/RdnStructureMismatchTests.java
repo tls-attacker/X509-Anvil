@@ -24,8 +24,8 @@ public class RdnStructureMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void rdnStructureMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, mergeRdnsModifier());
+    public void rdnStructureMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, mergeRdnsModifier());
     }
 
     private static X509CertificateModifier mergeRdnsModifier() {

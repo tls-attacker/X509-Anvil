@@ -24,8 +24,8 @@ public class ValidityNotPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void noValidityEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true,
+    public void noValidityEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> config.setIncludeValidity(false));
     }
 
@@ -34,8 +34,8 @@ public class ValidityNotPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void noValidityIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false,
+    public void noValidityIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> config.setIncludeValidity(false));
     }
 

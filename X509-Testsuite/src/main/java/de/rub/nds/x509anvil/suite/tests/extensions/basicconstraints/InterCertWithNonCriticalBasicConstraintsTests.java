@@ -27,8 +27,8 @@ public class InterCertWithNonCriticalBasicConstraintsTests extends X509AnvilTest
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void intermediateCertWithNonCriticalBasicConstraints(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+    public void intermediateCertWithNonCriticalBasicConstraints(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
             basicConstraintsConfig.setCritical(false);
         });

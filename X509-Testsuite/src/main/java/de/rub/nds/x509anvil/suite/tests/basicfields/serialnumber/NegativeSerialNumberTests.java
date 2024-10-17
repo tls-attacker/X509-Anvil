@@ -31,8 +31,8 @@ public class NegativeSerialNumberTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "entity.serial_number")
     @AnvilTest(id = "negative_serial_number_entity")
-    public void negativeSerialNumberEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> config.setSerialNumber(BigInteger.valueOf(-1337)));
+    public void negativeSerialNumberEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setSerialNumber(BigInteger.valueOf(-1337)));
     }
 
 
@@ -45,8 +45,8 @@ public class NegativeSerialNumberTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "inter0.serial_number")
     @AnvilTest
-    public void negativeSerialNumberIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> config.setSerialNumber(BigInteger.valueOf(-1337)));
+    public void negativeSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setSerialNumber(BigInteger.valueOf(-1337)));
     }
 
 }

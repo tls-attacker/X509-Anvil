@@ -24,8 +24,8 @@ public class TbsSignatureNotPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void noSignatureEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true,
+    public void noSignatureEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true,
         (X509CertificateConfigModifier) config ->
         config.setIncludeTbsSignature(false));
     }
@@ -34,8 +34,8 @@ public class TbsSignatureNotPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void noSignatureIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false,
+    public void noSignatureIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false,
         (X509CertificateConfigModifier) config ->
         config.setIncludeTbsSignature(false));
     }

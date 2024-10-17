@@ -29,9 +29,9 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void signatureAlgorithmFieldDoesntMatchAlgorithmEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void signatureAlgorithmFieldDoesntMatchAlgorithmEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
 
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
 
@@ -57,8 +57,8 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void signatureAlgorithmFieldDoesntMatchAlgorithmIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void signatureAlgorithmFieldDoesntMatchAlgorithmIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();

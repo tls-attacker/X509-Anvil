@@ -25,8 +25,8 @@ public class LargeVersionTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @IpmLimitations(identifiers = "entity.version")
 
-    public void largeVersionEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> config.setVersion(new BigInteger("256")));
+    public void largeVersionEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setVersion(new BigInteger("256")));
     }
 
     @Specification(document = "RFC 5280", section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
@@ -35,8 +35,8 @@ public class LargeVersionTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @IpmLimitations(identifiers = "inter0.version")
 
-    public void largeVersionIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false,
+    public void largeVersionIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> config.setVersion(new BigInteger("256")));
     }
 }

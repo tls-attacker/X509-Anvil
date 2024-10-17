@@ -29,8 +29,8 @@ public class StateProvinceMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.nc_state_province_present", method = "enabled")
     @AnvilTest
-    public void stateProvinceMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config ->
+    public void stateProvinceMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config ->
                 X509CertificateConfigUtil.modifyAttributeAndValuePair(config, X500AttributeType.STATE_OR_PROVINCE_NAME)
         );
     }

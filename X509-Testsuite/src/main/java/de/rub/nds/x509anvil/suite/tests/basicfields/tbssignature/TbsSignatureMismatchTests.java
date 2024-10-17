@@ -25,8 +25,8 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void tbsSignatureDoesntMatchAlgorithmEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void tbsSignatureDoesntMatchAlgorithmEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         certificateChainConfig.getEntityCertificateConfig().amendSignatureAlgorithm(
                 TestUtils.getNonMatchingAlgorithmOid(
                         certificateChainConfig.getIssuerConfigOf(
@@ -41,8 +41,8 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void tbsSignatureDoesntMatchAlgorithmIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(argumentsAccessor, testRunner);
+    public void tbsSignatureDoesntMatchAlgorithmIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         certificateChainConfig.getLastSigningConfig().amendSignatureAlgorithm(
                 TestUtils.getNonMatchingAlgorithmOid(
                         certificateChainConfig.getIssuerConfigOf(

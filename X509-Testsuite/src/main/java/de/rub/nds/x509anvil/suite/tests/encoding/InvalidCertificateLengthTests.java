@@ -26,31 +26,31 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void shortLengthTagEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(-ADDITION))));
+    public void shortLengthTagEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(-ADDITION))));
     }
 
     @Specification(document = "RFC 5280")
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void shortLengthTagIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(-ADDITION))));
+    public void shortLengthTagIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(-ADDITION))));
     }
 
     @Specification(document = "RFC 5280")
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void overflowingLengthTagEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(ADDITION))));
+    public void overflowingLengthTagEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(ADDITION))));
     }
 
     @Specification(document = "RFC 5280")
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
-    public void overflowingLengthTagIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(ADDITION))));
+    public void overflowingLengthTagIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(ADDITION))));
     }
 }

@@ -22,9 +22,9 @@ public class OnlySerialNumberTest extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
-    public void missingKeyIdentifierEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void missingKeyIdentifierEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement with extension
-//        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
+//        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
 //            // Placeholder for future extension implementation
 //            serialWithoutIssuerModifier(true);
 //        });
@@ -38,9 +38,9 @@ public class OnlySerialNumberTest extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
-    public void missingKeyIdentifierIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void missingKeyIdentifierIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement with extension
-//        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+//        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
 //            // Placeholder for future extension implementation
 //            serialWithoutIssuerModifier(true); // Assuming serialWithoutIssuerModifier will be implemented
 //        });

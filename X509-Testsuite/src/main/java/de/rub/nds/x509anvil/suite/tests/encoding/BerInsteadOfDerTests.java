@@ -34,8 +34,8 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "entity.ext_key_usage_critical", method = "enabled")
     @AnvilTest()
-    public void booleanRepresentationEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
+    public void booleanRepresentationEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig config = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
@@ -52,8 +52,8 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.ext_key_usage_critical", method = "enabled")
     @AnvilTest()
-    public void booleanRepresentationIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig config = prepareConfig(argumentsAccessor, testRunner);
+    public void booleanRepresentationIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainConfig config = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
@@ -70,8 +70,8 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "entity.version", method = "allowVersion1")
     @AnvilTest()
-    public void explicitVersion1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> { config.setVersion(X509Version.V1.getValue());
+    public void explicitVersion1Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> { config.setVersion(X509Version.V1.getValue());
         });
     }
 
@@ -83,8 +83,8 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.version", method = "allowVersion1")
     @AnvilTest()
-    public void explicitVersion1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+    public void explicitVersion1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setVersion(X509Version.V1.getValue());
         });
     }

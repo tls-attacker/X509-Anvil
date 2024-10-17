@@ -28,8 +28,8 @@ public class ExpiredTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "entity.not_after")
     @AnvilTest
-    public void expiredUtcEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true,
+    public void expiredUtcEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
                     config.setNotBefore(new DateTime(2020, 1, 1, 0, 0, 0));
                     config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
@@ -44,8 +44,8 @@ public class ExpiredTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "entity.not_after")
     @AnvilTest
-    public void expiredGeneralizedEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true,
+    public void expiredGeneralizedEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
                     config.setNotAfter(new DateTime(2020, 1, 1, 0, 0, 0));
                     config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
@@ -58,8 +58,8 @@ public class ExpiredTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "inter0.not_after")
     @AnvilTest
-    public void expiredUtcIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false,
+    public void expiredUtcIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {
                     config.setNotAfter(new DateTime(2001, 1, 1, 0, 0, 0));
                     config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
@@ -73,8 +73,8 @@ public class ExpiredTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "inter0.not_after")
     @AnvilTest
-    public void expiredGeneralizedIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false,
+    public void expiredGeneralizedIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {
                     config.setNotAfter(new DateTime(2020, 1, 1, 0, 0, 0));
                     config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);

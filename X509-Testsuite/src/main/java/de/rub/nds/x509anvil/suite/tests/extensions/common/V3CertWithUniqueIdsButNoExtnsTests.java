@@ -20,9 +20,9 @@ public class V3CertWithUniqueIdsButNoExtnsTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void v3WithoutExtensionsWithSubjectUIdEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void v3WithoutExtensionsWithSubjectUIdEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 // TODO: re-implement when extension implemented in attacker
-        /*  assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
+        /*  assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             config.setVersion(3);
             config.setExtensionsPresent(false);
             config.setSubjectUniqueIdPresent(true);
@@ -37,9 +37,9 @@ public class V3CertWithUniqueIdsButNoExtnsTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
 //TODO: re-implement when extension implemented in attacker
-    public void v3WithoutExtensionsWithSubjectUIdIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void v3WithoutExtensionsWithSubjectUIdIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 
-/*        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+/*        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setVersion(3);
             config.setExtensionsPresent(false);
             config.setSubjectUniqueIdPresent(true);
@@ -54,9 +54,9 @@ public class V3CertWithUniqueIdsButNoExtnsTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void v3WithoutExtensionsWithIssuerUIdEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void v3WithoutExtensionsWithIssuerUIdEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //        TODO: re-implement when extension implemented in attacker
-/*        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
+/*        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             config.setVersion(3);
             config.setExtensionsPresent(false);
             config.setIssuerUniqueIdPresent(true);
@@ -70,9 +70,9 @@ public class V3CertWithUniqueIdsButNoExtnsTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void v3WithoutExtensionsWithIssuerUIdIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void v3WithoutExtensionsWithIssuerUIdIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 // TODO: re-implement when extension implemented in attacker
- /*         assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+ /*         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setVersion(3);
             config.setExtensionsPresent(false);
             config.setIssuerUniqueIdPresent(true);

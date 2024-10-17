@@ -25,8 +25,8 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
     @ValueConstraint(identifier = "entity.extensions_present", method = "enabled")
     @ValueConstraint(identifier = "entity.ext_subject_key_identifier_present", method = "enabled")
     @AnvilTest
-    public void invalidCriticalSubjectKeyIdentifierEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-      /*  assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier)  config -> {
+    public void invalidCriticalSubjectKeyIdentifierEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+      /*  assertInvalid(testRunner, true, (X509CertificateConfigModifier)  config -> {
             //   TODO: re-implement when extension implemented in attacker
             config.extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
         }, Modifiers.invalidExtensionValueModifier(true, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
@@ -44,8 +44,8 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
     @AnvilTest
 
-    public void invalidCriticalSubjectKeyIdentifierIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-    /*    assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+    public void invalidCriticalSubjectKeyIdentifierIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    /*    assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
 //            TODO: re-implement when extension implemented in attacker
             config.extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
         }, Modifiers.invalidExtensionValueModifier(false, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));

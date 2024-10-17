@@ -28,8 +28,8 @@ public class NotYetValidTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "entity.not_before")
     @AnvilTest
-    public void notYetValidUtcEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true,
+    public void notYetValidUtcEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
                     config.setNotBefore(new DateTime(2040, 1, 1, 0, 0, 0));
                     config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
@@ -42,8 +42,8 @@ public class NotYetValidTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "entity.not_before")
     @AnvilTest
-    public void notYetValidGeneralizedEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true,
+    public void notYetValidGeneralizedEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
                     config.setNotBefore(new DateTime(2040, 1, 1, 0, 0, 0));
                     config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
@@ -56,8 +56,8 @@ public class NotYetValidTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "inter0.not_before")
     @AnvilTest
-    public void notYetValidUtcIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false,
+    public void notYetValidUtcIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {
                     config.setNotBefore(new DateTime(2040, 1, 1, 0, 0, 0));
                     config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
@@ -70,8 +70,8 @@ public class NotYetValidTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "inter0.not_before")
     @AnvilTest
-    public void notYetValidGeneralizedIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, false,
+    public void notYetValidGeneralizedIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {
                     config.setNotBefore(new DateTime(2040, 1, 1, 0, 0, 0));
                     config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);

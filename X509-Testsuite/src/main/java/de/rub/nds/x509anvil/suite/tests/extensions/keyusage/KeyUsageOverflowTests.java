@@ -23,9 +23,9 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
     @AnvilTest()
-    public void keyUsageOverflowAppend1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void keyUsageOverflowAppend1Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
-/*         assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
+/*         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             keyUsageOverflowModifier(true, (byte) 128, (byte) 6);
         });
 */
@@ -38,11 +38,11 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
     @AnvilTest()
-    public void keyUsageOverflowAppend1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void keyUsageOverflowAppend1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
 /*
 
-        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             keyUsageOverflowModifier(false, (byte) 128, (byte) 6);
         });
 */
@@ -54,10 +54,10 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
     @AnvilTest()
-    public void keyUsageOverflowAppend0Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void keyUsageOverflowAppend0Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
 
-/*        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
+/*        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             keyUsageOverflowModifier(true, (byte) 0, (byte) 6);
         });
         */
@@ -70,10 +70,10 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
     @AnvilTest()
-    public void keyUsageOverflowAppend0Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void keyUsageOverflowAppend0Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
 
-/*        assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
+/*        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             keyUsageOverflowModifier(false, (byte) 0, (byte) 6);
         });
         */

@@ -29,8 +29,8 @@ public class OrganizationMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.nc_organization_present", method = "enabled")
     @AnvilTest
-    public void organizationMismatch(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config ->
+    public void organizationMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config ->
                 X509CertificateConfigUtil.modifyAttributeAndValuePair(config, X500AttributeType.ORGANISATION_NAME)
         );
     }
