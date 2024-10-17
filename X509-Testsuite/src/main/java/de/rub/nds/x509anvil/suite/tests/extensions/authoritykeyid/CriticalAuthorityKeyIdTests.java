@@ -30,7 +30,6 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
-
     public void criticalAuthorityKeyIdEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: Fix to correct config once implemented
         /* assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier )config -> {
@@ -48,7 +47,6 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "inter0.ext_authority_key_identifier_present", method = "enabled")
-
     public void criticalAuthorityKeyIdIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //           TODO: Fix to correct config once implemented
      /*   assertInvalid(argumentsAccessor, testRunner, false,(X509CertificateConfigModifier) config -> {

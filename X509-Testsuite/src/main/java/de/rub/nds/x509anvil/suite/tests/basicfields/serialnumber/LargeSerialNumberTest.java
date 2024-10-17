@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class LargeSerialNumberTest extends X509AnvilTest {
+
     @Specification(document = "RFC 5280", section = "4.1.2.1. Version",
             text = "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may " +
                     "issue certificates with serial numbers that are negative or zero.  Certificate users SHOULD be prepared to " +
@@ -28,7 +29,6 @@ public class LargeSerialNumberTest extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "entity.serial_number")
     @AnvilTest
-
      public void largeSerialNumberEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> config.setSerialNumber(TestUtils.createBigInteger(256)));
     }
@@ -42,7 +42,6 @@ public class LargeSerialNumberTest extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "inter0.serial_number")
     @AnvilTest
-
     public void largeSerialNumberIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(argumentsAccessor, testRunner, false,
         (X509CertificateConfigModifier) config ->

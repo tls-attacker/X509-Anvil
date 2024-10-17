@@ -30,7 +30,6 @@ public class GeneralizedTimeNonZuluTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "entity.not_before")
     @AnvilTest
-
     public void notBeforeEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(argumentsAccessor, testRunner, true,
                 (X509CertificateConfigModifier) config -> {
@@ -47,7 +46,6 @@ public class GeneralizedTimeNonZuluTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "inter0.not_before")
     @AnvilTest
-
     public void notBeforeIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(argumentsAccessor, testRunner, false,
                 (X509CertificateConfigModifier) config -> {

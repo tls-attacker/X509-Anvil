@@ -23,7 +23,6 @@ public class UntrustedRootTests extends X509AnvilTest {
     @StaticRoot(false)
     @ChainLength(minLength = 1, maxLength = 2, intermediateCertsModeled = 2)
     @TestStrength(2)
-
     public void untrustedRootCertificate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(argumentsAccessor, testRunner, false, (X509CertificateConfigModifier) config -> {
             // No specific changes to config needed, assuming root is untrusted by default for this test case.

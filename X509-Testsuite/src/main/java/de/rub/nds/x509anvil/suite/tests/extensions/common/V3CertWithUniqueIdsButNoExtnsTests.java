@@ -20,7 +20,6 @@ public class V3CertWithUniqueIdsButNoExtnsTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-
     public void v3WithoutExtensionsWithSubjectUIdEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 // TODO: re-implement when extension implemented in attacker
         /*  assertInvalid(argumentsAccessor, testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -37,7 +36,6 @@ public class V3CertWithUniqueIdsButNoExtnsTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-
 //TODO: re-implement when extension implemented in attacker
     public void v3WithoutExtensionsWithSubjectUIdIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 

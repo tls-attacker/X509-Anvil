@@ -30,7 +30,6 @@ public class SubjectUniqueIdInV1CertTests extends X509AnvilTest {
     @ValueConstraint(identifier = "entity.subject_unique_id_present", method = "disabled")
     @ValueConstraint(identifier = "entity.version", method = "allowVersion1")
     @AnvilTest
-
     public void subjectUniqueIdPresentInV1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(argumentsAccessor, testRunner, true,
                 (X509CertificateConfigModifier) config -> {
@@ -46,7 +45,6 @@ public class SubjectUniqueIdInV1CertTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.subject_unique_id_present", method = "disabled")
     @AnvilTest
-
     public void subjectUniqueIdPresentInV1Intermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(argumentsAccessor, testRunner, false,
                 (X509CertificateConfigModifier) config -> {

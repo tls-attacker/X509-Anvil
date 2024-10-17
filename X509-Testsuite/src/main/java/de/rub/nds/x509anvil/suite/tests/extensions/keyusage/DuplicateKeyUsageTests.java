@@ -22,7 +22,6 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
-
     public void duplicateIdenticalEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //     TODO: re-implement when extension implemented in attacker
 
@@ -56,7 +55,6 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
-
     public void duplicateDifferentEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
 

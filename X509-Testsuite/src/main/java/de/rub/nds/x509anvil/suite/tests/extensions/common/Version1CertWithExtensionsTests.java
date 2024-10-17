@@ -21,7 +21,6 @@ public class Version1CertWithExtensionsTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "entity.extensions_present", method = "enabled")
     @AnvilTest
-
     public void version1CertWithExtensionsEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //     TODO: re-implement when extension implemented in attacker
 
@@ -38,7 +37,6 @@ public class Version1CertWithExtensionsTests extends X509AnvilTest {
     @TestStrength(2)
     @ValueConstraint(identifier = "inter0.extensions_present", method = "enabled")
     @AnvilTest
-
     public void version1CertWithExtensionsIntermediate(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
     // TODO: re-implement when extension implemented in attacker
 

@@ -44,7 +44,6 @@ public class ExpiredTests extends X509AnvilTest {
     @TestStrength(2)
     @IpmLimitations(identifiers = "entity.not_after")
     @AnvilTest
-
     public void expiredGeneralizedEntity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(argumentsAccessor, testRunner, true,
                 (X509CertificateConfigModifier) config -> {

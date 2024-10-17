@@ -30,7 +30,6 @@ public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
     @ValueConstraint(identifier = "entity.issuer_unique_id_present", method = "disabled")
     @ValueConstraint(identifier = "entity.version", method = "allowVersion1")
     @AnvilTest
-
     public void issuerUniqueIdPresentInV1Entity(ArgumentsAccessor argumentsAccessor, X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(argumentsAccessor, testRunner, true,
                 (X509CertificateConfigModifier) config -> {
