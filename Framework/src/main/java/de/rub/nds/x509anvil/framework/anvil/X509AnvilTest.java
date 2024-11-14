@@ -76,8 +76,8 @@ public class X509AnvilTest extends AnvilTestBaseClass {
      * Tests whether the given certificate modification leads to the certificate being correctly rejected or accepted.
      * Modifications apply to prepared certificates.
      */
-    private void assertBoolean(X509VerifierRunner testRunner, boolean expectValid,
-        boolean entity, X509CertificateModifier modifier) throws VerifierException, CertificateGeneratorException {
+    private void assertBoolean(X509VerifierRunner testRunner, boolean expectValid, boolean entity,
+        X509CertificateModifier modifier) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator =
             new X509CertificateChainGenerator(certificateChainConfig);
@@ -101,9 +101,8 @@ public class X509AnvilTest extends AnvilTestBaseClass {
      * Tests whether the given certificate modification leads to the certificate being correctly rejected or accepted.
      * Modifications apply to Configurations.
      */
-    private void assertBoolean(X509VerifierRunner testRunner, boolean expectValid,
-                               boolean entity, X509CertificateConfigModifier modifier)
-            throws VerifierException, CertificateGeneratorException {
+    private void assertBoolean(X509VerifierRunner testRunner, boolean expectValid, boolean entity,
+        X509CertificateConfigModifier modifier) throws VerifierException, CertificateGeneratorException {
         // generate chain config
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateConfig config;
@@ -120,8 +119,8 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         assert expectValid == result.isValid();
     }
 
-    private void assertBoolean(X509VerifierRunner testRunner, boolean expectValid,
-        boolean entity, X509CertificateConfigModifier configModifier, X509CertificateModifier certificateModifier)
+    private void assertBoolean(X509VerifierRunner testRunner, boolean expectValid, boolean entity,
+        X509CertificateConfigModifier configModifier, X509CertificateModifier certificateModifier)
         throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateConfig config;
@@ -152,29 +151,28 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         assert expectValid == result.isValid();
     }
 
-    public void assertValid(X509VerifierRunner testRunner, boolean entity,
-                             X509CertificateConfigModifier modifier) throws VerifierException, CertificateGeneratorException {
-        assertBoolean(testRunner, true, entity, modifier);
-    }
-
-    public void assertInvalid(X509VerifierRunner testRunner, boolean entity,
-        X509CertificateConfigModifier modifier) throws VerifierException, CertificateGeneratorException {
-        assertBoolean(testRunner, false, entity, modifier);
-    }
-
-    public void assertValid(X509VerifierRunner testRunner, boolean entity,
-        X509CertificateModifier modifier) throws VerifierException, CertificateGeneratorException {
-        assertBoolean(testRunner, true, entity, modifier);
-    }
-
-    public void assertInvalid(X509VerifierRunner testRunner, boolean entity,
-        X509CertificateModifier modifier) throws VerifierException, CertificateGeneratorException {
-        assertBoolean(testRunner, false, entity, modifier);
-    }
-
-    public void assertValid(X509VerifierRunner testRunner, boolean entity,
-        X509CertificateConfigModifier configModifier, X509CertificateModifier certificateModifier)
+    public void assertValid(X509VerifierRunner testRunner, boolean entity, X509CertificateConfigModifier modifier)
         throws VerifierException, CertificateGeneratorException {
+        assertBoolean(testRunner, true, entity, modifier);
+    }
+
+    public void assertInvalid(X509VerifierRunner testRunner, boolean entity, X509CertificateConfigModifier modifier)
+        throws VerifierException, CertificateGeneratorException {
+        assertBoolean(testRunner, false, entity, modifier);
+    }
+
+    public void assertValid(X509VerifierRunner testRunner, boolean entity, X509CertificateModifier modifier)
+        throws VerifierException, CertificateGeneratorException {
+        assertBoolean(testRunner, true, entity, modifier);
+    }
+
+    public void assertInvalid(X509VerifierRunner testRunner, boolean entity, X509CertificateModifier modifier)
+        throws VerifierException, CertificateGeneratorException {
+        assertBoolean(testRunner, false, entity, modifier);
+    }
+
+    public void assertValid(X509VerifierRunner testRunner, boolean entity, X509CertificateConfigModifier configModifier,
+        X509CertificateModifier certificateModifier) throws VerifierException, CertificateGeneratorException {
         assertBoolean(testRunner, true, entity, configModifier, certificateModifier);
     }
 
