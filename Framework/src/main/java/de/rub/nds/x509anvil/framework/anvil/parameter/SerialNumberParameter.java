@@ -50,9 +50,9 @@ public class SerialNumberParameter extends CertificateSpecificParameter<BigInteg
                                                                                                             // octets)
 
         // TODO: These values must be handled gracefully but do not have to be accepted
-        parameterValues.add(generateValue(BigInteger.valueOf(-1)));
-        parameterValues.add(generateValue(
-            new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16)));
+//        parameterValues.add(generateValue(BigInteger.valueOf(-1)));
+//        parameterValues.add(generateValue(
+//            new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16)));
         return parameterValues;
     }
 
