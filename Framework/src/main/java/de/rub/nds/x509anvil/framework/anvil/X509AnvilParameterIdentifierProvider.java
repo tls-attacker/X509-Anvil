@@ -74,12 +74,13 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
     public List<ParameterIdentifier> getModelParameterIdentifiers(DerivationScope derivationScope) {
         String modelType = derivationScope.getModelType();
         if (modelType.equals(DefaultModelTypes.ALL_PARAMETERS)) {
-            return getAllParameterIdentifiers(derivationScope);
+            return generateAllParameterIdentifiers(derivationScope);
         }
         return Collections.emptyList();
     }
 
-    public static List<ParameterIdentifier> getAllParameterIdentifiers(DerivationScope derivationScope) {
+    @Override
+    public List<ParameterIdentifier> generateAllParameterIdentifiers(DerivationScope derivationScope) {
         if (allParameterIdentifiers == null) {
             allParameterIdentifiers =
                 ((X509AnvilParameterIdentifierProvider) AnvilContext.getInstance().getParameterIdentifierProvider())
