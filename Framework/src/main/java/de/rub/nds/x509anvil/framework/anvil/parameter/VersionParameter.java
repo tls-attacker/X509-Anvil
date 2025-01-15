@@ -21,6 +21,7 @@ import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class VersionParameter extends CertificateSpecificParameter<Integer> {
@@ -43,7 +44,7 @@ public class VersionParameter extends CertificateSpecificParameter<Integer> {
     public List<DerivationParameter<X509CertificateChainConfig, Integer>>
         getNonNullParameterValues(DerivationScope derivationScope) {
         if (!getParameterScope().isEntity()) {
-            return Collections.singletonList(generateValue(2));
+            return List.of(generateValue(0), generateValue(1), generateValue(2));
         }
         List<DerivationParameter<X509CertificateChainConfig, Integer>> parameterValues = new ArrayList<>();
         List<Integer> supportedVersions = ContextHelper.getFeatureReport().getSupportedVersions();

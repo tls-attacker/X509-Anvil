@@ -38,5 +38,4 @@ public class ValidityNotPresentTests extends X509AnvilTest {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> config.setIncludeValidity(false));
     }
-
 }
