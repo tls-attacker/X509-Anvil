@@ -41,24 +41,24 @@ extentions,authoritykeyid,CriticalAuthorityKeyIdTests,DerivationScopeError,// TO
 extentions,authoritykeyid,DuplicateAuthKeyIdTests,DerivationScopeError,//TODO: implement when extension is implemented
 extentions,authoritykeyid,MissingKeyIdTests,DerivationScopeError,
 extentions,authoritykeyid,OnlySerialNumberTest,DerivationScopeError,// TODO: re-implement with extension
-extentions,basicconstraints,DuplicateBasicConstraintsTests,,
-extentions,basicconstraints,InsufficientPathLenTests,,
-extentions,basicconstraints,InterCertWithCaNotSetTests,,
-extentions,basicconstraints,InterCertWithNonCriticalBasicConstraintsTests,,
-extentions,basicconstraints,InterCertWithoutBasicConstraintsTests,,
-extentions,basicconstraints,NegativePathLenTests,,
-extentions,basicconstraints,PathlenWithoutCaSetTests,,
-extentions,common,InvalidCriticalExtensionTests,,
-extentions,common,UnknownCriticalExtentionTests,,
-extentions,common,V3CertWithUniqueIdsButNoExtnsTests,,
-extentions,common,Version1CertWithExtensionsTests,,
-extentions,common,Version2CertWithExtensionTests,,
-extentions,keyusage,BasicConstraintsWithoutKeyCertSignTests,,
-extentions,keyusage,DuplicateKeyUsageTests,,
-extentions,keyusage,EmptyKeyUsageTests,,
-extentions,keyusage,InterCertWithoutKeyCertSignTests,,
-extentions,keyusage,KeyCertSignNonCaTests,,
-extentions,keyusage,KeyUsageOverflowTests,,
+extentions,basicconstraints,DuplicateBasicConstraintsTests,AssertionError,
+extentions,basicconstraints,InsufficientPathLenTests,NullPointerException,
+extentions,basicconstraints,InterCertWithCaNotSetTests,AssertionFailedError ,
+extentions,basicconstraints,InterCertWithNonCriticalBasicConstraintsTests,AssertionError,
+extentions,basicconstraints,InterCertWithoutBasicConstraintsTests,AssertionError,
+extentions,basicconstraints,NegativePathLenTests,AssertionError,
+extentions,basicconstraints,PathlenWithoutCaSetTests,DerivationScopeError,
+extentions,common,InvalidCriticalExtensionTests,DerivationScopeError,//  TODO: re-implement when extension implemented in attacker
+extentions,common,UnknownCriticalExtentionTests,DerivationScopeError,//   TODO: re-implement when extension is implemented
+extentions,common,V3CertWithUniqueIdsButNoExtnsTests,Passed,//  TODO: re-implement when extension implemented in attacker
+extentions,common,Version1CertWithExtensionsTests,DerivationScopeError,//     TODO: re-implement when extension implemented in attacker
+extentions,common,Version2CertWithExtensionTests,DerivationScopeError,//        TODO: re-implement when extension implemented in attacker
+extentions,keyusage,BasicConstraintsWithoutKeyCertSignTests,DerivationScopeError,// TODO: re-implement when extension implemented in attacker
+extentions,keyusage,DuplicateKeyUsageTests,DerivationScopeError,// TODO: re-implement when extension implemented in attacker
+extentions,keyusage,EmptyKeyUsageTests,DerivationScopeError,// TODO: re-implement when extension implemented in attacker
+extentions,keyusage,InterCertWithoutKeyCertSignTests,DerivationScopeError,// TODO: re-implement when extension implemented in attacker
+extentions,keyusage,KeyCertSignNonCaTests,DerivationScopeError,// TODO: re-implement when extension implemented in attacker
+extentions,keyusage,KeyUsageOverflowTests,DerivationScopeError,// TODO: re-implement when extension implemented in attacker
 extentions,subjectkeyid,AuthKeyIdSubjectKeyIdMismatchTests,,
 extentions,subjectkeyid,DuplicateSubjectKeyIdTests,,
 namechaining,,AttributeNumberMismatchTests,,
