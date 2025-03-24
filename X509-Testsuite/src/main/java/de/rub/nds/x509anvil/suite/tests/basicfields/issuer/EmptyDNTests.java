@@ -15,6 +15,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -29,10 +30,10 @@ public class EmptyDNTests extends X509AnvilTest {
     @AnvilTest(id = "empty_dn")
     public void emptyDn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //        TODO: What does "empty" actually mean?
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
-            config.getSubject().clear();
-            config.getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "empty"));
-        });
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
+                config.setSubject(List.of(new Pair<>(X500AttributeType.DN_QUALIFIER, "empty")))
+        );
+
 
     }
 }

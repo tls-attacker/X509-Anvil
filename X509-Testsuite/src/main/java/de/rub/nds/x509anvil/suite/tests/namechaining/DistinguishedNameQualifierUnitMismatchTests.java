@@ -16,6 +16,7 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
@@ -30,7 +31,7 @@ public class DistinguishedNameQualifierUnitMismatchTests extends X509AnvilTest {
     @AnvilTest
     public void distinguishedNameQualifierMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig chainConfig = prepareConfig(testRunner);
-        chainConfig.getLastSigningConfig().getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq"));
+        chainConfig.getLastSigningConfig().setSubject(List.of(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq")));
         X509CertificateConfigUtil.modifyAttributeAndValuePair(chainConfig.getEntityCertificateConfig(), X500AttributeType.DN_QUALIFIER);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());

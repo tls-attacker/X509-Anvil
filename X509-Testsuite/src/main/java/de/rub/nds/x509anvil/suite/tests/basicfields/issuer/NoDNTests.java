@@ -1,4 +1,5 @@
 package de.rub.nds.x509anvil.suite.tests.basicfields.issuer;
+import java.util.List;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
@@ -16,7 +17,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
-public class NoDNTests extends X509AnvilTest {
+    public class NoDNTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.2.4. Issuer", text = "The issuer field MUST contain a non-empty distinguished name (DN).")
     @SeverityLevel(Severity.WARNING)
@@ -24,7 +25,7 @@ public class NoDNTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void noDn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.getSubject().clear());
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setSubject(List.of()));
     }
 
 

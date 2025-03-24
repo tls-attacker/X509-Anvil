@@ -33,7 +33,7 @@ public class RdnOrderMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void rdnOrderMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, config -> config.getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq")), reverseRdnsOrderModifier());
+        assertInvalid(testRunner, false, config -> config.setSubject(List.of(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq"))), reverseRdnsOrderModifier());
     }
 
     private static X509CertificateModifier reverseRdnsOrderModifier() {
