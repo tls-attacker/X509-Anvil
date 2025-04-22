@@ -26,7 +26,7 @@ public class ExpiredTests extends X509AnvilTest {
     public void expiredUtcEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
-                    config.setNotBefore(new DateTime(2020, 1, 1, 0, 0, 0));
+                    config.setNotAfter(new DateTime(2020, 1, 1, 0, 0, 0));
                     config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
                 });
     }

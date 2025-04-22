@@ -15,7 +15,7 @@ basicfields,tbssignature,TbsSignatureMismatchTests,AssertionFailedError / NoSuch
 basicfields,tbssignature,TbsSignatureNotPresentTests,Passed,
 basicfields,uniqueidentifiers,IssuerUniqueIdInV1CertTests,AssertionError, Works
 basicfields,uniqueidentifiers,SubjectUniqueIdInV1CertTests,AssertionError, Works
-basicfields,validity,ExpiredTests,AssertionError,
+basicfields,validity,ExpiredTests,AssertionError, Works
 basicfields,validity,GeneralizedTimeFractionalSecondsTests,AssertionError,
 basicfields,validity,GeneralizedTimeNonZuluTests,AssertionError,
 basicfields,validity,GeneralizedTimeWithoutSecondsTests,AssertionError,
