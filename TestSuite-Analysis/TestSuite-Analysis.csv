@@ -9,12 +9,12 @@ basicfields,serialnumber,ZeroSerialNumberTests,AssertionError, Works
 basicfields,signaturealgorithm,SignatureAlgorithmMismatchTests,AssertionFailedError ,TODO: Implement List acception in assertInvalid?
 basicfields,signaturealgorithm,SignatureAlgorithmNotPresentTests,Passed,
 basicfields,signaturealgorithm,UnknownOidTests,NullPointerException / AssertionFailedError ,TODO: Implement List acception in assertInvalid?
-basicfields,subject,SubjectNotPresentTests,AssertionError,
+basicfields,subject,SubjectNotPresentTests,AssertionError, TODO: Needs to be re-written
 basicfields,subjectpkinfo,SubjectPublicKeyInfoNotPresentTests,Passed,
 basicfields,tbssignature,TbsSignatureMismatchTests,AssertionFailedError / NoSuchElementException,
 basicfields,tbssignature,TbsSignatureNotPresentTests,Passed,
-basicfields,uniqueidentifiers,IssuerUniqueIdInV1CertTests,DerivationScopeError,
-basicfields,uniqueidentifiers,SubjectUniqueIdInV1CertTests,DerivationScopeError,
+basicfields,uniqueidentifiers,IssuerUniqueIdInV1CertTests,AssertionError, Works
+basicfields,uniqueidentifiers,SubjectUniqueIdInV1CertTests,AssertionError, Works
 basicfields,validity,ExpiredTests,AssertionError,
 basicfields,validity,GeneralizedTimeFractionalSecondsTests,AssertionError,
 basicfields,validity,GeneralizedTimeNonZuluTests,AssertionError,

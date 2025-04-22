@@ -20,6 +20,7 @@ public class SubjectNotPresentTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest(id = "no_subject_leaf")
     public void noSubjectEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        //TODO: this is wrong as it just removes the subject unique ID, which is not present by default
         assertInvalid(testRunner, true,
         (X509CertificateConfigModifier) config ->
         config.setIncludeSubjectUniqueId(false));
@@ -32,6 +33,7 @@ public class SubjectNotPresentTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest()
     public void noSubjectIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        //TODO: this is wrong as it just removes the subject unique ID, which is not present by default
         assertInvalid(testRunner, false,
         (X509CertificateConfigModifier) config ->
         config.setIncludeSubjectUniqueId(false));
