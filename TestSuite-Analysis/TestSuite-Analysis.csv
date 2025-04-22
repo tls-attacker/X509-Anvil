@@ -3,7 +3,7 @@ basicfields,issuer,EmptyDNTests,AssertionError, Seems to work
 basicfields,issuer,IssuerNotPresentTests,AssertionError, TODO: Needs to be re-written
 basicfields,issuer,NoDNTests,AssertionError, Seems to work
 basicfields,serialnumber,LargeSerialNumberTests,AssertionError, Seems to work
-basicfields,serialnumber,NegativeSerialNumberTests,AssertionError,
+basicfields,serialnumber,NegativeSerialNumberTests,AssertionError, Seems to work
 basicfields,serialnumber,SerialNumberNotPresentTests,Passed,
 basicfields,serialnumber,ZeroSerialNumberTests,AssertionError,
 basicfields,signaturealgorithm,SignatureAlgorithmMismatchTests,AssertionFailedError ,TODO: Implement List acception in assertInvalid?
