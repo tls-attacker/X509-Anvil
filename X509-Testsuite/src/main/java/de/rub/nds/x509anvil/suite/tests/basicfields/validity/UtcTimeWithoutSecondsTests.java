@@ -25,7 +25,7 @@ public class UtcTimeWithoutSecondsTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values [...] MUST include seconds")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(1)
+    @TestStrength(2)
     @IpmLimitations(identifiers = "entity.not_before")
     @AnvilTest
     public void notBeforeEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
