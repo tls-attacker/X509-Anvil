@@ -9,7 +9,6 @@
 
 package de.rub.nds.x509anvil.framework.x509.config;
 
-import de.rub.nds.protocol.constants.SignatureAlgorithm;
 import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
@@ -22,8 +21,6 @@ import de.rub.nds.x509attacker.constants.X509ExtensionType;
 import org.junit.platform.commons.JUnitException;
 
 import java.math.BigInteger;
-import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class X509CertificateConfigUtil {

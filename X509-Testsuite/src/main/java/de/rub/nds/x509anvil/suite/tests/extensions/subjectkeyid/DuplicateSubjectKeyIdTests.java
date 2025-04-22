@@ -11,8 +11,6 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
 

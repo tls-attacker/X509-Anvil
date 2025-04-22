@@ -9,8 +9,6 @@
 
 package de.rub.nds.x509anvil.framework.constants;
 
-import de.rub.nds.protocol.constants.SignatureAlgorithm;
-
 public enum EcdsaKeyLength {
 
     ECDSA_160(192),

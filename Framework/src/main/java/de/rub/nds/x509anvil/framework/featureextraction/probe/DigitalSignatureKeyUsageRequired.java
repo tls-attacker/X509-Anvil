@@ -21,10 +21,8 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
-import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
-import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.List;
 

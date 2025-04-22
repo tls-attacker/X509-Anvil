@@ -14,7 +14,6 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateMod
 import de.rub.nds.x509attacker.x509.model.AttributeTypeAndValue;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.platform.commons.JUnitException;
 
 public class RdnStructureMismatchTests extends X509AnvilTest {

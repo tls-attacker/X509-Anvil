@@ -1,7 +1,7 @@
 Family,Sub-Family,Test,Post Fix,
-basicfields,issuer,EmptyDNTests,unsupportedOperationException,
-basicfields,issuer,IssuerNotPresentTests,AssertionError,
-basicfields,issuer,NoDNTests,unsupportedOperationException,
+basicfields,issuer,EmptyDNTests,AssertionError, Seems to work
+basicfields,issuer,IssuerNotPresentTests,AssertionError, Needs to be re-written
+basicfields,issuer,NoDNTests,AssertionError, Seems to work
 basicfields,serialnumber,LargeSerialNumberTests,AssertionError,
 basicfields,serialnumber,NegativeSerialNumberTests,AssertionError,
 basicfields,serialnumber,SerialNumberNotPresentTests,Passed,

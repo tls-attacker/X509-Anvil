@@ -10,8 +10,6 @@
 package de.rub.nds.x509anvil.framework.x509.generator;
 
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.context.X509Context;

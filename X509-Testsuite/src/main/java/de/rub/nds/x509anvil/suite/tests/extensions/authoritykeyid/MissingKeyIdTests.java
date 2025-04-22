@@ -18,7 +18,6 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateMod
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
 import de.rub.nds.x509attacker.x509.model.Extension;
 import de.rub.nds.x509attacker.x509.model.extensions.AuthorityKeyIdentifier;
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class MissingKeyIdTests extends X509AnvilTest {
 

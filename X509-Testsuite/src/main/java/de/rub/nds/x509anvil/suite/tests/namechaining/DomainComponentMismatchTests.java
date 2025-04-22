@@ -17,7 +17,6 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateMod
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.x509.model.Name;
 import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class DomainComponentMismatchTests extends X509AnvilTest {
 

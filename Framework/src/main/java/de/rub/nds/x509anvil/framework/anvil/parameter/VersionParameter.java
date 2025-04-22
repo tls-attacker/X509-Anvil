@@ -20,8 +20,6 @@ import de.rub.nds.x509attacker.config.X509CertificateConfig;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 public class VersionParameter extends CertificateSpecificParameter<Integer> {

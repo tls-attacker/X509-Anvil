@@ -15,7 +15,6 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 import java.util.List;
 

@@ -9,7 +9,6 @@
 
 package de.rub.nds.x509anvil.framework.anvil;
 
-import de.rub.nds.anvilcore.coffee4j.model.ModelFromScope;
 import de.rub.nds.anvilcore.junit.AnvilTestBaseClass;
 import de.rub.nds.anvilcore.junit.extension.MethodConditionExtension;
 import de.rub.nds.anvilcore.junit.extension.ValueConstraintsConditionExtension;
@@ -29,11 +28,8 @@ import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 import java.util.List;
