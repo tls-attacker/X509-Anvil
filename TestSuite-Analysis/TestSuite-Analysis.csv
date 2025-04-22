@@ -1,11 +1,11 @@
 Family,Sub-Family,Test,Post Fix, Comment or TODO
-basicfields,issuer,EmptyDNTests,AssertionError, Seems to work
+basicfields,issuer,EmptyDNTests,AssertionError, Works
 basicfields,issuer,IssuerNotPresentTests,AssertionError, TODO: Needs to be re-written
-basicfields,issuer,NoDNTests,AssertionError, Seems to work
-basicfields,serialnumber,LargeSerialNumberTests,AssertionError, Seems to work
-basicfields,serialnumber,NegativeSerialNumberTests,AssertionError, Seems to work
+basicfields,issuer,NoDNTests,AssertionError, Works
+basicfields,serialnumber,LargeSerialNumberTests,AssertionError, Works
+basicfields,serialnumber,NegativeSerialNumberTests,AssertionError, Works
 basicfields,serialnumber,SerialNumberNotPresentTests,Passed,
-basicfields,serialnumber,ZeroSerialNumberTests,AssertionError,
+basicfields,serialnumber,ZeroSerialNumberTests,AssertionError, Works
 basicfields,signaturealgorithm,SignatureAlgorithmMismatchTests,AssertionFailedError ,TODO: Implement List acception in assertInvalid?
 basicfields,signaturealgorithm,SignatureAlgorithmNotPresentTests,Passed,
 basicfields,signaturealgorithm,UnknownOidTests,NullPointerException / AssertionFailedError ,TODO: Implement List acception in assertInvalid?
