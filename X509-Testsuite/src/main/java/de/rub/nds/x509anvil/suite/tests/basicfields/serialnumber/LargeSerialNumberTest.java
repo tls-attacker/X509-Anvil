@@ -17,9 +17,9 @@ import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
 public class LargeSerialNumberTest extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.2.1. Version",
-            text = "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may " +
-                    "issue certificates with serial numbers that are negative or zero.  Certificate users SHOULD be prepared to " +
-                    "gracefully handle such certificates.")
+            text = "Given the uniqueness requirements above, serial numbers can be expected to contain long integers.  " +
+                    "Certificate users MUST be able to handle serialNumber values up to 20 octets.  Conforming CAs MUST" +
+                    "NOT use serialNumber values longer than 20 octets.")
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
@@ -30,9 +30,9 @@ public class LargeSerialNumberTest extends X509AnvilTest {
     }
 
     @Specification(document = "RFC 5280", section = "4.1.2.1. Version",
-            text = "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may " +
-                    "issue certificates with serial numbers that are negative or zero.  Certificate users SHOULD be prepared to " +
-                    "gracefully handle such certificates.")
+            text = "Given the uniqueness requirements above, serial numbers can be expected to contain long integers.  " +
+                    "Certificate users MUST be able to handle serialNumber values up to 20 octets.  Conforming CAs MUST" +
+                    "NOT use serialNumber values longer than 20 octets.")
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
