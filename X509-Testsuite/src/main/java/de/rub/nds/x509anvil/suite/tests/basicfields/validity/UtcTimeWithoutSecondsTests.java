@@ -25,13 +25,14 @@ public class UtcTimeWithoutSecondsTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values [...] MUST include seconds")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
+    @TestStrength(1)
     @IpmLimitations(identifiers = "entity.not_before")
     @AnvilTest
     public void notBeforeEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
-                    config.setNotBefore(new DateTime(2001, 1, 0, 0, 0));
+                    // TODO: This needs to be re-written as a separate config value for the preparator
+                    config.setNotBefore(new DateTime(2001, 1, 1, 0, 0));
                     config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
                 });
     }
@@ -45,7 +46,8 @@ public class UtcTimeWithoutSecondsTests extends X509AnvilTest {
     public void notBeforeIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {
-                    config.setNotBefore(new DateTime(2001, 1, 0, 0, 0));
+                    // TODO: This needs to be re-written as a separate config value for the preparator
+                    config.setNotBefore(new DateTime(2001, 1, 1, 0, 0));
                     config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
                 });
     }
@@ -59,7 +61,8 @@ public class UtcTimeWithoutSecondsTests extends X509AnvilTest {
     public void notAfterEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
-                    config.setNotAfter(new DateTime(2030, 1, 0, 0, 0));
+                    // TODO: This needs to be re-written as a separate config value for the preparator
+                    config.setNotAfter(new DateTime(2030, 1, 1, 0, 0));
                     config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
                 });
     }
@@ -73,7 +76,8 @@ public class UtcTimeWithoutSecondsTests extends X509AnvilTest {
     public void notAfterIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {
-                    config.setNotAfter(new DateTime(2030, 1, 0, 0, 0));
+                    // TODO: This needs to be re-written as a separate config value for the preparator
+                    config.setNotAfter(new DateTime(2030, 1, 1, 0, 0));
                     config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
                 });
     }
