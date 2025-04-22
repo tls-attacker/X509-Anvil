@@ -16,14 +16,14 @@ basicfields,tbssignature,TbsSignatureNotPresentTests,Passed,
 basicfields,uniqueidentifiers,IssuerUniqueIdInV1CertTests,AssertionError, Works
 basicfields,uniqueidentifiers,SubjectUniqueIdInV1CertTests,AssertionError, Works
 basicfields,validity,ExpiredTests,AssertionError, Works
-basicfields,validity,GeneralizedTimeFractionalSecondsTests,AssertionError,
-basicfields,validity,GeneralizedTimeNonZuluTests,AssertionError,
-basicfields,validity,GeneralizedTimeWithoutSecondsTests,AssertionError,
+basicfields,validity,GeneralizedTimeFractionalSecondsTests,AssertionError, TODO: Fractional seconds are not correctly prepared yet
+basicfields,validity,GeneralizedTimeNonZuluTests,AssertionError, TODO: Zulu time needs to be prepared based on config (Z still present)
+basicfields,validity,GeneralizedTimeWithoutSecondsTests,AssertionError, TODO: Preparator needs option to omit seconds - currently it is still 0
 basicfields,validity,NotAfterNotPresentTests,Passed,
 basicfields,validity,NotBeforeNotPresentTests,Passed,
-basicfields,validity,NotYetValidTests,AssertionError,
-basicfields,validity,UtcTimeNonZuluTests,AssertionError,
-basicfields,validity,UtcTimeWithoutSecondsTests,AssertionError,
+basicfields,validity,NotYetValidTests,AssertionError, Works
+basicfields,validity,UtcTimeNonZuluTests,AssertionError, TODO: Zulu time needs to be prepared based on config (Z still present)
+basicfields,validity,UtcTimeWithoutSecondsTests,AssertionError, TODO: This needs to be re-written as a separate config value for the preparator
 basicfields,validity,ValidityNotPresentTests,Passed,
 basicfields,version,InvalidPositiveVersionTests,AssertionError,
 basicfields,version,LargeVersionTests,AssertionError,

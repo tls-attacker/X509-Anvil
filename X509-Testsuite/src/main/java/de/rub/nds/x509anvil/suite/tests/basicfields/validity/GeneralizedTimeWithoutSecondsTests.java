@@ -24,6 +24,7 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "entity.not_before")
     @AnvilTest
     public void notBeforeEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        //TODO: Preparator needs option to omit seconds - currently it is still 0
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
                     config.setNotBefore(new DateTime(2000, 1, 1, 0, 0, 0));
@@ -38,6 +39,7 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "inter0.not_before")
     @AnvilTest
     public void notBeforeIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        //TODO: Preparator needs option to omit seconds - currently it is still 0
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {
                     config.setNotBefore(new DateTime(2000, 1, 1, 0, 0, 0));
@@ -52,6 +54,7 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "entity.not_after")
     @AnvilTest
     public void notAfterEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        //TODO: Preparator needs option to omit seconds - currently it is still 0
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
                     config.setNotAfter(new DateTime(2050, 1, 1, 0, 0, 0));
@@ -66,6 +69,7 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
     @IpmLimitations(identifiers = "inter0.not_after")
     @AnvilTest
     public void notAfterIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        //TODO: Preparator needs option to omit seconds - currently it is still 0
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {
                     config.setNotAfter(new DateTime(2050, 1, 1, 0, 0, 0));
