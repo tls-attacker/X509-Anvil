@@ -33,13 +33,13 @@ chain,,DuplicateCertificateTests,AssertionFailedError ,
 chain,,SelfSignedNonRootTests,AssertionError,
 chain,,Version1IntermediateCertTests,AssertionError,
 common,,PositiveTests,Passed,
-common,,UntrustedRootTests,AssertionError,TODO: Test to be updated
-encoding,,BerInsteadOfDerTests,DerivationScopeError,
+common,,UntrustedRootTests,AssertionError, TODO: Test not implemented
+encoding,,BerInsteadOfDerTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker (KeyUsage)
 encoding,,InvalidCertificateLengthTests,AssertionError,
-extentions,authoritykeyid,CriticalAuthorityKeyIdTests,DerivationScopeError,// TODO: Fix to correct config once implemented
-extentions,authoritykeyid,DuplicateAuthKeyIdTests,DerivationScopeError,//TODO: implement when extension is implemented
-extentions,authoritykeyid,MissingKeyIdTests,DerivationScopeError,
-extentions,authoritykeyid,OnlySerialNumberTest,DerivationScopeError,// TODO: re-implement with extension
+extentions,authoritykeyid,CriticalAuthorityKeyIdTests,DerivationScopeError, TODO: Fix to correct config once implemented
+extentions,authoritykeyid,DuplicateAuthKeyIdTests,DerivationScopeError, TODO: implement when extension is implemented
+extentions,authoritykeyid,MissingKeyIdTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
+extentions,authoritykeyid,OnlySerialNumberTest,DerivationScopeError, TODO: re-implement when extension implemented in attacker
 extentions,basicconstraints,DuplicateBasicConstraintsTests,AssertionError,
 extentions,basicconstraints,InsufficientPathLenTests,NullPointerException,
 extentions,basicconstraints,InterCertWithCaNotSetTests,AssertionFailedError ,
@@ -47,19 +47,19 @@ extentions,basicconstraints,InterCertWithNonCriticalBasicConstraintsTests,Assert
 extentions,basicconstraints,InterCertWithoutBasicConstraintsTests,AssertionError,
 extentions,basicconstraints,NegativePathLenTests,AssertionError,
 extentions,basicconstraints,PathlenWithoutCaSetTests,DerivationScopeError,
-extentions,common,InvalidCriticalExtensionTests,DerivationScopeError,//  TODO: re-implement when extension implemented in attacker
-extentions,common,UnknownCriticalExtentionTests,DerivationScopeError,//   TODO: re-implement when extension is implemented
-extentions,common,V3CertWithUniqueIdsButNoExtnsTests,Passed,//  TODO: re-implement when extension implemented in attacker
-extentions,common,Version1CertWithExtensionsTests,DerivationScopeError,//     TODO: re-implement when extension implemented in attacker
-extentions,common,Version2CertWithExtensionTests,DerivationScopeError,//        TODO: re-implement when extension implemented in attacker
-extentions,keyusage,BasicConstraintsWithoutKeyCertSignTests,DerivationScopeError,// TODO: re-implement when extension implemented in attacker
-extentions,keyusage,DuplicateKeyUsageTests,DerivationScopeError,// TODO: re-implement when extension implemented in attacker
-extentions,keyusage,EmptyKeyUsageTests,DerivationScopeError,// TODO: re-implement when extension implemented in attacker
-extentions,keyusage,InterCertWithoutKeyCertSignTests,DerivationScopeError,// TODO: re-implement when extension implemented in attacker
-extentions,keyusage,KeyCertSignNonCaTests,DerivationScopeError,// TODO: re-implement when extension implemented in attacker
-extentions,keyusage,KeyUsageOverflowTests,DerivationScopeError,// TODO: re-implement when extension implemented in attacker
-extentions,subjectkeyid,AuthKeyIdSubjectKeyIdMismatchTests,DerivationScopeError,// TODO: re-implement when extension implemented in attacker
-extentions,subjectkeyid,DuplicateSubjectKeyIdTests,DerivationScopeError,// TODO: re-implement when extension implemented in attacker
+extentions,common,InvalidCriticalExtensionTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
+extentions,common,UnknownCriticalExtentionTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
+extentions,common,V3CertWithUniqueIdsButNoExtnsTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
+extentions,common,Version1CertWithExtensionsTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
+extentions,common,Version2CertWithExtensionTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
+extentions,keyusage,BasicConstraintsWithoutKeyCertSignTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
+extentions,keyusage,DuplicateKeyUsageTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
+extentions,keyusage,EmptyKeyUsageTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
+extentions,keyusage,InterCertWithoutKeyCertSignTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
+extentions,keyusage,KeyCertSignNonCaTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
+extentions,keyusage,KeyUsageOverflowTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
+extentions,subjectkeyid,AuthKeyIdSubjectKeyIdMismatchTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
+extentions,subjectkeyid,DuplicateSubjectKeyIdTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
 namechaining,,AttributeNumberMismatchTests,AssertionError,
 namechaining,,AttributeTypeMismatchTests,DerivationScopeError / RuntimeException (Could not change name component with oid COMMON_NAME),
 namechaining,,CnMismatchTests,AssertionError,
