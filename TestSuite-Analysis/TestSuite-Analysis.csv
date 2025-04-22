@@ -25,9 +25,9 @@ basicfields,validity,NotYetValidTests,AssertionError, Works
 basicfields,validity,UtcTimeNonZuluTests,AssertionError, TODO: Zulu time needs to be prepared based on config (Z still present)
 basicfields,validity,UtcTimeWithoutSecondsTests,AssertionError, TODO: This needs to be re-written as a separate config value for the preparator
 basicfields,validity,ValidityNotPresentTests,Passed,
-basicfields,version,InvalidPositiveVersionTests,AssertionError,
-basicfields,version,LargeVersionTests,AssertionError,
-basicfields,version,NegativeVersionTests,AssertionError,
+basicfields,version,InvalidPositiveVersionTests,AssertionError, Works
+basicfields,version,LargeVersionTests,AssertionError, Works
+basicfields,version,NegativeVersionTests,AssertionError, Works
 basicfields,,AppendUnexpectedCertificateFieldTest,NullPointerException,
 chain,,DuplicateCertificateTests,AssertionFailedError ,
 chain,,SelfSignedNonRootTests,AssertionError,

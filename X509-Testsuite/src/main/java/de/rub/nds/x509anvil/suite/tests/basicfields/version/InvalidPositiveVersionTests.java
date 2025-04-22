@@ -14,6 +14,9 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 import java.math.BigInteger;
 
 public class InvalidPositiveVersionTests extends X509AnvilTest {
+
+    @Specification(document = "RFC 5280", section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
+    @AnvilTest()
     @TestStrength(2)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @IpmLimitations(identifiers = "entity.version")
