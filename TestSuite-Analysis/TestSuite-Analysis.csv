@@ -7,7 +7,7 @@ basicfields,serialnumber,NegativeSerialNumberTests,AssertionError,
 basicfields,serialnumber,SerialNumberNotPresentTests,Passed,
 basicfields,serialnumber,ZeroSerialNumberTests,AssertionError,
 basicfields,signaturealgorithm,SignatureAlgorithmMismatchTests,AssertionFailedError ,TODO: Implement List acception in assertInvalid?
-basicfields,signaturealgorithm,SignatureAlgorithmNotPresentTests,NullPointerException,
+basicfields,signaturealgorithm,SignatureAlgorithmNotPresentTests,Passed,
 basicfields,signaturealgorithm,UnknownOidTests,NullPointerException / AssertionFailedError ,TODO: Implement List acception in assertInvalid?
 basicfields,subject,SubjectNotPresentTests,AssertionError,
 basicfields,subjectpkinfo,SubjectPublicKeyInfoNotPresentTests,Passed,
