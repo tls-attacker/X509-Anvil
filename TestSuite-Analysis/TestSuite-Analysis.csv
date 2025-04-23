@@ -4,35 +4,35 @@ basicfields,issuer,IssuerNotPresentTests,AssertionError, TODO: Needs to be re-wr
 basicfields,issuer,NoDNTests,AssertionError, Works
 basicfields,serialnumber,LargeSerialNumberTests,AssertionError, Works
 basicfields,serialnumber,NegativeSerialNumberTests,AssertionError, Works
-basicfields,serialnumber,SerialNumberNotPresentTests,Passed,
+basicfields,serialnumber,SerialNumberNotPresentTests,Passed, Works
 basicfields,serialnumber,ZeroSerialNumberTests,AssertionError, Works
 basicfields,signaturealgorithm,SignatureAlgorithmMismatchTests,AssertionFailedError ,TODO: Implement List acception in assertInvalid?
-basicfields,signaturealgorithm,SignatureAlgorithmNotPresentTests,Passed,
+basicfields,signaturealgorithm,SignatureAlgorithmNotPresentTests,Passed, Works
 basicfields,signaturealgorithm,UnknownOidTests,NullPointerException / AssertionFailedError ,TODO: Implement List acception in assertInvalid?
 basicfields,subject,SubjectNotPresentTests,AssertionError, TODO: Needs to be re-written
-basicfields,subjectpkinfo,SubjectPublicKeyInfoNotPresentTests,Passed,
+basicfields,subjectpkinfo,SubjectPublicKeyInfoNotPresentTests,Passed, Works
 basicfields,tbssignature,TbsSignatureMismatchTests,AssertionFailedError / NoSuchElementException,
-basicfields,tbssignature,TbsSignatureNotPresentTests,Passed,
+basicfields,tbssignature,TbsSignatureNotPresentTests,Passed, Works
 basicfields,uniqueidentifiers,IssuerUniqueIdInV1CertTests,AssertionError, Works
 basicfields,uniqueidentifiers,SubjectUniqueIdInV1CertTests,AssertionError, Works
 basicfields,validity,ExpiredTests,AssertionError, Works
 basicfields,validity,GeneralizedTimeFractionalSecondsTests,AssertionError, TODO: Fractional seconds are not correctly prepared yet
 basicfields,validity,GeneralizedTimeNonZuluTests,AssertionError, TODO: Zulu time needs to be prepared based on config (Z still present)
 basicfields,validity,GeneralizedTimeWithoutSecondsTests,AssertionError, TODO: Preparator needs option to omit seconds - currently it is still 0
-basicfields,validity,NotAfterNotPresentTests,Passed,
-basicfields,validity,NotBeforeNotPresentTests,Passed,
+basicfields,validity,NotAfterNotPresentTests,Passed, Works
+basicfields,validity,NotBeforeNotPresentTests,Passed, Works
 basicfields,validity,NotYetValidTests,AssertionError, Works
 basicfields,validity,UtcTimeNonZuluTests,AssertionError, TODO: Zulu time needs to be prepared based on config (Z still present)
 basicfields,validity,UtcTimeWithoutSecondsTests,AssertionError, TODO: This needs to be re-written as a separate config value for the preparator
-basicfields,validity,ValidityNotPresentTests,Passed,
+basicfields,validity,ValidityNotPresentTests,Passed, Works
 basicfields,version,InvalidPositiveVersionTests,AssertionError, Works
 basicfields,version,LargeVersionTests,AssertionError, Works
 basicfields,version,NegativeVersionTests,AssertionError, Works
 basicfields,,AppendUnexpectedCertificateFieldTest,NullPointerException,
-chain,,DuplicateCertificateTests,AssertionFailedError ,
+chain,,DuplicateCertificateTests,AssertionFailedError,
 chain,,SelfSignedNonRootTests,AssertionError, Works
 chain,,Version1IntermediateCertTests,AssertionError, Works
-common,,PositiveTests,Passed,
+common,,PositiveTests,Passed, Works
 common,,UntrustedRootTests,AssertionError, TODO: Test not implemented
 encoding,,BerInsteadOfDerTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker (KeyUsage)
 encoding,,InvalidCertificateLengthTests,AssertionError, TODO: Length field is not used during preparation
