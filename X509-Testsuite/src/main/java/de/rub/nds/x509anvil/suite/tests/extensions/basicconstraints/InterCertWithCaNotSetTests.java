@@ -9,14 +9,12 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
-import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
-import org.junit.jupiter.api.Assertions;
 
 public class InterCertWithCaNotSetTests extends X509AnvilTest {
 
@@ -28,13 +26,13 @@ public class InterCertWithCaNotSetTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void intermediateCertWithCaNotSet(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig chainConfig = prepareConfig(testRunner);
-        BasicConstraintsConfig config = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(chainConfig.getLastSigningConfig(), X509ExtensionType.BASIC_CONSTRAINTS);
-        config.setPresent(true);
-        config.setCa(false);
-        config.setIncludeCA(DefaultEncodingRule.FOLLOW_DEFAULT);
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
+            basicConstraintsConfig.setPresent(true);
+            basicConstraintsConfig.setCritical(true);
+            basicConstraintsConfig.setCa(false);
+            basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.FOLLOW_DEFAULT);
+        });
     }
 }
 

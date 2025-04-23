@@ -18,7 +18,6 @@ import de.rub.nds.x509attacker.constants.CertificateChainPositionType;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
-import org.junit.platform.commons.JUnitException;
 
 import java.math.BigInteger;
 import java.util.*;
@@ -125,12 +124,8 @@ public class X509CertificateConfigUtil {
     }
 
     public static void modifyAttributeAndValuePair(X509CertificateConfig config, X500AttributeType type) {
-        try {
-            Pair<X500AttributeType, String> cnPair =
-                config.getDefaultIssuer().stream().filter(x -> x.getLeftElement() == type).findFirst().orElseThrow();
-            cnPair.setRightElement(cnPair.getRightElement() + "_modified");
-        } catch (NoSuchElementException e) {
-            throw new JUnitException(e.getMessage());
-        }
+        Pair<X500AttributeType, String> cnPair =
+            config.getDefaultIssuer().stream().filter(x -> x.getLeftElement() == type).findFirst().orElseThrow();
+        cnPair.setRightElement(cnPair.getRightElement() + "_modified");
     }
 }

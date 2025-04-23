@@ -2,7 +2,6 @@ package de.rub.nds.x509anvil.suite.tests.extensions.basicconstraints;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -24,7 +23,6 @@ public class PathlenWithoutCaSetTests extends X509AnvilTest {
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "entity:ext_basic_constraints_ca", method = "strictlyDisabled")
     @AnvilTest
     public void pathlenWithoutCaSetEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

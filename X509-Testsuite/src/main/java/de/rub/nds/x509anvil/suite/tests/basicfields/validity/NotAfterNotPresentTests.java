@@ -21,9 +21,7 @@ public class NotAfterNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noNotAfterEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
-                (X509CertificateConfigModifier) config -> {
-                    config.setIncludeNotAfter(false);
-                });
+                (X509CertificateConfigModifier) config -> config.setIncludeNotAfter(false));
     }
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
@@ -33,9 +31,7 @@ public class NotAfterNotPresentTests extends X509AnvilTest {
     @AnvilTest()
     public void noNotAfterIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
-                (X509CertificateConfigModifier) config -> {
-                    config.setIncludeNotAfter(false);
-                });
+                (X509CertificateConfigModifier) config -> config.setIncludeNotAfter(false));
     }
 
 }

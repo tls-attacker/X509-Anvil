@@ -10,6 +10,7 @@ public class Main {
         ContextHelper.initializeContext();
         // TODO: Parse config from file
 
+        //TODO: Generate sample configs and save
         TestsuiteRunner.runTests();
     }
 }

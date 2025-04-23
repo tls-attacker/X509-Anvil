@@ -23,8 +23,6 @@ public class SerialNumberNotPresentTests extends X509AnvilTest {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setIncludeSerialNumber(false));
     }
 
-
-
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
