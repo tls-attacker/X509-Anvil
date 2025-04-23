@@ -1,7 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.weakcrypto;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.ValueConstraint;
+import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.protocol.constants.HashAlgorithm;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -17,7 +17,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
+    @TestStrength(2)
     public void weakHashMd2(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.MD2);
@@ -29,7 +29,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
+    @TestStrength(2)
     public void weakHashMd4(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.MD4);
@@ -40,7 +40,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
+    @TestStrength(2)
     public void weakHashMd5(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.MD5);
@@ -51,6 +51,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @TestStrength(2)
     public void weakHashSha1(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.SHA1);

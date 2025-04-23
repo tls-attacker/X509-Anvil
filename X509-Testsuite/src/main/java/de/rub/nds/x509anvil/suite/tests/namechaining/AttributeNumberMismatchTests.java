@@ -28,7 +28,8 @@ public class AttributeNumberMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void missingAttribute(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, missingAttributeModifier());
+        //TODO: missingAttributeModifier not implemented
+        assertInvalid(testRunner, true, missingAttributeModifier());
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
@@ -38,9 +39,11 @@ public class AttributeNumberMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void additionalAttribute(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, additionalAttributeModifier());
+        //TODO: Does not work
+        assertInvalid(testRunner, true, additionalAttributeModifier());
     }
 
+    //TODO: missingAttributeModifier not implemented
     // Ads an additional "distinguished name qualifier" to the intermediate's subject
     private static X509CertificateModifier missingAttributeModifier() {
         return (certificate) -> {
@@ -50,6 +53,7 @@ public class AttributeNumberMismatchTests extends X509AnvilTest {
         };
     }
 
+    //TODO: Does not work
     // Ads an additional "distinguished name qualifier" to the entity's issuer
     private static X509CertificateModifier additionalAttributeModifier() {
         return (certificate) -> {

@@ -27,10 +27,11 @@ public class RdnOrderMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void rdnOrderMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, config -> config.setSubject(List.of(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq"))), reverseRdnsOrderModifier());
+    public void rdnOrderMismatchInIssuerEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, config -> config.setSubject(List.of(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq"))), reverseRdnsOrderModifier());
     }
 
+    //TODO: RDNs are incorrectly prepared
     private static X509CertificateModifier reverseRdnsOrderModifier() {
         return (certificate) -> {
             Name issuer = certificate.getTbsCertificate().getIssuer();

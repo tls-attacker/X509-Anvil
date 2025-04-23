@@ -26,12 +26,12 @@ public class DomainComponentMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.domain_components_present", method = "enabled")
     @AnvilTest
     public void domainComponentMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, domainComponentMismatchModifier());
     }
 
+    //TODO: domain component does not exist in entity
     private static X509CertificateModifier domainComponentMismatchModifier() {
         return (certificate) -> {
             Name issuer = certificate.getTbsCertificate().getIssuer();

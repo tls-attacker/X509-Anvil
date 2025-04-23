@@ -2,7 +2,6 @@ package de.rub.nds.x509anvil.suite.tests.namechaining;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -15,7 +14,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 
-public class OrganizationalUnitMismatchTests extends X509AnvilTest {
+public class OrganisationUnitMismatchTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Two naming attributes match if the attribute types are the same and the values of the attributes are " +
@@ -23,9 +22,9 @@ public class OrganizationalUnitMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_organizational_unit_present", method = "enabled")
     @AnvilTest
-    public void organizationalUnitMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void organisationUnitMismatchInIssuerEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        //TODO: organisation unit does not exist in entity
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config ->
                 X509CertificateConfigUtil.modifyAttributeAndValuePair(config, X500AttributeType.ORGANISATION_UNIT_NAME)
         );

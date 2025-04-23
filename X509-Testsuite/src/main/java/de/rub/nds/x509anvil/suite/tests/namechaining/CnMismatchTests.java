@@ -23,7 +23,7 @@ public class CnMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
-    public void cnMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void cnMismatchInIssuerEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config ->
                 X509CertificateConfigUtil.modifyAttributeAndValuePair(config, X500AttributeType.COMMON_NAME)
         );

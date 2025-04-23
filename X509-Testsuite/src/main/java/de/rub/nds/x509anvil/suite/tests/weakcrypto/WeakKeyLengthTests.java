@@ -26,6 +26,7 @@ public class WeakKeyLengthTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
     @ValueConstraint(identifier = "inter0.hash_algorithm", method = "restrictHashForRsa512")    //Sha-512/SHA-384 digests are too big for RSA-512
     public void weak512BitRsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
+        // TODO: Needs new config stuff for keys
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm.RSASSA_PSS, 512), certificateChainConfig.getLastSigningConfig());
         VerifierResult result = testRunner.execute(certificateChainConfig);
