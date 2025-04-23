@@ -40,7 +40,7 @@ extentions,authoritykeyid,CriticalAuthorityKeyIdTests,DerivationScopeError, TODO
 extentions,authoritykeyid,DuplicateAuthKeyIdTests,DerivationScopeError, TODO: implement when extension is implemented
 extentions,authoritykeyid,MissingKeyIdTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
 extentions,authoritykeyid,OnlySerialNumberTest,DerivationScopeError, TODO: re-implement when extension implemented in attacker
-extentions,basicconstraints,DuplicateBasicConstraintsTests,AssertionError,
+extentions,basicconstraints,DuplicateBasicConstraintsTests,AssertionError, Works
 extentions,basicconstraints,InsufficientPathLenTests,NullPointerException,
 extentions,basicconstraints,InterCertWithCaNotSetTests,AssertionError, Works
 extentions,basicconstraints,InterCertWithNonCriticalBasicConstraintsTests,AssertionError, Works

@@ -18,7 +18,6 @@ import de.rub.nds.x509attacker.constants.CertificateChainPositionType;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
-import org.junit.platform.commons.JUnitException;
 
 import java.math.BigInteger;
 import java.util.*;
