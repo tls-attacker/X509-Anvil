@@ -22,7 +22,7 @@ public class SubjectUniqueIdInV1CertTests extends X509AnvilTest {
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @IpmLimitations(identifiers = "entity.version")
+    @IpmLimitations(identifiers = "entity:version")
     @AnvilTest
     public void subjectUniqueIdPresentInV1Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
@@ -38,7 +38,7 @@ public class SubjectUniqueIdInV1CertTests extends X509AnvilTest {
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @IpmLimitations(identifiers = "inter0.version")
+    @IpmLimitations(identifiers = "inter0:version")
     @AnvilTest
     public void subjectUniqueIdPresentInV1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,

@@ -23,7 +23,7 @@ public class OrganizationalUnitMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_organizational_unit_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:nc_organizational_unit_present", method = "enabled")
     @AnvilTest
     public void organizationalUnitMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config ->

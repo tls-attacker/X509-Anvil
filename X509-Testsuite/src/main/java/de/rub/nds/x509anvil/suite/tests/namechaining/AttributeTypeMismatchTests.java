@@ -40,7 +40,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_country_name_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:nc_country_name_present", method = "enabled")
     @AnvilTest()
     public void typeMismatchCountry(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.COUNTRY_NAME));
@@ -52,7 +52,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_organization_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:nc_organization_present", method = "enabled")
     @AnvilTest()
     public void typeMismatchOrganization(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.ORGANISATION_NAME));
@@ -64,7 +64,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_organizational_unit_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:nc_organizational_unit_present", method = "enabled")
     @AnvilTest()
     public void typeMismatchOrganizationalUnit(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.ORGANISATION_UNIT_NAME));
@@ -76,7 +76,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_organization_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:nc_organization_present", method = "enabled")
     @AnvilTest()
     public void typeMismatchDnQualifier(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true,
@@ -90,7 +90,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_state_province_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:nc_state_province_present", method = "enabled")
     @AnvilTest()
     public void typeMismatchStateProvince(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.STATE_OR_PROVINCE_NAME));
@@ -102,7 +102,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.nc_serial_number_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:nc_serial_number_present", method = "enabled")
     @AnvilTest()
     public void typeMismatchSerialNumber(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.SERIAL_NUMBER));

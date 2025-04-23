@@ -19,7 +19,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "entity:ext_authority_key_identifier_present", method = "enabled")
     public void duplicateIdenticalEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //TODO: implement when extension is implemented
     /*      assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -35,7 +35,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_authority_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:ext_authority_key_identifier_present", method = "enabled")
     public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: implement when extension implemented in attacker
  //        assertInvalid(testRunner, false, config -> {
@@ -49,7 +49,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "entity:ext_authority_key_identifier_present", method = "enabled")
     public void duplicateDifferentEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: implement when extension implemented in attacker
  //        assertInvalid(testRunner, true, config -> {
@@ -63,7 +63,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_authority_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:ext_authority_key_identifier_present", method = "enabled")
     public void duplicateDifferentIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: implement when extension implemented in attacker
 //        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

@@ -20,8 +20,8 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
-    @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:ext_subject_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "entity:ext_authority_key_identifier_present", method = "enabled")
     public void keyIdMismatchEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
 
@@ -40,7 +40,7 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_authority_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:ext_authority_key_identifier_present", method = "enabled")
     public void keyIdMismatchIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
     /*    assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

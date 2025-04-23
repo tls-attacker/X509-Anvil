@@ -17,7 +17,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
+    @ValueConstraint(identifier = "inter0:key_type", method = "allowRsa")
     public void weakHashMd2(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.MD2);
@@ -29,7 +29,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
+    @ValueConstraint(identifier = "inter0:key_type", method = "allowRsa")
     public void weakHashMd4(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.MD4);
@@ -40,7 +40,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @ValueConstraint(identifier = "inter0.key_type", method = "allowRsa")
+    @ValueConstraint(identifier = "inter0:key_type", method = "allowRsa")
     public void weakHashMd5(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.MD5);

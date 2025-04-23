@@ -19,7 +19,7 @@ public class LargeVersionTests extends X509AnvilTest {
     @AnvilTest()
     @TestStrength(2)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @IpmLimitations(identifiers = "entity.version")
+    @IpmLimitations(identifiers = "entity:version")
     public void largeVersionEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setVersion(new BigInteger("256")));
     }
@@ -28,7 +28,7 @@ public class LargeVersionTests extends X509AnvilTest {
     @AnvilTest()
     @TestStrength(2)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @IpmLimitations(identifiers = "inter0.version")
+    @IpmLimitations(identifiers = "inter0:version")
     public void largeVersionIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> config.setVersion(new BigInteger("256")));

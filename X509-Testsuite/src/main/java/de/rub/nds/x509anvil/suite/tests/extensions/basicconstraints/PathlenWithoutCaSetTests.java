@@ -24,7 +24,7 @@ public class PathlenWithoutCaSetTests extends X509AnvilTest {
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "entity.ext_basic_constraints_ca", method = "strictlyDisabled")
+    @ValueConstraint(identifier = "entity:ext_basic_constraints_ca", method = "strictlyDisabled")
     @AnvilTest
     public void pathlenWithoutCaSetEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

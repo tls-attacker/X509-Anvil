@@ -21,7 +21,7 @@ public class ExpiredTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @IpmLimitations(identifiers = "entity.not_after")
+    @IpmLimitations(identifiers = "entity:not_after")
     @AnvilTest
     public void expiredUtcEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
@@ -37,7 +37,7 @@ public class ExpiredTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @IpmLimitations(identifiers = "entity.not_after")
+    @IpmLimitations(identifiers = "entity:not_after")
     @AnvilTest
     public void expiredGeneralizedEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
@@ -51,7 +51,7 @@ public class ExpiredTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @IpmLimitations(identifiers = "inter0.not_after")
+    @IpmLimitations(identifiers = "inter0:not_after")
     @AnvilTest
     public void expiredUtcIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
@@ -66,7 +66,7 @@ public class ExpiredTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @IpmLimitations(identifiers = "inter0.not_after")
+    @IpmLimitations(identifiers = "inter0:not_after")
     @AnvilTest
     public void expiredGeneralizedIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,

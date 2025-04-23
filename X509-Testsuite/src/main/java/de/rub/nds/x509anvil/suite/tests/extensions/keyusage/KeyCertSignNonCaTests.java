@@ -20,8 +20,8 @@ public class KeyCertSignNonCaTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 2, maxLength = 2, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "entity.ext_key_usage_key_cert_sign", method = "enabled")
-    @ValueConstraint(identifier = "entity.ext_basic_constraints_ca", method = "disabled")
+    @ValueConstraint(identifier = "entity:ext_key_usage_key_cert_sign", method = "enabled")
+    @ValueConstraint(identifier = "entity:ext_basic_constraints_ca", method = "disabled")
     @AnvilTest
     public void keyCertSignNonCaEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {

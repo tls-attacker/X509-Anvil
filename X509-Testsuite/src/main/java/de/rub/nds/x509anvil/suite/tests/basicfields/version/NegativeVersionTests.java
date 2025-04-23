@@ -19,7 +19,7 @@ public class NegativeVersionTests extends X509AnvilTest {
     @AnvilTest()
     @TestStrength(1)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @IpmLimitations(identifiers = "entity.version")
+    @IpmLimitations(identifiers = "entity:version")
     public void negativeVersionEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
         (X509CertificateConfigModifier) config -> config.setVersion(BigInteger.valueOf(-1)));
@@ -29,7 +29,7 @@ public class NegativeVersionTests extends X509AnvilTest {
     @AnvilTest()
     @TestStrength(2)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @IpmLimitations(identifiers = "inter0.version")
+    @IpmLimitations(identifiers = "inter0:version")
     public void negativeVersionIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
         (X509CertificateConfigModifier) config -> config.setVersion(BigInteger.valueOf(-1)));

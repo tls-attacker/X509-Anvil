@@ -15,7 +15,6 @@ import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.ParameterIdentifierProvider;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
-import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,22 +22,42 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static de.rub.nds.x509anvil.framework.constants.ChainValues.MAX_CHAIN_LENGTH;
+import static de.rub.nds.x509anvil.framework.constants.ChainValues.MAX_INTERMEDIATE_CERTS_MODELED;
+
 public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierProvider {
 
     private static List<ParameterIdentifier> allParameterIdentifiers;
 
     private List<ParameterIdentifier>
-        generateAllParameterIdentifiersWithDerivationScope(DerivationScope derivationScope) {
-        int maxChainLength = AnnotationUtil.resolveMaxChainLength(derivationScope.getExtensionContext());
-        int intermediateCertsModeled =
-            AnnotationUtil.resolveIntermediateCertsModeled(derivationScope.getExtensionContext());
+    generateAllParameterIdentifiersWithDerivationScope(DerivationScope derivationScope) {
+        return generateAllParameterIdentifiersBase(
+                AnnotationUtil.resolveMaxChainLength(derivationScope.getExtensionContext()),
+                        AnnotationUtil.resolveIntermediateCertsModeled(derivationScope.getExtensionContext()),
+                                AnnotationUtil.resolveStaticRoot(derivationScope.getExtensionContext())
+        );
+    }
+
+    private List<ParameterIdentifier>
+    generateAllParameterIdentifiersWithoutDerivationScope() {
+        return generateAllParameterIdentifiersBase(
+                MAX_CHAIN_LENGTH.getValue(),
+                MAX_INTERMEDIATE_CERTS_MODELED.getValue(),
+                // TODO: I think this can be deleted?
+                false
+        );
+    }
+
+
+    private List<ParameterIdentifier>
+    generateAllParameterIdentifiersBase(int maxChainLength, int intermediateCertsModeled, boolean staticRoot) {
         int numCertificateScopes = Integer.min(maxChainLength, 2 + intermediateCertsModeled);
 
         List<ParameterIdentifier> parameterIdentifiers = new ArrayList<>();
         parameterIdentifiers.add(new ParameterIdentifier(X509AnvilParameterType.CHAIN_LENGTH));
 
         // Parameters for root certificate
-        if (!AnnotationUtil.resolveStaticRoot(derivationScope.getExtensionContext())) {
+        if (!staticRoot) {
             for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
                 parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ROOT));
             }
@@ -48,7 +67,7 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
         for (int i = 0; i < numCertificateScopes - 2; i++) {
             for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
                 parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType,
-                    X509AnvilParameterScope.createIntermediateScope(i)));
+                        X509AnvilParameterScope.createIntermediateScope(i)));
             }
         }
 
@@ -56,7 +75,7 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
         if (numCertificateScopes >= 2) {
             for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
                 parameterIdentifiers
-                    .add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ENTITY));
+                        .add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ENTITY));
             }
         }
 
@@ -71,26 +90,21 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
     }
 
     @Override
-    public List<ParameterIdentifier> getModelParameterIdentifiers(DerivationScope derivationScope) {
-        String modelType = derivationScope.getModelType();
-        if (modelType.equals(DefaultModelTypes.ALL_PARAMETERS)) {
-            return generateAllParameterIdentifiers(derivationScope);
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<ParameterIdentifier> generateAllParameterIdentifiers(DerivationScope derivationScope) {
+    public List<ParameterIdentifier> generateAllParameterIdentifiers() {
         if (allParameterIdentifiers == null) {
             allParameterIdentifiers =
-                ((X509AnvilParameterIdentifierProvider) AnvilContext.getInstance().getParameterIdentifierProvider())
-                    .generateAllParameterIdentifiersWithDerivationScope(derivationScope);
+                    ((X509AnvilParameterIdentifierProvider) AnvilContext.getInstance().getParameterIdentifierProvider())
+                            .generateAllParameterIdentifiersWithoutDerivationScope();
         }
         return allParameterIdentifiers;
     }
 
     @Override
-    public List<ParameterIdentifier> generateAllParameterIdentifiers() {
-        throw new NotImplementedException("Currently only implemented with DerivationScope provided.");
+    public List<ParameterIdentifier> getModelParameterIdentifiers(DerivationScope derivationScope) {
+        String modelType = derivationScope.getModelType();
+        if (modelType.equals(DefaultModelTypes.ALL_PARAMETERS)) {
+            return generateAllParameterIdentifiersWithDerivationScope(derivationScope);
+        }
+        return Collections.emptyList();
     }
 }

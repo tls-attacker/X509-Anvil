@@ -19,7 +19,7 @@ public class UnknownCriticalExtentionTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @IpmLimitations(identifiers = {"entity.version", "entity.extensions_present", "entity.ext_unknown_noncritical_extension_present"})
+    @IpmLimitations(identifiers = {"entity:version", "entity:extensions_present", "entity:ext_unknown_noncritical_extension_present"})
     @AnvilTest
     public void unknownCriticalExtensionEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //   TODO: re-implement when extension is implemented
@@ -38,7 +38,7 @@ public class UnknownCriticalExtentionTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @IpmLimitations(identifiers = {"inter0.version", "inter0.extensions_present", "inter0.ext_unknown_noncritical_extension_present"})
+    @IpmLimitations(identifiers = {"inter0:version", "inter0:extensions_present", "inter0:ext_unknown_noncritical_extension_present"})
     @AnvilTest
 
     public void unknownCriticalExtensionIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

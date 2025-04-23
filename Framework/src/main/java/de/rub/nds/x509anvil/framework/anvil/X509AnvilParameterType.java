@@ -79,4 +79,9 @@ public enum X509AnvilParameterType implements ParameterType {
     public DerivationParameter getInstance(ParameterScope scope) {
         return X509AnvilParameterFactory.getInstance(new ParameterIdentifier(this, scope));
     }
+
+    @Override
+    public String toString() {
+        return this.name().toLowerCase();
+    }
 }

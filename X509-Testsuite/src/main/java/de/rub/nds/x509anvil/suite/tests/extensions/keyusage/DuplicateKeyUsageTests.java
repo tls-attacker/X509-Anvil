@@ -19,7 +19,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
+    @ValueConstraint(identifier = "entity:ext_key_usage_present", method = "enabled")
     public void duplicateIdenticalEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 //     TODO: re-implement when extension implemented in attacker
 
@@ -35,7 +35,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:ext_key_usage_present", method = "enabled")
     public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
 
@@ -52,7 +52,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "entity.ext_key_usage_present", method = "enabled")
+    @ValueConstraint(identifier = "entity:ext_key_usage_present", method = "enabled")
     public void duplicateDifferentEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
 
@@ -68,7 +68,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:ext_key_usage_present", method = "enabled")
     public void duplicateDifferentIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
 

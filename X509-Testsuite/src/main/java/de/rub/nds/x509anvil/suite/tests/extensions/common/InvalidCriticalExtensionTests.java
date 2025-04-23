@@ -20,8 +20,8 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 2, maxLength = 2, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "entity.extensions_present", method = "enabled")
-    @ValueConstraint(identifier = "entity.ext_subject_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "entity:extensions_present", method = "enabled")
+    @ValueConstraint(identifier = "entity:ext_subject_key_identifier_present", method = "enabled")
     @AnvilTest
     public void invalidCriticalSubjectKeyIdentifierEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
       /*  assertInvalid(testRunner, true, (X509CertificateConfigModifier)  config -> {
@@ -38,8 +38,8 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.extensions_present", method = "enabled")
-    @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:extensions_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:ext_subject_key_identifier_present", method = "enabled")
     @AnvilTest
 
     public void invalidCriticalSubjectKeyIdentifierIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

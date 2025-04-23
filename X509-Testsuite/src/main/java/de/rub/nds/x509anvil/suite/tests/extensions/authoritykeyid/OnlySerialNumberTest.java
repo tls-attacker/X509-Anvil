@@ -20,7 +20,7 @@ public class OnlySerialNumberTest extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "entity:ext_authority_key_identifier_present", method = "enabled")
     public void missingKeyIdentifierEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement with extension
 //        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -36,7 +36,7 @@ public class OnlySerialNumberTest extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:ext_subject_key_identifier_present", method = "enabled")
     public void missingKeyIdentifierIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement with extension
 //        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

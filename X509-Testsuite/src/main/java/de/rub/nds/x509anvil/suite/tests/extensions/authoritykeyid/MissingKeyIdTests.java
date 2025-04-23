@@ -27,7 +27,7 @@ public class MissingKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 2, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "entity.ext_authority_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "entity:ext_authority_key_identifier_present", method = "enabled")
     public void missingKeyIdentifierEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, missingKeyIdentifierModifier());
     }
@@ -37,7 +37,7 @@ public class MissingKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 3, maxLength = 3)
     @TestStrength(2)
     @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_authority_key_identifier_present", method = "enabled")
+    @ValueConstraint(identifier = "inter0:ext_authority_key_identifier_present", method = "enabled")
     public void missingKeyIdentifierIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, missingKeyIdentifierModifier());
     }
