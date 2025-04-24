@@ -35,7 +35,7 @@ public class MissingSignatureTests extends X509AnvilTest {
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         Asn1BitString empty = new Asn1BitString("empty");
         generatedCertificates.get(generatedCertificates.size() - 1).setSignature(empty);
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -53,7 +53,7 @@ public class MissingSignatureTests extends X509AnvilTest {
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         Asn1BitString empty = new Asn1BitString("empty");
         generatedCertificates.get(1).setSignature(empty);
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -71,7 +71,7 @@ public class MissingSignatureTests extends X509AnvilTest {
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         Asn1BitString empty = new Asn1BitString("empty");
         generatedCertificates.get(0).setSignature(empty);
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 }

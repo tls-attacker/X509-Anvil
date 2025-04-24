@@ -9,6 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.verifier;
 
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class CliVerifierAdapter implements VerifierAdapter {
     }
 
     @Override
-    public VerifierResult invokeVerifier(List<X509Certificate> certificatesChain) throws VerifierException {
+    public VerifierResult invokeVerifier(X509CertificateConfig leafCertificateConfig, List<X509Certificate> certificatesChain) throws VerifierException {
         return null;
     }
 }

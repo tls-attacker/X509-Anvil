@@ -9,10 +9,11 @@
 
 package de.rub.nds.x509anvil.framework.verifier;
 
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import java.util.List;
 
 public interface VerifierAdapter {
-    VerifierResult invokeVerifier(List<X509Certificate> certificatesChain) throws VerifierException;
+    VerifierResult invokeVerifier(X509CertificateConfig leafCertificateconfig, List<X509Certificate> certificatesChain) throws VerifierException;
 }

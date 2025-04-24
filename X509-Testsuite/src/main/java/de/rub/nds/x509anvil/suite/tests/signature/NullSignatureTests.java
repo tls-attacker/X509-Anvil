@@ -33,7 +33,7 @@ public class NullSignatureTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         generatedCertificates.get(generatedCertificates.size() - 1).setSignature(null);
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -50,7 +50,7 @@ public class NullSignatureTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         generatedCertificates.get(1).setSignature(null);
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -67,7 +67,7 @@ public class NullSignatureTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         generatedCertificates.get(0).setSignature(null);
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 }

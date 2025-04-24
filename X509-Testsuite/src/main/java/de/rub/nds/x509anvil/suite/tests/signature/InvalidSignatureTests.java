@@ -35,7 +35,7 @@ public class InvalidSignatureTests extends X509AnvilTest {
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         Asn1BitString signature = generatedCertificates.get(generatedCertificates.size()-1).getSignature();
         signature.getContent().getValue()[32] = (byte) (~signature.getContent().getValue()[32] & 0xFF);
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -53,7 +53,7 @@ public class InvalidSignatureTests extends X509AnvilTest {
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         Asn1BitString signature = generatedCertificates.get(1).getSignature();
         signature.getContent().getValue()[32] = (byte) (~signature.getContent().getValue()[32] & 0xFF);
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -71,7 +71,7 @@ public class InvalidSignatureTests extends X509AnvilTest {
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         Asn1BitString signature = generatedCertificates.get(0).getSignature();
         signature.getContent().getValue()[32] = (byte) (~signature.getContent().getValue()[32] & 0xFF);
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 }

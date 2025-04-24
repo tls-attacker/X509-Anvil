@@ -31,7 +31,7 @@ public class UnknownOidTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         generatedCertificates.get(generatedCertificates.size()-1).getTbsCertificate().getSignature().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
     //    TODO: Implement List acception in assertInvalid?
@@ -47,7 +47,7 @@ public class UnknownOidTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         generatedCertificates.get(generatedCertificates.size()-2).getTbsCertificate().getSignature().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -62,7 +62,7 @@ public class UnknownOidTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         generatedCertificates.get(generatedCertificates.size()-1).getSignatureAlgorithmIdentifier().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -77,7 +77,7 @@ public class UnknownOidTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         generatedCertificates.get(generatedCertificates.size()-2).getSignatureAlgorithmIdentifier().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -93,7 +93,7 @@ public class UnknownOidTests extends X509AnvilTest {
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         generatedCertificates.get(generatedCertificates.size()-1).getSignatureAlgorithmIdentifier().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
         generatedCertificates.get(generatedCertificates.size()-1).getTbsCertificate().getSignature().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -109,7 +109,7 @@ public class UnknownOidTests extends X509AnvilTest {
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         generatedCertificates.get(generatedCertificates.size()-2).getSignatureAlgorithmIdentifier().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
         generatedCertificates.get(generatedCertificates.size()-2).getTbsCertificate().getSignature().getAlgorithm().setValue("1.2.3.4.5.6.7.8");
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 }

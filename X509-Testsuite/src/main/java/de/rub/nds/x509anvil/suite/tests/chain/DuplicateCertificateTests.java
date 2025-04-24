@@ -30,7 +30,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
         certificateChain.add(0, certificateChain.get(0));
-        VerifierResult result = testRunner.execute(certificateChain);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), certificateChain);
         Assertions.assertFalse(result.isValid());
     }
     //    TODO: create a new assert method that accepts lists and check for the occurrences of LIST functions?
@@ -46,7 +46,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
         certificateChain.add(1, certificateChain.get(1));
-        VerifierResult result = testRunner.execute(certificateChain);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), certificateChain);
         Assertions.assertFalse(result.isValid());
     }
 
@@ -63,7 +63,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
         certificateChain.add(certificateChain.get(certificateChain.size()-1));
-        VerifierResult result = testRunner.execute(certificateChain);
+        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), certificateChain);
         Assertions.assertFalse(result.isValid());
     }
 }

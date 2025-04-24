@@ -38,7 +38,7 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         X509Util.getExtensionByOid(generatedCertificates.get(generatedCertificates.size()-1), X509ExtensionType.KEY_USAGE).getCritical().setContent(new byte[] {0x01});
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(config.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 //    TODO: List Implementation in assertInvalid
@@ -56,7 +56,7 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
         X509Util.getExtensionByOid(generatedCertificates.get(generatedCertificates.size()-2), X509ExtensionType.KEY_USAGE).getCritical().setContent(new byte[] {0x01});
-        VerifierResult result = testRunner.execute(generatedCertificates);
+        VerifierResult result = testRunner.execute(config.getEntityCertificateConfig(), generatedCertificates);
         Assertions.assertFalse(result.isValid());
     }
 
