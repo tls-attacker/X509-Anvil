@@ -57,7 +57,7 @@ public class CachedKeyPairGenerator {
                     }
                 }
                 config.setDefaultSubjectRsaModulus(keyPair.getLeft().getModulus());
-                config.setDefaultSubjectRsaPrivateKey(keyPair.getRight().getPrivateExponent());
+                config.setDefaultSubjectRsaPrivateExponent(keyPair.getRight().getPrivateExponent());
                 break;
             case DSA:
                 DsaPublicKey dsaPublicKey;
