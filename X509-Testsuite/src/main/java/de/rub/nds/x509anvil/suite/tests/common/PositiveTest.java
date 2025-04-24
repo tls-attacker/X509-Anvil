@@ -17,7 +17,6 @@ public class PositiveTest extends X509AnvilTest {
     public void sampleTestCase(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
             // No specific changes to config needed for this test, keeping the default valid case.
-//            TODO: Test to be updated`
         });
     }
 }
