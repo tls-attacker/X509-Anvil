@@ -52,7 +52,7 @@ public class X509CertificateChainGenerator {
         if (signerConfig != null && !config.isSelfSigned()) {
             // rsa
             config.setDefaultIssuerRsaModulus(signerConfig.getDefaultSubjectRsaModulus());
-            config.setDefaultIssuerRsaPrivateKey(signerConfig.getDefaultSubjectRsaPrivateKey());
+            config.setDefaultIssuerRsaPrivateExponent(signerConfig.getDefaultSubjectRsaPrivateExponent());
             config.setDefaultIssuerRsaPublicKey(signerConfig.getDefaultSubjectRsaPublicKey());
             // dsa
             config.setDefaultIssuerDsaGenerator(signerConfig.getDefaultSubjectDsaGenerator());

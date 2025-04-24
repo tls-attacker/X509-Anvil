@@ -59,7 +59,8 @@ public class X509Util {
             String certificateFileName = filename + ".pem";
             CertificateFileWriter certificateFileWriter =
                 new CertificateFileWriter(new File(directory + "/" + certificateFileName));
-            certificateFileWriter.writeCertificate(certificate.getSerializer(new X509Chooser(null, new X509Context())).serialize());
+            certificateFileWriter
+                .writeCertificate(certificate.getSerializer(new X509Chooser(null, new X509Context())).serialize());
             certificateFileWriter.close();
         } catch (IOException e) {
             throw new RuntimeException("Error writing Certificate to PEM: " + e);
