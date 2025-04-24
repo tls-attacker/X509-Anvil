@@ -58,7 +58,7 @@ public class X509CertificateChainGenerator {
             config.setDefaultIssuerDsaGenerator(signerConfig.getDefaultSubjectDsaGenerator());
             config.setDefaultIssuerDsaPublicKey(signerConfig.getDefaultSubjectDsaPublicKey());
             config.setDefaultIssuerDsaPrimeP(signerConfig.getDefaultSubjectDsaPrimeP());
-            config.setDefaultIssuerDsaPrimeQ(signerConfig.getDefaultSubjectDsaPrivateKey());
+            config.setDefaultIssuerDsaPrimeQ(signerConfig.getDefaultSubjectDsaPrimeQ());
             config.setDefaultIssuerDsaNonce(signerConfig.getDefaultSubjectDsaNonce());
             // ecdsa
             config.setDefaultIssuerEcPrivateKey(signerConfig.getDefaultSubjectEcPrivateKey());
