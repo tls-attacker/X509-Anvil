@@ -59,16 +59,9 @@ public class FeatureExtractor {
         }
     }
 
-    private static void scanForBasicConstraintsExtension(FeatureReport featureReport)
-        throws ProbeException, UnsupportedFeatureException {
-        Probe basicConstraintsProbe = new BasicConstraintsExtensionProbe();
-        ExtensionProbeResult basicConstraintsProbeResult = (ExtensionProbeResult) basicConstraintsProbe.execute();
-        if (!basicConstraintsProbeResult.isSupported()) {
-            throw new UnsupportedFeatureException("Target verifier does not support basic constraints extension");
-        }
+    private static void scanForBasicConstraintsExtension(FeatureReport featureReport) {
+        // No need to check, all certs are generated with this anyway
         featureReport.addSupportedExtension(ExtensionType.BASIC_CONSTRAINTS);
-        featureReport.addProbeResult(basicConstraintsProbeResult);
-        featureReport.addProbeResult(basicConstraintsProbeResult);
     }
 
     private static void scanForSupportedVersions(FeatureReport featureReport)
