@@ -58,15 +58,14 @@ public class X509CertificateChainGenerator {
             config.setDefaultIssuerDsaGenerator(signerConfig.getDefaultSubjectDsaGenerator());
             config.setDefaultIssuerDsaPublicKey(signerConfig.getDefaultSubjectDsaPublicKey());
             config.setDefaultIssuerDsaPrimeP(signerConfig.getDefaultSubjectDsaPrimeP());
-            config.setDefaultIssuerDsaPrimeQ(signerConfig.getDefaultSubjectDsaPrimeQ());
-            config.setDefaultIssuerDsaPrivateK(signerConfig.getDefaultSubjectDsaPrivateK());
-            config.setDefaultIssuerDsaPrivateKeyX(signerConfig.getDefaultIssuerDsaPrivateKeyX());
+            config.setDefaultIssuerDsaPrimeQ(signerConfig.getDefaultSubjectDsaPrivateKey());
+            config.setDefaultIssuerDsaNonce(signerConfig.getDefaultSubjectDsaNonce());
             // ecdsa
             config.setDefaultIssuerEcPrivateKey(signerConfig.getDefaultSubjectEcPrivateKey());
             config.setDefaultIssuerEcPublicKey(signerConfig.getDefaultSubjectEcPublicKey());
-            config.setDefaultNamedCurve(signerConfig.getDefaultNamedCurve());
+            config.setDefaultIssuerNamedCurve(signerConfig.getDefaultSubjectNamedCurve());
             config.setDefaultEcPointFormat(signerConfig.getDefaultEcPointFormat());
-            config.setDefaultEcPrivateKeyK(signerConfig.getDefaultEcPrivateKeyK());
+            config.setDefaultIssuerEcPrivateKey(signerConfig.getDefaultSubjectEcPrivateKey());
         }
         X509Certificate certificate = new X509Certificate("cert", config);
         this.generatedCertificates.add(certificate);

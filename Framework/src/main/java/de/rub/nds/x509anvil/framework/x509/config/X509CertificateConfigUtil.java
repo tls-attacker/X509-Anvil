@@ -28,7 +28,7 @@ public class X509CertificateConfigUtil {
         X509CertificateConfig config = new X509CertificateConfig();
         config.setSerialNumber(generateUniqueSerialNumber());
 
-        config.setChainPosition(chainPosType);
+        // config.setChainPosition(chainPosType);
         config.setSelfSigned(selfSigned);
 
         // add all necessary extensions

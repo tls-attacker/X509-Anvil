@@ -3,7 +3,7 @@ package de.rub.nds.x509anvil.suite.tests.basicfields;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.asn1.model.Asn1OctetString;
-import de.rub.nds.modifiablevariable.bytearray.ByteArrayInsertModification;
+import de.rub.nds.modifiablevariable.bytearray.ByteArrayExplicitValueModification;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -28,7 +28,7 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
         octetString.setValue(TestUtils.createByteArray(8));
 
         assertInvalid(testRunner, true, (X509CertificateModifier)  certificate ->
-                certificate.getTbsCertificate().getEncodedChildren().setModification(new ByteArrayInsertModification(octetString.getValue().getValue(), -1)));
+                certificate.getTbsCertificate().getEncodedChildren().setModifications(new ByteArrayExplicitValueModification(octetString.getValue().getValue())));
     }
 
     @Specification(document = "RFC 5280")

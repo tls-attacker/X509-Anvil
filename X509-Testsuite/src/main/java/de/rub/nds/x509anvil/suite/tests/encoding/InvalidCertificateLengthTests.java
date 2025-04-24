@@ -23,7 +23,7 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
     @AnvilTest()
     public void shortLengthTagEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         //TODO: Length field is not used during preparation
-        assertInvalid(testRunner, true, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(-ADDITION))));
+        assertInvalid(testRunner, true, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModifications(new BigIntegerAddModification(BigInteger.valueOf(-ADDITION))));
     }
 
     @Specification(document = "RFC 5280")
@@ -32,7 +32,7 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
     @AnvilTest()
     public void shortLengthTagIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         //TODO: Length field is not used during preparation
-        assertInvalid(testRunner, false, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(-ADDITION))));
+        assertInvalid(testRunner, false, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModifications(new BigIntegerAddModification(BigInteger.valueOf(-ADDITION))));
     }
 
     @Specification(document = "RFC 5280")
@@ -41,7 +41,7 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
     @AnvilTest()
     public void overflowingLengthTagEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         //TODO: Length field is not used during preparation
-        assertInvalid(testRunner, true, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(ADDITION))));
+        assertInvalid(testRunner, true, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModifications(new BigIntegerAddModification(BigInteger.valueOf(ADDITION))));
     }
 
     @Specification(document = "RFC 5280")
@@ -50,6 +50,6 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
     @AnvilTest()
     public void overflowingLengthTagIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         //TODO: Length field is not used during preparation
-        assertInvalid(testRunner, false, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModification(new BigIntegerAddModification(BigInteger.valueOf(ADDITION))));
+        assertInvalid(testRunner, false, (X509CertificateModifier) certificate -> certificate.getTbsCertificate().getLength().setModifications(new BigIntegerAddModification(BigInteger.valueOf(ADDITION))));
     }
 }

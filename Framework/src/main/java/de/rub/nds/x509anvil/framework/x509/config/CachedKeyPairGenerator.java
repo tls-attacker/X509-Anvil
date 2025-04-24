@@ -65,7 +65,7 @@ public class CachedKeyPairGenerator {
                     if (dsaPublicKeyCache.containsKey(algorithmLengthPair)) {
                         dsaPublicKey = dsaPublicKeyCache.get(algorithmLengthPair);
                     } else {
-                        dsaPublicKey = KeyGenerator.generateDsaPublicKey(config.getDefaultSubjectDsaPrivateKeyX(),
+                        dsaPublicKey = KeyGenerator.generateDsaPublicKey(config.getDefaultSubjectDsaPrivateKey(),
                             algorithmLengthPair.getKeyLength(), 160, random);
                         dsaPublicKeyCache.put(algorithmLengthPair, dsaPublicKey);
                     }
@@ -76,14 +76,14 @@ public class CachedKeyPairGenerator {
                 config.setDefaultSubjectDsaPublicKey(dsaPublicKey.getY());
                 break;
             case ECDSA:
-                config.setDefaultNamedCurve(curveFromAlgorithmLengthPair(algorithmLengthPair));
+                config.setDefaultSubjectNamedCurve(curveFromAlgorithmLengthPair(algorithmLengthPair));
                 EcdsaPublicKey ecdsaPublicKey;
                 synchronized (ecdsaPublicKeyCache) {
                     if (ecdsaPublicKeyCache.containsKey(algorithmLengthPair)) {
                         ecdsaPublicKey = ecdsaPublicKeyCache.get(algorithmLengthPair);
                     } else {
                         ecdsaPublicKey = KeyGenerator.generateEcdsaPublicKey(config.getDefaultSubjectEcPrivateKey(),
-                            config.getDefaultNamedCurve().getParameters());
+                            config.getDefaultSubjectNamedCurve().getParameters());
                         ecdsaPublicKeyCache.put(algorithmLengthPair, ecdsaPublicKey);
                     }
                 }
