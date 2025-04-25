@@ -40,7 +40,7 @@ public class KeyCache {
 
     /**
      * Produces keys for the given pair of signature algorithm, hash algorithm, and key length, also updates the given
-     * config with th produced key values.
+     * config with the produced key values.
      */
     public void generateNewKeys(SignatureHashAlgorithmKeyLengthPair algorithmLengthPair, X509CertificateConfig config) {
 

@@ -92,12 +92,16 @@ public class FeatureExtractor {
         for (SignatureHashAlgorithmKeyLengthPair algorithm : SignatureHashAlgorithmKeyLengthPair
             .generateAllPossibilities()) {
             Probe signatureAlgorithmProbe = new SignatureHashAndKeyLengthProbe(algorithm, entity);
-            SignatureAlgorithmProbeResult signatureAlgorithmProbeResult =
-                (SignatureAlgorithmProbeResult) signatureAlgorithmProbe.execute();
-            if (signatureAlgorithmProbeResult.isSupported()) {
-                signatureHashAlgorithmKeyLengthPairs.add(algorithm);
+            try {
+                SignatureAlgorithmProbeResult signatureAlgorithmProbeResult =
+                        (SignatureAlgorithmProbeResult) signatureAlgorithmProbe.execute();
+                if (signatureAlgorithmProbeResult.isSupported()) {
+                    signatureHashAlgorithmKeyLengthPairs.add(algorithm);
+                }
+                featureReport.addProbeResult(signatureAlgorithmProbeResult);
+            } catch (Exception e) {
+                featureReport.addProbeResult(new SignatureAlgorithmProbeResult(algorithm, false));
             }
-            featureReport.addProbeResult(signatureAlgorithmProbeResult);
         }
 
         if (entity) {

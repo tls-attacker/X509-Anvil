@@ -59,6 +59,7 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
 
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
+        //TODO: Apply correct key type to signer config
         certificateConfig.setSignatureAlgorithm(getSelectedValue().getSignatureAndHashAlgorithm());
         CachedKeyPairGenerator.generateNewKeys(getSelectedValue(), certificateConfig,
             getParameterScope().getUniqueScopeIdentifier());

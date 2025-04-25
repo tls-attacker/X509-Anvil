@@ -32,13 +32,16 @@ public class SignatureHashAndKeyLengthProbe extends SimpleProbe {
     @Override
     protected X509CertificateChainConfig prepareConfig() {
         X509CertificateChainConfig x509CertificateChainConfig = X509CertificateConfigUtil.createBasicConfig(3);
-        X509CertificateConfig config;
         if (entity) {
-            config = x509CertificateChainConfig.getEntityCertificateConfig();
-            CachedKeyPairGenerator.generateNewKeys(signatureHashAlgorithmKeyLengthPair, config, "entity");
+            X509CertificateConfig entityConfig = x509CertificateChainConfig.getEntityCertificateConfig();
+            X509CertificateConfig signerConfig = x509CertificateChainConfig.getLastSigningConfig();
+            CachedKeyPairGenerator.generateNewKeys(signatureHashAlgorithmKeyLengthPair, signerConfig, "inter0");
+            entityConfig.setSignatureAlgorithm(signatureHashAlgorithmKeyLengthPair.getSignatureAndHashAlgorithm());
         } else {
-            config = x509CertificateChainConfig.getLastSigningConfig();
-            CachedKeyPairGenerator.generateNewKeys(signatureHashAlgorithmKeyLengthPair, config, "inter0");
+            X509CertificateConfig interConfig = x509CertificateChainConfig.getLastSigningConfig();
+            X509CertificateConfig signerConfig = x509CertificateChainConfig.getRootCertificateConfig();
+            CachedKeyPairGenerator.generateNewKeys(signatureHashAlgorithmKeyLengthPair, signerConfig, "root");
+            interConfig.setSignatureAlgorithm(signatureHashAlgorithmKeyLengthPair.getSignatureAndHashAlgorithm());
         }
         // set signature hash and key length
         // TODO: for RSA_PSS we always use the same hash algorithm
