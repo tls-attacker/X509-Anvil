@@ -86,7 +86,8 @@ public class X509VerifierRunner {
         return verifierAdapter.invokeVerifier(config.getEntityCertificateConfig(), certificateList);
     }
 
-    public VerifierResult execute(X509CertificateConfig leafCertificateConfig, List<X509Certificate> certificateList) throws VerifierException {
+    public VerifierResult execute(X509CertificateConfig leafCertificateConfig, List<X509Certificate> certificateList)
+        throws VerifierException {
         X509Util.exportCertificates(certificateList, "resources/out");
 
         TestConfig testConfig = ContextHelper.getTestConfig();

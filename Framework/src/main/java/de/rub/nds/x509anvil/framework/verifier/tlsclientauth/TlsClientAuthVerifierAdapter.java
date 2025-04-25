@@ -100,7 +100,8 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
     }
 
     @Override
-    public VerifierResult invokeVerifier(X509CertificateConfig leafCertificateConfig, List<X509Certificate> certificatesChain) {
+    public VerifierResult invokeVerifier(X509CertificateConfig leafCertificateConfig,
+        List<X509Certificate> certificatesChain) {
         List<CertificateBytes> encodedCertificateChain = new LinkedList<>();
         Collections.reverse(certificatesChain);
         for (X509Certificate x509Certificate : certificatesChain) {

@@ -41,7 +41,8 @@ public abstract class SimpleProbe implements Probe {
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
         try {
-            VerifierResult verifierResult = verifierAdapter.invokeVerifier(config.getEntityCertificateConfig(), certificateChain);
+            VerifierResult verifierResult =
+                verifierAdapter.invokeVerifier(config.getEntityCertificateConfig(), certificateChain);
             return createResult(verifierResult);
         } catch (VerifierException e) {
             throw new ProbeException("Invoking the verifier for probe failed", e);

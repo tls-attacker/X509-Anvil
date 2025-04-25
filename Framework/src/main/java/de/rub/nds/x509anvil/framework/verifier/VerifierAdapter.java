@@ -15,5 +15,6 @@ import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import java.util.List;
 
 public interface VerifierAdapter {
-    VerifierResult invokeVerifier(X509CertificateConfig leafCertificateconfig, List<X509Certificate> certificatesChain) throws VerifierException;
+    VerifierResult invokeVerifier(X509CertificateConfig leafCertificateconfig, List<X509Certificate> certificatesChain)
+        throws VerifierException;
 }

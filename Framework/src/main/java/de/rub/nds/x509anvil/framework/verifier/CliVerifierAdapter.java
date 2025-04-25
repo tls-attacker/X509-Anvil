@@ -30,7 +30,8 @@ public class CliVerifierAdapter implements VerifierAdapter {
     }
 
     @Override
-    public VerifierResult invokeVerifier(X509CertificateConfig leafCertificateConfig, List<X509Certificate> certificatesChain) throws VerifierException {
+    public VerifierResult invokeVerifier(X509CertificateConfig leafCertificateConfig,
+        List<X509Certificate> certificatesChain) throws VerifierException {
         return null;
     }
 }
