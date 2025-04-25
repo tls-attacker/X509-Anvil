@@ -38,7 +38,7 @@ public class X509CertificateChainGenerator {
 
         // set signature signing keys to keys from signer config unless self-signed
 
-        for (int i = certificateChainConfig.getCertificateConfigList().toArray().length - 1; i >= 0; i--) {
+        for (int i = 0; i < certificateChainConfig.getCertificateConfigList().toArray().length; i++) {
             X509CertificateConfig config = certificateChainConfig.getCertificateConfigList().get(i);
 
             if (config.isSelfSigned()) {

@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.framework.x509.key;
 
 import de.rub.nds.protocol.crypto.key.*;
+import de.rub.nds.x509anvil.framework.constants.RsaKeyLength;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.X509NamedCurve;
@@ -11,13 +12,12 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static de.rub.nds.x509attacker.constants.X509NamedCurve.*;
-import static de.rub.nds.x509attacker.constants.X509NamedCurve.SECP384R1;
 
 public class KeyCache {
 
-    private final Map<SignatureHashAlgorithmKeyLengthPair, Pair<RsaPublicKey, RsaPrivateKey>> rsaKeyPairCache;
-    private final Map<SignatureHashAlgorithmKeyLengthPair, DsaPublicKey> dsaPublicKeyCache;
-    private final Map<SignatureHashAlgorithmKeyLengthPair, EcdsaPublicKey> ecdsaPublicKeyCache;
+    private final Map<Integer, Pair<RsaPublicKey, RsaPrivateKey>> rsaKeyPairCache;
+    private final Map<Integer, DsaPublicKey> dsaPublicKeyCache;
+    private final Map<Integer, EcdsaPublicKey> ecdsaPublicKeyCache;
 
     private final Random random;
 
@@ -40,12 +40,12 @@ public class KeyCache {
             case RSA_SSA_PSS:
                 Pair<RsaPublicKey, RsaPrivateKey> keyPair;
                 synchronized (rsaKeyPairCache) {
-                    if (rsaKeyPairCache.containsKey(algorithmLengthPair)) {
-                        keyPair = rsaKeyPairCache.get(algorithmLengthPair);
+                    if (rsaKeyPairCache.containsKey(algorithmLengthPair.getKeyLength())) {
+                        keyPair = rsaKeyPairCache.get(algorithmLengthPair.getKeyLength());
                     } else {
                         keyPair = KeyGenerator.generateRsaKeys(config.getDefaultSubjectRsaPublicExponent(),
                                 algorithmLengthPair.getKeyLength(), random);
-                        rsaKeyPairCache.put(algorithmLengthPair, keyPair);
+                        rsaKeyPairCache.put(algorithmLengthPair.getKeyLength(), keyPair);
                     }
                 }
                 config.setDefaultSubjectRsaModulus(keyPair.getLeft().getModulus());
@@ -54,12 +54,12 @@ public class KeyCache {
             case DSA:
                 DsaPublicKey dsaPublicKey;
                 synchronized (dsaPublicKeyCache) {
-                    if (dsaPublicKeyCache.containsKey(algorithmLengthPair)) {
-                        dsaPublicKey = dsaPublicKeyCache.get(algorithmLengthPair);
+                    if (dsaPublicKeyCache.containsKey(algorithmLengthPair.getKeyLength())) {
+                        dsaPublicKey = dsaPublicKeyCache.get(algorithmLengthPair.getKeyLength());
                     } else {
                         dsaPublicKey = KeyGenerator.generateDsaPublicKey(config.getDefaultSubjectDsaPrivateKey(),
                                 algorithmLengthPair.getKeyLength(), 160, random);
-                        dsaPublicKeyCache.put(algorithmLengthPair, dsaPublicKey);
+                        dsaPublicKeyCache.put(algorithmLengthPair.getKeyLength(), dsaPublicKey);
                     }
                 }
                 config.setDefaultSubjectDsaPrimeP(dsaPublicKey.getModulus());
@@ -71,12 +71,12 @@ public class KeyCache {
                 config.setDefaultSubjectNamedCurve(curveFromAlgorithmLengthPair(algorithmLengthPair));
                 EcdsaPublicKey ecdsaPublicKey;
                 synchronized (ecdsaPublicKeyCache) {
-                    if (ecdsaPublicKeyCache.containsKey(algorithmLengthPair)) {
-                        ecdsaPublicKey = ecdsaPublicKeyCache.get(algorithmLengthPair);
+                    if (ecdsaPublicKeyCache.containsKey(algorithmLengthPair.getKeyLength())) {
+                        ecdsaPublicKey = ecdsaPublicKeyCache.get(algorithmLengthPair.getKeyLength());
                     } else {
                         ecdsaPublicKey = KeyGenerator.generateEcdsaPublicKey(config.getDefaultSubjectEcPrivateKey(),
                                 config.getDefaultSubjectNamedCurve().getParameters());
-                        ecdsaPublicKeyCache.put(algorithmLengthPair, ecdsaPublicKey);
+                        ecdsaPublicKeyCache.put(algorithmLengthPair.getKeyLength(), ecdsaPublicKey);
                     }
                 }
                 config.setDefaultSubjectEcPublicKey(ecdsaPublicKey.getPublicPoint());

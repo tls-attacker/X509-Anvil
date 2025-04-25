@@ -15,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class X509CertificateChainConfig {
@@ -82,7 +83,7 @@ public class X509CertificateChainConfig {
 
     public X509CertificateConfig getLastSigningConfig() {
         if (!intermediateCertificateConfigs.isEmpty()) {
-            return getIntermediateConfig(0);
+            return getIntermediateConfig(intermediateCertificateConfigs.size() - 1);
         } else {
             return rootCertificateConfig;
         }

@@ -60,8 +60,8 @@ public class X509CertificateConfigUtil {
     }
 
     public static X509CertificateConfig generateDefaultEntityCertificateConfig(boolean selfSigned) {
-        X509CertificateConfig config = generateDefaultCertificateConfig(selfSigned, CertificateChainPositionType.INTERMEDIATE, "tls-attacker.com");
-        attachUniqueKeysEntity(config);
+        X509CertificateConfig config = generateDefaultCertificateConfig(selfSigned, CertificateChainPositionType.ENTITY, "tls-attacker.com");
+        // attachUniqueKeysEntity(config);
         return config;
     }
 

@@ -9,23 +9,21 @@
 
 package de.rub.nds.x509anvil.framework.x509.key;
 
-import de.rub.nds.protocol.crypto.key.*;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
-import de.rub.nds.x509attacker.constants.X509NamedCurve;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static de.rub.nds.x509attacker.constants.X509NamedCurve.*;
 
 /**
  * Wraps around the key Generator in the Protocol-Attacker. Caches generated keys to save runtime.
  */
 public class CachedKeyPairGenerator {
 
+    /**
+     * Prevent instantiation of this class.
+     */
     private CachedKeyPairGenerator() {}
 
     private static final Map<String, KeyCache> keyCaches =
@@ -39,10 +37,5 @@ public class CachedKeyPairGenerator {
 
         keyCaches.computeIfAbsent(cacheIdentifier, k -> new KeyCache(random));
         keyCaches.get(cacheIdentifier).generateNewKeys(algorithmLengthPair, config);
-    }
-
-    public static void generateNewKeys(SignatureHashAlgorithmKeyLengthPair algorithmLengthPair,
-                                X509CertificateConfig config) {
-        generateNewKeys(algorithmLengthPair, config, "DEFAULT");
     }
 }

@@ -30,7 +30,7 @@ public class SignatureHashAndKeyLengthProbe extends SimpleProbe {
 
     @Override
     protected X509CertificateChainConfig prepareConfig() {
-        X509CertificateChainConfig x509CertificateChainConfig = X509CertificateConfigUtil.createBasicConfig(2);
+        X509CertificateChainConfig x509CertificateChainConfig = X509CertificateConfigUtil.createBasicConfig(3);
         X509CertificateConfig config;
         if (entity) {
             config = x509CertificateChainConfig.getEntityCertificateConfig();
