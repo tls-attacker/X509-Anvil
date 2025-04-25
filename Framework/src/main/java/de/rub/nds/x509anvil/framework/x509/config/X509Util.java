@@ -18,7 +18,6 @@ import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.filesystem.CertificateFileWriter;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
 import de.rub.nds.x509attacker.x509.model.*;
-import de.rub.nds.x509attacker.x509.serializer.X509ChoiceSerializer;
 
 import java.io.File;
 import java.io.IOException;
