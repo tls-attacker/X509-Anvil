@@ -1,12 +1,11 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.anvil.parameter;
 
 import de.rub.nds.anvilcore.model.DerivationScope;
@@ -60,6 +59,7 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
         certificateConfig.setSignatureAlgorithm(getSelectedValue().getSignatureAndHashAlgorithm());
-        CachedKeyPairGenerator.generateNewKeys(getSelectedValue(), certificateConfig, getParameterScope().getUniqueScopeIdentifier());
+        CachedKeyPairGenerator.generateNewKeys(getSelectedValue(), certificateConfig,
+            getParameterScope().getUniqueScopeIdentifier());
     }
 }

@@ -1,3 +1,11 @@
+/**
+ * Framework - A tool for creating arbitrary certificates
+ * <p>
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * <p>
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package de.rub.nds.x509anvil.framework.x509.key;
 
 import de.rub.nds.protocol.crypto.key.*;
@@ -33,8 +41,7 @@ public class KeyCache {
      * Produces keys for the given pair of signature algorithm, hash algorithm, and key length, also updates the given
      * config with th produced key values.
      */
-    public void generateNewKeys(SignatureHashAlgorithmKeyLengthPair algorithmLengthPair,
-                                       X509CertificateConfig config) {
+    public void generateNewKeys(SignatureHashAlgorithmKeyLengthPair algorithmLengthPair, X509CertificateConfig config) {
 
         switch (algorithmLengthPair.getSignatureAlgorithm()) {
             case RSA_PKCS1:
@@ -45,7 +52,7 @@ public class KeyCache {
                         keyPair = rsaKeyPairCache.get(algorithmLengthPair.getKeyLength());
                     } else {
                         keyPair = KeyGenerator.generateRsaKeys(config.getDefaultSubjectRsaPublicExponent(),
-                                algorithmLengthPair.getKeyLength(), random);
+                            algorithmLengthPair.getKeyLength(), random);
                         rsaKeyPairCache.put(algorithmLengthPair.getKeyLength(), keyPair);
                     }
                 }
@@ -60,7 +67,7 @@ public class KeyCache {
                         dsaPublicKey = dsaPublicKeyCache.get(algorithmLengthPair.getKeyLength());
                     } else {
                         dsaPublicKey = KeyGenerator.generateDsaPublicKey(config.getDefaultSubjectDsaPrivateKey(),
-                                algorithmLengthPair.getKeyLength(), 160, random);
+                            algorithmLengthPair.getKeyLength(), 160, random);
                         dsaPublicKeyCache.put(algorithmLengthPair.getKeyLength(), dsaPublicKey);
                     }
                 }
@@ -78,7 +85,7 @@ public class KeyCache {
                         ecdsaPublicKey = ecdsaPublicKeyCache.get(algorithmLengthPair.getKeyLength());
                     } else {
                         ecdsaPublicKey = KeyGenerator.generateEcdsaPublicKey(config.getDefaultSubjectEcPrivateKey(),
-                                config.getDefaultSubjectNamedCurve().getParameters());
+                            config.getDefaultSubjectNamedCurve().getParameters());
                         ecdsaPublicKeyCache.put(algorithmLengthPair.getKeyLength(), ecdsaPublicKey);
                     }
                 }

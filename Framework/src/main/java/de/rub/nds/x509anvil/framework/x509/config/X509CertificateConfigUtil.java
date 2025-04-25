@@ -1,12 +1,11 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.protocol.xml.Pair;
@@ -26,7 +25,7 @@ import java.util.*;
 
 public class X509CertificateConfigUtil {
     private static X509CertificateConfig generateDefaultCertificateConfig(boolean selfSigned,
-                                                                          CertificateChainPositionType chainPosType, String commonName) {
+        CertificateChainPositionType chainPosType, String commonName) {
         X509CertificateConfig config = new X509CertificateConfig();
         config.setSerialNumber(generateUniqueSerialNumber());
         config.setSelfSigned(selfSigned);
@@ -48,23 +47,27 @@ public class X509CertificateConfigUtil {
     }
 
     public static X509CertificateConfig generateDefaultRootCaCertificateConfig(boolean selfSigned) {
-        X509CertificateConfig config = generateDefaultCertificateConfig(selfSigned, CertificateChainPositionType.ROOT, "TLS Attacker CA - Global Insecurity Provider");
+        X509CertificateConfig config = generateDefaultCertificateConfig(selfSigned, CertificateChainPositionType.ROOT,
+            "TLS Attacker CA - Global Insecurity Provider");
         attachUniqueKeysRoot(config);
         return config;
     }
 
-    public static X509CertificateConfig generateDefaultIntermediateCaCertificateConfig(boolean selfSigned, int intermediatePosition) {
-        X509CertificateConfig config = generateDefaultCertificateConfig(selfSigned, CertificateChainPositionType.INTERMEDIATE, "TLS Attacker Intermediate CA Depth " + intermediatePosition + "- Global Insecurity Provider");
+    public static X509CertificateConfig generateDefaultIntermediateCaCertificateConfig(boolean selfSigned,
+        int intermediatePosition) {
+        X509CertificateConfig config =
+            generateDefaultCertificateConfig(selfSigned, CertificateChainPositionType.INTERMEDIATE,
+                "TLS Attacker Intermediate CA Depth " + intermediatePosition + "- Global Insecurity Provider");
         attachUniqueKeysIntermediate(config, intermediatePosition);
         return config;
     }
 
     public static X509CertificateConfig generateDefaultEntityCertificateConfig(boolean selfSigned) {
-        X509CertificateConfig config = generateDefaultCertificateConfig(selfSigned, CertificateChainPositionType.ENTITY, "tls-attacker.com");
+        X509CertificateConfig config =
+            generateDefaultCertificateConfig(selfSigned, CertificateChainPositionType.ENTITY, "tls-attacker.com");
         // attachUniqueKeysEntity(config);
         return config;
     }
-
 
     private static BasicConstraintsConfig generateBasicConstraintsConfig(CertificateChainPositionType chainPosType) {
         BasicConstraintsConfig basicConstraintsConfig = new BasicConstraintsConfig();
@@ -111,15 +114,19 @@ public class X509CertificateConfigUtil {
     }
 
     private static void attachUniqueKeysEntity(X509CertificateConfig config) {
-        CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(config.getDefaultSignatureAlgorithm()), config, "entity");
+        CachedKeyPairGenerator.generateNewKeys(
+            new SignatureHashAlgorithmKeyLengthPair(config.getDefaultSignatureAlgorithm()), config, "entity");
     }
 
     private static void attachUniqueKeysRoot(X509CertificateConfig config) {
-        CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(config.getDefaultSignatureAlgorithm()), config, "root");
+        CachedKeyPairGenerator.generateNewKeys(
+            new SignatureHashAlgorithmKeyLengthPair(config.getDefaultSignatureAlgorithm()), config, "root");
     }
 
     private static void attachUniqueKeysIntermediate(X509CertificateConfig config, int intermediatePosition) {
-        CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(config.getDefaultSignatureAlgorithm()), config, "inter" + intermediatePosition);
+        CachedKeyPairGenerator.generateNewKeys(
+            new SignatureHashAlgorithmKeyLengthPair(config.getDefaultSignatureAlgorithm()), config,
+            "inter" + intermediatePosition);
     }
 
     /**

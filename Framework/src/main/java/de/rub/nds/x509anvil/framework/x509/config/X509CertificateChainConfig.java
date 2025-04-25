@@ -1,12 +1,11 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
@@ -38,14 +37,13 @@ public class X509CertificateChainConfig {
         this.chainLength = chainLength;
         this.intermediateCertsModeled = intermediateCertsModeled;
 
-        rootCertificateConfig =
-            X509CertificateConfigUtil.generateDefaultRootCaCertificateConfig(true);
+        rootCertificateConfig = X509CertificateConfigUtil.generateDefaultRootCaCertificateConfig(true);
 
         // Generate configs for intermediate certificates
         for (int i = 0; i < chainLength - 2; i++) {
             if (i < intermediateCertsModeled) {
-                X509CertificateConfig config = X509CertificateConfigUtil.generateDefaultIntermediateCaCertificateConfig(false,
-                    i);
+                X509CertificateConfig config =
+                    X509CertificateConfigUtil.generateDefaultIntermediateCaCertificateConfig(false, i);
                 intermediateCertificateConfigs.add(config);
             }
         }
@@ -54,8 +52,7 @@ public class X509CertificateChainConfig {
         if (chainLength == 1) {
             entityCertificateConfig = rootCertificateConfig;
         } else {
-            entityCertificateConfig =
-                X509CertificateConfigUtil.generateDefaultEntityCertificateConfig(false);
+            entityCertificateConfig = X509CertificateConfigUtil.generateDefaultEntityCertificateConfig(false);
         }
 
         initialized = true;
