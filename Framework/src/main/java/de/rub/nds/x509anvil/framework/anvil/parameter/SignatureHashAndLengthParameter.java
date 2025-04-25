@@ -17,7 +17,8 @@ import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
-import de.rub.nds.x509anvil.framework.x509.config.CachedKeyPairGenerator;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
+import de.rub.nds.x509anvil.framework.x509.key.CachedKeyPairGenerator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 
@@ -59,6 +60,6 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
         certificateConfig.setSignatureAlgorithm(getSelectedValue().getSignatureAndHashAlgorithm());
-        CachedKeyPairGenerator.generateNewKeys(getSelectedValue(), certificateConfig);
+        CachedKeyPairGenerator.generateNewKeys(getSelectedValue(), certificateConfig, getParameterScope().getUniqueScopeIdentifier());
     }
 }

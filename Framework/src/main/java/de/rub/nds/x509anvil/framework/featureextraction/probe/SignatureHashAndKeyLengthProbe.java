@@ -13,7 +13,7 @@ import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthP
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.SignatureAlgorithmProbeResult;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
-import de.rub.nds.x509anvil.framework.x509.config.CachedKeyPairGenerator;
+import de.rub.nds.x509anvil.framework.x509.key.CachedKeyPairGenerator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
@@ -34,12 +34,13 @@ public class SignatureHashAndKeyLengthProbe extends SimpleProbe {
         X509CertificateConfig config;
         if (entity) {
             config = x509CertificateChainConfig.getEntityCertificateConfig();
+            CachedKeyPairGenerator.generateNewKeys(signatureHashAlgorithmKeyLengthPair, config, "entity");
         } else {
             config = x509CertificateChainConfig.getLastSigningConfig();
+            CachedKeyPairGenerator.generateNewKeys(signatureHashAlgorithmKeyLengthPair, config, "inter0");
         }
         // set signature hash and key length
         // TODO: for RSA_PSS we always use the same hash algorithm
-        CachedKeyPairGenerator.generateNewKeys(signatureHashAlgorithmKeyLengthPair, config);
         config.setSignatureAlgorithm(signatureHashAlgorithmKeyLengthPair.getSignatureAndHashAlgorithm());
         return x509CertificateChainConfig;
     }

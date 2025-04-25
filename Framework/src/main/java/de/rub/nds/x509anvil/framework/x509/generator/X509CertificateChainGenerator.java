@@ -41,7 +41,16 @@ public class X509CertificateChainGenerator {
         for (int i = certificateChainConfig.getCertificateConfigList().toArray().length - 1; i >= 0; i--) {
             X509CertificateConfig config = certificateChainConfig.getCertificateConfigList().get(i);
 
+            if (config.isSelfSigned()) {
+                config.setIssuer(config.getSubject());
+            }
+
             if (signerConfig != null && !config.isSelfSigned()) {
+
+                // copy issuer
+                config.setIssuer(signerConfig.getSubject());
+
+                // copy keys
                 // rsa
                 config.setDefaultIssuerRsaModulus(signerConfig.getDefaultSubjectRsaModulus());
                 config.setDefaultIssuerRsaPrivateExponent(signerConfig.getDefaultSubjectRsaPrivateExponent());

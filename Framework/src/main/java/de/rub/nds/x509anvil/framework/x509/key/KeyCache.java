@@ -1,13 +1,4 @@
-/**
- * Framework - A tool for creating arbitrary certificates
- * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- * <p>
- * Licensed under Apache License, Version 2.0
- * http://www.apache.org/licenses/LICENSE-2.0.txt
- */
-
-package de.rub.nds.x509anvil.framework.x509.config;
+package de.rub.nds.x509anvil.framework.x509.key;
 
 import de.rub.nds.protocol.crypto.key.*;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
@@ -20,28 +11,29 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static de.rub.nds.x509attacker.constants.X509NamedCurve.*;
+import static de.rub.nds.x509attacker.constants.X509NamedCurve.SECP384R1;
 
-/**
- * Wraps around the key Generator in the Protocol-Attacker. Caches generated keys to save runtime.
- */
-public class CachedKeyPairGenerator {
+public class KeyCache {
 
-    private static final Map<SignatureHashAlgorithmKeyLengthPair, Pair<RsaPublicKey, RsaPrivateKey>> rsaKeyPairCache =
-        new ConcurrentHashMap<>();
-    private static final Map<SignatureHashAlgorithmKeyLengthPair, DsaPublicKey> dsaPublicKeyCache =
-        new ConcurrentHashMap<>();
-    private static final Map<SignatureHashAlgorithmKeyLengthPair, EcdsaPublicKey> ecdsaPublicKeyCache =
-        new ConcurrentHashMap<>();
+    private final Map<SignatureHashAlgorithmKeyLengthPair, Pair<RsaPublicKey, RsaPrivateKey>> rsaKeyPairCache;
+    private final Map<SignatureHashAlgorithmKeyLengthPair, DsaPublicKey> dsaPublicKeyCache;
+    private final Map<SignatureHashAlgorithmKeyLengthPair, EcdsaPublicKey> ecdsaPublicKeyCache;
 
-    public static long RANDOM_SEED = 123456789;
-    public static Random random = new Random(RANDOM_SEED);
+    private final Random random;
+
+    KeyCache(Random random) {
+        rsaKeyPairCache = new ConcurrentHashMap<>();
+        dsaPublicKeyCache = new ConcurrentHashMap<>();
+        ecdsaPublicKeyCache = new ConcurrentHashMap<>();
+        this.random = random;
+    }
 
     /**
      * Produces keys for the given pair of signature algorithm, hash algorithm, and key length, also updates the given
      * config with th produced key values.
      */
-    public static void generateNewKeys(SignatureHashAlgorithmKeyLengthPair algorithmLengthPair,
-        X509CertificateConfig config) {
+    public void generateNewKeys(SignatureHashAlgorithmKeyLengthPair algorithmLengthPair,
+                                       X509CertificateConfig config) {
 
         switch (algorithmLengthPair.getSignatureAlgorithm()) {
             case RSA_PKCS1:
@@ -52,7 +44,7 @@ public class CachedKeyPairGenerator {
                         keyPair = rsaKeyPairCache.get(algorithmLengthPair);
                     } else {
                         keyPair = KeyGenerator.generateRsaKeys(config.getDefaultSubjectRsaPublicExponent(),
-                            algorithmLengthPair.getKeyLength(), random);
+                                algorithmLengthPair.getKeyLength(), random);
                         rsaKeyPairCache.put(algorithmLengthPair, keyPair);
                     }
                 }
@@ -66,7 +58,7 @@ public class CachedKeyPairGenerator {
                         dsaPublicKey = dsaPublicKeyCache.get(algorithmLengthPair);
                     } else {
                         dsaPublicKey = KeyGenerator.generateDsaPublicKey(config.getDefaultSubjectDsaPrivateKey(),
-                            algorithmLengthPair.getKeyLength(), 160, random);
+                                algorithmLengthPair.getKeyLength(), 160, random);
                         dsaPublicKeyCache.put(algorithmLengthPair, dsaPublicKey);
                     }
                 }
@@ -83,7 +75,7 @@ public class CachedKeyPairGenerator {
                         ecdsaPublicKey = ecdsaPublicKeyCache.get(algorithmLengthPair);
                     } else {
                         ecdsaPublicKey = KeyGenerator.generateEcdsaPublicKey(config.getDefaultSubjectEcPrivateKey(),
-                            config.getDefaultSubjectNamedCurve().getParameters());
+                                config.getDefaultSubjectNamedCurve().getParameters());
                         ecdsaPublicKeyCache.put(algorithmLengthPair, ecdsaPublicKey);
                     }
                 }

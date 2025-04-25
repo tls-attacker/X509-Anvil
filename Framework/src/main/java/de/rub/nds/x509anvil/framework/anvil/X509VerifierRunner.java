@@ -64,7 +64,6 @@ public class X509VerifierRunner {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateList = certificateChainGenerator.retrieveCertificateChain();
-        X509Util.exportCertificates(certificateList, "resources/out");
 
         TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
@@ -78,8 +77,6 @@ public class X509VerifierRunner {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateList = certificateChainGenerator.retrieveCertificateChain();
-        X509Util.exportCertificates(certificateList, "resources/out");
-
         TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
@@ -87,8 +84,6 @@ public class X509VerifierRunner {
     }
 
     public VerifierResult execute(X509CertificateConfig leafCertificateConfig, List<X509Certificate> certificateList) throws VerifierException {
-        X509Util.exportCertificates(certificateList, "resources/out");
-
         TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
