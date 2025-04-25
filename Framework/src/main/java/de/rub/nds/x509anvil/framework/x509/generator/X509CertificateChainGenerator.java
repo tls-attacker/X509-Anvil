@@ -50,6 +50,9 @@ public class X509CertificateChainGenerator {
                 // copy issuer
                 config.setIssuer(signerConfig.getSubject());
 
+                // copy issuer key type
+                config.setDefaultIssuerPublicKeyType(signerConfig.getPublicKeyType());
+
                 // copy keys
                 // rsa
                 config.setDefaultIssuerRsaModulus(signerConfig.getDefaultSubjectRsaModulus());

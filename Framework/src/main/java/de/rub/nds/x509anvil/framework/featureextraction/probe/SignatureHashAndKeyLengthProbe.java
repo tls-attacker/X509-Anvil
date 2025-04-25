@@ -17,6 +17,7 @@ import de.rub.nds.x509anvil.framework.x509.key.CachedKeyPairGenerator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.constants.X509PublicKeyType;
 
 public class SignatureHashAndKeyLengthProbe extends SimpleProbe {
     private final SignatureHashAlgorithmKeyLengthPair signatureHashAlgorithmKeyLengthPair;
@@ -41,7 +42,6 @@ public class SignatureHashAndKeyLengthProbe extends SimpleProbe {
         }
         // set signature hash and key length
         // TODO: for RSA_PSS we always use the same hash algorithm
-        config.setSignatureAlgorithm(signatureHashAlgorithmKeyLengthPair.getSignatureAndHashAlgorithm());
         return x509CertificateChainConfig;
     }
 

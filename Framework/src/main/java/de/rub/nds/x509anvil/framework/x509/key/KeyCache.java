@@ -5,6 +5,7 @@ import de.rub.nds.x509anvil.framework.constants.RsaKeyLength;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.X509NamedCurve;
+import de.rub.nds.x509attacker.constants.X509PublicKeyType;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Map;
@@ -50,6 +51,7 @@ public class KeyCache {
                 }
                 config.setDefaultSubjectRsaModulus(keyPair.getLeft().getModulus());
                 config.setDefaultSubjectRsaPrivateExponent(keyPair.getRight().getPrivateExponent());
+                config.setPublicKeyType(X509PublicKeyType.RSA);
                 break;
             case DSA:
                 DsaPublicKey dsaPublicKey;
@@ -66,6 +68,7 @@ public class KeyCache {
                 config.setDefaultSubjectDsaGenerator(dsaPublicKey.getGenerator());
                 config.setDefaultSubjectDsaPrimeQ(dsaPublicKey.getQ());
                 config.setDefaultSubjectDsaPublicKey(dsaPublicKey.getY());
+                config.setPublicKeyType(X509PublicKeyType.DSA);
                 break;
             case ECDSA:
                 config.setDefaultSubjectNamedCurve(curveFromAlgorithmLengthPair(algorithmLengthPair));
@@ -80,6 +83,7 @@ public class KeyCache {
                     }
                 }
                 config.setDefaultSubjectEcPublicKey(ecdsaPublicKey.getPublicPoint());
+                config.setPublicKeyType(X509PublicKeyType.ECDH_ECDSA);
                 break;
         }
     }
