@@ -21,7 +21,6 @@ import de.rub.nds.tlsattacker.core.workflow.WorkflowTrace;
 import de.rub.nds.tlsattacker.core.workflow.action.ReceiveAction;
 import de.rub.nds.tlsattacker.core.workflow.action.SendAction;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapter;
-import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
@@ -109,19 +108,13 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
                 x509Certificate.getSerializer(new X509Chooser(null, new X509Context())).serialize()));
         }
 
-        defaultConfig.setDefaultExplicitCertificateChain(encodedCertificateChain);
-
-        try {
-            defaultConfig.setDefaultSelectedSignatureAndHashAlgorithm(
-                TlsAttackerUtil.translateSignatureAlgorithm(certificatesChain.get(0).getX509SignatureAlgorithm()));
-        } catch (VerifierException e) {
-            return new VerifierResult(false);
-        }
-        defaultConfig.setAutoAdjustSignatureAndHashAlgorithm(false);
+        config.setDefaultExplicitCertificateChain(encodedCertificateChain);
+        // adjust proposed signature algorithm to the one used in the certificate
+        adjustSignatureAndHashAlgorithm(certificatesChain);
 
         // Execute workflow
-        WorkflowTrace workflowTrace = buildWorkflowTraceDhe(defaultConfig);
-        State state = new State(defaultConfig, workflowTrace);
+        WorkflowTrace workflowTrace = buildWorkflowTraceDhe(config);
+        State state = new State(config, workflowTrace);
 
         // set keys in tls attacker state
         X509Context x509Context = state.getContext().getTlsContext().getTalkingX509Context();
@@ -144,6 +137,22 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         workflowExecutor.executeWorkflow();
 
         return new VerifierResult(workflowTrace.executedAsPlanned());
+    }
+
+    private void adjustSignatureAndHashAlgorithm(List<X509Certificate> certificatesChain) {
+
+        SignatureAndHashAlgorithm signatureAndHashAlgorithm = switch (certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType()) {
+            case RSA -> SignatureAndHashAlgorithm.RSA_SHA256;
+            case DSA -> SignatureAndHashAlgorithm.DSA_SHA256;
+            case ECDSA -> SignatureAndHashAlgorithm.ECDSA_SHA256;
+            default -> throw new IllegalArgumentException(
+                    "Unsupported public key algorithm: " + certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType());
+        };
+        config.setDefaultClientSupportedSignatureAndHashAlgorithms(
+                config.getDefaultClientSupportedSignatureAndHashAlgorithms()
+                        .stream()
+                        .filter(algorithm -> algorithm.getSignatureAlgorithm() == signatureAndHashAlgorithm.getSignatureAlgorithm()).collect(Collectors.toList()));
+
     }
 
     private static WorkflowTrace buildWorkflowTraceDhe(Config config) {
