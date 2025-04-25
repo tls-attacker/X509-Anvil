@@ -64,7 +64,6 @@ public class X509CertificateChainGenerator {
             signerConfig = config;
         }
 
-
         for (X509CertificateConfig certificateConfig : certificateChainConfig.getCertificateConfigList()) {
             generateSingleCertificate(certificateConfig);
         }

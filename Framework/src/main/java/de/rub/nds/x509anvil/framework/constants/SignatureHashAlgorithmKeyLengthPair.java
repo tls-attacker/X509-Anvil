@@ -42,8 +42,7 @@ public class SignatureHashAlgorithmKeyLengthPair {
      */
     // not implemented in enum because of high number of combinations
     public static List<SignatureHashAlgorithmKeyLengthPair> generateAllPossibilities() {
-        return List.of(new SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION, 2048));
-        /*List<SignatureHashAlgorithmKeyLengthPair> pairs = new LinkedList<>();
+        List<SignatureHashAlgorithmKeyLengthPair> pairs = new LinkedList<>();
 
         for (X509SignatureAlgorithm signatureAlgorithm : X509SignatureAlgorithm.values()) {
             switch (signatureAlgorithm.getSignatureAlgorithm()) {
@@ -68,7 +67,7 @@ public class SignatureHashAlgorithmKeyLengthPair {
                         "Algorithm " + signatureAlgorithm.getSignatureAlgorithm() + " not supported.");
             }
         }
-        return pairs; */
+        return pairs;
     }
 
     public int getKeyLength() {
