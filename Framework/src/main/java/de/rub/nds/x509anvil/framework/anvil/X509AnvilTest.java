@@ -88,7 +88,8 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         }
 
         modifier.apply(certificate);
-        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
+        VerifierResult result =
+            testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         // assert values are equal
         assert expectValid == result.isValid();
     }
@@ -142,7 +143,8 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         }
 
         certificateModifier.apply(certificate);
-        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
+        VerifierResult result =
+            testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
         // assert values are equal
         assert expectValid == result.isValid();
     }

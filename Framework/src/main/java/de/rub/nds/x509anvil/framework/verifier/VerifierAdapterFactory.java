@@ -17,11 +17,9 @@ public class VerifierAdapterFactory {
         VerifierAdapterConfig verifierAdapterConfig) {
         switch (verifierAdapterType) {
             case TLS_CLIENT_AUTH:
-                if (!(verifierAdapterConfig instanceof TlsClientAuthVerifierAdapterConfig)) {
+                if (!(verifierAdapterConfig instanceof TlsClientAuthVerifierAdapterConfig tlsClientAuthVerifierAdapterConfig)) {
                     throw new UnsupportedOperationException("VerifierAdapterConfig does not match VerifierAdapterType");
                 }
-                TlsClientAuthVerifierAdapterConfig tlsClientAuthVerifierAdapterConfig =
-                    (TlsClientAuthVerifierAdapterConfig) verifierAdapterConfig;
                 return TlsClientAuthVerifierAdapter.fromConfig(tlsClientAuthVerifierAdapterConfig);
 
             default:

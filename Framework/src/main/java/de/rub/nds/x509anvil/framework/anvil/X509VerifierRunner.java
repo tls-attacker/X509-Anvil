@@ -83,7 +83,9 @@ public class X509VerifierRunner {
         return verifierAdapter.invokeVerifier(config.getEntityCertificateConfig(), certificateList);
     }
 
-    public VerifierResult execute(X509CertificateConfig leafCertificateConfig, List<X509Certificate> certificateList) throws VerifierException {
+    public VerifierResult execute(X509CertificateConfig leafCertificateConfig, List<X509Certificate> certificateList)
+        throws VerifierException {
+
         TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
