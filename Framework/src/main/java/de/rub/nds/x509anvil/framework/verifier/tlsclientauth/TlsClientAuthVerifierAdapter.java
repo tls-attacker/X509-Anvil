@@ -6,6 +6,7 @@
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
+
 package de.rub.nds.x509anvil.framework.verifier.tlsclientauth;
 
 import de.rub.nds.tlsattacker.core.config.Config;
@@ -140,17 +141,18 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
 
     private void adjustSignatureAndHashAlgorithm(List<X509Certificate> certificatesChain) {
 
-        SignatureAndHashAlgorithm signatureAndHashAlgorithm = switch (certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType()) {
+        SignatureAndHashAlgorithm signatureAndHashAlgorithm =
+            switch (certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType()) {
             case RSA -> SignatureAndHashAlgorithm.RSA_SHA256;
             case DSA -> SignatureAndHashAlgorithm.DSA_SHA256;
             case ECDSA -> SignatureAndHashAlgorithm.ECDSA_SHA256;
-            default -> throw new IllegalArgumentException(
-                    "Unsupported public key algorithm: " + certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType());
-        };
-        config.setDefaultClientSupportedSignatureAndHashAlgorithms(
-                config.getDefaultClientSupportedSignatureAndHashAlgorithms()
-                        .stream()
-                        .filter(algorithm -> algorithm.getSignatureAlgorithm() == signatureAndHashAlgorithm.getSignatureAlgorithm()).collect(Collectors.toList()));
+            default -> throw new IllegalArgumentException("Unsupported public key algorithm: "
+                + certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType());
+            };
+        config.setDefaultClientSupportedSignatureAndHashAlgorithms(config
+            .getDefaultClientSupportedSignatureAndHashAlgorithms().stream()
+            .filter(algorithm -> algorithm.getSignatureAlgorithm() == signatureAndHashAlgorithm.getSignatureAlgorithm())
+            .collect(Collectors.toList()));
 
     }
 
