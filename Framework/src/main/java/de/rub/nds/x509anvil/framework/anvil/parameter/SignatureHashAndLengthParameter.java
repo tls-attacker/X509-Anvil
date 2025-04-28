@@ -73,17 +73,11 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
         }
     }
 
-    private void applyToSignerConfig(X509CertificateConfig signerConfig) {
-        // set keys in signer config
-        CachedKeyPairGenerator.generateNewKeys(getSelectedValue(), signerConfig,
-            getParameterScope().getUniqueScopeIdentifier());
-    }
-
     @Override
     public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
         if (getSelectedValue() != null && getParameterScope().isModeled(config.getChainLength())) {
             applyToCertificateConfig(getCertificateConfigByScope(config), derivationScope);
-            applyToSignerConfig(getSignerConfigByScope(config));
+            applyToSignerConfig(getSignerConfigByScope(config), config);
         }
     }
 
@@ -91,5 +85,27 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
         // set the correct algorithm in cert
         certificateConfig.setSignatureAlgorithm(getSelectedValue().getSignatureAndHashAlgorithm());
+    }
+
+    private void applyToSignerConfig(X509CertificateConfig signerConfig, X509CertificateChainConfig certificateChainConfig) {
+        // set keys in signer config
+        CachedKeyPairGenerator.generateNewKeys(getSelectedValue(), signerConfig,
+                getSignerParameterIdentifier(certificateChainConfig));
+    }
+
+    private String getSignerParameterIdentifier(X509CertificateChainConfig certificateChainConfig) {
+        X509AnvilParameterScope parameterScope = getParameterScope();
+        if (parameterScope.isRoot()) { // self-signed root
+            return "root";
+        } else if (parameterScope.isEntity()) { // first inter
+            return "inter0";
+        } else { // upper inter or root
+            if (parameterScope.getIntermediateIndex() + 1
+                    < certificateChainConfig.getIntermediateCertificateConfigs().size()) {
+                return "inter" + (parameterScope.getIntermediateIndex() + 1);
+            } else {
+                return "root";
+            }
+        }
     }
 }
