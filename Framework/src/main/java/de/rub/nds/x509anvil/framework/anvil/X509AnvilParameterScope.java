@@ -53,10 +53,6 @@ public class X509AnvilParameterScope extends ParameterScope {
         }
     }
 
-//    public int getChainPosition() {
-//        return chainPosition;
-//    }
-
     public boolean isRoot() {
         return chainPosition == ROOT_CHAIN_POS;
     }

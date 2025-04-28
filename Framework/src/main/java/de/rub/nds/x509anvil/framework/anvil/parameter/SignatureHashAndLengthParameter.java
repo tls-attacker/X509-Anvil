@@ -92,7 +92,7 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
         CachedKeyPairGenerator.generateNewKeys(getSelectedValue(), signerConfig,
                 getSignerParameterIdentifier(certificateChainConfig));
 
-        // if root keys changed, signature algorithm has to match. Also for self signed
+        // if root keys changed, signature algorithm has to match. Also for self-signed
         X509AnvilParameterScope parameterScope = getParameterScope();
         if (parameterScope.isRoot() || signerConfig.isSelfSigned()) {
             signerConfig.setSignatureAlgorithm(getSelectedValue().getSignatureAndHashAlgorithm());
