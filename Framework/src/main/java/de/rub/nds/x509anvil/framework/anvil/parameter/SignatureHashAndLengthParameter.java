@@ -14,10 +14,10 @@ import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
+import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.key.CachedKeyPairGenerator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
@@ -57,11 +57,39 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
         return signatureHashAlgorithmKeyLengthPairs.stream().map(this::generateValue).collect(Collectors.toList());
     }
 
+    private X509CertificateConfig getSignerConfigByScope(X509CertificateChainConfig certificateChainConfig) {
+        X509AnvilParameterScope parameterScope = getParameterScope();
+        if (parameterScope.isRoot()) { // self-signed root
+            return certificateChainConfig.getRootCertificateConfig();
+        } else if (parameterScope.isEntity()) { // first inter
+            return certificateChainConfig.getLastSigningConfig();
+        } else { // upper inter or root
+            if (parameterScope.getIntermediateIndex() + 1
+                < certificateChainConfig.getIntermediateCertificateConfigs().size()) {
+                return certificateChainConfig.getIntermediateConfig(parameterScope.getIntermediateIndex());
+            } else {
+                return certificateChainConfig.getRootCertificateConfig();
+            }
+        }
+    }
+
+    private void applyToSignerConfig(X509CertificateConfig signerConfig) {
+        // set keys in signer config
+        CachedKeyPairGenerator.generateNewKeys(getSelectedValue(), signerConfig,
+            getParameterScope().getUniqueScopeIdentifier());
+    }
+
+    @Override
+    public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
+        if (getSelectedValue() != null && getParameterScope().isModeled(config.getChainLength())) {
+            applyToCertificateConfig(getCertificateConfigByScope(config), derivationScope);
+            applyToSignerConfig(getSignerConfigByScope(config));
+        }
+    }
+
     @Override
     protected void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        //TODO: Apply correct key type to signer config
+        // set the correct algorithm in cert
         certificateConfig.setSignatureAlgorithm(getSelectedValue().getSignatureAndHashAlgorithm());
-        CachedKeyPairGenerator.generateNewKeys(getSelectedValue(), certificateConfig,
-            getParameterScope().getUniqueScopeIdentifier());
     }
 }

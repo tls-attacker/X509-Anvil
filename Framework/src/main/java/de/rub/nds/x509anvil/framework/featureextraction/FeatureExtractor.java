@@ -94,7 +94,7 @@ public class FeatureExtractor {
             Probe signatureAlgorithmProbe = new SignatureHashAndKeyLengthProbe(algorithm, entity);
             try {
                 SignatureAlgorithmProbeResult signatureAlgorithmProbeResult =
-                        (SignatureAlgorithmProbeResult) signatureAlgorithmProbe.execute();
+                    (SignatureAlgorithmProbeResult) signatureAlgorithmProbe.execute();
                 if (signatureAlgorithmProbeResult.isSupported()) {
                     signatureHashAlgorithmKeyLengthPairs.add(algorithm);
                 }
