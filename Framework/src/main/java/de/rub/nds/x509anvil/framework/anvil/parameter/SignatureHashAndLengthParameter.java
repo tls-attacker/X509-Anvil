@@ -80,7 +80,7 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
                 applyToCertificateConfig(getCertificateConfigByScope(config), derivationScope);
                 applyToSignerConfig(getSignerConfigByScope(config), config);
             } else {
-                throw new UnsupportedOperationException("Minimum chain length not large enough for signature parameter (4 min)");
+                throw new UnsupportedOperationException("Signature hash and length algorithm tried to modify root");
             }
         }
     }
