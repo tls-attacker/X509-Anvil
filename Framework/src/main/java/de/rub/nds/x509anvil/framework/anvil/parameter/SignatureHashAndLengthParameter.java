@@ -91,6 +91,14 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
         // set keys in signer config
         CachedKeyPairGenerator.generateNewKeys(getSelectedValue(), signerConfig,
                 getSignerParameterIdentifier(certificateChainConfig));
+
+        // if root keys changed, signature algorithm has to match. Also for self signed
+        X509AnvilParameterScope parameterScope = getParameterScope();
+        if (parameterScope.isRoot() || signerConfig.isSelfSigned()) {
+            signerConfig.setSignatureAlgorithm(getSelectedValue().getSignatureAndHashAlgorithm());
+        } else if (!parameterScope.isEntity() && parameterScope.getIntermediateIndex() + 1 >= certificateChainConfig.getIntermediateCertificateConfigs().size()) {
+            signerConfig.setSignatureAlgorithm(getSelectedValue().getSignatureAndHashAlgorithm());
+        }
     }
 
     private String getSignerParameterIdentifier(X509CertificateChainConfig certificateChainConfig) {
