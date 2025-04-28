@@ -75,9 +75,13 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
 
     @Override
     public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
-        if (getSelectedValue() != null && getParameterScope().isModeled(config.getChainLength())) {
-            applyToCertificateConfig(getCertificateConfigByScope(config), derivationScope);
-            applyToSignerConfig(getSignerConfigByScope(config), config);
+        if (getSelectedValue() != null) {
+            if (getParameterScope().isModeled(config.getChainLength() - 1)) {
+                applyToCertificateConfig(getCertificateConfigByScope(config), derivationScope);
+                applyToSignerConfig(getSignerConfigByScope(config), config);
+            } else {
+                throw new UnsupportedOperationException("Minimum chain length not large enough for signature parameter (4 min)");
+            }
         }
     }
 
