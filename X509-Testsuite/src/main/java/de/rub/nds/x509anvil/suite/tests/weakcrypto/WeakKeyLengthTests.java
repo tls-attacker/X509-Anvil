@@ -10,7 +10,7 @@ import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
-import de.rub.nds.x509anvil.framework.x509.config.CachedKeyPairGenerator;
+import de.rub.nds.x509anvil.framework.x509.key.CachedKeyPairGenerator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
@@ -28,7 +28,7 @@ public class WeakKeyLengthTests extends X509AnvilTest {
     public void weak512BitRsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
         // TODO: Needs new config stuff for keys
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
-        CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm.RSASSA_PSS, 512), certificateChainConfig.getLastSigningConfig());
+        CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm.RSASSA_PSS, 512), certificateChainConfig.getLastSigningConfig(), "inter0");
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -39,7 +39,7 @@ public class WeakKeyLengthTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0:key_type", method = "allowRsa")
     public void weak1024BitRsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
-        CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm.RSASSA_PSS, 1024), certificateChainConfig.getLastSigningConfig());
+        CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm.RSASSA_PSS, 1024), certificateChainConfig.getLastSigningConfig(), "inter0");
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
@@ -50,7 +50,7 @@ public class WeakKeyLengthTests extends X509AnvilTest {
     @ValueConstraint(identifier = "inter0:key_type", method = "allowDsa")
     public void weak1024BitDsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException, NoSuchAlgorithmException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
-        CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm.DSA_WITH_SHA256, 1024), certificateChainConfig.getLastSigningConfig());
+        CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm.DSA_WITH_SHA256, 1024), certificateChainConfig.getLastSigningConfig(), "inter0");
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }

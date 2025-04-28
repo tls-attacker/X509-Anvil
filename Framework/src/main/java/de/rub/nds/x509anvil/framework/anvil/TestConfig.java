@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -17,7 +17,8 @@ public class TestConfig {
     // TODO: Use JCommander for config parameters
 
     private final VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_CLIENT_AUTH;
-    private final VerifierAdapterConfig verifierAdapterConfig = new TlsClientAuthVerifierAdapterConfig("localhost", 4433);
+    private final VerifierAdapterConfig verifierAdapterConfig =
+        new TlsClientAuthVerifierAdapterConfig("localhost", 4433);
     private Boolean useStaticRootCertificate = true;
     private String staticRootCertificateFile = "resources/static-root/root-cert.pem";
     private String staticRootPrivateKeyFile = "resources/static-root/private-key.pem";

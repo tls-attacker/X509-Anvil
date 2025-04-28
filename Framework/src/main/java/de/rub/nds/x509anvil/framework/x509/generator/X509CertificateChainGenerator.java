@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -38,10 +38,22 @@ public class X509CertificateChainGenerator {
 
         // set signature signing keys to keys from signer config unless self-signed
 
-        for (int i = certificateChainConfig.getCertificateConfigList().toArray().length - 1; i >= 0; i--) {
+        for (int i = 0; i < certificateChainConfig.getCertificateConfigList().toArray().length; i++) {
             X509CertificateConfig config = certificateChainConfig.getCertificateConfigList().get(i);
 
+            if (config.isSelfSigned()) {
+                config.setIssuer(config.getSubject());
+            }
+
             if (signerConfig != null && !config.isSelfSigned()) {
+
+                // copy issuer
+                config.setIssuer(signerConfig.getSubject());
+
+                // copy issuer key type
+                config.setDefaultIssuerPublicKeyType(signerConfig.getPublicKeyType());
+
+                // copy keys
                 // rsa
                 config.setDefaultIssuerRsaModulus(signerConfig.getDefaultSubjectRsaModulus());
                 config.setDefaultIssuerRsaPrivateExponent(signerConfig.getDefaultSubjectRsaPrivateExponent());

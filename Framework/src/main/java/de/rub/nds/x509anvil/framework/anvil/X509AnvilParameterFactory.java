@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -24,7 +24,6 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyidentifier.Su
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage.KeyUsageFlagParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage.KeyUsagePresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.name.CNTypeParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.name.DomainComponentsPresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.name.NameComponentPresentParameter;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
@@ -63,8 +62,6 @@ public class X509AnvilParameterFactory {
             case NC_SERIAL_NUMBER_PRESENT:
                 return new NameComponentPresentParameter(parameterIdentifier, X500AttributeType.SERIAL_NUMBER,
                     "SERIAL:A3:B4:1337");
-            case DOMAIN_COMPONENTS_PRESENT:
-                return new DomainComponentsPresentParameter(parameterIdentifier.getParameterScope());
             case ISSUER_UNIQUE_ID_PRESENT:
                 return new IssuerUniqueIdPresentParameter(parameterIdentifier.getParameterScope());
             case ISSUER_UNIQUE_ID:

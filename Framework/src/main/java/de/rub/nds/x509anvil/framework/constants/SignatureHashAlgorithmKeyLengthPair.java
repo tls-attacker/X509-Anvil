@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -27,6 +27,24 @@ public class SignatureHashAlgorithmKeyLengthPair {
     public SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm signatureAndHashAlgorithm, int keyLength) {
         this.signatureAndHashAlgorithm = signatureAndHashAlgorithm;
         this.keyLength = keyLength;
+    }
+
+    /**
+     * Constructor that only specifies the Signature and Hash Algorithm. Key length is set to a default value: 2048 for
+     * RSA, 256 for ECDSA, and 1024 for DSA.
+     * 
+     * @param signatureAndHashAlgorithm
+     *                                  The signature and hash algorithm to use.
+     */
+    public SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm signatureAndHashAlgorithm) {
+        this.signatureAndHashAlgorithm = signatureAndHashAlgorithm;
+        this.keyLength = switch (signatureAndHashAlgorithm.getSignatureAlgorithm()) {
+            case SignatureAlgorithm.RSA_PKCS1, SignatureAlgorithm.RSA_SSA_PSS -> RsaKeyLength.RSA_2048.getLength();
+            case SignatureAlgorithm.DSA -> DsaKeyLength.DSA_1024.getLength();
+            case SignatureAlgorithm.ECDSA -> EcdsaKeyLength.ECDSA_256.getLength();
+            default -> throw new UnsupportedOperationException(
+                "Algorithm " + signatureAndHashAlgorithm.getSignatureAlgorithm() + " not supported.");
+        };
     }
 
     public X509SignatureAlgorithm getSignatureAndHashAlgorithm() {
@@ -90,5 +108,21 @@ public class SignatureHashAlgorithmKeyLengthPair {
     public String toString() {
         return "SignatureHashAlgorithmKeyLengthPair{" + "signatureAndHashAlgorithm=" + signatureAndHashAlgorithm
             + ", keyLength=" + keyLength + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o instanceof SignatureHashAlgorithmKeyLengthPair other) {
+            return (keyLength == other.keyLength && signatureAndHashAlgorithm.equals(other.signatureAndHashAlgorithm));
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * signatureAndHashAlgorithm.hashCode() + keyLength;
     }
 }

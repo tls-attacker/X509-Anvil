@@ -1,4 +1,4 @@
-package de.rub.nds.x509anvil.suite.tests.common;
+package de.rub.nds.x509anvil.suite.tests.util;
 
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;

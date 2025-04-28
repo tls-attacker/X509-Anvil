@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -32,7 +32,6 @@ public enum X509AnvilParameterType implements ParameterType {
     NC_ORGANIZATION_PRESENT,
     NC_ORGANIZATIONAL_UNIT_PRESENT,
     NC_SERIAL_NUMBER_PRESENT,
-    DOMAIN_COMPONENTS_PRESENT,
     ISSUER_UNIQUE_ID_PRESENT,
     ISSUER_UNIQUE_ID,
     SUBJECT_UNIQUE_ID_PRESENT,
