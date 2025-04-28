@@ -22,6 +22,7 @@ import de.rub.nds.x509anvil.framework.x509.key.CachedKeyPairGenerator;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,13 +49,15 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
         getNonNullParameterValues(DerivationScope derivationScope) {
         FeatureReport featureReport = ContextHelper.getFeatureReport();
         List<SignatureHashAlgorithmKeyLengthPair> signatureHashAlgorithmKeyLengthPairs;
-        if (getParameterScope().isEntity()) {
+        if (getParameterScope().isEntity()) { //TODO: && chain length >= 3
             signatureHashAlgorithmKeyLengthPairs = featureReport.getSupportedSignatureHashAndKeyLengthPairsEntity();
-        } else {
+            return signatureHashAlgorithmKeyLengthPairs.stream().map(signatureHashAlgorithmKeyLengthPair -> new SignatureHashAndLengthParameter(getParameterScope(), signatureHashAlgorithmKeyLengthPair)).collect(Collectors.toList());
+        } else if (getParameterScope().isIntermediate() && getParameterScope().getIntermediateIndex() == 0) { //TODO: %% chain lenth >= 4
             signatureHashAlgorithmKeyLengthPairs =
                 featureReport.getSupportedSignatureHashAndKeyLengthPairsIntermediate();
+            return signatureHashAlgorithmKeyLengthPairs.stream().map(signatureHashAlgorithmKeyLengthPair -> new SignatureHashAndLengthParameter(getParameterScope(), signatureHashAlgorithmKeyLengthPair)).collect(Collectors.toList());
         }
-        return signatureHashAlgorithmKeyLengthPairs.stream().map(this::generateValue).collect(Collectors.toList());
+        return new ArrayList<>();
     }
 
     private X509CertificateConfig getSignerConfigByScope(X509CertificateChainConfig certificateChainConfig) {
