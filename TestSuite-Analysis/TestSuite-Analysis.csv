@@ -1,7 +1,7 @@
 Family,Sub-Family,Test,Post Fix, Comment or TODO
-basicfields,issuer,EmptyDNTests,AssertionError, Works
+basicfields,issuer,EmptyDNTests,AssertionError, TODO: Add new flag to forbid automatic issuer updates later in the chain gen, this gets overwritten now
 basicfields,issuer,IssuerNotPresentTests,AssertionError, TODO: Needs to be re-written
-basicfields,issuer,NoDNTests,AssertionError, Works
+basicfields,issuer,NoDNTests,AssertionError, TODO: Add new flag to forbid automatic issuer updates later in the chain gen, this gets overwritten now
 basicfields,serialnumber,LargeSerialNumberTests,AssertionError, Works
 basicfields,serialnumber,NegativeSerialNumberTests,AssertionError, Works
 basicfields,serialnumber,SerialNumberNotPresentTests,Passed, Works
@@ -30,8 +30,8 @@ basicfields,version,LargeVersionTests,AssertionError, Works
 basicfields,version,NegativeVersionTests,AssertionError, Works
 basicfields,,AppendUnexpectedCertificateFieldTest,NullPointerException,
 chain,,DuplicateCertificateTests,AssertionFailedError,
-chain,,SelfSignedNonRootTests,AssertionError, Works
-chain,,Version1IntermediateCertTests,AssertionError, Works
+chain,,SelfSignedNonRootTests,Passed, Works
+chain,,Version1IntermediateCertTests,Passed, Works
 common,,PositiveTests,Passed, Works
 common,,UntrustedRootTests,AssertionError, TODO: Test not implemented
 encoding,,BerInsteadOfDerTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker (KeyUsage)

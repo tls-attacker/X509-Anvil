@@ -20,7 +20,7 @@ public class Version1IntermediateCertTests extends X509AnvilTest {
             text = "If certificate i is a version 1 or version 2 certificate, then the application MUST either verify that " +
                     "certificate i is a CA certificate through out-of-band means or reject the certificate.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
     public void version1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -34,7 +34,7 @@ public class Version1IntermediateCertTests extends X509AnvilTest {
             text = "If certificate i is a version 1 or version 2 certificate, then the application MUST either verify that " +
                     "certificate i is a CA certificate through out-of-band means or reject the certificate.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
     public void version2Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

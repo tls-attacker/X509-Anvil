@@ -24,6 +24,7 @@ public class EmptyDNTests extends X509AnvilTest {
     @AnvilTest(id = "empty_dn")
     public void emptyDn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: What does "empty" actually mean?
+        // TODO: Add new flag to forbid automatic issuer updates later in the chain gen, this gets overwritten now
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config ->
                 config.setIssuer(List.of(new Pair<>(X500AttributeType.DN_QUALIFIER, "empty")))
         );
