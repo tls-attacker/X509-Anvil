@@ -19,7 +19,7 @@ public class ExpiredTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @IpmLimitations(identifiers = "entity:not_after")
     @AnvilTest
@@ -35,7 +35,7 @@ public class ExpiredTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @IpmLimitations(identifiers = "entity:not_after")
     @AnvilTest
@@ -49,7 +49,7 @@ public class ExpiredTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @IpmLimitations(identifiers = "inter0:not_after")
     @AnvilTest
@@ -64,7 +64,7 @@ public class ExpiredTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @IpmLimitations(identifiers = "inter0:not_after")
     @AnvilTest

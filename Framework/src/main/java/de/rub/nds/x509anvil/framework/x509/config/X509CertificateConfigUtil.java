@@ -153,8 +153,15 @@ public class X509CertificateConfigUtil {
     }
 
     public static void modifyAttributeAndValuePairInSubject(X509CertificateConfig config, X500AttributeType type) {
-        Pair<X500AttributeType, String> cnPair =
-            config.getSubject().stream().filter(x -> x.getLeftElement() == type).findFirst().orElseThrow();
-        cnPair.setRightElement(cnPair.getRightElement() + "_modified");
+        try {
+            Pair<X500AttributeType, String> existingPair =
+                    config.getSubject().stream().filter(x -> x.getLeftElement() == type).findFirst().orElseThrow();
+            existingPair.setRightElement(existingPair.getRightElement() + "_modified");
+        } catch (NoSuchElementException e) {
+            Pair<X500AttributeType, String> newPair = new Pair<>(type, "modificationtest_modified");
+            List<Pair<X500AttributeType, String>> modifiableSubject = new ArrayList<>(config.getSubject());
+            modifiableSubject.add(newPair);
+            config.setSubject(modifiableSubject);
+        }
     }
 }

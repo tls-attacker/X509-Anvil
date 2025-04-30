@@ -15,13 +15,13 @@ basicfields,tbssignature,TbsSignatureMismatchTests,AssertionFailedError / NoSuch
 basicfields,tbssignature,TbsSignatureNotPresentTests,Passed, Works
 basicfields,uniqueidentifiers,IssuerUniqueIdInV1CertTests,AssertionError, Works
 basicfields,uniqueidentifiers,SubjectUniqueIdInV1CertTests,AssertionError, Works
-basicfields,validity,ExpiredTests,AssertionError, Works
+basicfields,validity,ExpiredTests,Passed, Works
 basicfields,validity,GeneralizedTimeFractionalSecondsTests,AssertionError, TODO: Fractional seconds are not correctly prepared yet
 basicfields,validity,GeneralizedTimeNonZuluTests,AssertionError, TODO: Zulu time needs to be prepared based on config (Z still present)
 basicfields,validity,GeneralizedTimeWithoutSecondsTests,AssertionError, TODO: Preparator needs option to omit seconds - currently it is still 0
 basicfields,validity,NotAfterNotPresentTests,Passed, Works
 basicfields,validity,NotBeforeNotPresentTests,Passed, Works
-basicfields,validity,NotYetValidTests,AssertionError, Works
+basicfields,validity,NotYetValidTests,Passed, Works
 basicfields,validity,UtcTimeNonZuluTests,AssertionError, TODO: Zulu time needs to be prepared based on config (Z still present)
 basicfields,validity,UtcTimeWithoutSecondsTests,AssertionError, TODO: This needs to be re-written as a separate config value for the preparator
 basicfields,validity,ValidityNotPresentTests,Passed, Works
@@ -64,16 +64,16 @@ namechaining,,AttributeNumberMismatchTests,AssertionError, TODO: adding not work
 namechaining,,AttributeTypeMismatchTests,DerivationScopeError / RuntimeException (Could not change name component with oid COMMON_NAME),
 namechaining,,CnMismatchTests,Passed, Works
 namechaining,,CountryMismatchTests,Passed, Works
-namechaining,,DistinguishedNameQualifierUnitMismatchTests,AssertionFailedError, TODO: new assert and preparator incorrect
-namechaining,,DomainComponentCaseInsensitiveTests,NullPointerException, TODO: domain component does not exist in entity
-namechaining,,DomainComponentMismatchTests,NullPointerException, TODO: domain component does not exist in entity
-namechaining,,OrganisationalUnitMismatchTests,NoSuchElementException, TODO: organisation unit does not exist in entity
+namechaining,,DistinguishedNameQualifierUnitMismatchTests,Passed, TODO: DN_Qualifier not correctly prepared
+namechaining,,DomainComponentCaseInsensitiveTests,NullPointerException, TODO: domain component not correctly prepared
+namechaining,,DomainComponentMismatchTests,Passed, TODO: domain component not correctly prepared
+namechaining,,OrganisationalUnitMismatchTests,Passed,
 namechaining,,OrganisationMismatchTests,Passed, Works
 namechaining,,RdnNumberMismatchTests,AssertionError, TODO: Missing not correctly implemented
 namechaining,,RdnOrderMismatchTests,AssertionError, TODO: RDNs are incorrectly prepared
 namechaining,,RdnStructureMismatchTests,AssertionError,
-namechaining,,SerialNumberMismatchTests,NoSuchElementException, TODO: serial number does not exist in entity
-namechaining,,StateProvinceMismatchTests,NoSuchElementException, TODO: state province does not exist in entity
+namechaining,,SerialNumberMismatchTests,Passed, TODO: Not correctly prepared. Is this test even useful?
+namechaining,,StateProvinceMismatchTests,Passed, TODO: state province does not exist in entity
 signature,,InvalidSignatureTests,AssertionError, TODO: Changes get overwritten
 signature,,MissingSignatureTests,AssertionFailedError,
 signature,,NullSignatureTests,AssertionFailedError,

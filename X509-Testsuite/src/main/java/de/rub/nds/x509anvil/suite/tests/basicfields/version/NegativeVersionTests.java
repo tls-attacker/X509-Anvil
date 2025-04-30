@@ -17,8 +17,8 @@ public class NegativeVersionTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
     @AnvilTest()
-    @TestStrength(1)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @TestStrength(2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @IpmLimitations(identifiers = "entity:version")
     public void negativeVersionEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
@@ -28,7 +28,7 @@ public class NegativeVersionTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
     @AnvilTest()
     @TestStrength(2)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @IpmLimitations(identifiers = "inter0:version")
     public void negativeVersionIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,

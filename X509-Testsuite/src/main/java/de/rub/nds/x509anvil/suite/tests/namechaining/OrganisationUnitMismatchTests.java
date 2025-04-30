@@ -24,7 +24,6 @@ public class OrganisationUnitMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void organisationUnitMismatchInIssuerEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        //TODO: organisation unit does not exist in entity
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
                 X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(config, X500AttributeType.ORGANISATION_UNIT_NAME)
         );

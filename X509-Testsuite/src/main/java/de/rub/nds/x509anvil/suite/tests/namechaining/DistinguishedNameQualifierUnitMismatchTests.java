@@ -14,6 +14,7 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -24,16 +25,13 @@ public class DistinguishedNameQualifierUnitMismatchTests extends X509AnvilTest {
             text = "Two naming attributes match if the attribute types are the same and the values of the attributes are " +
                     "an exact match after processing with the string preparation algorithm")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
     public void distinguishedNameQualifierMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        //TODO: new assert and preparator incorrect
-        X509CertificateChainConfig chainConfig = prepareConfig(testRunner);
-        chainConfig.getLastSigningConfig().setSubject(List.of(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq"))); //
-        chainConfig.getEntityCertificateConfig().getDefaultIssuer().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq")); //
-        X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(chainConfig.getEntityCertificateConfig(), X500AttributeType.DN_QUALIFIER);
-        VerifierResult result = testRunner.execute(chainConfig);
-        Assertions.assertFalse(result.isValid());
+        //TODO: DN_Qualifier not correctly prepared
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
+                X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(config, X500AttributeType.DN_QUALIFIER)
+        );
     }
 }

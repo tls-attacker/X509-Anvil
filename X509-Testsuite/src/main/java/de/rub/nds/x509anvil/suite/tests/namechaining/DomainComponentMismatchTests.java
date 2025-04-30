@@ -10,8 +10,10 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateModifier;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.x509.model.Name;
@@ -23,22 +25,13 @@ public class DomainComponentMismatchTests extends X509AnvilTest {
             text = "Conforming implementations shall perform a case-insensitive exact match when comparing domainComponent " +
                     "attributes in distinguished names")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
     public void domainComponentMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, domainComponentMismatchModifier());
-    }
-
-    //TODO: domain component does not exist in entity
-    private static X509CertificateModifier domainComponentMismatchModifier() {
-        return (certificate) -> {
-            Name issuer = certificate.getTbsCertificate().getIssuer();
-            RelativeDistinguishedName rdn = X509Util.getRdnFromName(issuer, X500AttributeType.DOMAIN_COMPONENT);
-            String oldName = rdn.getAttributeTypeAndValueList().get(0).getStringValueOfValue();
-            Asn1Ia5String asn1PrimitiveIa5String = new Asn1Ia5String("domainComponent");
-            asn1PrimitiveIa5String.setValue(oldName + "_modified");
-            rdn.getAttributeTypeAndValueList().get(0).setValue(asn1PrimitiveIa5String);
-        };
+        //TODO: domain component not correctly prepared
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
+                X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(config, X500AttributeType.DOMAIN_COMPONENT)
+        );
     }
 }
