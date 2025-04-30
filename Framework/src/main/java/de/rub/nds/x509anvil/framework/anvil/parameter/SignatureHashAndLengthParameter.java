@@ -49,13 +49,23 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
         getNonNullParameterValues(DerivationScope derivationScope) {
         FeatureReport featureReport = ContextHelper.getFeatureReport();
         List<SignatureHashAlgorithmKeyLengthPair> signatureHashAlgorithmKeyLengthPairs;
-        if (getParameterScope().isEntity()) { //TODO: && chain length >= 3
+        if (getParameterScope().isEntity()) { // TODO: && chain length >= 3
             signatureHashAlgorithmKeyLengthPairs = featureReport.getSupportedSignatureHashAndKeyLengthPairsEntity();
-            return signatureHashAlgorithmKeyLengthPairs.stream().map(signatureHashAlgorithmKeyLengthPair -> new SignatureHashAndLengthParameter(getParameterScope(), signatureHashAlgorithmKeyLengthPair)).collect(Collectors.toList());
-        } else if (getParameterScope().isIntermediate() && getParameterScope().getIntermediateIndex() == 0) { //TODO: %% chain lenth >= 4
+            return signatureHashAlgorithmKeyLengthPairs.stream()
+                .map(signatureHashAlgorithmKeyLengthPair -> new SignatureHashAndLengthParameter(getParameterScope(),
+                    signatureHashAlgorithmKeyLengthPair))
+                .collect(Collectors.toList());
+        } else if (getParameterScope().isIntermediate() && getParameterScope().getIntermediateIndex() == 0) { // TODO:
+                                                                                                              // %%
+                                                                                                              // chain
+                                                                                                              // lenth
+                                                                                                              // >= 4
             signatureHashAlgorithmKeyLengthPairs =
                 featureReport.getSupportedSignatureHashAndKeyLengthPairsIntermediate();
-            return signatureHashAlgorithmKeyLengthPairs.stream().map(signatureHashAlgorithmKeyLengthPair -> new SignatureHashAndLengthParameter(getParameterScope(), signatureHashAlgorithmKeyLengthPair)).collect(Collectors.toList());
+            return signatureHashAlgorithmKeyLengthPairs.stream()
+                .map(signatureHashAlgorithmKeyLengthPair -> new SignatureHashAndLengthParameter(getParameterScope(),
+                    signatureHashAlgorithmKeyLengthPair))
+                .collect(Collectors.toList());
         }
         return new ArrayList<>();
     }
@@ -94,16 +104,18 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
         certificateConfig.setSignatureAlgorithm(getSelectedValue().getSignatureAndHashAlgorithm());
     }
 
-    private void applyToSignerConfig(X509CertificateConfig signerConfig, X509CertificateChainConfig certificateChainConfig) {
+    private void applyToSignerConfig(X509CertificateConfig signerConfig,
+        X509CertificateChainConfig certificateChainConfig) {
         // set keys in signer config
         CachedKeyPairGenerator.generateNewKeys(getSelectedValue(), signerConfig,
-                getSignerParameterIdentifier(certificateChainConfig));
+            getSignerParameterIdentifier(certificateChainConfig));
 
         // if root keys changed, signature algorithm has to match. Also for self-signed
         X509AnvilParameterScope parameterScope = getParameterScope();
         if (parameterScope.isRoot() || signerConfig.isSelfSigned()) {
             signerConfig.setSignatureAlgorithm(getSelectedValue().getSignatureAndHashAlgorithm());
-        } else if (!parameterScope.isEntity() && parameterScope.getIntermediateIndex() + 1 >= certificateChainConfig.getIntermediateCertificateConfigs().size()) {
+        } else if (!parameterScope.isEntity() && parameterScope.getIntermediateIndex() + 1
+            >= certificateChainConfig.getIntermediateCertificateConfigs().size()) {
             signerConfig.setSignatureAlgorithm(getSelectedValue().getSignatureAndHashAlgorithm());
         }
     }
@@ -116,7 +128,7 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
             return "inter0";
         } else { // upper inter or root
             if (parameterScope.getIntermediateIndex() + 1
-                    < certificateChainConfig.getIntermediateCertificateConfigs().size()) {
+                < certificateChainConfig.getIntermediateCertificateConfigs().size()) {
                 return "inter" + (parameterScope.getIntermediateIndex() + 1);
             } else {
                 return "root";

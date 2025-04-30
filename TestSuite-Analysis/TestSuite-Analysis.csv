@@ -1,6 +1,6 @@
 Family,Sub-Family,Test,Post Fix, Comment or TODO
 basicfields,issuer,EmptyDNTests,AssertionError, TODO: Add new flag to forbid automatic issuer updates later in the chain gen, this gets overwritten now
-basicfields,issuer,IssuerNotPresentTests,AssertionError, TODO: Needs to be re-written
+basicfields,issuer,IssuerNotPresentTests,Passed, Works
 basicfields,issuer,NoDNTests,AssertionError, TODO: Add new flag to forbid automatic issuer updates later in the chain gen, this gets overwritten now
 basicfields,serialnumber,LargeSerialNumberTests,AssertionError, Works
 basicfields,serialnumber,NegativeSerialNumberTests,AssertionError, Works
@@ -9,7 +9,7 @@ basicfields,serialnumber,ZeroSerialNumberTests,AssertionError, Works
 basicfields,signaturealgorithm,SignatureAlgorithmMismatchTests,AssertionFailedError ,TODO: Implement List acception in assertInvalid?
 basicfields,signaturealgorithm,SignatureAlgorithmNotPresentTests,Passed, Works
 basicfields,signaturealgorithm,UnknownOidTests,NullPointerException / AssertionFailedError ,TODO: Implement List acception in assertInvalid?
-basicfields,subject,SubjectNotPresentTests,AssertionError, TODO: Needs to be re-written
+basicfields,subject,SubjectNotPresentTests,Passed, Works
 basicfields,subjectpkinfo,SubjectPublicKeyInfoNotPresentTests,Passed, Works
 basicfields,tbssignature,TbsSignatureMismatchTests,AssertionFailedError / NoSuchElementException,
 basicfields,tbssignature,TbsSignatureNotPresentTests,Passed, Works

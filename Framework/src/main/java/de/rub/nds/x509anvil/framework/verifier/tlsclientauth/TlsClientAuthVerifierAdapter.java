@@ -143,17 +143,18 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
 
         try {
             SignatureAndHashAlgorithm signatureAndHashAlgorithm =
-                    switch (certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType()) {
-                        case RSA -> SignatureAndHashAlgorithm.RSA_SHA256;
-                        case DSA -> SignatureAndHashAlgorithm.DSA_SHA256;
-                        case ECDSA -> SignatureAndHashAlgorithm.ECDSA_SHA256;
-                        default -> throw new IllegalArgumentException("Unsupported public key algorithm: "
-                                + certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType());
-                    };
+                switch (certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType()) {
+                case RSA -> SignatureAndHashAlgorithm.RSA_SHA256;
+                case DSA -> SignatureAndHashAlgorithm.DSA_SHA256;
+                case ECDSA -> SignatureAndHashAlgorithm.ECDSA_SHA256;
+                default -> throw new IllegalArgumentException("Unsupported public key algorithm: "
+                    + certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType());
+                };
             config.setDefaultClientSupportedSignatureAndHashAlgorithms(config
-                    .getDefaultClientSupportedSignatureAndHashAlgorithms().stream()
-                    .filter(algorithm -> algorithm.getSignatureAlgorithm() == signatureAndHashAlgorithm.getSignatureAlgorithm())
-                    .collect(Collectors.toList()));
+                .getDefaultClientSupportedSignatureAndHashAlgorithms().stream()
+                .filter(
+                    algorithm -> algorithm.getSignatureAlgorithm() == signatureAndHashAlgorithm.getSignatureAlgorithm())
+                .collect(Collectors.toList()));
         } catch (NoSuchElementException e) {
             // modification removed public key container, this is fine
         }
