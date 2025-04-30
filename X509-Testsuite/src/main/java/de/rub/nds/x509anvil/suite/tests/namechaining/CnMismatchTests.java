@@ -20,12 +20,12 @@ public class CnMismatchTests extends X509AnvilTest {
             text = "Two naming attributes match if the attribute types are the same and the values of the attributes are " +
                     "an exact match after processing with the string preparation algorithm")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
     public void cnMismatchInIssuerEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config ->
-                X509CertificateConfigUtil.modifyAttributeAndValuePair(config, X500AttributeType.COMMON_NAME)
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
+                X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(config, X500AttributeType.COMMON_NAME)
         );
     }
     }

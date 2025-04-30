@@ -152,9 +152,9 @@ public class X509CertificateConfigUtil {
         return new BigInteger(uuid.toString().replace("-", ""), 16);
     }
 
-    public static void modifyAttributeAndValuePair(X509CertificateConfig config, X500AttributeType type) {
+    public static void modifyAttributeAndValuePairInSubject(X509CertificateConfig config, X500AttributeType type) {
         Pair<X500AttributeType, String> cnPair =
-            config.getDefaultIssuer().stream().filter(x -> x.getLeftElement() == type).findFirst().orElseThrow();
+            config.getSubject().stream().filter(x -> x.getLeftElement() == type).findFirst().orElseThrow();
         cnPair.setRightElement(cnPair.getRightElement() + "_modified");
     }
 }

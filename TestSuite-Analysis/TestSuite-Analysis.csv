@@ -62,20 +62,20 @@ extentions,subjectkeyid,AuthKeyIdSubjectKeyIdMismatchTests,DerivationScopeError,
 extentions,subjectkeyid,DuplicateSubjectKeyIdTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
 namechaining,,AttributeNumberMismatchTests,AssertionError, TODO: adding not working removing not implemented
 namechaining,,AttributeTypeMismatchTests,DerivationScopeError / RuntimeException (Could not change name component with oid COMMON_NAME),
-namechaining,,CnMismatchTests,AssertionError, Works
-namechaining,,CountryMismatchTests,AssertionError, Works
+namechaining,,CnMismatchTests,Passed, Works
+namechaining,,CountryMismatchTests,Passed, Works
 namechaining,,DistinguishedNameQualifierUnitMismatchTests,AssertionFailedError, TODO: new assert and preparator incorrect
 namechaining,,DomainComponentCaseInsensitiveTests,NullPointerException, TODO: domain component does not exist in entity
 namechaining,,DomainComponentMismatchTests,NullPointerException, TODO: domain component does not exist in entity
 namechaining,,OrganisationalUnitMismatchTests,NoSuchElementException, TODO: organisation unit does not exist in entity
-namechaining,,OrganisationMismatchTests,AssertionError, Works
+namechaining,,OrganisationMismatchTests,Passed, Works
 namechaining,,RdnNumberMismatchTests,AssertionError, TODO: Missing not correctly implemented
 namechaining,,RdnOrderMismatchTests,AssertionError, TODO: RDNs are incorrectly prepared
 namechaining,,RdnStructureMismatchTests,AssertionError,
 namechaining,,SerialNumberMismatchTests,NoSuchElementException, TODO: serial number does not exist in entity
 namechaining,,StateProvinceMismatchTests,NoSuchElementException, TODO: state province does not exist in entity
-signature,,InvalidSignatureTests,AssertionFailedError,
+signature,,InvalidSignatureTests,AssertionError, TODO: Changes get overwritten
 signature,,MissingSignatureTests,AssertionFailedError,
 signature,,NullSignatureTests,AssertionFailedError,
-weakcrypto,,WeakHashAlgorithmTests,AssertionError, Works
+weakcrypto,,WeakHashAlgorithmTests,Passed, Works
 weakcrypto,,WeakKeyLengthTests,DerivationScopeError, TODO: Needs new config stuff for keys

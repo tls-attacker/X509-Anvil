@@ -24,8 +24,8 @@ public class SerialNumberMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void serialNumberMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config ->
-                X509CertificateConfigUtil.modifyAttributeAndValuePair(config, X500AttributeType.SERIAL_NUMBER)
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
+                X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(config, X500AttributeType.SERIAL_NUMBER)
         );
     }
 

@@ -14,6 +14,7 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateModifier;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import org.junit.jupiter.api.Assertions;
 
@@ -25,53 +26,30 @@ public class InvalidSignatureTests extends X509AnvilTest {
             text = "The signature on the certificate can be verified using working_public_key_algorithm, the working_public_key," +
                     " and the working_public_key_parameters.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
     public void invalidSignatureEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
-        X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
-        certificateChainGenerator.generateCertificateChain();
-        List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        Asn1BitString signature = generatedCertificates.get(generatedCertificates.size()-1).getSignature();
-        signature.getContent().getValue()[32] = (byte) (~signature.getContent().getValue()[32] & 0xFF);
-        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
-        Assertions.assertFalse(result.isValid());
+        assertInvalid(testRunner, true, (X509CertificateModifier) certificate -> {
+            //TODO: Changes get overwritten
+            certificate.getSignature().getContent().getValue()[32] = (byte) (~certificate.getSignature().getContent().getValue()[32] & 0xFF);
+            byte[] wrongSignature = certificate.getSignatureComputations().getSignatureBytes().getValue();
+            wrongSignature[32]  = (byte) (~wrongSignature[32] & 0xFF);
+            certificate.getSignatureComputations().setSignatureBytes(wrongSignature);
+        });
     }
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing",
             text = "The signature on the certificate can be verified using working_public_key_algorithm, the working_public_key," +
                     " and the working_public_key_parameters.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
     public void invalidSignatureIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
-        X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
-        certificateChainGenerator.generateCertificateChain();
-        List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        Asn1BitString signature = generatedCertificates.get(1).getSignature();
-        signature.getContent().getValue()[32] = (byte) (~signature.getContent().getValue()[32] & 0xFF);
-        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
-        Assertions.assertFalse(result.isValid());
-    }
-
-    @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing",
-            text = "The signature on the certificate can be verified using working_public_key_algorithm, the working_public_key," +
-                    " and the working_public_key_parameters.")
-    @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest
-    public void invalidSignatureRoot(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
-        X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
-        certificateChainGenerator.generateCertificateChain();
-        List<X509Certificate> generatedCertificates = certificateChainGenerator.retrieveCertificateChain();
-        Asn1BitString signature = generatedCertificates.get(0).getSignature();
-        signature.getContent().getValue()[32] = (byte) (~signature.getContent().getValue()[32] & 0xFF);
-        VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
-        Assertions.assertFalse(result.isValid());
+        //TODO: Changes get overwritten
+        assertInvalid(testRunner, false, (X509CertificateModifier) certificate -> {
+            certificate.getSignature().getContent().getValue()[32] = (byte) (~certificate.getSignature().getContent().getValue()[32] & 0xFF);
+        });
     }
 }

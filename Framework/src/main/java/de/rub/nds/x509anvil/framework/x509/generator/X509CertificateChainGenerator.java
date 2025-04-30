@@ -9,9 +9,11 @@
 
 package de.rub.nds.x509anvil.framework.x509.generator;
 
+import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
@@ -47,8 +49,16 @@ public class X509CertificateChainGenerator {
 
             if (signerConfig != null && !config.isSelfSigned()) {
 
-                // copy issuer
-                config.setIssuer(signerConfig.getSubject());
+                // copy issuer without modifications
+                List<Pair<X500AttributeType, String>> signerSubject = new ArrayList<>();
+                signerConfig.getSubject().forEach(pair -> {
+                    String value = pair.getValue();
+                    if (value.contains("_modified")) {
+                        value = value.replace("_modified", "");
+                    }
+                    signerSubject.add(new Pair<>(pair.getKey(), value));
+                });
+                config.setIssuer(signerSubject);
 
                 // copy issuer key type
                 config.setDefaultIssuerPublicKeyType(signerConfig.getPublicKeyType());

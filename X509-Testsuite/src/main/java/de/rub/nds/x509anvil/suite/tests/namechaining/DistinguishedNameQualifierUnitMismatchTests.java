@@ -32,7 +32,7 @@ public class DistinguishedNameQualifierUnitMismatchTests extends X509AnvilTest {
         X509CertificateChainConfig chainConfig = prepareConfig(testRunner);
         chainConfig.getLastSigningConfig().setSubject(List.of(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq"))); //
         chainConfig.getEntityCertificateConfig().getDefaultIssuer().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq")); //
-        X509CertificateConfigUtil.modifyAttributeAndValuePair(chainConfig.getEntityCertificateConfig(), X500AttributeType.DN_QUALIFIER);
+        X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(chainConfig.getEntityCertificateConfig(), X500AttributeType.DN_QUALIFIER);
         VerifierResult result = testRunner.execute(chainConfig);
         Assertions.assertFalse(result.isValid());
     }

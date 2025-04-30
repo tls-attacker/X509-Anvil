@@ -16,7 +16,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
 
     @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     public void weakHashMd2(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -28,7 +28,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
 
     @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     public void weakHashMd4(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -39,7 +39,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
 
     @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     public void weakHashMd5(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -50,7 +50,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
 
     @AnvilTest()
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     public void weakHashSha1(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
