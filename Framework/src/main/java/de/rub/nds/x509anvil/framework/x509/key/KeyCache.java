@@ -10,7 +10,6 @@
 package de.rub.nds.x509anvil.framework.x509.key;
 
 import de.rub.nds.protocol.crypto.key.*;
-import de.rub.nds.x509anvil.framework.constants.RsaKeyLength;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.X509NamedCurve;

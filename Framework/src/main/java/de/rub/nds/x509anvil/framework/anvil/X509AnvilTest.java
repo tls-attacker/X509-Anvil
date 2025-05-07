@@ -116,6 +116,18 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         assert expectValid == result.isValid();
     }
 
+    public void assertBooleanRoot(X509VerifierRunner testRunner, boolean expectValid, X509CertificateConfigModifier modifier)
+        throws VerifierException, CertificateGeneratorException {
+        // generate chain config
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
+        X509CertificateConfig config = certificateChainConfig.getRootCertificateConfig();
+        // apply modifications
+        modifier.apply(config);
+        VerifierResult result = testRunner.execute(certificateChainConfig);
+        // assert values are equal
+        assert expectValid == result.isValid();
+    }
+
     private void assertBoolean(X509VerifierRunner testRunner, boolean expectValid, boolean entity,
         X509CertificateConfigModifier configModifier, X509CertificateModifier certificateModifier)
         throws VerifierException, CertificateGeneratorException {

@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.chain;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -22,8 +23,9 @@ public class DuplicateCertificateTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "A certificate MUST NOT appear more than once in a prospective certification path.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @AnvilTest
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
+    @TestStrength(2)
+    @AnvilTest()
     public void duplicateRoot(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
@@ -33,13 +35,13 @@ public class DuplicateCertificateTests extends X509AnvilTest {
         VerifierResult result = testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), certificateChain);
         Assertions.assertFalse(result.isValid());
     }
-    //    TODO: create a new assert method that accepts lists and check for the occurrences of LIST functions?
 
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "A certificate MUST NOT appear more than once in a prospective certification path.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @AnvilTest
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
+    @TestStrength(2)
+    @AnvilTest()
     public void duplicateIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
@@ -55,8 +57,9 @@ public class DuplicateCertificateTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "A certificate MUST NOT appear more than once in a prospective certification path.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @AnvilTest
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
+    @TestStrength(2)
+    @AnvilTest()
     public void duplicateEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);

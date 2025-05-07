@@ -1,7 +1,6 @@
 Family,Sub-Family,Test,Post Fix, Comment or TODO
-basicfields,issuer,EmptyDNTests,AssertionError, TODO: Add new flag to forbid automatic issuer updates later in the chain gen, this gets overwritten now
 basicfields,issuer,IssuerNotPresentTests,Passed, Works
-basicfields,issuer,NoDNTests,AssertionError, TODO: Add new flag to forbid automatic issuer updates later in the chain gen, this gets overwritten now
+basicfields,issuer,NoDNTests,AssertionError, Works
 basicfields,serialnumber,LargeSerialNumberTests,AssertionError, Works
 basicfields,serialnumber,NegativeSerialNumberTests,AssertionError, Works
 basicfields,serialnumber,SerialNumberNotPresentTests,Passed, Works
@@ -29,11 +28,11 @@ basicfields,version,InvalidPositiveVersionTests,AssertionError, Works
 basicfields,version,LargeVersionTests,AssertionError, Works
 basicfields,version,NegativeVersionTests,AssertionError, Works
 basicfields,,AppendUnexpectedCertificateFieldTest,NullPointerException,
-chain,,DuplicateCertificateTests,AssertionFailedError,
+chain,,DuplicateCertificateTests,AssertionFailedError, Works
 chain,,SelfSignedNonRootTests,Passed, Works
 chain,,Version1IntermediateCertTests,Passed, Works
 common,,PositiveTests,Passed, Works
-common,,UntrustedRootTests,AssertionError, TODO: Test not implemented
+common,,UntrustedRootTests,Passed, Works
 encoding,,BerInsteadOfDerTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker (KeyUsage)
 encoding,,InvalidCertificateLengthTests,AssertionError, TODO: Length field is not used during preparation
 extentions,authoritykeyid,CriticalAuthorityKeyIdTests,DerivationScopeError, TODO: Fix to correct config once implemented
@@ -67,13 +66,13 @@ namechaining,,CountryMismatchTests,Passed, Works
 namechaining,,DistinguishedNameQualifierUnitMismatchTests,Passed, TODO: DN_Qualifier not correctly prepared
 namechaining,,DomainComponentCaseInsensitiveTests,NullPointerException, TODO: domain component not correctly prepared
 namechaining,,DomainComponentMismatchTests,Passed, TODO: domain component not correctly prepared
-namechaining,,OrganisationalUnitMismatchTests,Passed,
+namechaining,,OrganisationalUnitMismatchTests,Passed, Works
 namechaining,,OrganisationMismatchTests,Passed, Works
 namechaining,,RdnNumberMismatchTests,AssertionError, TODO: Missing not correctly implemented
 namechaining,,RdnOrderMismatchTests,AssertionError, TODO: RDNs are incorrectly prepared
 namechaining,,RdnStructureMismatchTests,AssertionError,
 namechaining,,SerialNumberMismatchTests,Passed, TODO: Not correctly prepared. Is this test even useful?
-namechaining,,StateProvinceMismatchTests,Passed, TODO: state province does not exist in entity
+namechaining,,StateProvinceMismatchTests,Passed,Works
 signature,,InvalidSignatureTests,AssertionError, TODO: Changes get overwritten
 signature,,MissingSignatureTests,AssertionFailedError,
 signature,,NullSignatureTests,AssertionFailedError,

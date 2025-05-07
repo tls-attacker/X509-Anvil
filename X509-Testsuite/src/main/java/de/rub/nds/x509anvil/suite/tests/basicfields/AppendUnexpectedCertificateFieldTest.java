@@ -18,9 +18,11 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
 
+    // TODO: encoded children is null at this point and overridden later on...
+
     @Specification(document = "RFC 5280")
     @SeverityLevel(Severity.ERROR)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
     public void appendUnexpectedFieldEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -33,7 +35,7 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
 
     @Specification(document = "RFC 5280")
     @SeverityLevel(Severity.ERROR)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
     public void appendUnexpectedFieldIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

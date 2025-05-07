@@ -21,8 +21,8 @@ public class NoDNTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void noDn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        //TODO: Add new flag to forbid automatic issuer updates later in the chain gen, this gets overwritten now
-        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setIssuer(List.of()));
+        // this sets the issuer of the entity cert to empty list
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setSubject(List.of()));
     }
 
 

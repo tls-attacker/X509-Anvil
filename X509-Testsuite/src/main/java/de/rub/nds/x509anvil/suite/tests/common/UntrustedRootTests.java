@@ -2,6 +2,7 @@ package de.rub.nds.x509anvil.suite.tests.common;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
+import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.StaticRoot;
@@ -9,20 +10,23 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UntrustedRootTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280")
     @AnvilTest()
     @StaticRoot(false)
-    @ChainLength(minLength = 1, maxLength = 2, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     public void untrustedRootCertificate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
-            // No specific changes to config needed, assuming root is untrusted by default for this test case.
-//            TODO: Test to be updated
+        assertBooleanRoot(testRunner, false, config -> {
+            List<Pair<X500AttributeType, String>> subject = new ArrayList<>(config.getSubject());
+            subject.set(0, new Pair<>(subject.get(0).getLeftElement(), subject.get(0).getRightElement() + " Untrusted"));
+            config.setSubject(subject);
         });
     }
-
 }
