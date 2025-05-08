@@ -21,7 +21,7 @@ public class NegativePathLenTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.2.1.9. Basic Constraints",
             text = "here it appears, the pathLenConstraint field MUST be greater than or equal to zero.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
     public void negativePathLen(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

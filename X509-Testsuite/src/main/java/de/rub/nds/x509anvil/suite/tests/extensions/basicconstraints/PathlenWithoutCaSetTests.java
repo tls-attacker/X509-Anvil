@@ -21,7 +21,7 @@ public class PathlenWithoutCaSetTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.2.1.9. Basic Constraints",
             text = "CAs MUST NOT include the pathLenConstraint field unless the cA boolean is asserted")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
     public void pathlenWithoutCaSetEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

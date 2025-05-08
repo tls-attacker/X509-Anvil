@@ -20,7 +20,7 @@ public class InterCertWithNonCriticalBasicConstraintsTests extends X509AnvilTest
     @Specification(document = "RFC 5280", section = "4.2.1.9. Basic Constraints",
             text = "in all CA certificates that contain public keys used to validate digital signatures on certificates [...] MUST mark the extension as critical in such certificates.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest
     public void intermediateCertWithNonCriticalBasicConstraints(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

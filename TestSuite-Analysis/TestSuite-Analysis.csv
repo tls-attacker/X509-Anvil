@@ -36,16 +36,16 @@ common,,UntrustedRootTests,Passed, Works
 encoding,,BerInsteadOfDerTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker (KeyUsage)
 encoding,,InvalidCertificateLengthTests,AssertionError, TODO: Length field is not used during preparation
 extentions,authoritykeyid,CriticalAuthorityKeyIdTests,DerivationScopeError, TODO: Fix to correct config once implemented
-extentions,authoritykeyid,DuplicateAuthKeyIdTests,DerivationScopeError, TODO: implement when extension is implemented
+extentions,authoritykeyid,DuplicateAuthKeyIdTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
 extentions,authoritykeyid,MissingKeyIdTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
 extentions,authoritykeyid,OnlySerialNumberTest,DerivationScopeError, TODO: re-implement when extension implemented in attacker
-extentions,basicconstraints,DuplicateBasicConstraintsTests,AssertionError, Works
-extentions,basicconstraints,InsufficientPathLenTests,NullPointerException,
-extentions,basicconstraints,InterCertWithCaNotSetTests,AssertionError, Works
+extentions,basicconstraints,DuplicateBasicConstraintsTests,Passed, Works
+extentions,basicconstraints,InsufficientPathLenTests,Passed, Works
+extentions,basicconstraints,InterCertWithCaNotSetTests,Passed, Works
 extentions,basicconstraints,InterCertWithNonCriticalBasicConstraintsTests,AssertionError, Works
-extentions,basicconstraints,InterCertWithoutBasicConstraintsTests,AssertionError, Works
-extentions,basicconstraints,NegativePathLenTests,AssertionError, TODO: Verify if negative value correctly encoded
-extentions,basicconstraints,PathlenWithoutCaSetTests,AssertionError, Works
+extentions,basicconstraints,InterCertWithoutBasicConstraintsTests,Passed, Works
+extentions,basicconstraints,NegativePathLenTests,Passed, Works
+extentions,basicconstraints,PathlenWithoutCaSetTests,Passed, Works
 extentions,common,InvalidCriticalExtensionTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
 extentions,common,UnknownCriticalExtentionTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
 extentions,common,V3CertWithUniqueIdsButNoExtnsTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
