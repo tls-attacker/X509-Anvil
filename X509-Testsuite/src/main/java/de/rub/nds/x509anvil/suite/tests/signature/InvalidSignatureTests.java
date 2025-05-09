@@ -2,6 +2,8 @@ package de.rub.nds.x509anvil.suite.tests.signature;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
+import de.rub.nds.modifiablevariable.bytearray.ByteArrayExplicitValueModification;
+import de.rub.nds.modifiablevariable.bytearray.ByteArrayShuffleModification;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -41,7 +43,10 @@ public class InvalidSignatureTests extends X509AnvilTest {
     public void invalidSignatureIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         //TODO: Changes get overwritten
         assertInvalid(testRunner, false, (X509CertificateModifier) certificate -> {
-            certificate.getSignature().getContent().getValue()[32] = (byte) (~certificate.getSignature().getContent().getValue()[32] & 0xFF);
+            byte[] wrongSignature = certificate.getSignature().getContent().getValue();
+            wrongSignature[0]  = (byte) 0xFF;
+            certificate.getSignature().getContent().addModification(new ByteArrayExplicitValueModification(wrongSignature));
+            //certificate.getSignature().setContent(wrongSignature);
         });
     }
 }

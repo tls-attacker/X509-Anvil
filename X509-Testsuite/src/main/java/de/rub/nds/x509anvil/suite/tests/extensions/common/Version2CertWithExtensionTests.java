@@ -11,37 +11,34 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+
+import java.math.BigInteger;
 
 public class Version2CertWithExtensionTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.2.9. Extensions", text = "This field MUST only appear if the version is 3 (Section 4.1.2.1).")
-    @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @ValueConstraint(identifier = "entity:extensions_present", method = "enabled")
-    @AnvilTest
+    @SeverityLevel(Severity.INFORMATIONAL)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
+    @TestStrength(1)
+    @AnvilTest()
     public void version1CertWithExtensionsEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//        TODO: re-implement when extension implemented in attacker
-/*        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
-            config.setVersion(1);
-            config.extension(ExtensionType.KEY_USAGE).setPresent(true);
-        });*/
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            config.setVersion(BigInteger.valueOf(1));
+            config.setIncludeExtensions(true);
+        });
     }
 
 
     @Specification(document = "RFC 5280", section = "4.1.2.9. Extensions", text = "This field MUST only appear if the version is 3 (Section 4.1.2.1).")
-    @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @SeverityLevel(Severity.INFORMATIONAL)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0:extensions_present", method = "enabled")
-    @AnvilTest
+    @AnvilTest()
     public void version1CertWithExtensionsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-
-        //        TODO: re-implement when extension implemented in attacker
-/*        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
-            config.setVersion(1);
-            config.extension(ExtensionType.KEY_USAGE).setPresent(true);
-        });*/
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            config.setVersion(BigInteger.valueOf(1));
+            config.setIncludeExtensions(true);
+        });
     }
-
 }
