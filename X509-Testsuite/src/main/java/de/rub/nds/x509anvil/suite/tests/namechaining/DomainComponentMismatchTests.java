@@ -24,7 +24,6 @@ public class DomainComponentMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void domainComponentMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        //TODO: domain component not correctly prepared
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
                 X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(config, X500AttributeType.DOMAIN_COMPONENT)
         );

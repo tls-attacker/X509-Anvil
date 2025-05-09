@@ -20,12 +20,13 @@ public class RdnStructureMismatchTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
     public void rdnStructureMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, mergeRdnsModifier());
     }
+    //TODO: What is the point of this test?
 
     private static X509CertificateModifier mergeRdnsModifier() {
         return (certificate) -> {

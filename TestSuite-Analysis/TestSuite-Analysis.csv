@@ -15,14 +15,14 @@ basicfields,tbssignature,TbsSignatureNotPresentTests,Passed, Works
 basicfields,uniqueidentifiers,IssuerUniqueIdInV1CertTests,AssertionError, Works
 basicfields,uniqueidentifiers,SubjectUniqueIdInV1CertTests,AssertionError, Works
 basicfields,validity,ExpiredTests,Passed, Works
-basicfields,validity,GeneralizedTimeFractionalSecondsTests,AssertionError, TODO: Fractional seconds are not correctly prepared yet
+basicfields,validity,GeneralizedTimeFractionalSecondsTests,Passed, Works
 basicfields,validity,GeneralizedTimeNonZuluTests,Passed, Works
-basicfields,validity,GeneralizedTimeWithoutSecondsTests,AssertionError, TODO: Preparator needs option to omit seconds - currently it is still 0
+basicfields,validity,GeneralizedTimeWithoutSecondsTests,Passed, Works
 basicfields,validity,NotAfterNotPresentTests,Passed, Works
 basicfields,validity,NotBeforeNotPresentTests,Passed, Works
 basicfields,validity,NotYetValidTests,Passed, Works
 basicfields,validity,UtcTimeNonZuluTests,Passed, Works
-basicfields,validity,UtcTimeWithoutSecondsTests,AssertionError, TODO: Preparator needs option to omit seconds - currently it is still 0
+basicfields,validity,UtcTimeWithoutSecondsTests,Passed, Works
 basicfields,validity,ValidityNotPresentTests,Passed, Works
 basicfields,version,InvalidPositiveVersionTests,AssertionError, Works
 basicfields,version,LargeVersionTests,AssertionError, Works
@@ -52,7 +52,7 @@ extentions,common,Version1CertWithExtensionsTests,AssertionError, Works
 extentions,common,Version2CertWithExtensionTests,AssertionError, Works
 extentions,keyusage,BasicConstraintsWithoutKeyCertSignTests,AssertionError, Works
 extentions,keyusage,DuplicateKeyUsageTests,Passed, Works
-extentions,keyusage,EmptyKeyUsageTests,ArrayIndexOutOfBoundsException, TODO: Fix encodeBitString in ASN1-Attacker when usedBits is empty
+extentions,keyusage,EmptyKeyUsageTests,Passed, Works
 extentions,keyusage,InterCertWithoutKeyCertSignTests,Passed, Works
 extentions,keyusage,KeyCertSignNonCaTests,AssertionError, Works
 extentions,keyusage,KeyUsageOverflowTests,Unimplemented, I do not understand the purpose of this test
@@ -62,18 +62,18 @@ namechaining,,AttributeNumberMismatchTests,AssertionError, TODO: adding not work
 namechaining,,AttributeTypeMismatchTests,DerivationScopeError / RuntimeException (Could not change name component with oid COMMON_NAME),
 namechaining,,CnMismatchTests,Passed, Works
 namechaining,,CountryMismatchTests,Passed, Works
-namechaining,,DistinguishedNameQualifierUnitMismatchTests,Passed, TODO: DN_Qualifier not correctly prepared
-namechaining,,DomainComponentCaseInsensitiveTests,NullPointerException, TODO: domain component not correctly prepared
-namechaining,,DomainComponentMismatchTests,Passed, TODO: domain component not correctly prepared
+namechaining,,DistinguishedNameQualifierUnitMismatchTests,Passed, Works
+namechaining,,DomainComponentCaseInsensitiveTests,NullPointerException, TODO: Unimplemented
+namechaining,,DomainComponentMismatchTests,Passed, Works
 namechaining,,OrganisationalUnitMismatchTests,Passed, Works
 namechaining,,OrganisationMismatchTests,Passed, Works
-namechaining,,RdnNumberMismatchTests,AssertionError, TODO: Missing not correctly implemented
-namechaining,,RdnOrderMismatchTests,AssertionError, TODO: RDNs are incorrectly prepared
-namechaining,,RdnStructureMismatchTests,AssertionError,
-namechaining,,SerialNumberMismatchTests,Passed, TODO: Not correctly prepared. Is this test even useful?
+namechaining,,RdnNumberMismatchTests,Passed, Works
+namechaining,,RdnOrderMismatchTests,AssertionError, TODO: New config value to reverse issuer in entity
+namechaining,,RdnStructureMismatchTests,AssertionError, TODO: What is the point of this test?
+namechaining,,SerialNumberMismatchTests,Passed, Works
 namechaining,,StateProvinceMismatchTests,Passed,Works
 signature,,InvalidSignatureTests,AssertionError, TODO: Changes get overwritten
-signature,,MissingSignatureTests,AssertionFailedError,
-signature,,NullSignatureTests,AssertionFailedError,
+signature,,MissingSignatureTests,AssertionFailedError, TODO: Changes get overwritten
+signature,,NullSignatureTests,AssertionFailedError, TODO: Changes get overwritten
 weakcrypto,,WeakHashAlgorithmTests,Passed, Works
-weakcrypto,,WeakKeyLengthTests,DerivationScopeError, TODO: Needs new config stuff for keys
+weakcrypto,,WeakKeyLengthTests,Passed, Works

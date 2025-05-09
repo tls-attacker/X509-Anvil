@@ -24,7 +24,6 @@ public class DistinguishedNameQualifierUnitMismatchTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void distinguishedNameQualifierMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        //TODO: DN_Qualifier not correctly prepared
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
                 X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(config, X500AttributeType.DN_QUALIFIER)
         );

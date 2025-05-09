@@ -31,7 +31,6 @@ public class RdnOrderMismatchTests extends X509AnvilTest {
         assertInvalid(testRunner, true, config -> config.setSubject(List.of(new Pair<>(X500AttributeType.DN_QUALIFIER, "dnq"))), reverseRdnsOrderModifier());
     }
 
-    //TODO: RDNs are incorrectly prepared
     private static X509CertificateModifier reverseRdnsOrderModifier() {
         return (certificate) -> {
             Name issuer = certificate.getTbsCertificate().getIssuer();

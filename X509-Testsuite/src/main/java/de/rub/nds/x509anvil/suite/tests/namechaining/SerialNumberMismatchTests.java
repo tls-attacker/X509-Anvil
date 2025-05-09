@@ -22,12 +22,10 @@ public class SerialNumberMismatchTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest
+    @AnvilTest()
     public void serialNumberMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        //TODO: Not correctly prepared. Is this test even useful?
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
                 X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(config, X500AttributeType.SERIAL_NUMBER)
         );
     }
-
 }

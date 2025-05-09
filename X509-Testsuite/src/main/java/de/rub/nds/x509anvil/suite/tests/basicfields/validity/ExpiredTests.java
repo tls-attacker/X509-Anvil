@@ -31,8 +31,6 @@ public class ExpiredTests extends X509AnvilTest {
                 });
     }
 
-
-
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
@@ -75,5 +73,4 @@ public class ExpiredTests extends X509AnvilTest {
                     config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
                 });
     }
-
-    }
+}

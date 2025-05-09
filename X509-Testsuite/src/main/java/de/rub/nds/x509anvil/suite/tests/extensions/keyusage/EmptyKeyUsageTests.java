@@ -24,7 +24,6 @@ public class EmptyKeyUsageTests extends X509AnvilTest {
         @TestStrength(2)
         @AnvilTest()
         public void emptyKeyUsageEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-                //TODO: Fix encodeBitString in ASN1-Attacker when usedBits is empty
                 assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
                         KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);
                         keyUsageConfig.setDigitalSignature(false);

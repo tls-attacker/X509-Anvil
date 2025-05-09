@@ -19,6 +19,7 @@ import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class X509CertificateChainGenerator {
     private final X509CertificateChainConfig certificateChainConfig;
@@ -51,13 +52,26 @@ public class X509CertificateChainGenerator {
 
                 // copy issuer without modifications
                 List<Pair<X500AttributeType, String>> signerSubject = new ArrayList<>();
+                AtomicBoolean containsCountry = new AtomicBoolean(false);
                 signerConfig.getSubject().forEach(pair -> {
                     String value = pair.getValue();
                     if (value.contains("_modified")) {
+                        // mismatch tests
                         value = value.replace("_modified", "");
                     }
-                    signerSubject.add(new Pair<>(pair.getKey(), value));
+                    if (!value.contains("additional_rdn")) { // additional rdn mismatch test
+                        signerSubject.add(new Pair<>(pair.getKey(), value));
+                    }
+                    if (pair.getKey() == X500AttributeType.COUNTRY_NAME) {
+                        containsCountry.set(true);
+                    }
                 });
+
+                // removed country modification
+                if (!containsCountry.get()) {
+                    signerSubject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "Global"));
+                }
+
                 config.setIssuer(signerSubject);
 
                 // copy issuer key type

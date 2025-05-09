@@ -28,5 +28,5 @@ public class CnMismatchTests extends X509AnvilTest {
                 X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(config, X500AttributeType.COMMON_NAME)
         );
     }
-    }
+}
 
