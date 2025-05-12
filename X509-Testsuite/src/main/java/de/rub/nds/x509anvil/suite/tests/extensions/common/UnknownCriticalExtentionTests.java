@@ -25,11 +25,11 @@ public class UnknownCriticalExtentionTests extends X509AnvilTest {
     @IpmLimitations(identifiers = {"entity:version", "entity:extensions_present", "entity:ext_unknown_noncritical_extension_present"})
     @AnvilTest
     public void unknownCriticalExtensionEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        //  TODO: Unknown extension preparator length null pointer
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             UnknownConfig unknownConfig = new UnknownConfig(X509ExtensionType.UNKNOWN.getOid(), "unknownExtension");
             unknownConfig.setCritical(true);
             unknownConfig.setPresent(true);
+            unknownConfig.setContent(new byte[] {10, 11, 12});
             config.addExtensions(unknownConfig);
         });
     }
@@ -44,11 +44,11 @@ public class UnknownCriticalExtentionTests extends X509AnvilTest {
     @AnvilTest
 
     public void unknownCriticalExtensionIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        //  TODO: Unknown extension preparator length null pointer
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             UnknownConfig unknownConfig = new UnknownConfig(X509ExtensionType.UNKNOWN.getOid(), "unknownExtension");
             unknownConfig.setCritical(true);
             unknownConfig.setPresent(true);
+            unknownConfig.setContent(new byte[] {10, 11, 12});
             config.addExtensions(unknownConfig);
         });
     }
