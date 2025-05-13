@@ -10,7 +10,7 @@ basicfields,signaturealgorithm,SignatureAlgorithmNotPresentTests,Passed, Works
 basicfields,signaturealgorithm,UnknownOidTests,NullPointerException / AssertionFailedError ,TODO: Implement List acception in assertInvalid?
 basicfields,subject,SubjectNotPresentTests,Passed, Works
 basicfields,subjectpkinfo,SubjectPublicKeyInfoNotPresentTests,Passed, Works
-basicfields,tbssignature,TbsSignatureMismatchTests,AssertionFailedError / NoSuchElementException,
+basicfields,tbssignature,TbsSignatureMismatchTests,Passed, Works
 basicfields,tbssignature,TbsSignatureNotPresentTests,Passed, Works
 basicfields,uniqueidentifiers,IssuerUniqueIdInV1CertTests,AssertionError, Works
 basicfields,uniqueidentifiers,SubjectUniqueIdInV1CertTests,AssertionError, Works
@@ -34,7 +34,7 @@ chain,,Version1IntermediateCertTests,Passed, Works
 common,,PositiveTests,Passed, Works
 common,,UntrustedRootTests,Passed, Works
 encoding,,BerInsteadOfDerTests,AssertionError, TODO: Preparator overrides / does not take modification
-encoding,,InvalidCertificateLengthTests,AssertionError, TODO: Length field is not used during preparation
+encoding,,InvalidCertificateLengthTests,Passed, Works
 extentions,authoritykeyid,CriticalAuthorityKeyIdTests,DerivationScopeError, TODO: Fix to correct config once implemented
 extentions,authoritykeyid,DuplicateAuthKeyIdTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
 extentions,authoritykeyid,MissingKeyIdTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
@@ -72,8 +72,7 @@ namechaining,,RdnOrderMismatchTests,Passed, Works
 namechaining,,RdnStructureMismatchTests,AssertionError, TODO: What is the point of this test? Remove?
 namechaining,,SerialNumberMismatchTests,Passed, Works
 namechaining,,StateProvinceMismatchTests,Passed,Works
-signature,,InvalidSignatureTests,AssertionError, TODO: Changes get overwritten
-signature,,MissingSignatureTests,AssertionFailedError, TODO: Changes get overwritten
-signature,,NullSignatureTests,AssertionFailedError, TODO: Changes get overwritten
+signature,,InvalidSignatureTests,Passed, Works
+signature,,EmptySignatureTests,Passed/AssertionError Root, Works
 weakcrypto,,WeakHashAlgorithmTests,Passed, Works
 weakcrypto,,WeakKeyLengthTests,Passed, Works

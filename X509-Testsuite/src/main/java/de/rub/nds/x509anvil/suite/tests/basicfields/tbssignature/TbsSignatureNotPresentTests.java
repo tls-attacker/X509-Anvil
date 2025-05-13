@@ -30,9 +30,7 @@ public class TbsSignatureNotPresentTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest()
     public void noSignatureIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false,
-        (X509CertificateConfigModifier) config ->
-        config.setIncludeTbsSignature(false));
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setIncludeTbsSignature(false));
     }
 
 }

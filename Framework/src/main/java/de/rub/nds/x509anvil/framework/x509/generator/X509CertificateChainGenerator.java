@@ -63,7 +63,8 @@ public class X509CertificateChainGenerator {
                         // mismatch tests
                         value = value.replace("_modified", "");
                     }
-                    if (pair.getKey() == X500AttributeType.DOMAIN_COMPONENT && finalSignerConfig.isSubjectDomainComponentCaseInsensitive()) {
+                    if (pair.getKey() == X500AttributeType.DOMAIN_COMPONENT
+                        && finalSignerConfig.isSubjectDomainComponentCaseInsensitive()) {
                         value = value.toLowerCase(Locale.ROOT);
                     }
                     if (!value.contains("additional_rdn")) { // additional rdn mismatch test

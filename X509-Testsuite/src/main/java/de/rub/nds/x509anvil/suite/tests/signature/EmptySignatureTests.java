@@ -12,7 +12,7 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 
-public class InvalidSignatureTests extends X509AnvilTest {
+public class EmptySignatureTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing",
             text = "The signature on the certificate can be verified using working_public_key_algorithm, the working_public_key," +
@@ -20,9 +20,9 @@ public class InvalidSignatureTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest
-    public void invalidSignatureEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setSignatureInvalid(true));
+    @AnvilTest()
+    public void emptySignatureEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setSignatureEmpty(true));
     }
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing",
@@ -31,8 +31,19 @@ public class InvalidSignatureTests extends X509AnvilTest {
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest
-    public void invalidSignatureIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setSignatureInvalid(true));
+    @AnvilTest()
+    public void emptySignatureIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setSignatureEmpty(true));
+    }
+
+    @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing",
+            text = "The signature on the certificate can be verified using working_public_key_algorithm, the working_public_key," +
+                    " and the working_public_key_parameters.")
+    @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
+    @TestStrength(2)
+    @AnvilTest()
+    public void nullSignatureRoot(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertBooleanRoot(testRunner, false, config -> config.setSignatureEmpty(true));
     }
 }
