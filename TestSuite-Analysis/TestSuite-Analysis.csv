@@ -27,7 +27,7 @@ basicfields,validity,ValidityNotPresentTests,Passed, Works
 basicfields,version,InvalidPositiveVersionTests,AssertionError, Works
 basicfields,version,LargeVersionTests,AssertionError, Works
 basicfields,version,NegativeVersionTests,AssertionError, Works
-basicfields,,AppendUnexpectedCertificateFieldTest,NullPointerException,
+basicfields,,AppendUnexpectedCertificateFieldTest,AssertionError, TODO: Changes overridden later on
 chain,,DuplicateCertificateTests,AssertionFailedError, Works
 chain,,SelfSignedNonRootTests,Passed, Works
 chain,,Version1IntermediateCertTests,Passed, Works
@@ -57,7 +57,7 @@ extentions,keyusage,InterCertWithoutKeyCertSignTests,Passed, Works
 extentions,keyusage,KeyCertSignNonCaTests,AssertionError, Works
 extentions,keyusage,KeyUsageOverflowTests,Unimplemented, I do not understand the purpose of this test
 extentions,subjectkeyid,AuthKeyIdSubjectKeyIdMismatchTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
-extentions,subjectkeyid,DuplicateSubjectKeyIdTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
+extentions,subjectkeyid,DuplicateSubjectKeyIdTests,Passed, Works
 namechaining,,AttributeNumberMismatchTests,Passed, Works
 namechaining,,AttributeTypeMismatchTests,Unimplemented, TODO: What is the point of this? I do not understand.
 namechaining,,CnMismatchTests,Passed, Works

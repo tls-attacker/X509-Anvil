@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
 
 public class X509CertificateChainGenerator {
     private final X509CertificateChainConfig certificateChainConfig;
