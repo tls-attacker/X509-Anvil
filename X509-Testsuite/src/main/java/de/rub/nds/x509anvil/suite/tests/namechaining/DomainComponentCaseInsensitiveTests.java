@@ -24,7 +24,7 @@ public class DomainComponentCaseInsensitiveTests extends X509AnvilTest {
                     "attributes in distinguished names")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(1)
+    @TestStrength(2)
     @AnvilTest()
     public void switchedCaseDomainComponentTest(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {

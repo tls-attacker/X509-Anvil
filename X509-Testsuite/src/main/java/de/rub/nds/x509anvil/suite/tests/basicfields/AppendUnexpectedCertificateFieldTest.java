@@ -22,7 +22,7 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
     @Specification(document = "RFC 5280")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(1)
+    @TestStrength(2)
     @AnvilTest()
     public void appendUnexpectedFieldEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         Asn1OctetString octetString = new Asn1OctetString("unexpectedField");

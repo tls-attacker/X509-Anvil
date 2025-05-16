@@ -2,7 +2,6 @@ package de.rub.nds.x509anvil.suite.tests.extensions.authoritykeyid;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -11,41 +10,53 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509attacker.config.extension.AuthorityKeyIdentifierConfig;
+import de.rub.nds.x509attacker.config.extension.SubjectKeyIdentifierConfig;
 
 public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2.1.1. Authority Key Identifier", text = "Conforming CAs MUST mark this extension as non-critical.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 2, maxLength = 3)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest
-    @ValueConstraint(identifier = "entity:ext_authority_key_identifier_present", method = "enabled")
+    @AnvilTest()
     public void criticalAuthorityKeyIdEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: Fix to correct config once implemented
-        /* assertInvalid(testRunner, true, (X509CertificateConfigModifier )config -> {
-            ExtensionConfig authorityKeyIdentifier = new UnknownConfig(X509ExtensionType.AUTHORITY_KEY_IDENTIFIER.getOid(), "authority_key_identifier");
+        assertInvalid(testRunner, true, config -> {
+            AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
+            authorityKeyIdentifier.setPresent(true);
             authorityKeyIdentifier.setCritical(true);
+            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
             config.addExtensions(authorityKeyIdentifier);
+            config.setIncludeExtensions(true);
+        }, (X509CertificateConfigModifier) config -> {
+            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
+            newConfig.setPresent(true);
+            newConfig.setKeyIdentifier(new byte[] {1,2,3});
+            config.addExtensions(newConfig);
+            config.setIncludeExtensions(true);
         });
-
-         */
     }
 
     @Specification(document = "RFC 5280", section = "4.2.1.1. Authority Key Identifier", text = "Conforming CAs MUST mark this extension as non-critical.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 3, maxLength = 3)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest
-    @ValueConstraint(identifier = "inter0:ext_authority_key_identifier_present", method = "enabled")
+    @AnvilTest()
     public void criticalAuthorityKeyIdIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-//           TODO: Fix to correct config once implemented
-     /*   assertInvalid(testRunner, false,(X509CertificateConfigModifier) config -> {
-            ExtensionConfig authorityKeyIdentifier = new UnknownConfig(X509ExtensionType.AUTHORITY_KEY_IDENTIFIER.getOid(), "authority_key_identifier");
+        assertInvalid(testRunner, false, config -> {
+            AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
+            authorityKeyIdentifier.setPresent(true);
             authorityKeyIdentifier.setCritical(true);
+            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
             config.addExtensions(authorityKeyIdentifier);
+            config.setIncludeExtensions(true);
+        }, (X509CertificateConfigModifier) config -> {
+            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
+            newConfig.setPresent(true);
+            newConfig.setKeyIdentifier(new byte[] {1,2,3});
+            config.addExtensions(newConfig);
+            config.setIncludeExtensions(true);
         });
-
-      */
     }
-
 }

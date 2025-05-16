@@ -116,6 +116,32 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         assert expectValid == result.isValid();
     }
 
+    private void assertBoolean(X509VerifierRunner testRunner, boolean expectValid, boolean entity,
+        X509CertificateConfigModifier modifier1, X509CertificateConfigModifier modifier2)
+        throws VerifierException, CertificateGeneratorException {
+        // generate chain config
+        X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
+        X509CertificateConfig config1;
+        X509CertificateConfig config2;
+
+        // choose correct certificate configs
+        if (entity) {
+            config1 = certificateChainConfig.getEntityCertificateConfig();
+            config2 = certificateChainConfig.getLastSigningConfig();
+        } else {
+            config1 = certificateChainConfig.getLastSigningConfig();
+            config2 = certificateChainConfig
+                .getIntermediateConfig(certificateChainConfig.getIntermediateCertificateConfigs().size() - 2);
+        }
+
+        // apply modifications
+        modifier1.apply(config1);
+        modifier2.apply(config2);
+        VerifierResult result = testRunner.execute(certificateChainConfig);
+        // assert values are equal
+        assert expectValid == result.isValid();
+    }
+
     public void assertBooleanRoot(X509VerifierRunner testRunner, boolean expectValid,
         X509CertificateConfigModifier modifier) throws VerifierException, CertificateGeneratorException {
         // generate chain config
@@ -181,6 +207,11 @@ public class X509AnvilTest extends AnvilTestBaseClass {
     public void assertInvalid(X509VerifierRunner testRunner, boolean entity, X509CertificateConfigModifier modifier)
         throws VerifierException, CertificateGeneratorException {
         assertBoolean(testRunner, false, entity, modifier);
+    }
+
+    public void assertInvalid(X509VerifierRunner testRunner, boolean entity, X509CertificateConfigModifier modifier1,
+        X509CertificateConfigModifier modifier2) throws VerifierException, CertificateGeneratorException {
+        assertBoolean(testRunner, false, entity, modifier1, modifier2);
     }
 
     public void assertValid(X509VerifierRunner testRunner, boolean entity, X509CertificateModifier modifier)

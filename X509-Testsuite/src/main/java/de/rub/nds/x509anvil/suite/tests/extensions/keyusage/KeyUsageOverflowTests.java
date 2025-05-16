@@ -2,7 +2,6 @@ package de.rub.nds.x509anvil.suite.tests.extensions.keyusage;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -18,7 +17,6 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "entity:ext_key_usage_present", method = "enabled")
     @AnvilTest()
     public void keyUsageOverflowAppend1Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
@@ -33,7 +31,6 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0:ext_key_usage_present", method = "enabled")
     @AnvilTest()
     public void keyUsageOverflowAppend1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
@@ -49,7 +46,6 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "entity:ext_key_usage_present", method = "enabled")
     @AnvilTest()
     public void keyUsageOverflowAppend0Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker
@@ -65,7 +61,6 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0:ext_key_usage_present", method = "enabled")
     @AnvilTest()
     public void keyUsageOverflowAppend0Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // TODO: re-implement when extension implemented in attacker

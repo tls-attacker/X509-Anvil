@@ -15,7 +15,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 import de.rub.nds.x509attacker.config.extension.UnknownConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
-public class UnknownCriticalExtentionTests extends X509AnvilTest {
+public class UnknownCriticalExtensionTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions",
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension it does not recognize")

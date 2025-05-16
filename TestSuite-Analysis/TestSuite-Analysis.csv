@@ -5,9 +5,9 @@ basicfields,serialnumber,LargeSerialNumberTests,AssertionError, Works
 basicfields,serialnumber,NegativeSerialNumberTests,AssertionError, Works
 basicfields,serialnumber,SerialNumberNotPresentTests,Passed, Works
 basicfields,serialnumber,ZeroSerialNumberTests,AssertionError, Works
-basicfields,signaturealgorithm,SignatureAlgorithmMismatchTests,AssertionFailedError ,TODO: Implement List acception in assertInvalid?
+basicfields,signaturealgorithm,SignatureAlgorithmMismatchTests,AssertionFailedError ,TODO: Config value for explicit mismatch
 basicfields,signaturealgorithm,SignatureAlgorithmNotPresentTests,Passed, Works
-basicfields,signaturealgorithm,UnknownOidTests,NullPointerException / AssertionFailedError ,TODO: Implement List acception in assertInvalid?
+basicfields,signaturealgorithm,UnknownOidTests,NullPointerException / AssertionFailedError , TODO: Config values for invalid OIDs
 basicfields,subject,SubjectNotPresentTests,Passed, Works
 basicfields,subjectpkinfo,SubjectPublicKeyInfoNotPresentTests,Passed, Works
 basicfields,tbssignature,TbsSignatureMismatchTests,Passed, Works
@@ -27,7 +27,7 @@ basicfields,validity,ValidityNotPresentTests,Passed, Works
 basicfields,version,InvalidPositiveVersionTests,AssertionError, Works
 basicfields,version,LargeVersionTests,AssertionError, Works
 basicfields,version,NegativeVersionTests,AssertionError, Works
-basicfields,,AppendUnexpectedCertificateFieldTest,AssertionError, TODO: Changes overridden later on
+basicfields,,AppendUnexpectedCertificateFieldTest,AssertionError, TODO: Changes overridden later on, flag for preparator needed
 chain,,DuplicateCertificateTests,AssertionFailedError, Works
 chain,,SelfSignedNonRootTests,Passed, Works
 chain,,Version1IntermediateCertTests,Passed, Works
@@ -35,29 +35,29 @@ common,,PositiveTests,Passed, Works
 common,,UntrustedRootTests,Passed, Works
 encoding,,BerInsteadOfDerTests,AssertionError, TODO: Preparator overrides / does not take modification
 encoding,,InvalidCertificateLengthTests,Passed, Works
-extentions,authoritykeyid,CriticalAuthorityKeyIdTests,DerivationScopeError, TODO: Fix to correct config once implemented
-extentions,authoritykeyid,DuplicateAuthKeyIdTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
-extentions,authoritykeyid,MissingKeyIdTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
-extentions,authoritykeyid,OnlySerialNumberTest,DerivationScopeError, TODO: re-implement when extension implemented in attacker
-extentions,basicconstraints,DuplicateBasicConstraintsTests,Passed, Works
-extentions,basicconstraints,InsufficientPathLenTests,Passed, Works
-extentions,basicconstraints,InterCertWithCaNotSetTests,Passed, Works
-extentions,basicconstraints,InterCertWithNonCriticalBasicConstraintsTests,AssertionError, Works
-extentions,basicconstraints,InterCertWithoutBasicConstraintsTests,Passed, Works
-extentions,basicconstraints,NegativePathLenTests,Passed, Works
-extentions,basicconstraints,PathlenWithoutCaSetTests,Passed, Works
-extentions,common,InvalidCriticalExtensionTests,Unimplemented, Not sure what the purpose is here
-extentions,common,UnknownCriticalExtentionTests,Passed, Works
-extentions,common,Version1CertWithExtensionsTests,AssertionError, Works
-extentions,common,Version2CertWithExtensionTests,AssertionError, Works
-extentions,keyusage,BasicConstraintsWithoutKeyCertSignTests,AssertionError, Works
-extentions,keyusage,DuplicateKeyUsageTests,Passed, Works
-extentions,keyusage,EmptyKeyUsageTests,Passed, Works
-extentions,keyusage,InterCertWithoutKeyCertSignTests,Passed, Works
-extentions,keyusage,KeyCertSignNonCaTests,AssertionError, Works
-extentions,keyusage,KeyUsageOverflowTests,Unimplemented, I do not understand the purpose of this test
-extentions,subjectkeyid,AuthKeyIdSubjectKeyIdMismatchTests,DerivationScopeError, TODO: re-implement when extension implemented in attacker
-extentions,subjectkeyid,DuplicateSubjectKeyIdTests,Passed, Works
+extensions,authoritykeyid,CriticalAuthorityKeyIdTests,Passed, Works
+extensions,authoritykeyid,DuplicateAuthKeyIdTests,Passed, Works
+extensions,authoritykeyid,MissingKeyIdTests,Passed, Works
+extensions,authoritykeyid,OnlySerialNumberTest,Passed, Works
+extensions,basicconstraints,DuplicateBasicConstraintsTests,Passed, Works
+extensions,basicconstraints,InsufficientPathLenTests,Passed, Works
+extensions,basicconstraints,InterCertWithCaNotSetTests,Passed, Works
+extensions,basicconstraints,InterCertWithNonCriticalBasicConstraintsTests,AssertionError, Works
+extensions,basicconstraints,InterCertWithoutBasicConstraintsTests,Passed, Works
+extensions,basicconstraints,NegativePathLenTests,Passed, Works
+extensions,basicconstraints,PathlenWithoutCaSetTests,Passed, Works
+extensions,common,InvalidCriticalExtensionTests,Unimplemented, TODO: Needs preparator config value (basic constraints config invalid flag)
+extensions,common,UnknownCriticalExtensionTests,Passed, Works
+extensions,common,Version1CertWithExtensionsTests,AssertionError, Works
+extensions,common,Version2CertWithExtensionTests,AssertionError, Works
+extensions,keyusage,BasicConstraintsWithoutKeyCertSignTests,AssertionError, Works
+extensions,keyusage,DuplicateKeyUsageTests,Passed, Works
+extensions,keyusage,EmptyKeyUsageTests,Passed, Works
+extensions,keyusage,InterCertWithoutKeyCertSignTests,Passed, Works
+extensions,keyusage,KeyCertSignNonCaTests,AssertionError, Works
+extensions,keyusage,KeyUsageOverflowTests,Unimplemented, I do not understand the purpose of this test
+extensions,subjectkeyid,AuthKeyIdSubjectKeyIdMismatchTests,Passed, Works
+extensions,subjectkeyid,DuplicateSubjectKeyIdTests,Passed, Works
 namechaining,,AttributeNumberMismatchTests,Passed, Works
 namechaining,,AttributeTypeMismatchTests,Unimplemented, TODO: What is the point of this? I do not understand.
 namechaining,,CnMismatchTests,Passed, Works

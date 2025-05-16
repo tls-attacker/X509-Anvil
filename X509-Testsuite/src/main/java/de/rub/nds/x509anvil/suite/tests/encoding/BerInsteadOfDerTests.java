@@ -33,7 +33,7 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
             text = "If the encoding represents the boolean value TRUE, its single contents octet shall have all eight bits set to one")
     @SeverityLevel(Severity.WARNING)
     @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(1)
+    @TestStrength(2)
     @AnvilTest()
     public void booleanRepresentationIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateModifier) certificate -> X509Util.getExtensionByOid(certificate, X509ExtensionType.KEY_USAGE).getCritical().getContent().addModification(new ByteArrayExplicitValueModification(new byte[] {0x01})));
