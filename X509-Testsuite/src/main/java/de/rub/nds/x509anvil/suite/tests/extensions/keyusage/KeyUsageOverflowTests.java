@@ -9,89 +9,101 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
+import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
+import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
 public class KeyUsageOverflowTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
     public void keyUsageOverflowAppend1Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: re-implement when extension implemented in attacker
-/*         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
-            keyUsageOverflowModifier(true, (byte) 128, (byte) 6);
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);
+            keyUsageConfig.setPresent(true);
+
+            keyUsageConfig.setDigitalSignature(true);
+            keyUsageConfig.setKeyAgreement(false);
+            keyUsageConfig.setKeyCertSign(false);
+            keyUsageConfig.setKeyEncipherment(false);
+
+            keyUsageConfig.setNonRepudiation(true);
+            keyUsageConfig.setOverflowInvalidation(true);
+            keyUsageConfig.setOverflowWithOne(true);
+            config.setIncludeExtensions(true);
         });
-*/
     }
 
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
     public void keyUsageOverflowAppend1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: re-implement when extension implemented in attacker
-/*
-
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
-            keyUsageOverflowModifier(false, (byte) 128, (byte) 6);
+            KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);
+            keyUsageConfig.setPresent(true);
+
+            keyUsageConfig.setDigitalSignature(true);
+            keyUsageConfig.setKeyAgreement(true);
+            keyUsageConfig.setKeyCertSign(true);
+            keyUsageConfig.setKeyEncipherment(true);
+
+            keyUsageConfig.setNonRepudiation(true);
+            keyUsageConfig.setOverflowInvalidation(true);
+            keyUsageConfig.setOverflowWithOne(true);
+            config.setIncludeExtensions(true);
         });
-*/
     }
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
     public void keyUsageOverflowAppend0Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: re-implement when extension implemented in attacker
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);
+            keyUsageConfig.setPresent(true);
 
-/*        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
-            keyUsageOverflowModifier(true, (byte) 0, (byte) 6);
+            keyUsageConfig.setDigitalSignature(true);
+            keyUsageConfig.setKeyAgreement(false);
+            keyUsageConfig.setKeyCertSign(false);
+            keyUsageConfig.setKeyEncipherment(false);
+
+            keyUsageConfig.setNonRepudiation(true);
+            keyUsageConfig.setOverflowInvalidation(true);
+            keyUsageConfig.setOverflowWithOne(false);
+            config.setIncludeExtensions(true);
         });
-        */
     }
 
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
     @AnvilTest()
     public void keyUsageOverflowAppend0Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: re-implement when extension implemented in attacker
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);
+            keyUsageConfig.setPresent(true);
 
-/*        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
-            keyUsageOverflowModifier(false, (byte) 0, (byte) 6);
+            keyUsageConfig.setDigitalSignature(true);
+            keyUsageConfig.setKeyAgreement(false);
+            keyUsageConfig.setKeyCertSign(false);
+            keyUsageConfig.setKeyEncipherment(false);
+
+            keyUsageConfig.setNonRepudiation(true);
+            keyUsageConfig.setOverflowInvalidation(true);
+            keyUsageConfig.setOverflowWithOne(false);
+            config.setIncludeExtensions(true);
         });
-        */
     }
-
-
-    // TODO: re-implement when extension implemented in attacker
-        /*
-    X509CertificateModifier keyUsageOverflowModifier(boolean entity, byte bitmask, byte unusedBits) {
-        return (certificate, config, previousConfig) -> {
-            if (entity && config.isEntity() || !entity && config.isIntermediate()) {
-                Extension extension = X509Util.getExtensionByOid(certificate, ExtensionObjectIdentifiers.KEY_USAGE);
-                Asn1OctetString extnValue = extension.getExtnValue();
-
-                byte[] flags = ((KeyUsageExtensionConfig) config.extension(ExtensionType.KEY_USAGE)).getFlags();
-                flags[1] |= bitmask;
-
-                Asn1BitString keyUsageAsn1 = new Asn1BitString("keyUsage");
-                keyUsageAsn1.setUsedBits(flags);
-                keyUsageAsn1.setUnusedBits(unusedBits);
-
-                Asn1FieldSerializer serializer = new Asn1FieldSerializer(keyUsageAsn1);
-                byte[] derEncoded = serializer.serialize();
-                extnValue.setValue(derEncoded);
-            }
-        };
-    }
-         */
 }

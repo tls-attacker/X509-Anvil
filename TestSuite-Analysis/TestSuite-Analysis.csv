@@ -55,7 +55,7 @@ extensions,keyusage,DuplicateKeyUsageTests,Passed, Works
 extensions,keyusage,EmptyKeyUsageTests,Passed, Works
 extensions,keyusage,InterCertWithoutKeyCertSignTests,Passed, Works
 extensions,keyusage,KeyCertSignNonCaTests,AssertionError, Works
-extensions,keyusage,KeyUsageOverflowTests,Unimplemented, I do not understand the purpose of this test
+extensions,keyusage,KeyUsageOverflowTests,AssertionError, Works
 extensions,subjectkeyid,AuthKeyIdSubjectKeyIdMismatchTests,Passed, Works
 extensions,subjectkeyid,DuplicateSubjectKeyIdTests,Passed, Works
 namechaining,,AttributeNumberMismatchTests,Passed, Works
