@@ -13,6 +13,7 @@ import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
@@ -47,19 +48,20 @@ public class SignatureHashAndLengthParameter extends CertificateSpecificParamete
     @Override
     protected List<DerivationParameter<X509CertificateChainConfig, SignatureHashAlgorithmKeyLengthPair>>
         getNonNullParameterValues(DerivationScope derivationScope) {
+
         FeatureReport featureReport = ContextHelper.getFeatureReport();
         List<SignatureHashAlgorithmKeyLengthPair> signatureHashAlgorithmKeyLengthPairs;
-        if (getParameterScope().isEntity()) { // TODO: && chain length >= 3
+
+        int chainLength = AnnotationUtil.resolveMinChainLength(derivationScope.getExtensionContext());
+
+        if (getParameterScope().isEntity() && chainLength >= 3) {
             signatureHashAlgorithmKeyLengthPairs = featureReport.getSupportedSignatureHashAndKeyLengthPairsEntity();
             return signatureHashAlgorithmKeyLengthPairs.stream()
                 .map(signatureHashAlgorithmKeyLengthPair -> new SignatureHashAndLengthParameter(getParameterScope(),
                     signatureHashAlgorithmKeyLengthPair))
                 .collect(Collectors.toList());
-        } else if (getParameterScope().isIntermediate() && getParameterScope().getIntermediateIndex() == 0) { // TODO:
-                                                                                                              // %%
-                                                                                                              // chain
-                                                                                                              // lenth
-                                                                                                              // >= 4
+        } else if (getParameterScope().isIntermediate() && getParameterScope().getIntermediateIndex() == 0
+            && chainLength >= 4) {
             signatureHashAlgorithmKeyLengthPairs =
                 featureReport.getSupportedSignatureHashAndKeyLengthPairsIntermediate();
             return signatureHashAlgorithmKeyLengthPairs.stream()
