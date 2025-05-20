@@ -19,6 +19,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
 
+    //TODO: New config value for preparator
     @Specification(document = "RFC 5280")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
@@ -28,7 +29,6 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
         Asn1OctetString octetString = new Asn1OctetString("unexpectedField");
         octetString.setValue(TestUtils.createByteArray(8));
 
-        //TODO: Changes overridden later on
         assertInvalid(testRunner, true, (X509CertificateModifier)  certificate -> {
             certificate.getTbsCertificate().setEncodedChildren(new ModifiableByteArray());
             certificate.getTbsCertificate().getEncodedChildren().setModifications(new ByteArrayExplicitValueModification(octetString.getValue().getValue()));

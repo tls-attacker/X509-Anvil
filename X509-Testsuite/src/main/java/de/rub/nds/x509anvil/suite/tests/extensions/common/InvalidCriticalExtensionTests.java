@@ -13,6 +13,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 
 public class InvalidCriticalExtensionTests extends X509AnvilTest {
 
+    //TODO: Implement test with unknown extension
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions",
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension [...] " +
                     "that contains information that it cannot process.")
@@ -22,7 +23,6 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
     @AnvilTest
     public void invalidCriticalSubjectKeyIdentifierEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
       /*  assertInvalid(testRunner, true, (X509CertificateConfigModifier)  config -> {
-            //   TODO: re-implement when extension implemented in attacker
             config.extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
         }, Modifiers.invalidExtensionValueModifier(true, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
        */
@@ -39,7 +39,6 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
 
     public void invalidCriticalSubjectKeyIdentifierIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
     /*    assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
-//            TODO: re-implement when extension implemented in attacker
             config.extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
         }, Modifiers.invalidExtensionValueModifier(false, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER));
     }

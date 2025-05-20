@@ -22,7 +22,7 @@ import de.rub.nds.x509attacker.x509.model.RelativeDistinguishedName;
 
 public class AttributeTypeMismatchTests extends X509AnvilTest {
 
-    //TODO: What is the point of this?
+    //TODO: set defaultdirectorystringtype in in config
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling), as specified in [RFC4518], " +
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")

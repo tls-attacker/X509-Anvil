@@ -69,7 +69,6 @@ namechaining,,OrganisationalUnitMismatchTests,Passed, Works
 namechaining,,OrganisationMismatchTests,Passed, Works
 namechaining,,RdnNumberMismatchTests,Passed, Works
 namechaining,,RdnOrderMismatchTests,Passed, Works
-namechaining,,RdnStructureMismatchTests,AssertionError, TODO: What is the point of this test? Remove?
 namechaining,,SerialNumberMismatchTests,Passed, Works
 namechaining,,StateProvinceMismatchTests,Passed,Works
 signature,,InvalidSignatureTests,Passed, Works
