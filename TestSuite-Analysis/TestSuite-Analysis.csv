@@ -27,7 +27,7 @@ basicfields,validity,ValidityNotPresentTests,Passed, Works
 basicfields,version,InvalidPositiveVersionTests,AssertionError, Works
 basicfields,version,LargeVersionTests,AssertionError, Works
 basicfields,version,NegativeVersionTests,AssertionError, Works
-basicfields,,AppendUnexpectedCertificateFieldTest,AssertionError, TODO: Changes overridden later on, flag for preparator needed
+basicfields,,AppendUnexpectedCertificateFieldTest,AssertionError, TODO: Changes overridden later on flag for preparator needed
 chain,,DuplicateCertificateTests,AssertionFailedError, Works
 chain,,SelfSignedNonRootTests,Passed, Works
 chain,,Version1IntermediateCertTests,Passed, Works
