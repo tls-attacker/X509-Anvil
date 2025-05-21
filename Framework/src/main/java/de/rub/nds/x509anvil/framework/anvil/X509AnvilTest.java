@@ -215,7 +215,7 @@ public class X509AnvilTest extends AnvilTestBaseClass {
     }
 
     public void assertValid(X509VerifierRunner testRunner, boolean entity, X509CertificateConfigModifier modifier1,
-                              X509CertificateConfigModifier modifier2) throws VerifierException, CertificateGeneratorException {
+        X509CertificateConfigModifier modifier2) throws VerifierException, CertificateGeneratorException {
         assertBoolean(testRunner, true, entity, modifier1, modifier2);
     }
 
