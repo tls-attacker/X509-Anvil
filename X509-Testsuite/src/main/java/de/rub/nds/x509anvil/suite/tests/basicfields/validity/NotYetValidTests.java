@@ -19,9 +19,7 @@ public class NotYetValidTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @IpmLimitations(identifiers = "entity:not_before")
+            @IpmLimitations(identifiers = "entity:not_before")
     @AnvilTest
     public void notYetValidUtcEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
@@ -33,9 +31,7 @@ public class NotYetValidTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @IpmLimitations(identifiers = "entity:not_before")
+            @IpmLimitations(identifiers = "entity:not_before")
     @AnvilTest
     public void notYetValidGeneralizedEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
@@ -47,9 +43,7 @@ public class NotYetValidTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @IpmLimitations(identifiers = "inter0:not_before")
+            @IpmLimitations(identifiers = "inter0:not_before")
     @AnvilTest
     public void notYetValidUtcIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
@@ -61,9 +55,7 @@ public class NotYetValidTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @IpmLimitations(identifiers = "inter0:not_before")
+            @IpmLimitations(identifiers = "inter0:not_before")
     @AnvilTest
     public void notYetValidGeneralizedIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,

@@ -22,9 +22,7 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Two distinguished names DN1 and DN2 match if they have the same number of RDNs")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+            @AnvilTest()
     public void missingRdn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             List<Pair<X500AttributeType, String>> subject = config.getSubject();
@@ -42,9 +40,7 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Two distinguished names DN1 and DN2 match if they have the same number of RDNs")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+            @AnvilTest()
     public void additionalRdn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             Pair<X500AttributeType, String> newPair = new Pair<>(X500AttributeType.DOMAIN_COMPONENT, "additional_rdn");

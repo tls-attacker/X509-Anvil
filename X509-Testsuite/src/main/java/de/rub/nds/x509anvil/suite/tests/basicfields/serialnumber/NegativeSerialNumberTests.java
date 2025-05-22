@@ -23,8 +23,7 @@ public class NegativeSerialNumberTests extends X509AnvilTest {
                     "gracefully handle such certificates.")
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @IpmLimitations(identifiers = "entity:serial_number")
+        @IpmLimitations(identifiers = "entity:serial_number")
     @AnvilTest(id = "negative_serial_number_entity")
     public void negativeSerialNumberEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setSerialNumber(BigInteger.valueOf(-1337)));
@@ -37,8 +36,7 @@ public class NegativeSerialNumberTests extends X509AnvilTest {
                     "gracefully handle such certificates.")
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @IpmLimitations(identifiers = "inter0:serial_number")
+        @IpmLimitations(identifiers = "inter0:serial_number")
     @AnvilTest
     public void negativeSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setSerialNumber(BigInteger.valueOf(-1337)));

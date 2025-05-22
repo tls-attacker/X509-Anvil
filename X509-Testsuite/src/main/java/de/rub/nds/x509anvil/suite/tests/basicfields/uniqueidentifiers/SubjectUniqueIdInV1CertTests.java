@@ -20,9 +20,7 @@ public class SubjectUniqueIdInV1CertTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.8. Unique Identifiers",
             text = "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @IpmLimitations(identifiers = "entity:version")
+            @IpmLimitations(identifiers = "entity:version")
     @AnvilTest
     public void subjectUniqueIdPresentInV1Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
@@ -36,9 +34,7 @@ public class SubjectUniqueIdInV1CertTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.8. Unique Identifiers",
             text = "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @IpmLimitations(identifiers = "inter0:version")
+            @IpmLimitations(identifiers = "inter0:version")
     @AnvilTest
     public void subjectUniqueIdPresentInV1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,

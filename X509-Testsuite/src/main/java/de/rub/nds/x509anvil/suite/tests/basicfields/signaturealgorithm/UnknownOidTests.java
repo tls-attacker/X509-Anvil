@@ -23,8 +23,7 @@ public class UnknownOidTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm and 4.1.2.3")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+        @AnvilTest()
     public void unknownOidTbsEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
@@ -38,8 +37,7 @@ public class UnknownOidTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm and 4.1.2.3")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+        @AnvilTest()
     public void unknownOidTbsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
@@ -53,8 +51,7 @@ public class UnknownOidTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.3.  Signature")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+        @AnvilTest()
     public void unknownOidCertEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
@@ -68,8 +65,7 @@ public class UnknownOidTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.3.  Signature")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+        @AnvilTest()
     public void unknownOidCertIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
@@ -83,8 +79,7 @@ public class UnknownOidTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm and 4.1.2.3")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+        @AnvilTest()
     public void unknownOidTbsAndCertEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
@@ -99,8 +94,7 @@ public class UnknownOidTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm and 4.1.2.3")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+        @AnvilTest()
     public void unknownOidTbsAndCertIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);

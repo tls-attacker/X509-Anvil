@@ -20,9 +20,7 @@ public class UnknownCriticalExtensionTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions",
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension it does not recognize")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @IpmLimitations(identifiers = {"entity:version", "entity:extensions_present", "entity:ext_unknown_noncritical_extension_present"})
+            @IpmLimitations(identifiers = {"entity:version", "entity:extensions_present", "entity:ext_unknown_noncritical_extension_present"})
     @AnvilTest
     public void unknownCriticalExtensionEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -38,9 +36,7 @@ public class UnknownCriticalExtensionTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions",
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension it does not recognize")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @IpmLimitations(identifiers = {"inter0:version", "inter0:extensions_present", "inter0:ext_unknown_noncritical_extension_present"})
+            @IpmLimitations(identifiers = {"inter0:version", "inter0:extensions_present", "inter0:ext_unknown_noncritical_extension_present"})
     @AnvilTest
 
     public void unknownCriticalExtensionIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

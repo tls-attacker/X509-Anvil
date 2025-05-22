@@ -20,9 +20,7 @@ public class InterCertWithoutBasicConstraintsTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.2.1.9. Basic Constraints",
             text = "Conforming CAs MUST include this extension in all CA certificates that contain public keys used to validate digital signatures on certificates")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest
+            @AnvilTest
     public void intermediateCertWithoutBasicConstraintsTests(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);

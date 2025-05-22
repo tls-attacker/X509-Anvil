@@ -25,9 +25,7 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm",
             text = "This field MUST contain the same algorithm identifier as the signature field in the sequence tbsCertificate (Section 4.1.2.3).")
     @SeverityLevel(Severity.ERROR)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+            @AnvilTest()
     public void signatureAlgorithmFieldDoesntMatchAlgorithmEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
 
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
@@ -46,9 +44,7 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm",
             text = "This field MUST contain the same algorithm identifier as the signature field in the sequence tbsCertificate (Section 4.1.2.3).")
     @SeverityLevel(Severity.ERROR)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+            @AnvilTest()
     public void signatureAlgorithmFieldDoesntMatchAlgorithmIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);

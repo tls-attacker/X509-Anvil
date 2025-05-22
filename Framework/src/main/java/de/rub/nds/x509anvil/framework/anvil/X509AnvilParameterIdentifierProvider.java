@@ -39,9 +39,7 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
 
     private List<ParameterIdentifier> generateAllParameterIdentifiersWithoutDerivationScope() {
         return generateAllParameterIdentifiersBase(MAX_CHAIN_LENGTH.getValue(),
-            MAX_INTERMEDIATE_CERTS_MODELED.getValue(),
-            // TODO: I think this can be deleted?
-            false);
+            MAX_INTERMEDIATE_CERTS_MODELED.getValue(), false);
     }
 
     private List<ParameterIdentifier> generateAllParameterIdentifiersBase(int maxChainLength,

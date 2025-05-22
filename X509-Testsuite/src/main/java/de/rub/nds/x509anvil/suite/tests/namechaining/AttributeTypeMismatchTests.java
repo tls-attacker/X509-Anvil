@@ -28,8 +28,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+        @AnvilTest()
     public void typeMismatchCn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.COMMON_NAME));
     }
@@ -39,8 +38,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+        @AnvilTest()
     public void typeMismatchCountry(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.COUNTRY_NAME));
     }
@@ -50,8 +48,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+        @AnvilTest()
     public void typeMismatchOrganization(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.ORGANISATION_NAME));
     }
@@ -61,8 +58,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+        @AnvilTest()
     public void typeMismatchOrganizationalUnit(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.ORGANISATION_UNIT_NAME));
     }
@@ -72,8 +68,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+        @AnvilTest()
     public void typeMismatchDnQualifier(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true,
                 config -> config.getSubject().add(new Pair<>(X500AttributeType.DN_QUALIFIER, "new_dn")),
@@ -85,8 +80,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+        @AnvilTest()
     public void typeMismatchStateProvince(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.STATE_OR_PROVINCE_NAME));
     }
@@ -96,8 +90,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
                     "as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.")
     @SeverityLevel(Severity.ERROR)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+        @AnvilTest()
     public void typeMismatchSerialNumber(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, nameComponentTypeSwitchModifier(X500AttributeType.SERIAL_NUMBER));
     }

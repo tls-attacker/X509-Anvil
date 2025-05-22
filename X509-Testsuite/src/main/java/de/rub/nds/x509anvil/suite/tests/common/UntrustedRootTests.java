@@ -20,9 +20,7 @@ public class UntrustedRootTests extends X509AnvilTest {
     @Specification(document = "RFC 5280")
     @AnvilTest()
     @StaticRoot(false)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    public void untrustedRootCertificate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+            public void untrustedRootCertificate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertBooleanRoot(testRunner, false, config -> {
             List<Pair<X500AttributeType, String>> subject = new ArrayList<>(config.getSubject());
             subject.set(0, new Pair<>(subject.get(0).getLeftElement(), subject.get(0).getRightElement() + " Untrusted"));

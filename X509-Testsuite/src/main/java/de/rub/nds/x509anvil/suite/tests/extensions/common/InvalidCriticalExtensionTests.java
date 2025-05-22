@@ -19,8 +19,7 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
                     "that contains information that it cannot process.")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 2, maxLength = 2, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest
+        @AnvilTest
     public void invalidCriticalSubjectKeyIdentifierEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
       /*  assertInvalid(testRunner, true, (X509CertificateConfigModifier)  config -> {
             config.extension(ExtensionType.SUBJECT_KEY_IDENTIFIER).setCritical(true);
@@ -34,8 +33,7 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
                     "that contains information that it cannot process.")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest
+        @AnvilTest
 
     public void invalidCriticalSubjectKeyIdentifierIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
     /*    assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

@@ -20,9 +20,7 @@ public class BasicConstraintsWithoutKeyCertSignTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "6.1.4. Preparation for Certificate i+1",
             text = "(n)  If a key usage extension is present, verify that the keyCertSign bit is set.")
     @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+            @AnvilTest()
     public void basicConstraintsWithoutKeyCert(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);

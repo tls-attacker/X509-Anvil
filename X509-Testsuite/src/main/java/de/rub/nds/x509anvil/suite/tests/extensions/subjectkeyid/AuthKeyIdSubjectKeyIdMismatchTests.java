@@ -19,9 +19,7 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
             text = "In conforming CA certificates, the value of the subject key identifier MUST be the value placed in the key identifier " +
                     "field of the authority key identifier extension (Section 4.2.1.1) of certificates issued by the subject of this certificate.")
     @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+            @AnvilTest()
     public void keyIdMismatchEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, config -> {
             AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
@@ -43,9 +41,7 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
             text = "In conforming CA certificates, the value of the subject key identifier MUST be the value placed in the key identifier " +
                     "field of the authority key identifier extension (Section 4.2.1.1) of certificates issued by the subject of this certificate.")
     @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+            @AnvilTest()
     public void keyIdMismatchIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, config -> {
             AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();

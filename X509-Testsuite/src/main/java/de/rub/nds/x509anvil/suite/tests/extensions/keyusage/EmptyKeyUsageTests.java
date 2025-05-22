@@ -20,9 +20,7 @@ public class EmptyKeyUsageTests extends X509AnvilTest {
         @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage",
                 text = "When the keyUsage extension appears in a certificate, at least one of the bits MUST be set to 1.")
         @SeverityLevel(Severity.WARNING)
-        @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-        @TestStrength(2)
-        @AnvilTest()
+                        @AnvilTest()
         public void emptyKeyUsageEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
                 assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
                         KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);

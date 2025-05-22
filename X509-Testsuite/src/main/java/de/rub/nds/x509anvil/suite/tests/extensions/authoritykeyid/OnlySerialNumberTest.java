@@ -20,9 +20,7 @@ public class OnlySerialNumberTest extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "A.2. Implicitly Tagged Module, 1988 Syntax",
             text = "authorityCertIssuer and authorityCertSerialNumber MUST both be present or both be absent")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+            @AnvilTest()
     public void missingKeyIdentifierEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, config -> {
             AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
@@ -39,9 +37,7 @@ public class OnlySerialNumberTest extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "A.2. Implicitly Tagged Module, 1988 Syntax",
             text = "authorityCertIssuer and authorityCertSerialNumber MUST both be present or both be absent")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+            @AnvilTest()
     public void missingKeyIdentifierIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, config -> {
             AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();

@@ -16,9 +16,7 @@ public class SubjectPublicKeyInfoNotPresentTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+            @AnvilTest()
     public void noSubjectPublicKeyInfoEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
         (X509CertificateConfigModifier) config ->
@@ -27,9 +25,7 @@ public class SubjectPublicKeyInfoNotPresentTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+            @AnvilTest()
     public void noSubjectPublicKeyInfoIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
         (X509CertificateConfigModifier) config ->

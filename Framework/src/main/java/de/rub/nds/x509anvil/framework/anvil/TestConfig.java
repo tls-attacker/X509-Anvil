@@ -9,26 +9,33 @@
 
 package de.rub.nds.x509anvil.framework.anvil;
 
-import de.rub.nds.x509anvil.framework.verifier.tlsclientauth.TlsClientAuthVerifierAdapterConfig;
+import de.rub.nds.anvilcore.context.AnvilTestConfig;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterConfig;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterType;
+import de.rub.nds.x509anvil.framework.verifier.tlsclientauth.TlsClientAuthVerifierAdapterConfig;
 
 public class TestConfig {
     // TODO: Use JCommander for config parameters
+    private AnvilTestConfig anvilTestConfig = new AnvilTestConfig();
 
     private final VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_CLIENT_AUTH;
     private final VerifierAdapterConfig verifierAdapterConfig =
         new TlsClientAuthVerifierAdapterConfig("localhost", 4433);
     private Boolean useStaticRootCertificate = true;
-    private String staticRootCertificateFile = "resources/static-root/root-cert.pem";
-    private String staticRootPrivateKeyFile = "resources/static-root/private-key.pem";
 
-    private int defaultMinChainLength = 1;
-    private int defaultMaxChainLength = 3;
-    private int defaultIntermediateCertsModeled = 1;
+    private int defaultMinChainLength = 4;
+    private int defaultMaxChainLength = 4;
+    private int defaultIntermediateCertsModeled = 2;
 
     private String testPackage = "de.rub.nds.x509anvil.suite.tests";
-    private int numParallelTests = 4;
+
+    public AnvilTestConfig getAnvilTestConfig() {
+        return anvilTestConfig;
+    }
+
+    public void setAnvilTestConfig(AnvilTestConfig anvilTestConfig) {
+        this.anvilTestConfig = anvilTestConfig;
+    }
 
     public VerifierAdapterType getVerifierAdapterType() {
         return verifierAdapterType;
@@ -70,35 +77,11 @@ public class TestConfig {
         this.useStaticRootCertificate = useStaticRootCertificate;
     }
 
-    public String getStaticRootCertificateFile() {
-        return staticRootCertificateFile;
-    }
-
-    public void setStaticRootCertificateFile(String staticRootCertificateFile) {
-        this.staticRootCertificateFile = staticRootCertificateFile;
-    }
-
-    public String getStaticRootPrivateKeyFile() {
-        return staticRootPrivateKeyFile;
-    }
-
-    public void setStaticRootPrivateKeyFile(String staticRootPrivateKeyFile) {
-        this.staticRootPrivateKeyFile = staticRootPrivateKeyFile;
-    }
-
     public String getTestPackage() {
         return testPackage;
     }
 
     public void setTestPackage(String testPackage) {
         this.testPackage = testPackage;
-    }
-
-    public int getNumParallelTests() {
-        return numParallelTests;
-    }
-
-    public void setNumParallelTests(int numParallelTests) {
-        this.numParallelTests = numParallelTests;
     }
 }
