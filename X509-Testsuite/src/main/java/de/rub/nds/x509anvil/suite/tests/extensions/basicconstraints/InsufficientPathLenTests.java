@@ -9,16 +9,12 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
-import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class InsufficientPathLenTests extends X509AnvilTest {
 
@@ -30,7 +26,7 @@ public class InsufficientPathLenTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest
     public void insufficientPathLenChainLength4(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+        assertBooleanFirstIntermediate(testRunner, false, config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
             basicConstraintsConfig.setPresent(true);
             basicConstraintsConfig.setCa(true);
@@ -44,11 +40,11 @@ public class InsufficientPathLenTests extends X509AnvilTest {
             text = "In this case, it [the pathLenConstraint field] gives the maximum number of non-self-issued intermediate certificates that may " +
                     "follow this certificate in a valid certification path.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 5, maxLength = 5, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 5, maxLength = 5, intermediateCertsModeled = 3)
     @TestStrength(2)
     @AnvilTest
     public void insufficientPathLenChainLength5(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+        assertBooleanFirstIntermediate(testRunner, false, config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
             basicConstraintsConfig.setPresent(true);
             basicConstraintsConfig.setCa(true);
@@ -62,7 +58,7 @@ public class InsufficientPathLenTests extends X509AnvilTest {
             text = "In this case, it [the pathLenConstraint field] gives the maximum number of non-self-issued intermediate certificates that may " +
                     "follow this certificate in a valid certification path.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 10, maxLength = 10, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 10, maxLength = 10, intermediateCertsModeled = 8)
     @TestStrength(2)
     @AnvilTest
     public void insufficientPathLenChainLength10(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

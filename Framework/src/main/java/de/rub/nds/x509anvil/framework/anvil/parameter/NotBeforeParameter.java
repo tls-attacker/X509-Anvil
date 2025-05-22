@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -56,19 +56,19 @@ public class NotBeforeParameter extends CertificateSpecificParameter<NotBeforeVa
         switch (getSelectedValue()) {
             case UTC_TIME:
                 certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
-                certificateConfig.setNotAfter(new DateTime(2022, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
+                certificateConfig.setNotBefore(new DateTime(2022, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
             case UTC_TIME_EARLIEST:
                 certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
-                certificateConfig.setNotAfter(new DateTime(1950, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
+                certificateConfig.setNotBefore(new DateTime(1950, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
             case GENERALIZED_TIME:
                 certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-                certificateConfig.setNotAfter(new DateTime(2022, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
+                certificateConfig.setNotBefore(new DateTime(2022, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
             case GENERALIZED_TIME_BEFORE_1950:
                 certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-                certificateConfig.setNotAfter(new DateTime(1940, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
+                certificateConfig.setNotBefore(new DateTime(1950, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
         }
     }

@@ -10,37 +10,33 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
-import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class LargeSerialNumberTest extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.2.1. Version",
-            text = "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may " +
-                    "issue certificates with serial numbers that are negative or zero.  Certificate users SHOULD be prepared to " +
-                    "gracefully handle such certificates.")
+            text = "Given the uniqueness requirements above, serial numbers can be expected to contain long integers.  " +
+                    "Certificate users MUST be able to handle serialNumber values up to 20 octets.  Conforming CAs MUST" +
+                    "NOT use serialNumber values longer than 20 octets.")
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @IpmLimitations(identifiers = "entity.serial_number")
+    @IpmLimitations(identifiers = "entity:serial_number")
     @AnvilTest
      public void largeSerialNumberEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setSerialNumber(TestUtils.createBigInteger(256)));
     }
 
     @Specification(document = "RFC 5280", section = "4.1.2.1. Version",
-            text = "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may " +
-                    "issue certificates with serial numbers that are negative or zero.  Certificate users SHOULD be prepared to " +
-                    "gracefully handle such certificates.")
+            text = "Given the uniqueness requirements above, serial numbers can be expected to contain long integers.  " +
+                    "Certificate users MUST be able to handle serialNumber values up to 20 octets.  Conforming CAs MUST" +
+                    "NOT use serialNumber values longer than 20 octets.")
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @IpmLimitations(identifiers = "inter0.serial_number")
+    @IpmLimitations(identifiers = "inter0:serial_number")
     @AnvilTest
     public void largeSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,

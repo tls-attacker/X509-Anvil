@@ -2,7 +2,6 @@ package de.rub.nds.x509anvil.suite.tests.extensions.keyusage;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
@@ -10,9 +9,11 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
+import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
 public class InterCertWithoutKeyCertSignTests extends X509AnvilTest {
 
@@ -20,21 +21,13 @@ public class InterCertWithoutKeyCertSignTests extends X509AnvilTest {
             text = "If the keyUsage extension is present, then the subject public key MUST NOT be used to verify signatures on " +
                     "certificates or CRLs unless the corresponding keyCertSign or cRLSign bit is set.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @ValueConstraint(identifier = "inter0.ext_key_usage_present", method = "enabled")
-    @AnvilTest
+    @AnvilTest()
     public void intermediateCertWithCaNotSet(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: re-implement when extension implemented in attacker
-
-/*        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
-            KeyUsageExtensionConfig keyUsageExtensionConfig = (KeyUsageExtensionConfig)
-                    config.extension(ExtensionType.KEY_USAGE);
-            keyUsageExtensionConfig.setKeyCertSign(false);
-            keyUsageExtensionConfig.setDigitalSignature(true); // Just to make sure something is set to true
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);
+            keyUsageConfig.setKeyCertSign(false);
         });
-        */
     }
-
-
 }

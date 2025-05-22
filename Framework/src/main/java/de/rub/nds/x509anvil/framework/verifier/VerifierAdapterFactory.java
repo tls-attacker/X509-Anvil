@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -17,11 +17,9 @@ public class VerifierAdapterFactory {
         VerifierAdapterConfig verifierAdapterConfig) {
         switch (verifierAdapterType) {
             case TLS_CLIENT_AUTH:
-                if (!(verifierAdapterConfig instanceof TlsClientAuthVerifierAdapterConfig)) {
+                if (!(verifierAdapterConfig instanceof TlsClientAuthVerifierAdapterConfig tlsClientAuthVerifierAdapterConfig)) {
                     throw new UnsupportedOperationException("VerifierAdapterConfig does not match VerifierAdapterType");
                 }
-                TlsClientAuthVerifierAdapterConfig tlsClientAuthVerifierAdapterConfig =
-                    (TlsClientAuthVerifierAdapterConfig) verifierAdapterConfig;
                 return TlsClientAuthVerifierAdapter.fromConfig(tlsClientAuthVerifierAdapterConfig);
 
             default:

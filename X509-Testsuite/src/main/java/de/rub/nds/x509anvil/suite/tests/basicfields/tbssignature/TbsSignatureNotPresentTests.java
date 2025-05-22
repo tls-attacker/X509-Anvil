@@ -9,13 +9,8 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
-import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
-import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 public class TbsSignatureNotPresentTests extends X509AnvilTest {
 
@@ -35,9 +30,7 @@ public class TbsSignatureNotPresentTests extends X509AnvilTest {
     @TestStrength(2)
     @AnvilTest()
     public void noSignatureIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false,
-        (X509CertificateConfigModifier) config ->
-        config.setIncludeTbsSignature(false));
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setIncludeTbsSignature(false));
     }
 
 }

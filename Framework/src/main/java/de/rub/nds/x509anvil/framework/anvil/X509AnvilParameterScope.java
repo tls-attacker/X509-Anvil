@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -52,10 +52,6 @@ public class X509AnvilParameterScope extends ParameterScope {
             return "inter" + (chainPosition - INTER_CHAIN_OFFSET);
         }
     }
-
-//    public int getChainPosition() {
-//        return chainPosition;
-//    }
 
     public boolean isRoot() {
         return chainPosition == ROOT_CHAIN_POS;

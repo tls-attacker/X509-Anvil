@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -59,16 +59,9 @@ public class FeatureExtractor {
         }
     }
 
-    private static void scanForBasicConstraintsExtension(FeatureReport featureReport)
-        throws ProbeException, UnsupportedFeatureException {
-        Probe basicConstraintsProbe = new BasicConstraintsExtensionProbe();
-        ExtensionProbeResult basicConstraintsProbeResult = (ExtensionProbeResult) basicConstraintsProbe.execute();
-        if (!basicConstraintsProbeResult.isSupported()) {
-            throw new UnsupportedFeatureException("Target verifier does not support basic constraints extension");
-        }
+    private static void scanForBasicConstraintsExtension(FeatureReport featureReport) {
+        // No need to check, all certs are generated with this anyway
         featureReport.addSupportedExtension(ExtensionType.BASIC_CONSTRAINTS);
-        featureReport.addProbeResult(basicConstraintsProbeResult);
-        featureReport.addProbeResult(basicConstraintsProbeResult);
     }
 
     private static void scanForSupportedVersions(FeatureReport featureReport)
@@ -99,12 +92,16 @@ public class FeatureExtractor {
         for (SignatureHashAlgorithmKeyLengthPair algorithm : SignatureHashAlgorithmKeyLengthPair
             .generateAllPossibilities()) {
             Probe signatureAlgorithmProbe = new SignatureHashAndKeyLengthProbe(algorithm, entity);
-            SignatureAlgorithmProbeResult signatureAlgorithmProbeResult =
-                (SignatureAlgorithmProbeResult) signatureAlgorithmProbe.execute();
-            if (signatureAlgorithmProbeResult.isSupported()) {
-                signatureHashAlgorithmKeyLengthPairs.add(algorithm);
+            try {
+                SignatureAlgorithmProbeResult signatureAlgorithmProbeResult =
+                    (SignatureAlgorithmProbeResult) signatureAlgorithmProbe.execute();
+                if (signatureAlgorithmProbeResult.isSupported()) {
+                    signatureHashAlgorithmKeyLengthPairs.add(algorithm);
+                }
+                featureReport.addProbeResult(signatureAlgorithmProbeResult);
+            } catch (Exception e) {
+                featureReport.addProbeResult(new SignatureAlgorithmProbeResult(algorithm, false));
             }
-            featureReport.addProbeResult(signatureAlgorithmProbeResult);
         }
 
         if (entity) {

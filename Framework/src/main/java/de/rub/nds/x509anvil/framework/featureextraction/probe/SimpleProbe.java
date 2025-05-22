@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -41,7 +41,8 @@ public abstract class SimpleProbe implements Probe {
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
         try {
-            VerifierResult verifierResult = verifierAdapter.invokeVerifier(certificateChain);
+            VerifierResult verifierResult =
+                verifierAdapter.invokeVerifier(config.getEntityCertificateConfig(), certificateChain);
             return createResult(verifierResult);
         } catch (VerifierException e) {
             throw new ProbeException("Invoking the verifier for probe failed", e);

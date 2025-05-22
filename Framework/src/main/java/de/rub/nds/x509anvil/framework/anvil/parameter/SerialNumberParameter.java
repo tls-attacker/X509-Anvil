@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -50,9 +50,9 @@ public class SerialNumberParameter extends CertificateSpecificParameter<BigInteg
                                                                                                             // octets)
 
         // TODO: These values must be handled gracefully but do not have to be accepted
-        parameterValues.add(generateValue(BigInteger.valueOf(-1)));
-        parameterValues.add(generateValue(
-            new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16)));
+//        parameterValues.add(generateValue(BigInteger.valueOf(-1)));
+//        parameterValues.add(generateValue(
+//            new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16)));
         return parameterValues;
     }
 

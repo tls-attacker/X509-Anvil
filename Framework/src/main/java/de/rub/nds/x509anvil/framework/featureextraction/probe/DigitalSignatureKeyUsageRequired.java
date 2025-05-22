@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -21,10 +21,8 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
-import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
-import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.List;
 
@@ -63,7 +61,7 @@ public class DigitalSignatureKeyUsageRequired implements Probe {
         TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
-        return verifierAdapter.invokeVerifier(certificateChain);
+        return verifierAdapter.invokeVerifier(config.getEntityCertificateConfig(), certificateChain);
     }
 
     public boolean probeWithoutFlagSet() throws VerifierException, CertificateGeneratorException {

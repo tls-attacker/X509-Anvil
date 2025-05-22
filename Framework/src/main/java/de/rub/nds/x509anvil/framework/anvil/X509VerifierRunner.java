@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -15,10 +15,10 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterFactory;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -63,12 +63,11 @@ public class X509VerifierRunner {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateList = certificateChainGenerator.retrieveCertificateChain();
-        X509Util.exportCertificates(certificateList, "resources/out");
 
         TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
-        return verifierAdapter.invokeVerifier(certificateList);
+        return verifierAdapter.invokeVerifier(config.getEntityCertificateConfig(), certificateList);
     }
 
     // TODO: modifiers unset rn, switch all tests to new modifiers
@@ -77,20 +76,18 @@ public class X509VerifierRunner {
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
         certificateChainGenerator.generateCertificateChain();
         List<X509Certificate> certificateList = certificateChainGenerator.retrieveCertificateChain();
-        X509Util.exportCertificates(certificateList, "resources/out");
-
         TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
-        return verifierAdapter.invokeVerifier(certificateList);
+        return verifierAdapter.invokeVerifier(config.getEntityCertificateConfig(), certificateList);
     }
 
-    public VerifierResult execute(List<X509Certificate> certificateList) throws VerifierException {
-        X509Util.exportCertificates(certificateList, "resources/out");
+    public VerifierResult execute(X509CertificateConfig leafCertificateConfig, List<X509Certificate> certificateList)
+        throws VerifierException {
 
         TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
             testConfig.getVerifierAdapterConfig());
-        return verifierAdapter.invokeVerifier(certificateList);
+        return verifierAdapter.invokeVerifier(leafCertificateConfig, certificateList);
     }
 }

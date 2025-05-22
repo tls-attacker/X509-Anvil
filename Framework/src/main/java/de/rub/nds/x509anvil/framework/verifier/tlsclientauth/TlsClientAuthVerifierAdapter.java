@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -21,9 +21,9 @@ import de.rub.nds.tlsattacker.core.workflow.WorkflowTrace;
 import de.rub.nds.tlsattacker.core.workflow.action.ReceiveAction;
 import de.rub.nds.tlsattacker.core.workflow.action.SendAction;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapter;
-import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.filesystem.CertificateBytes;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
@@ -99,45 +99,65 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
     }
 
     @Override
-    public VerifierResult invokeVerifier(List<X509Certificate> certificatesChain) {
+    public VerifierResult invokeVerifier(X509CertificateConfig leafCertificateConfig,
+        List<X509Certificate> certificatesChain) {
         List<CertificateBytes> encodedCertificateChain = new LinkedList<>();
         Collections.reverse(certificatesChain);
         for (X509Certificate x509Certificate : certificatesChain) {
-            /*
-             * X509CertificateConfig config = new X509CertificateConfig(); config.setIncludeIssuerUniqueId(true);
-             * config.setIncludeSubjectUniqueId(true); config.setVersion(x509Certificate.getX509Version()); // TODO: add
-             * extensions x509Certificate.getTbsCertificate().setExplicitExtensions(null); // TODO: Fix config or
-             * propagate choser? // config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC); //
-             * config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC); //
-             * config.setIncludeExtensions(true);
-             * 
-             * // Set Validity Time Types config.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
-             * config.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
-             */
-
-            // TODO: already prepared in chain generator?
-            // x509Certificate.getPreparator(new X509Chooser(config, new X509Context())).prepare();
             encodedCertificateChain.add(new CertificateBytes(
                 x509Certificate.getSerializer(new X509Chooser(null, new X509Context())).serialize()));
         }
 
-        defaultConfig.setDefaultExplicitCertificateChain(encodedCertificateChain);
-
-        try {
-            defaultConfig.setDefaultSelectedSignatureAndHashAlgorithm(
-                TlsAttackerUtil.translateSignatureAlgorithm(certificatesChain.get(0).getX509SignatureAlgorithm()));
-        } catch (VerifierException e) {
-            return new VerifierResult(false);
-        }
-        defaultConfig.setAutoAdjustSignatureAndHashAlgorithm(false);
+        config.setDefaultExplicitCertificateChain(encodedCertificateChain);
+        // adjust proposed signature algorithm to the one used in the certificate
+        adjustSignatureAndHashAlgorithm(certificatesChain);
 
         // Execute workflow
-        WorkflowTrace workflowTrace = buildWorkflowTraceDhe(defaultConfig);
-        State state = new State(defaultConfig, workflowTrace);
+        WorkflowTrace workflowTrace = buildWorkflowTraceDhe(config);
+        State state = new State(config, workflowTrace);
+
+        // set keys in tls attacker state
+        X509Context x509Context = state.getContext().getTlsContext().getTalkingX509Context();
+        x509Context.setSubjectRsaModulus(leafCertificateConfig.getDefaultSubjectRsaModulus());
+        x509Context.setSubjectRsaPublicExponent(leafCertificateConfig.getDefaultSubjectRsaPublicExponent());
+        x509Context.setSubjectRsaPrivateExponent(leafCertificateConfig.getDefaultSubjectRsaPrivateExponent());
+
+        x509Context.setSubjectDsaGeneratorG(leafCertificateConfig.getDefaultSubjectDsaGenerator());
+        x509Context.setSubjectDsaPublicKeyY(leafCertificateConfig.getDefaultSubjectDsaPublicKey());
+        x509Context.setSubjectDsaPrimeModulusP(leafCertificateConfig.getDefaultSubjectDsaPrimeP());
+        x509Context.setSubjectDsaPrimeDivisorQ(leafCertificateConfig.getDefaultSubjectDsaPrimeQ());
+        x509Context.setSubjectDsaPrivateKeyX(leafCertificateConfig.getDefaultSubjectDsaPrivateKey());
+        x509Context.setSubjectDsaPrivateK(leafCertificateConfig.getDefaultSubjectDsaNonce());
+
+        x509Context.setSubjectEcPrivateKey(leafCertificateConfig.getDefaultSubjectEcPrivateKey());
+        x509Context.setSubjectEcPublicKey(leafCertificateConfig.getDefaultSubjectEcPublicKey());
+        x509Context.setSubjectNamedCurve(leafCertificateConfig.getDefaultSubjectNamedCurve());
+
         DefaultWorkflowExecutor workflowExecutor = new DefaultWorkflowExecutor(state);
         workflowExecutor.executeWorkflow();
 
         return new VerifierResult(workflowTrace.executedAsPlanned());
+    }
+
+    private void adjustSignatureAndHashAlgorithm(List<X509Certificate> certificatesChain) {
+
+        try {
+            SignatureAndHashAlgorithm signatureAndHashAlgorithm =
+                switch (certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType()) {
+                case RSA -> SignatureAndHashAlgorithm.RSA_SHA256;
+                case DSA -> SignatureAndHashAlgorithm.DSA_SHA256;
+                case ECDSA -> SignatureAndHashAlgorithm.ECDSA_SHA256;
+                default -> throw new IllegalArgumentException("Unsupported public key algorithm: "
+                    + certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType());
+                };
+            config.setDefaultClientSupportedSignatureAndHashAlgorithms(config
+                .getDefaultClientSupportedSignatureAndHashAlgorithms().stream()
+                .filter(
+                    algorithm -> algorithm.getSignatureAlgorithm() == signatureAndHashAlgorithm.getSignatureAlgorithm())
+                .collect(Collectors.toList()));
+        } catch (NoSuchElementException e) {
+            // modification removed public key container, this is fine
+        }
     }
 
     private static WorkflowTrace buildWorkflowTraceDhe(Config config) {

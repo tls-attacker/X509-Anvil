@@ -10,12 +10,8 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
-import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 
 import java.math.BigInteger;
 
@@ -28,11 +24,11 @@ public class ZeroSerialNumberTests extends X509AnvilTest {
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @IpmLimitations(identifiers = "entity.serial_number")
+    @IpmLimitations(identifiers = "entity:serial_number")
     @AnvilTest
     public void zeroSerialNumberEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
-                (X509CertificateConfigModifier) config -> config.setSerialNumber(BigInteger.valueOf(-1337)));
+                (X509CertificateConfigModifier) config -> config.setSerialNumber(BigInteger.valueOf(0)));
     }
 
 
@@ -43,11 +39,11 @@ public class ZeroSerialNumberTests extends X509AnvilTest {
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @IpmLimitations(identifiers = "inter0.serial_number")
+    @IpmLimitations(identifiers = "inter0:serial_number")
     @AnvilTest
     public void zeroSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
-                (X509CertificateConfigModifier) config -> config.setSerialNumber(BigInteger.valueOf(-1337)));
+                (X509CertificateConfigModifier) config -> config.setSerialNumber(BigInteger.valueOf(0)));
     }
 
 

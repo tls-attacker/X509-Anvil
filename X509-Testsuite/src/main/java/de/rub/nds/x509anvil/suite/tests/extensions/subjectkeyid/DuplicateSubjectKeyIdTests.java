@@ -2,7 +2,6 @@ package de.rub.nds.x509anvil.suite.tests.extensions.subjectkeyid;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.anvilcore.annotation.ValueConstraint;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -12,77 +11,84 @@ import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+import de.rub.nds.x509attacker.config.extension.SubjectKeyIdentifierConfig;
 
 public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 2, maxLength = 3)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest
-    @ValueConstraint(identifier = "entity.ext_subject_key_identifier_present", method = "enabled")
+    @AnvilTest()
     public void duplicateIdenticalEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: re-implement when extension implemented in attacker
-/*        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config ->
-                Modifiers.duplicateIdenticalExtensionModifier(true, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER)
-        );*/
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
+            newConfig.setPresent(true);
+            newConfig.setKeyIdentifier(new byte[] {1, 2, 3, 4, 5});
+            config.addExtensions(newConfig);
+            config.addExtensions(newConfig);
+            config.setIncludeExtensions(true);
+        });
     }
 
 
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 3, maxLength = 3)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
+    @AnvilTest()
     public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: re-implement when extension implemented in attacker
- /*       assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
-                Modifiers.duplicateIdenticalExtensionModifier(false, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER)
-        );
-        */
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
+            newConfig.setPresent(true);
+            newConfig.setKeyIdentifier(new byte[] {1, 2, 3, 4, 5});
+            config.addExtensions(newConfig);
+            config.addExtensions(newConfig);
+            config.setIncludeExtensions(true);
+        });
     }
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 2, maxLength = 3)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest
-    @ValueConstraint(identifier = "entity.ext_subject_key_identifier_present", method = "enabled")
+    @AnvilTest()
     public void duplicateDifferentEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: re-implement when extension implemented in attacker
-/*        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config ->
-                Modifiers.duplicateDifferentExtensionModifier(true, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER, createDuplicateExtensionValue())
-        );
-        */
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
+            newConfig.setPresent(true);
+            newConfig.setKeyIdentifier(new byte[] {1, 2, 3, 4, 5});
+            config.addExtensions(newConfig);
+
+            SubjectKeyIdentifierConfig differentConfig = new SubjectKeyIdentifierConfig();
+            differentConfig.setPresent(true);
+            differentConfig.setKeyIdentifier(new byte[] {2, 3, 4, 5, 6});
+            config.addExtensions(differentConfig);
+
+            config.setIncludeExtensions(true);
+        });
     }
 
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 3, maxLength = 3)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest
-    @ValueConstraint(identifier = "inter0.ext_subject_key_identifier_present", method = "enabled")
+    @AnvilTest()
     public void duplicateDifferentIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // TODO: re-implement when extension implemented in attacker
-/*
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
-                Modifiers.duplicateDifferentExtensionModifier(false, ExtensionObjectIdentifiers.SUBJECT_KEY_IDENTIFIER, createDuplicateExtensionValue())
-        );
-*/
-    }
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
+            newConfig.setPresent(true);
+            newConfig.setKeyIdentifier(new byte[] {1, 2, 3, 4, 5});
+            config.addExtensions(newConfig);
 
+            SubjectKeyIdentifierConfig differentConfig = new SubjectKeyIdentifierConfig();
+            differentConfig.setPresent(true);
+            differentConfig.setKeyIdentifier(new byte[] {2, 3, 4, 5, 6});
+            config.addExtensions(differentConfig);
 
-// TODO: re-implement when extension implemented in attacker
-        /*
-        private static byte[] createDuplicateExtensionValue() {
-        Asn1OctetString subjectKeyId = new Asn1OctetString("subjectKeyId");
-        subjectKeyId.setValue(TestUtils.createByteArray(20));
-        Asn1FieldSerializer serializer = new Asn1FieldSerializer(subjectKeyId);
-        return serializer.serialize();
+            config.setIncludeExtensions(true);
+        });
     }
-         */
 }

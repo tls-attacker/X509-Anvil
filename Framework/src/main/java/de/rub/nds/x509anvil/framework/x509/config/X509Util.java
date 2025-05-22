@@ -1,7 +1,7 @@
 /**
  * Framework - A tool for creating arbitrary certificates
  * <p>
- * Copyright 2014-2024 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
  * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -10,9 +10,11 @@
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
+import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.filesystem.CertificateFileWriter;
 import de.rub.nds.x509attacker.x509.X509CertificateChain;
 import de.rub.nds.x509attacker.x509.model.*;
@@ -56,7 +58,8 @@ public class X509Util {
             String certificateFileName = filename + ".pem";
             CertificateFileWriter certificateFileWriter =
                 new CertificateFileWriter(new File(directory + "/" + certificateFileName));
-            certificateFileWriter.writeCertificate(certificate.getContent().getValue());
+            certificateFileWriter
+                .writeCertificate(certificate.getSerializer(new X509Chooser(null, new X509Context())).serialize());
             certificateFileWriter.close();
         } catch (IOException e) {
             throw new RuntimeException("Error writing Certificate to PEM: " + e);

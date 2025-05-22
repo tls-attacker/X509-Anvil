@@ -2,6 +2,7 @@ package de.rub.nds.x509anvil.suite.tests.namechaining;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
+import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -9,52 +10,47 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
-import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
-import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateModifier;
-import de.rub.nds.x509attacker.x509.model.Name;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+import de.rub.nds.x509attacker.constants.X500AttributeType;
 
-import static de.rub.nds.x509anvil.framework.x509.config.X509Util.addDnQualifierToName;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RdnNumberMismatchTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Two distinguished names DN1 and DN2 match if they have the same number of RDNs")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest
+    @AnvilTest()
     public void missingRdn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, missingRdnModifier());
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            List<Pair<X500AttributeType, String>> subject = config.getSubject();
+            List<Pair<X500AttributeType, String>> newSubject = new ArrayList<>();
+
+            subject.forEach(pair -> {
+                if (pair.getKey() != X500AttributeType.COUNTRY_NAME) {
+                    newSubject.add(new Pair<>(pair.getKey(), pair.getValue()));
+                }
+            });
+            config.setSubject(newSubject);
+        });
     }
 
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Two distinguished names DN1 and DN2 match if they have the same number of RDNs")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @TestStrength(2)
-    @AnvilTest
+    @AnvilTest()
     public void additionalRdn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, additionalRdnModifier());
-    }
-
-    // Ads an additional "distinguished name qualifier" to the intermediate's subject
-    private static X509CertificateModifier missingRdnModifier() {
-        return (certificate) -> {
-            Name subject = certificate.getTbsCertificate().getSubject();
-            addDnQualifierToName(subject);
-        };
-    }
-
-    // Ads an additional "distinguished name qualifier" to the entity's issuer
-    private static X509CertificateModifier additionalRdnModifier() {
-        return (certificate) -> {
-            Name issuer = certificate.getTbsCertificate().getIssuer();
-            addDnQualifierToName(issuer);
-        };
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            Pair<X500AttributeType, String> newPair = new Pair<>(X500AttributeType.DOMAIN_COMPONENT, "additional_rdn");
+            List<Pair<X500AttributeType, String>> modifiableSubject = new ArrayList<>(config.getSubject());
+            modifiableSubject.add(newPair);
+            config.setSubject(modifiableSubject);
+        });
     }
 }
