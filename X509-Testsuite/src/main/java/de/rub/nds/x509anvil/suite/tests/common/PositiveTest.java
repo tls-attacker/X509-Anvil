@@ -13,7 +13,7 @@ public class PositiveTest extends X509AnvilTest {
 
     @AnvilTest(id = "1")
     @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(1)
+    @TestStrength(2)
     public void sampleTestCase(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
             // No specific changes to config needed for this test, keeping the default valid case.
