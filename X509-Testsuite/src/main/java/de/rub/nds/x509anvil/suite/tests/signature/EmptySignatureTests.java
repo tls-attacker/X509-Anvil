@@ -18,7 +18,7 @@ public class EmptySignatureTests extends X509AnvilTest {
             text = "The signature on the certificate can be verified using working_public_key_algorithm, the working_public_key," +
                     " and the working_public_key_parameters.")
     @SeverityLevel(Severity.CRITICAL)
-            @AnvilTest()
+    @AnvilTest()
     public void emptySignatureEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setSignatureEmpty(true));
     }
@@ -27,7 +27,7 @@ public class EmptySignatureTests extends X509AnvilTest {
             text = "The signature on the certificate can be verified using working_public_key_algorithm, the working_public_key," +
                     " and the working_public_key_parameters.")
     @SeverityLevel(Severity.CRITICAL)
-            @AnvilTest()
+    @AnvilTest()
     public void emptySignatureIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setSignatureEmpty(true));
     }
@@ -36,7 +36,7 @@ public class EmptySignatureTests extends X509AnvilTest {
             text = "The signature on the certificate can be verified using working_public_key_algorithm, the working_public_key," +
                     " and the working_public_key_parameters.")
     @SeverityLevel(Severity.CRITICAL)
-            @AnvilTest()
+    @AnvilTest()
     public void nullSignatureRoot(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertBooleanRoot(testRunner, false, config -> config.setSignatureEmpty(true));
     }

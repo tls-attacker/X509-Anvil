@@ -19,7 +19,7 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
-            @AnvilTest()
+    @AnvilTest()
     public void keyUsageOverflowAppend1Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);
@@ -40,7 +40,7 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
-            @AnvilTest()
+    @AnvilTest()
     public void keyUsageOverflowAppend1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);
@@ -60,7 +60,7 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
-            @AnvilTest()
+    @AnvilTest()
     public void keyUsageOverflowAppend0Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);
@@ -81,7 +81,7 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
-            @AnvilTest()
+    @AnvilTest()
     public void keyUsageOverflowAppend0Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);

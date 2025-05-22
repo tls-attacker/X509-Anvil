@@ -18,7 +18,7 @@ public class Version2CertWithExtensionTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.2.9. Extensions", text = "This field MUST only appear if the version is 3 (Section 4.1.2.1).")
     @SeverityLevel(Severity.INFORMATIONAL)
-            @AnvilTest()
+    @AnvilTest()
     public void version1CertWithExtensionsEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             config.setVersion(BigInteger.valueOf(1));
@@ -29,7 +29,7 @@ public class Version2CertWithExtensionTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.2.9. Extensions", text = "This field MUST only appear if the version is 3 (Section 4.1.2.1).")
     @SeverityLevel(Severity.INFORMATIONAL)
-            @AnvilTest()
+    @AnvilTest()
     public void version1CertWithExtensionsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setVersion(BigInteger.valueOf(1));

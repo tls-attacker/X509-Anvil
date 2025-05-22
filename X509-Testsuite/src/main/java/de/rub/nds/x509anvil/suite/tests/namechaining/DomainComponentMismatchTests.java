@@ -20,7 +20,7 @@ public class DomainComponentMismatchTests extends X509AnvilTest {
             text = "Conforming implementations shall perform a case-insensitive exact match when comparing domainComponent " +
                     "attributes in distinguished names")
     @SeverityLevel(Severity.CRITICAL)
-            @AnvilTest
+    @AnvilTest
     public void domainComponentMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
                 X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(config, X500AttributeType.DOMAIN_COMPONENT)

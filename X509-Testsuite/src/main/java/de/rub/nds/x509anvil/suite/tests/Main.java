@@ -20,7 +20,7 @@ public class Main {
         anvilTestConfig.setDisableTcpDump(true);
         anvilTestConfig.setIgnoreCache(true);
         anvilTestConfig.setIdentifier("X509AnvilTest");
-        anvilTestConfig.setOutputFolder("/tmp/X509-Anvil-Out-" + new Random().nextInt());
+        anvilTestConfig.setOutputFolder("/tmp/X509-Anvil-Out-" + System.currentTimeMillis());
         anvilTestConfig.setTestPackage(ContextHelper.getTestConfig().getTestPackage());
 
 

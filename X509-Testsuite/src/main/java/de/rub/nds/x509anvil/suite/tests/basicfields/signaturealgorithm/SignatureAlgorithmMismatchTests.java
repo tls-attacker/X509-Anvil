@@ -18,7 +18,7 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm",
             text = "This field MUST contain the same algorithm identifier as the signature field in the sequence tbsCertificate (Section 4.1.2.3).")
     @SeverityLevel(Severity.ERROR)
-            @AnvilTest()
+    @AnvilTest()
     public void signatureAlgorithmFieldDoesntMatchAlgorithmEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setDifferentSignatureAlgorithmOid(TestUtils.getNonMatchingAlgorithmOid(config.getSignatureAlgorithm()).getSignatureAndHashAlgorithm().getOid()));
     }
@@ -26,7 +26,7 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm",
             text = "This field MUST contain the same algorithm identifier as the signature field in the sequence tbsCertificate (Section 4.1.2.3).")
     @SeverityLevel(Severity.ERROR)
-            @AnvilTest()
+    @AnvilTest()
     public void signatureAlgorithmFieldDoesntMatchAlgorithmIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setDifferentSignatureAlgorithmOid(TestUtils.getNonMatchingAlgorithmOid(config.getSignatureAlgorithm()).getSignatureAndHashAlgorithm().getOid()));
     }
