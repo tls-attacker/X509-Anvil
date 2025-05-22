@@ -5,9 +5,9 @@ basicfields,serialnumber,LargeSerialNumberTests,AssertionError, Works
 basicfields,serialnumber,NegativeSerialNumberTests,AssertionError, Works
 basicfields,serialnumber,SerialNumberNotPresentTests,Passed, Works
 basicfields,serialnumber,ZeroSerialNumberTests,AssertionError, Works
-basicfields,signaturealgorithm,SignatureAlgorithmMismatchTests,AssertionFailedError ,TODO: Config value for explicit mismatch
+basicfields,signaturealgorithm,SignatureAlgorithmMismatchTests,Passed, Works
 basicfields,signaturealgorithm,SignatureAlgorithmNotPresentTests,Passed, Works
-basicfields,signaturealgorithm,UnknownOidTests,NullPointerException / AssertionFailedError , TODO: Config values for invalid OIDs
+basicfields,signaturealgorithm,UnknownOidTests,Passed , Works
 basicfields,subject,SubjectNotPresentTests,Passed, Works
 basicfields,subjectpkinfo,SubjectPublicKeyInfoNotPresentTests,Passed, Works
 basicfields,tbssignature,TbsSignatureMismatchTests,Passed, Works
@@ -27,7 +27,7 @@ basicfields,validity,ValidityNotPresentTests,Passed, Works
 basicfields,version,InvalidPositiveVersionTests,AssertionError, Works
 basicfields,version,LargeVersionTests,AssertionError, Works
 basicfields,version,NegativeVersionTests,AssertionError, Works
-basicfields,,AppendUnexpectedCertificateFieldTest,AssertionError, TODO: Changes overridden later on flag for preparator needed
+basicfields,,AppendUnexpectedCertificateFieldTest,Passed, Works
 chain,,DuplicateCertificateTests,AssertionFailedError, Works
 chain,,SelfSignedNonRootTests,Passed, Works
 chain,,Version1IntermediateCertTests,Passed, Works
@@ -46,7 +46,7 @@ extensions,basicconstraints,InterCertWithNonCriticalBasicConstraintsTests,Assert
 extensions,basicconstraints,InterCertWithoutBasicConstraintsTests,Passed, Works
 extensions,basicconstraints,NegativePathLenTests,Passed, Works
 extensions,basicconstraints,PathlenWithoutCaSetTests,Passed, Works
-extensions,common,InvalidCriticalExtensionTests,Unimplemented, TODO: Needs preparator config value (basic constraints config invalid flag)
+extensions,common,InvalidCriticalExtensionTests,Passed, Works
 extensions,common,UnknownCriticalExtensionTests,Passed, Works
 extensions,common,Version1CertWithExtensionsTests,AssertionError, Works
 extensions,common,Version2CertWithExtensionTests,AssertionError, Works
@@ -59,7 +59,7 @@ extensions,keyusage,KeyUsageOverflowTests,AssertionError, Works
 extensions,subjectkeyid,AuthKeyIdSubjectKeyIdMismatchTests,Passed, Works
 extensions,subjectkeyid,DuplicateSubjectKeyIdTests,Passed, Works
 namechaining,,AttributeNumberMismatchTests,Passed, Works
-namechaining,,AttributeTypeMismatchTests,Unimplemented, TODO: What is the point of this? I do not understand.
+namechaining,,AttributeTypeMismatchTests,Passed, Works
 namechaining,,CnMismatchTests,Passed, Works
 namechaining,,CountryMismatchTests,Passed, Works
 namechaining,,DistinguishedNameQualifierUnitMismatchTests,Passed, Works
