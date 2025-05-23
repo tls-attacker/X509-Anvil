@@ -1,8 +1,6 @@
 package de.rub.nds.x509anvil.suite.tests.basicfields.signaturealgorithm;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -18,7 +16,7 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm",
             text = "This field MUST contain the same algorithm identifier as the signature field in the sequence tbsCertificate (Section 4.1.2.3).")
     @SeverityLevel(Severity.ERROR)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "basic-47ba5ecc23")
     public void signatureAlgorithmFieldDoesntMatchAlgorithmEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setDifferentSignatureAlgorithmOid(TestUtils.getNonMatchingAlgorithmOid(config.getSignatureAlgorithm()).getSignatureAndHashAlgorithm().getOid()));
     }
@@ -26,7 +24,7 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm",
             text = "This field MUST contain the same algorithm identifier as the signature field in the sequence tbsCertificate (Section 4.1.2.3).")
     @SeverityLevel(Severity.ERROR)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "basic-47ba5ecc23")
     public void signatureAlgorithmFieldDoesntMatchAlgorithmIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setDifferentSignatureAlgorithmOid(TestUtils.getNonMatchingAlgorithmOid(config.getSignatureAlgorithm()).getSignatureAndHashAlgorithm().getOid()));
     }

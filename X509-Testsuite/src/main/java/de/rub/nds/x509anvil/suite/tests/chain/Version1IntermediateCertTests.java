@@ -1,8 +1,6 @@
 package de.rub.nds.x509anvil.suite.tests.chain;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -20,7 +18,7 @@ public class Version1IntermediateCertTests extends X509AnvilTest {
             text = "If certificate i is a version 1 or version 2 certificate, then the application MUST either verify that " +
                     "certificate i is a CA certificate through out-of-band means or reject the certificate.")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "chain-917cc9d726")
     public void version1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setVersion(new BigInteger("0"));
@@ -32,7 +30,7 @@ public class Version1IntermediateCertTests extends X509AnvilTest {
             text = "If certificate i is a version 1 or version 2 certificate, then the application MUST either verify that " +
                     "certificate i is a CA certificate through out-of-band means or reject the certificate.")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "chain-917cc9d726")
     public void version2Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setVersion(new BigInteger("1"));

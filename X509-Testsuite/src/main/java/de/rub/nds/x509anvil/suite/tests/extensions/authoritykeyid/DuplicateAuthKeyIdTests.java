@@ -1,8 +1,6 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.authoritykeyid;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -18,7 +16,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "extension-0aafd3e26f")
     public void duplicateIdenticalEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, config -> {
             AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
@@ -39,7 +37,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "extension-0aafd3e26f")
     public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, config -> {
             AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
@@ -60,7 +58,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "extension-0aafd3e26f")
     public void duplicateDifferentEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, config -> {
             AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
@@ -86,7 +84,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "extension-0aafd3e26f")
     public void duplicateDifferentIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, config -> {
             AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();

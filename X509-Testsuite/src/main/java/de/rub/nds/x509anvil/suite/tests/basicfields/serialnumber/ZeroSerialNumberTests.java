@@ -2,7 +2,6 @@ package de.rub.nds.x509anvil.suite.tests.basicfields.serialnumber;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
-import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;

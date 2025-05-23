@@ -1,8 +1,6 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.keyusage;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -20,7 +18,7 @@ public class BasicConstraintsWithoutKeyCertSignTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "6.1.4. Preparation for Certificate i+1",
             text = "(n)  If a key usage extension is present, verify that the keyCertSign bit is set.")
     @SeverityLevel(Severity.WARNING)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "extension-c9a7df19c2")
     public void basicConstraintsWithoutKeyCert(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);

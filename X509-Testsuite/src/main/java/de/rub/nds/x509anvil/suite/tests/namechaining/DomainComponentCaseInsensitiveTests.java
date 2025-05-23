@@ -1,9 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.namechaining;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.protocol.xml.Pair;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -23,7 +21,7 @@ public class DomainComponentCaseInsensitiveTests extends X509AnvilTest {
             text = "Conforming implementations shall perform a case-insensitive exact match when comparing domainComponent " +
                     "attributes in distinguished names")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "namechaining-a7151079d1")
     public void switchedCaseDomainComponentTest(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {
             Pair<X500AttributeType, String> newPair = new Pair<>(X500AttributeType.DOMAIN_COMPONENT, "CaSeInSeNsItIvE");

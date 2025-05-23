@@ -2,8 +2,6 @@ package de.rub.nds.x509anvil.suite.tests.basicfields.validity;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
-import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -24,7 +22,7 @@ public class GeneralizedTimeNonZuluDifferentialTests extends X509AnvilTest {
             text = "For the purposes of this profile, GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)")
     @SeverityLevel(Severity.ERROR)
     @IpmLimitations(identifiers = "entity:not_before")
-    @AnvilTest(id = "")
+    @AnvilTest(id = "basic-b1996f0f23")
     public void notBeforeEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
@@ -39,7 +37,7 @@ public class GeneralizedTimeNonZuluDifferentialTests extends X509AnvilTest {
             text = "For the purposes of this profile, GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)")
     @SeverityLevel(Severity.ERROR)
     @IpmLimitations(identifiers = "inter0:not_before")
-    @AnvilTest(id = "")
+    @AnvilTest(id = "basic-b1996f0f23")
     public void notBeforeIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {
@@ -54,7 +52,7 @@ public class GeneralizedTimeNonZuluDifferentialTests extends X509AnvilTest {
             text = "For the purposes of this profile, GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)")
     @SeverityLevel(Severity.ERROR)
     @IpmLimitations(identifiers = "entity:not_after")
-    @AnvilTest(id = "")
+    @AnvilTest(id = "basic-b1996f0f23")
     public void notAfterEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
@@ -70,7 +68,7 @@ public class GeneralizedTimeNonZuluDifferentialTests extends X509AnvilTest {
             text = "For the purposes of this profile, GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)")
     @SeverityLevel(Severity.ERROR)
     @IpmLimitations(identifiers = "inter0:not_after")
-    @AnvilTest(id = "")
+    @AnvilTest(id = "basic-b1996f0f23")
     public void notAfterIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {

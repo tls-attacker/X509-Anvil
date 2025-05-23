@@ -2,10 +2,8 @@ package de.rub.nds.x509anvil.suite.tests.basicfields.uniqueidentifiers;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
-import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
@@ -21,7 +19,7 @@ public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
             text = "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).")
     @SeverityLevel(Severity.INFORMATIONAL)
     @IpmLimitations(identifiers = "entity:version")
-    @AnvilTest(id = "")
+    @AnvilTest(id = "basic-c27b5d3680")
     public void issuerUniqueIdPresentInV1Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
@@ -36,7 +34,7 @@ public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
             text = "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).")
     @SeverityLevel(Severity.INFORMATIONAL)
     @IpmLimitations(identifiers = "inter0:version")
-    @AnvilTest(id = "")
+    @AnvilTest(id = "basic-c27b5d3680")
     public void issuerUniqueIdPresentInV1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {

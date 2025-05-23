@@ -2,9 +2,8 @@ package de.rub.nds.x509anvil.suite.tests.extensions.common;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
@@ -28,7 +27,7 @@ public class Version1CertWithExtensionsTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.2.9. Extensions", text = "This field MUST only appear if the version is 3 (Section 4.1.2.1).")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest(id = "")    @TestStrength(1)
+    @AnvilTest(id = "extension-17c40ba75d")    @TestStrength(1)
     public void version1CertWithExtensionsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setVersion(BigInteger.valueOf(0));

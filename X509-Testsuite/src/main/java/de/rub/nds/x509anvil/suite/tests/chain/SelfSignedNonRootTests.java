@@ -1,8 +1,6 @@
 package de.rub.nds.x509anvil.suite.tests.chain;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -18,7 +16,7 @@ public class SelfSignedNonRootTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "for all x in {1, ..., n-1}, the subject of certificate x is the issuer of certificate x+1;")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "chain-1ffa212932")
     public void selfSignedEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier)config -> config.setSelfSigned(true));
     }
@@ -26,7 +24,7 @@ public class SelfSignedNonRootTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "for all x in {1, ..., n-1}, the subject of certificate x is the issuer of certificate x+1;")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "chain-1ffa212932")
     public void selfSignedIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier)config -> config.setSelfSigned(true));
     }

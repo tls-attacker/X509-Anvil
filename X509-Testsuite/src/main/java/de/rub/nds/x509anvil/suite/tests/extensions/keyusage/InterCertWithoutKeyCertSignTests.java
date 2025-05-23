@@ -1,10 +1,8 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.keyusage;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
@@ -21,7 +19,7 @@ public class InterCertWithoutKeyCertSignTests extends X509AnvilTest {
             text = "If the keyUsage extension is present, then the subject public key MUST NOT be used to verify signatures on " +
                     "certificates or CRLs unless the corresponding keyCertSign or cRLSign bit is set.")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "extension-654b8810f8")
     public void intermediateCertWithCaNotSet(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);

@@ -1,8 +1,6 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.common;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -21,7 +19,7 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension [...] " +
                     "that contains information that it cannot process.")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "extension-f7cd9aefde")
     public void invalidCriticalSubjectKeyIdentifierEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
@@ -37,7 +35,7 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension [...] " +
                     "that contains information that it cannot process.")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "")
+    @AnvilTest(id = "extension-f7cd9aefde")
     public void invalidCriticalSubjectKeyIdentifierIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
