@@ -19,7 +19,7 @@ public class PathlenWithoutCaSetTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.2.1.9. Basic Constraints",
             text = "CAs MUST NOT include the pathLenConstraint field unless the cA boolean is asserted")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest(id = "extension-213e772d37")
+    @AnvilTest(id = "extension-ef15984307")
     public void pathlenWithoutCaSetEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);

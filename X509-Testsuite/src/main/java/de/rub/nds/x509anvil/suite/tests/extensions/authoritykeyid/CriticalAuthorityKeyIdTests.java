@@ -16,7 +16,7 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2.1.1. Authority Key Identifier", text = "Conforming CAs MUST mark this extension as non-critical.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest(id = "extension-758db4c4b5")
+    @AnvilTest(id = "extension-efb61a5418")
     public void criticalAuthorityKeyIdEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, config -> {
             AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
@@ -36,7 +36,7 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2.1.1. Authority Key Identifier", text = "Conforming CAs MUST mark this extension as non-critical.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest(id = "extension-758db4c4b5")
+    @AnvilTest(id = "extension-320a8c3fd3")
     public void criticalAuthorityKeyIdIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, config -> {
             AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();

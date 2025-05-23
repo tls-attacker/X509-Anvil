@@ -23,7 +23,7 @@ public class ZeroSerialNumberTests extends X509AnvilTest {
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @IpmLimitations(identifiers = "entity:serial_number")
-    @AnvilTest(id = "basic-66bebdc227")
+    @AnvilTest(id = "basic-0dd1f8b33d")
     public void zeroSerialNumberEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> config.setSerialNumber(BigInteger.valueOf(0)));
@@ -37,7 +37,7 @@ public class ZeroSerialNumberTests extends X509AnvilTest {
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @IpmLimitations(identifiers = "inter0:serial_number")
-    @AnvilTest(id = "basic-29c1b0d3f0")
+    @AnvilTest(id = "basic-55a018dc6c")
     public void zeroSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> config.setSerialNumber(BigInteger.valueOf(0)));

@@ -12,7 +12,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 
 public class WeakHashAlgorithmTests extends X509AnvilTest {
 
-    @AnvilTest(id = "weakcrypto-17d514dca0")
+    @AnvilTest(id = "weakcrypto-8cce4bf80f")
     @SeverityLevel(Severity.CRITICAL)
     public void weakHashMd2(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -22,7 +22,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     }
 
 
-    @AnvilTest(id = "weakcrypto-17d514dca0")
+    @AnvilTest(id = "weakcrypto-fa9ccc9dfa")
     @SeverityLevel(Severity.CRITICAL)
     public void weakHashMd4(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -31,7 +31,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     }
 
 
-    @AnvilTest(id = "weakcrypto-17d514dca0")
+    @AnvilTest(id = "weakcrypto-0499c0a19c")
     @SeverityLevel(Severity.CRITICAL)
     public void weakHashMd5(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -40,7 +40,7 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     }
 
 
-    @AnvilTest(id = "weakcrypto-17d514dca0")
+    @AnvilTest(id = "weakcrypto-dbc5ebe60a")
     @SeverityLevel(Severity.CRITICAL)
     public void weakHashSha1(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

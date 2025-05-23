@@ -14,7 +14,7 @@ public class ValidityNotPresentTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1. Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "basic-1fd14f828f")
+    @AnvilTest(id = "basic-a4593c9ff9")
     public void noValidityEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> config.setIncludeValidity(false));
@@ -22,7 +22,7 @@ public class ValidityNotPresentTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1. Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "basic-1fd14f828f")
+    @AnvilTest(id = "basic-02f469f8a4")
     public void noValidityIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> config.setIncludeValidity(false));

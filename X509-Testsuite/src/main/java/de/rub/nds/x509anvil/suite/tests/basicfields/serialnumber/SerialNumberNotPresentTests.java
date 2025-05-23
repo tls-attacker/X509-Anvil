@@ -16,7 +16,7 @@ public class SerialNumberNotPresentTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @AnvilTest(id = "basic-c739a27930")
+    @AnvilTest(id = "basic-c946fef182")
     public void noSerialNumberEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setIncludeSerialNumber(false));
     }
@@ -24,7 +24,7 @@ public class SerialNumberNotPresentTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @AnvilTest(id = "basic-5d6a308758")
+    @AnvilTest(id = "basic-99ffba7896")
     public void noSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setIncludeSerialNumber(false));
     }

@@ -18,7 +18,7 @@ public class SerialNumberMismatchTests extends X509AnvilTest {
             text = "Two naming attributes match if the attribute types are the same and the values of the attributes are " +
                     "an exact match after processing with the string preparation algorithm")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "namechaining-ab76daacff")
+    @AnvilTest(id = "namechaining-0ccaa40653")
     public void serialNumberMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
                 X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(config, X500AttributeType.SERIAL_NUMBER)

@@ -14,7 +14,7 @@ public class SubjectNotPresentTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "no_subject_leaf")
+    @AnvilTest(id = "basic-24f7012913")
     public void noSubjectEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
         (X509CertificateConfigModifier) config ->
@@ -24,7 +24,7 @@ public class SubjectNotPresentTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "basic-abc26ca6df")
+    @AnvilTest(id = "basic-e026d7520e")
     public void noSubjectIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
         (X509CertificateConfigModifier) config ->

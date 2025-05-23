@@ -19,7 +19,7 @@ public class KeyCertSignNonCaTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage",
             text = "If the keyCertSign bit is asserted, then the cA bit in the basic constraints extension (Section 4.2.1.9) MUST also be asserted")
     @SeverityLevel(Severity.WARNING)
-    @AnvilTest(id = "extension-7e60e88c0f")
+    @AnvilTest(id = "extension-91e2ddbf9d")
     public void keyCertSignNonCaEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);

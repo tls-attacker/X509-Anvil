@@ -18,7 +18,7 @@ public class OrganizationMismatchTests extends X509AnvilTest {
             text = "Two naming attributes match if the attribute types are the same and the values of the attributes are " +
                     "an exact match after processing with the string preparation algorithm")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "namechaining-c53471c934")
+    @AnvilTest(id = "namechaining-456b282cb3")
     public void organizationMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->
                 X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(config, X500AttributeType.ORGANISATION_NAME)

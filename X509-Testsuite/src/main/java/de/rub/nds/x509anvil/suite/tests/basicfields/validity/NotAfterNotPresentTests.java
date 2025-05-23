@@ -16,7 +16,7 @@ public class NotAfterNotPresentTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @AnvilTest(id = "basic-2e748146ce")
+    @AnvilTest(id = "basic-fc7bf2a460")
     public void noNotAfterEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> config.setIncludeNotAfter(false));
@@ -25,7 +25,7 @@ public class NotAfterNotPresentTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @AnvilTest(id = "basic-2e748146ce")
+    @AnvilTest(id = "basic-3c7f842115")
     public void noNotAfterIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> config.setIncludeNotAfter(false));

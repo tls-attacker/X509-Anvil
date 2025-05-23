@@ -22,7 +22,7 @@ public class LargeSerialNumberTest extends X509AnvilTest {
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
     @IpmLimitations(identifiers = "entity:serial_number")
-    @AnvilTest(id = "basic-fe0010f77a")
+    @AnvilTest(id = "basic-63b58d6a92")
     public void largeSerialNumberEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setSerialNumber(TestUtils.createBigInteger(256)));
     }
@@ -34,7 +34,7 @@ public class LargeSerialNumberTest extends X509AnvilTest {
     @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
     @IpmLimitations(identifiers = "inter0:serial_number")
-    @AnvilTest(id = "basic-bf058326d1")
+    @AnvilTest(id = "basic-c482ae3643")
     public void largeSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
         (X509CertificateConfigModifier) config ->

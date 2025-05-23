@@ -19,7 +19,7 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension [...] " +
                     "that contains information that it cannot process.")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "extension-f7cd9aefde")
+    @AnvilTest(id = "extension-199eb869ce")
     public void invalidCriticalSubjectKeyIdentifierEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
@@ -35,7 +35,7 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension [...] " +
                     "that contains information that it cannot process.")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "extension-f7cd9aefde")
+    @AnvilTest(id = "extension-5ad1c94f1c")
     public void invalidCriticalSubjectKeyIdentifierIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);

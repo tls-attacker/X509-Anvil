@@ -1,5 +1,5 @@
 import os
-import sys
+import re
 
 # exhaustively iterate through all subfolders
 def walk_dir(path):
@@ -13,14 +13,20 @@ def walk_dir(path):
             print(file)
             # read file content as string
             with open(os.path.join(root, file), 'r') as f:
-                content = f.read()
-                if '@AnvilTest(id = "")' in content:
-                    # generate 5 byte long random hex string
-                    random_hex = os.urandom(5).hex()
-                    # replace the id with the random hex string
-                    content = content.replace('@AnvilTest(id = "")', '@AnvilTest(id = "REPLACE-' + random_hex + '")')
-                    # write the content back to the file
-                    with open(os.path.join(root, file), 'w') as f:
-                        f.write(content)
+                lines = []
+                for line in f:
+                    lines += [line]
+                for i, line in enumerate(lines):
+                    if '@AnvilTest(id = "' in line:
+                        # replace the id with the random hex string
+                        line = re.sub('@AnvilTest\(id = ".*"\)', '@AnvilTest(id = "REPLACE-' + os.urandom(5).hex() + '")', line)
+                        # content = content.replace('@AnvilTest(id = "")', )
+                    lines[i] = line
+
+                # join the lines back into a single string
+                content = ''.join(lines)
+                # write the content back to the file
+                with open(os.path.join(root, file), 'w') as f:
+                    f.write(content)
 
 walk_dir(".")

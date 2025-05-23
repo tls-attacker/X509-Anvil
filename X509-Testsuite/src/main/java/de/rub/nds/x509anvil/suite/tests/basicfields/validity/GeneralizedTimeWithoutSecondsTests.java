@@ -19,7 +19,7 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values [...] MUST include seconds")
     @SeverityLevel(Severity.ERROR)
     @IpmLimitations(identifiers = "entity:not_before")
-    @AnvilTest(id = "basic-e6fd8c867c")
+    @AnvilTest(id = "basic-b09833f225")
     public void notBeforeEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
@@ -32,7 +32,7 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values [...] MUST include seconds")
     @SeverityLevel(Severity.ERROR)
     @IpmLimitations(identifiers = "inter0:not_before")
-    @AnvilTest(id = "basic-e6fd8c867c")
+    @AnvilTest(id = "basic-b1e7273312")
     public void notBeforeIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {
@@ -45,7 +45,7 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values [...] MUST include seconds")
     @SeverityLevel(Severity.ERROR)
             @IpmLimitations(identifiers = "entity:not_after")
-    @AnvilTest(id = "basic-e6fd8c867c")
+    @AnvilTest(id = "basic-0a0797aef4")
     public void notAfterEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
@@ -58,7 +58,7 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values [...] MUST include seconds")
     @SeverityLevel(Severity.ERROR)
     @IpmLimitations(identifiers = "inter0:not_after")
-    @AnvilTest(id = "basic-e6fd8c867c")
+    @AnvilTest(id = "basic-beb1b04e7a")
     public void notAfterIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {

@@ -16,7 +16,7 @@ import java.util.List;
 public class UntrustedRootTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280")
-    @AnvilTest(id = "common-24658bad0c")
+    @AnvilTest(id = "common-f15e7199ea")
     @StaticRoot(false)
     public void untrustedRootCertificate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertBooleanRoot(testRunner, false, config -> {

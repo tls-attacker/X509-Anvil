@@ -17,7 +17,7 @@ public class SignatureAlgorithmNotPresentTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @AnvilTest(id = "basic-cc1bcd785a")
+    @AnvilTest(id = "basic-d4c4dd28f7")
     public void noSignatureAlgorithmEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> config.setIncludeSignatureAlgorithm(false));
@@ -26,7 +26,7 @@ public class SignatureAlgorithmNotPresentTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @AnvilTest(id = "basic-cc1bcd785a")
+    @AnvilTest(id = "basic-a5f35deb02")
     public void noSignatureAlgorithmIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> config.setIncludeSignatureAlgorithm(false));

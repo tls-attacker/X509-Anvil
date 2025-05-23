@@ -14,7 +14,7 @@ public class UnknownOidTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm and 4.1.2.3")
     @SeverityLevel(Severity.ERROR)
-    @AnvilTest(id = "basic-863d801ce1")
+    @AnvilTest(id = "basic-fb1e899219")
     public void unknownOidTbsAndCertEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> config.setSignatureAlgorithmOidInvalid(true));
@@ -22,7 +22,7 @@ public class UnknownOidTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm and 4.1.2.3")
     @SeverityLevel(Severity.ERROR)
-    @AnvilTest(id = "basic-863d801ce1")
+    @AnvilTest(id = "basic-3bd920316f")
     public void unknownOidTbsAndCertIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> config.setSignatureAlgorithmOidInvalid(true));

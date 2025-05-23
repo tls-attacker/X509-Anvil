@@ -19,7 +19,7 @@ public class GeneralizedTimeFractionalSecondsTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.5.2. GeneralizedTime", text = "GeneralizedTime values MUST NOT include fractional seconds.")
     @SeverityLevel(Severity.ERROR)
     @IpmLimitations(identifiers = "entity:not_before")
-    @AnvilTest(id = "basic-41012181c9")
+    @AnvilTest(id = "basic-4d9f222798")
     public void notBeforeEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
@@ -32,7 +32,7 @@ public class GeneralizedTimeFractionalSecondsTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.5.2. GeneralizedTime", text = "GeneralizedTime values MUST NOT include fractional seconds.")
     @SeverityLevel(Severity.ERROR)
     @IpmLimitations(identifiers = "inter0:not_before")
-    @AnvilTest(id = "basic-41012181c9")
+    @AnvilTest(id = "basic-d786262526")
     public void notBeforeIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {
@@ -45,7 +45,7 @@ public class GeneralizedTimeFractionalSecondsTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.5.2. GeneralizedTime", text = "GeneralizedTime values MUST NOT include fractional seconds.")
     @SeverityLevel(Severity.ERROR)
     @IpmLimitations(identifiers = "entity:not_after")
-    @AnvilTest(id = "basic-41012181c9")
+    @AnvilTest(id = "basic-c2bc812f45")
     public void notAfterEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
@@ -58,7 +58,7 @@ public class GeneralizedTimeFractionalSecondsTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.5.2. GeneralizedTime", text = "GeneralizedTime values MUST NOT include fractional seconds.")
     @SeverityLevel(Severity.ERROR)
     @IpmLimitations(identifiers = "inter0:not_after")
-    @AnvilTest(id = "basic-41012181c9")
+    @AnvilTest(id = "basic-0f5f2487f7")
     public void notAfterIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {

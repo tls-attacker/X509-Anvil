@@ -21,7 +21,7 @@ public class InsufficientPathLenTests extends X509AnvilTest {
             text = "In this case, it [the pathLenConstraint field] gives the maximum number of non-self-issued intermediate certificates that may " +
                     "follow this certificate in a valid certification path.")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "extension-1dd7781bc6")
+    @AnvilTest(id = "extension-b88af2b7d6")
     public void insufficientPathLenChainLength4(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertBooleanFirstIntermediate(testRunner, false, config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
@@ -38,7 +38,7 @@ public class InsufficientPathLenTests extends X509AnvilTest {
                     "follow this certificate in a valid certification path.")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 5, maxLength = 5, intermediateCertsModeled = 3)
-    @AnvilTest(id = "extension-1dd7781bc6")
+    @AnvilTest(id = "extension-f4379eba22")
     public void insufficientPathLenChainLength5(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertBooleanFirstIntermediate(testRunner, false, config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
@@ -55,7 +55,7 @@ public class InsufficientPathLenTests extends X509AnvilTest {
                     "follow this certificate in a valid certification path.")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 10, maxLength = 10, intermediateCertsModeled = 8)
-    @AnvilTest(id = "extension-1dd7781bc6")
+    @AnvilTest(id = "extension-a4b5710704")
     public void insufficientPathLenChainLength10(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);

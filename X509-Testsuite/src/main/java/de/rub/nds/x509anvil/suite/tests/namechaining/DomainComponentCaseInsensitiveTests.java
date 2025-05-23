@@ -21,7 +21,7 @@ public class DomainComponentCaseInsensitiveTests extends X509AnvilTest {
             text = "Conforming implementations shall perform a case-insensitive exact match when comparing domainComponent " +
                     "attributes in distinguished names")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "namechaining-a7151079d1")
+    @AnvilTest(id = "namechaining-85e5f0f10d")
     public void switchedCaseDomainComponentTest(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {
             Pair<X500AttributeType, String> newPair = new Pair<>(X500AttributeType.DOMAIN_COMPONENT, "CaSeInSeNsItIvE");

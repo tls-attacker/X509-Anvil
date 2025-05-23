@@ -19,7 +19,7 @@ public class NegativePathLenTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.2.1.9. Basic Constraints",
             text = "here it appears, the pathLenConstraint field MUST be greater than or equal to zero.")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "extension-9e3c97d427")
+    @AnvilTest(id = "extension-3dbdfa5609")
     public void negativePathLen(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);

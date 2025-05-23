@@ -18,7 +18,7 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
             text = "This field MUST contain the same algorithm identifier as the signatureAlgorithm field in the sequence Certificate (Section 4.1.1.2).")
     @SeverityLevel(Severity.ERROR)
     @IpmLimitations(identifiers = "entity:key_type")
-    @AnvilTest(id = "basic-42fa96e99c")
+    @AnvilTest(id = "basic-3e2fbb009f")
     public void tbsSignatureDoesntMatchAlgorithmEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(
@@ -31,7 +31,7 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
             text = "This field MUST contain the same algorithm identifier as the signatureAlgorithm field in the sequence Certificate (Section 4.1.1.2).")
     @SeverityLevel(Severity.ERROR)
     @IpmLimitations(identifiers = "inter0:key_type")
-    @AnvilTest(id = "basic-42fa96e99c")
+    @AnvilTest(id = "basic-eec58410b3")
     public void tbsSignatureDoesntMatchAlgorithmIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(

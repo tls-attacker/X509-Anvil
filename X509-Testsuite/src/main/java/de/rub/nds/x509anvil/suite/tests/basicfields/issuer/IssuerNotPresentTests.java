@@ -14,14 +14,14 @@ public class IssuerNotPresentTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "basic-dd3cfbae96")
+    @AnvilTest(id = "basic-3d37c180b5")
     public void noIssuerEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setIncludeIssuer(false));
    }
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "basic-9e47a1a2cb")
+    @AnvilTest(id = "basic-3502b37055")
     public void noIssuerIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setIncludeIssuer(false));
       }

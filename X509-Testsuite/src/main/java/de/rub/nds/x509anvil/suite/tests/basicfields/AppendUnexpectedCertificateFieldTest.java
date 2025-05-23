@@ -14,7 +14,7 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
 
     @Specification(document = "RFC 5280")
     @SeverityLevel(Severity.ERROR)
-    @AnvilTest(id = "basic-fea0767d4f")
+    @AnvilTest(id = "basic-e0bcce347c")
     public void appendUnexpectedFieldEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             config.setAppendUnexpectedCertificateField(true);
@@ -23,7 +23,7 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
 
     @Specification(document = "RFC 5280")
     @SeverityLevel(Severity.ERROR)
-    @AnvilTest(id = "basic-fea0767d4f")
+    @AnvilTest(id = "basic-6d1ba61fab")
     public void appendUnexpectedFieldIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setAppendUnexpectedCertificateField(true);

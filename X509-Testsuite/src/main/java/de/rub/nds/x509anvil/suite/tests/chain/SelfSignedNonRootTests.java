@@ -16,7 +16,7 @@ public class SelfSignedNonRootTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "for all x in {1, ..., n-1}, the subject of certificate x is the issuer of certificate x+1;")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "chain-1ffa212932")
+    @AnvilTest(id = "chain-1694cbbbbf")
     public void selfSignedEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier)config -> config.setSelfSigned(true));
     }
@@ -24,7 +24,7 @@ public class SelfSignedNonRootTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "for all x in {1, ..., n-1}, the subject of certificate x is the issuer of certificate x+1;")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "chain-1ffa212932")
+    @AnvilTest(id = "chain-01967f3251")
     public void selfSignedIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier)config -> config.setSelfSigned(true));
     }

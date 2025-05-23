@@ -9,7 +9,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 
 public class PositiveTest extends X509AnvilTest {
 
-    @AnvilTest(id = "common-9ddcbc1284")
+    @AnvilTest(id = "common-f4db514b76")
     public void sampleTestCase(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
             // No specific changes to config needed for this test, keeping the default valid case.

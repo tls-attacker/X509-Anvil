@@ -19,7 +19,7 @@ public class InterCertWithoutKeyCertSignTests extends X509AnvilTest {
             text = "If the keyUsage extension is present, then the subject public key MUST NOT be used to verify signatures on " +
                     "certificates or CRLs unless the corresponding keyCertSign or cRLSign bit is set.")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest(id = "extension-654b8810f8")
+    @AnvilTest(id = "extension-9e051adef5")
     public void intermediateCertWithCaNotSet(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);

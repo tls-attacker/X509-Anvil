@@ -15,7 +15,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest(id = "extension-3c18f9642b")
+    @AnvilTest(id = "extension-ddb7cadc32")
     public void duplicateIdenticalEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
@@ -31,7 +31,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest(id = "extension-3c18f9642b")
+    @AnvilTest(id = "extension-ad98d1b6ce")
     public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
@@ -45,7 +45,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest(id = "extension-3c18f9642b")
+    @AnvilTest(id = "extension-8fc40ac4e1")
     public void duplicateDifferentEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
@@ -65,7 +65,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2 Certificate Extensions", text = "A certificate MUST NOT include more than one instance of a particular extension")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest(id = "extension-3c18f9642b")
+    @AnvilTest(id = "extension-c9f599cfc7")
     public void duplicateDifferentIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();

@@ -14,14 +14,14 @@ import java.math.BigInteger;
 public class InvalidPositiveVersionTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
-    @AnvilTest(id = "basic-ae83129638")
+    @AnvilTest(id = "basic-c1e564eea6")
             @IpmLimitations(identifiers = "entity:version")
     public void invalidVersion4Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setVersion(BigInteger.valueOf(3)));
     }
 
     @Specification(document = "RFC 5280", section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
-    @AnvilTest(id = "basic-ae83129638")
+    @AnvilTest(id = "basic-1203edde46")
             @IpmLimitations(identifiers = "inter0:version")
     public void invalidVersion4Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setVersion(BigInteger.valueOf(3)));
