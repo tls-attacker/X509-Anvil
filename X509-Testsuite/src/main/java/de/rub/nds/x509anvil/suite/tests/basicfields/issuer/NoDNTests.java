@@ -17,7 +17,7 @@ public class NoDNTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.2.4. Issuer", text = "The issuer field MUST contain a non-empty distinguished name (DN).")
     @SeverityLevel(Severity.WARNING)
-    @AnvilTest
+    @AnvilTest(id = "syntax-1d53f8c491")
     public void noDn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         // this sets the issuer of the entity cert to empty list
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setSubject(List.of()));

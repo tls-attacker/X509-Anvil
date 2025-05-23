@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Assertions;
 public class WeakKeyLengthTests extends X509AnvilTest {
 
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest()
+    @AnvilTest(id = "")
     public void weak512BitRsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION, 512), certificateChainConfig.getLastSigningConfig(), "inter0");
@@ -29,7 +29,7 @@ public class WeakKeyLengthTests extends X509AnvilTest {
     }
 
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest()
+    @AnvilTest(id = "")
     public void weak1024BitRsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION, 1024), certificateChainConfig.getLastSigningConfig(), "inter0");
@@ -39,7 +39,7 @@ public class WeakKeyLengthTests extends X509AnvilTest {
     }
 
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest()
+    @AnvilTest(id = "")
     public void weak1024BitDsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm.DSA_WITH_SHA256, 1024), certificateChainConfig.getLastSigningConfig(), "inter0");

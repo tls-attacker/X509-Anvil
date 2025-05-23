@@ -22,7 +22,7 @@ public class InsufficientPathLenTests extends X509AnvilTest {
             text = "In this case, it [the pathLenConstraint field] gives the maximum number of non-self-issued intermediate certificates that may " +
                     "follow this certificate in a valid certification path.")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest
+    @AnvilTest(id = "")
     public void insufficientPathLenChainLength4(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertBooleanFirstIntermediate(testRunner, false, config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
@@ -39,7 +39,7 @@ public class InsufficientPathLenTests extends X509AnvilTest {
                     "follow this certificate in a valid certification path.")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 5, maxLength = 5, intermediateCertsModeled = 3)
-@AnvilTest
+    @AnvilTest(id = "")
     public void insufficientPathLenChainLength5(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertBooleanFirstIntermediate(testRunner, false, config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
@@ -56,7 +56,7 @@ public class InsufficientPathLenTests extends X509AnvilTest {
                     "follow this certificate in a valid certification path.")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 10, maxLength = 10, intermediateCertsModeled = 8)
-@AnvilTest
+    @AnvilTest(id = "")
     public void insufficientPathLenChainLength10(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);

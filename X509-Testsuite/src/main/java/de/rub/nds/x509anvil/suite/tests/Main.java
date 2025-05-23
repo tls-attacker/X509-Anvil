@@ -7,8 +7,6 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterIdentifierProvider
 import de.rub.nds.x509anvil.framework.featureextraction.UnsupportedFeatureException;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeException;
 
-import java.util.Random;
-
 public class Main {
     public static void main(String[] args) throws UnsupportedFeatureException, ProbeException {
 
@@ -21,7 +19,7 @@ public class Main {
         anvilTestConfig.setIgnoreCache(true);
         anvilTestConfig.setIdentifier("X509AnvilTest");
         anvilTestConfig.setOutputFolder("/tmp/X509-Anvil-Out-" + System.currentTimeMillis());
-        anvilTestConfig.setTestPackage(ContextHelper.getTestConfig().getTestPackage());
+        anvilTestConfig.setTestPackage(ContextHelper.getTestConfig().getTestPackage() + ".extensions.common");
 
 
         TestRunner testRunner = new TestRunner(anvilTestConfig, "placeholder", new X509AnvilParameterIdentifierProvider());

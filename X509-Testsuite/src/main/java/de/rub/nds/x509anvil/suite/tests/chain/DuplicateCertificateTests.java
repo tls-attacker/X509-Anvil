@@ -23,7 +23,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "A certificate MUST NOT appear more than once in a prospective certification path.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest()
+    @AnvilTest(id = "")
     public void duplicateRoot(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
@@ -37,7 +37,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "A certificate MUST NOT appear more than once in a prospective certification path.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest()
+    @AnvilTest(id = "")
     public void duplicateIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);
@@ -53,7 +53,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "A certificate MUST NOT appear more than once in a prospective certification path.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @AnvilTest()
+    @AnvilTest(id = "")
     public void duplicateEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
         X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(certificateChainConfig);

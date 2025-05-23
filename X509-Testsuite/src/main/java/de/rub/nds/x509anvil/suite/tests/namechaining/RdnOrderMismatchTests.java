@@ -17,7 +17,7 @@ public class RdnOrderMismatchTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Two distinguished names DN1 and DN2 match if [...] and the matching RDNs appear in the same order in both DNs")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest
+    @AnvilTest(id = "")
     public void rdnOrderMismatchInIssuerEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setShuffleIssuer(true));
     }

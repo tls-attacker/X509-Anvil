@@ -14,9 +14,9 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 
 public class WeakHashAlgorithmTests extends X509AnvilTest {
 
-    @AnvilTest()
+    @AnvilTest(id = "")
     @SeverityLevel(Severity.CRITICAL)
-            public void weakHashMd2(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void weakHashMd2(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.MD2);
         });
@@ -24,27 +24,27 @@ public class WeakHashAlgorithmTests extends X509AnvilTest {
     }
 
 
-    @AnvilTest()
+    @AnvilTest(id = "")
     @SeverityLevel(Severity.CRITICAL)
-            public void weakHashMd4(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void weakHashMd4(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.MD4);
         });
     }
 
 
-    @AnvilTest()
+    @AnvilTest(id = "")
     @SeverityLevel(Severity.CRITICAL)
-            public void weakHashMd5(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void weakHashMd5(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.MD5);
         });
     }
 
 
-    @AnvilTest()
+    @AnvilTest(id = "")
     @SeverityLevel(Severity.CRITICAL)
-            public void weakHashSha1(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void weakHashSha1(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.amendSignatureAlgorithm(HashAlgorithm.SHA1);
         });

@@ -20,7 +20,7 @@ public class Version1IntermediateCertTests extends X509AnvilTest {
             text = "If certificate i is a version 1 or version 2 certificate, then the application MUST either verify that " +
                     "certificate i is a CA certificate through out-of-band means or reject the certificate.")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest
+    @AnvilTest(id = "")
     public void version1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setVersion(new BigInteger("0"));
@@ -32,7 +32,7 @@ public class Version1IntermediateCertTests extends X509AnvilTest {
             text = "If certificate i is a version 1 or version 2 certificate, then the application MUST either verify that " +
                     "certificate i is a CA certificate through out-of-band means or reject the certificate.")
     @SeverityLevel(Severity.CRITICAL)
-    @AnvilTest
+    @AnvilTest(id = "")
     public void version2Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             config.setVersion(new BigInteger("1"));
