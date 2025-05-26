@@ -17,9 +17,9 @@ public class Main {
         anvilTestConfig.setStrength(1);
         anvilTestConfig.setDisableTcpDump(true);
         anvilTestConfig.setIgnoreCache(true);
-        anvilTestConfig.setIdentifier("X509AnvilTest");
+        anvilTestConfig.setIdentifier("X509AnvilTest - Test Strength " + anvilTestConfig.getStrength());
         anvilTestConfig.setOutputFolder("/tmp/X509-Anvil-Out-" + System.currentTimeMillis());
-        anvilTestConfig.setTestPackage(ContextHelper.getTestConfig().getTestPackage() + ".extensions.common");
+        anvilTestConfig.setTestPackage(ContextHelper.getTestConfig().getTestPackage());
 
 
         TestRunner testRunner = new TestRunner(anvilTestConfig, "placeholder", new X509AnvilParameterIdentifierProvider());
