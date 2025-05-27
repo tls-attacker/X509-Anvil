@@ -13,9 +13,9 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 
 public class TbsSignatureNotPresentTests extends X509AnvilTest {
 
-    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
+    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields", text = "The signature field is non-optional and must be present.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-4d1fd77ec3")
     public void noSignatureEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
@@ -23,9 +23,9 @@ public class TbsSignatureNotPresentTests extends X509AnvilTest {
         config.setIncludeTbsSignature(false));
     }
 
-    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
+    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields", text = "The signature field is non-optional and must be present.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-ab702acb6f")
     public void noSignatureIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setIncludeTbsSignature(false));

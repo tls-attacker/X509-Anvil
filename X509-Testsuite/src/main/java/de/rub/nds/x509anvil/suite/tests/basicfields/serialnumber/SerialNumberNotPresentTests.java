@@ -13,17 +13,17 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 
 public class SerialNumberNotPresentTests extends X509AnvilTest {
 
-    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
+    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields", text = "The serialNumber field is non-optional and must be present.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-c946fef182")
     public void noSerialNumberEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setIncludeSerialNumber(false));
     }
 
-    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
+    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields", text = "The serialNumber field is non-optional and must be present.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-99ffba7896")
     public void noSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setIncludeSerialNumber(false));

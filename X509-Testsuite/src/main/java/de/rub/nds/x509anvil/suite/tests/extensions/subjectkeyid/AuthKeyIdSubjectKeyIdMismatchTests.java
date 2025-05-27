@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.subjectkeyid;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -16,7 +17,8 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.2.1.2. Subject Key Identifier",
             text = "In conforming CA certificates, the value of the subject key identifier MUST be the value placed in the key identifier " +
                     "field of the authority key identifier extension (Section 4.2.1.1) of certificates issued by the subject of this certificate.")
-    @SeverityLevel(Severity.WARNING)
+    @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-a71fd6a6dc")
     public void keyIdMismatchEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, config -> {
@@ -38,7 +40,8 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.2.1.2. Subject Key Identifier",
             text = "In conforming CA certificates, the value of the subject key identifier MUST be the value placed in the key identifier " +
                     "field of the authority key identifier extension (Section 4.2.1.1) of certificates issued by the subject of this certificate.")
-    @SeverityLevel(Severity.WARNING)
+    @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-0ff7547245")
     public void keyIdMismatchIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, config -> {

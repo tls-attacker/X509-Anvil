@@ -2,6 +2,7 @@ package de.rub.nds.x509anvil.suite.tests.basicfields.tbssignature;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
+import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -16,7 +17,8 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.2.3.  Signature",
             text = "This field MUST contain the same algorithm identifier as the signatureAlgorithm field in the sequence Certificate (Section 4.1.1.2).")
-    @SeverityLevel(Severity.ERROR)
+    @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:key_type")
     @AnvilTest(id = "basic-3e2fbb009f")
     public void tbsSignatureDoesntMatchAlgorithmEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -29,7 +31,8 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.2.3.  Signature",
             text = "This field MUST contain the same algorithm identifier as the signatureAlgorithm field in the sequence Certificate (Section 4.1.1.2).")
-    @SeverityLevel(Severity.ERROR)
+    @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:key_type")
     @AnvilTest(id = "basic-eec58410b3")
     public void tbsSignatureDoesntMatchAlgorithmIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

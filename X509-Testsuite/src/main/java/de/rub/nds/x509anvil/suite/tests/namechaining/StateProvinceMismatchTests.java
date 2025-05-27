@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.namechaining;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -18,6 +19,7 @@ public class StateProvinceMismatchTests extends X509AnvilTest {
             text = "Two naming attributes match if the attribute types are the same and the values of the attributes are " +
                     "an exact match after processing with the string preparation algorithm")
     @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-48527310d0")
     public void stateProvinceMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->

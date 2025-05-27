@@ -20,7 +20,7 @@ public class LargeSerialNumberTest extends X509AnvilTest {
                     "Certificate users MUST be able to handle serialNumber values up to 20 octets.  Conforming CAs MUST" +
                     "NOT use serialNumber values longer than 20 octets.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:serial_number")
     @AnvilTest(id = "basic-63b58d6a92")
     public void largeSerialNumberEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -32,7 +32,7 @@ public class LargeSerialNumberTest extends X509AnvilTest {
                     "Certificate users MUST be able to handle serialNumber values up to 20 octets.  Conforming CAs MUST" +
                     "NOT use serialNumber values longer than 20 octets.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:serial_number")
     @AnvilTest(id = "basic-c482ae3643")
     public void largeSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

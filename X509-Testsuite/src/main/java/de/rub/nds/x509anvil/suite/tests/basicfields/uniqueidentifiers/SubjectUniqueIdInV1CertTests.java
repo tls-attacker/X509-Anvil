@@ -2,6 +2,7 @@ package de.rub.nds.x509anvil.suite.tests.basicfields.uniqueidentifiers;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
+import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -18,6 +19,7 @@ public class SubjectUniqueIdInV1CertTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.8. Unique Identifiers",
             text = "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).")
     @SeverityLevel(Severity.INFORMATIONAL)
+    @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:version")
     @AnvilTest(id = "basic-9966458966")
     public void subjectUniqueIdPresentInV1Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -32,6 +34,7 @@ public class SubjectUniqueIdInV1CertTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.2.8. Unique Identifiers",
             text = "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).")
     @SeverityLevel(Severity.INFORMATIONAL)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:version")
     @AnvilTest(id = "basic-8ab9f03d9c")
     public void subjectUniqueIdPresentInV1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

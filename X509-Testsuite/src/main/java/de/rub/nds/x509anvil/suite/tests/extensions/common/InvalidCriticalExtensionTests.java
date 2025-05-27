@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.common;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -19,6 +20,7 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension [...] " +
                     "that contains information that it cannot process.")
     @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-199eb869ce")
     public void invalidCriticalSubjectKeyIdentifierEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -35,6 +37,7 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
             text = "A certificate-using system MUST reject the certificate if it encounters a critical extension [...] " +
                     "that contains information that it cannot process.")
     @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-5ad1c94f1c")
     public void invalidCriticalSubjectKeyIdentifierIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

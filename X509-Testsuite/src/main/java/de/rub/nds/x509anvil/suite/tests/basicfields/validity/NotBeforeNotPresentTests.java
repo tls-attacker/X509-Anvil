@@ -13,18 +13,18 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 
 public class NotBeforeNotPresentTests extends X509AnvilTest {
 
-    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
+    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields", text = "The notBefore field is non-optional and must be present.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-8161c07302")
     public void noNotBeforeEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> config.setIncludeNotBefore(false));
     }
 
-    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
+    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields", text = "The notBefore field is non-optional and must be present.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-a995359b4a")
     public void noNotBeforeIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
