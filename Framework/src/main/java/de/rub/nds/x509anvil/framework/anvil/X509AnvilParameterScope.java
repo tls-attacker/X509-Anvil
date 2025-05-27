@@ -16,8 +16,8 @@ public class X509AnvilParameterScope extends ParameterScope {
     private final static int INTER_CHAIN_OFFSET = 1;
     private final static int ENTITY_CHAIN_POS = Integer.MAX_VALUE;
 
-    public static X509AnvilParameterScope ROOT = new X509AnvilParameterScope(ROOT_CHAIN_POS);
-    public static X509AnvilParameterScope ENTITY = new X509AnvilParameterScope(ENTITY_CHAIN_POS);
+    public static final X509AnvilParameterScope ROOT = new X509AnvilParameterScope(ROOT_CHAIN_POS);
+    public static final X509AnvilParameterScope ENTITY = new X509AnvilParameterScope(ENTITY_CHAIN_POS);
 
     private final int chainPosition;
 

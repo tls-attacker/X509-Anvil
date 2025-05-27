@@ -14,18 +14,18 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 
 public class SignatureAlgorithmNotPresentTests extends X509AnvilTest {
 
-    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
+    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields", text = "The signatureAlgorithm field is non-optional and must be present.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-d4c4dd28f7")
     public void noSignatureAlgorithmEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> config.setIncludeSignatureAlgorithm(false));
     }
 
-    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
+    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields", text = "The signatureAlgorithm field is non-optional and must be present.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-a5f35deb02")
     public void noSignatureAlgorithmIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,

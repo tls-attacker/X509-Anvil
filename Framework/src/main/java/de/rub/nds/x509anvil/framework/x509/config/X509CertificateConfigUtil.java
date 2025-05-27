@@ -64,10 +64,7 @@ public class X509CertificateConfigUtil {
     }
 
     public static X509CertificateConfig generateDefaultEntityCertificateConfig(boolean selfSigned) {
-        X509CertificateConfig config =
-            generateDefaultCertificateConfig(selfSigned, CertificateChainPositionType.ENTITY, "tls-attacker.com");
-        // attachUniqueKeysEntity(config);
-        return config;
+        return generateDefaultCertificateConfig(selfSigned, CertificateChainPositionType.ENTITY, "tls-attacker.com");
     }
 
     private static BasicConstraintsConfig generateBasicConstraintsConfig(CertificateChainPositionType chainPosType) {

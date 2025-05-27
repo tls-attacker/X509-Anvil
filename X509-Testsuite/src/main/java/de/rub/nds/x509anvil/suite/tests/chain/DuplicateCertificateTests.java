@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.chain;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -21,6 +22,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "A certificate MUST NOT appear more than once in a prospective certification path.")
     @SeverityLevel(Severity.INFORMATIONAL)
+    @ChainLength(minLength = 2)
     @AnvilTest(id = "chain-ff448e8b13")
     public void duplicateRoot(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
@@ -35,6 +37,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "A certificate MUST NOT appear more than once in a prospective certification path.")
     @SeverityLevel(Severity.INFORMATIONAL)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "chain-606109ea61")
     public void duplicateIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
@@ -51,6 +54,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "6.1 Basic Path Validation",
             text = "A certificate MUST NOT appear more than once in a prospective certification path.")
     @SeverityLevel(Severity.INFORMATIONAL)
+    @ChainLength(minLength = 2)
     @AnvilTest(id = "chain-7e77ac5a30")
     public void duplicateEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);

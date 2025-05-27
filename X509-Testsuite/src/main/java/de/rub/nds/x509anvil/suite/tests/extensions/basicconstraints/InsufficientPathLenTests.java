@@ -21,6 +21,7 @@ public class InsufficientPathLenTests extends X509AnvilTest {
             text = "In this case, it [the pathLenConstraint field] gives the maximum number of non-self-issued intermediate certificates that may " +
                     "follow this certificate in a valid certification path.")
     @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
     @AnvilTest(id = "extension-b88af2b7d6")
     public void insufficientPathLenChainLength4(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertBooleanFirstIntermediate(testRunner, false, config -> {

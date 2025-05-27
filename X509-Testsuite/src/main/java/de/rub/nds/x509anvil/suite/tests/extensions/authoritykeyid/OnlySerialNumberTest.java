@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.authoritykeyid;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -17,7 +18,8 @@ public class OnlySerialNumberTest extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "A.2. Implicitly Tagged Module, 1988 Syntax",
             text = "authorityCertIssuer and authorityCertSerialNumber MUST both be present or both be absent")
-    @SeverityLevel(Severity.INFORMATIONAL)
+    @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-b054d544c3")
     public void missingKeyIdentifierEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, config -> {
@@ -34,7 +36,8 @@ public class OnlySerialNumberTest extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "A.2. Implicitly Tagged Module, 1988 Syntax",
             text = "authorityCertIssuer and authorityCertSerialNumber MUST both be present or both be absent")
-    @SeverityLevel(Severity.INFORMATIONAL)
+    @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-dadc51d905")
     public void missingKeyIdentifierIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, config -> {

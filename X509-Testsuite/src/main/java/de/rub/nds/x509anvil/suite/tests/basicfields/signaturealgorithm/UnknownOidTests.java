@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.basicfields.signaturealgorithm;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -13,7 +14,8 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 public class UnknownOidTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm and 4.1.2.3")
-    @SeverityLevel(Severity.ERROR)
+    @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-fb1e899219")
     public void unknownOidTbsAndCertEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
@@ -21,7 +23,8 @@ public class UnknownOidTests extends X509AnvilTest {
     }
 
     @Specification(document = "RFC 5280", section = "4.1.1.2. signatureAlgorithm and 4.1.2.3")
-    @SeverityLevel(Severity.ERROR)
+    @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-3bd920316f")
     public void unknownOidTbsAndCertIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,

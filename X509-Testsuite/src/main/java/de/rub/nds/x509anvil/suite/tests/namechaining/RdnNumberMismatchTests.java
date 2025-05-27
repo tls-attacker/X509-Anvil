@@ -2,6 +2,7 @@ package de.rub.nds.x509anvil.suite.tests.namechaining;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.protocol.xml.Pair;
+import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -20,6 +21,7 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Two distinguished names DN1 and DN2 match if they have the same number of RDNs")
     @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-f284c832ec")
     public void missingRdn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -38,6 +40,7 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "7.1. Internationalized Names in Distinguished Names",
             text = "Two distinguished names DN1 and DN2 match if they have the same number of RDNs")
     @SeverityLevel(Severity.CRITICAL)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-b1401df33c")
     public void additionalRdn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
