@@ -29,3 +29,5 @@ hs_err_pid*
 
 X509-Testsuite/results/*
 X509-Testsuite/resources/out/*
+*/.flattened-pom.xml
+*/apps

@@ -1,7 +1,6 @@
 package de.rub.nds.x509anvil.suite.tests.basicfields.signaturealgorithm;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -18,8 +17,7 @@ public class SignatureAlgorithmNotPresentTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "basic-d4c4dd28f7")
     public void noSignatureAlgorithmEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> config.setIncludeSignatureAlgorithm(false));
@@ -28,8 +26,7 @@ public class SignatureAlgorithmNotPresentTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "basic-a5f35deb02")
     public void noSignatureAlgorithmIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> config.setIncludeSignatureAlgorithm(false));

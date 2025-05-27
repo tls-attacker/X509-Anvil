@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>de.rub.nds.x509test</groupId>
+  <artifactId>X509-Anvil</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <description>Bill of Materials POM for the entire protocol attacker ecosystem used to keep dependencies in sync.</description>
+  <url>https://github.com/tls-attacker/Protocol-Toolkit-BOM/X509-Anvil</url>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>jsomorovsky</id>
+      <name>Juraj Somorovsky</name>
+      <email>juraj.somorovsky@upb.de</email>
+      <url>https://github.com/jurajsomorovsky/</url>
+      <organization>UPB</organization>
+      <organizationUrl>https://cs.uni-paderborn.de/en/syssec/</organizationUrl>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>ic0ns</id>
+      <name>Robert Merget</name>
+      <email>robert.merget@tii.ae</email>
+      <url>https://github.com/ic0ns/</url>
+      <organization>TII</organization>
+      <organizationUrl>https://tii.ae</organizationUrl>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>mmaehren</id>
+      <name>Marcel Maehren</name>
+      <email>marcel.maehren@rub.de</email>
+      <url>https://github.com/mmaehren/</url>
+      <organization>NDS</organization>
+      <organizationUrl>https://informatik.rub.de/nds/</organizationUrl>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>NErinola</id>
+      <name>Nurullah Erinola</name>
+      <email>nurullah.erinola@rub.de</email>
+      <url>https://github.com/NErinola/</url>
+      <organization>NDS</organization>
+      <organizationUrl>https://informatik.rub.de/nds/</organizationUrl>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>TrueSkrillor</id>
+      <name>Fabian Bäumer</name>
+      <email>fabian.baeumer@rub.de</email>
+      <url>https://github.com/TrueSkrillor</url>
+      <organization>NDS</organization>
+      <organizationUrl>https://informatik.rub.de/nds/</organizationUrl>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>lambdafu</id>
+      <name>Marcus Brinkmann</name>
+      <email>marcus.brinkmann@rub.de</email>
+      <url>https://github.com/lambdafu</url>
+      <organization>NDS</organization>
+      <organizationUrl>https://informatik.rub.de/nds/</organizationUrl>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/tls-attacker/Protocol-Toolkit-BOM.git/X509-Anvil</connection>
+    <developerConnection>scm:git:ssh://git@github.com/tls-attacker/Protocol-Toolkit-BOM.git/X509-Anvil</developerConnection>
+    <tag>v5.1.11</tag>
+    <url>https://github.com/tls-attacker/Protocol-Toolkit-BOM/X509-Anvil</url>
+  </scm>
+</project>

@@ -9,6 +9,8 @@
 
 package de.rub.nds.x509anvil.framework.constants;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import de.rub.nds.protocol.constants.HashAlgorithm;
 import de.rub.nds.protocol.constants.SignatureAlgorithm;
 import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
@@ -20,8 +22,10 @@ import java.util.stream.Collectors;
 
 public class SignatureHashAlgorithmKeyLengthPair {
 
+    @JsonProperty("SignatureAndHashAlgorithm")
     private X509SignatureAlgorithm signatureAndHashAlgorithm;
 
+    @JsonProperty("KeyLength")
     private int keyLength;
 
     public SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm signatureAndHashAlgorithm, int keyLength) {
@@ -96,10 +100,12 @@ public class SignatureHashAlgorithmKeyLengthPair {
         this.keyLength = keyLength;
     }
 
+    @JsonIgnore
     public SignatureAlgorithm getSignatureAlgorithm() {
         return signatureAndHashAlgorithm.getSignatureAlgorithm();
     }
 
+    @JsonIgnore
     public HashAlgorithm getHashAlgorithm() {
         return signatureAndHashAlgorithm.getHashAlgorithm();
     }

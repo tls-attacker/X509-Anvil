@@ -20,12 +20,230 @@
         <module>X509-Testsuite</module>
     </modules>
     <properties>
+        <main.basedir>${project.basedir}</main.basedir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <toolkit.common.coffee4j.anvil.version>1.2.0</toolkit.common.coffee4j.anvil.version>
-        <toolkit.common.asn1attacker.version>4.1.1-SNAPSHOT</toolkit.common.asn1attacker.version>
-        <toolkit.common.x509attacker.version>4.1.2-SNAPSHOT</toolkit.common.x509attacker.version>
+        <toolkit.common.anvilcore.version>2.0.5-SNAPSHOT</toolkit.common.anvilcore.version>
+        <toolkit.common.asn1attacker.version>4.1.2-SNAPSHOT</toolkit.common.asn1attacker.version>
+        <toolkit.common.x509attacker.version>4.2.2-SNAPSHOT</toolkit.common.x509attacker.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <skip.signature>true</skip.signature>
     </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!--################# default lifecycle plugins #################-->
+                <!-- Plugin to compile source files -->
+                <!-- Compile source files -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                        <compilerArgs>
+                            <compilerArg>-proc:full</compilerArg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+                <!-- Plugin to compile javadoc -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Pack source files to jar archive -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Plugin to copy artifacts to apps folder -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>copy</id>
+                            <goals>
+                                <goal>copy</goal>
+                            </goals>
+                            <phase>package</phase>
+                            <configuration>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>${project.groupId}</groupId>
+                                        <artifactId>${project.artifactId}</artifactId>
+                                        <version>${project.version}</version>
+                                        <type>${project.packaging}</type>
+                                        <destFileName>${project.build.finalName}.${project.packaging}</destFileName>
+                                    </artifactItem>
+                                </artifactItems>
+                                <outputDirectory>${main.basedir}/apps</outputDirectory>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>copy-dependencies</id>
+                            <goals>
+                                <goal>copy-dependencies</goal>
+                            </goals>
+                            <phase>package</phase>
+                            <configuration>
+                                <outputDirectory>${main.basedir}/apps/lib</outputDirectory>
+                                <!--Ensures only runnable dependencies are included-->
+                                <includeScope>compile</includeScope>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <!--################## clean lifecycle plugins ##################-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-clean</id>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <inherited>false</inherited>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>${main.basedir}/apps</directory>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>clean-apps-folder</id>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                        <inherited>false</inherited>
+                        <configuration>
+                            <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                            <filesets>
+                                <fileset>
+                                    <directory>${main.basedir}/apps</directory>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--################# default lifecycle plugins #################-->
+            <!-- Formatting -->
+            <!--plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <configuration>
+                    <java>
+                        <lineEndings>GIT_ATTRIBUTES</lineEndings>
+                        <trimTrailingWhitespace />
+                        <endWithNewline />
+                        <importOrder />
+                        <removeUnusedImports />
+                        <indent>
+                            <spaces>true</spaces>
+                            <spacesPerTab>4</spacesPerTab>
+                        </indent>
+                        <googleJavaFormat>
+                            <version>1.25.2</version>
+                            <style>AOSP</style>
+                        </googleJavaFormat>
+                        <licenseHeader>
+                            <file>${main.basedir}/license_header_plain.txt</file>
+                        </licenseHeader>
+                    </java>
+                </configuration>
+            </plugin-->
+            <!-- Flatten pom.xml before install / deploy phases -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <configuration>
+                    <flattenMode>ossrh</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten-clean</id>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <phase>clean</phase>
+                    </execution>
+                    <execution>
+                        <id>flatten</id>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--############ plugins without lifecycle bindings #############-->
+            <!-- Static code analysis -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <configuration>
+                    <excludeFilterFile>${main.basedir}/resources/spotbugs.xml</excludeFilterFile>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

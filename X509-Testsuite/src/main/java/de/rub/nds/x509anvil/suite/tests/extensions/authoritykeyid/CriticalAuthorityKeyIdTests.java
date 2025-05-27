@@ -1,10 +1,8 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.authoritykeyid;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
+import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.constants.Severity;
@@ -18,9 +16,7 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2.1.1. Authority Key Identifier", text = "Conforming CAs MUST mark this extension as non-critical.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "extension-efb61a5418")
     public void criticalAuthorityKeyIdEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, config -> {
             AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
@@ -40,9 +36,7 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2.1.1. Authority Key Identifier", text = "Conforming CAs MUST mark this extension as non-critical.")
     @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "extension-320a8c3fd3")
     public void criticalAuthorityKeyIdIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, config -> {
             AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();

@@ -1,9 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.encoding;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.modifiablevariable.bytearray.ByteArrayExplicitValueModification;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -14,33 +12,25 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateMod
 public class InvalidCertificateLengthTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280")
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "encoding-465dca8b34")
     public void shortLengthTagEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateModifier) certificate -> certificate.getLengthOctets().setModifications(new ByteArrayExplicitValueModification(new byte[]{(byte) 0x82, 0, 1})));
     }
 
     @Specification(document = "RFC 5280")
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "encoding-bfa8982b92")
     public void shortLengthTagIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateModifier) certificate -> certificate.getLengthOctets().setModifications(new ByteArrayExplicitValueModification(new byte[]{(byte) 0x82, 0, 1})));
     }
 
     @Specification(document = "RFC 5280")
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "encoding-c151dbb976")
     public void overflowingLengthTagEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateModifier) certificate -> certificate.getLengthOctets().setModifications(new ByteArrayExplicitValueModification(new byte[]{(byte) 0x82, 0x07, (byte) 0xD0})));
     }
 
     @Specification(document = "RFC 5280")
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "encoding-0d3990e788")
     public void overflowingLengthTagIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateModifier) certificate -> certificate.getLengthOctets().setModifications(new ByteArrayExplicitValueModification(new byte[]{(byte) 0x82, 0x07, (byte) 0xD0})));
     }

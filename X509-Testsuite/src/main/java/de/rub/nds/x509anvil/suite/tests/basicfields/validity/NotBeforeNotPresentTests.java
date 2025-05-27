@@ -1,7 +1,6 @@
 package de.rub.nds.x509anvil.suite.tests.basicfields.validity;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.TestStrength;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -17,8 +16,7 @@ public class NotBeforeNotPresentTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 2, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "basic-8161c07302")
     public void noNotBeforeEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> config.setIncludeNotBefore(false));
@@ -27,8 +25,7 @@ public class NotBeforeNotPresentTests extends X509AnvilTest {
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3, maxLength = 3, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "basic-a995359b4a")
     public void noNotBeforeIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> config.setIncludeNotBefore(false));

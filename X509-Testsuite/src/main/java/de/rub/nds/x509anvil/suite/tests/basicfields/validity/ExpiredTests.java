@@ -2,8 +2,6 @@ package de.rub.nds.x509anvil.suite.tests.basicfields.validity;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
-import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -19,10 +17,8 @@ public class ExpiredTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
     @IpmLimitations(identifiers = "entity:not_after")
-    @AnvilTest
+    @AnvilTest(id = "basic-7d768e9cc6")
     public void expiredUtcEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
@@ -33,10 +29,8 @@ public class ExpiredTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
     @IpmLimitations(identifiers = "entity:not_after")
-    @AnvilTest
+    @AnvilTest(id = "basic-b71262c3ab")
     public void expiredGeneralizedEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
                 (X509CertificateConfigModifier) config -> {
@@ -47,10 +41,8 @@ public class ExpiredTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
     @IpmLimitations(identifiers = "inter0:not_after")
-    @AnvilTest
+    @AnvilTest(id = "basic-a00de3717c")
     public void expiredUtcIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {
@@ -62,10 +54,8 @@ public class ExpiredTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "6.1.3. Basic Certificate Processing", text = "The certificate validity period includes the current time.")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
     @IpmLimitations(identifiers = "inter0:not_after")
-    @AnvilTest
+    @AnvilTest(id = "basic-fd5f30ce88")
     public void expiredGeneralizedIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
                 (X509CertificateConfigModifier) config -> {

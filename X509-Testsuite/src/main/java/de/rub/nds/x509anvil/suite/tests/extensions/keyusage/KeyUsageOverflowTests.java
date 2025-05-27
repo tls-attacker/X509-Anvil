@@ -1,8 +1,6 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.keyusage;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -19,9 +17,7 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "extension-53e2e2bb36")
     public void keyUsageOverflowAppend1Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);
@@ -42,9 +38,7 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "extension-7042e82768")
     public void keyUsageOverflowAppend1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);
@@ -64,9 +58,7 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "extension-c88ac06a56")
     public void keyUsageOverflowAppend0Entity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);
@@ -87,9 +79,7 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.2.1.3. Key Usage")
     @SeverityLevel(Severity.WARNING)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "extension-a51284dc4b")
     public void keyUsageOverflowAppend0Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);

@@ -1,8 +1,6 @@
 package de.rub.nds.x509anvil.suite.tests.basicfields.subject;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
-import de.rub.nds.anvilcore.annotation.TestStrength;
-import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
@@ -16,9 +14,7 @@ public class SubjectNotPresentTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest(id = "no_subject_leaf")
+    @AnvilTest(id = "basic-24f7012913")
     public void noSubjectEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true,
         (X509CertificateConfigModifier) config ->
@@ -28,9 +24,7 @@ public class SubjectNotPresentTests extends X509AnvilTest {
 
     @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields")
     @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 4, maxLength = 4, intermediateCertsModeled = 2)
-    @TestStrength(2)
-    @AnvilTest()
+    @AnvilTest(id = "basic-e026d7520e")
     public void noSubjectIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
         (X509CertificateConfigModifier) config ->
