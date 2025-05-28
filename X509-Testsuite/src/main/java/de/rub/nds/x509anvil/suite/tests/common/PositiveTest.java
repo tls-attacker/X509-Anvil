@@ -2,20 +2,15 @@ package de.rub.nds.x509anvil.suite.tests.common;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
-import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 
 public class PositiveTest extends X509AnvilTest {
 
-    @Specification(document = "RFC 5280", text = "This test performs no modifications and MUST always pass. If it does not, it is an indication that the feature extraction is broken.")
-    @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3)
+    @ChainLength(minLength = 2)
     @AnvilTest(id = "common-f4db514b76")
     public void sampleTestCase(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {

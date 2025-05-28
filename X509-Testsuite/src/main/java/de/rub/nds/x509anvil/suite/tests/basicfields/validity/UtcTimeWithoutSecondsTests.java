@@ -4,11 +4,8 @@ import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.asn1.constants.TimeAccurracy;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
-import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
@@ -17,8 +14,6 @@ import org.joda.time.DateTime;
 
 public class UtcTimeWithoutSecondsTests extends X509AnvilTest {
 
-    @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values [...] MUST include seconds")
-    @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:not_before")
     @AnvilTest(id = "basic-f898ad6553")
@@ -31,9 +26,7 @@ public class UtcTimeWithoutSecondsTests extends X509AnvilTest {
                 });
     }
 
-    @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values [...] MUST include seconds")
-    @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 3)
+    @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "inter0:not_before")
     @AnvilTest(id = "basic-963d221c48")
     public void notBeforeIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -45,8 +38,6 @@ public class UtcTimeWithoutSecondsTests extends X509AnvilTest {
                 });
     }
 
-    @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values [...] MUST include seconds")
-    @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:not_after")
     @AnvilTest(id = "basic-88ec7bd824")
@@ -59,9 +50,7 @@ public class UtcTimeWithoutSecondsTests extends X509AnvilTest {
                 });
     }
 
-    @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values [...] MUST include seconds")
-    @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 3)
+    @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "inter0:not_after")
     @AnvilTest(id = "basic-cfa169c84e")
     public void notAfterIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

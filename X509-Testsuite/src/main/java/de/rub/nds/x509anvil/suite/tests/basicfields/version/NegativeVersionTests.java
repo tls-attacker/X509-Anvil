@@ -3,11 +3,8 @@ package de.rub.nds.x509anvil.suite.tests.basicfields.version;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
-import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
@@ -16,8 +13,6 @@ import java.math.BigInteger;
 
 public class NegativeVersionTests extends X509AnvilTest {
 
-    @Specification(document = "RFC 5280", section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
-    @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-d196ac0293")
     @IpmLimitations(identifiers = "entity:version")
@@ -26,9 +21,7 @@ public class NegativeVersionTests extends X509AnvilTest {
         (X509CertificateConfigModifier) config -> config.setVersion(BigInteger.valueOf(-1)));
     }
 
-    @Specification(document = "RFC 5280", section = "4.1", text = "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }")
-    @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 3)
+    @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-04db02edb2")
     @IpmLimitations(identifiers = "inter0:version")
     public void negativeVersionIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

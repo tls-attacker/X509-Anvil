@@ -3,11 +3,8 @@ package de.rub.nds.x509anvil.suite.tests.basicfields.validity;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
-import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
@@ -19,8 +16,6 @@ import org.joda.time.DateTime;
  */
 public class UtcTimeNonZuluDifferentialTests extends X509AnvilTest {
 
-    @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)")
-    @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:not_before")
     @AnvilTest(id = "basic-9e21624bf9")
@@ -33,9 +28,7 @@ public class UtcTimeNonZuluDifferentialTests extends X509AnvilTest {
                 });
     }
 
-    @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)")
-    @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 3)
+    @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "inter0:not_before")
     @AnvilTest(id = "basic-db726975ce")
     public void notBeforeIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -47,8 +40,6 @@ public class UtcTimeNonZuluDifferentialTests extends X509AnvilTest {
                 });
     }
 
-    @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)")
-    @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:not_after")
     @AnvilTest(id = "basic-8f1bf51a99")
@@ -61,9 +52,7 @@ public class UtcTimeNonZuluDifferentialTests extends X509AnvilTest {
                 });
     }
 
-    @Specification(document = "RFC 5280", section = "4.1.2.5.1. UTCTime", text = "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)")
-    @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 3)
+    @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "inter0:not_after")
     @AnvilTest(id = "basic-6690fa3d2f")
     public void notAfterIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

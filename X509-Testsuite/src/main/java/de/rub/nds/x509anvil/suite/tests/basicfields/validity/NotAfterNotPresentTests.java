@@ -2,19 +2,14 @@ package de.rub.nds.x509anvil.suite.tests.basicfields.validity;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
-import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 
 public class NotAfterNotPresentTests extends X509AnvilTest {
 
-    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields", text = "The notAfter field is non-optional and must be present.")
-    @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-fc7bf2a460")
     public void noNotAfterEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -22,9 +17,7 @@ public class NotAfterNotPresentTests extends X509AnvilTest {
                 (X509CertificateConfigModifier) config -> config.setIncludeNotAfter(false));
     }
 
-    @Specification(document = "RFC 5280", section = "4.1.  Basic Certificate Fields", text = "The notAfter field is non-optional and must be present.")
-    @SeverityLevel(Severity.CRITICAL)
-    @ChainLength(minLength = 3)
+    @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-3c7f842115")
     public void noNotAfterIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,

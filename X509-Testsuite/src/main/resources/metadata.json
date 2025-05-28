@@ -1275,6 +1275,17 @@
         },
         "tags": null
     },
+    "weakcrypto-8cce4bf80f": {
+        "description": "This test checks whether weak hash algorithms are supported. In this case MD2.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
     "weakcrypto-fa9ccc9dfa": {
         "description": "This test checks whether weak hash algorithms are supported. In this case MD4.",
         "severityLevels": {
