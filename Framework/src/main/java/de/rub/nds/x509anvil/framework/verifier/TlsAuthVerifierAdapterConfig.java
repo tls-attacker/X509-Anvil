@@ -7,20 +7,18 @@
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 
-package de.rub.nds.x509anvil.framework.verifier.tlsclientauth;
+package de.rub.nds.x509anvil.framework.verifier;
 
-import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterConfig;
-
-public class TlsClientAuthVerifierAdapterConfig implements VerifierAdapterConfig {
+public class TlsAuthVerifierAdapterConfig implements VerifierAdapterConfig {
     private String hostname;
     private int port;
 
-    public TlsClientAuthVerifierAdapterConfig(String hostname, int port) {
+    public TlsAuthVerifierAdapterConfig(String hostname, int port) {
         this.hostname = hostname;
         this.port = port;
     }
 
-    public TlsClientAuthVerifierAdapterConfig() {
+    public TlsAuthVerifierAdapterConfig() {
     }
 
     public String getHostname() {

@@ -12,15 +12,15 @@ package de.rub.nds.x509anvil.framework.anvil;
 import de.rub.nds.anvilcore.context.AnvilTestConfig;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterConfig;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterType;
-import de.rub.nds.x509anvil.framework.verifier.tlsclientauth.TlsClientAuthVerifierAdapterConfig;
+import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfig;
 
 public class TestConfig {
     // TODO: Use JCommander for config parameters
     private AnvilTestConfig anvilTestConfig = new AnvilTestConfig();
 
-    private final VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_CLIENT_AUTH;
+    private VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_CLIENT_AUTH;
     private final VerifierAdapterConfig verifierAdapterConfig =
-        new TlsClientAuthVerifierAdapterConfig("localhost", 4433);
+        new TlsAuthVerifierAdapterConfig("localhost", 4433);
     private Boolean useStaticRootCertificate = true;
 
     private int defaultMinChainLength = 4;
@@ -39,6 +39,10 @@ public class TestConfig {
 
     public VerifierAdapterType getVerifierAdapterType() {
         return verifierAdapterType;
+    }
+
+    public void setVerifierAdapterType(VerifierAdapterType verifierAdapterType) {
+        this.verifierAdapterType = verifierAdapterType;
     }
 
     public VerifierAdapterConfig getVerifierAdapterConfig() {

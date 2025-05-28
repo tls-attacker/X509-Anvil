@@ -9,21 +9,26 @@
 
 package de.rub.nds.x509anvil.framework.verifier;
 
-import de.rub.nds.x509anvil.framework.verifier.tlsclientauth.TlsClientAuthVerifierAdapter;
-import de.rub.nds.x509anvil.framework.verifier.tlsclientauth.TlsClientAuthVerifierAdapterConfig;
+import de.rub.nds.x509anvil.framework.verifier.adapter.TlsClientAuthVerifierAdapter;
+import de.rub.nds.x509anvil.framework.verifier.adapter.TlsServerAuthVerifierAdapter;
 
 public class VerifierAdapterFactory {
     public static VerifierAdapter getInstance(VerifierAdapterType verifierAdapterType,
         VerifierAdapterConfig verifierAdapterConfig) {
-        switch (verifierAdapterType) {
-            case TLS_CLIENT_AUTH:
-                if (!(verifierAdapterConfig instanceof TlsClientAuthVerifierAdapterConfig tlsClientAuthVerifierAdapterConfig)) {
+        return switch (verifierAdapterType) {
+            case TLS_CLIENT_AUTH -> {
+                if (!(verifierAdapterConfig instanceof TlsAuthVerifierAdapterConfig tlsAuthVerifierAdapterConfig)) {
                     throw new UnsupportedOperationException("VerifierAdapterConfig does not match VerifierAdapterType");
                 }
-                return TlsClientAuthVerifierAdapter.fromConfig(tlsClientAuthVerifierAdapterConfig);
-
-            default:
-                throw new UnsupportedOperationException("Unsupported VerifierAdapterType");
-        }
+                yield TlsClientAuthVerifierAdapter.fromConfig(tlsAuthVerifierAdapterConfig);
+            }
+            case TLS_SERVER_AUTH -> {
+                if (!(verifierAdapterConfig instanceof TlsAuthVerifierAdapterConfig tlsAuthVerifierAdapterConfig)) {
+                    throw new UnsupportedOperationException("VerifierAdapterConfig does not match VerifierAdapterType");
+                }
+                yield TlsServerAuthVerifierAdapter.fromConfig(tlsAuthVerifierAdapterConfig);
+            }
+            default -> throw new UnsupportedOperationException("Unsupported VerifierAdapterType");
+        };
     }
 }
