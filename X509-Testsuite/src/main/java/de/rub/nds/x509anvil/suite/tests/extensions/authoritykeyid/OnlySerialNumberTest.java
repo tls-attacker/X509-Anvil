@@ -30,7 +30,7 @@ public class OnlySerialNumberTest extends X509AnvilTest {
         });
     }
 
-    @ChainLength(minLength = 4, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-dadc51d905")
     public void missingKeyIdentifierIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, config -> {

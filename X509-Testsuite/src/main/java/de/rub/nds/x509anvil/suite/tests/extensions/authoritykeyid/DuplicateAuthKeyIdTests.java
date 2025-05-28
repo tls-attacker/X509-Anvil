@@ -32,7 +32,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
     }
 
 
-    @ChainLength(minLength = 4, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-ff7cdd6926")
     public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, config -> {
@@ -77,7 +77,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
     }
 
 
-    @ChainLength(minLength = 4, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-3b0f420c2c")
     public void duplicateDifferentIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, config -> {

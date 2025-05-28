@@ -30,7 +30,7 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
         });
     }
 
-    @ChainLength(minLength = 4, intermediateCertsModeled = 2)
+    @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-0ff7547245")
     public void keyIdMismatchIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, config -> {
