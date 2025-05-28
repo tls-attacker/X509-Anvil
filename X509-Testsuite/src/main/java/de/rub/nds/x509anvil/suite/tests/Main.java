@@ -14,7 +14,7 @@ public class Main {
         ContextHelper.initializeContext();
 
         AnvilTestConfig anvilTestConfig = ContextHelper.getTestConfig().getAnvilTestConfig();
-        anvilTestConfig.setStrength(1);
+        anvilTestConfig.setStrength(2);
         anvilTestConfig.setDisableTcpDump(true);
         anvilTestConfig.setIgnoreCache(true);
         anvilTestConfig.setIdentifier("X509AnvilTest - Test Strength " + anvilTestConfig.getStrength());

@@ -1,14 +1,1850 @@
 {
-  "empty_dn": {
-    "description": "Empty domain name for issuer",
-    "severityLevels": {
-      "TEST_LEVEL": 42
+    "basic-e0bcce347c": {
+        "description": "Adds an unexpected field to the certificate. This does not conform with the specification and needs to fail.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "basic-6d1ba61fab": {
+        "description": "Adds an unexpected field to the certificate. This does not conform with the specification and needs to fail.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "basic-21d376ecbb": {
+        "description": "The issuer field MUST contain a non-empty distinguished name (DN).",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.4. Issuer"
+        },
+        "tags": null
+    },
+    "basic-3d37c180b5": {
+        "description": "The issuer field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-3502b37055": {
+        "description": "The issuer field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-b56d876a16": {
+        "description": "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1"
+        },
+        "tags": null
+    },
+    "basic-bdf4da10f4": {
+        "description": "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1"
+        },
+        "tags": null
+    },
+    "basic-c1e564eea6": {
+        "description": "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1"
+        },
+        "tags": null
+    },
+    "basic-1203edde46": {
+        "description": "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1"
+        },
+        "tags": null
+    },
+    "basic-d196ac0293": {
+        "description": "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1"
+        },
+        "tags": null
+    },
+    "basic-04db02edb2": {
+        "description": "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1"
+        },
+        "tags": null
+    },
+    "basic-4cfe12547b": {
+        "description": "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.8. Unique Identifiers"
+        },
+        "tags": null
+    },
+    "basic-adc3be6001": {
+        "description": "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.8. Unique Identifiers"
+        },
+        "tags": null
+    },
+    "basic-9966458966": {
+        "description": "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.8. Unique Identifiers"
+        },
+        "tags": null
+    },
+    "basic-8ab9f03d9c": {
+        "description": "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.8. Unique Identifiers"
+        },
+        "tags": null
+    },
+    "basic-51110d0302": {
+        "description": "This field MUST contain the same algorithm identifier as the signature field in the sequence tbsCertificate (Section 4.1.2.3).",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.1.2. signatureAlgorithm"
+        },
+        "tags": null
+    },
+    "basic-77e4d2a826": {
+        "description": "This field MUST contain the same algorithm identifier as the signature field in the sequence tbsCertificate (Section 4.1.2.3).",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.1.2. signatureAlgorithm"
+        },
+        "tags": null
+    },
+    "basic-d4c4dd28f7": {
+        "description": "The signatureAlgorithm field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-a5f35deb02": {
+        "description": "The signatureAlgorithm field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-fb1e899219": {
+        "description": "4.1.1.2. signatureAlgorithm and 4.1.2.3",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.1.2. signatureAlgorithm and 4.1.2.3"
+        },
+        "tags": null
+    },
+    "basic-3bd920316f": {
+        "description": "4.1.1.2. signatureAlgorithm and 4.1.2.3",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.1.2. signatureAlgorithm and 4.1.2.3"
+        },
+        "tags": null
+    },
+    "basic-45174189ef": {
+        "description": "The subjectPublicKeyInfo field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-d3f8dfc444": {
+        "description": "The subjectPublicKeyInfo field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-24f7012913": {
+        "description": "The subject field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-e026d7520e": {
+        "description": "The subject field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-fc7bf2a460": {
+        "description": "The notAfter field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-3c7f842115": {
+        "description": "The notAfter field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-21f3acf036": {
+        "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.2. GeneralizedTime"
+        },
+        "tags": null
+    },
+    "basic-4b8345d5e1": {
+        "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.2. GeneralizedTime"
+        },
+        "tags": null
+    },
+    "basic-b2548936e9": {
+        "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.2. GeneralizedTime"
+        },
+        "tags": null
+    },
+    "basic-797cfb720a": {
+        "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.2. GeneralizedTime"
+        },
+        "tags": null
+    },
+    "basic-a4593c9ff9": {
+        "description": "The validity field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-02f469f8a4": {
+        "description": "The validity field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-0b35348dd5": {
+        "description": "The certificate validity period includes the current time.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.3. Basic Certificate Processing"
+        },
+        "tags": null
+    },
+    "basic-d0325d7e05": {
+        "description": "The certificate validity period includes the current time.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.3. Basic Certificate Processing"
+        },
+        "tags": null
+    },
+    "basic-48f16a250d": {
+        "description": "The certificate validity period includes the current time.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.3. Basic Certificate Processing"
+        },
+        "tags": null
+    },
+    "basic-5341312baf": {
+        "description": "The certificate validity period includes the current time.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.3. Basic Certificate Processing"
+        },
+        "tags": null
+    },
+    "basic-7d768e9cc6": {
+        "description": "The certificate validity period includes the current time.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.3. Basic Certificate Processing"
+        },
+        "tags": null
+    },
+    "basic-b71262c3ab": {
+        "description": "The certificate validity period includes the current time.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.3. Basic Certificate Processing"
+        },
+        "tags": null
+    },
+    "basic-a00de3717c": {
+        "description": "The certificate validity period includes the current time.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.3. Basic Certificate Processing"
+        },
+        "tags": null
+    },
+    "basic-fd5f30ce88": {
+        "description": "The certificate validity period includes the current time.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.3. Basic Certificate Processing"
+        },
+        "tags": null
+    },
+    "basic-b09833f225": {
+        "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.1. UTCTime"
+        },
+        "tags": null
+    },
+    "basic-b1e7273312": {
+        "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.1. UTCTime"
+        },
+        "tags": null
+    },
+    "basic-0a0797aef4": {
+        "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.1. UTCTime"
+        },
+        "tags": null
+    },
+    "basic-beb1b04e7a": {
+        "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.1. UTCTime"
+        },
+        "tags": null
+    },
+    "basic-8161c07302": {
+        "description": "The notBefore field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-a995359b4a": {
+        "description": "The notBefore field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-e46824186e": {
+        "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.2. GeneralizedTime"
+        },
+        "tags": null
+    },
+    "basic-8706cfabaa": {
+        "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.2. GeneralizedTime"
+        },
+        "tags": null
+    },
+    "basic-f9cadd3fe6": {
+        "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.2. GeneralizedTime"
+        },
+        "tags": null
+    },
+    "basic-3f0d1ca795": {
+        "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.2. GeneralizedTime"
+        },
+        "tags": null
+    },
+    "basic-4d9f222798": {
+        "description": "GeneralizedTime values MUST NOT include fractional seconds.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.2. GeneralizedTime"
+        },
+        "tags": null
+    },
+    "basic-d786262526": {
+        "description": "GeneralizedTime values MUST NOT include fractional seconds.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.2. GeneralizedTime"
+        },
+        "tags": null
+    },
+    "basic-c2bc812f45": {
+        "description": "GeneralizedTime values MUST NOT include fractional seconds.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.2. GeneralizedTime"
+        },
+        "tags": null
+    },
+    "basic-0f5f2487f7": {
+        "description": "GeneralizedTime values MUST NOT include fractional seconds.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.2. GeneralizedTime"
+        },
+        "tags": null
+    },
+    "basic-9e21624bf9": {
+        "description": "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.1. UTCTime"
+        },
+        "tags": null
+    },
+    "basic-db726975ce": {
+        "description": "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.1. UTCTime"
+        },
+        "tags": null
+    },
+    "basic-8f1bf51a99": {
+        "description": "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.1. UTCTime"
+        },
+        "tags": null
+    },
+    "basic-6690fa3d2f": {
+        "description": "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.1. UTCTime"
+        },
+        "tags": null
+    },
+    "basic-f898ad6553": {
+        "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.1. UTCTime"
+        },
+        "tags": null
+    },
+    "basic-963d221c48": {
+        "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.1. UTCTime"
+        },
+        "tags": null
+    },
+    "basic-88ec7bd824": {
+        "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.1. UTCTime"
+        },
+        "tags": null
+    },
+    "basic-cfa169c84e": {
+        "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.5.1. UTCTime"
+        },
+        "tags": null
+    },
+    "basic-4d1fd77ec3": {
+        "description": "The signature field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-ab702acb6f": {
+        "description": "The signature field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-3e2fbb009f": {
+        "description": "This field MUST contain the same algorithm identifier as the signatureAlgorithm field in the sequence Certificate (Section 4.1.1.2).",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.3. Signature"
+        },
+        "tags": null
+    },
+    "basic-eec58410b3": {
+        "description": "This field MUST contain the same algorithm identifier as the signatureAlgorithm field in the sequence Certificate (Section 4.1.1.2).",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.3. Signature"
+        },
+        "tags": null
+    },
+    "basic-63b58d6a92": {
+        "description": "Given the uniqueness requirements above serial numbers can be expected to contain long integers. Certificate users MUST be able to handle serialNumber values up to 20 octets. Conforming CAs MUST NOT use serialNumber values longer than 20 octets.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.1. Version"
+        },
+        "tags": null
+    },
+    "basic-c482ae3643": {
+        "description": "Given the uniqueness requirements above serial numbers can be expected to contain long integers. Certificate users MUST be able to handle serialNumber values up to 20 octets. Conforming CAs MUST NOT use serialNumber values longer than 20 octets.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.1. Version"
+        },
+        "tags": null
+    },
+    "basic-c946fef182": {
+        "description": "The serialNumber field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-99ffba7896": {
+        "description": "The serialNumber field is non-optional and must be present.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1. Basic Certificate Fields"
+        },
+        "tags": null
+    },
+    "basic-d2c3455637": {
+        "description": "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may issue certificates with serial numbers that are negative or zero. Certificate users SHOULD be prepared to gracefully handle such certificates.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.1. Version"
+        },
+        "tags": null
+    },
+    "basic-dc9c549b5f": {
+        "description": "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may issue certificates with serial numbers that are negative or zero. Certificate users SHOULD be prepared to gracefully handle such certificates.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.1. Version"
+        },
+        "tags": null
+    },
+    "basic-0dd1f8b33d": {
+        "description": "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may issue certificates with serial numbers that are negative or zero. Certificate users SHOULD be prepared to gracefully handle such certificates.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.1. Version"
+        },
+        "tags": null
+    },
+    "basic-55a018dc6c": {
+        "description": "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may issue certificates with serial numbers that are negative or zero. Certificate users SHOULD be prepared to gracefully handle such certificates.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.1. Version"
+        },
+        "tags": null
+    },
+    "chain-24e3a47439": {
+        "description": "If certificate i is a version 1 or version 2 certificate then the application MUST either verify that certificate i is a CA certificate through out-of-band means or reject the certificate.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.4. Preparation for Certificate i+1"
+        },
+        "tags": null
+    },
+    "chain-60a9344ec7": {
+        "description": "If certificate i is a version 1 or version 2 certificate then the application MUST either verify that certificate i is a CA certificate through out-of-band means or reject the certificate.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.4. Preparation for Certificate i+1"
+        },
+        "tags": null
+    },
+    "chain-ff448e8b13": {
+        "description": "A certificate MUST NOT appear more than once in a prospective certification path.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1 Basic Path Validation"
+        },
+        "tags": null
+    },
+    "chain-606109ea61": {
+        "description": "A certificate MUST NOT appear more than once in a prospective certification path.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1 Basic Path Validation"
+        },
+        "tags": null
+    },
+    "chain-7e77ac5a30": {
+        "description": "A certificate MUST NOT appear more than once in a prospective certification path.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1 Basic Path Validation"
+        },
+        "tags": null
+    },
+    "chain-1694cbbbbf": {
+        "description": "for all x in {1 ... n-1} the subject of certificate x is the issuer of certificate x1;",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1 Basic Path Validation"
+        },
+        "tags": null
+    },
+    "chain-01967f3251": {
+        "description": "for all x in {1 ... n-1} the subject of certificate x is the issuer of certificate x1;",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1 Basic Path Validation"
+        },
+        "tags": null
+    },
+    "common-f4db514b76": {
+        "description": "This test performs no modifications and MUST always pass. If it does not it is an indication that the feature extraction is broken.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "common-f15e7199ea": {
+        "description": "If the root certificate is not trusted the certificate MUST be rejected.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "encoding-0e88c639e4": {
+        "description": "If the encoding represents the boolean value TRUE its single contents octet shall have all eight bits set to one",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": null,
+            "section": "11.1 Boolean values "
+        },
+        "tags": null
+    },
+    "encoding-5735cdbb46": {
+        "description": "If the encoding represents the boolean value TRUE its single contents octet shall have all eight bits set to one",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": null,
+            "section": "11.1 Boolean values "
+        },
+        "tags": null
+    },
+    "encoding-bbe8f26bc7": {
+        "description": "The encoding of a set value or sequence value shall not include an encoding for any component value which is equal to its default value.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": null,
+            "section": "11.5 Set and sequence components with default value"
+        },
+        "tags": null
+    },
+    "encoding-42c061c4d3": {
+        "description": "The encoding of a set value or sequence value shall not include an encoding for any component value which is equal to its default value.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": null,
+            "section": "11.5 Set and sequence components with default value"
+        },
+        "tags": null
+    },
+    "encoding-465dca8b34": {
+        "description": "Sets the length of the certificate to a too short value.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "encoding-bfa8982b92": {
+        "description": "Sets the length of the certificate to a too short value.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "encoding-c151dbb976": {
+        "description": "Sets the length of the certificate to a too large value.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "encoding-0d3990e788": {
+        "description": "Sets the length of the certificate to a too large value.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "namechaining-48527310d0": {
+        "description": "Two naming attributes match if the attribute types are the same and the values of the attributes are an exact match after processing with the string preparation algorithm",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-456b282cb3": {
+        "description": "Two naming attributes match if the attribute types are the same and the values of the attributes are an exact match after processing with the string preparation algorithm",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-789e36d91e": {
+        "description": "Two naming attributes match if the attribute types are the same and the values of the attributes are an exact match after processing with the string preparation algorithm",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-dec07d6681": {
+        "description": "Two naming attributes match if the attribute types are the same and the values of the attributes are an exact match after processing with the string preparation algorithm",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-f284c832ec": {
+        "description": "Two distinguished names DN1 and DN2 match if they have the same number of RDNs",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-b1401df33c": {
+        "description": "Two distinguished names DN1 and DN2 match if they have the same number of RDNs",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-4bf3a1d933": {
+        "description": "Conforming implementations shall perform a case-insensitive exact match when comparing domainComponent attributes in distinguished names",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.3. Internationalized Domain Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-be286d6c7d": {
+        "description": "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling) as specified in [RFC4518] as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-658c1fd3c9": {
+        "description": "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling) as specified in [RFC4518] as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-0946a5f8e7": {
+        "description": "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling) as specified in [RFC4518] as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-0be3c6ebe2": {
+        "description": "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling) as specified in [RFC4518] as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-7247764279": {
+        "description": "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling) as specified in [RFC4518] as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-75f6f195a4": {
+        "description": "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling) as specified in [RFC4518] as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-ce08905f2b": {
+        "description": "Conforming implementations MUST use the LDAP StringPrep profile (including insignificant space handling) as specified in [RFC4518] as the basis for comparison of distinguished name attributes encoded in either PrintableString or UTF8String.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-0ccaa40653": {
+        "description": "Two naming attributes match if the attribute types are the same and the values of the attributes are an exact match after processing with the string preparation algorithm",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-9a73514b63": {
+        "description": "Two naming attributes match if the attribute types are the same and the values of the attributes are an exact match after processing with the string preparation algorithm",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-a42d0a45c1": {
+        "description": "Two distinguished names DN1 and DN2 match if [...] and the matching RDNs appear in the same order in both DNs",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-4075e0cc0f": {
+        "description": "Two relative distinguished names RDN1 and RDN2 match if they have the same number of naming attributes",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-5fa5031980": {
+        "description": "Two relative distinguished names RDN1 and RDN2 match if they have the same number of naming attributes",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-85e5f0f10d": {
+        "description": "Conforming implementations shall perform a case-insensitive exact match when comparing domainComponent attributes in distinguished names",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.3. Internationalized Domain Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "namechaining-5fbbc06151": {
+        "description": "Two naming attributes match if the attribute types are the same and the values of the attributes are an exact match after processing with the string preparation algorithm",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
+    "weakcrypto-5521f8be14": {
+        "description": "This test checks whether weak key lengths are supported. In this case RSA 512 bit.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "weakcrypto-448bf60b34": {
+        "description": "This test checks whether weak key lengths are supported. In this case RSA 1024 bit.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "weakcrypto-8246133e52": {
+        "description": "This test checks whether weak key lengths are supported. In this case DSA 1024 bit.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "weakcrypto-fa9ccc9dfa": {
+        "description": "This test checks whether weak hash algorithms are supported. In this case MD4.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "weakcrypto-0499c0a19c": {
+        "description": "This test checks whether weak hash algorithms are supported. In this case MD5.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "weakcrypto-dbc5ebe60a": {
+        "description": "This test checks whether weak hash algorithms are supported. In this case SHA1.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "signature-aee615f131": {
+        "description": "The signature on the certificate can be verified using working_public_key_algorithm the working_public_key and the working_public_key_parameters.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.3. Basic Certificate Processing"
+        },
+        "tags": null
+    },
+    "signature-0c864620d2": {
+        "description": "The signature on the certificate can be verified using working_public_key_algorithm the working_public_key and the working_public_key_parameters.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.3. Basic Certificate Processing"
+        },
+        "tags": null
+    },
+    "signature-104b0eac54": {
+        "description": "The signature on the certificate can be verified using working_public_key_algorithm the working_public_key and the working_public_key_parameters.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.3. Basic Certificate Processing"
+        },
+        "tags": null
+    },
+    "signature-beb05c376e": {
+        "description": "The signature on the certificate can be verified using working_public_key_algorithm the working_public_key and the working_public_key_parameters.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.3. Basic Certificate Processing"
+        },
+        "tags": null
+    },
+    "signature-b61f8b0eae": {
+        "description": "The signature on the certificate can be verified using working_public_key_algorithm the working_public_key and the working_public_key_parameters.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.3. Basic Certificate Processing"
+        },
+        "tags": null
+    },
+    "extension-9b75135269": {
+        "description": "This field MUST only appear if the version is 3 (Section 4.1.2.1).",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.9. Extensions"
+        },
+        "tags": null
+    },
+    "extension-9b75135366": {
+        "description": "This field MUST only appear if the version is 3 (Section 4.1.2.1).",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.9. Extensions"
+        },
+        "tags": null
+    },
+    "extension-d8772be424": {
+        "description": "A certificate-using system MUST reject the certificate if it encounters a 100 extension it does not recognize",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-14d5fe1bed": {
+        "description": "A certificate-using system MUST reject the certificate if it encounters a 100 extension it does not recognize",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-0a5be219fe": {
+        "description": "This field MUST only appear if the version is 3 (Section 4.1.2.1).",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.9. Extensions"
+        },
+        "tags": null
+    },
+    "extension-2b30514cc9": {
+        "description": "This field MUST only appear if the version is 3 (Section 4.1.2.1).",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.9. Extensions"
+        },
+        "tags": null
+    },
+    "extension-199eb869ce": {
+        "description": "A certificate-using system MUST reject the certificate if it encounters a 100 extension [...] that contains information that it cannot process.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-5ad1c94f1c": {
+        "description": "A certificate-using system MUST reject the certificate if it encounters a 100 extension [...] that contains information that it cannot process.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-930f474fe2": {
+        "description": "(n) If a key usage extension is present verify that the keyCertSign bit is set.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "6.1.4. Preparation for Certificate i+1"
+        },
+        "tags": null
+    },
+    "extension-53e2e2bb36": {
+        "description": "This test sets one undefined bit of the unused bits in the key usage extension to 1.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.3. Key Usage"
+        },
+        "tags": null
+    },
+    "extension-7042e82768": {
+        "description": "This test sets one undefined bit of the unused bits in the key usage extension to 1.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.3. Key Usage"
+        },
+        "tags": null
+    },
+    "extension-c88ac06a56": {
+        "description": "This test sets one undefined bit of the unused bits in the key usage extension to 0.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.3. Key Usage"
+        },
+        "tags": null
+    },
+    "extension-a51284dc4b": {
+        "description": "This test sets one undefined bit of the unused bits in the key usage extension to 0.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.3. Key Usage"
+        },
+        "tags": null
+    },
+    "extension-3e4c7f3e62": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-44d01aed5a": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-9e051adef5": {
+        "description": "If the keyUsage extension is present then the subject public key MUST NOT be used to verify signatures on certificates or CRLs unless the corresponding keyCertSign or cRLSign bit is set.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.3. Key Usage"
+        },
+        "tags": null
+    },
+    "extension-c6d9fda7d3": {
+        "description": "When the keyUsage extension appears in a certificate at least one of the bits MUST be set to 1.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.3. Key Usage"
+        },
+        "tags": null
+    },
+    "extension-91e2ddbf9d": {
+        "description": "If the keyCertSign bit is asserted then the cA bit in the basic constraints extension (Section 4.2.1.9) MUST also be asserted",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.3. Key Usage"
+        },
+        "tags": null
+    },
+    "extension-efb61a5418": {
+        "description": "Conforming CAs MUST mark this extension as non-100.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.1. Authority Key Identifier"
+        },
+        "tags": null
+    },
+    "extension-320a8c3fd3": {
+        "description": "Conforming CAs MUST mark this extension as non-100.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.1. Authority Key Identifier"
+        },
+        "tags": null
+    },
+    "extension-b054d544c3": {
+        "description": "authorityCertIssuer and authorityCertSerialNumber MUST both be present or both be absent",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "extension-dadc51d905": {
+        "description": "authorityCertIssuer and authorityCertSerialNumber MUST both be present or both be absent",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "extension-190349e95d": {
+        "description": "The keyIdentifier field of the authorityKeyIdentifier extension MUST be included in all certificates generated by conforming CAs.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.1. Authority Key Identifier"
+        },
+        "tags": null
+    },
+    "extension-9e241be2f9": {
+        "description": "The keyIdentifier field of the authorityKeyIdentifier extension MUST be included in all certificates generated by conforming CAs.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.1. Authority Key Identifier"
+        },
+        "tags": null
+    },
+    "extension-012f1b4bd0": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-ff7cdd6926": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-4a5dd1e00a": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-3b0f420c2c": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-3dbdfa5609": {
+        "description": "here it appears the pathLenConstraint field MUST be greater than or equal to zero.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.9. Basic Constraints"
+        },
+        "tags": null
+    },
+    "extension-b88af2b7d6": {
+        "description": "In this case it [the pathLenConstraint field] gives the maximum number of non-self-issued intermediate certificates that may follow this certificate in a valid certification path.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.9. Basic Constraints"
+        },
+        "tags": null
+    },
+    "extension-f4379eba22": {
+        "description": "In this case it [the pathLenConstraint field] gives the maximum number of non-self-issued intermediate certificates that may follow this certificate in a valid certification path.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.9. Basic Constraints"
+        },
+        "tags": null
+    },
+    "extension-a4b5710704": {
+        "description": "In this case it [the pathLenConstraint field] gives the maximum number of non-self-issued intermediate certificates that may follow this certificate in a valid certification path.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.9. Basic Constraints"
+        },
+        "tags": null
+    },
+    "extension-ef15984307": {
+        "description": "CAs MUST NOT include the pathLenConstraint field unless the cA boolean is asserted",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.9. Basic Constraints"
+        },
+        "tags": null
+    },
+    "extension-bcb4b2c11e": {
+        "description": "in all CA certificates that contain public keys used to validate digital signatures on certificates [...] MUST mark the extension as 100 in such certificates.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.9. Basic Constraints"
+        },
+        "tags": null
+    },
+    "extension-5427239f8e": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-027e0728ed": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-db7489730f": {
+        "description": "If the basic constraints extension is not present in a version 3 certificate or the extension is present but the cA boolean is not asserted then the certified public key MUST NOT be used to verify certificate signatures.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.9. Basic Constraints"
+        },
+        "tags": null
+    },
+    "extension-0bd143b23d": {
+        "description": "Conforming CAs MUST include this extension in all CA certificates that contain public keys used to validate digital signatures on certificates",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.9. Basic Constraints"
+        },
+        "tags": null
+    },
+    "extension-a71fd6a6dc": {
+        "description": "In conforming CA certificates the value of the subject key identifier MUST be the value placed in the key identifier field of the authority key identifier extension (Section 4.2.1.1) of certificates issued by the subject of this certificate.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.2. Subject Key Identifier"
+        },
+        "tags": null
+    },
+    "extension-0ff7547245": {
+        "description": "In conforming CA certificates the value of the subject key identifier MUST be the value placed in the key identifier field of the authority key identifier extension (Section 4.2.1.1) of certificates issued by the subject of this certificate.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2.1.2. Subject Key Identifier"
+        },
+        "tags": null
+    },
+    "extension-ddb7cadc32": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-ad98d1b6ce": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-8fc40ac4e1": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-c9f599cfc7": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
     }
-  },
-  "no_subject_leaf": {
-    "description": "No subject in leaf",
-    "severityLevels": {
-      "TEST_LEVEL": 42
-    }
-  }
 }
