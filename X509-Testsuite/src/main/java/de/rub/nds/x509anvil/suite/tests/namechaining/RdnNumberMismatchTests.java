@@ -15,7 +15,7 @@ import java.util.List;
 
 public class RdnNumberMismatchTests extends X509AnvilTest {
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-f284c832ec")
     public void missingRdn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -31,7 +31,7 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
         });
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-b1401df33c")
     public void additionalRdn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

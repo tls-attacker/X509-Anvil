@@ -27,7 +27,7 @@ public class GeneralizedTimeNonZuluLocalTests extends X509AnvilTest {
         });
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_before")
     @AnvilTest(id = "basic-8706cfabaa")
     public void notBeforeIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -49,7 +49,7 @@ public class GeneralizedTimeNonZuluLocalTests extends X509AnvilTest {
                 });
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_after")
     @AnvilTest(id = "basic-3f0d1ca795")    public void notAfterIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,

@@ -17,7 +17,7 @@ public class UnknownOidTests extends X509AnvilTest {
                 (X509CertificateConfigModifier) config -> config.setSignatureAlgorithmOidInvalid(true));
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-3bd920316f")
     public void unknownOidTbsAndCertIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,

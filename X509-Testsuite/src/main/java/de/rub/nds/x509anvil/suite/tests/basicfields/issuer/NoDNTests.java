@@ -12,10 +12,10 @@ import java.util.List;
 
 public class NoDNTests extends X509AnvilTest {
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-21d376ecbb")
     public void noDn(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        // this sets the issuer of the entity cert to an empty list
+        // this sets the subject of the intermediate and the issuer of the entity cert to an empty list
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setSubject(List.of()));
     }
 }

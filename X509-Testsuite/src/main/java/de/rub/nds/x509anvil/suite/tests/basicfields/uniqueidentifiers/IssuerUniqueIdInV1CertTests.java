@@ -25,7 +25,7 @@ public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
                 });
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:version")
     @AnvilTest(id = "basic-adc3be6001")
     public void issuerUniqueIdPresentInV1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

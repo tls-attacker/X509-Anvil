@@ -12,7 +12,7 @@ import de.rub.nds.x509attacker.constants.X500AttributeType;
 
 public class SerialNumberMismatchTests extends X509AnvilTest {
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-0ccaa40653")
     public void serialNumberMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->

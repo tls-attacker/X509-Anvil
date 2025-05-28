@@ -12,7 +12,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 public class WeakHashAlgorithmTests extends X509AnvilTest {
 
     @AnvilTest(id = "weakcrypto-8cce4bf80f")
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
         public void weakHashMd2(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.amendSignatureAlgorithm(HashAlgorithm.MD2));
 

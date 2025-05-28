@@ -19,7 +19,7 @@ public class SubjectNotPresentTests extends X509AnvilTest {
     }
 
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-e026d7520e")
     public void noSubjectIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,

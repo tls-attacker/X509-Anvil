@@ -19,7 +19,7 @@ public class LargeSerialNumberTest extends X509AnvilTest {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setSerialNumber(TestUtils.createBigInteger(256)));
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:serial_number")
     @AnvilTest(id = "basic-c482ae3643")
     public void largeSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

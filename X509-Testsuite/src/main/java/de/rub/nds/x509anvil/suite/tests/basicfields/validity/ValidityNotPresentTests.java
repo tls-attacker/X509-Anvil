@@ -17,7 +17,7 @@ public class ValidityNotPresentTests extends X509AnvilTest {
                 (X509CertificateConfigModifier) config -> config.setIncludeValidity(false));
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-02f469f8a4")
     public void noValidityIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,

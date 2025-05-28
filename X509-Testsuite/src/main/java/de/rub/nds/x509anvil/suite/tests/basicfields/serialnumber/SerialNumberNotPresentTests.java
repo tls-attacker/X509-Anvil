@@ -16,7 +16,7 @@ public class SerialNumberNotPresentTests extends X509AnvilTest {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setIncludeSerialNumber(false));
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-99ffba7896")
     public void noSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setIncludeSerialNumber(false));

@@ -28,7 +28,7 @@ public class DuplicateCertificateTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "chain-606109ea61")
     public void duplicateIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);

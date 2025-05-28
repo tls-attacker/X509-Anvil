@@ -16,7 +16,7 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setAppendUnexpectedCertificateField(true));
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-6d1ba61fab")
     public void appendUnexpectedFieldIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setAppendUnexpectedCertificateField(true));

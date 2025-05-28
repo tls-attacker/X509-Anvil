@@ -12,7 +12,7 @@ import de.rub.nds.x509attacker.config.extension.SubjectKeyIdentifierConfig;
 
 public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-a71fd6a6dc")
     public void keyIdMismatchEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, config -> {
@@ -30,7 +30,7 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
         });
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 4, intermediateCertsModeled = 2)
     @AnvilTest(id = "extension-0ff7547245")
     public void keyIdMismatchIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, config -> {

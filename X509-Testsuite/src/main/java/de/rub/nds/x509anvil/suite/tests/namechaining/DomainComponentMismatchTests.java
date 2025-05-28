@@ -12,7 +12,7 @@ import de.rub.nds.x509attacker.constants.X500AttributeType;
 
 public class DomainComponentMismatchTests extends X509AnvilTest {
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-4bf3a1d933")
     public void domainComponentMismatch(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config ->

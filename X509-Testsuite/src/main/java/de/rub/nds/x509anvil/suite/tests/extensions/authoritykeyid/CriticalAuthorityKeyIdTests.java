@@ -12,7 +12,7 @@ import de.rub.nds.x509attacker.config.extension.SubjectKeyIdentifierConfig;
 
 public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-efb61a5418")
     public void criticalAuthorityKeyIdEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, config -> {
@@ -31,7 +31,7 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
         });
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 4, intermediateCertsModeled = 2)
     @AnvilTest(id = "extension-320a8c3fd3")
     public void criticalAuthorityKeyIdIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, config -> {

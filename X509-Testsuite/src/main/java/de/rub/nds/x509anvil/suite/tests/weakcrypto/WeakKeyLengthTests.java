@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Assertions;
 
 public class WeakKeyLengthTests extends X509AnvilTest {
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "weakcrypto-5521f8be14")
     public void weak512BitRsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
@@ -25,7 +25,7 @@ public class WeakKeyLengthTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "weakcrypto-448bf60b34")
     public void weak1024BitRsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
@@ -35,7 +35,7 @@ public class WeakKeyLengthTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "weakcrypto-8246133e52")
     public void weak1024BitDsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);

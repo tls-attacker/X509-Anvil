@@ -14,7 +14,7 @@ import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
 public class PathlenWithoutCaSetTests extends X509AnvilTest {
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-ef15984307")
     public void pathlenWithoutCaSetEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

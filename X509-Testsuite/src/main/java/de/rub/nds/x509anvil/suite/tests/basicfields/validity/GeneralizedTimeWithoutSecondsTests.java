@@ -26,7 +26,7 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
                 });
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_before")
     @AnvilTest(id = "basic-b1e7273312")
     public void notBeforeIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -50,7 +50,7 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
                 });
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_after")
     @AnvilTest(id = "basic-beb1b04e7a")
     public void notAfterIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

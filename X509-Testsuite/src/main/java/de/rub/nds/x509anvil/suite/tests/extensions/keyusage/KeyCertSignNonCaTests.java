@@ -27,5 +27,4 @@ public class KeyCertSignNonCaTests extends X509AnvilTest {
             config.setIncludeExtensions(true);
         });
     }
-
 }

@@ -21,7 +21,7 @@ public class NegativeVersionTests extends X509AnvilTest {
         (X509CertificateConfigModifier) config -> config.setVersion(BigInteger.valueOf(-1)));
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-04db02edb2")
     @IpmLimitations(identifiers = "inter0:version")
     public void negativeVersionIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

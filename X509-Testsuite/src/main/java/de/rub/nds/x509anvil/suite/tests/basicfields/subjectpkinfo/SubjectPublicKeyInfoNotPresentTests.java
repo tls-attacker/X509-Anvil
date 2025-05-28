@@ -18,7 +18,7 @@ public class SubjectPublicKeyInfoNotPresentTests extends X509AnvilTest {
         config.setIncludeSubjectPublicKeyInfo(false));
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-d3f8dfc444")
     public void noSubjectPublicKeyInfoIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,

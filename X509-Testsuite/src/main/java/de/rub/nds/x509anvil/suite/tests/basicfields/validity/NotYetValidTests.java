@@ -35,7 +35,7 @@ public class NotYetValidTests extends X509AnvilTest {
                 });
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_before")
     @AnvilTest(id = "basic-48f16a250d")
     public void notYetValidUtcIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -46,7 +46,7 @@ public class NotYetValidTests extends X509AnvilTest {
                 });
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_before")
     @AnvilTest(id = "basic-5341312baf")
     public void notYetValidGeneralizedIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

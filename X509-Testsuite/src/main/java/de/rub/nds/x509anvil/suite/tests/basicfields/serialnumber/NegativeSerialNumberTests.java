@@ -21,7 +21,7 @@ public class NegativeSerialNumberTests extends X509AnvilTest {
     }
 
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:serial_number")
     @AnvilTest(id = "basic-dc9c549b5f")
     public void negativeSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

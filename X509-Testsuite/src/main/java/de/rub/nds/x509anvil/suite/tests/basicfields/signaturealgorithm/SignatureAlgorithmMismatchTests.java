@@ -17,7 +17,7 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setDifferentSignatureAlgorithmOid(TestUtils.getNonMatchingAlgorithmOid(config.getSignatureAlgorithm()).getSignatureAndHashAlgorithm().getOid()));
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-77e4d2a826")
     public void signatureAlgorithmFieldDoesntMatchAlgorithmIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setDifferentSignatureAlgorithmOid(TestUtils.getNonMatchingAlgorithmOid(config.getSignatureAlgorithm()).getSignatureAndHashAlgorithm().getOid()));

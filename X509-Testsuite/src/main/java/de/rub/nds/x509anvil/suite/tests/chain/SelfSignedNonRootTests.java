@@ -17,7 +17,7 @@ public class SelfSignedNonRootTests extends X509AnvilTest {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier)config -> config.setSelfSigned(true));
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "chain-01967f3251")
     public void selfSignedIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier)config -> config.setSelfSigned(true));

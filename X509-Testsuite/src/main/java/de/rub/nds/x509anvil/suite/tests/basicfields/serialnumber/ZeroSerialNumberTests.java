@@ -22,7 +22,7 @@ public class ZeroSerialNumberTests extends X509AnvilTest {
     }
 
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:serial_number")
     @AnvilTest(id = "basic-55a018dc6c")
     public void zeroSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

@@ -27,7 +27,7 @@ public class UnknownCriticalExtensionTests extends X509AnvilTest {
     }
 
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = {"inter0:version", "inter0:extensions_present", "inter0:ext_unknown_noncritical_extension_present"})
     @AnvilTest(id = "extension-14d5fe1bed")
     public void unknownCriticalExtensionIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

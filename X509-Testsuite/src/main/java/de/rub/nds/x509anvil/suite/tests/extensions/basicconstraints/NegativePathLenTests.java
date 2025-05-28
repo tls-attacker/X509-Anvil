@@ -14,7 +14,7 @@ import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
 public class NegativePathLenTests extends X509AnvilTest {
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-3dbdfa5609")
     public void negativePathLen(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

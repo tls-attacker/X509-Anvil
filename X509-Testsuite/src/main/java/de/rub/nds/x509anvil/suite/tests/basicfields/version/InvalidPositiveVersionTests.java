@@ -20,7 +20,7 @@ public class InvalidPositiveVersionTests extends X509AnvilTest {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setVersion(BigInteger.valueOf(3)));
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-1203edde46")
     @IpmLimitations(identifiers = "inter0:version")
     public void invalidVersion4Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

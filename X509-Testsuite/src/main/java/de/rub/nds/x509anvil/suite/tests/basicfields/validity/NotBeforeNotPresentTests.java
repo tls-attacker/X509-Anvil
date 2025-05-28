@@ -17,7 +17,7 @@ public class NotBeforeNotPresentTests extends X509AnvilTest {
                 (X509CertificateConfigModifier) config -> config.setIncludeNotBefore(false));
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-a995359b4a")
     public void noNotBeforeIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false,
