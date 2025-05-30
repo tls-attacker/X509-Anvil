@@ -34,7 +34,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> config.setDivergentIssuerDirectoryStringChoices(List.of(new Pair<>(X500AttributeType.ORGANISATION_NAME, DirectoryStringChoiceType.PRINTABLE_STRING))));
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-0be3c6ebe2")
     public void typeMismatchOrganizationalUnit(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, config -> config.setDivergentIssuerDirectoryStringChoices(List.of(new Pair<>(X500AttributeType.ORGANISATION_UNIT_NAME, DirectoryStringChoiceType.PRINTABLE_STRING))), (X509CertificateConfigModifier) config -> {
@@ -44,7 +44,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
         });
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-7247764279")
     public void typeMismatchDnQualifier(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, config -> config.setDivergentIssuerDirectoryStringChoices(List.of(new Pair<>(X500AttributeType.DN_QUALIFIER, DirectoryStringChoiceType.PRINTABLE_STRING))), (X509CertificateConfigModifier) config -> {
@@ -54,7 +54,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
         });
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-75f6f195a4")
     public void typeMismatchStateProvince(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, config -> config.setDivergentIssuerDirectoryStringChoices(List.of(new Pair<>(X500AttributeType.STATE_OR_PROVINCE_NAME, DirectoryStringChoiceType.PRINTABLE_STRING))), (X509CertificateConfigModifier) config -> {
@@ -64,7 +64,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
         });
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-ce08905f2b")
     public void typeMismatchSerialNumber(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, config -> config.setDivergentIssuerDirectoryStringChoices(List.of(new Pair<>(X500AttributeType.SERIAL_NUMBER, DirectoryStringChoiceType.PRINTABLE_STRING))), (X509CertificateConfigModifier) config -> {

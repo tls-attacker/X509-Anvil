@@ -6,6 +6,7 @@ import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterIdentifierProvider;
 import de.rub.nds.x509anvil.framework.featureextraction.UnsupportedFeatureException;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeException;
+import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterType;
 
 public class Main {
     public static void main(String[] args) throws UnsupportedFeatureException, ProbeException {

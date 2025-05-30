@@ -30,7 +30,7 @@ public class ContextHelper {
     private static synchronized void setContext() throws UnsupportedFeatureException, ProbeException {
         Security.addProvider(new BouncyCastleProvider());
         testConfig = new TestConfig();
-        testConfig.setVerifierAdapterType(VerifierAdapterType.TLS_SERVER_AUTH);
+        testConfig.setVerifierAdapterType(VerifierAdapterType.TLS_CLIENT_AUTH);
         AnvilTestConfig anvilTestConfig = new AnvilTestConfig();
         anvilTestConfig.setStrength(2);
         AnvilContext.createInstance(anvilTestConfig, "", new X509AnvilParameterIdentifierProvider());
