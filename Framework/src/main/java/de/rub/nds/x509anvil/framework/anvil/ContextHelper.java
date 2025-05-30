@@ -15,6 +15,7 @@ import de.rub.nds.x509anvil.framework.featureextraction.FeatureExtractor;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509anvil.framework.featureextraction.UnsupportedFeatureException;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeException;
+import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterType;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.security.Security;
@@ -29,6 +30,7 @@ public class ContextHelper {
     private static synchronized void setContext() throws UnsupportedFeatureException, ProbeException {
         Security.addProvider(new BouncyCastleProvider());
         testConfig = new TestConfig();
+        testConfig.setVerifierAdapterType(VerifierAdapterType.TLS_SERVER_AUTH);
         AnvilTestConfig anvilTestConfig = new AnvilTestConfig();
         anvilTestConfig.setStrength(2);
         AnvilContext.createInstance(anvilTestConfig, "", new X509AnvilParameterIdentifierProvider());

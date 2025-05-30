@@ -21,7 +21,6 @@ public class Main {
         anvilTestConfig.setOutputFolder("/tmp/X509-Anvil-Out-" + System.currentTimeMillis());
         anvilTestConfig.setTestPackage(ContextHelper.getTestConfig().getTestPackage());
 
-
         TestRunner testRunner = new TestRunner(anvilTestConfig, "placeholder", new X509AnvilParameterIdentifierProvider());
         testRunner.runTests();
     }

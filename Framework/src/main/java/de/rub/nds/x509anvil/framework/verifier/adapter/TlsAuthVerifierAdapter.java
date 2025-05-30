@@ -1,25 +1,13 @@
-/**
- * Framework - A tool for creating arbitrary certificates
- * <p>
- * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- * <p>
- * Licensed under Apache License, Version 2.0
- * http://www.apache.org/licenses/LICENSE-2.0.txt
- */
-
-package de.rub.nds.x509anvil.framework.verifier.tlsclientauth;
+package de.rub.nds.x509anvil.framework.verifier.adapter;
 
 import de.rub.nds.tlsattacker.core.config.Config;
 import de.rub.nds.tlsattacker.core.connection.OutboundConnection;
 import de.rub.nds.tlsattacker.core.constants.CipherSuite;
 import de.rub.nds.tlsattacker.core.constants.NamedGroup;
 import de.rub.nds.tlsattacker.core.constants.SignatureAndHashAlgorithm;
-import de.rub.nds.tlsattacker.core.protocol.message.*;
 import de.rub.nds.tlsattacker.core.state.State;
 import de.rub.nds.tlsattacker.core.workflow.DefaultWorkflowExecutor;
 import de.rub.nds.tlsattacker.core.workflow.WorkflowTrace;
-import de.rub.nds.tlsattacker.core.workflow.action.ReceiveAction;
-import de.rub.nds.tlsattacker.core.workflow.action.SendAction;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapter;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
@@ -31,27 +19,23 @@ import de.rub.nds.x509attacker.x509.model.X509Certificate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
-
+public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
     private static final Config defaultConfig;
 
-    private final Config config;
+    protected final Config config;
 
     static {
         Config config = new Config();
         config.setAutoAdjustCertificate(false);
-        config.setDefaultClientConnection(new OutboundConnection("client", 4433, "localhost"));
-        config.setClientAuthentication(true);
 
         List<CipherSuite> supportedCipherSuites = new ArrayList<>();
         supportedCipherSuites.add(CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256);
         supportedCipherSuites.add(CipherSuite.TLS_RSA_WITH_AES_128_GCM_SHA256);
-
         supportedCipherSuites.add(CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256);
-
         supportedCipherSuites.add(CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256);
         supportedCipherSuites.add(CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256);
         config.setDefaultClientSupportedCipherSuites(supportedCipherSuites);
+        config.setDefaultServerSupportedCipherSuites(supportedCipherSuites);
 
         List<SignatureAndHashAlgorithm> supportedSignatureAndHashAlgorithms = new ArrayList<>();
         supportedSignatureAndHashAlgorithms.add(SignatureAndHashAlgorithm.RSA_MD5);
@@ -73,39 +57,33 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         supportedSignatureAndHashAlgorithms.add(SignatureAndHashAlgorithm.ECDSA_SHA384);
         supportedSignatureAndHashAlgorithms.add(SignatureAndHashAlgorithm.ECDSA_SHA512);
         config.setDefaultClientSupportedSignatureAndHashAlgorithms(supportedSignatureAndHashAlgorithms);
+        config.setDefaultServerSupportedSignatureAndHashAlgorithms(supportedSignatureAndHashAlgorithms);
 
         List<NamedGroup> supportedNamedGroups =
-            Arrays.stream(NamedGroup.values()).filter(g -> g.name().contains("SECP256R")).collect(Collectors.toList());
+                Arrays.stream(NamedGroup.values()).filter(g -> g.name().contains("SECP256R")).collect(Collectors.toList());
         config.setDefaultClientNamedGroups(supportedNamedGroups);
-
-        config.setAddRenegotiationInfoExtension(false);
+        config.setDefaultServerNamedGroups(supportedNamedGroups);
 
         defaultConfig = config;
     }
 
-    public static TlsClientAuthVerifierAdapter fromConfig(TlsClientAuthVerifierAdapterConfig config) {
-        String hostname = config.getHostname();
-        int port = config.getPort();
-        return new TlsClientAuthVerifierAdapter(hostname, port);
-    }
-
-    public TlsClientAuthVerifierAdapter(String hostname, int port) {
+    public TlsAuthVerifierAdapter(String hostname, int port) {
         config = defaultConfig.createCopy();
         config.setDefaultClientConnection(new OutboundConnection("client", port, hostname));
     }
 
-    public TlsClientAuthVerifierAdapter() {
+    public TlsAuthVerifierAdapter() {
         config = defaultConfig.createCopy();
     }
 
     @Override
     public VerifierResult invokeVerifier(X509CertificateConfig leafCertificateConfig,
-        List<X509Certificate> certificatesChain) {
+                                         List<X509Certificate> certificatesChain) {
         List<CertificateBytes> encodedCertificateChain = new LinkedList<>();
         Collections.reverse(certificatesChain);
         for (X509Certificate x509Certificate : certificatesChain) {
             encodedCertificateChain.add(new CertificateBytes(
-                x509Certificate.getSerializer(new X509Chooser(null, new X509Context())).serialize()));
+                    x509Certificate.getSerializer(new X509Chooser(null, new X509Context())).serialize()));
         }
 
         config.setDefaultExplicitCertificateChain(encodedCertificateChain);
@@ -134,6 +112,9 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
         x509Context.setSubjectNamedCurve(leafCertificateConfig.getDefaultSubjectNamedCurve());
 
         DefaultWorkflowExecutor workflowExecutor = new DefaultWorkflowExecutor(state);
+
+        runCommandInBackground();
+
         workflowExecutor.executeWorkflow();
 
         return new VerifierResult(workflowTrace.executedAsPlanned());
@@ -143,42 +124,24 @@ public class TlsClientAuthVerifierAdapter implements VerifierAdapter {
 
         try {
             SignatureAndHashAlgorithm signatureAndHashAlgorithm =
-                switch (certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType()) {
-                case RSA -> SignatureAndHashAlgorithm.RSA_SHA256;
-                case DSA -> SignatureAndHashAlgorithm.DSA_SHA256;
-                case ECDSA -> SignatureAndHashAlgorithm.ECDSA_SHA256;
-                default -> throw new IllegalArgumentException("Unsupported public key algorithm: "
-                    + certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType());
-                };
+                    switch (certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType()) {
+                        case RSA -> SignatureAndHashAlgorithm.RSA_SHA256;
+                        case DSA -> SignatureAndHashAlgorithm.DSA_SHA256;
+                        case ECDSA -> SignatureAndHashAlgorithm.ECDSA_SHA256;
+                        default -> throw new IllegalArgumentException("Unsupported public key algorithm: "
+                                + certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType());
+                    };
             config.setDefaultClientSupportedSignatureAndHashAlgorithms(config
-                .getDefaultClientSupportedSignatureAndHashAlgorithms().stream()
-                .filter(
-                    algorithm -> algorithm.getSignatureAlgorithm() == signatureAndHashAlgorithm.getSignatureAlgorithm())
-                .collect(Collectors.toList()));
+                    .getDefaultClientSupportedSignatureAndHashAlgorithms().stream()
+                    .filter(
+                            algorithm -> algorithm.getSignatureAlgorithm() == signatureAndHashAlgorithm.getSignatureAlgorithm())
+                    .collect(Collectors.toList()));
         } catch (NoSuchElementException e) {
             // modification removed public key container, this is fine
         }
     }
 
-    private static WorkflowTrace buildWorkflowTraceDhe(Config config) {
-        WorkflowTrace workflowTrace = new WorkflowTrace();
-        workflowTrace.addTlsAction(new SendAction(new ClientHelloMessage(config)));
-        workflowTrace.addTlsAction(new ReceiveAction(new ServerHelloMessage(), new CertificateMessage(),
-            new DHEServerKeyExchangeMessage(), new CertificateRequestMessage(), new ServerHelloDoneMessage()));
-        workflowTrace.addTlsAction(new SendAction(new CertificateMessage(), new DHClientKeyExchangeMessage(),
-            new CertificateVerifyMessage(), new ChangeCipherSpecMessage(), new FinishedMessage()));
-        workflowTrace.addTlsAction(new ReceiveAction(new ChangeCipherSpecMessage(), new FinishedMessage()));
-        return workflowTrace;
-    }
+    abstract WorkflowTrace buildWorkflowTraceDhe(Config config);
 
-    private static WorkflowTrace buildWorkflowTraceRsa(Config config) {
-        WorkflowTrace workflowTrace = new WorkflowTrace();
-        workflowTrace.addTlsAction(new SendAction(new ClientHelloMessage(config)));
-        workflowTrace.addTlsAction(new ReceiveAction(new ServerHelloMessage(), new CertificateMessage(),
-            new CertificateRequestMessage(), new ServerHelloDoneMessage()));
-        workflowTrace.addTlsAction(new SendAction(new CertificateMessage(), new RSAClientKeyExchangeMessage(),
-            new CertificateVerifyMessage(), new ChangeCipherSpecMessage(), new FinishedMessage()));
-        workflowTrace.addTlsAction(new ReceiveAction(new ChangeCipherSpecMessage(), new FinishedMessage()));
-        return workflowTrace;
-    }
+    abstract void runCommandInBackground();
 }
