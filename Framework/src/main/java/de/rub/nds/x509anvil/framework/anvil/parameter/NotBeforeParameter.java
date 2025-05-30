@@ -55,19 +55,19 @@ public class NotBeforeParameter extends CertificateSpecificParameter<NotBeforeVa
     public void applyToCertificateConfig(X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
         switch (getSelectedValue()) {
             case UTC_TIME:
-                certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
+                certificateConfig.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
                 certificateConfig.setNotBefore(new DateTime(2022, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
             case UTC_TIME_EARLIEST:
-                certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
+                certificateConfig.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
                 certificateConfig.setNotBefore(new DateTime(1950, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
             case GENERALIZED_TIME:
-                certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+                certificateConfig.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
                 certificateConfig.setNotBefore(new DateTime(2022, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
             case GENERALIZED_TIME_BEFORE_1950:
-                certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
+                certificateConfig.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
                 certificateConfig.setNotBefore(new DateTime(1950, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
         }
