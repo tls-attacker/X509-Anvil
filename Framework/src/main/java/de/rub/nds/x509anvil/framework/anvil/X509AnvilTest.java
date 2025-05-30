@@ -43,7 +43,7 @@ public class X509AnvilTest extends AnvilTestBaseClass {
 
     @BeforeAll
     public static void initialize() throws UnsupportedFeatureException, ProbeException {
-        ContextHelper.initializeContext();
+        ContextHelper.initializeAll();
     }
 
     @Deprecated

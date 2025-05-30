@@ -15,7 +15,8 @@ import de.rub.nds.x509anvil.framework.featureextraction.FeatureExtractor;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509anvil.framework.featureextraction.UnsupportedFeatureException;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeException;
-import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.security.Security;
@@ -23,27 +24,36 @@ import java.security.Security;
 public class ContextHelper {
 
     private static FeatureReport featureReport = null;
-    private static boolean contextInitialized = false;
-
     private static TestConfig testConfig = null;
 
-    private static synchronized void setContext() throws UnsupportedFeatureException, ProbeException {
+    static {
         Security.addProvider(new BouncyCastleProvider());
-        testConfig = new TestConfig();
-        testConfig.setVerifierAdapterType(VerifierAdapterType.TLS_CLIENT_AUTH);
-        AnvilTestConfig anvilTestConfig = new AnvilTestConfig();
-        anvilTestConfig.setStrength(2);
-        AnvilContext.createInstance(anvilTestConfig, "", new X509AnvilParameterIdentifierProvider());
-
-        featureReport = FeatureExtractor.scanFeatures();
     }
 
-    public static synchronized void initializeContext() throws UnsupportedFeatureException, ProbeException {
-        if (!contextInitialized) {
-            setContext();
-            contextInitialized = true;
+    public static synchronized void initializeConfigs(String[] args) {
+        if (testConfig == null) {
+            testConfig = new TestConfig();
+            if (args != null) {
+                testConfig.parse(args);
+            }
+            AnvilContext.createInstance(testConfig.getAnvilTestConfig(), "", new X509AnvilParameterIdentifierProvider());
         }
     }
+
+    public static synchronized void initializefeatureReport() throws UnsupportedFeatureException, ProbeException {
+        if (testConfig == null) {
+            throw new UnsupportedOperationException("TestConfig is not initialized. Call initializeConfigs() first.");
+        }
+        if (featureReport == null) {
+            featureReport = FeatureExtractor.scanFeatures();
+        }
+    }
+
+    public static synchronized void initializeAll() throws UnsupportedFeatureException, ProbeException {
+        initializeConfigs(null);
+        initializefeatureReport();
+    }
+
 
     public static FeatureReport getFeatureReport() {
         return featureReport;

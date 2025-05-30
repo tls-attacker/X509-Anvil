@@ -58,7 +58,7 @@ public class AnnotationUtil {
         Method testMethod = extensionContext.getRequiredTestMethod();
         StaticRoot staticRootAnnotation = testMethod.getAnnotation(StaticRoot.class);
         if (staticRootAnnotation == null) {
-            return ContextHelper.getTestConfig().getUseStaticRootCertificate();
+            return false;
         }
         return staticRootAnnotation.value();
     }
