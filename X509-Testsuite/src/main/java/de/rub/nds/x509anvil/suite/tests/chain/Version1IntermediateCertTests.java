@@ -2,11 +2,8 @@ package de.rub.nds.x509anvil.suite.tests.chain;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
-import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
@@ -15,11 +12,7 @@ import java.math.BigInteger;
 
 public class Version1IntermediateCertTests extends X509AnvilTest {
 
-    @Specification(document = "RFC 5280", section = "6.1.4. Preparation for Certificate i+1",
-            text = "If certificate i is a version 1 or version 2 certificate, then the application MUST either verify that " +
-                    "certificate i is a CA certificate through out-of-band means or reject the certificate.")
-    @SeverityLevel(Severity.INFORMATIONAL)
-    @ChainLength(minLength = 3)
+    @ChainLength(minLength = 2)
     @AnvilTest(id = "chain-24e3a47439")
     public void version1Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -28,10 +21,6 @@ public class Version1IntermediateCertTests extends X509AnvilTest {
         });
     }
 
-    @Specification(document = "RFC 5280", section = "6.1.4. Preparation for Certificate i+1",
-            text = "If certificate i is a version 1 or version 2 certificate, then the application MUST either verify that " +
-                    "certificate i is a CA certificate through out-of-band means or reject the certificate.")
-    @SeverityLevel(Severity.INFORMATIONAL)
     @ChainLength(minLength = 3)
     @AnvilTest(id = "chain-60a9344ec7")
     public void version2Intermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -40,5 +29,4 @@ public class Version1IntermediateCertTests extends X509AnvilTest {
             config.setIncludeExtensions(false);
         });
     }
-
 }

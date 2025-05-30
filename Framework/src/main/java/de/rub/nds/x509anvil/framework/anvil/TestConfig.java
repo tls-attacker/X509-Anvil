@@ -9,25 +9,112 @@
 
 package de.rub.nds.x509anvil.framework.anvil;
 
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
+import com.beust.jcommander.ParameterException;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.rub.nds.anvilcore.constants.TestEndpointType;
 import de.rub.nds.anvilcore.context.AnvilTestConfig;
+import de.rub.nds.tlsattacker.core.config.TLSDelegateConfig;
+import de.rub.nds.tlsattacker.core.config.delegate.GeneralDelegate;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterConfig;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterType;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class TestConfig {
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Date;
+import java.util.Map;
+
+@JsonAutoDetect(
+        fieldVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE,
+        getterVisibility = JsonAutoDetect.Visibility.NONE,
+        isGetterVisibility = JsonAutoDetect.Visibility.NONE,
+        creatorVisibility = JsonAutoDetect.Visibility.NONE)
+
+public class TestConfig extends TLSDelegateConfig {
+
+    protected static final Logger LOGGER = LogManager.getLogger();
+
     // TODO: Use JCommander for config parameters
-    private AnvilTestConfig anvilTestConfig = new AnvilTestConfig();
+    @JsonProperty private AnvilTestConfig anvilTestConfig = new AnvilTestConfig();
 
-    private VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_CLIENT_AUTH;
+
     private final VerifierAdapterConfig verifierAdapterConfig =
         new TlsAuthVerifierAdapterConfig("localhost", 4433);
-    private Boolean useStaticRootCertificate = true;
 
-    private int defaultMinChainLength = 4;
+
+    @JsonProperty("verifierAdapterType")
+    @Parameter(
+            names = "-verifierAdapterType",
+            description = "Whether to test TLS servers or TLS clients.")
+
+    private VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_CLIENT_AUTH;
+
+
+    @JsonProperty("minChainLength")
+    @Parameter(
+            names = "-minChainLength",
+            description = "The default minimum chain length for the test cases. Ignored for test cases with annotated chain length.")
+    private int defaultMinChainLength = 2;
+
+
+    @JsonProperty("maxChainLength")
+    @Parameter(
+            names = "-maxChainLength",
+            description = "The default maximum chain length for the test cases. Ignored for test cases with annotated chain length.")
     private int defaultMaxChainLength = 4;
+
+
+    @JsonProperty("intermediateCertsModeled")
+    @Parameter(
+            names = "-intermediateCertsModeled",
+            description = "The default number of intermediate certificated modeled. Ignored for test cases with annotated chain length.")
     private int defaultIntermediateCertsModeled = 2;
 
-    private String testPackage = "de.rub.nds.x509anvil.suite.tests";
+    public TestConfig() {
+        super(new GeneralDelegate());
+    }
+
+    public void parse(String[] args) {
+
+        JCommander argParser = JCommander.newBuilder()
+                .addObject(getAnvilTestConfig())
+                .addObject(this)
+                .build();
+
+        try {
+            argParser.parse(args);
+        } catch (ParameterException e) {
+            LOGGER.error("Could not parse provided parameters", e);
+            LOGGER.error("Provided parameters: {}", String.join(" ", args));
+            argParser.usage();
+            System.exit(2);
+        }
+
+        if (getGeneralDelegate().isHelp()) {
+            argParser.usage();
+            System.exit(0);
+        }
+
+        if (getAnvilTestConfig().getTestPackage() != null) {
+            LOGGER.info(
+                    "Limiting test to those of package {}",
+                    getAnvilTestConfig().getTestPackage());
+        } else {
+            // set test package if not specified via command args
+            getAnvilTestConfig().setTestPackage("de.rub.nds.x509anvil.suite.tests");
+        }
+    }
+
 
     public AnvilTestConfig getAnvilTestConfig() {
         return anvilTestConfig;
@@ -71,21 +158,5 @@ public class TestConfig {
 
     public void setDefaultIntermediateCertsModeled(int defaultIntermediateCertsModeled) {
         this.defaultIntermediateCertsModeled = defaultIntermediateCertsModeled;
-    }
-
-    public Boolean getUseStaticRootCertificate() {
-        return useStaticRootCertificate;
-    }
-
-    public void setUseStaticRootCertificate(Boolean useStaticRootCertificate) {
-        this.useStaticRootCertificate = useStaticRootCertificate;
-    }
-
-    public String getTestPackage() {
-        return testPackage;
-    }
-
-    public void setTestPackage(String testPackage) {
-        this.testPackage = testPackage;
     }
 }

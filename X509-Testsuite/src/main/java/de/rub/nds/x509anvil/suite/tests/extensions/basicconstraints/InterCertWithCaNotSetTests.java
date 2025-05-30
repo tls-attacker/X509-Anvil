@@ -2,11 +2,8 @@ package de.rub.nds.x509anvil.suite.tests.extensions.basicconstraints;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
-import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
@@ -17,10 +14,6 @@ import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
 public class InterCertWithCaNotSetTests extends X509AnvilTest {
 
-    @Specification(document = "RFC 5280", section = "4.2.1.9. Basic Constraints",
-            text = "If the basic constraints extension is not present in a version 3 certificate, or the extension is present but the cA boolean " +
-                    "is not asserted, then the certified public key MUST NOT be used to verify certificate signatures.")
-    @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-db7489730f")
     public void intermediateCertWithCaNotSet(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {

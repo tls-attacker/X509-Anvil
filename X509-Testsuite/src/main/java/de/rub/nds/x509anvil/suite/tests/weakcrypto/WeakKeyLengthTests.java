@@ -2,11 +2,8 @@ package de.rub.nds.x509anvil.suite.tests.weakcrypto;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
-import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
@@ -18,9 +15,7 @@ import org.junit.jupiter.api.Assertions;
 
 public class WeakKeyLengthTests extends X509AnvilTest {
 
-    @Specification(document = "RFC 5280", text = "This test checks whether weak key lengths are supported. In this case, RSA 512 bit.")
     @ChainLength(minLength = 3)
-    @SeverityLevel(Severity.CRITICAL)
     @AnvilTest(id = "weakcrypto-5521f8be14")
     public void weak512BitRsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
@@ -30,9 +25,7 @@ public class WeakKeyLengthTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @Specification(document = "RFC 5280", text = "This test checks whether weak key lengths are supported. In this case, RSA 1024 bit.")
     @ChainLength(minLength = 3)
-    @SeverityLevel(Severity.CRITICAL)
     @AnvilTest(id = "weakcrypto-448bf60b34")
     public void weak1024BitRsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
@@ -42,9 +35,7 @@ public class WeakKeyLengthTests extends X509AnvilTest {
         Assertions.assertFalse(result.isValid());
     }
 
-    @Specification(document = "RFC 5280", text = "This test checks whether weak key lengths are supported. In this case, DSA 1024 bit.")
     @ChainLength(minLength = 3)
-    @SeverityLevel(Severity.CRITICAL)
     @AnvilTest(id = "weakcrypto-8246133e52")
     public void weak1024BitDsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);

@@ -2,11 +2,8 @@ package de.rub.nds.x509anvil.suite.tests.extensions.basicconstraints;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
-import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
-import de.rub.nds.x509anvil.framework.annotation.Specification;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
-import de.rub.nds.x509anvil.framework.constants.Severity;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
@@ -16,9 +13,6 @@ import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
 public class InterCertWithoutBasicConstraintsTests extends X509AnvilTest {
 
-    @Specification(document = "RFC 5280", section = "4.2.1.9. Basic Constraints",
-            text = "Conforming CAs MUST include this extension in all CA certificates that contain public keys used to validate digital signatures on certificates")
-    @SeverityLevel(Severity.CRITICAL)
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-0bd143b23d")
     public void intermediateCertWithoutBasicConstraintsTests(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
