@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.subjectkeyid;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -12,6 +13,7 @@ import de.rub.nds.x509attacker.config.extension.SubjectKeyIdentifierConfig;
 public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-ddb7cadc32")
     public void duplicateIdenticalEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -38,6 +40,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-8fc40ac4e1")
     public void duplicateDifferentEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {

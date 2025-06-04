@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.encoding;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -15,6 +16,7 @@ import de.rub.nds.x509attacker.constants.X509Version;
 public class BerInsteadOfDerTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = "entity:extensions_present, entity:ext_basic_constraints_present, entity:ext_basic_constraints_critical")
     @AnvilTest(id = "encoding-0e88c639e4")
     public void booleanRepresentationEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -27,6 +29,7 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
+    @IpmLimitations(identifiers = "inter0:extensions_present, inter0:ext_basic_constraints_present, inter0:ext_basic_constraints_critical")
     @AnvilTest(id = "encoding-5735cdbb46")
     public void booleanRepresentationIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

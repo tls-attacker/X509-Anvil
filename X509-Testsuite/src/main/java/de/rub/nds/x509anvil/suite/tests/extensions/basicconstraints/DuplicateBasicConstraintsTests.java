@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.basicconstraints;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -12,6 +13,7 @@ import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
 public class DuplicateBasicConstraintsTests extends X509AnvilTest {
+
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-5427239f8e")
     public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -22,6 +24,7 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
+    @IpmLimitations(identifiers = "inter0:ext_basic_constraints_ca")
     @AnvilTest(id = "extension-027e0728ed")
     public void duplicateDifferentIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

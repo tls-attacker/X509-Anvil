@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.keyusage;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -15,6 +16,7 @@ import de.rub.nds.x509attacker.constants.X509ExtensionType;
 public class KeyCertSignNonCaTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = "entity:extensions_present, entity:ext_basic_constraints_present, entity:ext_basic_constraints_ca")
     @AnvilTest(id = "extension-91e2ddbf9d")
     public void keyCertSignNonCaEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {

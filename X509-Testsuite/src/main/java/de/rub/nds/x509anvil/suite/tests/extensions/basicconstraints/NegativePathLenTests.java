@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.basicconstraints;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -15,6 +16,7 @@ import de.rub.nds.x509attacker.constants.X509ExtensionType;
 public class NegativePathLenTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
+    @IpmLimitations(identifiers = "inter0:ext_basic_constraints_pathlen_constraint, inter0:ext_basic_constraints_pathlen_constraint_present")
     @AnvilTest(id = "extension-3dbdfa5609")
     public void negativePathLen(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -25,6 +27,5 @@ public class NegativePathLenTests extends X509AnvilTest {
             basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.ENCODE);
             basicConstraintsConfig.setIncludePathLenConstraint(DefaultEncodingRule.ENCODE);
         });
-
     }
 }

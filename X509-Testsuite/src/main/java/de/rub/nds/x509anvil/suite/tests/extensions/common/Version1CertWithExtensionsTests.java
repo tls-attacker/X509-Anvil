@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.common;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -13,6 +14,7 @@ import java.math.BigInteger;
 public class Version1CertWithExtensionsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = "entity:extensions_present, entity:version")
     @AnvilTest(id = "extension-9b75135269")
     public void version1CertWithExtensionsEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -22,6 +24,7 @@ public class Version1CertWithExtensionsTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
+    @IpmLimitations(identifiers = "inter0:version")
     @AnvilTest(id = "extension-9b75135366")
     public void version1CertWithExtensionsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

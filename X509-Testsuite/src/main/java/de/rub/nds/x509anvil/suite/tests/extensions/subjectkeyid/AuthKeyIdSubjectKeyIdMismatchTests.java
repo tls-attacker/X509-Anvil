@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.subjectkeyid;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -13,6 +14,7 @@ import de.rub.nds.x509attacker.config.extension.SubjectKeyIdentifierConfig;
 public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
+    @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-a71fd6a6dc")
     public void keyIdMismatchEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, config -> {
