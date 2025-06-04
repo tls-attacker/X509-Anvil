@@ -14,7 +14,7 @@ import de.rub.nds.x509attacker.constants.X509ExtensionType;
 public class UnknownCriticalExtensionTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @IpmLimitations(identifiers = {"entity:version", "entity:extensions_present", "entity:ext_unknown_noncritical_extension_present"})
+    @IpmLimitations(identifiers = {"entity:extensions_present"})
     @AnvilTest(id = "extension-d8772be424")
     public void unknownCriticalExtensionEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -28,7 +28,6 @@ public class UnknownCriticalExtensionTests extends X509AnvilTest {
 
 
     @ChainLength(minLength = 3)
-    @IpmLimitations(identifiers = {"inter0:version", "inter0:extensions_present", "inter0:ext_unknown_noncritical_extension_present"})
     @AnvilTest(id = "extension-14d5fe1bed")
     public void unknownCriticalExtensionIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

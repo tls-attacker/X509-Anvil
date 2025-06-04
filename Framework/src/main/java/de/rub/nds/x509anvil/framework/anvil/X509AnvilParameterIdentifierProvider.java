@@ -76,10 +76,7 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
     }
 
     public static List<X509AnvilParameterType> getModeledParameterTypes() {
-        return Arrays.stream(X509AnvilParameterType.values()).filter(t -> t != X509AnvilParameterType.CHAIN_LENGTH)
-            .filter(t -> !t.name().startsWith("EXT_KEY_USAGE")).filter(t -> !t.name().contains("UNIQUE"))
-            .filter(t -> !t.name().contains("NC")).collect(Collectors.toList());
-
+        return Arrays.stream(X509AnvilParameterType.values()).filter(t -> t != X509AnvilParameterType.CHAIN_LENGTH).collect(Collectors.toList());
     }
 
     @Override

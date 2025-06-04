@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.authoritykeyid;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.annotation.SeverityLevel;
 import de.rub.nds.x509anvil.framework.annotation.Specification;
@@ -17,6 +18,7 @@ import java.math.BigInteger;
 public class OnlySerialNumberTest extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
+    @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-b054d544c3")
     public void missingKeyIdentifierEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, config -> {
