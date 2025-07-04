@@ -6,7 +6,7 @@
         <groupId>de.rub.nds</groupId>
         <artifactId>protocol-toolkit-bom</artifactId>
         <!-- <version>3.5.17-anvilJ</version> -->
-        <version>5.1.11</version>
+        <version>6.2.1</version>
     </parent>
 
     <groupId>de.rub.nds.x509test</groupId>
