@@ -1,13 +1,15 @@
-/**
- * Framework - A tool for creating arbitrary certificates
- * <p>
- * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- * <p>
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.anvil;
+
+import static de.rub.nds.x509anvil.framework.constants.ChainValues.MAX_CHAIN_LENGTH;
+import static de.rub.nds.x509anvil.framework.constants.ChainValues.MAX_INTERMEDIATE_CERTS_MODELED;
 
 import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.model.DefaultModelTypes;
@@ -15,35 +17,32 @@ import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.ParameterIdentifierProvider;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static de.rub.nds.x509anvil.framework.constants.ChainValues.MAX_CHAIN_LENGTH;
-import static de.rub.nds.x509anvil.framework.constants.ChainValues.MAX_INTERMEDIATE_CERTS_MODELED;
-
 public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierProvider {
 
     private static List<ParameterIdentifier> allParameterIdentifiers;
 
-    private List<ParameterIdentifier>
-        generateAllParameterIdentifiersWithDerivationScope(DerivationScope derivationScope) {
+    private List<ParameterIdentifier> generateAllParameterIdentifiersWithDerivationScope(
+            DerivationScope derivationScope) {
         return generateAllParameterIdentifiersBase(
-            AnnotationUtil.resolveMaxChainLength(derivationScope.getExtensionContext()),
-            AnnotationUtil.resolveIntermediateCertsModeled(derivationScope.getExtensionContext()),
-            AnnotationUtil.resolveStaticRoot(derivationScope.getExtensionContext()));
+                AnnotationUtil.resolveMaxChainLength(derivationScope.getExtensionContext()),
+                AnnotationUtil.resolveIntermediateCertsModeled(
+                        derivationScope.getExtensionContext()),
+                AnnotationUtil.resolveStaticRoot(derivationScope.getExtensionContext()));
     }
 
     private List<ParameterIdentifier> generateAllParameterIdentifiersWithoutDerivationScope() {
-        return generateAllParameterIdentifiersBase(MAX_CHAIN_LENGTH.getValue(),
-            MAX_INTERMEDIATE_CERTS_MODELED.getValue(), false);
+        return generateAllParameterIdentifiersBase(
+                MAX_CHAIN_LENGTH.getValue(), MAX_INTERMEDIATE_CERTS_MODELED.getValue(), false);
     }
 
-    private List<ParameterIdentifier> generateAllParameterIdentifiersBase(int maxChainLength,
-        int intermediateCertsModeled, boolean staticRoot) {
+    private List<ParameterIdentifier> generateAllParameterIdentifiersBase(
+            int maxChainLength, int intermediateCertsModeled, boolean staticRoot) {
         int numCertificateScopes = Integer.min(maxChainLength, 2 + intermediateCertsModeled);
 
         List<ParameterIdentifier> parameterIdentifiers = new ArrayList<>();
@@ -52,23 +51,28 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
         // Parameters for root certificate
         if (!staticRoot) {
             for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
-                parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ROOT));
+                parameterIdentifiers.add(
+                        new ParameterIdentifier(
+                                x509AnvilParameterType, X509AnvilParameterScope.ROOT));
             }
         }
 
         // Parameters for intermediate certificates
         for (int i = 0; i < numCertificateScopes - 2; i++) {
             for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
-                parameterIdentifiers.add(new ParameterIdentifier(x509AnvilParameterType,
-                    X509AnvilParameterScope.createIntermediateScope(i)));
+                parameterIdentifiers.add(
+                        new ParameterIdentifier(
+                                x509AnvilParameterType,
+                                X509AnvilParameterScope.createIntermediateScope(i)));
             }
         }
 
         // Parameters for entity certificate
         if (numCertificateScopes >= 2) {
             for (X509AnvilParameterType x509AnvilParameterType : getModeledParameterTypes()) {
-                parameterIdentifiers
-                    .add(new ParameterIdentifier(x509AnvilParameterType, X509AnvilParameterScope.ENTITY));
+                parameterIdentifiers.add(
+                        new ParameterIdentifier(
+                                x509AnvilParameterType, X509AnvilParameterScope.ENTITY));
             }
         }
 
@@ -76,15 +80,18 @@ public class X509AnvilParameterIdentifierProvider extends ParameterIdentifierPro
     }
 
     public static List<X509AnvilParameterType> getModeledParameterTypes() {
-        return Arrays.stream(X509AnvilParameterType.values()).filter(t -> t != X509AnvilParameterType.CHAIN_LENGTH).collect(Collectors.toList());
+        return Arrays.stream(X509AnvilParameterType.values())
+                .filter(t -> t != X509AnvilParameterType.CHAIN_LENGTH)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<ParameterIdentifier> generateAllParameterIdentifiers() {
         if (allParameterIdentifiers == null) {
             allParameterIdentifiers =
-                ((X509AnvilParameterIdentifierProvider) AnvilContext.getInstance().getParameterIdentifierProvider())
-                    .generateAllParameterIdentifiersWithoutDerivationScope();
+                    ((X509AnvilParameterIdentifierProvider)
+                                    AnvilContext.getInstance().getParameterIdentifierProvider())
+                            .generateAllParameterIdentifiersWithoutDerivationScope();
         }
         return allParameterIdentifiers;
     }

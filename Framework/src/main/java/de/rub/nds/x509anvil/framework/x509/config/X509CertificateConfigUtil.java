@@ -1,12 +1,11 @@
-/**
- * Framework - A tool for creating arbitrary certificates
- * <p>
- * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- * <p>
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.protocol.xml.Pair;
@@ -20,13 +19,12 @@ import de.rub.nds.x509attacker.constants.CertificateChainPositionType;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
-
 import java.math.BigInteger;
 import java.util.*;
 
 public class X509CertificateConfigUtil {
-    private static X509CertificateConfig generateDefaultCertificateConfig(boolean selfSigned,
-        CertificateChainPositionType chainPosType, String commonName) {
+    private static X509CertificateConfig generateDefaultCertificateConfig(
+            boolean selfSigned, CertificateChainPositionType chainPosType, String commonName) {
         X509CertificateConfig config = new X509CertificateConfig();
         config.setSerialNumber(generateUniqueSerialNumber());
         config.setSelfSigned(selfSigned);
@@ -48,26 +46,35 @@ public class X509CertificateConfigUtil {
     }
 
     public static X509CertificateConfig generateDefaultRootCaCertificateConfig(boolean selfSigned) {
-        X509CertificateConfig config = generateDefaultCertificateConfig(selfSigned, CertificateChainPositionType.ROOT,
-            "TLS Attacker CA - Global Insecurity Provider");
+        X509CertificateConfig config =
+                generateDefaultCertificateConfig(
+                        selfSigned,
+                        CertificateChainPositionType.ROOT,
+                        "TLS Attacker CA - Global Insecurity Provider");
         attachUniqueKeysRoot(config);
         return config;
     }
 
-    public static X509CertificateConfig generateDefaultIntermediateCaCertificateConfig(boolean selfSigned,
-        int intermediatePosition) {
+    public static X509CertificateConfig generateDefaultIntermediateCaCertificateConfig(
+            boolean selfSigned, int intermediatePosition) {
         X509CertificateConfig config =
-            generateDefaultCertificateConfig(selfSigned, CertificateChainPositionType.INTERMEDIATE,
-                "TLS Attacker Intermediate CA Depth " + intermediatePosition + "- Global Insecurity Provider");
+                generateDefaultCertificateConfig(
+                        selfSigned,
+                        CertificateChainPositionType.INTERMEDIATE,
+                        "TLS Attacker Intermediate CA Depth "
+                                + intermediatePosition
+                                + "- Global Insecurity Provider");
         attachUniqueKeysIntermediate(config, intermediatePosition);
         return config;
     }
 
     public static X509CertificateConfig generateDefaultEntityCertificateConfig(boolean selfSigned) {
-        return generateDefaultCertificateConfig(selfSigned, CertificateChainPositionType.ENTITY, "tls-attacker.com");
+        return generateDefaultCertificateConfig(
+                selfSigned, CertificateChainPositionType.ENTITY, "tls-attacker.com");
     }
 
-    private static BasicConstraintsConfig generateBasicConstraintsConfig(CertificateChainPositionType chainPosType) {
+    private static BasicConstraintsConfig generateBasicConstraintsConfig(
+            CertificateChainPositionType chainPosType) {
         BasicConstraintsConfig basicConstraintsConfig = new BasicConstraintsConfig();
         basicConstraintsConfig.setPresent(true);
         basicConstraintsConfig.setCritical(true);
@@ -80,7 +87,8 @@ public class X509CertificateConfigUtil {
         return basicConstraintsConfig;
     }
 
-    private static KeyUsageConfig generateKeyUsageConfig(CertificateChainPositionType chainPosType) {
+    private static KeyUsageConfig generateKeyUsageConfig(
+            CertificateChainPositionType chainPosType) {
         KeyUsageConfig keyUsageConfig = new KeyUsageConfig();
         keyUsageConfig.setPresent(true);
         keyUsageConfig.setCritical(true);
@@ -113,29 +121,40 @@ public class X509CertificateConfigUtil {
 
     private static void attachUniqueKeysEntity(X509CertificateConfig config) {
         CachedKeyPairGenerator.generateNewKeys(
-            new SignatureHashAlgorithmKeyLengthPair(config.getDefaultSignatureAlgorithm()), config, "entity");
+                new SignatureHashAlgorithmKeyLengthPair(config.getDefaultSignatureAlgorithm()),
+                config,
+                "entity");
     }
 
     private static void attachUniqueKeysRoot(X509CertificateConfig config) {
         CachedKeyPairGenerator.generateNewKeys(
-            new SignatureHashAlgorithmKeyLengthPair(config.getDefaultSignatureAlgorithm()), config, "root");
+                new SignatureHashAlgorithmKeyLengthPair(config.getDefaultSignatureAlgorithm()),
+                config,
+                "root");
     }
 
-    private static void attachUniqueKeysIntermediate(X509CertificateConfig config, int intermediatePosition) {
+    private static void attachUniqueKeysIntermediate(
+            X509CertificateConfig config, int intermediatePosition) {
         CachedKeyPairGenerator.generateNewKeys(
-            new SignatureHashAlgorithmKeyLengthPair(config.getDefaultSignatureAlgorithm()), config,
-            "inter" + intermediatePosition);
+                new SignatureHashAlgorithmKeyLengthPair(config.getDefaultSignatureAlgorithm()),
+                config,
+                "inter" + intermediatePosition);
     }
 
     /**
-     * Returns the first extension config in the given config that matches the given extensionType. Returns null if
-     * extension not found.
+     * Returns the first extension config in the given config that matches the given extensionType.
+     * Returns null if extension not found.
      */
-    public static ExtensionConfig getExtensionConfig(X509CertificateConfig certificateConfig,
-        X509ExtensionType extensionType) {
+    public static ExtensionConfig getExtensionConfig(
+            X509CertificateConfig certificateConfig, X509ExtensionType extensionType) {
         return certificateConfig.getExtensions().stream()
-            .filter(x -> X509ExtensionType.decodeFromOidBytes(x.getExtensionId().getEncoded()) == extensionType)
-            .findFirst().orElse(null);
+                .filter(
+                        x ->
+                                X509ExtensionType.decodeFromOidBytes(
+                                                x.getExtensionId().getEncoded())
+                                        == extensionType)
+                .findFirst()
+                .orElse(null);
     }
 
     public static X509CertificateChainConfig createBasicConfig(int chainLength) {
@@ -149,14 +168,19 @@ public class X509CertificateConfigUtil {
         return new BigInteger(uuid.toString().replace("-", ""), 16);
     }
 
-    public static void modifyAttributeAndValuePairInSubject(X509CertificateConfig config, X500AttributeType type) {
+    public static void modifyAttributeAndValuePairInSubject(
+            X509CertificateConfig config, X500AttributeType type) {
         try {
             Pair<X500AttributeType, String> existingPair =
-                config.getSubject().stream().filter(x -> x.getLeftElement() == type).findFirst().orElseThrow();
+                    config.getSubject().stream()
+                            .filter(x -> x.getLeftElement() == type)
+                            .findFirst()
+                            .orElseThrow();
             existingPair.setRightElement(existingPair.getRightElement() + "_modified");
         } catch (NoSuchElementException e) {
             Pair<X500AttributeType, String> newPair = new Pair<>(type, "modificationtest_modified");
-            List<Pair<X500AttributeType, String>> modifiableSubject = new ArrayList<>(config.getSubject());
+            List<Pair<X500AttributeType, String>> modifiableSubject =
+                    new ArrayList<>(config.getSubject());
             modifiableSubject.add(newPair);
             config.setSubject(modifiableSubject);
         }

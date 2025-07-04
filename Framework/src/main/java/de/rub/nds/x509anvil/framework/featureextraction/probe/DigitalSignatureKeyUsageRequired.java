@@ -1,12 +1,11 @@
-/**
- * Framework - A tool for creating arbitrary certificates
- * <p>
- * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- * <p>
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.featureextraction.probe;
 
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
@@ -23,7 +22,6 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
 import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
-
 import java.util.List;
 
 public class DigitalSignatureKeyUsageRequired implements Probe {
@@ -54,14 +52,18 @@ public class DigitalSignatureKeyUsageRequired implements Probe {
     }
 
     private VerifierResult invokeVerifier(X509CertificateChainConfig config)
-        throws VerifierException, CertificateGeneratorException {
-        X509CertificateChainGenerator certificateChainGenerator = new X509CertificateChainGenerator(config);
+            throws VerifierException, CertificateGeneratorException {
+        X509CertificateChainGenerator certificateChainGenerator =
+                new X509CertificateChainGenerator(config);
         certificateChainGenerator.generateCertificateChain();
-        List<X509Certificate> certificateChain = certificateChainGenerator.retrieveCertificateChain();
+        List<X509Certificate> certificateChain =
+                certificateChainGenerator.retrieveCertificateChain();
         TestConfig testConfig = ContextHelper.getTestConfig();
-        VerifierAdapter verifierAdapter = VerifierAdapterFactory.getInstance(testConfig.getVerifierAdapterType(),
-            testConfig.getVerifierAdapterConfig());
-        return verifierAdapter.invokeVerifier(config.getEntityCertificateConfig(), certificateChain);
+        VerifierAdapter verifierAdapter =
+                VerifierAdapterFactory.getInstance(
+                        testConfig.getVerifierAdapterType(), testConfig.getVerifierAdapterConfig());
+        return verifierAdapter.invokeVerifier(
+                config.getEntityCertificateConfig(), certificateChain);
     }
 
     public boolean probeWithoutFlagSet() throws VerifierException, CertificateGeneratorException {

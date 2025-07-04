@@ -1,3 +1,11 @@
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package de.rub.nds.x509anvil.suite.tests.extensions.keyusage;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
@@ -16,17 +24,30 @@ import de.rub.nds.x509attacker.constants.X509ExtensionType;
 public class KeyCertSignNonCaTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @IpmLimitations(identifiers = "entity:extensions_present, entity:ext_basic_constraints_present, entity:ext_basic_constraints_ca")
+    @IpmLimitations(
+            identifiers =
+                    "entity:extensions_present, entity:ext_basic_constraints_present, entity:ext_basic_constraints_ca")
     @AnvilTest(id = "extension-91e2ddbf9d")
-    public void keyCertSignNonCaEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
-            KeyUsageConfig keyUsageConfig = (KeyUsageConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.KEY_USAGE);
-            keyUsageConfig.setKeyCertSign(true);
-            keyUsageConfig.setPresent(true);
-            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
-            basicConstraintsConfig.setCa(false);
-            basicConstraintsConfig.setPresent(true);
-            config.setIncludeExtensions(true);
-        });
+    public void keyCertSignNonCaEntity(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            KeyUsageConfig keyUsageConfig =
+                                    (KeyUsageConfig)
+                                            X509CertificateConfigUtil.getExtensionConfig(
+                                                    config, X509ExtensionType.KEY_USAGE);
+                            keyUsageConfig.setKeyCertSign(true);
+                            keyUsageConfig.setPresent(true);
+                            BasicConstraintsConfig basicConstraintsConfig =
+                                    (BasicConstraintsConfig)
+                                            X509CertificateConfigUtil.getExtensionConfig(
+                                                    config, X509ExtensionType.BASIC_CONSTRAINTS);
+                            basicConstraintsConfig.setCa(false);
+                            basicConstraintsConfig.setPresent(true);
+                            config.setIncludeExtensions(true);
+                        });
     }
 }

@@ -1,12 +1,11 @@
-/**
- * Framework - A tool for creating arbitrary certificates
- * <p>
- * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- * <p>
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.x509.generator;
 
 import de.rub.nds.protocol.xml.Pair;
@@ -16,7 +15,6 @@ import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,14 +34,17 @@ public class X509CertificateChainGenerator {
 
     public void generateCertificateChain() throws CertificateGeneratorException {
         if (!certificateChainConfig.isInitialized()) {
-            throw new CertificateGeneratorException("X509CertificateChainConfig is not initialized");
+            throw new CertificateGeneratorException(
+                    "X509CertificateChainConfig is not initialized");
         }
 
         X509CertificateConfig signerConfig = null;
 
         // set signature signing keys to keys from signer config unless self-signed
 
-        for (int i = 0; i < certificateChainConfig.getCertificateConfigList().toArray().length; i++) {
+        for (int i = 0;
+                i < certificateChainConfig.getCertificateConfigList().toArray().length;
+                i++) {
             X509CertificateConfig config = certificateChainConfig.getCertificateConfigList().get(i);
 
             if (config.isSelfSigned()) {
@@ -56,30 +57,36 @@ public class X509CertificateChainGenerator {
                 List<Pair<X500AttributeType, String>> signerSubject = new ArrayList<>();
                 AtomicBoolean containsCountry = new AtomicBoolean(false);
                 X509CertificateConfig finalSignerConfig = signerConfig;
-                signerConfig.getSubject().forEach(pair -> {
-                    String value = pair.getValue();
-                    if (value.contains("_modified")) {
-                        // mismatch tests
-                        value = value.replace("_modified", "");
-                    }
-                    if (pair.getKey() == X500AttributeType.DOMAIN_COMPONENT
-                        && finalSignerConfig.isSubjectDomainComponentCaseInsensitive()) {
-                        value = value.toLowerCase(Locale.ROOT);
-                    }
-                    if (!value.contains("additional_rdn")) { // additional rdn mismatch test
-                        signerSubject.add(new Pair<>(pair.getKey(), value));
-                    }
-                    if (pair.getKey() == X500AttributeType.COUNTRY_NAME) {
-                        containsCountry.set(true);
-                    }
-                });
+                signerConfig
+                        .getSubject()
+                        .forEach(
+                                pair -> {
+                                    String value = pair.getValue();
+                                    if (value.contains("_modified")) {
+                                        // mismatch tests
+                                        value = value.replace("_modified", "");
+                                    }
+                                    if (pair.getKey() == X500AttributeType.DOMAIN_COMPONENT
+                                            && finalSignerConfig
+                                                    .isSubjectDomainComponentCaseInsensitive()) {
+                                        value = value.toLowerCase(Locale.ROOT);
+                                    }
+                                    if (!value.contains(
+                                            "additional_rdn")) { // additional rdn mismatch test
+                                        signerSubject.add(new Pair<>(pair.getKey(), value));
+                                    }
+                                    if (pair.getKey() == X500AttributeType.COUNTRY_NAME) {
+                                        containsCountry.set(true);
+                                    }
+                                });
 
                 // removed country modification
                 if (!containsCountry.get()) {
                     signerSubject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "Global"));
                 }
 
-                List<Pair<X500AttributeType, String>> shuffledSignerSubject = new ArrayList<>(signerSubject);
+                List<Pair<X500AttributeType, String>> shuffledSignerSubject =
+                        new ArrayList<>(signerSubject);
                 if (config.isShuffleIssuer()) {
                     while (shuffledSignerSubject.equals(signerSubject)) {
                         Collections.shuffle(shuffledSignerSubject);
@@ -102,7 +109,8 @@ public class X509CertificateChainGenerator {
                 // copy keys
                 // rsa
                 config.setDefaultIssuerRsaModulus(signerConfig.getDefaultSubjectRsaModulus());
-                config.setDefaultIssuerRsaPrivateExponent(signerConfig.getDefaultSubjectRsaPrivateExponent());
+                config.setDefaultIssuerRsaPrivateExponent(
+                        signerConfig.getDefaultSubjectRsaPrivateExponent());
                 config.setDefaultIssuerRsaPublicKey(signerConfig.getDefaultSubjectRsaPublicKey());
                 // dsa
                 config.setDefaultIssuerDsaGenerator(signerConfig.getDefaultSubjectDsaGenerator());
@@ -122,7 +130,8 @@ public class X509CertificateChainGenerator {
             signerConfig = config;
         }
 
-        for (X509CertificateConfig certificateConfig : certificateChainConfig.getCertificateConfigList()) {
+        for (X509CertificateConfig certificateConfig :
+                certificateChainConfig.getCertificateConfigList()) {
             generateSingleCertificate(certificateConfig);
         }
     }

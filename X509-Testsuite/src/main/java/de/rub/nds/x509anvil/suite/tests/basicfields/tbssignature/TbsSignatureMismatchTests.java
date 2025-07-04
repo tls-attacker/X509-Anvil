@@ -1,3 +1,11 @@
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package de.rub.nds.x509anvil.suite.tests.basicfields.tbssignature;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
@@ -15,22 +23,34 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:key_type")
     @AnvilTest(id = "basic-3e2fbb009f")
-    public void tbsSignatureDoesntMatchAlgorithmEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
-            config.amendSignatureAlgorithm(
-                    TestUtils.getNonMatchingAlgorithmOid(
-                            config.getDefaultSignatureAlgorithm()).getSignatureAlgorithm());
-        });
+    public void tbsSignatureDoesntMatchAlgorithmEntity(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            config.amendSignatureAlgorithm(
+                                    TestUtils.getNonMatchingAlgorithmOid(
+                                                    config.getDefaultSignatureAlgorithm())
+                                            .getSignatureAlgorithm());
+                        });
     }
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:key_type")
     @AnvilTest(id = "basic-eec58410b3")
-    public void tbsSignatureDoesntMatchAlgorithmIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
-            config.amendSignatureAlgorithm(
-                    TestUtils.getNonMatchingAlgorithmOid(
-                            config.getDefaultSignatureAlgorithm()).getSignatureAlgorithm());
-        });
+    public void tbsSignatureDoesntMatchAlgorithmIntermediate(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                false,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            config.amendSignatureAlgorithm(
+                                    TestUtils.getNonMatchingAlgorithmOid(
+                                                    config.getDefaultSignatureAlgorithm())
+                                            .getSignatureAlgorithm());
+                        });
     }
 }

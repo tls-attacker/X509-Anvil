@@ -1,33 +1,30 @@
-# Compiled class file
-*.class
+resources/*.pem
+test.sh
+.vscode/
 
-# Log file
-*.log
+# (build) artifacts
+apps/
+target/
 
-# BlueJ files
-*.ctxt
+# Eclipse
+**/.classpath
+**/.project
+**/.settings/
+.project
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# Netbeans
+nbproject/
+nbactions.xml.project
+nbactions.xml
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
-*.idea/*
+# IntelliJ
+.idea/
+*.iml
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-*/target/*
-/target/
+# Maven
+**/pom.xml.*
+**/release.properties
+**/.flattened-pom.xml
 
-.idea/*
-
-X509-Testsuite/results/*
-X509-Testsuite/resources/out/*
-*/.flattened-pom.xml
-*/apps
+# VS Code
+.factorypath
