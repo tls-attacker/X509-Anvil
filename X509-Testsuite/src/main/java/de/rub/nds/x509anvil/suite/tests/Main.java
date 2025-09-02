@@ -15,6 +15,7 @@ public class Main {
         anvilTestConfig.setIgnoreCache(true);
         anvilTestConfig.setStrength(1);
         anvilTestConfig.setOutputFolder("results");
+        anvilTestConfig.setIdentifier("x509tests");
 
         TestRunner testRunner = new TestRunner(anvilTestConfig, "placeholder", new X509AnvilParameterIdentifierProvider());
         testRunner.runTests();
