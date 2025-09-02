@@ -56,8 +56,7 @@ public class TestConfig extends TLSDelegateConfig {
     @Parameter(
             names = "-verifierAdapterType",
             description = "Whether to test TLS servers or TLS clients.")
-
-    private VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_SERVER_AUTH;
+    private VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_CLIENT_AUTH;
 
 
     @JsonProperty("minChainLength")
