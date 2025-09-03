@@ -5,7 +5,6 @@
     <parent>
         <groupId>de.rub.nds</groupId>
         <artifactId>protocol-toolkit-bom</artifactId>
-        <!-- <version>3.5.17-anvilJ</version> -->
         <version>5.1.11</version>
     </parent>
 
@@ -24,12 +23,27 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <toolkit.common.coffee4j.anvil.version>1.2.0</toolkit.common.coffee4j.anvil.version>
         <toolkit.common.anvilcore.version>2.0.5-SNAPSHOT</toolkit.common.anvilcore.version>
-        <toolkit.common.asn1attacker.version>4.1.2-SNAPSHOT</toolkit.common.asn1attacker.version>
-        <toolkit.common.x509attacker.version>4.2.2-SNAPSHOT</toolkit.common.x509attacker.version>
+        <toolkit.common.asn1attacker.version>4.1.2</toolkit.common.asn1attacker.version>
+        <toolkit.common.x509attacker.version>4.3.3-SNAPSHOT</toolkit.common.x509attacker.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <skip.signature>true</skip.signature>
     </properties>
+
+    <dependencies>
+        <!-- scope: compile -->
+        <dependency>
+            <groupId>de.rub.nds</groupId>
+            <artifactId>modifiable-variable</artifactId>
+            <version>5.3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.rub.nds</groupId>
+            <artifactId>protocol-attacker</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <pluginManagement>
