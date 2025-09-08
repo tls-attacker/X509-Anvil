@@ -13,10 +13,8 @@ import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.parameter.*;
-import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionCriticalParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.*;
 import de.rub.nds.x509anvil.framework.anvil.parameter.name.CNTypeParameter;
-import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 
 public class X509AnvilParameterFactory {
 
