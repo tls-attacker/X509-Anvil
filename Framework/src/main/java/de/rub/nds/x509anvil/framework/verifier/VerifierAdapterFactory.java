@@ -9,6 +9,7 @@
 package de.rub.nds.x509anvil.framework.verifier;
 
 import de.rub.nds.x509anvil.framework.verifier.adapter.TlsClientAuthVerifierAdapter;
+import de.rub.nds.x509anvil.framework.verifier.adapter.TlsClientAuthVerifierAdapterDocker;
 import de.rub.nds.x509anvil.framework.verifier.adapter.TlsServerAuthVerifierAdapter;
 
 public class VerifierAdapterFactory {
@@ -21,7 +22,11 @@ public class VerifierAdapterFactory {
                     throw new UnsupportedOperationException(
                             "VerifierAdapterConfig does not match VerifierAdapterType");
                 }
-                yield TlsClientAuthVerifierAdapter.fromConfig(tlsAuthVerifierAdapterConfig);
+                if(verifierAdapterConfig instanceof TlsAuthVerifierAdapterConfigDocker tlsAuthVerifierAdapterConfigDocker) {
+                    yield TlsClientAuthVerifierAdapterDocker.fromConfig(tlsAuthVerifierAdapterConfigDocker);
+                } else {
+                    yield TlsClientAuthVerifierAdapter.fromConfig(tlsAuthVerifierAdapterConfig);
+                }
             }
             case TLS_SERVER_AUTH -> {
                 if (!(verifierAdapterConfig
@@ -29,7 +34,12 @@ public class VerifierAdapterFactory {
                     throw new UnsupportedOperationException(
                             "VerifierAdapterConfig does not match VerifierAdapterType");
                 }
-                yield TlsServerAuthVerifierAdapter.fromConfig(tlsAuthVerifierAdapterConfig);
+                if(verifierAdapterConfig instanceof TlsAuthVerifierAdapterConfigDocker tlsAuthVerifierAdapterConfigDocker) {
+                    //TODO FIXME
+                    yield TlsClientAuthVerifierAdapterDocker.fromConfig(tlsAuthVerifierAdapterConfigDocker);
+                }else {
+                    yield TlsServerAuthVerifierAdapter.fromConfig(tlsAuthVerifierAdapterConfig);
+                }
             }
             default -> throw new UnsupportedOperationException("Unsupported VerifierAdapterType");
         };

@@ -17,6 +17,7 @@ import de.rub.nds.anvilcore.context.AnvilTestConfig;
 import de.rub.nds.tlsattacker.core.config.TLSDelegateConfig;
 import de.rub.nds.tlsattacker.core.config.delegate.GeneralDelegate;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfig;
+import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocker;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterConfig;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterType;
 import org.apache.logging.log4j.LogManager;
@@ -42,7 +43,13 @@ public class TestConfig extends TLSDelegateConfig {
     @Parameter(
             names = "-verifierAdapterType",
             description = "Whether to test TLS servers or TLS clients.")
-    private VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_SERVER_AUTH;
+    private VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_CLIENT_AUTH;
+
+    @JsonProperty("verifierAdapterType")
+    @Parameter(
+            names = "-docker",
+            description = "Whether to use Docker.")
+    private boolean useDocker = false;
 
     @JsonProperty("minChainLength")
     @Parameter(
@@ -114,6 +121,8 @@ public class TestConfig extends TLSDelegateConfig {
     }
 
     public VerifierAdapterConfig getVerifierAdapterConfig() {
+        //TODO: Fix this
+        if(useDocker()) return new TlsAuthVerifierAdapterConfigDocker("openssl", "3.5.0");
         return verifierAdapterConfig;
     }
 
@@ -139,5 +148,13 @@ public class TestConfig extends TLSDelegateConfig {
 
     public void setDefaultIntermediateCertsModeled(int defaultIntermediateCertsModeled) {
         this.defaultIntermediateCertsModeled = defaultIntermediateCertsModeled;
+    }
+
+    public boolean useDocker() {
+        return useDocker;
+    }
+
+    public void setUseDocker(boolean useDocker) {
+        this.useDocker = useDocker;
     }
 }

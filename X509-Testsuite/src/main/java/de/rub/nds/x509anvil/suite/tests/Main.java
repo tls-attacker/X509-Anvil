@@ -14,6 +14,7 @@ import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterIdentifierProvider;
 import de.rub.nds.x509anvil.framework.featureextraction.UnsupportedFeatureException;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeException;
+import de.rub.nds.x509anvil.framework.verifier.adapter.TlsClientAuthVerifierAdapterDocker;
 
 public class Main {
     public static void main(String[] args) throws UnsupportedFeatureException, ProbeException {
@@ -23,10 +24,13 @@ public class Main {
         AnvilTestConfig anvilTestConfig = ContextHelper.getTestConfig().getAnvilTestConfig();
         anvilTestConfig.setDisableTcpDump(true);
         anvilTestConfig.setIgnoreCache(true);
+        anvilTestConfig.setStrength(1);
+        anvilTestConfig.setOutputFolder("results");
 
         TestRunner testRunner =
                 new TestRunner(
                         anvilTestConfig, "placeholder", new X509AnvilParameterIdentifierProvider());
         testRunner.runTests();
+        TlsClientAuthVerifierAdapterDocker.stopContainers();
     }
 }

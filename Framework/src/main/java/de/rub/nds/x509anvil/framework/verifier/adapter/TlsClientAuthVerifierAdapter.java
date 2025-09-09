@@ -19,7 +19,6 @@ import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfig;
 public class TlsClientAuthVerifierAdapter extends TlsAuthVerifierAdapter {
     public TlsClientAuthVerifierAdapter(String hostname, int port) {
         super(hostname, port);
-        config.setDefaultClientConnection(new OutboundConnection("client", 4433, "localhost"));
         config.setClientAuthentication(true);
         config.setAddRenegotiationInfoExtension(false);
     }
