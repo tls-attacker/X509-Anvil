@@ -1,39 +1,35 @@
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package de.rub.nds.x509anvil.framework.verifier.adapter;
 
-import com.fasterxml.jackson.databind.deser.impl.CreatorCandidate;
-import com.github.dockerjava.api.command.ExecCreateCmdResponse;
+import com.github.dockerjava.api.exception.InternalServerErrorException;
+import com.github.dockerjava.api.exception.NotFoundException;
 import com.github.dockerjava.api.model.AccessMode;
 import com.github.dockerjava.api.model.Bind;
 import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.api.model.Volume;
-import de.rub.nds.tls.subject.ConnectionRole;
-import de.rub.nds.tls.subject.ServerUtil;
 import de.rub.nds.tls.subject.TlsImplementationType;
-import de.rub.nds.tls.subject.docker.DockerExecInstance;
 import de.rub.nds.tls.subject.docker.DockerTlsClientInstance;
 import de.rub.nds.tls.subject.docker.DockerTlsManagerFactory;
-import de.rub.nds.tls.subject.docker.DockerTlsServerInstance;
 import de.rub.nds.tls.subject.exceptions.TlsVersionNotFoundException;
-import de.rub.nds.tls.subject.params.Parameter;
-import de.rub.nds.tls.subject.params.ParameterProfileManager;
-import de.rub.nds.tls.subject.properties.ImageProperties;
-import de.rub.nds.tls.subject.properties.PropertyManager;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocker;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAdapter {
     protected static final Logger LOGGER = LogManager.getLogger();
 
-    private final static Map<String, DockerTlsClientInstance> tlsClientInstances = new HashMap<String, DockerTlsClientInstance>();
-    private static final ServerUtil serverUtil = new ServerUtil();
+    private static final Map<String, DockerTlsClientInstance> tlsClientInstances =
+            new HashMap<String, DockerTlsClientInstance>();
 
     private final DockerTlsClientInstance currentClientInstance;
     private int port;
@@ -44,25 +40,32 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
         this.port = 45655;
     }
 
-    public static TlsServerAuthVerifierAdapterDocker fromConfig(TlsAuthVerifierAdapterConfigDocker config) {
+    public static TlsServerAuthVerifierAdapterDocker fromConfig(
+            TlsAuthVerifierAdapterConfigDocker config) {
         DockerTlsClientInstance instance = spinUpServer(config);
         return new TlsServerAuthVerifierAdapterDocker(instance);
     }
 
     private static DockerTlsClientInstance spinUpServer(TlsAuthVerifierAdapterConfigDocker config) {
-        String key = config.getImage()+":"+config.getVersion();
-        if(tlsClientInstances.containsKey(key)) {
+        String key = config.getImage() + ":" + config.getVersion();
+        if (tlsClientInstances.containsKey(key)) {
             return tlsClientInstances.get(key);
         }
 
         DockerTlsClientInstance tlsClientInstance = null;
         LOGGER.info("Attempting to start TLS Server Docker image...");
         try {
-            DockerTlsManagerFactory.TlsClientInstanceBuilder builder = DockerTlsManagerFactory.
-                    getTlsClientBuilder(TlsImplementationType.fromString(config.getImage()), config.getVersion())
-                    .hostConfigHook(TlsServerAuthVerifierAdapterDocker::applyConfig);
-                    //.cmd(supplementStartCommand(TlsImplementationType.fromString(config.getImage())));
-            builder.getImageProperties().setDefaultCertPath("/x509-anv-resources/out/root_cert.pem");
+            DockerTlsManagerFactory.TlsClientInstanceBuilder builder =
+                    DockerTlsManagerFactory.getTlsClientBuilder(
+                                    TlsImplementationType.fromString(config.getImage()),
+                                    config.getVersion())
+                            .hostname("0.0.0.0")
+                            .hostConfigHook(TlsServerAuthVerifierAdapterDocker::applyConfig)
+                            .additionalParameters(
+                                    supplementStartCommand(
+                                            TlsImplementationType.fromString(config.getImage())));
+            builder.getImageProperties()
+                    .setDefaultCertPath("/x509-anv-resources/out/root_cert.pem");
 
             tlsClientInstance = builder.build();
         } catch (TlsVersionNotFoundException e) {
@@ -81,15 +84,15 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
         String hostPath = Paths.get("X509-Testsuite/resources/").toAbsolutePath().toString();
         config.withBinds(new Bind(hostPath, new Volume("/x509-anv-resources/"), AccessMode.ro));
         config.withExtraHosts("host.docker.internal:host-gateway");
-
         config.withAutoRemove(true);
         return config;
     }
 
-    private static String[] supplementStartCommand(TlsImplementationType tlsImplementationType) {
+    private static String supplementStartCommand(TlsImplementationType tlsImplementationType) {
         return (switch (tlsImplementationType) {
+            // case S2N -> "-f /x509-anv-resources/out/root_cert.pem";
             default -> "";
-        }).split(" ");
+        });
     }
 
     @Override
@@ -98,8 +101,12 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
     }
 
     public static void stopContainers() {
-        for(DockerTlsClientInstance instance : tlsClientInstances.values()) {
-            instance.kill();
+        for (DockerTlsClientInstance instance : tlsClientInstances.values()) {
+            try {
+                instance.kill();
+            } catch (NotFoundException | InternalServerErrorException e) {
+                // Container is already dead, so it's alright :-)
+            }
         }
     }
 }

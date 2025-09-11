@@ -12,12 +12,11 @@ import de.rub.nds.anvilcore.context.AnvilTestConfig;
 import de.rub.nds.anvilcore.execution.TestRunner;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterIdentifierProvider;
-import de.rub.nds.x509anvil.framework.featureextraction.UnsupportedFeatureException;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.ProbeException;
 import de.rub.nds.x509anvil.framework.verifier.adapter.TlsClientAuthVerifierAdapterDocker;
+import de.rub.nds.x509anvil.framework.verifier.adapter.TlsServerAuthVerifierAdapterDocker;
 
 public class Main {
-    public static void main(String[] args) throws UnsupportedFeatureException, ProbeException {
+    public static void main(String[] args) {
 
         // create the TLS-Anvil test context singleton
         ContextHelper.initializeConfigs(args);
@@ -32,5 +31,16 @@ public class Main {
                         anvilTestConfig, "placeholder", new X509AnvilParameterIdentifierProvider());
         testRunner.runTests();
         TlsClientAuthVerifierAdapterDocker.stopContainers();
+        TlsServerAuthVerifierAdapterDocker.stopContainers();
+    }
+
+    static {
+        Runtime.getRuntime()
+                .addShutdownHook(
+                        new Thread(
+                                () -> {
+                                    TlsClientAuthVerifierAdapterDocker.stopContainers();
+                                    TlsServerAuthVerifierAdapterDocker.stopContainers();
+                                }));
     }
 }

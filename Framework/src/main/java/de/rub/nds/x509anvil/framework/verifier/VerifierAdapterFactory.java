@@ -23,8 +23,11 @@ public class VerifierAdapterFactory {
                     throw new UnsupportedOperationException(
                             "VerifierAdapterConfig does not match VerifierAdapterType");
                 }
-                if(verifierAdapterConfig instanceof TlsAuthVerifierAdapterConfigDocker tlsAuthVerifierAdapterConfigDocker) {
-                    yield TlsClientAuthVerifierAdapterDocker.fromConfig(tlsAuthVerifierAdapterConfigDocker);
+                if (verifierAdapterConfig
+                        instanceof
+                        TlsAuthVerifierAdapterConfigDocker tlsAuthVerifierAdapterConfigDocker) {
+                    yield TlsClientAuthVerifierAdapterDocker.fromConfig(
+                            tlsAuthVerifierAdapterConfigDocker);
                 } else {
                     yield TlsClientAuthVerifierAdapter.fromConfig(tlsAuthVerifierAdapterConfig);
                 }
@@ -35,9 +38,12 @@ public class VerifierAdapterFactory {
                     throw new UnsupportedOperationException(
                             "VerifierAdapterConfig does not match VerifierAdapterType");
                 }
-                if(verifierAdapterConfig instanceof TlsAuthVerifierAdapterConfigDocker tlsAuthVerifierAdapterConfigDocker) {
-                    yield TlsServerAuthVerifierAdapterDocker.fromConfig(tlsAuthVerifierAdapterConfigDocker);
-                }else {
+                if (verifierAdapterConfig
+                        instanceof
+                        TlsAuthVerifierAdapterConfigDocker tlsAuthVerifierAdapterConfigDocker) {
+                    yield TlsServerAuthVerifierAdapterDocker.fromConfig(
+                            tlsAuthVerifierAdapterConfigDocker);
+                } else {
                     yield TlsServerAuthVerifierAdapter.fromConfig(tlsAuthVerifierAdapterConfig);
                 }
             }

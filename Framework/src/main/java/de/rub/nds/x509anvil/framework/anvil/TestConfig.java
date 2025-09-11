@@ -48,8 +48,9 @@ public class TestConfig extends TLSDelegateConfig {
     @JsonProperty("verifierAdapterType")
     @Parameter(
             names = "-docker",
-            description = "Whether to use Docker.")
-    private boolean useDocker = false;
+            description =
+                    "Use TLS Docker Library with indicated library (latest) or library:version.")
+    private String dockerLibrary = "";
 
     @JsonProperty("minChainLength")
     @Parameter(
@@ -121,8 +122,28 @@ public class TestConfig extends TLSDelegateConfig {
     }
 
     public VerifierAdapterConfig getVerifierAdapterConfig() {
-        //TODO: Fix this
-        if(useDocker()) return new TlsAuthVerifierAdapterConfigDocker("openssl", "3.5.0");
+        if (useDocker()) {
+            String[] parts = dockerLibrary.split(":");
+            return switch (parts.length) {
+                case 1:
+                    yield new TlsAuthVerifierAdapterConfigDocker(parts[0], "");
+                case 2:
+                    yield new TlsAuthVerifierAdapterConfigDocker(parts[0], parts[1]);
+                case 0:
+                    {
+                        LOGGER.error("Docker Library parameter must not be empty");
+                        System.exit(0);
+                        yield null;
+                    }
+                default:
+                    {
+                        LOGGER.error(
+                                "Docker Parameter must be either a library or library:version");
+                        System.exit(0);
+                        yield null;
+                    }
+            };
+        }
         return verifierAdapterConfig;
     }
 
@@ -151,10 +172,10 @@ public class TestConfig extends TLSDelegateConfig {
     }
 
     public boolean useDocker() {
-        return useDocker;
+        return !dockerLibrary.isEmpty();
     }
 
-    public void setUseDocker(boolean useDocker) {
-        this.useDocker = useDocker;
+    public String getDockerLibrary() {
+        return dockerLibrary;
     }
 }
