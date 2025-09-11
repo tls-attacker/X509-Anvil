@@ -11,6 +11,7 @@ package de.rub.nds.x509anvil.framework.verifier;
 import de.rub.nds.x509anvil.framework.verifier.adapter.TlsClientAuthVerifierAdapter;
 import de.rub.nds.x509anvil.framework.verifier.adapter.TlsClientAuthVerifierAdapterDocker;
 import de.rub.nds.x509anvil.framework.verifier.adapter.TlsServerAuthVerifierAdapter;
+import de.rub.nds.x509anvil.framework.verifier.adapter.TlsServerAuthVerifierAdapterDocker;
 
 public class VerifierAdapterFactory {
     public static VerifierAdapter getInstance(
@@ -35,8 +36,7 @@ public class VerifierAdapterFactory {
                             "VerifierAdapterConfig does not match VerifierAdapterType");
                 }
                 if(verifierAdapterConfig instanceof TlsAuthVerifierAdapterConfigDocker tlsAuthVerifierAdapterConfigDocker) {
-                    //TODO FIXME
-                    yield TlsClientAuthVerifierAdapterDocker.fromConfig(tlsAuthVerifierAdapterConfigDocker);
+                    yield TlsServerAuthVerifierAdapterDocker.fromConfig(tlsAuthVerifierAdapterConfigDocker);
                 }else {
                     yield TlsServerAuthVerifierAdapter.fromConfig(tlsAuthVerifierAdapterConfig);
                 }

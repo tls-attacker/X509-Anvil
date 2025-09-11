@@ -130,7 +130,17 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
 
         DefaultWorkflowExecutor workflowExecutor = new DefaultWorkflowExecutor(state);
 
-        runCommandInBackground();
+
+        //FIXME: The order is correct for a server (though not necessary), but wrong for the client.
+        Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            runCommandInBackground();
+        });
+        t.start();
 
         workflowExecutor.executeWorkflow();
 

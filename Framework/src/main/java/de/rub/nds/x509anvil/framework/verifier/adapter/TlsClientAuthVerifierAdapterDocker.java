@@ -15,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -83,7 +82,6 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
     @Override
     public void runCommandInBackground() {
         if(!serverUtil.isServerOnline(currentServerInstance.getHostInfo().getHostname(), currentServerInstance.getPort())) {
-            System.exit(0);
             currentServerInstance.restart();
             serverUtil.waitUntilServerIsOnline(currentServerInstance.getHostInfo().getHostname(), currentServerInstance.getPort());
         }
