@@ -28,8 +28,7 @@ import org.apache.logging.log4j.Logger;
 public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAdapter {
     protected static final Logger LOGGER = LogManager.getLogger();
 
-    private static final Map<String, DockerTlsClientInstance> tlsClientInstances =
-            new HashMap<>();
+    private static final Map<String, DockerTlsClientInstance> tlsClientInstances = new HashMap<>();
 
     private final DockerTlsClientInstance currentClientInstance;
     private final int port;
@@ -55,7 +54,7 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
         DockerTlsClientInstance tlsClientInstance = null;
         LOGGER.info("Attempting to start TLS Server Docker image...");
         try {
-            tlsClientInstance = DockerTlsManagerFactory.TlsClientInstanceBuilder builder =
+            tlsClientInstance =
                     DockerTlsManagerFactory.getTlsClientBuilder(
                                     TlsImplementationType.fromString(config.getImage()),
                                     config.getVersion())
