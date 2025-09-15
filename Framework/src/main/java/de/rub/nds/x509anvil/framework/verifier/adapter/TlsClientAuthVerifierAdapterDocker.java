@@ -51,7 +51,8 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
         if (tlsServerInstances.containsKey(key)) {
             return tlsServerInstances.get(key);
         }
-
+        TlsImplementationType implementationType =
+                TlsImplementationType.fromString(config.getImage());
         String hostname = config.getHostname();
 
         DockerTlsServerInstance tlsServerInstance = null;
@@ -59,19 +60,31 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
         try {
             DockerTlsManagerFactory.TlsServerInstanceBuilder builder =
                     DockerTlsManagerFactory.getTlsServerBuilder(
-                                    TlsImplementationType.fromString(config.getImage()),
-                                    config.getVersion())
+                                    implementationType, config.getVersion())
                             .hostConfigHook(TlsClientAuthVerifierAdapterDocker::applyConfig)
-                            .additionalParameters(
-                                    supplementStartCommand(
-                                            TlsImplementationType.fromString(config.getImage())));
-            builder.getImageProperties()
-                    .setDefaultCertPath("/x509-anv-resources/static-root/root-cert.pem");
-            builder.getImageProperties()
-                    .setDefaultKeyPath("/x509-anv-resources/static-root/private-key.pem");
-            if (TlsImplementationType.fromString(config.getImage())
-                    == TlsImplementationType.GNUTLS) {
+                            .ip("0.0.0.0")
+                            .keyPath("/x509-anv-resources/static-root/private-key.pem")
+                            .certificatePath("/x509-anv-resources/static-root/root-cert.pem")
+                            .additionalParameters(supplementStartCommand(implementationType));
+            if (implementationType == TlsImplementationType.GNUTLS
+                    || implementationType == TlsImplementationType.WOLFSSL) {
+                // First argument disables Client Auth, removing that.
                 builder.getProfile().getParameterList().remove(1);
+            }
+            if (TlsImplementationType.fromString(config.getImage())
+                    == TlsImplementationType.RUSTLS) {
+                // This is a special case, since the "mode" (http) has to come as last argument, we
+                // cannot just append the client auth argument like with the other servers
+                builder =
+                        builder.cmd(
+                                "--auth",
+                                "/x509-anv-resources/out/root_cert.pem",
+                                "--certs",
+                                "/x509-anv-resources/static-root/root-cert.pem",
+                                "--key",
+                                "/x509-anv-resources/static-root/private-key.pem",
+                                "--require-auth",
+                                "http");
             }
             tlsServerInstance = builder.build();
         } catch (TlsVersionNotFoundException e) {
@@ -96,9 +109,13 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
 
     private static String supplementStartCommand(TlsImplementationType tlsImplementationType) {
         return (switch (tlsImplementationType) {
-            case OPENSSL ->
+            case OPENSSL, LIBRESSL ->
                     "-CAfile /x509-anv-resources/out/root_cert.pem -Verify 5 -verify_return_error";
-            case WOLFSSL -> "-A /x509-anv-resources/out/root_cert.pem";
+            case WOLFSSL -> "-A /x509-anv-resources/out/root_cert.pem -b -i -x";
+            case BORINGSSL -> "-require-any-client-cert";
+            case MBEDTLS -> "ca_file=/x509-anv-resources/out/root_cert.pem auth_mode=required";
+            case RUSTLS -> "--auth /x509-anv-resources/out/root_cert.pem --require-auth";
+            case S2N -> "--mutualAuth --ca-file /x509-anv-resources/out/root_cert.pem";
             default -> "";
         });
     }

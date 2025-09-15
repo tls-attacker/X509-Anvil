@@ -153,7 +153,10 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
 
         try {
             SignatureAndHashAlgorithm signatureAndHashAlgorithm =
-                    switch (certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType()) {
+                    switch (certificatesChain
+                            .getFirst()
+                            .getPublicKeyContainer()
+                            .getAlgorithmType()) {
                         case RSA -> SignatureAndHashAlgorithm.RSA_SHA256;
                         case DSA -> SignatureAndHashAlgorithm.DSA_SHA256;
                         case ECDSA -> SignatureAndHashAlgorithm.ECDSA_SHA256;
@@ -161,7 +164,7 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
                                 throw new IllegalArgumentException(
                                         "Unsupported public key algorithm: "
                                                 + certificatesChain
-                                                        .get(0)
+                                                        .getFirst()
                                                         .getPublicKeyContainer()
                                                         .getAlgorithmType());
                     };
