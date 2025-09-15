@@ -10,13 +10,17 @@ package de.rub.nds.x509anvil.framework.verifier.adapter;
 
 import de.rub.nds.tlsattacker.core.config.Config;
 import de.rub.nds.tlsattacker.core.connection.InboundConnection;
+import de.rub.nds.tlsattacker.core.constants.CipherSuite;
+import de.rub.nds.tlsattacker.core.constants.ProtocolVersion;
 import de.rub.nds.tlsattacker.core.constants.RunningModeType;
 import de.rub.nds.tlsattacker.core.protocol.message.*;
 import de.rub.nds.tlsattacker.core.workflow.WorkflowTrace;
 import de.rub.nds.tlsattacker.core.workflow.action.ReceiveAction;
 import de.rub.nds.tlsattacker.core.workflow.action.SendAction;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfig;
+
 import java.io.IOException;
+import java.util.List;
 
 public class TlsServerAuthVerifierAdapter extends TlsAuthVerifierAdapter {
 
@@ -26,6 +30,8 @@ public class TlsServerAuthVerifierAdapter extends TlsAuthVerifierAdapter {
         config.setClientAuthentication(false);
         config.setDefaultRunningMode(RunningModeType.SERVER);
         config.setAddRenegotiationInfoExtension(true);
+        config.setDefaultServerSupportedCipherSuites(
+        CipherSuite.getImplemented().stream().filter(cipherSuite -> cipherSuite.toString().contains("ECDHE_RSA") && cipherSuite.isSupportedInProtocol(ProtocolVersion.TLS12)).toList());
     }
 
     public static TlsServerAuthVerifierAdapter fromConfig(TlsAuthVerifierAdapterConfig config) {
@@ -39,15 +45,17 @@ public class TlsServerAuthVerifierAdapter extends TlsAuthVerifierAdapter {
         WorkflowTrace workflowTrace = new WorkflowTrace();
         // workflowTrace.addTlsAction(new InvokeClientAction());
         workflowTrace.addTlsAction(new ReceiveAction(new ClientHelloMessage()));
+        //ServerHelloMessage serverHelloMessage = new ServerHelloMessage(config);
+        //serverHelloMessage.setSelectedCipherSuite(new byte[] {(byte) 0xc0, 0x14}); //CipherSuite.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
         workflowTrace.addTlsAction(
                 new SendAction(
                         new ServerHelloMessage(config),
                         new CertificateMessage(),
-                        new DHEServerKeyExchangeMessage(),
+                        new ECDHEServerKeyExchangeMessage(),
                         new ServerHelloDoneMessage()));
         workflowTrace.addTlsAction(
                 new ReceiveAction(
-                        new DHClientKeyExchangeMessage(),
+                        new ECDHClientKeyExchangeMessage(),
                         new ChangeCipherSpecMessage(),
                         new FinishedMessage()));
         workflowTrace.addTlsAction(

@@ -29,10 +29,10 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
     protected static final Logger LOGGER = LogManager.getLogger();
 
     private static final Map<String, DockerTlsClientInstance> tlsClientInstances =
-            new HashMap<String, DockerTlsClientInstance>();
+            new HashMap<>();
 
     private final DockerTlsClientInstance currentClientInstance;
-    private int port;
+    private final int port;
 
     private TlsServerAuthVerifierAdapterDocker(DockerTlsClientInstance instance) {
         super("localhost", 45655);
@@ -55,19 +55,13 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
         DockerTlsClientInstance tlsClientInstance = null;
         LOGGER.info("Attempting to start TLS Server Docker image...");
         try {
-            DockerTlsManagerFactory.TlsClientInstanceBuilder builder =
+            tlsClientInstance = DockerTlsManagerFactory.TlsClientInstanceBuilder builder =
                     DockerTlsManagerFactory.getTlsClientBuilder(
                                     TlsImplementationType.fromString(config.getImage()),
                                     config.getVersion())
-                            .hostname("0.0.0.0")
                             .hostConfigHook(TlsServerAuthVerifierAdapterDocker::applyConfig)
-                            .additionalParameters(
-                                    supplementStartCommand(
-                                            TlsImplementationType.fromString(config.getImage())));
-            builder.getImageProperties()
-                    .setDefaultCertPath("/x509-anv-resources/out/root_cert.pem");
-
-            tlsClientInstance = builder.build();
+                            .certificatePath("/x509-anv-resources/out/root_cert.pem")
+                            .build();
         } catch (TlsVersionNotFoundException e) {
             LOGGER.error("Unknown Version {} of {}", config.getVersion(), config.getImage());
             System.exit(-1);
@@ -83,21 +77,14 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
     private static HostConfig applyConfig(HostConfig config) {
         String hostPath = Paths.get("X509-Testsuite/resources/").toAbsolutePath().toString();
         config.withBinds(new Bind(hostPath, new Volume("/x509-anv-resources/"), AccessMode.ro));
-        config.withExtraHosts("host.docker.internal:host-gateway");
+        config.withExtraHosts("tls-attacker.com:host-gateway");
         config.withAutoRemove(true);
         return config;
     }
 
-    private static String supplementStartCommand(TlsImplementationType tlsImplementationType) {
-        return (switch (tlsImplementationType) {
-            // case S2N -> "-f /x509-anv-resources/out/root_cert.pem";
-            default -> "";
-        });
-    }
-
     @Override
     public void runCommandInBackground() {
-        currentClientInstance.connect("host.docker.internal", this.port);
+        currentClientInstance.connect("tls-attacker.com", this.port);
     }
 
     public static void stopContainers() {
