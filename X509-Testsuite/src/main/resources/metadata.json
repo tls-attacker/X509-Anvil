@@ -2583,5 +2583,93 @@
         "section": "4.2.1.8.  Subject Directory Attributes"
       },
       "tags": null
+    },
+    "extension-6b125b4c97": {
+      "description": "A certificate policy OID MUST NOT appear more than once in a certificate policies extension.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.4.  Certificate Policies"
+      },
+      "tags": null
+    },
+    "extension-c3e50f1c30": {
+      "description": "A certificate policy OID MUST NOT appear more than once in a certificate policies extension.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.4.  Certificate Policies"
+      },
+      "tags": null
+    },
+    "extension-bf8b1694b7": {
+      "description": "When qualifiers are used with the special policy anyPolicy, they MUST be limited to the qualifiers identified in this section",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.4.  Certificate Policies"
+      },
+      "tags": null
+    },
+    "extension-bada689d12": {
+      "description": "When qualifiers are used with the special policy anyPolicy, they MUST be limited to the qualifiers identified in this section",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.4.  Certificate Policies"
+      },
+      "tags": null
+    },
+    "extension-7b8f543a1f": {
+      "description": "Policies MUST NOT be mapped from the special value anyPolicy",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.5.  Policy Mappings"
+      },
+      "tags": null
+    },
+    "extension-42c0e99d7d": {
+      "description": "Policies MUST NOT be mapped from the special value anyPolicy",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.5.  Policy Mappings"
+      },
+      "tags": null
+    },
+    "extension-587d94f3b5": {
+      "description": "Policies MUST NOT be mapped to the special value anyPolicy",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.5.  Policy Mappings"
+      },
+      "tags": null
+    },
+    "extension-ab7837006f": {
+      "description": "Policies MUST NOT be mapped to the special value anyPolicy",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.5.  Policy Mappings"
+      },
+      "tags": null
     }
 }
