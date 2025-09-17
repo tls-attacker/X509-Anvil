@@ -2561,5 +2561,27 @@
         "section": "4.2.1.7.  Subject Alternative Name"
       },
       "tags": null
+    },
+    "extension-ce3148df7c": {
+      "description": "Conforming CAs MUST mark this extension as non-critical",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.8.  Subject Directory Attributes"
+      },
+      "tags": null
+    },
+    "extension-bfad73e06a": {
+      "description": "Conforming CAs MUST mark this extension as non-critical",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.8.  Subject Directory Attributes"
+      },
+      "tags": null
     }
 }
