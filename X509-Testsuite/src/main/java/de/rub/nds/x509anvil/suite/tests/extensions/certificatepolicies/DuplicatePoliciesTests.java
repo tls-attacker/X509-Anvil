@@ -2,6 +2,9 @@ package de.rub.nds.x509anvil.suite.tests.extensions.certificatepolicies;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
+import de.rub.nds.asn1.model.Asn1ObjectIdentifier;
+import de.rub.nds.asn1.model.Asn1OctetString;
+import de.rub.nds.asn1.oid.ObjectIdentifier;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -9,11 +12,15 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.CertificatePoliciesConfig;
+import de.rub.nds.x509attacker.x509.model.extensions.PolicyQualifierInfo;
 import de.rub.nds.x509attacker.x509.model.extensions.PolicyQualifiers;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class DuplicatePoliciesTests extends X509AnvilTest {
+
+    //  A certificate policy OID MUST NOT appear more than once in a certificate policies extension.
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-cb233ef8a5")
@@ -43,4 +50,56 @@ public class DuplicatePoliciesTests extends X509AnvilTest {
             config.addExtensions(certificatePoliciesConfig);
         });
     }
+
+    // When qualifiers are used with the special policy anyPolicy, they MUST be limited to the qualifiers identified in this section
+    @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = "entity:extensions_present")
+    @AnvilTest(id = "extension-cb233ef8a5")
+    public void undefinedAnyPolicyEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
+            certificatePoliciesConfig.setPresent(true);
+            certificatePoliciesConfig.setCritical(true);
+            // TODO oid of any policy
+            certificatePoliciesConfig.setPolicyIdentifiers(List.of("2.5.29.32.0"));
+
+            PolicyQualifiers qualifiers = new PolicyQualifiers("qualifiers");
+            PolicyQualifierInfo policyQualifierInfo = new PolicyQualifierInfo("info");
+            policyQualifierInfo.setPolicyObjectIdentifier(new ObjectIdentifier(new byte[] { 1, 3, 6, 1, 5, 5, 7, 2, 1 }));
+            policyQualifierInfo.setQualifierOctetString(new byte[] {1, 2, 3, 4});
+            qualifiers.setPolicyQualifierInfo(List.of(policyQualifierInfo));
+
+
+            certificatePoliciesConfig.setPolicyQualifiers(List.of(qualifiers));
+            certificatePoliciesConfig.setIncludeQualifiers(List.of(true));
+            config.addExtensions(certificatePoliciesConfig);
+            config.setIncludeExtensions(true);
+        });
+    }
+
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-bc135fe2a1")
+    public void undefinedAnyPolicyIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
+            certificatePoliciesConfig.setPresent(true);
+            certificatePoliciesConfig.setCritical(true);
+            // TODO oid of any policy
+            certificatePoliciesConfig.setPolicyIdentifiers(List.of("2.5.29.32.0"));
+
+            PolicyQualifiers qualifiers = new PolicyQualifiers("qualifiers");
+            PolicyQualifierInfo policyQualifierInfo = new PolicyQualifierInfo("info");
+            policyQualifierInfo.setPolicyObjectIdentifier(new ObjectIdentifier(new byte[] { 1, 3, 6, 1, 5, 5, 7, 2, 1 }));
+            policyQualifierInfo.setQualifierOctetString(new byte[] {1, 2, 3, 4});
+            qualifiers.setPolicyQualifierInfo(List.of(policyQualifierInfo));
+
+
+            certificatePoliciesConfig.setPolicyQualifiers(List.of(qualifiers));
+            certificatePoliciesConfig.setIncludeQualifiers(List.of(true));
+            config.addExtensions(certificatePoliciesConfig);
+            config.setIncludeExtensions(true);
+        });
+    }
+
+    // TODO: usernotice MUST statement
 }
