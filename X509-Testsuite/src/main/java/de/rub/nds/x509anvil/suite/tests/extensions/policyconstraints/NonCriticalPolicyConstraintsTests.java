@@ -19,7 +19,7 @@ public class NonCriticalPolicyConstraintsTests extends X509AnvilTest {
             policyConstraintsConfig.setPresent(true);
             policyConstraintsConfig.setCritical(false);
             policyConstraintsConfig.setIncludeRequired(true);
-            policyConstraintsConfig.setIncludeRequired(true);
+            policyConstraintsConfig.setIncludeInhibit(true);
             policyConstraintsConfig.setSkipCertsInhibit(3);
             policyConstraintsConfig.setSkipCertsRequired(10);
             config.addExtensions(policyConstraintsConfig);
