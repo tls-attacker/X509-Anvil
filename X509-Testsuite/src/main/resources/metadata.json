@@ -2671,5 +2671,16 @@
         "section": "4.2.1.5.  Policy Mappings"
       },
       "tags": null
+    },
+    "extension-799e5cd831": {
+      "description": "Conforming CAs MUST mark this extension as critical.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.14.  Inhibit anyPolicy"
+      },
+      "tags": null
     }
 }
