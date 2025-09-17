@@ -2682,5 +2682,71 @@
         "section": "4.2.1.14.  Inhibit anyPolicy"
       },
       "tags": null
+    },
+    "extension-515bf6be01": {
+      "description": "Conforming applications MUST be able to process the\n   requireExplicitPolicy field",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.11.  Policy Constraints"
+      },
+      "tags": null
+    },
+    "extension-ad71b692af": {
+      "description": "Conforming applications MUST be able to process the\n   requireExplicitPolicy field",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.11.  Policy Constraints"
+      },
+      "tags": null
+    },
+    "extension-b7dc0826ae": {
+      "description": "Conforming CAs MUST NOT issue certificates where policy constraints is an empty sequence.  That is, either the inhibitPolicyMapping field or the requireExplicitPolicy field MUST be present.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.11.  Policy Constraints"
+      },
+      "tags": null
+    },
+    "extension-c5a7d132d9": {
+      "description": "Conforming CAs MUST NOT issue certificates where policy constraints is an empty sequence.  That is, either the inhibitPolicyMapping field or the requireExplicitPolicy field MUST be present.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.11.  Policy Constraints"
+      },
+      "tags": null
+    },
+    "extension-6b9aabb935": {
+      "description": "Conforming CAs MUST mark this extension as critical.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.11.  Policy Constraints"
+      },
+      "tags": null
+    },
+    "extension-ece1272184": {
+      "description": "Conforming CAs MUST mark this extension as critical.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.11.  Policy Constraints"
+      },
+      "tags": null
     }
 }

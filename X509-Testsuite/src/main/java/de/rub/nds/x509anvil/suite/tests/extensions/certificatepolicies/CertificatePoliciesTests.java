@@ -15,7 +15,7 @@ import de.rub.nds.x509attacker.x509.model.extensions.PolicyQualifiers;
 
 import java.util.List;
 
-public class DuplicatePoliciesTests extends X509AnvilTest {
+public class CertificatePoliciesTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
