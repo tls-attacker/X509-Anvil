@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.nameconstraints;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -18,6 +19,7 @@ import java.util.List;
 public class NameConstraintsInEntityTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-c1a6aca5d3")
     public void nameConstraintsInEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
