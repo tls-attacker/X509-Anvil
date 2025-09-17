@@ -50,51 +50,55 @@ public class X509CertificateChainGenerator {
                 config.setIssuer(config.getSubject());
             }
 
-            if (signerConfig != null && !config.isSelfSigned()) {
+            if (signerConfig != null && !config.isSelfSigned() && !config.isFixIssuer()) {
 
                 // copy issuer without modifications
-                List<Pair<X500AttributeType, String>> signerSubject = new ArrayList<>();
                 AtomicBoolean containsCountry = new AtomicBoolean(false);
                 X509CertificateConfig finalSignerConfig = signerConfig;
-                signerConfig.getSubject().forEach(pair -> {
-                    String value = pair.getValue();
-                    if (value.contains("_modified")) {
-                        // mismatch tests
-                        value = value.replace("_modified", "");
-                    }
-                    if (pair.getKey() == X500AttributeType.DOMAIN_COMPONENT
-                        && finalSignerConfig.isSubjectDomainComponentCaseInsensitive()) {
-                        value = value.toLowerCase(Locale.ROOT);
-                    }
-                    if (!value.contains("additional_rdn")) { // additional rdn mismatch test
-                        signerSubject.add(new Pair<>(pair.getKey(), value));
-                    }
-                    if (pair.getKey() == X500AttributeType.COUNTRY_NAME) {
-                        containsCountry.set(true);
-                    }
-                });
+                if (signerConfig.getSubject().isEmpty()) {
+                    config.setIssuer(new ArrayList<>());
+                } else {
+                    List<Pair<X500AttributeType, String>> signerSubject = new ArrayList<>();
+                    signerConfig.getSubject().forEach(pair -> {
+                        String value = pair.getValue();
+                        if (value.contains("_modified")) {
+                            // mismatch tests
+                            value = value.replace("_modified", "");
+                        }
+                        if (pair.getKey() == X500AttributeType.DOMAIN_COMPONENT
+                                && finalSignerConfig.isSubjectDomainComponentCaseInsensitive()) {
+                            value = value.toLowerCase(Locale.ROOT);
+                        }
+                        if (!value.contains("additional_rdn")) { // additional rdn mismatch test
+                            signerSubject.add(new Pair<>(pair.getKey(), value));
+                        }
+                        if (pair.getKey() == X500AttributeType.COUNTRY_NAME) {
+                            containsCountry.set(true);
+                        }
+                    });
 
-                // removed country modification
-                if (!containsCountry.get()) {
-                    signerSubject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "Global"));
+                    // removed country modification
+                    if (!containsCountry.get()) {
+                        signerSubject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "Global"));
+                    }
+
+                    List<Pair<X500AttributeType, String>> shuffledSignerSubject = new ArrayList<>(signerSubject);
+                    if (config.isShuffleIssuer()) {
+                        while (shuffledSignerSubject.equals(signerSubject)) {
+                            Collections.shuffle(shuffledSignerSubject);
+                        }
+                    }
+
+                    if (config.isRemoveFirstRdnIssuer()) {
+                        shuffledSignerSubject.removeFirst();
+                    }
+
+                    if (config.isDuplicateFirstRdnIssuer()) {
+                        shuffledSignerSubject.add(shuffledSignerSubject.getFirst());
+                    }
+
+                    config.setIssuer(shuffledSignerSubject);
                 }
-
-                List<Pair<X500AttributeType, String>> shuffledSignerSubject = new ArrayList<>(signerSubject);
-                if (config.isShuffleIssuer()) {
-                    while (shuffledSignerSubject.equals(signerSubject)) {
-                        Collections.shuffle(shuffledSignerSubject);
-                    }
-                }
-
-                if (config.isRemoveFirstRdnIssuer()) {
-                    shuffledSignerSubject.removeFirst();
-                }
-
-                if (config.isDuplicateFirstRdnIssuer()) {
-                    shuffledSignerSubject.add(shuffledSignerSubject.getFirst());
-                }
-
-                config.setIssuer(shuffledSignerSubject);
 
                 // copy issuer key type
                 config.setDefaultIssuerPublicKeyType(signerConfig.getPublicKeyType());

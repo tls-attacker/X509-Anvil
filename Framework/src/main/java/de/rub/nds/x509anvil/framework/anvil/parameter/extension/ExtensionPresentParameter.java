@@ -40,6 +40,7 @@ public class ExtensionPresentParameter extends BooleanCertificateSpecificParamet
         this.extensionType = extensionType;
     }
 
+
     @Override
     protected DerivationParameter<X509CertificateChainConfig, Boolean> generateValue(Boolean selectedValue) {
         return new ExtensionPresentParameter(selectedValue, getParameterIdentifier(), extensionType);

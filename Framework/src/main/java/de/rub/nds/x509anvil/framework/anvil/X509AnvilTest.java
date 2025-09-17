@@ -131,8 +131,7 @@ public class X509AnvilTest extends AnvilTestBaseClass {
             config2 = certificateChainConfig.getLastSigningConfig();
         } else {
             config1 = certificateChainConfig.getLastSigningConfig();
-            config2 = certificateChainConfig
-                .getIntermediateConfig(certificateChainConfig.getIntermediateCertificateConfigs().size() - 2);
+            config2 = certificateChainConfig.getIssuerConfigOf(config1);
         }
 
         // apply modifications

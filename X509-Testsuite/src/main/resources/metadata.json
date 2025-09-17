@@ -1857,5 +1857,709 @@
             "section": "4.2 Certificate Extensions"
         },
         "tags": null
+    },
+    "extension-c1b1cda8d9": {
+      "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-a8b5caa8d9": {
+      "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-9af0478bd0": {
+      "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-aad8a2245b": {
+      "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-402322d3de": {
+      "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-2dcf039fe2": {
+      "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-4d10f6a130": {
+      "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-bbd5958633": {
+      "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-f4c711dd6d": {
+      "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-53a913244e": {
+      "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-b85eea047f": {
+      "description": "When the subjectAltName extension contains an Internet mail address, the address MUST be stored in the rfc822Name.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-ba3c67bcf6": {
+      "description": "When the subjectAltName extension contains an Internet mail address, the address MUST be stored in the rfc822Name.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-5c3703f705": {
+      "description": "For IP version 4, as specified in [RFC791], the octet string MUST contain exactly four octets. For IP version 6, as specified in [RFC2460], the octet string MUST contain exactly sixteen octets.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-e6cdce436a": {
+      "description": "For IP version 4, as specified in [RFC791], the octet string MUST contain exactly four octets. For IP version 6, as specified in [RFC2460], the octet string MUST contain exactly sixteen octets.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-e313a21fbc": {
+      "description": "When the subjectAltName extension contains a domain name system label, the domain name MUST be stored in the dNSName.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-420b8e5ee3": {
+      "description": "When the subjectAltName extension contains a domain name system label, the domain name MUST be stored in the dNSName.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-8cfafee500": {
+      "description": "The name MUST be in the preferred name syntax",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-ad3d24bfdd": {
+      "description": "The name MUST be in the preferred name syntax",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-395bba36f0": {
+      "description": "subjectAltName extensions with a dNSName of \" \" MUST NOT be used.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-aed854dd91": {
+      "description": "subjectAltName extensions with a dNSName of \" \" MUST NOT be used",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-c7bcd39697": {
+      "description": "When the subjectAltName extension contains a URI, the name MUST be stored in the uniformResourceIdentifier (an IA5String)",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-485a129c88": {
+      "description": "When the subjectAltName extension contains a URI, the name MUST be stored in the uniformResourceIdentifier (an IA5String)",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-4a67c83ba5": {
+      "description": "The name MUST NOT be a relative URI",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-b2a952d256": {
+      "description": "The name MUST NOT be a relative URI",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-755f6f9a73": {
+      "description": "MUST follow the URI syntax and encoding rules specified in [RFC3986]",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-90276bbd2e": {
+      "description": "MUST follow the URI syntax and encoding rules specified in [RFC3986]",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-1de992c455": {
+      "description": "The name MUST include a scheme (e.g., \"http\" or \"ftp\")",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-5e7399fe45": {
+      "description": "The name MUST include a scheme (e.g., \"http\" or \"ftp\")",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-6abf32243f": {
+      "description": "The name MUST include a scheme-specific-part",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-c6ff9d3f5f": {
+      "description": "The name MUST include a scheme-specific-part",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-0710a73747": {
+      "description": "URIs that include an authority ([RFC3986], Section 3.2) MUST include a fully qualified domain name or IP address as the host",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-2be00fdc1f": {
+      "description": "URIs that include an authority ([RFC3986], Section 3.2) MUST include a fully qualified domain name or IP address as the host",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.6.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-eb7d7b73a7": {
+      "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-ee591d0f6d": {
+      "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-8c049a0d2d": {
+      "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-ae73e0f75b": {
+      "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-0e2e4cd7b4": {
+      "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-5419ef48ce": {
+      "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-4cb6303918": {
+      "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-1619f2e27a": {
+      "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-91b57880be": {
+      "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-68c93d34e9": {
+      "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-fd6f7e2ec8": {
+      "description": "When the subjectAltName extension contains an Internet mail address, the address MUST be stored in the rfc822Name.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-df9c7bd48a": {
+      "description": "When the subjectAltName extension contains an Internet mail address, the address MUST be stored in the rfc822Name.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-9a8cfa3dcc": {
+      "description": "For IP version 4, as specified in [RFC791], the octet string MUST contain exactly four octets. For IP version 6, as specified in [RFC2460], the octet string MUST contain exactly sixteen octets.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-72d58e9202": {
+      "description": "For IP version 4, as specified in [RFC791], the octet string MUST contain exactly four octets. For IP version 6, as specified in [RFC2460], the octet string MUST contain exactly sixteen octets.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-d943626982": {
+      "description": "When the subjectAltName extension contains a domain name system label, the domain name MUST be stored in the dNSName.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-8a26a71fc0": {
+      "description": "When the subjectAltName extension contains a domain name system label, the domain name MUST be stored in the dNSName.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-c199210ef3": {
+      "description": "The name MUST be in the preferred name syntax",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-c4f9120a7d": {
+      "description": "The name MUST be in the preferred name syntax",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-75fc92cadc": {
+      "description": "subjectAltName extensions with a dNSName of \" \" MUST NOT be used.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-e4e530c1ca": {
+      "description": "subjectAltName extensions with a dNSName of \" \" MUST NOT be used",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-b247cea7ca": {
+      "description": "When the subjectAltName extension contains a URI, the name MUST be stored in the uniformResourceIdentifier (an IA5String)",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-337825e1c7": {
+      "description": "When the subjectAltName extension contains a URI, the name MUST be stored in the uniformResourceIdentifier (an IA5String)",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-848691cb51": {
+      "description": "The name MUST NOT be a relative URI",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-497dede29d": {
+      "description": "The name MUST NOT be a relative URI",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-195bf04da5": {
+      "description": "MUST follow the URI syntax and encoding rules specified in [RFC3986]",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-38d4b6e6f1": {
+      "description": "MUST follow the URI syntax and encoding rules specified in [RFC3986]",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-8a6d852e22": {
+      "description": "The name MUST include a scheme (e.g., \"http\" or \"ftp\")",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-f675452d31": {
+      "description": "The name MUST include a scheme (e.g., \"http\" or \"ftp\")",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-3f9fa8cb40": {
+      "description": "The name MUST include a scheme-specific-part",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-f7749028cf": {
+      "description": "The name MUST include a scheme-specific-part",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-a1b27a1650": {
+      "description": "URIs that include an authority ([RFC3986], Section 3.2) MUST include a fully qualified domain name or IP address as the host",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
+    },
+    "extension-5a2b87c1f5": {
+      "description": "URIs that include an authority ([RFC3986], Section 3.2) MUST include a fully qualified domain name or IP address as the host",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.7.  Subject Alternative Name"
+      },
+      "tags": null
     }
 }
