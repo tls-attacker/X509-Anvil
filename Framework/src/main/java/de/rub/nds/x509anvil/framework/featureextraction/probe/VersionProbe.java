@@ -1,20 +1,18 @@
-/**
- * Framework - A tool for creating arbitrary certificates
- * <p>
- * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- * <p>
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.featureextraction.probe;
 
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.VersionProbeResult;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import java.math.BigInteger;
 
 public class VersionProbe extends SimpleProbe {
@@ -26,8 +24,11 @@ public class VersionProbe extends SimpleProbe {
 
     @Override
     public X509CertificateChainConfig prepareConfig() {
-        X509CertificateChainConfig x509CertificateChainConfig = X509CertificateConfigUtil.createBasicConfig(2);
-        x509CertificateChainConfig.getEntityCertificateConfig().setVersion(BigInteger.valueOf(version));
+        X509CertificateChainConfig x509CertificateChainConfig =
+                X509CertificateConfigUtil.createBasicConfig(2);
+        x509CertificateChainConfig
+                .getEntityCertificateConfig()
+                .setVersion(BigInteger.valueOf(version));
         return x509CertificateChainConfig;
     }
 

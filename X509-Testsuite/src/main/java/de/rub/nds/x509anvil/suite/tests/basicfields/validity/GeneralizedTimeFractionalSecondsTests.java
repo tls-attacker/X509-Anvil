@@ -1,3 +1,11 @@
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package de.rub.nds.x509anvil.suite.tests.basicfields.validity;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
@@ -17,48 +25,68 @@ public class GeneralizedTimeFractionalSecondsTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:not_before")
     @AnvilTest(id = "basic-4d9f222798")
-    public void notBeforeEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true,
-                (X509CertificateConfigModifier) config -> {
-                    config.setNotBefore(new DateTime(2020, 1, 1, 0, 0, 0, 300));
-                    config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-                    config.setNotBeforeAccurracy(TimeAccurracy.MILLISECONDS);
-                });
+    public void notBeforeEntity(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            config.setNotBefore(new DateTime(2020, 1, 1, 0, 0, 0, 300));
+                            config.setDefaultNotBeforeEncoding(
+                                    ValidityEncoding.GENERALIZED_TIME_UTC);
+                            config.setNotBeforeAccurracy(TimeAccurracy.MILLISECONDS);
+                        });
     }
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_before")
     @AnvilTest(id = "basic-d786262526")
-    public void notBeforeIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false,
-                (X509CertificateConfigModifier) config -> {
-                    config.setNotBefore(new DateTime(2020, 1, 1, 0, 0, 0, 300));
-                    config.setDefaultNotBeforeEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-                    config.setNotBeforeAccurracy(TimeAccurracy.MILLISECONDS);
-                });
+    public void notBeforeIntermediate(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                false,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            config.setNotBefore(new DateTime(2020, 1, 1, 0, 0, 0, 300));
+                            config.setDefaultNotBeforeEncoding(
+                                    ValidityEncoding.GENERALIZED_TIME_UTC);
+                            config.setNotBeforeAccurracy(TimeAccurracy.MILLISECONDS);
+                        });
     }
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:not_after")
     @AnvilTest(id = "basic-c2bc812f45")
-    public void notAfterEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true,
-                (X509CertificateConfigModifier) config -> {
-                    config.setNotAfter(new DateTime(2050, 1, 1, 0, 0, 0, 300));
-                    config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-                    config.setNotAfterAccurracy(TimeAccurracy.MILLISECONDS);
-                });
+    public void notAfterEntity(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            config.setNotAfter(new DateTime(2050, 1, 1, 0, 0, 0, 300));
+                            config.setDefaultNotAfterEncoding(
+                                    ValidityEncoding.GENERALIZED_TIME_UTC);
+                            config.setNotAfterAccurracy(TimeAccurracy.MILLISECONDS);
+                        });
     }
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_after")
     @AnvilTest(id = "basic-0f5f2487f7")
-    public void notAfterIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false,
-                (X509CertificateConfigModifier) config -> {
-                    config.setNotAfter(new DateTime(2050, 1, 1, 0, 0, 0, 300));
-                    config.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
-                    config.setNotAfterAccurracy(TimeAccurracy.MILLISECONDS);
-                });
+    public void notAfterIntermediate(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                false,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            config.setNotAfter(new DateTime(2050, 1, 1, 0, 0, 0, 300));
+                            config.setDefaultNotAfterEncoding(
+                                    ValidityEncoding.GENERALIZED_TIME_UTC);
+                            config.setNotAfterAccurracy(TimeAccurracy.MILLISECONDS);
+                        });
     }
 }

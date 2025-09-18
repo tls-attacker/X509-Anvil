@@ -1,3 +1,11 @@
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package de.rub.nds.x509anvil.framework.verifier.adapter;
 
 import de.rub.nds.tlsattacker.core.config.Config;
@@ -15,7 +23,6 @@ import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.filesystem.CertificateBytes;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -56,11 +63,15 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
         supportedSignatureAndHashAlgorithms.add(SignatureAndHashAlgorithm.ECDSA_SHA256);
         supportedSignatureAndHashAlgorithms.add(SignatureAndHashAlgorithm.ECDSA_SHA384);
         supportedSignatureAndHashAlgorithms.add(SignatureAndHashAlgorithm.ECDSA_SHA512);
-        config.setDefaultClientSupportedSignatureAndHashAlgorithms(supportedSignatureAndHashAlgorithms);
-        config.setDefaultServerSupportedSignatureAndHashAlgorithms(supportedSignatureAndHashAlgorithms);
+        config.setDefaultClientSupportedSignatureAndHashAlgorithms(
+                supportedSignatureAndHashAlgorithms);
+        config.setDefaultServerSupportedSignatureAndHashAlgorithms(
+                supportedSignatureAndHashAlgorithms);
 
         List<NamedGroup> supportedNamedGroups =
-                Arrays.stream(NamedGroup.values()).filter(g -> g.name().contains("SECP256R")).collect(Collectors.toList());
+                Arrays.stream(NamedGroup.values())
+                        .filter(g -> g.name().contains("SECP256R"))
+                        .collect(Collectors.toList());
         config.setDefaultClientNamedGroups(supportedNamedGroups);
         config.setDefaultServerNamedGroups(supportedNamedGroups);
 
@@ -77,13 +88,16 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
     }
 
     @Override
-    public VerifierResult invokeVerifier(X509CertificateConfig leafCertificateConfig,
-                                         List<X509Certificate> certificatesChain) {
+    public VerifierResult invokeVerifier(
+            X509CertificateConfig leafCertificateConfig, List<X509Certificate> certificatesChain) {
         List<CertificateBytes> encodedCertificateChain = new LinkedList<>();
         Collections.reverse(certificatesChain);
         for (X509Certificate x509Certificate : certificatesChain) {
-            encodedCertificateChain.add(new CertificateBytes(
-                    x509Certificate.getSerializer(new X509Chooser(null, new X509Context())).serialize()));
+            encodedCertificateChain.add(
+                    new CertificateBytes(
+                            x509Certificate
+                                    .getSerializer(new X509Chooser(null, new X509Context()))
+                                    .serialize()));
         }
 
         config.setDefaultExplicitCertificateChain(encodedCertificateChain);
@@ -97,14 +111,17 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
         // set keys in tls attacker state
         X509Context x509Context = state.getContext().getTlsContext().getTalkingX509Context();
         x509Context.setSubjectRsaModulus(leafCertificateConfig.getDefaultSubjectRsaModulus());
-        x509Context.setSubjectRsaPublicExponent(leafCertificateConfig.getDefaultSubjectRsaPublicExponent());
-        x509Context.setSubjectRsaPrivateExponent(leafCertificateConfig.getDefaultSubjectRsaPrivateExponent());
+        x509Context.setSubjectRsaPublicExponent(
+                leafCertificateConfig.getDefaultSubjectRsaPublicExponent());
+        x509Context.setSubjectRsaPrivateExponent(
+                leafCertificateConfig.getDefaultSubjectRsaPrivateExponent());
 
         x509Context.setSubjectDsaGeneratorG(leafCertificateConfig.getDefaultSubjectDsaGenerator());
         x509Context.setSubjectDsaPublicKeyY(leafCertificateConfig.getDefaultSubjectDsaPublicKey());
         x509Context.setSubjectDsaPrimeModulusP(leafCertificateConfig.getDefaultSubjectDsaPrimeP());
         x509Context.setSubjectDsaPrimeDivisorQ(leafCertificateConfig.getDefaultSubjectDsaPrimeQ());
-        x509Context.setSubjectDsaPrivateKeyX(leafCertificateConfig.getDefaultSubjectDsaPrivateKey());
+        x509Context.setSubjectDsaPrivateKeyX(
+                leafCertificateConfig.getDefaultSubjectDsaPrivateKey());
         x509Context.setSubjectDsaPrivateK(leafCertificateConfig.getDefaultSubjectDsaNonce());
 
         x509Context.setSubjectEcPrivateKey(leafCertificateConfig.getDefaultSubjectEcPrivateKey());
@@ -128,14 +145,22 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
                         case RSA -> SignatureAndHashAlgorithm.RSA_SHA256;
                         case DSA -> SignatureAndHashAlgorithm.DSA_SHA256;
                         case ECDSA -> SignatureAndHashAlgorithm.ECDSA_SHA256;
-                        default -> throw new IllegalArgumentException("Unsupported public key algorithm: "
-                                + certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType());
+                        default ->
+                                throw new IllegalArgumentException(
+                                        "Unsupported public key algorithm: "
+                                                + certificatesChain
+                                                        .get(0)
+                                                        .getPublicKeyContainer()
+                                                        .getAlgorithmType());
                     };
-            config.setDefaultClientSupportedSignatureAndHashAlgorithms(config
-                    .getDefaultClientSupportedSignatureAndHashAlgorithms().stream()
-                    .filter(
-                            algorithm -> algorithm.getSignatureAlgorithm() == signatureAndHashAlgorithm.getSignatureAlgorithm())
-                    .collect(Collectors.toList()));
+            config.setDefaultClientSupportedSignatureAndHashAlgorithms(
+                    config.getDefaultClientSupportedSignatureAndHashAlgorithms().stream()
+                            .filter(
+                                    algorithm ->
+                                            algorithm.getSignatureAlgorithm()
+                                                    == signatureAndHashAlgorithm
+                                                            .getSignatureAlgorithm())
+                            .collect(Collectors.toList()));
         } catch (NoSuchElementException e) {
             // modification removed public key container, this is fine
         }

@@ -1,3 +1,11 @@
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package de.rub.nds.x509anvil.suite.tests.basicfields.serialnumber;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
@@ -15,17 +23,24 @@ public class LargeSerialNumberTest extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:serial_number")
     @AnvilTest(id = "basic-63b58d6a92")
-    public void largeSerialNumberEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setSerialNumber(TestUtils.createBigInteger(256)));
+    public void largeSerialNumberEntity(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier)
+                        config -> config.setSerialNumber(TestUtils.createBigInteger(256)));
     }
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:serial_number")
     @AnvilTest(id = "basic-c482ae3643")
-    public void largeSerialNumberIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false,
-        (X509CertificateConfigModifier) config ->
-        config.setSerialNumber(TestUtils.createBigInteger(256)));
+    public void largeSerialNumberIntermediate(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                false,
+                (X509CertificateConfigModifier)
+                        config -> config.setSerialNumber(TestUtils.createBigInteger(256)));
     }
-
 }

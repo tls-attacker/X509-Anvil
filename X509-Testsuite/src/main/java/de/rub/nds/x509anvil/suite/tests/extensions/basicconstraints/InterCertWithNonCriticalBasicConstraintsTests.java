@@ -1,3 +1,11 @@
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package de.rub.nds.x509anvil.suite.tests.extensions.basicconstraints;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
@@ -17,12 +25,18 @@ public class InterCertWithNonCriticalBasicConstraintsTests extends X509AnvilTest
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:ext_basic_constraints_critical")
     @AnvilTest(id = "extension-bcb4b2c11e")
-    public void intermediateCertWithNonCriticalBasicConstraints(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
-            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
-            basicConstraintsConfig.setCritical(false);
-        });
+    public void intermediateCertWithNonCriticalBasicConstraints(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                false,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            BasicConstraintsConfig basicConstraintsConfig =
+                                    (BasicConstraintsConfig)
+                                            X509CertificateConfigUtil.getExtensionConfig(
+                                                    config, X509ExtensionType.BASIC_CONSTRAINTS);
+                            basicConstraintsConfig.setCritical(false);
+                        });
     }
 }
-
-

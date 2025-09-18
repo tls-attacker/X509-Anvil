@@ -1,3 +1,11 @@
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package de.rub.nds.x509anvil.suite.tests.basicfields;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
@@ -12,13 +20,23 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-e0bcce347c")
-    public void appendUnexpectedFieldEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setAppendUnexpectedCertificateField(true));
+    public void appendUnexpectedFieldEntity(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier)
+                        config -> config.setAppendUnexpectedCertificateField(true));
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-6d1ba61fab")
-    public void appendUnexpectedFieldIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setAppendUnexpectedCertificateField(true));
+    public void appendUnexpectedFieldIntermediate(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                false,
+                (X509CertificateConfigModifier)
+                        config -> config.setAppendUnexpectedCertificateField(true));
     }
 }

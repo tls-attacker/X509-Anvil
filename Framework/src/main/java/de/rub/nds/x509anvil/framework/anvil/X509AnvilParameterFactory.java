@@ -1,12 +1,11 @@
-/**
- * Framework - A tool for creating arbitrary certificates
- * <p>
- * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- * <p>
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.anvil;
 
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
@@ -37,18 +36,23 @@ public class X509AnvilParameterFactory {
             case EXTENSIONS_PRESENT:
                 return new ExtensionsPresentParameter(parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_PRESENT:
-                return new BasicConstraintsPresentParameter(parameterIdentifier.getParameterScope());
+                return new BasicConstraintsPresentParameter(
+                        parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_CRITICAL:
-                return new BasicConstraintsCriticalParameter(parameterIdentifier.getParameterScope());
+                return new BasicConstraintsCriticalParameter(
+                        parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_CA:
                 return new BasicConstraintsCaParameter(parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT:
-                return new BasicConstraintsPathLenConstraintPresentParameter(parameterIdentifier.getParameterScope());
+                return new BasicConstraintsPathLenConstraintPresentParameter(
+                        parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT:
-                return new BasicConstraintsPathLenConstraintParameter(parameterIdentifier.getParameterScope());
+                return new BasicConstraintsPathLenConstraintParameter(
+                        parameterIdentifier.getParameterScope());
             default:
                 throw new IllegalArgumentException(
-                    "Unknown parameter identifier " + parameterIdentifier.getParameterType().toString());
+                        "Unknown parameter identifier "
+                                + parameterIdentifier.getParameterType().toString());
         }
     }
 

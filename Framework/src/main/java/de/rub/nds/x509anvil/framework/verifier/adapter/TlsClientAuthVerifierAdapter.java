@@ -1,12 +1,11 @@
-/**
- * Framework - A tool for creating arbitrary certificates
- * <p>
- * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- * <p>
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.verifier.adapter;
 
 import de.rub.nds.tlsattacker.core.config.Config;
@@ -35,11 +34,22 @@ public class TlsClientAuthVerifierAdapter extends TlsAuthVerifierAdapter {
     public WorkflowTrace buildWorkflowTraceDhe(Config config) {
         WorkflowTrace workflowTrace = new WorkflowTrace();
         workflowTrace.addTlsAction(new SendAction(new ClientHelloMessage(config)));
-        workflowTrace.addTlsAction(new ReceiveAction(new ServerHelloMessage(), new CertificateMessage(),
-                new DHEServerKeyExchangeMessage(), new CertificateRequestMessage(), new ServerHelloDoneMessage()));
-        workflowTrace.addTlsAction(new SendAction(new CertificateMessage(), new DHClientKeyExchangeMessage(),
-                new CertificateVerifyMessage(), new ChangeCipherSpecMessage(), new FinishedMessage()));
-        workflowTrace.addTlsAction(new ReceiveAction(new ChangeCipherSpecMessage(), new FinishedMessage()));
+        workflowTrace.addTlsAction(
+                new ReceiveAction(
+                        new ServerHelloMessage(),
+                        new CertificateMessage(),
+                        new DHEServerKeyExchangeMessage(),
+                        new CertificateRequestMessage(),
+                        new ServerHelloDoneMessage()));
+        workflowTrace.addTlsAction(
+                new SendAction(
+                        new CertificateMessage(),
+                        new DHClientKeyExchangeMessage(),
+                        new CertificateVerifyMessage(),
+                        new ChangeCipherSpecMessage(),
+                        new FinishedMessage()));
+        workflowTrace.addTlsAction(
+                new ReceiveAction(new ChangeCipherSpecMessage(), new FinishedMessage()));
         return workflowTrace;
     }
 

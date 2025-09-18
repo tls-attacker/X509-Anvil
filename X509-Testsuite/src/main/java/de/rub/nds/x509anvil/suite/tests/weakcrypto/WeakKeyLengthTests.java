@@ -1,3 +1,11 @@
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package de.rub.nds.x509anvil.suite.tests.weakcrypto;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
@@ -17,30 +25,51 @@ public class WeakKeyLengthTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "weakcrypto-5521f8be14")
-    public void weak512BitRsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void weak512BitRsaKey(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
-        CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION, 512), certificateChainConfig.getLastSigningConfig(), "inter0");
-        certificateChainConfig.getEntityCertificateConfig().setSignatureAlgorithm(X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION);
+        CachedKeyPairGenerator.generateNewKeys(
+                new SignatureHashAlgorithmKeyLengthPair(
+                        X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION, 512),
+                certificateChainConfig.getLastSigningConfig(),
+                "inter0");
+        certificateChainConfig
+                .getEntityCertificateConfig()
+                .setSignatureAlgorithm(X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION);
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "weakcrypto-448bf60b34")
-    public void weak1024BitRsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void weak1024BitRsaKey(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
-        CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION, 1024), certificateChainConfig.getLastSigningConfig(), "inter0");
-        certificateChainConfig.getEntityCertificateConfig().setSignatureAlgorithm(X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION);
+        CachedKeyPairGenerator.generateNewKeys(
+                new SignatureHashAlgorithmKeyLengthPair(
+                        X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION, 1024),
+                certificateChainConfig.getLastSigningConfig(),
+                "inter0");
+        certificateChainConfig
+                .getEntityCertificateConfig()
+                .setSignatureAlgorithm(X509SignatureAlgorithm.SHA256_WITH_RSA_ENCRYPTION);
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "weakcrypto-8246133e52")
-    public void weak1024BitDsaKey(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void weak1024BitDsaKey(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
         X509CertificateChainConfig certificateChainConfig = prepareConfig(testRunner);
-        CachedKeyPairGenerator.generateNewKeys(new SignatureHashAlgorithmKeyLengthPair(X509SignatureAlgorithm.DSA_WITH_SHA256, 1024), certificateChainConfig.getLastSigningConfig(), "inter0");
-        certificateChainConfig.getEntityCertificateConfig().setSignatureAlgorithm(X509SignatureAlgorithm.DSA_WITH_SHA256);
+        CachedKeyPairGenerator.generateNewKeys(
+                new SignatureHashAlgorithmKeyLengthPair(
+                        X509SignatureAlgorithm.DSA_WITH_SHA256, 1024),
+                certificateChainConfig.getLastSigningConfig(),
+                "inter0");
+        certificateChainConfig
+                .getEntityCertificateConfig()
+                .setSignatureAlgorithm(X509SignatureAlgorithm.DSA_WITH_SHA256);
         VerifierResult result = testRunner.execute(certificateChainConfig);
         Assertions.assertFalse(result.isValid());
     }

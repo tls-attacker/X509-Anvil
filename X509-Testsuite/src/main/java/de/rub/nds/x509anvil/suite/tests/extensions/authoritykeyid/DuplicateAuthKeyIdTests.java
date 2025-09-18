@@ -1,3 +1,11 @@
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package de.rub.nds.x509anvil.suite.tests.extensions.authoritykeyid;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
@@ -16,91 +24,118 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-012f1b4bd0")
-    public void duplicateIdenticalEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, config -> {
-            AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
-            authorityKeyIdentifier.setPresent(true);
-            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
-            config.addExtensions(authorityKeyIdentifier);
-            config.addExtensions(authorityKeyIdentifier);
-            config.setIncludeExtensions(true);
-        }, (X509CertificateConfigModifier) config -> {
-            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
-            newConfig.setPresent(true);
-            newConfig.setKeyIdentifier(new byte[] {1,2,3});
-            config.addExtensions(newConfig);
-            config.setIncludeExtensions(true);
-        });
+    public void duplicateIdenticalEntity(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                true,
+                config -> {
+                    AuthorityKeyIdentifierConfig authorityKeyIdentifier =
+                            new AuthorityKeyIdentifierConfig();
+                    authorityKeyIdentifier.setPresent(true);
+                    authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
+                    config.addExtensions(authorityKeyIdentifier);
+                    config.addExtensions(authorityKeyIdentifier);
+                    config.setIncludeExtensions(true);
+                },
+                (X509CertificateConfigModifier)
+                        config -> {
+                            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
+                            newConfig.setPresent(true);
+                            newConfig.setKeyIdentifier(new byte[] {1, 2, 3});
+                            config.addExtensions(newConfig);
+                            config.setIncludeExtensions(true);
+                        });
     }
-
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-ff7cdd6926")
-    public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, config -> {
-            AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
-            authorityKeyIdentifier.setPresent(true);
-            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
-            config.addExtensions(authorityKeyIdentifier);
-            config.addExtensions(authorityKeyIdentifier);
-            config.setIncludeExtensions(true);
-        }, (X509CertificateConfigModifier) config -> {
-            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
-            newConfig.setPresent(true);
-            newConfig.setKeyIdentifier(new byte[] {1,2,3});
-            config.addExtensions(newConfig);
-            config.setIncludeExtensions(true);
-        });
+    public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                false,
+                config -> {
+                    AuthorityKeyIdentifierConfig authorityKeyIdentifier =
+                            new AuthorityKeyIdentifierConfig();
+                    authorityKeyIdentifier.setPresent(true);
+                    authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
+                    config.addExtensions(authorityKeyIdentifier);
+                    config.addExtensions(authorityKeyIdentifier);
+                    config.setIncludeExtensions(true);
+                },
+                (X509CertificateConfigModifier)
+                        config -> {
+                            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
+                            newConfig.setPresent(true);
+                            newConfig.setKeyIdentifier(new byte[] {1, 2, 3});
+                            config.addExtensions(newConfig);
+                            config.setIncludeExtensions(true);
+                        });
     }
-
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-4a5dd1e00a")
-    public void duplicateDifferentEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, config -> {
-            AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
-            authorityKeyIdentifier.setPresent(true);
-            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
-            config.addExtensions(authorityKeyIdentifier);
+    public void duplicateDifferentEntity(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                true,
+                config -> {
+                    AuthorityKeyIdentifierConfig authorityKeyIdentifier =
+                            new AuthorityKeyIdentifierConfig();
+                    authorityKeyIdentifier.setPresent(true);
+                    authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
+                    config.addExtensions(authorityKeyIdentifier);
 
-            AuthorityKeyIdentifierConfig differentConfig = new AuthorityKeyIdentifierConfig();
-            differentConfig.setPresent(true);
-            differentConfig.setKeyIdentifier(new byte[] {2, 3, 4});
-            config.addExtensions(differentConfig);
+                    AuthorityKeyIdentifierConfig differentConfig =
+                            new AuthorityKeyIdentifierConfig();
+                    differentConfig.setPresent(true);
+                    differentConfig.setKeyIdentifier(new byte[] {2, 3, 4});
+                    config.addExtensions(differentConfig);
 
-            config.setIncludeExtensions(true);
-        }, (X509CertificateConfigModifier) config -> {
-            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
-            newConfig.setPresent(true);
-            newConfig.setKeyIdentifier(new byte[] {1,2,3});
-            config.addExtensions(newConfig);
-            config.setIncludeExtensions(true);
-        });
+                    config.setIncludeExtensions(true);
+                },
+                (X509CertificateConfigModifier)
+                        config -> {
+                            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
+                            newConfig.setPresent(true);
+                            newConfig.setKeyIdentifier(new byte[] {1, 2, 3});
+                            config.addExtensions(newConfig);
+                            config.setIncludeExtensions(true);
+                        });
     }
-
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-3b0f420c2c")
-    public void duplicateDifferentIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, config -> {
-            AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
-            authorityKeyIdentifier.setPresent(true);
-            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
-            config.addExtensions(authorityKeyIdentifier);
+    public void duplicateDifferentIntermediate(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                false,
+                config -> {
+                    AuthorityKeyIdentifierConfig authorityKeyIdentifier =
+                            new AuthorityKeyIdentifierConfig();
+                    authorityKeyIdentifier.setPresent(true);
+                    authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
+                    config.addExtensions(authorityKeyIdentifier);
 
-            AuthorityKeyIdentifierConfig differentConfig = new AuthorityKeyIdentifierConfig();
-            differentConfig.setPresent(true);
-            differentConfig.setKeyIdentifier(new byte[] {2, 3, 4});
-            config.addExtensions(differentConfig);
+                    AuthorityKeyIdentifierConfig differentConfig =
+                            new AuthorityKeyIdentifierConfig();
+                    differentConfig.setPresent(true);
+                    differentConfig.setKeyIdentifier(new byte[] {2, 3, 4});
+                    config.addExtensions(differentConfig);
 
-            config.setIncludeExtensions(true);
-        }, (X509CertificateConfigModifier) config -> {
-            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
-            newConfig.setPresent(true);
-            newConfig.setKeyIdentifier(new byte[] {1,2,3});
-            config.addExtensions(newConfig);
-            config.setIncludeExtensions(true);
-        });
+                    config.setIncludeExtensions(true);
+                },
+                (X509CertificateConfigModifier)
+                        config -> {
+                            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
+                            newConfig.setPresent(true);
+                            newConfig.setKeyIdentifier(new byte[] {1, 2, 3});
+                            config.addExtensions(newConfig);
+                            config.setIncludeExtensions(true);
+                        });
     }
 }

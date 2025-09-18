@@ -1,23 +1,23 @@
-/**
- * Framework - A tool for creating arbitrary certificates
- * <p>
- * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- * <p>
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.anvil;
 
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 
 public class X509AnvilParameterScope extends ParameterScope {
-    private final static int ROOT_CHAIN_POS = 0;
-    private final static int INTER_CHAIN_OFFSET = 1;
-    private final static int ENTITY_CHAIN_POS = Integer.MAX_VALUE;
+    private static final int ROOT_CHAIN_POS = 0;
+    private static final int INTER_CHAIN_OFFSET = 1;
+    private static final int ENTITY_CHAIN_POS = Integer.MAX_VALUE;
 
     public static final X509AnvilParameterScope ROOT = new X509AnvilParameterScope(ROOT_CHAIN_POS);
-    public static final X509AnvilParameterScope ENTITY = new X509AnvilParameterScope(ENTITY_CHAIN_POS);
+    public static final X509AnvilParameterScope ENTITY =
+            new X509AnvilParameterScope(ENTITY_CHAIN_POS);
 
     private final int chainPosition;
 
@@ -34,7 +34,8 @@ public class X509AnvilParameterScope extends ParameterScope {
             int intermediateIndex = Integer.parseInt(uniqueIdentifier.replace("inter", ""));
             return new X509AnvilParameterScope(INTER_CHAIN_OFFSET + intermediateIndex);
         } else {
-            throw new IllegalArgumentException("Unable to parse scope identifier " + uniqueIdentifier);
+            throw new IllegalArgumentException(
+                    "Unable to parse scope identifier " + uniqueIdentifier);
         }
     }
 
@@ -67,7 +68,8 @@ public class X509AnvilParameterScope extends ParameterScope {
 
     public int getIntermediateIndex() {
         if (!isIntermediate()) {
-            throw new RuntimeException("Intermediate index for root or entity parameter scope requested");
+            throw new RuntimeException(
+                    "Intermediate index for root or entity parameter scope requested");
         }
         return chainPosition - INTER_CHAIN_OFFSET;
     }

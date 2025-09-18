@@ -1,3 +1,11 @@
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package de.rub.nds.x509anvil.suite.tests.extensions.common;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
@@ -16,27 +24,39 @@ public class UnknownCriticalExtensionTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = {"entity:extensions_present"})
     @AnvilTest(id = "extension-d8772be424")
-    public void unknownCriticalExtensionEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
-            UnknownConfig unknownConfig = new UnknownConfig(X509ExtensionType.UNKNOWN.getOid(), "unknownExtension");
-            unknownConfig.setCritical(true);
-            unknownConfig.setPresent(true);
-            unknownConfig.setContent(new byte[] {10, 11, 12});
-            config.addExtensions(unknownConfig);
-        });
+    public void unknownCriticalExtensionEntity(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            UnknownConfig unknownConfig =
+                                    new UnknownConfig(
+                                            X509ExtensionType.UNKNOWN.getOid(), "unknownExtension");
+                            unknownConfig.setCritical(true);
+                            unknownConfig.setPresent(true);
+                            unknownConfig.setContent(new byte[] {10, 11, 12});
+                            config.addExtensions(unknownConfig);
+                        });
     }
-
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-14d5fe1bed")
-    public void unknownCriticalExtensionIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
-            UnknownConfig unknownConfig = new UnknownConfig(X509ExtensionType.UNKNOWN.getOid(), "unknownExtension");
-            unknownConfig.setCritical(true);
-            unknownConfig.setPresent(true);
-            unknownConfig.setContent(new byte[] {10, 11, 12});
-            config.addExtensions(unknownConfig);
-        });
+    public void unknownCriticalExtensionIntermediate(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                false,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            UnknownConfig unknownConfig =
+                                    new UnknownConfig(
+                                            X509ExtensionType.UNKNOWN.getOid(), "unknownExtension");
+                            unknownConfig.setCritical(true);
+                            unknownConfig.setPresent(true);
+                            unknownConfig.setContent(new byte[] {10, 11, 12});
+                            config.addExtensions(unknownConfig);
+                        });
     }
-
 }

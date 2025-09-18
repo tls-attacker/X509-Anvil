@@ -1,17 +1,15 @@
-/**
- * Framework - A tool for creating arbitrary certificates
- * <p>
- * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
- * <p>
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-
 package de.rub.nds.x509anvil.framework.featureextraction;
 
 import de.rub.nds.x509anvil.framework.constants.*;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
-
 import java.util.*;
 
 public class FeatureReport {
@@ -19,10 +17,11 @@ public class FeatureReport {
     private List<Integer> supportedVersions = new ArrayList<>();
     private List<ExtensionType> supportedExtensions = new ArrayList<>();
 
-    private List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsEntity = new ArrayList<>();
+    private List<SignatureHashAlgorithmKeyLengthPair>
+            supportedSignatureHashAndKeyLengthPairsEntity = new ArrayList<>();
 
-    private List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate =
-        new ArrayList<>();
+    private List<SignatureHashAlgorithmKeyLengthPair>
+            supportedSignatureHashAndKeyLengthPairsIntermediate = new ArrayList<>();
     private boolean digitalSignatureKeyUsageRequired;
 
     public List<ProbeResult> getProbeResults() {
@@ -77,30 +76,39 @@ public class FeatureReport {
         this.digitalSignatureKeyUsageRequired = digitalSignatureKeyUsageRequired;
     }
 
-    public List<SignatureHashAlgorithmKeyLengthPair> getSupportedSignatureHashAndKeyLengthPairsIntermediate() {
+    public List<SignatureHashAlgorithmKeyLengthPair>
+            getSupportedSignatureHashAndKeyLengthPairsIntermediate() {
         return supportedSignatureHashAndKeyLengthPairsIntermediate;
     }
 
     public void setSupportedSignatureHashAndKeyLengthPairsIntermediate(
-        List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate) {
-        this.supportedSignatureHashAndKeyLengthPairsIntermediate = supportedSignatureHashAndKeyLengthPairsIntermediate;
+            List<SignatureHashAlgorithmKeyLengthPair>
+                    supportedSignatureHashAndKeyLengthPairsIntermediate) {
+        this.supportedSignatureHashAndKeyLengthPairsIntermediate =
+                supportedSignatureHashAndKeyLengthPairsIntermediate;
     }
 
-    public List<SignatureHashAlgorithmKeyLengthPair> getSupportedSignatureHashAndKeyLengthPairsEntity() {
+    public List<SignatureHashAlgorithmKeyLengthPair>
+            getSupportedSignatureHashAndKeyLengthPairsEntity() {
         return supportedSignatureHashAndKeyLengthPairsEntity;
     }
 
     public void setSupportedSignatureHashAndKeyLengthPairsEntity(
-        List<SignatureHashAlgorithmKeyLengthPair> supportedSignatureHashAndKeyLengthPairsIntermediate) {
-        this.supportedSignatureHashAndKeyLengthPairsEntity = supportedSignatureHashAndKeyLengthPairsIntermediate;
+            List<SignatureHashAlgorithmKeyLengthPair>
+                    supportedSignatureHashAndKeyLengthPairsIntermediate) {
+        this.supportedSignatureHashAndKeyLengthPairsEntity =
+                supportedSignatureHashAndKeyLengthPairsIntermediate;
     }
 
     @Override
     public String toString() {
-        return "Supported versions: " + supportedVersions + "\n"
-            + "Supported Signature and HashAlgorithm and Key Length triples: "
-            + supportedSignatureHashAndKeyLengthPairsIntermediate + "\n" + "Supported extensions: "
-            + supportedExtensions;
+        return "Supported versions: "
+                + supportedVersions
+                + "\n"
+                + "Supported Signature and HashAlgorithm and Key Length triples: "
+                + supportedSignatureHashAndKeyLengthPairsIntermediate
+                + "\n"
+                + "Supported extensions: "
+                + supportedExtensions;
     }
-
 }

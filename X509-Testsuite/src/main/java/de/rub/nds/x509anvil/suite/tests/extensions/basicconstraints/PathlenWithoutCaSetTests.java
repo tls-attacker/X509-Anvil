@@ -1,3 +1,11 @@
+/*
+ * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
+ *
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
+ *
+ * Licensed under Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package de.rub.nds.x509anvil.suite.tests.extensions.basicconstraints;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
@@ -16,17 +24,27 @@ import de.rub.nds.x509attacker.constants.X509ExtensionType;
 public class PathlenWithoutCaSetTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
-    @IpmLimitations(identifiers = "inter0:ext_basic_constraints_pathlen_constraint, inter0:ext_basic_constraints_pathlen_constraint_present, inter0:ext_basic_constraints_ca")
+    @IpmLimitations(
+            identifiers =
+                    "inter0:ext_basic_constraints_pathlen_constraint, inter0:ext_basic_constraints_pathlen_constraint_present, inter0:ext_basic_constraints_ca")
     @AnvilTest(id = "extension-ef15984307")
-    public void pathlenWithoutCaSetEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
-            BasicConstraintsConfig basicConstraintsConfig = (BasicConstraintsConfig) X509CertificateConfigUtil.getExtensionConfig(config, X509ExtensionType.BASIC_CONSTRAINTS);
-            basicConstraintsConfig.setPresent(true);
-            basicConstraintsConfig.setCa(false);
-            basicConstraintsConfig.setPathLenConstraint(5);
-            basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.FOLLOW_DEFAULT);
-            basicConstraintsConfig.setIncludePathLenConstraint(DefaultEncodingRule.ENCODE);
-        });
-
+    public void pathlenWithoutCaSetEntity(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                false,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            BasicConstraintsConfig basicConstraintsConfig =
+                                    (BasicConstraintsConfig)
+                                            X509CertificateConfigUtil.getExtensionConfig(
+                                                    config, X509ExtensionType.BASIC_CONSTRAINTS);
+                            basicConstraintsConfig.setPresent(true);
+                            basicConstraintsConfig.setCa(false);
+                            basicConstraintsConfig.setPathLenConstraint(5);
+                            basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.FOLLOW_DEFAULT);
+                            basicConstraintsConfig.setIncludePathLenConstraint(
+                                    DefaultEncodingRule.ENCODE);
+                        });
     }
 }
