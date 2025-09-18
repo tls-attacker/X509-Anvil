@@ -34,7 +34,6 @@ public class SubjectAlternativeNameWithoutContentTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-a8b5caa8d9")
-    @SeverityLevel(Severity.INFORMATIONAL)
     public void subjectAltNameEmptyIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();

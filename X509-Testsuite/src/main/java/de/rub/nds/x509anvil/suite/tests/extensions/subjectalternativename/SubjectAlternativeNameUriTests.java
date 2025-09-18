@@ -34,7 +34,6 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-485a129c88" )
-    @SeverityLevel(Severity.INFORMATIONAL)
     public void subjectAltNameUriIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
@@ -63,7 +62,6 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-b2a952d256" )
-    @SeverityLevel(Severity.INFORMATIONAL)
     public void subjectAltNameUriRelativeIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
@@ -92,7 +90,6 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-90276bbd2e" )
-    @SeverityLevel(Severity.INFORMATIONAL)
     public void subjectAltNameInvalidUriIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
@@ -121,7 +118,6 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-5e7399fe45" )
-    @SeverityLevel(Severity.INFORMATIONAL)
     public void subjectAltNameNoSchemeUriIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
@@ -150,7 +146,6 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-c6ff9d3f5f" )
-    @SeverityLevel(Severity.INFORMATIONAL)
     public void subjectAltNameNoPathUriIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
@@ -179,7 +174,6 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-2be00fdc1f" )
-    @SeverityLevel(Severity.INFORMATIONAL)
     public void subjectAltNameAuthorityUriIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();

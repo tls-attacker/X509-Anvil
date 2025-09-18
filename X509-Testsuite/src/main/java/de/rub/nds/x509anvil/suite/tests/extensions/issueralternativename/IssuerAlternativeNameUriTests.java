@@ -33,7 +33,6 @@ public class IssuerAlternativeNameUriTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-337825e1c7" )
-    @SeverityLevel(Severity.INFORMATIONAL)
     public void issuerAltNameUriIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();
@@ -62,7 +61,6 @@ public class IssuerAlternativeNameUriTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-497dede29d" )
-    @SeverityLevel(Severity.INFORMATIONAL)
     public void issuerAltNameUriRelativeIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();
@@ -91,7 +89,6 @@ public class IssuerAlternativeNameUriTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-38d4b6e6f1" )
-    @SeverityLevel(Severity.INFORMATIONAL)
     public void issuerAltNameInvalidUriIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();
@@ -120,7 +117,6 @@ public class IssuerAlternativeNameUriTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-f675452d31" )
-    @SeverityLevel(Severity.INFORMATIONAL)
     public void issuerAltNameNoSchemeUriIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();
@@ -149,7 +145,6 @@ public class IssuerAlternativeNameUriTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-f7749028cf" )
-    @SeverityLevel(Severity.INFORMATIONAL)
     public void issuerAltNameNoPathUriIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();
@@ -178,7 +173,6 @@ public class IssuerAlternativeNameUriTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-5a2b87c1f5" )
-    @SeverityLevel(Severity.INFORMATIONAL)
     public void issuerAltNameAuthorityUriIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();
