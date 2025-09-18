@@ -17,68 +17,13 @@
   </licenses>
   <developers>
     <developer>
-      <id>jsomorovsky</id>
-      <name>Juraj Somorovsky</name>
-      <email>juraj.somorovsky@upb.de</email>
-      <url>https://github.com/jurajsomorovsky/</url>
+      <id>FelixLange1998</id>
+      <name>Felix Lange</name>
+      <email>felix.lange@uni-paderborn.de</email>
       <organization>UPB</organization>
-      <organizationUrl>https://cs.uni-paderborn.de/en/syssec/</organizationUrl>
+      <organizationUrl>https://www.uni-paderborn.de/</organizationUrl>
       <roles>
-        <role>Developer</role>
-      </roles>
-    </developer>
-    <developer>
-      <id>ic0ns</id>
-      <name>Robert Merget</name>
-      <email>robert.merget@tii.ae</email>
-      <url>https://github.com/ic0ns/</url>
-      <organization>TII</organization>
-      <organizationUrl>https://tii.ae</organizationUrl>
-      <roles>
-        <role>Developer</role>
-      </roles>
-    </developer>
-    <developer>
-      <id>mmaehren</id>
-      <name>Marcel Maehren</name>
-      <email>marcel.maehren@rub.de</email>
-      <url>https://github.com/mmaehren/</url>
-      <organization>NDS</organization>
-      <organizationUrl>https://informatik.rub.de/nds/</organizationUrl>
-      <roles>
-        <role>Developer</role>
-      </roles>
-    </developer>
-    <developer>
-      <id>NErinola</id>
-      <name>Nurullah Erinola</name>
-      <email>nurullah.erinola@rub.de</email>
-      <url>https://github.com/NErinola/</url>
-      <organization>NDS</organization>
-      <organizationUrl>https://informatik.rub.de/nds/</organizationUrl>
-      <roles>
-        <role>Developer</role>
-      </roles>
-    </developer>
-    <developer>
-      <id>TrueSkrillor</id>
-      <name>Fabian Bäumer</name>
-      <email>fabian.baeumer@rub.de</email>
-      <url>https://github.com/TrueSkrillor</url>
-      <organization>NDS</organization>
-      <organizationUrl>https://informatik.rub.de/nds/</organizationUrl>
-      <roles>
-        <role>Developer</role>
-      </roles>
-    </developer>
-    <developer>
-      <id>lambdafu</id>
-      <name>Marcus Brinkmann</name>
-      <email>marcus.brinkmann@rub.de</email>
-      <url>https://github.com/lambdafu</url>
-      <organization>NDS</organization>
-      <organizationUrl>https://informatik.rub.de/nds/</organizationUrl>
-      <roles>
+        <role>Architect</role>
         <role>Developer</role>
       </roles>
     </developer>
@@ -94,6 +39,12 @@
       <groupId>de.rub.nds</groupId>
       <artifactId>modifiable-variable</artifactId>
       <version>5.3.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.rub.nds</groupId>
+      <artifactId>protocol-attacker</artifactId>
+      <version>2.1.0</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
