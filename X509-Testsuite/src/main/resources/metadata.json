@@ -2748,5 +2748,49 @@
         "section": "4.2.1.11.  Policy Constraints"
       },
       "tags": null
+    },
+    "extension-2d1dd79c3e": {
+      "description": "Conforming CAs MUST NOT encode explicitText as BMPString.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.4.  Certificate Policies"
+      },
+      "tags": null
+    },
+    "extension-bf3cd590b7": {
+      "description": "Conforming CAs MUST NOT encode explicitText as BMPString.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.4.  Certificate Policies"
+      },
+      "tags": null
+    },
+    "extension-e73101436a": {
+      "description": "Conforming CAs MUST NOT encode explicitText as VisibleString.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.4.  Certificate Policies"
+      },
+      "tags": null
+    },
+    "extension-5005585bbd": {
+      "description": "Conforming CAs MUST NOT encode explicitText as VisibleString.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.4.  Certificate Policies"
+      },
+      "tags": null
     }
 }

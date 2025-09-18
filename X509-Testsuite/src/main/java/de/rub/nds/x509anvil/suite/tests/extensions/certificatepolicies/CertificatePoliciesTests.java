@@ -10,6 +10,8 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.CertificatePoliciesConfig;
+import de.rub.nds.x509attacker.constants.DisplayText;
+import de.rub.nds.x509attacker.constants.PolicyQualifierChoiceType;
 import de.rub.nds.x509attacker.x509.model.extensions.PolicyQualifierInfo;
 import de.rub.nds.x509attacker.x509.model.extensions.PolicyQualifiers;
 
@@ -95,5 +97,113 @@ public class CertificatePoliciesTests extends X509AnvilTest {
         });
     }
 
-    // TODO: usernotice MUST statement
+    @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = "entity:extensions_present")
+    @AnvilTest(id = "extension-cb233ef8a5")
+    public void explicitTestBmpStringEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
+            certificatePoliciesConfig.setPresent(true);
+            certificatePoliciesConfig.setCritical(true);
+            certificatePoliciesConfig.setPolicyIdentifiers(List.of("1.3.6.1.5.5.7.2.2"));
+            PolicyQualifiers userNotice = new PolicyQualifiers("userNotice");
+            PolicyQualifierInfo userNoticeInfo = new PolicyQualifierInfo("userNoticeInfo");
+            userNoticeInfo.setPolicyObjectIdentifier(new ObjectIdentifier("1.3.6.1.5.5.7.2.2"));
+            userNoticeInfo.setQualifierChoiceType(PolicyQualifierChoiceType.USERNOTICE);
+            userNoticeInfo.setIncludeNoticeRef(true);
+            userNoticeInfo.setNoticeRefOrganization("testOrg");
+            userNoticeInfo.setNoticeRefOrganizationType(DisplayText.IA5STRING);
+            userNoticeInfo.setNoticeRefNoticeNumbers(List.of(1024L));
+            userNoticeInfo.setIncludeExplicitText(true);
+            userNoticeInfo.setExplicitText("Test notice text");
+            userNoticeInfo.setExplicitTextType(DisplayText.BMPSTRING);
+            userNotice.setPolicyQualifierInfo(List.of(userNoticeInfo));
+            certificatePoliciesConfig.setPolicyQualifiers(List.of(userNotice));
+            certificatePoliciesConfig.setIncludeQualifiers(List.of(true));
+            config.addExtensions(certificatePoliciesConfig);
+            config.setIncludeExtensions(true);
+        });
+    }
+
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-cb233ef8a5")
+    public void explicitTestBmpStringIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
+            certificatePoliciesConfig.setPresent(true);
+            certificatePoliciesConfig.setCritical(true);
+            certificatePoliciesConfig.setPolicyIdentifiers(List.of("1.3.6.1.5.5.7.2.2"));
+            PolicyQualifiers userNotice = new PolicyQualifiers("userNotice");
+            PolicyQualifierInfo userNoticeInfo = new PolicyQualifierInfo("userNoticeInfo");
+            userNoticeInfo.setPolicyObjectIdentifier(new ObjectIdentifier("1.3.6.1.5.5.7.2.2"));
+            userNoticeInfo.setQualifierChoiceType(PolicyQualifierChoiceType.USERNOTICE);
+            userNoticeInfo.setIncludeNoticeRef(true);
+            userNoticeInfo.setNoticeRefOrganization("testOrg");
+            userNoticeInfo.setNoticeRefOrganizationType(DisplayText.IA5STRING);
+            userNoticeInfo.setNoticeRefNoticeNumbers(List.of(1024L));
+            userNoticeInfo.setIncludeExplicitText(true);
+            userNoticeInfo.setExplicitText("Test notice text");
+            userNoticeInfo.setExplicitTextType(DisplayText.BMPSTRING);
+            userNotice.setPolicyQualifierInfo(List.of(userNoticeInfo));
+            certificatePoliciesConfig.setPolicyQualifiers(List.of(userNotice));
+            certificatePoliciesConfig.setIncludeQualifiers(List.of(true));
+            config.addExtensions(certificatePoliciesConfig);
+            config.setIncludeExtensions(true);
+        });
+    }
+
+    @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = "entity:extensions_present")
+    @AnvilTest(id = "extension-cb233ef8a5")
+    public void explicitTestVisibleStringEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
+            certificatePoliciesConfig.setPresent(true);
+            certificatePoliciesConfig.setCritical(true);
+            certificatePoliciesConfig.setPolicyIdentifiers(List.of("1.3.6.1.5.5.7.2.2"));
+            PolicyQualifiers userNotice = new PolicyQualifiers("userNotice");
+            PolicyQualifierInfo userNoticeInfo = new PolicyQualifierInfo("userNoticeInfo");
+            userNoticeInfo.setPolicyObjectIdentifier(new ObjectIdentifier("1.3.6.1.5.5.7.2.2"));
+            userNoticeInfo.setQualifierChoiceType(PolicyQualifierChoiceType.USERNOTICE);
+            userNoticeInfo.setIncludeNoticeRef(true);
+            userNoticeInfo.setNoticeRefOrganization("testOrg");
+            userNoticeInfo.setNoticeRefOrganizationType(DisplayText.IA5STRING);
+            userNoticeInfo.setNoticeRefNoticeNumbers(List.of(1024L));
+            userNoticeInfo.setIncludeExplicitText(true);
+            userNoticeInfo.setExplicitText("Test notice text");
+            userNoticeInfo.setExplicitTextType(DisplayText.VISIBLESTRING);
+            userNotice.setPolicyQualifierInfo(List.of(userNoticeInfo));
+            certificatePoliciesConfig.setPolicyQualifiers(List.of(userNotice));
+            certificatePoliciesConfig.setIncludeQualifiers(List.of(true));
+            config.addExtensions(certificatePoliciesConfig);
+            config.setIncludeExtensions(true);
+        });
+    }
+
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-cb233ef8a5")
+    public void explicitTestVisibleStringIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
+            certificatePoliciesConfig.setPresent(true);
+            certificatePoliciesConfig.setCritical(true);
+            certificatePoliciesConfig.setPolicyIdentifiers(List.of("1.3.6.1.5.5.7.2.2"));
+            PolicyQualifiers userNotice = new PolicyQualifiers("userNotice");
+            PolicyQualifierInfo userNoticeInfo = new PolicyQualifierInfo("userNoticeInfo");
+            userNoticeInfo.setPolicyObjectIdentifier(new ObjectIdentifier("1.3.6.1.5.5.7.2.2"));
+            userNoticeInfo.setQualifierChoiceType(PolicyQualifierChoiceType.USERNOTICE);
+            userNoticeInfo.setIncludeNoticeRef(true);
+            userNoticeInfo.setNoticeRefOrganization("testOrg");
+            userNoticeInfo.setNoticeRefOrganizationType(DisplayText.IA5STRING);
+            userNoticeInfo.setNoticeRefNoticeNumbers(List.of(1024L));
+            userNoticeInfo.setIncludeExplicitText(true);
+            userNoticeInfo.setExplicitText("Test notice text");
+            userNoticeInfo.setExplicitTextType(DisplayText.VISIBLESTRING);
+            userNotice.setPolicyQualifierInfo(List.of(userNoticeInfo));
+            certificatePoliciesConfig.setPolicyQualifiers(List.of(userNotice));
+            certificatePoliciesConfig.setIncludeQualifiers(List.of(true));
+            config.addExtensions(certificatePoliciesConfig);
+            config.setIncludeExtensions(true);
+        });
+    }
 }
