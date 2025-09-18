@@ -99,7 +99,7 @@ public class CertificatePoliciesTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-cb233ef8a5")
+    @AnvilTest(id = "extension-2d1dd79c3e")
     public void explicitTestBmpStringEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -126,7 +126,7 @@ public class CertificatePoliciesTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-cb233ef8a5")
+    @AnvilTest(id = "extension-bf3cd590b7")
     public void explicitTestBmpStringIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -154,7 +154,7 @@ public class CertificatePoliciesTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-cb233ef8a5")
+    @AnvilTest(id = "extension-e73101436a")
     public void explicitTestVisibleStringEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -181,7 +181,7 @@ public class CertificatePoliciesTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-cb233ef8a5")
+    @AnvilTest(id = "extension-5005585bbd")
     public void explicitTestVisibleStringIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();

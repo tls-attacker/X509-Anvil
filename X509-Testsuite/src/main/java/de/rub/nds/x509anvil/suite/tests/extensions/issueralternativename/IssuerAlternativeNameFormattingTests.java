@@ -17,7 +17,7 @@ import java.util.List;
 
 public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-91b57880be" )
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void nonCriticalAltNameWhenEmptySubjectEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -30,6 +30,7 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
             config.addExtensions(issuerAlternativeNameConfig);
             config.setIssuer(new LinkedList<>());
             config.setFixIssuer(true);
+            config.setIncludeExtensions(true);
         }, (X509CertificateConfigModifier) config -> {
             SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
             subjectAlternativeNameConfig.setPresent(true);
@@ -41,7 +42,7 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
         });
     }
 
-    @ChainLength(minLength = 3)
+    @ChainLength(minLength = 4)
     @AnvilTest(id = "extension-68c93d34e9")
     public void nonCriticalAltNameWhenEmptySubjectIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -75,10 +76,11 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
             issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("mail@test.com"));
             config.addExtensions(issuerAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-df9c7bd48a" )
     public void issuerAltNameMailFormattingIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -102,6 +104,7 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.IP_ADDRESS));
             issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of(new byte[]{0x01, 0x01, 0x01, 0x01, 0x01}));
             config.addExtensions(issuerAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
@@ -130,6 +133,7 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.IP_ADDRESS));
             issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of(new byte[] {0x74, 0x65, 0x73, 0x74, 0x2e, 0x63, 0x6f, 0x6d}));
             config.addExtensions(issuerAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
@@ -157,6 +161,7 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
             issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("test;com"));
             config.addExtensions(issuerAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
@@ -184,6 +189,7 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
             issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of(" "));
             config.addExtensions(issuerAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 

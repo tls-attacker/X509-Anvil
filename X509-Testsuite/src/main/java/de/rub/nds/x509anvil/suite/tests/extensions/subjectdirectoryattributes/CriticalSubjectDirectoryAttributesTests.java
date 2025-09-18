@@ -47,7 +47,6 @@ public class CriticalSubjectDirectoryAttributesTests extends X509AnvilTest {
             attributeValueSet.setValueHolders(List.of(new Asn1PrintableString("attribute")));
             subjectDirectoryAttributesConfig.setAttributeValueSets(List.of(attributeValueSet));
             config.addExtensions(subjectDirectoryAttributesConfig);
-            config.setIncludeExtensions(true);
         });
     }
 }

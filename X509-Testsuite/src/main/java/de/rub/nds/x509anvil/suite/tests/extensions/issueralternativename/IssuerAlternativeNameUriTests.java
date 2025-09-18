@@ -27,6 +27,7 @@ public class IssuerAlternativeNameUriTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.IP_ADDRESS));
             issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of(new byte[]{0x68, 0x74, 0x74, 0x70, 0x73, 0x3A, 0x2F, 0x2F, 0x74, 0x65, 0x73, 0x74, 0x2E, 0x63, 0x6F, 0x6D, 0x2F, 0x66, 0x69, 0x6C, 0x65}));
             config.addExtensions(issuerAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
@@ -55,6 +56,7 @@ public class IssuerAlternativeNameUriTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER));
             issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("file"));
             config.addExtensions(issuerAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
@@ -83,6 +85,7 @@ public class IssuerAlternativeNameUriTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER));
             issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("https://test.com;file"));
             config.addExtensions(issuerAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
@@ -111,6 +114,7 @@ public class IssuerAlternativeNameUriTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER));
             issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("test.com/file"));
             config.addExtensions(issuerAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
@@ -139,6 +143,7 @@ public class IssuerAlternativeNameUriTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER));
             issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("https://"));
             config.addExtensions(issuerAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
@@ -167,6 +172,7 @@ public class IssuerAlternativeNameUriTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER));
             issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("user@test.com"));
             config.addExtensions(issuerAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 

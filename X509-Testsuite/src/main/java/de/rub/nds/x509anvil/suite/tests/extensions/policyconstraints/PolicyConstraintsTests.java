@@ -39,7 +39,6 @@ public class PolicyConstraintsTests extends X509AnvilTest {
             policyConstraintsConfig.setIncludeRequired(true);
             policyConstraintsConfig.setSkipCertsRequired(10);
             config.addExtensions(policyConstraintsConfig);
-            config.setIncludeExtensions(true);
         });
     }
 
@@ -68,14 +67,13 @@ public class PolicyConstraintsTests extends X509AnvilTest {
             policyConstraintsConfig.setIncludeInhibit(false);
             policyConstraintsConfig.setIncludeRequired(false);
             config.addExtensions(policyConstraintsConfig);
-            config.setIncludeExtensions(true);
         });
     }
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-6b9aabb935")
     @IpmLimitations(identifiers = "entity:extensions_present")
-    public void criticalPolicyConstraintsEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void nonCriticalPolicyConstraintsEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
             policyConstraintsConfig.setPresent(true);
@@ -90,7 +88,7 @@ public class PolicyConstraintsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-ece1272184")
-    public void criticalPolicyConstraintsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void nonCriticalPolicyConstraintsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
             policyConstraintsConfig.setPresent(true);
@@ -99,7 +97,6 @@ public class PolicyConstraintsTests extends X509AnvilTest {
             policyConstraintsConfig.setIncludeRequired(true);
             policyConstraintsConfig.setSkipCertsRequired(10);
             config.addExtensions(policyConstraintsConfig);
-            config.setIncludeExtensions(true);
         });
     }
 }

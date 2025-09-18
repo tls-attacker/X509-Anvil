@@ -24,7 +24,7 @@ public class IssuerAlternativeNameWithoutContentTests extends X509AnvilTest {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();
             issuerAlternativeNameConfig.setPresent(true);
-            issuerAlternativeNameConfig.setCritical(true);
+            issuerAlternativeNameConfig.setCritical(false);
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of());
             issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of());
             config.addExtensions(issuerAlternativeNameConfig);
@@ -38,12 +38,11 @@ public class IssuerAlternativeNameWithoutContentTests extends X509AnvilTest {
     public void issuerAltNameEmptyIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();
-            issuerAlternativeNameConfig.setPresent(true);
+            issuerAlternativeNameConfig.setPresent(false);
             issuerAlternativeNameConfig.setCritical(true);
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of());
             issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of());
             config.addExtensions(issuerAlternativeNameConfig);
-            config.setIncludeExtensions(true);
         });
     }
 }

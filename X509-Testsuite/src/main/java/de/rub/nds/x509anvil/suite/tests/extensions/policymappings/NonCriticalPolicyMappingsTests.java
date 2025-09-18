@@ -19,7 +19,7 @@ import java.util.List;
 public class NonCriticalPolicyMappingsTests extends X509AnvilTest {
 
     // When qualifiers are used with the special policy anyPolicy, they MUST be limited to the qualifiers identified in this section
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-7b8f543a1f")
     public void anyPolicyMappingFromEntityToIssuerInEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -53,11 +53,10 @@ public class NonCriticalPolicyMappingsTests extends X509AnvilTest {
             certificatePoliciesConfig.setPolicyQualifiers(List.of(new PolicyQualifiers("qualifiers")));
             certificatePoliciesConfig.setIncludeQualifiers(List.of(false));
             config.addExtensions(certificatePoliciesConfig);
-            config.setIncludeExtensions(true);
         });
     }
 
-    @ChainLength(minLength = 3)
+    @ChainLength(minLength = 4)
     @AnvilTest(id = "extension-42c0e99d7d")
     public void anyPolicyMappingFromEntityToIssuerInIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -70,7 +69,6 @@ public class NonCriticalPolicyMappingsTests extends X509AnvilTest {
             certificatePoliciesConfig.setPolicyQualifiers(List.of(new PolicyQualifiers("qualifiers")));
             certificatePoliciesConfig.setIncludeQualifiers(List.of(false));
             config.addExtensions(certificatePoliciesConfig);
-            config.setIncludeExtensions(true);
 
             PolicyMappingsConfig policyMappingsConfig = new PolicyMappingsConfig();
             policyMappingsConfig.setPresent(true);
@@ -90,12 +88,11 @@ public class NonCriticalPolicyMappingsTests extends X509AnvilTest {
             certificatePoliciesConfig.setPolicyQualifiers(List.of(new PolicyQualifiers("qualifiers")));
             certificatePoliciesConfig.setIncludeQualifiers(List.of(false));
             config.addExtensions(certificatePoliciesConfig);
-            config.setIncludeExtensions(true);
         });
     }
 
     // When qualifiers are used with the special policy anyPolicy, they MUST be limited to the qualifiers identified in this section
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-587d94f3b5")
     public void anyPolicyMappingFromIssuerToEntityInEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
@@ -129,11 +126,10 @@ public class NonCriticalPolicyMappingsTests extends X509AnvilTest {
             certificatePoliciesConfig.setPolicyQualifiers(List.of(new PolicyQualifiers("qualifiers")));
             certificatePoliciesConfig.setIncludeQualifiers(List.of(false));
             config.addExtensions(certificatePoliciesConfig);
-            config.setIncludeExtensions(true);
         });
     }
 
-    @ChainLength(minLength = 3)
+    @ChainLength(minLength = 4)
     @AnvilTest(id = "extension-ab7837006f")
     public void anyPolicyMappingFromIssuerToEntityInIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -144,7 +140,6 @@ public class NonCriticalPolicyMappingsTests extends X509AnvilTest {
             certificatePoliciesConfig.setPolicyQualifiers(List.of(new PolicyQualifiers("qualifiers")));
             certificatePoliciesConfig.setIncludeQualifiers(List.of(false));
             config.addExtensions(certificatePoliciesConfig);
-            config.setIncludeExtensions(true);
 
             certificatePoliciesConfig.setPolicyIdentifiers(List.of("2.23.140.1.2.1"));
 
@@ -166,7 +161,6 @@ public class NonCriticalPolicyMappingsTests extends X509AnvilTest {
             certificatePoliciesConfig.setPolicyQualifiers(List.of(new PolicyQualifiers("qualifiers")));
             certificatePoliciesConfig.setIncludeQualifiers(List.of(false));
             config.addExtensions(certificatePoliciesConfig);
-            config.setIncludeExtensions(true);
         });
     }
 }

@@ -29,6 +29,7 @@ public class SubjectAlternativeNameFormattingTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("test.com"));
             config.setSubject(new LinkedList<>());
             config.addExtensions(subjectAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
@@ -57,6 +58,7 @@ public class SubjectAlternativeNameFormattingTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
             subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("mail@test.com"));
             config.addExtensions(subjectAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
@@ -84,6 +86,7 @@ public class SubjectAlternativeNameFormattingTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.IP_ADDRESS));
             subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of(new byte[]{0x01, 0x01, 0x01, 0x01, 0x01}));
             config.addExtensions(subjectAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
@@ -111,6 +114,7 @@ public class SubjectAlternativeNameFormattingTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.IP_ADDRESS));
             subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of(new byte[] {0x74, 0x65, 0x73, 0x74, 0x2e, 0x63, 0x6f, 0x6d}));
             config.addExtensions(subjectAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
@@ -138,6 +142,7 @@ public class SubjectAlternativeNameFormattingTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
             subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("test;com"));
             config.addExtensions(subjectAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
@@ -165,6 +170,7 @@ public class SubjectAlternativeNameFormattingTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
             subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of(" "));
             config.addExtensions(subjectAlternativeNameConfig);
+            config.setIncludeExtensions(true);
         });
     }
 
