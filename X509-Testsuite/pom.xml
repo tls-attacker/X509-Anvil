@@ -2,35 +2,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>de.rub.nds.x509.anvil</groupId>
-        <artifactId>x509-anvil</artifactId>
+        <groupId>de.rub.nds.x509test</groupId>
+        <artifactId>X509-Anvil</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>x509-anvil-testsuite</artifactId>
 
-    <name>X.509-Anvil Testsuite</name>
-
-    <scm>
-        <connection>scm:git:https://github.com/tls-attacker/X509-Anvil.git</connection>
-        <developerConnection>sm:git:ssh://git@github.com/tls-attacker/X509-Anvil.git</developerConnection>
-        <url>https://github.com/tls-attacker/X509-Anvil</url>
-    </scm>
+    <artifactId>X509-Testsuite</artifactId>
 
     <properties>
-        <main.basedir>${project.parent.basedir}</main.basedir>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>de.rub.nds.x509.anvil</groupId>
-            <artifactId>x509-anvil-framework</artifactId>
+            <groupId>de.rub.nds</groupId>
+            <artifactId>x509-attacker</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-engine</artifactId>
+            <groupId>de.rub.nds.x509test</groupId>
+            <artifactId>Framework</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
     <build>
         <finalName>X509-Testsuite</finalName>
         <plugins>
@@ -93,18 +87,4 @@
         </plugins>
     </build>
 
-    <profiles>
-        <profile>
-            <id>coverage</id>
-            <build>
-                <plugins>
-                    <!-- Record test coverage with JaCoCo -->
-                    <plugin>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
