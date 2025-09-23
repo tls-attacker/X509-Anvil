@@ -77,6 +77,12 @@ public class X509Util {
             String directory, String filename, X509Certificate certificate) {
         try {
             String certificateFileName = filename + ".pem";
+            File dir = new File (directory);
+            if (!dir.exists()) {
+                if (!dir.mkdirs()) {
+                    throw new IOException("Could not create directory " + dir.getAbsolutePath());
+                }
+            }
             CertificateFileWriter certificateFileWriter =
                     new CertificateFileWriter(new File(directory + "/" + certificateFileName));
             certificateFileWriter.writeCertificate(
