@@ -8,11 +8,8 @@ import de.rub.nds.asn1.model.Asn1OctetString;
 import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
-import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
-import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
-import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
 import de.rub.nds.x509attacker.config.extension.SubjectAlternativeNameConfig;
 import de.rub.nds.x509attacker.constants.GeneralNameChoiceType;
@@ -39,9 +36,7 @@ public class SubjectAlternativeNameValuesParameter extends CertificateSpecificPa
             switch (getSelectedValue()) {
                 case IP -> {
                     subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.IP_ADDRESS));
-                    Asn1OctetString ip = new Asn1OctetString("ip");
-                    ip.setValue(new byte[] {(byte) 0xc0, (byte) 0xa8, (byte) 0x00, (byte) 0x01});
-                    subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of(ip));
+                    subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of(new byte[] {(byte) 0xc0, (byte) 0xa8, (byte) 0x00, (byte) 0x01}));
                 }
                 case DNS ->  {
                     subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
@@ -54,9 +49,8 @@ public class SubjectAlternativeNameValuesParameter extends CertificateSpecificPa
             subjectAlternativeNameConfig.setCritical(false);
             switch (getSelectedValue()) {
                 case IP -> {
-                    // TODO: IP
-                    subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
-                    subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("www.test.com"));
+                    subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.IP_ADDRESS));
+                    subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of(new byte[] {(byte) 0xc0, (byte) 0xa8, (byte) 0x00, (byte) 0x01}));
                 }
                 case DNS ->  {
                     subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
