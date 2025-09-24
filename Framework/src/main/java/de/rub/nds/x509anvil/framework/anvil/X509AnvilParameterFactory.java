@@ -13,6 +13,7 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.x509anvil.framework.anvil.parameter.*;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.*;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.subjectalternativename.SubjectAlternativeNamePresentParameter;
+import de.rub.nds.x509anvil.framework.anvil.parameter.extension.subjectalternativename.SubjectAlternativeNameValuesParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.name.CNTypeParameter;
 
 public class X509AnvilParameterFactory {
@@ -39,6 +40,7 @@ public class X509AnvilParameterFactory {
                     parameterIdentifier.getParameterScope());
             case EXT_SUBJECT_ALT_NAME_PRESENT ->
                     new SubjectAlternativeNamePresentParameter(parameterIdentifier.getParameterScope());
+            case EXT_SUBJECT_ALT_NAME_VALUES ->  new SubjectAlternativeNameValuesParameter(parameterIdentifier.getParameterScope());
         };
     }
 }

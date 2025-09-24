@@ -8,11 +8,15 @@ import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionPresentParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
 import de.rub.nds.x509attacker.config.extension.SubjectAlternativeNameConfig;
 import de.rub.nds.x509attacker.constants.GeneralNameChoiceType;
+import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 public class SubjectAlternativeNamePresentParameter extends ExtensionPresentParameter {
     public SubjectAlternativeNamePresentParameter(ParameterScope parameterScope) {
@@ -26,12 +30,17 @@ public class SubjectAlternativeNamePresentParameter extends ExtensionPresentPara
     @Override
     public void applyToCertificateConfig(
             X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
-        subjectAlternativeNameConfig.setPresent(getSelectedValue());
-        subjectAlternativeNameConfig.setCritical(false);
-        subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.RFC822_NAME));
-        subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("tessa.com"));
-        certificateConfig.addExtensions(subjectAlternativeNameConfig);
+        Optional<ExtensionConfig> config = certificateConfig.getExtensions().stream().filter(e -> Objects.equals(e.getExtensionId(), X509ExtensionType.SUBJECT_ALTERNATIVE_NAME.getOid())).findFirst();
+        if (config.isPresent()) {
+            config.get().setPresent(getSelectedValue());
+        } else {
+            SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
+            subjectAlternativeNameConfig.setPresent(getSelectedValue());
+            subjectAlternativeNameConfig.setCritical(false);
+            subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.RFC822_NAME));
+            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("test.com"));
+            certificateConfig.addExtensions(subjectAlternativeNameConfig);
+        }
     }
 
     @Override

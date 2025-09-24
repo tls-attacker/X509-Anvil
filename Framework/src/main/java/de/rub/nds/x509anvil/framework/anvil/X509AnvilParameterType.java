@@ -32,6 +32,7 @@ public enum X509AnvilParameterType implements ParameterType {
 
     // SubjectAlternativeName extension
     EXT_SUBJECT_ALT_NAME_PRESENT,
+    EXT_SUBJECT_ALT_NAME_VALUES,
     ;
 
     @Override
