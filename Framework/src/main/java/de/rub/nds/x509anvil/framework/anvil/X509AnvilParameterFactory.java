@@ -10,57 +10,35 @@ package de.rub.nds.x509anvil.framework.anvil;
 
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
-import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.parameter.*;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints.*;
+import de.rub.nds.x509anvil.framework.anvil.parameter.extension.subjectalternativename.SubjectAlternativeNamePresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.name.CNTypeParameter;
 
 public class X509AnvilParameterFactory {
 
     public static DerivationParameter getInstance(ParameterIdentifier parameterIdentifier) {
-        switch ((X509AnvilParameterType) parameterIdentifier.getParameterType()) {
-            case CHAIN_LENGTH:
-                return new ChainLengthParameter();
-            case VERSION:
-                return new VersionParameter(parameterIdentifier.getParameterScope());
-            case SERIAL_NUMBER:
-                return new SerialNumberParameter(parameterIdentifier.getParameterScope());
-            case KEY_TYPE:
-                return new SignatureHashAndLengthParameter(parameterIdentifier.getParameterScope());
-            case NOT_BEFORE:
-                return new NotBeforeParameter(parameterIdentifier.getParameterScope());
-            case NOT_AFTER:
-                return new NotAfterParameter(parameterIdentifier.getParameterScope());
-            case CN_TYPE:
-                return new CNTypeParameter(parameterIdentifier.getParameterScope());
-            case EXTENSIONS_PRESENT:
-                return new ExtensionsPresentParameter(parameterIdentifier.getParameterScope());
-            case EXT_BASIC_CONSTRAINTS_PRESENT:
-                return new BasicConstraintsPresentParameter(
-                        parameterIdentifier.getParameterScope());
-            case EXT_BASIC_CONSTRAINTS_CRITICAL:
-                return new BasicConstraintsCriticalParameter(
-                        parameterIdentifier.getParameterScope());
-            case EXT_BASIC_CONSTRAINTS_CA:
-                return new BasicConstraintsCaParameter(parameterIdentifier.getParameterScope());
-            case EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT:
-                return new BasicConstraintsPathLenConstraintPresentParameter(
-                        parameterIdentifier.getParameterScope());
-            case EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT:
-                return new BasicConstraintsPathLenConstraintParameter(
-                        parameterIdentifier.getParameterScope());
-            default:
-                throw new IllegalArgumentException(
-                        "Unknown parameter identifier "
-                                + parameterIdentifier.getParameterType().toString());
-        }
-    }
-
-    public ParameterScope resolveParameterScope(String scopeIdentifier) {
-        try {
-            return X509AnvilParameterScope.fromUniqueIdentifier(scopeIdentifier);
-        } catch (NumberFormatException e) {
-            return ParameterScope.NO_SCOPE;
-        }
+        return switch ((X509AnvilParameterType) parameterIdentifier.getParameterType()) {
+            case CHAIN_LENGTH -> new ChainLengthParameter();
+            case VERSION -> new VersionParameter(parameterIdentifier.getParameterScope());
+            case SERIAL_NUMBER -> new SerialNumberParameter(parameterIdentifier.getParameterScope());
+            case KEY_TYPE -> new SignatureHashAndLengthParameter(parameterIdentifier.getParameterScope());
+            case NOT_BEFORE -> new NotBeforeParameter(parameterIdentifier.getParameterScope());
+            case NOT_AFTER -> new NotAfterParameter(parameterIdentifier.getParameterScope());
+            case CN_TYPE -> new CNTypeParameter(parameterIdentifier.getParameterScope());
+            case EXTENSIONS_PRESENT -> new ExtensionsPresentParameter(parameterIdentifier.getParameterScope());
+            case EXT_BASIC_CONSTRAINTS_PRESENT -> new BasicConstraintsPresentParameter(
+                    parameterIdentifier.getParameterScope());
+            case EXT_BASIC_CONSTRAINTS_CRITICAL -> new BasicConstraintsCriticalParameter(
+                    parameterIdentifier.getParameterScope());
+            case EXT_BASIC_CONSTRAINTS_CA -> new BasicConstraintsCaParameter(parameterIdentifier.getParameterScope());
+            case EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT ->
+                    new BasicConstraintsPathLenConstraintPresentParameter(
+                            parameterIdentifier.getParameterScope());
+            case EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT -> new BasicConstraintsPathLenConstraintParameter(
+                    parameterIdentifier.getParameterScope());
+            case EXT_SUBJECT_ALT_NAME_PRESENT ->
+                    new SubjectAlternativeNamePresentParameter(parameterIdentifier.getParameterScope());
+        };
     }
 }

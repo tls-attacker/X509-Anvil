@@ -23,12 +23,15 @@ public enum X509AnvilParameterType implements ParameterType {
     CN_TYPE,
     EXTENSIONS_PRESENT,
 
-    // BasicConstraints extension //TODO: Apply in tests
+    // BasicConstraints extension
     EXT_BASIC_CONSTRAINTS_PRESENT,
     EXT_BASIC_CONSTRAINTS_CRITICAL,
     EXT_BASIC_CONSTRAINTS_CA,
     EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT,
     EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT,
+
+    // SubjectAlternativeName extension
+    EXT_SUBJECT_ALT_NAME_PRESENT,
     ;
 
     @Override

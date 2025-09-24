@@ -25,20 +25,6 @@ public class X509AnvilParameterScope extends ParameterScope {
         return new X509AnvilParameterScope(INTER_CHAIN_OFFSET + intermediateIndex);
     }
 
-    public static X509AnvilParameterScope fromUniqueIdentifier(String uniqueIdentifier) {
-        if (uniqueIdentifier.equals("root")) {
-            return ROOT;
-        } else if (uniqueIdentifier.equals("entity")) {
-            return ENTITY;
-        } else if (uniqueIdentifier.startsWith("inter")) {
-            int intermediateIndex = Integer.parseInt(uniqueIdentifier.replace("inter", ""));
-            return new X509AnvilParameterScope(INTER_CHAIN_OFFSET + intermediateIndex);
-        } else {
-            throw new IllegalArgumentException(
-                    "Unable to parse scope identifier " + uniqueIdentifier);
-        }
-    }
-
     private X509AnvilParameterScope(int chainPosition) {
         this.chainPosition = chainPosition;
     }

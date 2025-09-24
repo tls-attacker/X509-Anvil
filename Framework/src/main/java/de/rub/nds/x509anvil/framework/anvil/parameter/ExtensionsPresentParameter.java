@@ -21,7 +21,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class ExtensionsPresentParameter extends BooleanCertificateSpecificParameter {
-    // TODO If present, this field is a SEQUENCE of one or more certificate extensions.
 
     public ExtensionsPresentParameter(ParameterScope parameterScope) {
         super(new ParameterIdentifier(X509AnvilParameterType.EXTENSIONS_PRESENT, parameterScope));
