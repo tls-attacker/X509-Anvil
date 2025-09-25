@@ -37,7 +37,7 @@ public class SubjectAlternativeNamePresentParameter extends ExtensionPresentPara
             SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
             subjectAlternativeNameConfig.setPresent(getSelectedValue());
             subjectAlternativeNameConfig.setCritical(false);
-            subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.RFC822_NAME));
+            subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
             subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("test.com"));
             certificateConfig.addExtensions(subjectAlternativeNameConfig);
         }
@@ -53,7 +53,7 @@ public class SubjectAlternativeNamePresentParameter extends ExtensionPresentPara
     public List<DerivationParameter<X509CertificateChainConfig, Boolean>> getNonNullParameterValues(
             DerivationScope derivationScope) {
         // Do not modify in root TODO: ???
-        if (getParameterScope().isEntity()) {
+        if (getParameterScope().isRoot()) {
             return Collections.singletonList(generateValue(false));
         }
         return super.getNonNullParameterValues(derivationScope);

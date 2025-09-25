@@ -9,6 +9,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.keyusage;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -23,6 +24,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-3e4c7f3e62")
+    @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
     public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -40,6 +42,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-44d01aed5a")
+    @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
     public void duplicateDifferentIntermediate(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
