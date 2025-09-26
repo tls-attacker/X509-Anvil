@@ -1,5 +1,5 @@
 {
   "name": "Everything",
-  "profiles": ["rfc5280"],
+  "profiles": ["rfc5280", "bsi"],
   "testIds": []
 }
