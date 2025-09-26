@@ -19,7 +19,7 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-91b57880be" )
-    @IpmLimitations(identifiers = "entity:extensions_present")
+    @IpmLimitations(identifiers = "entity:extensions_present, inter0:ext_subject_alt_name_present, inter0:ext_subject_alt_name_values")
     public void nonCriticalAltNameWhenEmptySubjectEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();
@@ -44,6 +44,7 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
 
     @ChainLength(minLength = 4)
     @AnvilTest(id = "extension-68c93d34e9")
+    @IpmLimitations(identifiers = "inter1:ext_subject_alt_name_present, inter1:ext_subject_alt_name_values")
     public void nonCriticalAltNameWhenEmptySubjectIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();

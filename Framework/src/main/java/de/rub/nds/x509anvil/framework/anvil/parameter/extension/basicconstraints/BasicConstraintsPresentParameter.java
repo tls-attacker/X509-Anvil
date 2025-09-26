@@ -14,25 +14,31 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionPresentParameter;
-import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
+import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
+import de.rub.nds.x509attacker.constants.X509ExtensionType;
+
 import java.util.Collections;
 import java.util.List;
 
 public class BasicConstraintsPresentParameter extends ExtensionPresentParameter {
     public BasicConstraintsPresentParameter(ParameterScope parameterScope) {
-        super(
-                new ParameterIdentifier(
-                        X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT, parameterScope),
-                ExtensionType.BASIC_CONSTRAINTS);
+        super(new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT, parameterScope));
     }
 
     public BasicConstraintsPresentParameter(Boolean selectedValue, ParameterScope parameterScope) {
-        super(
-                selectedValue,
-                new ParameterIdentifier(
-                        X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT, parameterScope),
-                ExtensionType.BASIC_CONSTRAINTS);
+        super(selectedValue, new ParameterIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_PRESENT, parameterScope));
+    }
+
+    @Override
+    public void applyToCertificateConfig(
+            X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
+        ExtensionConfig config =
+                X509CertificateConfigUtil.getExtensionConfig(
+                        certificateConfig, X509ExtensionType.BASIC_CONSTRAINTS);
+        config.setPresent(getSelectedValue());
     }
 
     @Override
@@ -49,10 +55,5 @@ public class BasicConstraintsPresentParameter extends ExtensionPresentParameter 
             return Collections.singletonList(generateValue(true));
         }
         return super.getNonNullParameterValues(derivationScope);
-    }
-
-    @Override
-    protected boolean canBeDisabled(DerivationScope derivationScope) {
-        return true;
     }
 }

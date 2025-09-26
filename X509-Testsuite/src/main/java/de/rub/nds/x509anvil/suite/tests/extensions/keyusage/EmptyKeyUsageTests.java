@@ -9,6 +9,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.keyusage;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -23,6 +24,7 @@ public class EmptyKeyUsageTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-c6d9fda7d3")
+    @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
     public void emptyKeyUsageEntity(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
