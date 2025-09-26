@@ -48,6 +48,23 @@ public class X509CertificateChainGenerator {
 
             if (config.isSelfSigned()) {
                 config.setIssuer(config.getSubject());
+                config.setDefaultIssuerRsaModulus(config.getDefaultSubjectRsaModulus());
+                config.setDefaultIssuerRsaPrivateExponent(
+                        config.getDefaultSubjectRsaPrivateExponent());
+                config.setDefaultIssuerRsaPublicKey(config.getDefaultSubjectRsaPublicKey());
+                // dsa
+                config.setDefaultIssuerDsaGenerator(config.getDefaultSubjectDsaGenerator());
+                config.setDefaultIssuerDsaPublicKey(config.getDefaultSubjectDsaPublicKey());
+                config.setDefaultIssuerDsaPrimeP(config.getDefaultSubjectDsaPrimeP());
+                config.setDefaultIssuerDsaPrimeQ(config.getDefaultSubjectDsaPrimeQ());
+                config.setDefaultIssuerDsaNonce(config.getDefaultSubjectDsaNonce());
+                config.setDefaultIssuerDsaPrivateKey(config.getDefaultSubjectDsaPrivateKey());
+                // ecdsa
+                config.setDefaultIssuerEcPrivateKey(config.getDefaultSubjectEcPrivateKey());
+                config.setDefaultIssuerEcPublicKey(config.getDefaultSubjectEcPublicKey());
+                config.setDefaultIssuerNamedCurve(config.getDefaultSubjectNamedCurve());
+                config.setDefaultEcPointFormat(config.getDefaultEcPointFormat());
+                config.setDefaultIssuerEcPrivateKey(config.getDefaultSubjectEcPrivateKey());
             }
 
             if (signerConfig != null && !config.isSelfSigned() && !config.isFixIssuer()) {
