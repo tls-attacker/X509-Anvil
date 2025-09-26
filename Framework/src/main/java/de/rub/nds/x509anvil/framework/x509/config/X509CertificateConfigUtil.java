@@ -51,6 +51,7 @@ public class X509CertificateConfigUtil {
                         selfSigned,
                         CertificateChainPositionType.ROOT,
                         "TLS Attacker CA - Global Insecurity Provider");
+        config.setSerialNumber(new BigInteger("01020304050607080910111213141516", 16));
         attachUniqueKeysRoot(config);
         return config;
     }
