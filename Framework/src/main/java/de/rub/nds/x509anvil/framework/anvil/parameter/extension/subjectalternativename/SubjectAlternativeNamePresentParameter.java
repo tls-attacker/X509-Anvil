@@ -52,7 +52,6 @@ public class SubjectAlternativeNamePresentParameter extends ExtensionPresentPara
     @Override
     public List<DerivationParameter<X509CertificateChainConfig, Boolean>> getNonNullParameterValues(
             DerivationScope derivationScope) {
-        // Do not modify in root TODO: ???
         if (getParameterScope().isRoot()) {
             return Collections.singletonList(generateValue(false));
         }
