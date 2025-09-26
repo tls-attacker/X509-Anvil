@@ -68,12 +68,12 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
         config.setDefaultServerSupportedSignatureAndHashAlgorithms(
                 supportedSignatureAndHashAlgorithms);
 
-        List<NamedGroup> supportedNamedGroups =
+        /*List<NamedGroup> supportedNamedGroups =
                 Arrays.stream(NamedGroup.values())
                         .filter(g -> g.name().contains("SECP256R"))
                         .collect(Collectors.toList());
         config.setDefaultClientNamedGroups(supportedNamedGroups);
-        config.setDefaultServerNamedGroups(supportedNamedGroups);
+        config.setDefaultServerNamedGroups(supportedNamedGroups);*/
 
         defaultConfig = config;
     }
