@@ -14,10 +14,12 @@ import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.AuthorityKeyIdentifierConfig;
 import de.rub.nds.x509attacker.config.extension.SubjectKeyIdentifierConfig;
+import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
 public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
 
@@ -29,22 +31,13 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
         assertInvalid(
                 testRunner,
                 true,
-                config -> {
+                (X509CertificateConfigModifier) config -> {
                     AuthorityKeyIdentifierConfig authorityKeyIdentifier =
-                            new AuthorityKeyIdentifierConfig();
-                    authorityKeyIdentifier.setPresent(true);
-                    authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
-                    config.addExtensions(authorityKeyIdentifier);
-                    config.setIncludeExtensions(true);
-                },
-                (X509CertificateConfigModifier)
-                        config -> {
-                            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
-                            newConfig.setPresent(true);
-                            newConfig.setKeyIdentifier(new byte[] {2, 3, 4});
-                            config.addExtensions(newConfig);
-                            config.setIncludeExtensions(true);
-                        });
+                            (AuthorityKeyIdentifierConfig)
+                                    X509CertificateConfigUtil.getExtensionConfig(
+                                            config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
+                    authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 1, 1}); // wrong
+                });
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
@@ -54,21 +47,12 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
         assertInvalid(
                 testRunner,
                 false,
-                config -> {
+                (X509CertificateConfigModifier) config -> {
                     AuthorityKeyIdentifierConfig authorityKeyIdentifier =
-                            new AuthorityKeyIdentifierConfig();
-                    authorityKeyIdentifier.setPresent(true);
-                    authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
-                    config.addExtensions(authorityKeyIdentifier);
-                    config.setIncludeExtensions(true);
-                },
-                (X509CertificateConfigModifier)
-                        config -> {
-                            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
-                            newConfig.setPresent(true);
-                            newConfig.setKeyIdentifier(new byte[] {2, 3, 4});
-                            config.addExtensions(newConfig);
-                            config.setIncludeExtensions(true);
-                        });
+                            (AuthorityKeyIdentifierConfig)
+                                    X509CertificateConfigUtil.getExtensionConfig(
+                                            config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
+                    authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 1, 1}); // wrong
+                });
     }
 }
