@@ -21,7 +21,7 @@ import java.math.BigInteger;
 public class Version2CertWithExtensionTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @IpmLimitations(identifiers = "entity:extensions_present, entity:version")
+    @IpmLimitations(identifiers = { "entity:extensions_present", "entity:version" })
     @AnvilTest(id = "extension-0a5be219fe")
     public void version2CertWithExtensionsEntity(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {

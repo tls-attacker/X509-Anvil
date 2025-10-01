@@ -50,7 +50,7 @@ public class EmptyKeyUsageTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-a3e1cdc1d3")
-    @IpmLimitations(identifiers = "entity:extensions_present, entity:ext_key_usage_additional")
+    @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_key_usage_additional" })
     public void emptyKeyUsageEntity(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

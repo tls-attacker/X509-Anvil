@@ -19,7 +19,7 @@ public class SubjectAlternativeNameWithoutContentTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-c1b1cda8d9")
-    @IpmLimitations(identifiers = "entity:extensions_present, entity:ext_subject_alt_name_present, entity:ext_subject_alt_name_values")
+    @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_subject_alt_name_present", "entity:ext_subject_alt_name_values" })
     public void subjectAltNameEmptyEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
@@ -34,7 +34,7 @@ public class SubjectAlternativeNameWithoutContentTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-a8b5caa8d9")
-    @IpmLimitations(identifiers = "inter0:ext_subject_alt_name_present, inter0:ext_subject_alt_name_values")
+    @IpmLimitations(identifiers = { "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values" })
     public void subjectAltNameEmptyIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
