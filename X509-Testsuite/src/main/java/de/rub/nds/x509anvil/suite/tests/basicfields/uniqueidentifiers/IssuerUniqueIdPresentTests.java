@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.basicfields.uniqueidentifiers;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -10,8 +11,9 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 
 public class IssuerUniqueIdPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = "entity:version")
     @AnvilTest(id = "basic-5da143217b")
-    public void issuerUniqueIdPresentInV1Entity(X509VerifierRunner testRunner)
+    public void issuerUniqueIdPresentInEntity(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -24,8 +26,9 @@ public class IssuerUniqueIdPresentTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
+    @IpmLimitations(identifiers = "inter0:version")
     @AnvilTest(id = "basic-5da113007b")
-    public void issuerUniqueIdPresentInV1Intermediate(X509VerifierRunner testRunner)
+    public void issuerUniqueIdPresentInIntermediate(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,

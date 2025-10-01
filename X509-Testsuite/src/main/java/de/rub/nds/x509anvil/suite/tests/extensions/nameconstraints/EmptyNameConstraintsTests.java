@@ -12,7 +12,7 @@ import de.rub.nds.x509attacker.config.extension.NameConstraintsConfig;
 public class EmptyNameConstraintsTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-a6c2a465a3")
-    public void nonCriticalNameConstraintsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void emptyNameConstraintsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             NameConstraintsConfig nameConstraintsConfig = new NameConstraintsConfig();
             nameConstraintsConfig.setPresent(true);
