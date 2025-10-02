@@ -33,7 +33,7 @@ public class InvalidKeyUsagesTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-1e2a19cef5")
-    @IpmLimitations(identifiers = "entity:ext_key_usage_additional")
+    @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_key_usage_additional" })
     public void entityInvalidUse(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

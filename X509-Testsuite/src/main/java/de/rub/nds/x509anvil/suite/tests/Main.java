@@ -27,7 +27,7 @@ public class Main {
         anvilTestConfig.setOutputFolder("results");
         anvilTestConfig.setIdentifier("x509tests");
         anvilTestConfig.setProfileFolder("./X509-Testsuite/profiles/");
-        anvilTestConfig.setProfiles(List.of("bsi"));
+        anvilTestConfig.setProfiles(List.of("rfc5280"));
 
         TestRunner testRunner =
                 new TestRunner(

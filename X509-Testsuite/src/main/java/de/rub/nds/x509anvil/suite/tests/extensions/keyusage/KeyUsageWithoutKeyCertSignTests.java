@@ -23,13 +23,13 @@ import de.rub.nds.x509attacker.constants.X509ExtensionType;
 public class KeyUsageWithoutKeyCertSignTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_key_usage_additional" })
+    @IpmLimitations(identifiers = { "inter0:extensions_present", "inter0:ext_key_usage_additional" })
     @AnvilTest(id = "extension-930f474fe2")
     public void keyUsageWithoutKeyCert(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
-                true,
+                false,
                 (X509CertificateConfigModifier)
                         config -> {
                             KeyUsageConfig keyUsageConfig =
