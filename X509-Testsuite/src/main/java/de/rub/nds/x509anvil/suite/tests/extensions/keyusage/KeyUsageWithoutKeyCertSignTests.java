@@ -20,12 +20,12 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
-public class BasicConstraintsWithoutKeyCertSignTests extends X509AnvilTest {
+public class KeyUsageWithoutKeyCertSignTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_key_usage_additional" })
     @AnvilTest(id = "extension-930f474fe2")
-    public void basicConstraintsWithoutKeyCert(X509VerifierRunner testRunner)
+    public void keyUsageWithoutKeyCert(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
