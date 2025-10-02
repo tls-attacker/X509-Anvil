@@ -33,7 +33,7 @@ public class CriticalSubjectKeyIdTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-2d1d5dc17")
+    @AnvilTest(id = "extension-2d1d5dc178")
     public void criticalSubjectKeyIdIntermediate(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
