@@ -1,11 +1,3 @@
-/*
- * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
- *
- * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
- *
- * Licensed under Apache License, Version 2.0
- * http://www.apache.org/licenses/LICENSE-2.0.txt
- */
 package de.rub.nds.x509anvil.suite.tests.extensions.authoritykeyid;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
@@ -20,12 +12,11 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 import de.rub.nds.x509attacker.config.extension.AuthorityKeyIdentifierConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
-public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
-
-    @ChainLength(minLength = 3)
+public class AuthorityKeyIdNotPresentTests extends X509AnvilTest {
+    @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-efb61a5418")
-    public void criticalAuthorityKeyIdEntity(X509VerifierRunner testRunner)
+    @AnvilTest(id = "extension-a2c84a2918")
+    public void authKeyIdNotPresentEntity(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -35,14 +26,13 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
                             (AuthorityKeyIdentifierConfig)
                                     X509CertificateConfigUtil.getExtensionConfig(
                                             config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
-                    authorityKeyIdentifier.setCritical(true);
-                    config.setIncludeExtensions(true);
+                    authorityKeyIdentifier.setPresent(false);
                 });
     }
 
-    @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-320a8c3fd3")
-    public void criticalAuthorityKeyIdIntermediate(X509VerifierRunner testRunner)
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-198c1c9f93")
+    public void authKeyIdNotPresentIntermediate(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -52,7 +42,7 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
                             (AuthorityKeyIdentifierConfig)
                                     X509CertificateConfigUtil.getExtensionConfig(
                                             config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
-                    authorityKeyIdentifier.setCritical(true);
+                    authorityKeyIdentifier.setPresent(false);
                 });
     }
 }

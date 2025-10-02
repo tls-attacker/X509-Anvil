@@ -12,9 +12,7 @@ import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.x509.key.CachedKeyPairGenerator;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
-import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
-import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
-import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
+import de.rub.nds.x509attacker.config.extension.*;
 import de.rub.nds.x509attacker.constants.CertificateChainPositionType;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
@@ -53,11 +51,16 @@ public class X509CertificateConfigUtil {
                         "TLS Attacker CA - Global Insecurity Provider");
         config.setSerialNumber(new BigInteger("01020304050607080910111213141516", 16));
         attachUniqueKeysRoot(config);
+        SubjectKeyIdentifierConfig subjectKeyIdentifierConfig = new SubjectKeyIdentifierConfig();
+        subjectKeyIdentifierConfig.setPresent(true);
+        subjectKeyIdentifierConfig.setCritical(false);
+        subjectKeyIdentifierConfig.setKeyIdentifier(new byte[] {1, 2, 4});
+        config.addExtensions(subjectKeyIdentifierConfig);
         return config;
     }
 
     public static X509CertificateConfig generateDefaultIntermediateCaCertificateConfig(
-            boolean selfSigned, int intermediatePosition) {
+            boolean selfSigned, int intermediatePosition, boolean isLast) {
         X509CertificateConfig config =
                 generateDefaultCertificateConfig(
                         selfSigned,
@@ -66,12 +69,36 @@ public class X509CertificateConfigUtil {
                                 + intermediatePosition
                                 + "- Global Insecurity Provider");
         attachUniqueKeysIntermediate(config, intermediatePosition);
+        SubjectKeyIdentifierConfig subjectKeyIdentifierConfig = new SubjectKeyIdentifierConfig();
+        subjectKeyIdentifierConfig.setPresent(true);
+        subjectKeyIdentifierConfig.setCritical(false);
+        subjectKeyIdentifierConfig.setKeyIdentifier(new byte[] {1, 2, 3, (byte) intermediatePosition});
+        config.addExtensions(subjectKeyIdentifierConfig);
+        AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
+        authorityKeyIdentifier.setPresent(true);
+        authorityKeyIdentifier.setCritical(false);
+        if (isLast) {
+            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 4});
+        } else {
+            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3, (byte) (intermediatePosition+1)});
+        }
+        config.addExtensions(authorityKeyIdentifier);
         return config;
     }
 
-    public static X509CertificateConfig generateDefaultEntityCertificateConfig(boolean selfSigned) {
-        return generateDefaultCertificateConfig(
+    public static X509CertificateConfig generateDefaultEntityCertificateConfig(boolean selfSigned, boolean isLast) {
+        X509CertificateConfig config = generateDefaultCertificateConfig(
                 selfSigned, CertificateChainPositionType.ENTITY, "tls-attacker.com");
+        AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
+        authorityKeyIdentifier.setPresent(true);
+        authorityKeyIdentifier.setCritical(false);
+        if (isLast) {
+            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 4});
+        } else {
+            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3, 0});
+        }
+        config.addExtensions(authorityKeyIdentifier);
+        return config;
     }
 
     private static BasicConstraintsConfig generateBasicConstraintsConfig(

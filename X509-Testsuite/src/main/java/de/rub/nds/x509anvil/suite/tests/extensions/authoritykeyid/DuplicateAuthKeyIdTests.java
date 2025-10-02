@@ -14,10 +14,11 @@ import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.AuthorityKeyIdentifierConfig;
-import de.rub.nds.x509attacker.config.extension.SubjectKeyIdentifierConfig;
+import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
 public class DuplicateAuthKeyIdTests extends X509AnvilTest {
 
@@ -29,23 +30,13 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
         assertInvalid(
                 testRunner,
                 true,
-                config -> {
+                (X509CertificateConfigModifier) config -> {
                     AuthorityKeyIdentifierConfig authorityKeyIdentifier =
-                            new AuthorityKeyIdentifierConfig();
-                    authorityKeyIdentifier.setPresent(true);
-                    authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
+                            (AuthorityKeyIdentifierConfig)
+                                    X509CertificateConfigUtil.getExtensionConfig(
+                                            config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
                     config.addExtensions(authorityKeyIdentifier);
-                    config.addExtensions(authorityKeyIdentifier);
-                    config.setIncludeExtensions(true);
-                },
-                (X509CertificateConfigModifier)
-                        config -> {
-                            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
-                            newConfig.setPresent(true);
-                            newConfig.setKeyIdentifier(new byte[] {1, 2, 3});
-                            config.addExtensions(newConfig);
-                            config.setIncludeExtensions(true);
-                        });
+                });
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
@@ -55,23 +46,13 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
         assertInvalid(
                 testRunner,
                 false,
-                config -> {
+                (X509CertificateConfigModifier) config -> {
                     AuthorityKeyIdentifierConfig authorityKeyIdentifier =
-                            new AuthorityKeyIdentifierConfig();
-                    authorityKeyIdentifier.setPresent(true);
-                    authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
+                            (AuthorityKeyIdentifierConfig)
+                                    X509CertificateConfigUtil.getExtensionConfig(
+                                            config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
                     config.addExtensions(authorityKeyIdentifier);
-                    config.addExtensions(authorityKeyIdentifier);
-                    config.setIncludeExtensions(true);
-                },
-                (X509CertificateConfigModifier)
-                        config -> {
-                            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
-                            newConfig.setPresent(true);
-                            newConfig.setKeyIdentifier(new byte[] {1, 2, 3});
-                            config.addExtensions(newConfig);
-                            config.setIncludeExtensions(true);
-                        });
+                });
     }
 
     @ChainLength(minLength = 3)
@@ -82,13 +63,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
         assertInvalid(
                 testRunner,
                 true,
-                config -> {
-                    AuthorityKeyIdentifierConfig authorityKeyIdentifier =
-                            new AuthorityKeyIdentifierConfig();
-                    authorityKeyIdentifier.setPresent(true);
-                    authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
-                    config.addExtensions(authorityKeyIdentifier);
-
+                (X509CertificateConfigModifier) config -> {
                     AuthorityKeyIdentifierConfig differentConfig =
                             new AuthorityKeyIdentifierConfig();
                     differentConfig.setPresent(true);
@@ -96,15 +71,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
                     config.addExtensions(differentConfig);
 
                     config.setIncludeExtensions(true);
-                },
-                (X509CertificateConfigModifier)
-                        config -> {
-                            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
-                            newConfig.setPresent(true);
-                            newConfig.setKeyIdentifier(new byte[] {1, 2, 3});
-                            config.addExtensions(newConfig);
-                            config.setIncludeExtensions(true);
-                        });
+                });
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
@@ -114,13 +81,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
         assertInvalid(
                 testRunner,
                 false,
-                config -> {
-                    AuthorityKeyIdentifierConfig authorityKeyIdentifier =
-                            new AuthorityKeyIdentifierConfig();
-                    authorityKeyIdentifier.setPresent(true);
-                    authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3});
-                    config.addExtensions(authorityKeyIdentifier);
-
+                (X509CertificateConfigModifier) config -> {
                     AuthorityKeyIdentifierConfig differentConfig =
                             new AuthorityKeyIdentifierConfig();
                     differentConfig.setPresent(true);
@@ -128,14 +89,6 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
                     config.addExtensions(differentConfig);
 
                     config.setIncludeExtensions(true);
-                },
-                (X509CertificateConfigModifier)
-                        config -> {
-                            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
-                            newConfig.setPresent(true);
-                            newConfig.setKeyIdentifier(new byte[] {1, 2, 3});
-                            config.addExtensions(newConfig);
-                            config.setIncludeExtensions(true);
-                        });
+                });
     }
 }

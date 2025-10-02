@@ -72,11 +72,12 @@ public class NotAfterParameter extends CertificateSpecificParameter<NotAfterValu
                 certificateConfig.setNotAfter(
                         new DateTime(2075, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
-            case GENERALIZED_TIME_BEFORE_2050:
+            // removed due to BSI compliance by default
+            /*case GENERALIZED_TIME_BEFORE_2050:
                 certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
                 certificateConfig.setNotAfter(
                         new DateTime(2026, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
-                break;
+                break;*/
         }
     }
 }

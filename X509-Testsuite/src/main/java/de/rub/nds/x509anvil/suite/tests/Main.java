@@ -13,6 +13,8 @@ import de.rub.nds.anvilcore.execution.TestRunner;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterIdentifierProvider;
 
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -24,6 +26,8 @@ public class Main {
         anvilTestConfig.setStrength(1);
         anvilTestConfig.setOutputFolder("results");
         anvilTestConfig.setIdentifier("x509tests");
+        anvilTestConfig.setProfileFolder("./X509-Testsuite/profiles/");
+        anvilTestConfig.setProfiles(List.of("everything"));
 
         TestRunner testRunner =
                 new TestRunner(

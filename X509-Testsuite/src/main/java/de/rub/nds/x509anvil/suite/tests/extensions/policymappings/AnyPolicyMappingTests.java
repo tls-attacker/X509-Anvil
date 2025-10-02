@@ -2,7 +2,6 @@ package de.rub.nds.x509anvil.suite.tests.extensions.policymappings;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
-import de.rub.nds.asn1.oid.ObjectIdentifier;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -11,12 +10,11 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.CertificatePoliciesConfig;
 import de.rub.nds.x509attacker.config.extension.PolicyMappingsConfig;
-import de.rub.nds.x509attacker.x509.model.extensions.PolicyQualifierInfo;
 import de.rub.nds.x509attacker.x509.model.extensions.PolicyQualifiers;
 
 import java.util.List;
 
-public class NonCriticalPolicyMappingsTests extends X509AnvilTest {
+public class AnyPolicyMappingTests extends X509AnvilTest {
 
     // When qualifiers are used with the special policy anyPolicy, they MUST be limited to the qualifiers identified in this section
     @ChainLength(minLength = 3)
@@ -37,7 +35,7 @@ public class NonCriticalPolicyMappingsTests extends X509AnvilTest {
 
             PolicyMappingsConfig policyMappingsConfig = new PolicyMappingsConfig();
             policyMappingsConfig.setPresent(true);
-            policyMappingsConfig.setCritical(false);
+            policyMappingsConfig.setCritical(true);
             policyMappingsConfig.setSubjectDomainPolicies(List.of("2.5.29.32.0"));
             policyMappingsConfig.setIssuerDomainPolicies(List.of("2.23.140.1.2.1"));
             config.addExtensions(policyMappingsConfig);
@@ -72,7 +70,7 @@ public class NonCriticalPolicyMappingsTests extends X509AnvilTest {
 
             PolicyMappingsConfig policyMappingsConfig = new PolicyMappingsConfig();
             policyMappingsConfig.setPresent(true);
-            policyMappingsConfig.setCritical(false);
+            policyMappingsConfig.setCritical(true);
             policyMappingsConfig.setSubjectDomainPolicies(List.of("2.5.29.32.0"));
             policyMappingsConfig.setIssuerDomainPolicies(List.of("2.23.140.1.2.1"));
             config.addExtensions(policyMappingsConfig);
@@ -110,7 +108,7 @@ public class NonCriticalPolicyMappingsTests extends X509AnvilTest {
 
             PolicyMappingsConfig policyMappingsConfig = new PolicyMappingsConfig();
             policyMappingsConfig.setPresent(true);
-            policyMappingsConfig.setCritical(false);
+            policyMappingsConfig.setCritical(true);
             policyMappingsConfig.setIssuerDomainPolicies(List.of("2.5.29.32.0"));
             policyMappingsConfig.setSubjectDomainPolicies(List.of("2.23.140.1.2.1"));
             config.addExtensions(policyMappingsConfig);
@@ -145,7 +143,7 @@ public class NonCriticalPolicyMappingsTests extends X509AnvilTest {
 
             PolicyMappingsConfig policyMappingsConfig = new PolicyMappingsConfig();
             policyMappingsConfig.setPresent(true);
-            policyMappingsConfig.setCritical(false);
+            policyMappingsConfig.setCritical(true);
             policyMappingsConfig.setIssuerDomainPolicies(List.of("2.5.29.32.0"));
             policyMappingsConfig.setSubjectDomainPolicies(List.of("2.23.140.1.2.1"));
             config.addExtensions(policyMappingsConfig);
