@@ -18,7 +18,6 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.AuthorityKeyIdentifierConfig;
-import de.rub.nds.x509attacker.config.extension.SubjectKeyIdentifierConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
 public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {

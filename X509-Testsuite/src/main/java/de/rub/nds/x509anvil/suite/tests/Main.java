@@ -25,7 +25,7 @@ public class Main {
         anvilTestConfig.setIgnoreCache(true);
         anvilTestConfig.setStrength(1);
         anvilTestConfig.setOutputFolder("results");
-        anvilTestConfig.setIdentifier("x509tests");
+        anvilTestConfig.setIdentifier("openssl-t1");
         anvilTestConfig.setProfileFolder("./X509-Testsuite/profiles/");
         anvilTestConfig.setProfiles(List.of("rfc5280"));
 
