@@ -23,6 +23,8 @@ import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocke
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.rub.nds.x509anvil.framework.verifier.adapter.util.NSSPkcs12Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -86,6 +88,13 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
                                 "--require-auth",
                                 "http");
             }
+
+            if(implementationType == TlsImplementationType.NSS) {
+                NSSPkcs12Util.execSetup();
+                 builder =
+                        builder.cmd(
+                                "-n", "nss-server-cert", "-p", "4430", "-d", "sql:/x509-anv-resources/nss_db", "-r", "-r", "-w", "password");
+            }
             tlsServerInstance = builder.build();
         } catch (TlsVersionNotFoundException e) {
             LOGGER.error("Unknown Version {} of {}", config.getVersion(), config.getImage());
@@ -141,4 +150,5 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
             }
         }
     }
+
 }
