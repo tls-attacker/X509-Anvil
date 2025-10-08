@@ -20,14 +20,6 @@ public class NSSPkcs12Util {
             builder.redirectErrorStream(true);
 
             Process process = builder.start();
-
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
-                }
-            }
-
             int exitCode = process.waitFor();
             if (exitCode != 0) {
                 throw new RuntimeException("NSS setup script failed with exit code: " + exitCode);
