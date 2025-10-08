@@ -11,7 +11,6 @@ package de.rub.nds.x509anvil.framework.verifier.adapter;
 import de.rub.nds.tlsattacker.core.config.Config;
 import de.rub.nds.tlsattacker.core.connection.OutboundConnection;
 import de.rub.nds.tlsattacker.core.constants.CipherSuite;
-import de.rub.nds.tlsattacker.core.constants.NamedGroup;
 import de.rub.nds.tlsattacker.core.constants.SignatureAndHashAlgorithm;
 import de.rub.nds.tlsattacker.core.state.State;
 import de.rub.nds.tlsattacker.core.workflow.DefaultWorkflowExecutor;
@@ -130,19 +129,24 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
 
         DefaultWorkflowExecutor workflowExecutor = new DefaultWorkflowExecutor(state);
 
-        // FIXME: The order is correct for a server (though not necessary), but wrong for the
-        // client.
-        Thread t =
-                new Thread(
-                        () -> {
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                            runCommandInBackground();
-                        });
-        t.start();
+        if(this instanceof TlsServerAuthVerifierAdapter) {
+            Thread t =
+                    new Thread(
+                            () -> {
+                                try {
+                                    Thread.sleep(20);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                runCommandInBackground();
+                            });
+            workflowExecutor.setBeforeTransportInitCallback(state1 -> {
+                t.start();
+                return 0;
+            });
+        } else {
+            runCommandInBackground();
+        }
 
         workflowExecutor.executeWorkflow();
 

@@ -47,7 +47,6 @@ public class TlsServerAuthVerifierAdapter extends TlsAuthVerifierAdapter {
     @Override
     public WorkflowTrace buildWorkflowTraceDhe(Config config) {
         WorkflowTrace workflowTrace = new WorkflowTrace();
-        // workflowTrace.addTlsAction(new InvokeClientAction());
         workflowTrace.addTlsAction(new ReceiveAction(new ClientHelloMessage()));
         // ServerHelloMessage serverHelloMessage = new ServerHelloMessage(config);
         // serverHelloMessage.setSelectedCipherSuite(new byte[] {(byte) 0xc0, 0x14});

@@ -32,11 +32,13 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
 
     private final DockerTlsClientInstance currentClientInstance;
     private final int port;
+    private static int nextPort = 45655;
 
     private TlsServerAuthVerifierAdapterDocker(DockerTlsClientInstance instance) {
-        super("localhost", 45655);
+        super("localhost", nextPort);
         this.currentClientInstance = instance;
-        this.port = 45655;
+        this.port = nextPort;
+        nextPort = ((nextPort +1)%10000)+40000;
     }
 
     public static TlsServerAuthVerifierAdapterDocker fromConfig(
