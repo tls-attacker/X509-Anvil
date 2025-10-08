@@ -1,6 +1,8 @@
 resources/*.pem
+X509-Testsuite/resources/*.pem
 test.sh
 .vscode/
+results/*
 
 # (build) artifacts
 apps/

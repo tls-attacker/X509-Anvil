@@ -14,9 +14,11 @@ import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
+import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.AuthorityKeyIdentifierConfig;
+import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
 public class MissingKeyIdTests extends X509AnvilTest {
 
@@ -31,10 +33,10 @@ public class MissingKeyIdTests extends X509AnvilTest {
                 (X509CertificateConfigModifier)
                         config -> {
                             AuthorityKeyIdentifierConfig authorityKeyIdentifier =
-                                    new AuthorityKeyIdentifierConfig();
-                            authorityKeyIdentifier.setPresent(true);
-                            config.addExtensions(authorityKeyIdentifier);
-                            config.setIncludeExtensions(true);
+                                    (AuthorityKeyIdentifierConfig)
+                                            X509CertificateConfigUtil.getExtensionConfig(
+                                                    config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
+                            authorityKeyIdentifier.setKeyIdentifier(null);
                         });
     }
 
@@ -48,10 +50,10 @@ public class MissingKeyIdTests extends X509AnvilTest {
                 (X509CertificateConfigModifier)
                         config -> {
                             AuthorityKeyIdentifierConfig authorityKeyIdentifier =
-                                    new AuthorityKeyIdentifierConfig();
-                            authorityKeyIdentifier.setPresent(true);
-                            config.addExtensions(authorityKeyIdentifier);
-                            config.setIncludeExtensions(true);
+                                    (AuthorityKeyIdentifierConfig)
+                                            X509CertificateConfigUtil.getExtensionConfig(
+                                                    config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
+                            authorityKeyIdentifier.setKeyIdentifier(null);
                         });
     }
 }

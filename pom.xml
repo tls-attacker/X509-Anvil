@@ -1,90 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>de.rub.nds</groupId>
         <artifactId>protocol-toolkit-bom</artifactId>
         <version>6.2.2</version>
     </parent>
 
-    <groupId>de.rub.nds.x509.anvil</groupId>
-    <artifactId>x509-anvil</artifactId>
+    <groupId>de.rub.nds.x509test</groupId>
+
+    <artifactId>X509-Anvil</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <packaging>pom</packaging>
 
-    <name>X.509-Anvil</name>
-    <description>X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates</description>
-    <url>https://github.com/tls-attacker/X509-Anvil</url>
-    <inceptionYear>2022</inceptionYear>
-
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
+    <developers>
+        <developer>
+            <id>FelixLange1998</id>
+            <name>Felix Lange</name>
+            <email>felix.lange@uni-paderborn.de</email>
+            <organization>UPB</organization>
+            <organizationUrl>https://www.uni-paderborn.de/</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>JonSnowWhite</id>
+            <name>Niklas Niere</name>
+            <email>niklas.niere@uni-paderborn.de</email>
+            <organization>UPB</organization>
+            <organizationUrl>https://www.uni-paderborn.de/</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
     <modules>
         <module>Framework</module>
         <module>X509-Testsuite</module>
     </modules>
-
-    <scm>
-        <connection>scm:git:https://github.com/tls-attacker/X509-Anvil.git</connection>
-        <developerConnection>sm:git:ssh://git@github.com/tls-attacker/X509-Anvil.git</developerConnection>
-        <url>https://github.com/tls-attacker/X509-Anvil</url>
-    </scm>
-
     <properties>
+        <main.basedir>${project.basedir}</main.basedir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <toolkit.common.coffee4j.anvil.version>1.2.0</toolkit.common.coffee4j.anvil.version>
+        <toolkit.common.anvilcore.version>2.0.5-SNAPSHOT</toolkit.common.anvilcore.version>
+        <toolkit.common.asn1attacker.version>4.2.1</toolkit.common.asn1attacker.version>
+        <toolkit.common.x509attacker.version>4.3.4</toolkit.common.x509attacker.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <main.basedir>${project.basedir}</main.basedir>
-        <!-- The following variables are required for Jenkins CI -->
-        <skipTests>false</skipTests>
-        <skip.surefire.tests>${skipTests}</skip.surefire.tests>
-        <skip.failsafe.tests>${skipTests}</skip.failsafe.tests>
+        <skip.signature>true</skip.signature>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>de.rub.nds.x509.anvil</groupId>
-                <artifactId>x509-anvil</artifactId>
-                <version>${project.version}</version>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>de.rub.nds.x509.anvil</groupId>
-                <artifactId>x509-anvil-framework</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>de.rub.nds.x509.anvil</groupId>
-                <artifactId>x509-anvil-testsuite</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
-        <dependency>
-            <groupId>de.rub.nds</groupId>
-            <artifactId>anvil-core</artifactId>
-            <version>2.0.5</version>
-        </dependency>
-        <dependency>
-            <groupId>de.rub.nds</groupId>
-            <artifactId>asn1-attacker</artifactId>
-            <version>4.2.1</version>
-        </dependency>
+        <!-- scope: compile -->
         <dependency>
             <groupId>de.rub.nds</groupId>
             <artifactId>modifiable-variable</artifactId>
             <version>5.3.0</version>
         </dependency>
+
         <dependency>
             <groupId>de.rub.nds</groupId>
             <artifactId>protocol-attacker</artifactId>
@@ -93,27 +71,8 @@
         <dependency>
             <groupId>de.rub.nds</groupId>
             <artifactId>x509-attacker</artifactId>
-            <version>4.3.2</version>
+            <version>4.3.4</version>
         </dependency>
-        <dependency>
-            <groupId>de.rub.nds</groupId>
-            <artifactId>x509-attacker</artifactId>
-            <version>4.3.2</version>
-        </dependency>
-        <dependency>
-            <groupId>de.rub.nds.tls.dockerlib</groupId>
-            <artifactId>tls-docker-library</artifactId>
-            <version>3.1.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -128,26 +87,9 @@
                     <configuration>
                         <source>${maven.compiler.source}</source>
                         <target>${maven.compiler.target}</target>
-                        <proc>full</proc>
-                    </configuration>
-                </plugin>
-                <!-- Plugin to execute unit tests -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <trimStackTrace>false</trimStackTrace>
-                        <includes>
-                            <include>**/*.java</include>
-                        </includes>
-                        <!-- Allow parallel execution of unit tests (execution in series within test classes) -->
-                        <parallel>classes</parallel>
-                        <!-- Can be adjusted depending on the local system, 3 should be a fair default value -->
-                        <forkCount>3</forkCount>
-                        <reuseForks>true</reuseForks>
-                        <!-- By default we include all but integration tests during surefire execution -->
-                        <excludedGroups>IntegrationTest</excludedGroups>
-                        <skipTests>${skip.surefire.tests}</skipTests>
+                        <compilerArgs>
+                            <compilerArg>-proc:full</compilerArg>
+                        </compilerArgs>
                     </configuration>
                 </plugin>
                 <!-- Plugin to compile javadoc -->
@@ -218,36 +160,6 @@
                         </execution>
                     </executions>
                 </plugin>
-                <!-- Plugin to execute integration tests -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <configuration>
-                        <!-- By default, the Failsafe plugin excludes various files. We have to override that. -->
-                        <includes>
-                            <include>**/*.java</include>
-                        </includes>
-                        <!-- Integration tests and slow tests are started -->
-                        <groups>IntegrationTest</groups>
-                        <skipITs>${skip.failsafe.tests}</skipITs>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>run-integration-tests</id>
-                            <goals>
-                                <goal>integration-test</goal>
-                            </goals>
-                            <phase>integration-test</phase>
-                        </execution>
-                        <execution>
-                            <id>verify-integration-tests</id>
-                            <goals>
-                                <goal>verify</goal>
-                            </goals>
-                            <phase>verify</phase>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -290,7 +202,7 @@
             </plugin>
             <!--################# default lifecycle plugins #################-->
             <!-- Formatting -->
-            <plugin>
+            <!--plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
                 <configuration>
@@ -305,7 +217,7 @@
                             <spacesPerTab>4</spacesPerTab>
                         </indent>
                         <googleJavaFormat>
-                            <version>${plugin.spotless-maven-plugin.google-java-format.version}</version>
+                            <version>1.25.2</version>
                             <style>AOSP</style>
                         </googleJavaFormat>
                         <licenseHeader>
@@ -313,7 +225,7 @@
                         </licenseHeader>
                     </java>
                 </configuration>
-            </plugin>
+            </plugin-->
             <!-- Flatten pom.xml before install / deploy phases -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -343,6 +255,9 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
+                <configuration>
+                    <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -375,99 +290,4 @@
             </plugin>
         </plugins>
     </reporting>
-
-    <profiles>
-        <profile>
-            <id>delayed-slow-tests</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <!-- Configure Surefire to run SlowTests during integration-test phase to speed up the build process -->
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-surefire-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <id>default-test</id>
-                                    <configuration>
-                                        <excludedGroups>SlowTest,IntegrationTest</excludedGroups>
-                                    </configuration>
-                                </execution>
-                                <execution>
-                                    <id>run-slow-unit-tests</id>
-                                    <goals>
-                                        <goal>test</goal>
-                                    </goals>
-                                    <phase>integration-test</phase>
-                                    <configuration>
-                                        <groups>SlowTest</groups>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-        <profile>
-            <id>coverage</id>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <!-- Configure JaCoCo to run during unit and integration tests -->
-                        <plugin>
-                            <groupId>org.jacoco</groupId>
-                            <artifactId>jacoco-maven-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <id>jacoco-prepare-agent</id>
-                                    <goals>
-                                        <goal>prepare-agent</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>jacoco-prepare-agent-it</id>
-                                    <goals>
-                                        <goal>prepare-agent-integration</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>jacoco-merge</id>
-                                    <goals>
-                                        <goal>merge</goal>
-                                    </goals>
-                                    <phase>post-integration-test</phase>
-                                    <configuration>
-                                        <destFile>${project.build.outputDirectory}/jacoco.merged.exec</destFile>
-                                        <fileSets>
-                                            <fileSet>
-                                                <directory>${project.build.directory}</directory>
-                                                <includes>
-                                                    <include>jacoco.exec</include>
-                                                    <include>jacoco-it.exec</include>
-                                                </includes>
-                                            </fileSet>
-                                        </fileSets>
-                                    </configuration>
-                                </execution>
-                                <execution>
-                                    <id>jacoco-report</id>
-                                    <goals>
-                                        <goal>report</goal>
-                                    </goals>
-                                    <phase>verify</phase>
-                                    <configuration>
-                                        <dataFile>${project.build.outputDirectory}/jacoco.merged.exec</dataFile>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-    </profiles>
 </project>

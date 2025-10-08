@@ -11,7 +11,6 @@ package de.rub.nds.x509anvil.framework.anvil.parameter.value;
 public enum NotAfterValue {
     UTC_TIME,
     UTC_TIME_LATEST,
-    GENERALIZED_TIME_BEFORE_2050,
+    // GENERALIZED_TIME_BEFORE_2050, not BSI compliant
     GENERALIZED_TIME_AFTER_2050,
-    // TODO: retain? NO_WELL_DEFINED_EXPIRATION
 }

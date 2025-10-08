@@ -67,7 +67,8 @@ public class NotBeforeParameter extends CertificateSpecificParameter<NotBeforeVa
                 certificateConfig.setNotBefore(
                         new DateTime(1950, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
-            case GENERALIZED_TIME:
+            // removed due to BSI compliance by default
+            /*case GENERALIZED_TIME:
                 certificateConfig.setDefaultNotBeforeEncoding(
                         ValidityEncoding.GENERALIZED_TIME_UTC);
                 certificateConfig.setNotBefore(
@@ -78,7 +79,7 @@ public class NotBeforeParameter extends CertificateSpecificParameter<NotBeforeVa
                         ValidityEncoding.GENERALIZED_TIME_UTC);
                 certificateConfig.setNotBefore(
                         new DateTime(1950, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
-                break;
+                break;*/
         }
     }
 }

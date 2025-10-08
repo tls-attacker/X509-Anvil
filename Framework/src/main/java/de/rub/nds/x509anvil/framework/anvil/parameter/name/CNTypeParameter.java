@@ -17,6 +17,8 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParamet
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,9 +48,11 @@ public class CNTypeParameter extends CertificateSpecificParameter<DirectoryStrin
     @Override
     protected List<DerivationParameter<X509CertificateChainConfig, DirectoryStringChoiceType>>
             getNonNullParameterValues(DerivationScope derivationScope) {
-        return Arrays.stream(DirectoryStringChoiceType.values())
-                .map(this::generateValue)
-                .collect(Collectors.toList());
+        List<DerivationParameter<X509CertificateChainConfig, DirectoryStringChoiceType>> parameters = new ArrayList<>();
+        parameters.add(generateValue(DirectoryStringChoiceType.PRINTABLE_STRING));
+        parameters.add(generateValue(DirectoryStringChoiceType.UTF8_STRING));
+        // BSI compliant by default: printable and utf8
+        return parameters;
     }
 
     @Override

@@ -1,11 +1,12 @@
-/*
- * X.509-Anvil - A Compliancy Evaluation Tool for X.509 Certificates.
- *
- * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Technology Innovation Institute, and Hackmanit GmbH
- *
+/**
+ * Framework - A tool for creating arbitrary certificates
+ * <p>
+ * Copyright 2014-2025 Ruhr University Bochum, Paderborn University, Hackmanit GmbH
+ * <p>
  * Licensed under Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0.txt
  */
+
 package de.rub.nds.x509anvil.framework.anvil;
 
 import com.beust.jcommander.JCommander;
@@ -20,6 +21,7 @@ import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfig;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocker;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterConfig;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterType;
+import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +31,7 @@ import org.apache.logging.log4j.Logger;
         getterVisibility = JsonAutoDetect.Visibility.NONE,
         isGetterVisibility = JsonAutoDetect.Visibility.NONE,
         creatorVisibility = JsonAutoDetect.Visibility.NONE)
+
 public class TestConfig extends TLSDelegateConfig {
 
     protected static final Logger LOGGER = LogManager.getLogger();
@@ -36,8 +39,10 @@ public class TestConfig extends TLSDelegateConfig {
     // TODO: Use JCommander for config parameters
     @JsonProperty private AnvilTestConfig anvilTestConfig = new AnvilTestConfig();
 
+
     private final VerifierAdapterConfig verifierAdapterConfig =
-            new TlsAuthVerifierAdapterConfig("localhost", 4433);
+        new TlsAuthVerifierAdapterConfig("localhost", 4433);
+
 
     @JsonProperty("verifierAdapterType")
     @Parameter(
@@ -45,7 +50,7 @@ public class TestConfig extends TLSDelegateConfig {
             description = "Whether to test TLS servers or TLS clients.")
     private VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_CLIENT_AUTH;
 
-    @JsonProperty("verifierAdapterType")
+    @JsonProperty("docker")
     @Parameter(
             names = "-docker",
             description =
@@ -55,22 +60,21 @@ public class TestConfig extends TLSDelegateConfig {
     @JsonProperty("minChainLength")
     @Parameter(
             names = "-minChainLength",
-            description =
-                    "The default minimum chain length for the test cases. Ignored for test cases with annotated chain length.")
+            description = "The default minimum chain length for the test cases. Ignored for test cases with annotated chain length.")
     private int defaultMinChainLength = 2;
+
 
     @JsonProperty("maxChainLength")
     @Parameter(
             names = "-maxChainLength",
-            description =
-                    "The default maximum chain length for the test cases. Ignored for test cases with annotated chain length.")
+            description = "The default maximum chain length for the test cases. Ignored for test cases with annotated chain length.")
     private int defaultMaxChainLength = 4;
+
 
     @JsonProperty("intermediateCertsModeled")
     @Parameter(
             names = "-intermediateCertsModeled",
-            description =
-                    "The default number of intermediate certificated modeled. Ignored for test cases with annotated chain length.")
+            description = "The default number of intermediate certificated modeled. Ignored for test cases with annotated chain length.")
     private int defaultIntermediateCertsModeled = 2;
 
     public TestConfig() {
@@ -79,8 +83,10 @@ public class TestConfig extends TLSDelegateConfig {
 
     public void parse(String[] args) {
 
-        JCommander argParser =
-                JCommander.newBuilder().addObject(getAnvilTestConfig()).addObject(this).build();
+        JCommander argParser = JCommander.newBuilder()
+                .addObject(getAnvilTestConfig())
+                .addObject(this)
+                .build();
 
         try {
             argParser.parse(args);
@@ -98,12 +104,14 @@ public class TestConfig extends TLSDelegateConfig {
 
         if (getAnvilTestConfig().getTestPackage() != null) {
             LOGGER.info(
-                    "Limiting test to those of package {}", getAnvilTestConfig().getTestPackage());
+                    "Limiting test to those of package {}",
+                    getAnvilTestConfig().getTestPackage());
         } else {
             // set test package if not specified via command args
             getAnvilTestConfig().setTestPackage("de.rub.nds.x509anvil.suite.tests");
         }
     }
+
 
     public AnvilTestConfig getAnvilTestConfig() {
         return anvilTestConfig;
