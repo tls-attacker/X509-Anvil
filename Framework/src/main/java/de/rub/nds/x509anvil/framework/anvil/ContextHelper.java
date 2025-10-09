@@ -9,7 +9,7 @@
 
 package de.rub.nds.x509anvil.framework.anvil;
 
-import de.rub.nds.anvilcore.context.AnvilContext;
+import de.rub.nds.anvilcore.context.AnvilContextRegistry;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureExtractor;
 import de.rub.nds.x509anvil.framework.featureextraction.FeatureReport;
 import de.rub.nds.x509anvil.framework.featureextraction.UnsupportedFeatureException;
@@ -33,7 +33,7 @@ public class ContextHelper {
             if (args != null) {
                 testConfig.parse(args);
             }
-            AnvilContext.createInstance(testConfig.getAnvilTestConfig(), "", new X509AnvilParameterIdentifierProvider());
+            AnvilContextRegistry.createContext(testConfig.getAnvilTestConfig(), "", new X509AnvilParameterIdentifierProvider());
         }
     }
 

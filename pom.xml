@@ -38,6 +38,16 @@
                 <role>Developer</role>
             </roles>
         </developer>
+        <developer>
+            <id>mradoy99</id>
+            <name>Maximilian radoy</name>
+            <email>maximilian.radoy@uni-paderborn.de</email>
+            <organization>UPB</organization>
+            <organizationUrl>https://cs.uni-paderborn.de/syssec</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
     </developers>
     <modules>
         <module>Framework</module>
@@ -47,7 +57,7 @@
         <main.basedir>${project.basedir}</main.basedir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <toolkit.common.coffee4j.anvil.version>1.2.0</toolkit.common.coffee4j.anvil.version>
-        <toolkit.common.anvilcore.version>2.0.5-SNAPSHOT</toolkit.common.anvilcore.version>
+        <toolkit.common.anvilcore.version>2.0.5</toolkit.common.anvilcore.version>
         <toolkit.common.asn1attacker.version>4.2.1</toolkit.common.asn1attacker.version>
         <toolkit.common.x509attacker.version>4.3.4</toolkit.common.x509attacker.version>
         <maven.compiler.source>21</maven.compiler.source>
@@ -71,7 +81,7 @@
         <dependency>
             <groupId>de.rub.nds</groupId>
             <artifactId>x509-attacker</artifactId>
-            <version>4.3.4</version>
+            <version>4.3.5-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
