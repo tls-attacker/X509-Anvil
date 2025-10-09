@@ -25,9 +25,9 @@ public class Main {
         AnvilTestConfig anvilTestConfig = ContextHelper.getTestConfig().getAnvilTestConfig();
         anvilTestConfig.setDisableTcpDump(true);
         anvilTestConfig.setIgnoreCache(true);
-        anvilTestConfig.setStrength(1);
+        anvilTestConfig.setStrength(2);
         anvilTestConfig.setOutputFolder("results");
-        anvilTestConfig.setIdentifier("openssl-t1");
+        anvilTestConfig.setIdentifier("openssl-t2");
         anvilTestConfig.setProfileFolder("./X509-Testsuite/profiles/");
         anvilTestConfig.setProfiles(List.of("rfc5280"));
 
