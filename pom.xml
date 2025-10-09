@@ -71,7 +71,7 @@
         <dependency>
             <groupId>de.rub.nds</groupId>
             <artifactId>x509-attacker</artifactId>
-            <version>4.3.4</version>
+            <version>4.3.5-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

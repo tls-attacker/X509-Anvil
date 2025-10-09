@@ -18,10 +18,13 @@ import de.rub.nds.tls.subject.TlsImplementationType;
 import de.rub.nds.tls.subject.docker.DockerTlsClientInstance;
 import de.rub.nds.tls.subject.docker.DockerTlsManagerFactory;
 import de.rub.nds.tls.subject.exceptions.TlsVersionNotFoundException;
+import de.rub.nds.tls.subject.params.ParameterProfile;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocker;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.rub.nds.x509anvil.framework.verifier.adapter.util.NSSPkcs12Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -56,13 +59,18 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
         DockerTlsClientInstance tlsClientInstance = null;
         LOGGER.info("Attempting to start TLS Server Docker image...");
         try {
-            tlsClientInstance =
+            de.rub.nds.tls.subject.docker.DockerTlsManagerFactory.TlsClientInstanceBuilder builder =
                     DockerTlsManagerFactory.getTlsClientBuilder(
                                     TlsImplementationType.fromString(config.getImage()),
                                     config.getVersion())
                             .hostConfigHook(TlsServerAuthVerifierAdapterDocker::applyConfig)
-                            .certificatePath("/x509-anv-resources/out/root_cert.pem")
-                            .build();
+                            .certificatePath("/x509-anv-resources/out/root_cert.pem");
+            if(TlsImplementationType.fromString(config.getImage()) == TlsImplementationType.NSS) {
+                NSSPkcs12Util.execSetup();
+                builder.certificatePath("sql:/x509-anv-resources/nss_db/").additionalParameters("-R X509-Anvil-CA");
+            }
+
+            tlsClientInstance = builder.build();
         } catch (TlsVersionNotFoundException e) {
             LOGGER.error("Unknown Version {} of {}", config.getVersion(), config.getImage());
             System.exit(-1);

@@ -37,6 +37,6 @@ echo "Importing PKCS#12 container into NSS DB..."
 pk12util -i "$ROOT_DIR/x509_anvil_nss_server.p12" -d "sql:$NSS_DB" -W "password"
 
 echo "Adding CA certificate..."
-certutil -A -n "X509-Anvil-CA" -t "CT,," -i "$OUT_DIR/root_cert.pem" -d "sql:$NSS_DB" -@ "$NSS_DB/pwdfile.txt"
+certutil -A -n "X509-Anvil-CA" -t "CT,," -i "$OUT_DIR/root_cert.pem" -d "sql:$NSS_DB"
 
 echo "✅ NSS DB setup complete!"
