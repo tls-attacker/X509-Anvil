@@ -48,9 +48,6 @@ public class TlsServerAuthVerifierAdapter extends TlsAuthVerifierAdapter {
     public WorkflowTrace buildWorkflowTraceDhe(Config config) {
         WorkflowTrace workflowTrace = new WorkflowTrace();
         workflowTrace.addTlsAction(new ReceiveAction(new ClientHelloMessage()));
-        // ServerHelloMessage serverHelloMessage = new ServerHelloMessage(config);
-        // serverHelloMessage.setSelectedCipherSuite(new byte[] {(byte) 0xc0, 0x14});
-        // //CipherSuite.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
         workflowTrace.addTlsAction(
                 new SendAction(
                         new ServerHelloMessage(config),
