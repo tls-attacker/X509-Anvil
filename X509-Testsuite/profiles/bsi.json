@@ -1,6 +1,6 @@
 {
   "name": "BSI",
-  "profiles": [],
+  "profiles": ["rfc5280"],
   "testIds": [
     "extension-9b75135269",
     "extension-9b75135366",

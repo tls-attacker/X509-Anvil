@@ -209,7 +209,7 @@
         "tags": null
     },
     "basic-fb1e899219": {
-        "description": "4.1.1.2. signatureAlgorithm and 4.1.2.3",
+        "description": "Tests whether and unknown OID is accepted as signatureAlgorithm. This needs to fail.",
         "severityLevels": {
             "Security": 100
         },
@@ -220,7 +220,7 @@
         "tags": null
     },
     "basic-3bd920316f": {
-        "description": "4.1.1.2. signatureAlgorithm and 4.1.2.3",
+        "description": "Tests whether and unknown OID is accepted as signatureAlgorithm. This needs to fail.",
         "severityLevels": {
             "Security": 100
         },
@@ -1465,7 +1465,7 @@
     "extension-930f474fe2": {
         "description": "(n) If a key usage extension is present verify that the keyCertSign bit is set.",
         "severityLevels": {
-            "Interoperability": 100
+            "Security": 100
         },
         "rfc": {
             "number": 5280,
@@ -1548,6 +1548,7 @@
             "number": 5280,
             "section": "4.2.1.3. Key Usage"
         },
+        "bsi": null,
         "tags": null
     },
     "extension-c6d9fda7d3": {
@@ -1559,7 +1560,20 @@
             "number": 5280,
             "section": "4.2.1.3. Key Usage"
         },
+        "bsi": null,
         "tags": null
+    },
+    "extension-a3e1cdc1d3": {
+      "description": "When the keyUsage extension appears in a certificate at least one of the bits MUST be set to 1.",
+      "severityLevels": {
+        "Security": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.3. Key Usage"
+      },
+      "bsi": null,
+      "tags": null
     },
     "extension-91e2ddbf9d": {
         "description": "If the keyCertSign bit is asserted then the cA bit in the basic constraints extension (Section 4.2.1.9) MUST also be asserted",
@@ -2716,6 +2730,17 @@
       },
       "tags": null
     },
+    "extension-77b24ac4ff": {
+      "description": "Conforming CAs MUST NOT issue certificates where policy constraints is an empty sequence.  That is, either the inhibitPolicyMapping field or the requireExplicitPolicy field MUST be present.",
+      "severityLevels": {
+        "Interoperability": 100
+      },
+      "rfc": {
+        "number": 5280,
+        "section": "4.2.1.11.  Policy Constraints"
+      },
+      "tags": null
+    },
     "extension-c5a7d132d9": {
       "description": "Conforming CAs MUST NOT issue certificates where policy constraints is an empty sequence.  That is, either the inhibitPolicyMapping field or the requireExplicitPolicy field MUST be present.",
       "severityLevels": {
@@ -2792,5 +2817,425 @@
         "section": "4.2.1.4.  Certificate Policies"
       },
       "tags": null
-    }
+    },
+  "basic-3f9a198ac8": {
+    "description": "MUST only use GeneralizedTime starting at year 2050.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.2.5 validity"
+    },
+    "tags": null
+  },
+  "basic-3f2aca81b6": {
+    "description": "MUST only use GeneralizedTime starting at year 2050.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.2.5 validity"
+    },
+    "tags": null
+  },
+  "basic-3f9b9cf188": {
+    "description": "MUST only use GeneralizedTime starting at year 2050.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.2.5 validity"
+    },
+    "tags": null
+  },
+  "basic-1ef52d9ac8": {
+    "description": "MUST only use GeneralizedTime starting at year 2050.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.2.5 validity"
+    },
+    "tags": null
+  },
+  "basic-2ec124217b": {
+    "description": "MUST not be used anymore.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.2.8 issuerUniqueID und subjectUniqueID"
+    },
+    "tags": null
+  },
+  "basic-2e1514212d": {
+    "description": "MUST not be used anymore.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.2.8 issuerUniqueID und subjectUniqueID"
+    },
+    "tags": null
+  },
+  "basic-5da143217b": {
+    "description": "MUST not be used anymore.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.2.8 issuerUniqueID und subjectUniqueID"
+    },
+    "tags": null
+  },
+  "basic-5da113007b": {
+    "description": "MUST not be used anymore.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.2.8 issuerUniqueID und subjectUniqueID"
+    },
+    "tags": null
+  },
+  "basic-a3e135eba6": {
+    "description": "MUST: Version 3.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "4 TLS Server Zertifikate, 5 TLS Client Zertifikate"
+    },
+    "tags": null
+  },
+  "basic-a6a825cba3": {
+    "description": "MUST: Version 3.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "4 TLS Server Zertifikate, 5 TLS Client Zertifikate"
+    },
+    "tags": null
+  },
+  "basic-a9e117aba9": {
+    "description": "MUST: Version 3.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "4 TLS Server Zertifikate, 5 TLS Client Zertifikate"
+    },
+    "tags": null
+  },
+  "basic-c9a8351ca3": {
+    "description": "MUST: Version 3.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "4 TLS Server Zertifikate, 5 TLS Client Zertifikate"
+    },
+    "tags": null
+  },
+  "basic-a5a68afea1": {
+    "description": "Version MUST be present.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.1.  Basic Certificate Fields"
+    },
+    "bsi": null,
+    "tags": null
+  },
+  "basic-a6b1964ba3": {
+    "description": "Version MUST be present.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.1.  Basic Certificate Fields"
+    },
+    "bsi": null,
+    "tags": null
+  },
+  "basic-e106a2171a": {
+    "description": "MUST be present and non-empty.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "3 CA-Zertifikate"
+    },
+    "tags": null
+  },
+  "basic-f214c1171a": {
+    "description": "MUST use PrintableString or UTF8String for subject and issuer.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.2.4 issuer, 2.2.6 subject"
+    },
+    "tags": null
+  },
+  "basic-f149a9f71a": {
+    "description": "MUST use PrintableString or UTF8String for subject and issuer.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.2.4 issuer, 2.2.6 subject"
+    },
+    "tags": null
+  },
+  "basic-e991a3581a": {
+    "description": "MUST use PrintableString or UTF8String for subject and issuer.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.2.4 issuer, 2.2.6 subject"
+    },
+    "tags": null
+  },
+  "basic-e191a2791c": {
+    "description": "MUST use PrintableString or UTF8String for subject and issuer.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.2.4 issuer, 2.2.6 subject"
+    },
+    "tags": null
+  },
+  "basic-e195f2581a": {
+    "description": "MUST use PrintableString or UTF8String for subject and issuer.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.2.4 issuer, 2.2.6 subject"
+    },
+    "tags": null
+  },
+  "basic-e921fed89a": {
+    "description": "MUST use PrintableString or UTF8String for subject and issuer.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.2.4 issuer, 2.2.6 subject"
+    },
+    "tags": null
+  },
+  "extension-128a9aac93": {
+    "description": "MUST be used for all CA certificates.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.3.8 Subject Key Identifier"
+    },
+    "tags": null
+  },
+  "extension-999f499fe2": {
+    "description": "Multiple valid extended key usages are allowed.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.12.  Extended Key Usage"
+    },
+    "bsi": null,
+    "tags": null
+  },
+  "extension-130f887ee2": {
+    "description": "Multiple valid extended key usages are allowed.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.12.  Extended Key Usage"
+    },
+    "bsi": null,
+    "tags": null
+  },
+  "extension-a2c84a2918": {
+    "description": "MUST be used for all non self-signed certificates.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.3.7 Authority Key Identifier"
+    },
+    "tags": null
+  },
+  "extension-198c1c9f93": {
+    "description": "MUST be used for all non self-signed certificates.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "2.3.7 Authority Key Identifier"
+    },
+    "tags": null
+  },
+  "extension-1e2a19cef5": {
+    "description": "Set key usages MUST be valid.",
+    "severityLevels": {
+      "Security": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.3.  Key Usage"
+    },
+    "bsi": null,
+    "tags": null
+  },
+  "extension-1ea3c5dc17": {
+    "description": "Conforming CAs MUST mark this extension as non-critical.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.2.  Subject Key Identifier"
+    },
+    "bsi": null,
+    "tags": null
+  },
+  "extension-2d1d5dc178": {
+    "description": "Conforming CAs MUST mark this extension as non-critical.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.2.  Subject Key Identifier"
+    },
+    "bsi": null,
+    "tags": null
+  },
+  "extension-930f499fe2": {
+    "description": "If a certificate contains both a key usage extension and an extended key usage extension, then both extensions MUST be processed independently and the certificate MUST only be used for a purpose consistent with both extensions.",
+    "severityLevels": {
+      "Security": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.12.  Extended Key Usage"
+    },
+    "bsi": null,
+    "tags": null
+  },
+  "extension-930f987fe2": {
+    "description": "If a certificate contains both a key usage extension and an extended key usage extension, then both extensions MUST be processed independently and the certificate MUST only be used for a purpose consistent with both extensions.",
+    "severityLevels": {
+      "Security": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.12.  Extended Key Usage"
+    },
+    "bsi": null,
+    "tags": null
+  },
+  "extension-a6c2a465a3": {
+    "description": "If present, the content of the name constraints extension MUST not be empty.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "3.2.4 Name Constraints"
+    },
+    "tags": null
+  },
+  "extension-c1a6aca5d3": {
+    "description": "The name constraints extension, which MUST be used only in a CA certificate,[...]",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.10.  Name Constraints"
+    },
+    "bsi": null,
+    "tags": null
+  },
+  "extension-c1c9dcb5d3": {
+    "description": "Conforming CAs MUST mark this extension as critical",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.10.  Name Constraints"
+    },
+    "bsi": null,
+    "tags": null
+  },
+  "extension-da2157ba0f": {
+    "description": "If present, cA field must have value false.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": null,
+    "bsi": {
+      "number": "TR-02103",
+      "section": "4.1.1 Basic Constraints, 5.1.1 Basic Constraints"
+    },
+    "tags": null
+  }
 }

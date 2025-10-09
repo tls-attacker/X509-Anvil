@@ -8,17 +8,17 @@
  */
 package de.rub.nds.x509anvil.suite.tests.util;
 
+import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.Test;
 
 public class CertificateGenerationTest {
     protected static final Logger LOGGER = LogManager.getLogger();
 
-    @Test
+    @AnvilTest(id = "cert-gen")
     public void exportSampleCertificates() {
         X509CertificateChainConfig chainConfig = new X509CertificateChainConfig();
         chainConfig.initializeChain(3, 1);

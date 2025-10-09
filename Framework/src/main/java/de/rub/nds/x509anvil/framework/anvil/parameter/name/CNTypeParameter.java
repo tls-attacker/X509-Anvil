@@ -19,9 +19,7 @@ import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /** Sets the DirectoryStringType of the subject */
 public class CNTypeParameter extends CertificateSpecificParameter<DirectoryStringChoiceType> {

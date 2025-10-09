@@ -54,7 +54,7 @@ public class AnyPolicyMappingTests extends X509AnvilTest {
         });
     }
 
-    @ChainLength(minLength = 4)
+    @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-42c0e99d7d")
     public void anyPolicyMappingFromEntityToIssuerInIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -127,7 +127,7 @@ public class AnyPolicyMappingTests extends X509AnvilTest {
         });
     }
 
-    @ChainLength(minLength = 4)
+    @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-ab7837006f")
     public void anyPolicyMappingFromIssuerToEntityInIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

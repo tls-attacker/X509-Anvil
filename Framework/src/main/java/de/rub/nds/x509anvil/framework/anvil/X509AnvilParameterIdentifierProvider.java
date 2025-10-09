@@ -11,7 +11,6 @@ package de.rub.nds.x509anvil.framework.anvil;
 import static de.rub.nds.x509anvil.framework.constants.ChainValues.MAX_CHAIN_LENGTH;
 import static de.rub.nds.x509anvil.framework.constants.ChainValues.MAX_INTERMEDIATE_CERTS_MODELED;
 
-import de.rub.nds.anvilcore.context.AnvilContext;
 import de.rub.nds.anvilcore.context.AnvilContextRegistry;
 import de.rub.nds.anvilcore.model.DefaultModelTypes;
 import de.rub.nds.anvilcore.model.DerivationScope;
