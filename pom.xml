@@ -38,6 +38,16 @@
                 <role>Developer</role>
             </roles>
         </developer>
+        <developer>
+            <id>mradoy99</id>
+            <name>Maximilian radoy</name>
+            <email>maximilian.radoy@uni-paderborn.de</email>
+            <organization>UPB</organization>
+            <organizationUrl>https://cs.uni-paderborn.de/syssec</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
     </developers>
     <modules>
         <module>Framework</module>
@@ -71,7 +81,7 @@
         <dependency>
             <groupId>de.rub.nds</groupId>
             <artifactId>x509-attacker</artifactId>
-            <version>4.3.4</version>
+            <version>4.3.5-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

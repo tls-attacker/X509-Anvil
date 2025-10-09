@@ -9,7 +9,8 @@
 package de.rub.nds.x509anvil.framework.verifier.adapter;
 
 import de.rub.nds.tlsattacker.core.config.Config;
-import de.rub.nds.tlsattacker.core.connection.OutboundConnection;
+import de.rub.nds.tlsattacker.core.constants.CipherSuite;
+import de.rub.nds.tlsattacker.core.constants.ProtocolVersion;
 import de.rub.nds.tlsattacker.core.protocol.message.*;
 import de.rub.nds.tlsattacker.core.workflow.WorkflowTrace;
 import de.rub.nds.tlsattacker.core.workflow.action.ReceiveAction;
@@ -19,9 +20,16 @@ import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfig;
 public class TlsClientAuthVerifierAdapter extends TlsAuthVerifierAdapter {
     public TlsClientAuthVerifierAdapter(String hostname, int port) {
         super(hostname, port);
-        config.setDefaultClientConnection(new OutboundConnection("client", 4433, "localhost"));
         config.setClientAuthentication(true);
         config.setAddRenegotiationInfoExtension(false);
+        config.setDefaultClientSupportedCipherSuites(
+                CipherSuite.getImplemented().stream()
+                        .filter(
+                                cipherSuite ->
+                                        cipherSuite.toString().contains("ECDHE_RSA")
+                                                && cipherSuite.isSupportedInProtocol(
+                                                        ProtocolVersion.TLS12))
+                        .toList());
     }
 
     public static TlsClientAuthVerifierAdapter fromConfig(TlsAuthVerifierAdapterConfig config) {
@@ -38,13 +46,13 @@ public class TlsClientAuthVerifierAdapter extends TlsAuthVerifierAdapter {
                 new ReceiveAction(
                         new ServerHelloMessage(),
                         new CertificateMessage(),
-                        new DHEServerKeyExchangeMessage(),
+                        new ECDHEServerKeyExchangeMessage(),
                         new CertificateRequestMessage(),
                         new ServerHelloDoneMessage()));
         workflowTrace.addTlsAction(
                 new SendAction(
                         new CertificateMessage(),
-                        new DHClientKeyExchangeMessage(),
+                        new ECDHClientKeyExchangeMessage(),
                         new CertificateVerifyMessage(),
                         new ChangeCipherSpecMessage(),
                         new FinishedMessage()));

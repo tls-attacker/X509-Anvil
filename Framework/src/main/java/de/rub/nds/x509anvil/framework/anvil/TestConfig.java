@@ -17,6 +17,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import de.rub.nds.anvilcore.context.AnvilTestConfig;
 import de.rub.nds.tlsattacker.core.config.TLSDelegateConfig;
 import de.rub.nds.tlsattacker.core.config.delegate.GeneralDelegate;
+import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfig;
+import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocker;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterConfig;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterType;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfig;
@@ -48,6 +50,12 @@ public class TestConfig extends TLSDelegateConfig {
             description = "Whether to test TLS servers or TLS clients.")
     private VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_CLIENT_AUTH;
 
+    @JsonProperty("docker")
+    @Parameter(
+            names = "-docker",
+            description =
+                    "Use TLS Docker Library with indicated library (latest) or library:version.")
+    private String dockerLibrary = "";
 
     @JsonProperty("minChainLength")
     @Parameter(
@@ -122,6 +130,28 @@ public class TestConfig extends TLSDelegateConfig {
     }
 
     public VerifierAdapterConfig getVerifierAdapterConfig() {
+        if (useDocker()) {
+            String[] parts = dockerLibrary.split(":");
+            return switch (parts.length) {
+                case 1:
+                    yield new TlsAuthVerifierAdapterConfigDocker(parts[0], "");
+                case 2:
+                    yield new TlsAuthVerifierAdapterConfigDocker(parts[0], parts[1]);
+                case 0:
+                    {
+                        LOGGER.error("Docker Library parameter must not be empty");
+                        System.exit(0);
+                        yield null;
+                    }
+                default:
+                    {
+                        LOGGER.error(
+                                "Docker Parameter must be either a library or library:version");
+                        System.exit(0);
+                        yield null;
+                    }
+            };
+        }
         return verifierAdapterConfig;
     }
 
@@ -147,5 +177,13 @@ public class TestConfig extends TLSDelegateConfig {
 
     public void setDefaultIntermediateCertsModeled(int defaultIntermediateCertsModeled) {
         this.defaultIntermediateCertsModeled = defaultIntermediateCertsModeled;
+    }
+
+    public boolean useDocker() {
+        return !dockerLibrary.isEmpty();
+    }
+
+    public String getDockerLibrary() {
+        return dockerLibrary;
     }
 }

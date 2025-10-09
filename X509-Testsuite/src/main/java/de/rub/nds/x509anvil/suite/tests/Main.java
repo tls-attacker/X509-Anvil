@@ -14,6 +14,8 @@ import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterIdentifierProvider;
 
 import java.util.List;
+import de.rub.nds.x509anvil.framework.verifier.adapter.TlsClientAuthVerifierAdapterDocker;
+import de.rub.nds.x509anvil.framework.verifier.adapter.TlsServerAuthVerifierAdapterDocker;
 
 public class Main {
     public static void main(String[] args) {
@@ -33,5 +35,17 @@ public class Main {
                 new TestRunner(
                         anvilTestConfig, "placeholder", new X509AnvilParameterIdentifierProvider());
         testRunner.runTests();
+        TlsClientAuthVerifierAdapterDocker.stopContainers();
+        TlsServerAuthVerifierAdapterDocker.stopContainers();
+    }
+
+    static {
+        Runtime.getRuntime()
+                .addShutdownHook(
+                        new Thread(
+                                () -> {
+                                    TlsClientAuthVerifierAdapterDocker.stopContainers();
+                                    TlsServerAuthVerifierAdapterDocker.stopContainers();
+                                }));
     }
 }

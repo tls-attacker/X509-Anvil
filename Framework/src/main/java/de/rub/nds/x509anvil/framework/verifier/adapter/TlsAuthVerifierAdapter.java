@@ -11,7 +11,6 @@ package de.rub.nds.x509anvil.framework.verifier.adapter;
 import de.rub.nds.tlsattacker.core.config.Config;
 import de.rub.nds.tlsattacker.core.connection.OutboundConnection;
 import de.rub.nds.tlsattacker.core.constants.CipherSuite;
-import de.rub.nds.tlsattacker.core.constants.NamedGroup;
 import de.rub.nds.tlsattacker.core.constants.SignatureAndHashAlgorithm;
 import de.rub.nds.tlsattacker.core.state.State;
 import de.rub.nds.tlsattacker.core.workflow.DefaultWorkflowExecutor;
@@ -68,13 +67,6 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
         config.setDefaultServerSupportedSignatureAndHashAlgorithms(
                 supportedSignatureAndHashAlgorithms);
 
-        List<NamedGroup> supportedNamedGroups =
-                Arrays.stream(NamedGroup.values())
-                        .filter(g -> g.name().contains("SECP256R"))
-                        .collect(Collectors.toList());
-        config.setDefaultClientNamedGroups(supportedNamedGroups);
-        config.setDefaultServerNamedGroups(supportedNamedGroups);
-
         defaultConfig = config;
     }
 
@@ -130,7 +122,24 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
 
         DefaultWorkflowExecutor workflowExecutor = new DefaultWorkflowExecutor(state);
 
-        runCommandInBackground();
+        if(this instanceof TlsServerAuthVerifierAdapter) {
+            Thread t =
+                    new Thread(
+                            () -> {
+                                try {
+                                    Thread.sleep(20);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                runCommandInBackground();
+                            });
+            workflowExecutor.setBeforeTransportInitCallback(state1 -> {
+                t.start();
+                return 0;
+            });
+        } else {
+            runCommandInBackground();
+        }
 
         workflowExecutor.executeWorkflow();
 
@@ -141,7 +150,10 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
 
         try {
             SignatureAndHashAlgorithm signatureAndHashAlgorithm =
-                    switch (certificatesChain.get(0).getPublicKeyContainer().getAlgorithmType()) {
+                    switch (certificatesChain
+                            .getFirst()
+                            .getPublicKeyContainer()
+                            .getAlgorithmType()) {
                         case RSA -> SignatureAndHashAlgorithm.RSA_SHA256;
                         case DSA -> SignatureAndHashAlgorithm.DSA_SHA256;
                         case ECDSA -> SignatureAndHashAlgorithm.ECDSA_SHA256;
@@ -149,7 +161,7 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
                                 throw new IllegalArgumentException(
                                         "Unsupported public key algorithm: "
                                                 + certificatesChain
-                                                        .get(0)
+                                                        .getFirst()
                                                         .getPublicKeyContainer()
                                                         .getAlgorithmType());
                     };
