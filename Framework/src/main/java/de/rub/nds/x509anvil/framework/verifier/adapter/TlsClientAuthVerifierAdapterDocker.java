@@ -95,6 +95,10 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
                         builder.cmd(
                                 "-n", "nss-server-cert", "-p", "4430", "-d", "sql:/x509-anv-resources/nss_db", "-r", "-r", "-w", "password");
             }
+            if(implementationType == TlsImplementationType.S2N) {
+                builder = builder.cmd("--cert", "/x509-anv-resources/static-root/root-cert.pem", "--key", "/x509-anv-resources/static-root/private-key.pem",
+                        "--parallelize", "--self-service-blinding", "--mutualAuth", "--ca-file", "/x509-anv-resources/out/root_cert.pem", "--non-blocking", "0.0.0.0", "4430");
+            }
             tlsServerInstance = builder.build();
         } catch (TlsVersionNotFoundException e) {
             LOGGER.error("Unknown Version {} of {}", config.getVersion(), config.getImage());
@@ -124,7 +128,6 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
             case BORINGSSL -> "-require-any-client-cert";
             case MBEDTLS -> "ca_file=/x509-anv-resources/out/root_cert.pem auth_mode=required";
             case RUSTLS -> "--auth /x509-anv-resources/out/root_cert.pem --require-auth";
-            case S2N -> "--mutualAuth --ca-file /x509-anv-resources/out/root_cert.pem";
             default -> "";
         });
     }
