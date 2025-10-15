@@ -23,13 +23,6 @@ public class Main {
         // create the TLS-Anvil test context singleton
         ContextHelper.initializeConfigs(args);
         AnvilTestConfig anvilTestConfig = ContextHelper.getTestConfig().getAnvilTestConfig();
-        anvilTestConfig.setDisableTcpDump(true);
-        anvilTestConfig.setIgnoreCache(true);
-        anvilTestConfig.setStrength(2);
-        anvilTestConfig.setOutputFolder("results");
-        anvilTestConfig.setIdentifier("openssl-t2");
-        anvilTestConfig.setProfileFolder("./X509-Testsuite/profiles/");
-        anvilTestConfig.setProfiles(List.of("rfc5280"));
 
         TestRunner testRunner =
                 new TestRunner(

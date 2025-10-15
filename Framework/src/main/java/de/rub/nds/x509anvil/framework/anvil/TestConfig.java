@@ -24,6 +24,10 @@ import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 @JsonAutoDetect(
         fieldVisibility = JsonAutoDetect.Visibility.NONE,
         setterVisibility = JsonAutoDetect.Visibility.NONE,
@@ -81,6 +85,7 @@ public class TestConfig extends TLSDelegateConfig {
     }
 
     public void parse(String[] args) {
+        applyModifiedAnvilCoreDefaults();
 
         JCommander argParser = JCommander.newBuilder()
                 .addObject(getAnvilTestConfig())
@@ -109,6 +114,14 @@ public class TestConfig extends TLSDelegateConfig {
             // set test package if not specified via command args
             getAnvilTestConfig().setTestPackage("de.rub.nds.x509anvil.suite.tests");
         }
+    }
+
+    private void applyModifiedAnvilCoreDefaults() {
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        anvilTestConfig.setOutputFolder("results-"+timestamp);
+        anvilTestConfig.setIdentifier("");
+        anvilTestConfig.setProfileFolder("./X509-Testsuite/profiles/");
+        anvilTestConfig.setProfiles(List.of("rfc5280"));
     }
 
 
