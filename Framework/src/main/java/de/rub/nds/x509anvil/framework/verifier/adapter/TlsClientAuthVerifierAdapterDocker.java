@@ -138,10 +138,11 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
         if (!serverUtil.isServerOnline(
                 currentServerInstance.getHostInfo().getHostname(),
                 currentServerInstance.getPort())) {
-            currentServerInstance.restart();
+            LOGGER.warn("Server is not reachable");
+            /*currentServerInstance.restart();
             serverUtil.waitUntilServerIsOnline(
                     currentServerInstance.getHostInfo().getHostname(),
-                    currentServerInstance.getPort());
+                    currentServerInstance.getPort());*/
         }
     }
 
