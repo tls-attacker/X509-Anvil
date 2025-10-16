@@ -8,8 +8,6 @@
  */
 package de.rub.nds.x509anvil.framework.verifier.adapter;
 
-import com.github.dockerjava.api.exception.InternalServerErrorException;
-import com.github.dockerjava.api.exception.NotFoundException;
 import com.github.dockerjava.api.model.AccessMode;
 import com.github.dockerjava.api.model.Bind;
 import com.github.dockerjava.api.model.HostConfig;
@@ -19,7 +17,7 @@ import de.rub.nds.tls.subject.docker.DockerTlsClientInstance;
 import de.rub.nds.tls.subject.docker.DockerTlsManagerFactory;
 import de.rub.nds.tls.subject.exceptions.TlsVersionNotFoundException;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocker;
-import java.nio.file.Paths;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +25,6 @@ import de.rub.nds.x509anvil.framework.verifier.adapter.util.NSSPkcs12Util;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.bouncycastle.jcajce.provider.asymmetric.X509;
 
 public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAdapter {
     protected static final Logger LOGGER = LogManager.getLogger();

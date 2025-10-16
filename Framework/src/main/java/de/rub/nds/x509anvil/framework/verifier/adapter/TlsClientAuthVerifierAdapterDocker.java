@@ -20,7 +20,7 @@ import de.rub.nds.tls.subject.docker.DockerTlsManagerFactory;
 import de.rub.nds.tls.subject.docker.DockerTlsServerInstance;
 import de.rub.nds.tls.subject.exceptions.TlsVersionNotFoundException;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocker;
-import java.nio.file.Paths;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -140,10 +140,6 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
                 currentServerInstance.getHostInfo().getHostname(),
                 currentServerInstance.getPort())) {
             LOGGER.warn("Server is not reachable");
-            /*currentServerInstance.restart();
-            serverUtil.waitUntilServerIsOnline(
-                    currentServerInstance.getHostInfo().getHostname(),
-                    currentServerInstance.getPort());*/
         }
     }
 
