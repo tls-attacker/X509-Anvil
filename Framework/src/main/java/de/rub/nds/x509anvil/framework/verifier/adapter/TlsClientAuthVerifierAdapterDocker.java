@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.rub.nds.x509anvil.framework.verifier.adapter.util.NSSPkcs12Util;
+import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -114,7 +115,7 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
     }
 
     private static HostConfig applyConfig(HostConfig config) {
-        String hostPath = Paths.get("X509-Testsuite/resources/").toAbsolutePath().toString();
+        String hostPath = X509Util.RESOURCES_PATH.getAbsolutePath();
         config.withBinds(new Bind(hostPath, new Volume("/x509-anv-resources/"), AccessMode.ro));
         config.withAutoRemove(true);
         return config;

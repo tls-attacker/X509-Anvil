@@ -119,7 +119,7 @@ public class TestConfig extends TLSDelegateConfig {
     private void applyModifiedAnvilCoreDefaults() {
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         anvilTestConfig.setOutputFolder("results-"+timestamp);
-        anvilTestConfig.setIdentifier("");
+        anvilTestConfig.setIdentifier("x509-anvil");
         anvilTestConfig.setProfileFolder("./X509-Testsuite/profiles/");
         anvilTestConfig.setProfiles(List.of("rfc5280"));
     }

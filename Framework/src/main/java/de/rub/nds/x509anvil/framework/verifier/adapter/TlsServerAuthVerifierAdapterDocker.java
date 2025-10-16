@@ -24,8 +24,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.rub.nds.x509anvil.framework.verifier.adapter.util.NSSPkcs12Util;
+import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.bouncycastle.jcajce.provider.asymmetric.X509;
 
 public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAdapter {
     protected static final Logger LOGGER = LogManager.getLogger();
@@ -83,7 +85,7 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
     }
 
     private static HostConfig applyConfig(HostConfig config) {
-        String hostPath = Paths.get("X509-Testsuite/resources/").toAbsolutePath().toString();
+        String hostPath = X509Util.RESOURCES_PATH.getAbsolutePath();
         config.withBinds(new Bind(hostPath, new Volume("/x509-anv-resources/"), AccessMode.ro));
         config.withExtraHosts("tls-attacker.com:host-gateway");
         config.withAutoRemove(true);
@@ -99,7 +101,7 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
         for (DockerTlsClientInstance instance : tlsClientInstances.values()) {
             try {
                 instance.kill();
-            } catch (NotFoundException | InternalServerErrorException e) {
+            } catch (Exception e) {
                 // Container is already dead, so it's alright :-)
             }
         }

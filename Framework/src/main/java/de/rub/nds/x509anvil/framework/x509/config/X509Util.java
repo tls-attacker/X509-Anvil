@@ -40,23 +40,25 @@ public class X509Util {
                                             .getValue()
                                             .getValue()
                                             .equals(extensionType.getOid().toString()))
-                    .collect(Collectors.toList())
-                    .get(0);
+                    .toList()
+                    .getFirst();
         } catch (IndexOutOfBoundsException e) {
             throw new IllegalArgumentException("Extensions not found");
         }
     }
+    public static final File RESOURCES_PATH = new File("resources");
 
     public static void exportCertificates(
-            List<X509Certificate> certificateChain, String directory) {
+            List<X509Certificate> certificateChain) {
         X509CertificateChain x509CertificateChain = new X509CertificateChain(certificateChain);
+        String targetDirectory = RESOURCES_PATH.getAbsolutePath()+"/out/";
         if (x509CertificateChain.size() >= 1) {
             writeCertificate(
-                    directory, "root_cert", x509CertificateChain.getCertificateList().get(0));
+                    targetDirectory, "root_cert", x509CertificateChain.getCertificateList().getFirst());
         }
         if (x509CertificateChain.size() >= 2) {
             writeCertificate(
-                    directory,
+                    targetDirectory,
                     "leaf_cert",
                     x509CertificateChain.getCertificateList().get(x509CertificateChain.size() - 1));
         }
@@ -67,7 +69,7 @@ public class X509Util {
                     .forEach(
                             x ->
                                     writeCertificate(
-                                            directory,
+                                            targetDirectory,
                                             "inter_cert_" + (certificateChain.indexOf(x) - 1),
                                             x));
         }

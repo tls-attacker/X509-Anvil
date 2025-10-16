@@ -32,6 +32,6 @@ public class CertificateGenerationTest {
             LOGGER.error("Could not generate certificates with: ", e);
         }
 
-        X509Util.exportCertificates(chainGenerator.retrieveCertificateChain(), "resources/out");
+        X509Util.exportCertificates(chainGenerator.retrieveCertificateChain());
     }
 }
