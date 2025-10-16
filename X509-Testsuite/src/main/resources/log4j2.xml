@@ -6,6 +6,9 @@
         </Console>
     </Appenders>
     <Loggers>
+        <Logger name="de.rub.nds.tlsattacker.core.layer.LayerStackProcessingResult" level="error" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
         <Root level="warn">
             <AppenderRef ref="ConsoleAppender" />
         </Root>
