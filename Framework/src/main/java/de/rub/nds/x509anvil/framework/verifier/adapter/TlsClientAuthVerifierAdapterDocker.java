@@ -20,11 +20,12 @@ import de.rub.nds.tls.subject.docker.DockerTlsManagerFactory;
 import de.rub.nds.tls.subject.docker.DockerTlsServerInstance;
 import de.rub.nds.tls.subject.exceptions.TlsVersionNotFoundException;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocker;
-import java.nio.file.Paths;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import de.rub.nds.x509anvil.framework.verifier.adapter.util.NSSPkcs12Util;
+import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -114,7 +115,7 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
     }
 
     private static HostConfig applyConfig(HostConfig config) {
-        String hostPath = Paths.get("X509-Testsuite/resources/").toAbsolutePath().toString();
+        String hostPath = X509Util.RESOURCES_PATH.getAbsolutePath();
         config.withBinds(new Bind(hostPath, new Volume("/x509-anv-resources/"), AccessMode.ro));
         config.withAutoRemove(true);
         return config;
@@ -128,6 +129,7 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
             case BORINGSSL -> "-require-any-client-cert";
             case MBEDTLS -> "ca_file=/x509-anv-resources/out/root_cert.pem auth_mode=required";
             case RUSTLS -> "--auth /x509-anv-resources/out/root_cert.pem --require-auth";
+            case GNUTLS -> "--require-client-cert --verify-client-cert --x509cafile /x509-anv-resources/out/root_cert.pem";
             default -> "";
         });
     }
@@ -137,10 +139,7 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
         if (!serverUtil.isServerOnline(
                 currentServerInstance.getHostInfo().getHostname(),
                 currentServerInstance.getPort())) {
-            currentServerInstance.restart();
-            serverUtil.waitUntilServerIsOnline(
-                    currentServerInstance.getHostInfo().getHostname(),
-                    currentServerInstance.getPort());
+            LOGGER.warn("Server is not reachable");
         }
     }
 
