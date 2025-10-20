@@ -3237,5 +3237,16 @@
       "section": "4.1.1 Basic Constraints, 5.1.1 Basic Constraints"
     },
     "tags": null
+  },
+  "extension-0123456789": {
+    "description": "Simple CRL Test.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.13.  CRL Distribution Points"
+    },
+    "tags": null
   }
 }

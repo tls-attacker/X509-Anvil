@@ -8,6 +8,8 @@
  */
 package de.rub.nds.x509anvil.framework.x509.config;
 
+import de.rub.nds.asn1.model.Asn1UnknownField;
+import de.rub.nds.asn1.model.Asn1UnknownSequence;
 import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.x509.key.CachedKeyPairGenerator;
@@ -17,6 +19,9 @@ import de.rub.nds.x509attacker.constants.CertificateChainPositionType;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import de.rub.nds.x509attacker.x509.model.extensions.DistributionPoint;
+import de.rub.nds.x509attacker.x509.model.extensions.DistributionPointName;
+
 import java.math.BigInteger;
 import java.util.*;
 
@@ -38,9 +43,24 @@ public class X509CertificateConfigUtil {
         List<ExtensionConfig> extensionConfigList = new ArrayList<>();
         extensionConfigList.add(generateBasicConstraintsConfig(chainPosType));
         extensionConfigList.add(generateKeyUsageConfig(chainPosType));
+        //extensionConfigList.add(generateCRLDistributionPointsConfig(chainPosType));
         config.setExtensions(extensionConfigList);
         config.setIncludeExtensions(true);
         return config;
+    }
+
+    private static ExtensionConfig generateCRLDistributionPointsConfig(CertificateChainPositionType chainPosType) {
+        CRLDistributionPointsConfig crlDistributionPointsConfig = new CRLDistributionPointsConfig();
+        crlDistributionPointsConfig.setPresent(true);
+        crlDistributionPointsConfig.setCritical(false);
+        DistributionPointName distributionPointName = new DistributionPointName("URI:http://e8.c.lencr.org/72.crl");
+        DistributionPoint distributionPoint = new DistributionPoint("dp1");
+        distributionPoint.setDistributionPointName(distributionPointName);
+        List<DistributionPoint> distributionPointList = new ArrayList<>();
+        distributionPointList.add(distributionPoint);
+        crlDistributionPointsConfig.setDistributionPointList(distributionPointList);
+
+        return crlDistributionPointsConfig;
     }
 
     public static X509CertificateConfig generateDefaultRootCaCertificateConfig(boolean selfSigned) {
@@ -54,7 +74,7 @@ public class X509CertificateConfigUtil {
         SubjectKeyIdentifierConfig subjectKeyIdentifierConfig = new SubjectKeyIdentifierConfig();
         subjectKeyIdentifierConfig.setPresent(true);
         subjectKeyIdentifierConfig.setCritical(false);
-        subjectKeyIdentifierConfig.setKeyIdentifier(new byte[] {1, 2, 4});
+        subjectKeyIdentifierConfig.setKeyIdentifier(new byte[]{1, 2, 4});
         config.addExtensions(subjectKeyIdentifierConfig);
         return config;
     }
@@ -72,15 +92,15 @@ public class X509CertificateConfigUtil {
         SubjectKeyIdentifierConfig subjectKeyIdentifierConfig = new SubjectKeyIdentifierConfig();
         subjectKeyIdentifierConfig.setPresent(true);
         subjectKeyIdentifierConfig.setCritical(false);
-        subjectKeyIdentifierConfig.setKeyIdentifier(new byte[] {1, 2, 3, (byte) intermediatePosition});
+        subjectKeyIdentifierConfig.setKeyIdentifier(new byte[]{1, 2, 3, (byte) intermediatePosition});
         config.addExtensions(subjectKeyIdentifierConfig);
         AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
         authorityKeyIdentifier.setPresent(true);
         authorityKeyIdentifier.setCritical(false);
         if (isLast) {
-            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 4});
+            authorityKeyIdentifier.setKeyIdentifier(new byte[]{1, 2, 4});
         } else {
-            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3, (byte) (intermediatePosition+1)});
+            authorityKeyIdentifier.setKeyIdentifier(new byte[]{1, 2, 3, (byte) (intermediatePosition + 1)});
         }
         config.addExtensions(authorityKeyIdentifier);
         return config;
@@ -93,9 +113,9 @@ public class X509CertificateConfigUtil {
         authorityKeyIdentifier.setPresent(true);
         authorityKeyIdentifier.setCritical(false);
         if (isLast) {
-            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 4});
+            authorityKeyIdentifier.setKeyIdentifier(new byte[]{1, 2, 4});
         } else {
-            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3, 0});
+            authorityKeyIdentifier.setKeyIdentifier(new byte[]{1, 2, 3, 0});
         }
         config.addExtensions(authorityKeyIdentifier);
         return config;
@@ -179,7 +199,7 @@ public class X509CertificateConfigUtil {
                 .filter(
                         x ->
                                 X509ExtensionType.decodeFromOidBytes(
-                                                x.getExtensionId().getEncoded())
+                                        x.getExtensionId().getEncoded())
                                         == extensionType)
                 .findFirst()
                 .orElse(null);
