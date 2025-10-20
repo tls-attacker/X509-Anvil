@@ -16,8 +16,10 @@ import de.rub.nds.tls.subject.TlsImplementationType;
 import de.rub.nds.tls.subject.docker.DockerTlsClientInstance;
 import de.rub.nds.tls.subject.docker.DockerTlsManagerFactory;
 import de.rub.nds.tls.subject.exceptions.TlsVersionNotFoundException;
+import de.rub.nds.tlsattacker.core.constants.SignatureAndHashAlgorithm;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocker;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,17 +37,25 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
     private final int port;
     private static int nextPort = 45655;
 
-    private TlsServerAuthVerifierAdapterDocker(DockerTlsClientInstance instance) {
+    private TlsServerAuthVerifierAdapterDocker(DockerTlsClientInstance instance, TlsImplementationType implementationType) {
         super("localhost", nextPort);
         this.currentClientInstance = instance;
         this.port = nextPort;
         nextPort = ((nextPort +1)%10000)+40000;
+        if (implementationType == TlsImplementationType.WOLFSSL) {
+            config.getDefaultServerSupportedSignatureAndHashAlgorithms()
+                    .removeAll(Arrays.asList(
+                            SignatureAndHashAlgorithm.DSA_SHA224,
+                            SignatureAndHashAlgorithm.ECDSA_SHA224,
+                            SignatureAndHashAlgorithm.RSA_SHA224
+                    ));
+        }
     }
 
     public static TlsServerAuthVerifierAdapterDocker fromConfig(
             TlsAuthVerifierAdapterConfigDocker config) {
         DockerTlsClientInstance instance = spinUpServer(config);
-        return new TlsServerAuthVerifierAdapterDocker(instance);
+        return new TlsServerAuthVerifierAdapterDocker(instance, TlsImplementationType.fromString(config.getImage()));
     }
 
     private static DockerTlsClientInstance spinUpServer(TlsAuthVerifierAdapterConfigDocker config) {
