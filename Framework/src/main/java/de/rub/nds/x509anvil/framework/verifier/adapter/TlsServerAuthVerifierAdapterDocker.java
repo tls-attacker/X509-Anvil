@@ -66,7 +66,8 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
                                     TlsImplementationType.fromString(config.getImage()),
                                     config.getVersion())
                             .hostConfigHook(TlsServerAuthVerifierAdapterDocker::applyConfig)
-                            .certificatePath("/x509-anv-resources/out/root_cert.pem");
+                            .certificatePath("/x509-anv-resources/out/root_cert.pem")
+                            .additionalParameters(supplementStartCommand(TlsImplementationType.fromString(config.getImage())));;
             if(TlsImplementationType.fromString(config.getImage()) == TlsImplementationType.NSS) {
                 NSSPkcs12Util.execSetup();
                 builder.certificatePath("sql:/x509-anv-resources/nss_db/").additionalParameters("-R X509-Anvil-CA");
@@ -83,6 +84,14 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
         tlsClientInstance.start();
         tlsClientInstances.put(key, tlsClientInstance);
         return tlsClientInstance;
+    }
+
+        private static String supplementStartCommand(TlsImplementationType tlsImplementationType) {
+        return (switch (tlsImplementationType) {
+            case OPENSSL, LIBRESSL ->
+                    "-Verify 5 -verify_return_error";
+            default -> "";
+        });
     }
 
     private static HostConfig applyConfig(HostConfig config) {
