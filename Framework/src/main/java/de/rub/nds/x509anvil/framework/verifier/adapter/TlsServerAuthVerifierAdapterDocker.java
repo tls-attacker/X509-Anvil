@@ -32,14 +32,11 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
     private static final Map<String, DockerTlsClientInstance> tlsClientInstances = new HashMap<>();
 
     private final DockerTlsClientInstance currentClientInstance;
-    private final int port;
-    private static int nextPort = 45655;
+    protected int realPort;
 
     private TlsServerAuthVerifierAdapterDocker(DockerTlsClientInstance instance) {
-        super("localhost", nextPort);
+        super("localhost", 0);
         this.currentClientInstance = instance;
-        this.port = nextPort;
-        nextPort = ((nextPort +1)%10000)+40000;
     }
 
     public static TlsServerAuthVerifierAdapterDocker fromConfig(
@@ -91,7 +88,7 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
 
     @Override
     public void runCommandInBackground() {
-        currentClientInstance.connect("tls-attacker.com", this.port);
+        currentClientInstance.connect("tls-attacker.com", realPort);
     }
 
     public static void stopContainers() {

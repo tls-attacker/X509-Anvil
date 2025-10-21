@@ -9,12 +9,12 @@
 package de.rub.nds.x509anvil.framework.verifier.adapter;
 
 import de.rub.nds.tlsattacker.core.config.Config;
-import de.rub.nds.tlsattacker.core.connection.OutboundConnection;
 import de.rub.nds.tlsattacker.core.constants.CipherSuite;
 import de.rub.nds.tlsattacker.core.constants.SignatureAndHashAlgorithm;
 import de.rub.nds.tlsattacker.core.state.State;
 import de.rub.nds.tlsattacker.core.workflow.DefaultWorkflowExecutor;
 import de.rub.nds.tlsattacker.core.workflow.WorkflowTrace;
+import de.rub.nds.tlsattacker.transport.tcp.ServerTcpTransportHandler;
 import de.rub.nds.x509anvil.framework.verifier.VerifierAdapter;
 import de.rub.nds.x509anvil.framework.verifier.VerifierResult;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
@@ -68,11 +68,6 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
                 supportedSignatureAndHashAlgorithms);
 
         defaultConfig = config;
-    }
-
-    public TlsAuthVerifierAdapter(String hostname, int port) {
-        config = defaultConfig.createCopy();
-        config.setDefaultClientConnection(new OutboundConnection("client", port, hostname));
     }
 
     public TlsAuthVerifierAdapter() {
@@ -134,6 +129,9 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
                                 runCommandInBackground();
                             });
             workflowExecutor.setBeforeTransportInitCallback(state1 -> {
+                if(this instanceof TlsServerAuthVerifierAdapterDocker) {
+                    ((TlsServerAuthVerifierAdapterDocker)this).realPort = ((ServerTcpTransportHandler)state1.getContext().getTransportHandler()).getSrcPort();
+                }
                 t.start();
                 return 0;
             });
