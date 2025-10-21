@@ -27,10 +27,7 @@ public class TlsServerAuthVerifierAdapter extends TlsAuthVerifierAdapter {
         config.setDefaultServerConnection(new InboundConnection("server", port, hostname));
         config.setClientAuthentication(false);
         config.setDefaultRunningMode(RunningModeType.SERVER);
-
-        // FIXME TODO Some Libraries want this, some don't. Think about it
-        config.setAddRenegotiationInfoExtension(true);
-
+        config.setAddExtendedMasterSecretExtension(true);
         config.setDefaultServerSupportedCipherSuites(
                 CipherSuite.getImplemented().stream()
                         .filter(

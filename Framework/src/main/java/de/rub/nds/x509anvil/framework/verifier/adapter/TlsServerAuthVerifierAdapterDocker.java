@@ -34,15 +34,22 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
     private final DockerTlsClientInstance currentClientInstance;
     protected int realPort;
 
-    private TlsServerAuthVerifierAdapterDocker(DockerTlsClientInstance instance) {
+    private TlsServerAuthVerifierAdapterDocker(DockerTlsClientInstance instance, String type) {
         super("localhost", 0);
         this.currentClientInstance = instance;
+
+        if(TlsImplementationType.fromString(type) == TlsImplementationType.OPENSSL) {
+            config.setAddRenegotiationInfoExtension(true);
+        }
+        if(TlsImplementationType.fromString(type) == TlsImplementationType.WOLFSSL) {
+            config.setAddRenegotiationInfoExtension(false);
+        }
     }
 
     public static TlsServerAuthVerifierAdapterDocker fromConfig(
             TlsAuthVerifierAdapterConfigDocker config) {
         DockerTlsClientInstance instance = spinUpServer(config);
-        return new TlsServerAuthVerifierAdapterDocker(instance);
+        return new TlsServerAuthVerifierAdapterDocker(instance, config.getImage());
     }
 
     private static DockerTlsClientInstance spinUpServer(TlsAuthVerifierAdapterConfigDocker config) {
