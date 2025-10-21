@@ -23,11 +23,11 @@ import java.io.IOException;
 public class TlsServerAuthVerifierAdapter extends TlsAuthVerifierAdapter {
 
     public TlsServerAuthVerifierAdapter(String hostname, int port) {
-        super(hostname, port);
-        config.setDefaultServerConnection(new InboundConnection("client", port, hostname));
+        super();
+        config.setDefaultServerConnection(new InboundConnection("server", port, hostname));
         config.setClientAuthentication(false);
         config.setDefaultRunningMode(RunningModeType.SERVER);
-        config.setAddRenegotiationInfoExtension(false);
+        config.setAddExtendedMasterSecretExtension(true);
         config.setDefaultServerSupportedCipherSuites(
                 CipherSuite.getImplemented().stream()
                         .filter(
