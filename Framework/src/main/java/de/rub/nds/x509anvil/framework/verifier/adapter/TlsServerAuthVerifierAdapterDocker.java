@@ -16,8 +16,10 @@ import de.rub.nds.tls.subject.TlsImplementationType;
 import de.rub.nds.tls.subject.docker.DockerTlsClientInstance;
 import de.rub.nds.tls.subject.docker.DockerTlsManagerFactory;
 import de.rub.nds.tls.subject.exceptions.TlsVersionNotFoundException;
+import de.rub.nds.tlsattacker.core.constants.SignatureAndHashAlgorithm;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocker;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +45,12 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
         }
         if(TlsImplementationType.fromString(type) == TlsImplementationType.WOLFSSL) {
             config.setAddRenegotiationInfoExtension(false);
+            config.getDefaultServerSupportedSignatureAndHashAlgorithms()
+                    .removeAll(Arrays.asList(
+                            SignatureAndHashAlgorithm.DSA_SHA224,
+                            SignatureAndHashAlgorithm.ECDSA_SHA224,
+                            SignatureAndHashAlgorithm.RSA_SHA224
+                    ));
         }
     }
 
