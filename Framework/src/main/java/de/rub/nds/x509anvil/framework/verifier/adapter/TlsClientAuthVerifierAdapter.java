@@ -9,6 +9,7 @@
 package de.rub.nds.x509anvil.framework.verifier.adapter;
 
 import de.rub.nds.tlsattacker.core.config.Config;
+import de.rub.nds.tlsattacker.core.connection.OutboundConnection;
 import de.rub.nds.tlsattacker.core.constants.CipherSuite;
 import de.rub.nds.tlsattacker.core.constants.ProtocolVersion;
 import de.rub.nds.tlsattacker.core.protocol.message.*;
@@ -19,7 +20,8 @@ import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfig;
 
 public class TlsClientAuthVerifierAdapter extends TlsAuthVerifierAdapter {
     public TlsClientAuthVerifierAdapter(String hostname, int port) {
-        super(hostname, port);
+        super();
+        config.setDefaultClientConnection(new OutboundConnection("client", port, hostname));
         config.setClientAuthentication(true);
         config.setAddRenegotiationInfoExtension(false);
         config.setDefaultClientSupportedCipherSuites(
