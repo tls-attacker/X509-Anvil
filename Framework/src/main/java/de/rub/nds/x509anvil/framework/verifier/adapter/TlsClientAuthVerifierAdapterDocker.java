@@ -40,10 +40,10 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
 
     private final DockerTlsServerInstance currentServerInstance;
 
-    private TlsClientAuthVerifierAdapterDocker(DockerTlsServerInstance instance, TlsImplementationType implementationType) {
+    private TlsClientAuthVerifierAdapterDocker(DockerTlsServerInstance instance, String type) {
         super("localhost", instance.getPort());
         this.currentServerInstance = instance;
-        if (implementationType == TlsImplementationType.WOLFSSL) {
+        if(TlsImplementationType.fromString(type) == TlsImplementationType.WOLFSSL) {
             config.getDefaultClientSupportedSignatureAndHashAlgorithms()
                     .removeAll(Arrays.asList(
                             SignatureAndHashAlgorithm.DSA_SHA224,
@@ -56,7 +56,7 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
     public static TlsClientAuthVerifierAdapterDocker fromConfig(
             TlsAuthVerifierAdapterConfigDocker config) {
         DockerTlsServerInstance instance = spinUpServer(config);
-        return new TlsClientAuthVerifierAdapterDocker(instance, TlsImplementationType.fromString(config.getImage()));
+        return new TlsClientAuthVerifierAdapterDocker(instance, config.getImage());
     }
 
     private static DockerTlsServerInstance spinUpServer(TlsAuthVerifierAdapterConfigDocker config) {
