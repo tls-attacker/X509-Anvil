@@ -136,7 +136,7 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
             case OPENSSL, LIBRESSL ->
                     "-CAfile /x509-anv-resources/out/root_cert.pem -Verify 5 -verify_return_error";
             case WOLFSSL -> "-A /x509-anv-resources/out/root_cert.pem -b -i -F -x";
-            case BORINGSSL -> "-require-any-client-cert";
+            case BORINGSSL -> "-require-any-client-cert -root-certs /x509-anv-resources/out/root_cert.pem";
             case MBEDTLS -> "ca_file=/x509-anv-resources/out/root_cert.pem auth_mode=required";
             case RUSTLS -> "--auth /x509-anv-resources/out/root_cert.pem --require-auth";
             case GNUTLS -> "--require-client-cert --verify-client-cert --x509cafile /x509-anv-resources/out/root_cert.pem";
