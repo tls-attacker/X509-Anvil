@@ -35,7 +35,7 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
     protected static final Logger LOGGER = LogManager.getLogger();
 
     private static final Map<String, DockerTlsServerInstance> tlsServerInstances =
-            new HashMap<String, DockerTlsServerInstance>();
+            new HashMap<>();
     private static final ServerUtil serverUtil = new ServerUtil();
 
     private final DockerTlsServerInstance currentServerInstance;
