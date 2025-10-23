@@ -21,7 +21,7 @@ import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocke
 import java.util.HashMap;
 import java.util.Map;
 
-import de.rub.nds.x509anvil.framework.verifier.adapter.util.NSSPkcs12Util;
+import de.rub.nds.x509anvil.framework.verifier.adapter.util.PkcsUtil;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -69,7 +69,7 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
                             .certificatePath("/x509-anv-resources/out/root_cert.pem")
                             .additionalParameters(supplementStartCommand(TlsImplementationType.fromString(config.getImage())));;
             if(TlsImplementationType.fromString(config.getImage()) == TlsImplementationType.NSS) {
-                NSSPkcs12Util.execSetup();
+                PkcsUtil.execNSSPkcs12Setup();
                 builder.certificatePath("sql:/x509-anv-resources/nss_db/").additionalParameters("-R X509-Anvil-CA");
             }
 
