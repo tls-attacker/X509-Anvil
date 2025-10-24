@@ -143,7 +143,7 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
             case MBEDTLS -> "ca_file=/x509-anv-resources/out/root_cert.pem auth_mode=required";
             case RUSTLS -> "--auth /x509-anv-resources/out/root_cert.pem --require-auth";
             case GNUTLS -> "--require-client-cert --verify-client-cert --x509cafile /x509-anv-resources/out/root_cert.pem";
-            case BOTAN -> "--ca-cert /x509-anv-resources/out/root_cert.pem";
+            case BOTAN -> "--ca-cert=/x509-anv-resources/out/root_cert.pem";
             default -> "";
         });
     }
