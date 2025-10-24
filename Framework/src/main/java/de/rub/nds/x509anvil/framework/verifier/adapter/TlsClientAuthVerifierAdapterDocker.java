@@ -110,6 +110,9 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
                 builder = builder.cmd("--cert", "/x509-anv-resources/static-root/root-cert.pem", "--key", "/x509-anv-resources/static-root/private-key.pem",
                         "--parallelize", "--self-service-blinding", "--mutualAuth", "--ca-file", "/x509-anv-resources/out/root_cert.pem", "--non-blocking", "0.0.0.0", "4430");
             }
+            if(implementationType == TlsImplementationType.BOTAN) {
+                builder.keyPath("/x509-anv-resources/static-root/private-key-pkcs8.pem");
+            }
             tlsServerInstance = builder.build();
         } catch (TlsVersionNotFoundException e) {
             LOGGER.error("Unknown Version {} of {}", config.getVersion(), config.getImage());
