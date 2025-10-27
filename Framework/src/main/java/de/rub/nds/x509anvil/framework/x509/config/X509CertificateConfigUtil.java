@@ -43,25 +43,11 @@ public class X509CertificateConfigUtil {
         List<ExtensionConfig> extensionConfigList = new ArrayList<>();
         extensionConfigList.add(generateBasicConstraintsConfig(chainPosType));
         extensionConfigList.add(generateKeyUsageConfig(chainPosType));
-        //extensionConfigList.add(generateCRLDistributionPointsConfig(chainPosType));
         config.setExtensions(extensionConfigList);
         config.setIncludeExtensions(true);
         return config;
     }
 
-    private static ExtensionConfig generateCRLDistributionPointsConfig(CertificateChainPositionType chainPosType) {
-        CRLDistributionPointsConfig crlDistributionPointsConfig = new CRLDistributionPointsConfig();
-        crlDistributionPointsConfig.setPresent(true);
-        crlDistributionPointsConfig.setCritical(false);
-        DistributionPointName distributionPointName = new DistributionPointName("URI:http://e8.c.lencr.org/72.crl");
-        DistributionPoint distributionPoint = new DistributionPoint("dp1");
-        distributionPoint.setDistributionPointName(distributionPointName);
-        List<DistributionPoint> distributionPointList = new ArrayList<>();
-        distributionPointList.add(distributionPoint);
-        crlDistributionPointsConfig.setDistributionPointList(distributionPointList);
-
-        return crlDistributionPointsConfig;
-    }
 
     public static X509CertificateConfig generateDefaultRootCaCertificateConfig(boolean selfSigned) {
         X509CertificateConfig config =
