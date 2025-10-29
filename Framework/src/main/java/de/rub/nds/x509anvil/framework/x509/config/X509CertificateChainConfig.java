@@ -20,13 +20,15 @@ public class X509CertificateChainConfig {
     private int chainLength;
     private int intermediateCertsModeled;
 
+    private static int certificateCounter = 0;
+
     private X509CertificateConfig rootCertificateConfig = null;
     private final List<X509CertificateConfig> intermediateCertificateConfigs = new ArrayList<>();
     private X509CertificateConfig entityCertificateConfig = null;
 
     private boolean initialized = false;
 
-    public void initializeChain(int chainLength, int intermediateCertsModeled) {
+    public void initializeChain(int chainLength, int intermediateCertsModeled, boolean uniqueKeyIds) {
         if (initialized) {
             throw new IllegalStateException("Config is already initialized");
         }
@@ -44,7 +46,7 @@ public class X509CertificateChainConfig {
                 boolean isLast = i  == chainLength - 3 || i == intermediateCertsModeled - 1;
                 X509CertificateConfig config =
                         X509CertificateConfigUtil.generateDefaultIntermediateCaCertificateConfig(
-                                false, i, isLast);
+                                false, i, isLast, certificateCounter, uniqueKeyIds);
                 intermediateCertificateConfigs.add(config);
                 intermediatesGenerated = true;
             }
@@ -55,10 +57,11 @@ public class X509CertificateChainConfig {
             entityCertificateConfig = rootCertificateConfig;
         } else {
             entityCertificateConfig =
-                    X509CertificateConfigUtil.generateDefaultEntityCertificateConfig(false, !intermediatesGenerated);
+                    X509CertificateConfigUtil.generateDefaultEntityCertificateConfig(false, !intermediatesGenerated, certificateCounter, uniqueKeyIds);
         }
 
         initialized = true;
+        certificateCounter += 1;
     }
 
     public int getChainLength() {
