@@ -35,7 +35,7 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
     protected static final Logger LOGGER = LogManager.getLogger();
 
     private static final Map<String, DockerTlsServerInstance> tlsServerInstances =
-            new HashMap<String, DockerTlsServerInstance>();
+            new HashMap<>();
     private static final ServerUtil serverUtil = new ServerUtil();
 
     private final DockerTlsServerInstance currentServerInstance;
@@ -110,6 +110,9 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
                 builder = builder.cmd("--cert", "/x509-anv-resources/static-root/root-cert.pem", "--key", "/x509-anv-resources/static-root/private-key.pem",
                         "--parallelize", "--self-service-blinding", "--mutualAuth", "--ca-file", "/x509-anv-resources/out/root_cert.pem", "--non-blocking", "0.0.0.0", "4430");
             }
+            if(implementationType == TlsImplementationType.BOTAN) {
+                builder.keyPath("/x509-anv-resources/static-root/private-key-pkcs8.pem");
+            }
             tlsServerInstance = builder.build();
         } catch (TlsVersionNotFoundException e) {
             LOGGER.error("Unknown Version {} of {}", config.getVersion(), config.getImage());
@@ -136,10 +139,11 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
             case OPENSSL, LIBRESSL ->
                     "-CAfile /x509-anv-resources/out/root_cert.pem -Verify 5 -verify_return_error";
             case WOLFSSL -> "-A /x509-anv-resources/out/root_cert.pem -b -i -F -x";
-            case BORINGSSL -> "-require-any-client-cert";
+            case BORINGSSL -> "-require-any-client-cert -root-certs /x509-anv-resources/out/root_cert.pem";
             case MBEDTLS -> "ca_file=/x509-anv-resources/out/root_cert.pem auth_mode=required";
             case RUSTLS -> "--auth /x509-anv-resources/out/root_cert.pem --require-auth";
             case GNUTLS -> "--require-client-cert --verify-client-cert --x509cafile /x509-anv-resources/out/root_cert.pem";
+            case BOTAN -> "--ca-cert=/x509-anv-resources/out/root_cert.pem";
             default -> "";
         });
     }
