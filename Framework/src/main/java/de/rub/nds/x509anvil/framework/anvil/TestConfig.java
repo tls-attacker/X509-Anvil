@@ -58,7 +58,7 @@ public class TestConfig extends TLSDelegateConfig {
             names = "-docker",
             description =
                     "Use TLS Docker Library with indicated library (latest) or library:version.")
-    private String dockerLibrary = "";
+    private String dockerLibrary = "gnutls:3.8.10";
 
     @JsonProperty("minChainLength")
     @Parameter(
@@ -78,7 +78,7 @@ public class TestConfig extends TLSDelegateConfig {
     @Parameter(
             names = "-intermediateCertsModeled",
             description = "The default number of intermediate certificated modeled. Ignored for test cases with annotated chain length.")
-    private int defaultIntermediateCertsModeled = 2;
+    private int defaultIntermediateCertsModeled = 0;
 
     public TestConfig() {
         super(new GeneralDelegate());
