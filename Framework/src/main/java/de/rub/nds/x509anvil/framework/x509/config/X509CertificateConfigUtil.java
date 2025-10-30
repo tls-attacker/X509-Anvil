@@ -237,7 +237,7 @@ public class X509CertificateConfigUtil {
 
     public static X509CertificateChainConfig createBasicConfig(int chainLength) {
         X509CertificateChainConfig x509CertificateChainConfig = new X509CertificateChainConfig();
-        x509CertificateChainConfig.initializeChain(chainLength, 1, true);
+        x509CertificateChainConfig.initializeChain(chainLength, chainLength-2, true);
         return x509CertificateChainConfig;
     }
 
