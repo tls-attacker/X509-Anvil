@@ -31,7 +31,7 @@ public class SignatureHashAndKeyLengthProbe extends SimpleProbe {
     @Override
     protected X509CertificateChainConfig prepareConfig() {
         X509CertificateChainConfig x509CertificateChainConfig =
-                X509CertificateConfigUtil.createBasicConfig(3);
+                X509CertificateConfigUtil.createBasicConfig(4);
         if (entity) {
             X509CertificateConfig entityConfig =
                     x509CertificateChainConfig.getEntityCertificateConfig();
@@ -43,9 +43,9 @@ public class SignatureHashAndKeyLengthProbe extends SimpleProbe {
         } else {
             X509CertificateConfig interConfig = x509CertificateChainConfig.getLastSigningConfig();
             X509CertificateConfig signerConfig =
-                    x509CertificateChainConfig.getRootCertificateConfig();
+                    x509CertificateChainConfig.getIssuerConfigOf(x509CertificateChainConfig.getLastSigningConfig());
             CachedKeyPairGenerator.generateNewKeys(
-                    signatureHashAlgorithmKeyLengthPair, signerConfig, "root");
+                    signatureHashAlgorithmKeyLengthPair, signerConfig, "inter1");
             interConfig.setSignatureAlgorithm(
                     signatureHashAlgorithmKeyLengthPair.getSignatureAndHashAlgorithm());
         }
