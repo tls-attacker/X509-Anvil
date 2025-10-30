@@ -58,7 +58,7 @@ public class TestConfig extends TLSDelegateConfig {
             names = "-docker",
             description =
                     "Use TLS Docker Library with indicated library (latest) or library:version.")
-    private String dockerLibrary = "";
+    private String dockerLibrary = "nss:3.117";
 
     @JsonProperty("minChainLength")
     @Parameter(

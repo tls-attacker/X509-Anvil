@@ -16,11 +16,9 @@ import de.rub.nds.anvilcore.model.parameter.ParameterType;
 public enum X509AnvilParameterType implements ParameterType {
     CHAIN_LENGTH,
     VERSION,
-    SERIAL_NUMBER,
     KEY_TYPE,
     NOT_BEFORE,
     NOT_AFTER,
-    CN_TYPE,
     EXTENSIONS_PRESENT,
 
     // BasicConstraints extension
