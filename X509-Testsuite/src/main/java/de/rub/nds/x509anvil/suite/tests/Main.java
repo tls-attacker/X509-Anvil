@@ -44,7 +44,7 @@ public class Main {
 
     private static void generateCACert() {
         X509CertificateChainConfig chainConfig = new X509CertificateChainConfig();
-        chainConfig.initializeChain(3, 1);
+        chainConfig.initializeChain(3, 1, true);
 
         X509CertificateChainGenerator chainGenerator =
                 new X509CertificateChainGenerator(chainConfig);

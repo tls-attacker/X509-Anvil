@@ -21,6 +21,49 @@ import java.math.BigInteger;
 import java.util.*;
 
 public class X509CertificateConfigUtil {
+
+    /**
+     * A counter to generate unique auth key ids. Auth key structure is
+     * <prefix: 4><0x00></><intermediatePosistionBytes: 1><0x00></><counter: 9>
+     */
+    private static final byte[] AUTH_KEY_PREFIX = new byte[] {1, 2, 3, 4};
+
+    /**
+     * Generates a unique key identifier for the given position in the certificate chain. Increases the counter for
+     * certificates.
+     * @param position The intermediate position in the chain (FF for root, 00 for first intermediate, 01 for second intermediate, etc.)
+     * @return A unique key identifier byte array.
+     */
+    private static byte[] keyIdForIntermediate(int counter, int position, boolean uniqueKeyIds) {
+        byte[] keyId = new byte[16];
+        System.arraycopy(AUTH_KEY_PREFIX, 0, keyId, 0, AUTH_KEY_PREFIX.length);
+        keyId[4] = 0x00;
+        keyId[5] = (byte) position;
+        keyId[6] = 0x00;
+        if (uniqueKeyIds) {
+            byte[] counterBytes = BigInteger.valueOf(counter).toByteArray();
+            System.arraycopy(
+                    counterBytes,
+                    0,
+                    keyId, 7 + (9 - counterBytes.length),
+                    counterBytes.length);
+        } else {
+            System.arraycopy(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, keyId, 7, 9);
+        }
+        return keyId;
+    }
+
+    /**
+     * For root, always generate a static key id.
+     */
+    private static byte[] keyIdForRoot() {
+        return keyIdForIntermediate(0, 0xFF, false);
+    }
+
+    private static byte[] keyIdForEntity(int counter, boolean uniqueKeyIds) {
+        return keyIdForIntermediate(counter, 0xFE, uniqueKeyIds);
+    }
+
     private static X509CertificateConfig generateDefaultCertificateConfig(
             boolean selfSigned, CertificateChainPositionType chainPosType, String commonName) {
         X509CertificateConfig config = new X509CertificateConfig();
@@ -54,13 +97,13 @@ public class X509CertificateConfigUtil {
         SubjectKeyIdentifierConfig subjectKeyIdentifierConfig = new SubjectKeyIdentifierConfig();
         subjectKeyIdentifierConfig.setPresent(true);
         subjectKeyIdentifierConfig.setCritical(false);
-        subjectKeyIdentifierConfig.setKeyIdentifier(new byte[] {1, 2, 4});
+        subjectKeyIdentifierConfig.setKeyIdentifier(keyIdForRoot());
         config.addExtensions(subjectKeyIdentifierConfig);
         return config;
     }
 
     public static X509CertificateConfig generateDefaultIntermediateCaCertificateConfig(
-            boolean selfSigned, int intermediatePosition, boolean isLast) {
+            boolean selfSigned, int intermediatePosition, boolean isSignedByRoot, int certCounter, boolean uniqueKeyIds) {
         X509CertificateConfig config =
                 generateDefaultCertificateConfig(
                         selfSigned,
@@ -72,31 +115,38 @@ public class X509CertificateConfigUtil {
         SubjectKeyIdentifierConfig subjectKeyIdentifierConfig = new SubjectKeyIdentifierConfig();
         subjectKeyIdentifierConfig.setPresent(true);
         subjectKeyIdentifierConfig.setCritical(false);
-        subjectKeyIdentifierConfig.setKeyIdentifier(new byte[] {1, 2, 3, (byte) intermediatePosition});
+        subjectKeyIdentifierConfig.setKeyIdentifier(keyIdForIntermediate(certCounter, intermediatePosition, uniqueKeyIds));
         config.addExtensions(subjectKeyIdentifierConfig);
         AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
         authorityKeyIdentifier.setPresent(true);
         authorityKeyIdentifier.setCritical(false);
-        if (isLast) {
-            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 4});
+        if (isSignedByRoot) {
+            // root is issuer
+            authorityKeyIdentifier.setKeyIdentifier(keyIdForRoot());
         } else {
-            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3, (byte) (intermediatePosition+1)});
+            authorityKeyIdentifier.setKeyIdentifier(keyIdForIntermediate(certCounter, intermediatePosition - 1, uniqueKeyIds));
         }
         config.addExtensions(authorityKeyIdentifier);
         return config;
     }
 
-    public static X509CertificateConfig generateDefaultEntityCertificateConfig(boolean selfSigned, boolean isLast) {
+    public static X509CertificateConfig generateDefaultEntityCertificateConfig(boolean selfSigned, int intermediatesGenerated, int certCounter, boolean uniqueKeyIds) {
         X509CertificateConfig config = generateDefaultCertificateConfig(
                 selfSigned, CertificateChainPositionType.ENTITY, "tls-attacker.com");
         AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
         authorityKeyIdentifier.setPresent(true);
         authorityKeyIdentifier.setCritical(false);
-        if (isLast) {
-            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 4});
+        if (intermediatesGenerated == 0) {
+            // root is issuer
+            authorityKeyIdentifier.setKeyIdentifier(keyIdForRoot());
         } else {
-            authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 2, 3, 0});
+            authorityKeyIdentifier.setKeyIdentifier(keyIdForIntermediate(certCounter, intermediatesGenerated - 1, uniqueKeyIds));
         }
+        SubjectKeyIdentifierConfig subjectKeyIdentifierConfig = new SubjectKeyIdentifierConfig();
+        subjectKeyIdentifierConfig.setPresent(true);
+        subjectKeyIdentifierConfig.setCritical(false);
+        subjectKeyIdentifierConfig.setKeyIdentifier(keyIdForEntity(certCounter, uniqueKeyIds));
+        config.addExtensions(subjectKeyIdentifierConfig);
         config.addExtensions(authorityKeyIdentifier);
         return config;
     }
@@ -187,7 +237,7 @@ public class X509CertificateConfigUtil {
 
     public static X509CertificateChainConfig createBasicConfig(int chainLength) {
         X509CertificateChainConfig x509CertificateChainConfig = new X509CertificateChainConfig();
-        x509CertificateChainConfig.initializeChain(chainLength, 1);
+        x509CertificateChainConfig.initializeChain(chainLength, 1, true);
         return x509CertificateChainConfig;
     }
 
