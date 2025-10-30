@@ -65,7 +65,7 @@ public class NotBeforeParameter extends CertificateSpecificParameter<NotBeforeVa
             case UTC_TIME_EARLIEST:
                 certificateConfig.setDefaultNotBeforeEncoding(ValidityEncoding.UTC);
                 certificateConfig.setNotBefore(
-                        new DateTime(1950, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
+                        new DateTime(1970, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
             // removed due to BSI compliance by default
             /*case GENERALIZED_TIME:

@@ -15,7 +15,6 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage.KeyUsageAdditionalUsagesParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.subjectalternativename.SubjectAlternativeNamePresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.subjectalternativename.SubjectAlternativeNameValuesParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.name.CNTypeParameter;
 
 public class X509AnvilParameterFactory {
 
@@ -27,13 +26,11 @@ public class X509AnvilParameterFactory {
             case KEY_TYPE -> new SignatureHashAndLengthParameter(parameterIdentifier.getParameterScope());
             case NOT_BEFORE -> new NotBeforeParameter(parameterIdentifier.getParameterScope());
             case NOT_AFTER -> new NotAfterParameter(parameterIdentifier.getParameterScope());
-            case CN_TYPE -> new CNTypeParameter(parameterIdentifier.getParameterScope());
             case EXTENSIONS_PRESENT -> new ExtensionsPresentParameter(parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_PRESENT -> new BasicConstraintsPresentParameter(
                     parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_CRITICAL -> new BasicConstraintsCriticalParameter(
                     parameterIdentifier.getParameterScope());
-            case EXT_BASIC_CONSTRAINTS_CA -> new BasicConstraintsCaParameter(parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT ->
                     new BasicConstraintsPathLenConstraintPresentParameter(
                             parameterIdentifier.getParameterScope());
