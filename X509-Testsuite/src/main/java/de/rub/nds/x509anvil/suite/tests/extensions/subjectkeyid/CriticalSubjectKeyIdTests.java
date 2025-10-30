@@ -23,12 +23,11 @@ public class CriticalSubjectKeyIdTests extends X509AnvilTest {
                 true,
                 (X509CertificateConfigModifier)
                         config -> {
-                            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
-                            newConfig.setPresent(true);
-                            newConfig.setKeyIdentifier(new byte[] {1, 2, 3, 4, 5});
-                            newConfig.setCritical(true);
-                            config.addExtensions(newConfig);
-                            config.setIncludeExtensions(true);
+                            SubjectKeyIdentifierConfig subjectKeyIdentifierConfig =
+                                    (SubjectKeyIdentifierConfig)
+                                            X509CertificateConfigUtil.getExtensionConfig(
+                                                    config, X509ExtensionType.SUBJECT_KEY_IDENTIFIER);
+                            subjectKeyIdentifierConfig.setCritical(true);
                         });
     }
 

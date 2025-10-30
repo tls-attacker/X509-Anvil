@@ -40,15 +40,14 @@ public class X509CertificateChainConfig {
                 X509CertificateConfigUtil.generateDefaultRootCaCertificateConfig(true);
 
         // Generate configs for intermediate certificates
-        boolean intermediatesGenerated = false;
+        int intermediatesGenerated = 0;
         for (int i = 0; i < chainLength - 2; i++) {
             if (i < intermediateCertsModeled) {
-                boolean isLast = i  == chainLength - 3 || i == intermediateCertsModeled - 1;
                 X509CertificateConfig config =
                         X509CertificateConfigUtil.generateDefaultIntermediateCaCertificateConfig(
-                                false, i, isLast, certificateCounter, uniqueKeyIds);
+                                false, i, i==0, certificateCounter, uniqueKeyIds);
                 intermediateCertificateConfigs.add(config);
-                intermediatesGenerated = true;
+                intermediatesGenerated += 1;
             }
         }
 
@@ -57,7 +56,7 @@ public class X509CertificateChainConfig {
             entityCertificateConfig = rootCertificateConfig;
         } else {
             entityCertificateConfig =
-                    X509CertificateConfigUtil.generateDefaultEntityCertificateConfig(false, !intermediatesGenerated, certificateCounter, uniqueKeyIds);
+                    X509CertificateConfigUtil.generateDefaultEntityCertificateConfig(false, intermediatesGenerated, certificateCounter, uniqueKeyIds);
         }
 
         initialized = true;

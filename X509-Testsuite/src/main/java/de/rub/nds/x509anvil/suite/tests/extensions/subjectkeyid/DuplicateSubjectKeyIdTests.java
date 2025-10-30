@@ -32,12 +32,11 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
                 true,
                 (X509CertificateConfigModifier)
                         config -> {
-                            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
-                            newConfig.setPresent(true);
-                            newConfig.setKeyIdentifier(new byte[] {1, 2, 3, 4, 5});
-                            config.addExtensions(newConfig);
-                            config.addExtensions(newConfig);
-                            config.setIncludeExtensions(true);
+                            SubjectKeyIdentifierConfig subjectKeyIdentifierConfig =
+                                    (SubjectKeyIdentifierConfig)
+                                            X509CertificateConfigUtil.getExtensionConfig(
+                                                    config, X509ExtensionType.SUBJECT_KEY_IDENTIFIER);
+                            config.addExtensions(subjectKeyIdentifierConfig);
                         });
     }
 
@@ -68,15 +67,13 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
                 true,
                 (X509CertificateConfigModifier)
                         config -> {
-                            SubjectKeyIdentifierConfig newConfig = new SubjectKeyIdentifierConfig();
-                            newConfig.setPresent(true);
-                            newConfig.setKeyIdentifier(new byte[] {1, 2, 3, 4, 5});
-                            config.addExtensions(newConfig);
-
                             SubjectKeyIdentifierConfig differentConfig =
                                     new SubjectKeyIdentifierConfig();
                             differentConfig.setPresent(true);
-                            differentConfig.setKeyIdentifier(new byte[] {2, 3, 4, 5, 6});
+                            byte[] originalKeyId = differentConfig.getKeyIdentifier();
+                            byte[] modifiedKeyId = originalKeyId.clone();
+                            modifiedKeyId[4] ^= (byte) 0xFF; // flip a bit
+                            differentConfig.setKeyIdentifier(modifiedKeyId); // wrong
                             config.addExtensions(differentConfig);
 
                             config.setIncludeExtensions(true);
@@ -95,7 +92,10 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
                             SubjectKeyIdentifierConfig differentConfig =
                                     new SubjectKeyIdentifierConfig();
                             differentConfig.setPresent(true);
-                            differentConfig.setKeyIdentifier(new byte[] {2, 3, 4, 5, 6});
+                            byte[] originalKeyId = differentConfig.getKeyIdentifier();
+                            byte[] modifiedKeyId = originalKeyId.clone();
+                            modifiedKeyId[4] ^= (byte) 0xFF; // flip a bit
+                            differentConfig.setKeyIdentifier(modifiedKeyId); // wrong
                             config.addExtensions(differentConfig);
 
                             config.setIncludeExtensions(true);

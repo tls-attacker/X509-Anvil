@@ -124,23 +124,23 @@ public class X509CertificateConfigUtil {
             // root is issuer
             authorityKeyIdentifier.setKeyIdentifier(keyIdForRoot());
         } else {
-            authorityKeyIdentifier.setKeyIdentifier(keyIdForIntermediate(certCounter, intermediatePosition + 1, uniqueKeyIds));
+            authorityKeyIdentifier.setKeyIdentifier(keyIdForIntermediate(certCounter, intermediatePosition - 1, uniqueKeyIds));
         }
         config.addExtensions(authorityKeyIdentifier);
         return config;
     }
 
-    public static X509CertificateConfig generateDefaultEntityCertificateConfig(boolean selfSigned, boolean isLast, int certCounter, boolean uniqueKeyIds) {
+    public static X509CertificateConfig generateDefaultEntityCertificateConfig(boolean selfSigned, int intermediatesGenerated, int certCounter, boolean uniqueKeyIds) {
         X509CertificateConfig config = generateDefaultCertificateConfig(
                 selfSigned, CertificateChainPositionType.ENTITY, "tls-attacker.com");
         AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
         authorityKeyIdentifier.setPresent(true);
         authorityKeyIdentifier.setCritical(false);
-        if (isLast) {
+        if (intermediatesGenerated == 0) {
             // root is issuer
             authorityKeyIdentifier.setKeyIdentifier(keyIdForRoot());
         } else {
-            authorityKeyIdentifier.setKeyIdentifier(keyIdForIntermediate(certCounter, 0x00, uniqueKeyIds));
+            authorityKeyIdentifier.setKeyIdentifier(keyIdForIntermediate(certCounter, intermediatesGenerated - 1, uniqueKeyIds));
         }
         SubjectKeyIdentifierConfig subjectKeyIdentifierConfig = new SubjectKeyIdentifierConfig();
         subjectKeyIdentifierConfig.setPresent(true);
