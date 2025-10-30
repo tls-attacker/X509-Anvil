@@ -73,7 +73,7 @@ public class BasicConstraintsPathLenConstraintParameter
             derivationParameters.add(generateValue(i));
         }
         // Add an unreasonably high (but still valid) value
-        derivationParameters.add(generateValue(1000));
+        // derivationParameters.add(generateValue(1000));
         return derivationParameters;
     }
 

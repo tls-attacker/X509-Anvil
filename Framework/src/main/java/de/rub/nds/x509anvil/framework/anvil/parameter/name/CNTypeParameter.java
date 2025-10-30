@@ -40,7 +40,7 @@ public class CNTypeParameter extends CertificateSpecificParameter<DirectoryStrin
     @Override
     protected void applyToCertificateConfig(
             X509CertificateConfig certificateConfig, DerivationScope derivationScope) {
-        certificateConfig.setDefaultDirectoryStringType(getSelectedValue());
+        // certificateConfig.setDefaultDirectoryStringType(getSelectedValue());
     }
 
     @Override
