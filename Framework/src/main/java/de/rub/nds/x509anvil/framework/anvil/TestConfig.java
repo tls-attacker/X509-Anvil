@@ -78,7 +78,7 @@ public class TestConfig extends TLSDelegateConfig {
     @Parameter(
             names = "-intermediateCertsModeled",
             description = "The default number of intermediate certificated modeled. Ignored for test cases with annotated chain length.")
-    private int defaultIntermediateCertsModeled = 0;
+    private int defaultIntermediateCertsModeled = 2;
 
     public TestConfig() {
         super(new GeneralDelegate());
