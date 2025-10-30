@@ -67,10 +67,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
                     AuthorityKeyIdentifierConfig differentConfig =
                             new AuthorityKeyIdentifierConfig();
                     differentConfig.setPresent(true);
-                    byte[] originalKeyId = differentConfig.getKeyIdentifier();
-                    byte[] modifiedKeyId = originalKeyId.clone();
-                    modifiedKeyId[4] ^= (byte) 0xFF; // flip a bit
-                    differentConfig.setKeyIdentifier(modifiedKeyId); // wrong
+                    differentConfig.setKeyIdentifier(new byte[] {(byte) 0xFF,(byte) 0xFF,(byte) 0xFF,(byte) 0xFF}); // wrong
                     config.addExtensions(differentConfig);
 
                     config.setIncludeExtensions(true);
@@ -88,10 +85,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
                     AuthorityKeyIdentifierConfig differentConfig =
                             new AuthorityKeyIdentifierConfig();
                     differentConfig.setPresent(true);
-                    byte[] originalKeyId = differentConfig.getKeyIdentifier();
-                    byte[] modifiedKeyId = originalKeyId.clone();
-                    modifiedKeyId[4] ^= (byte) 0xFF; // flip a bit
-                    differentConfig.setKeyIdentifier(modifiedKeyId); // wrong
+                    differentConfig.setKeyIdentifier(new byte[] {(byte) 0xFF,(byte) 0xFF,(byte) 0xFF,(byte) 0xFF}); // wrong
                     config.addExtensions(differentConfig);
 
                     config.setIncludeExtensions(true);
