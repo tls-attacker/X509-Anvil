@@ -67,7 +67,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
                     AuthorityKeyIdentifierConfig differentConfig =
                             new AuthorityKeyIdentifierConfig();
                     differentConfig.setPresent(true);
-                    differentConfig.setKeyIdentifier(new byte[] {2, 3, 4});
+                    differentConfig.setKeyIdentifier(new byte[] {(byte) 0xFF,(byte) 0xFF,(byte) 0xFF,(byte) 0xFF}); // wrong
                     config.addExtensions(differentConfig);
 
                     config.setIncludeExtensions(true);
@@ -85,7 +85,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
                     AuthorityKeyIdentifierConfig differentConfig =
                             new AuthorityKeyIdentifierConfig();
                     differentConfig.setPresent(true);
-                    differentConfig.setKeyIdentifier(new byte[] {2, 3, 4});
+                    differentConfig.setKeyIdentifier(new byte[] {(byte) 0xFF,(byte) 0xFF,(byte) 0xFF,(byte) 0xFF}); // wrong
                     config.addExtensions(differentConfig);
 
                     config.setIncludeExtensions(true);

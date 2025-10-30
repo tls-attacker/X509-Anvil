@@ -57,7 +57,7 @@ public class ChainLengthParameter extends X509AnvilDerivationParameter<Integer> 
         int intermediateCertsModeled =
                 AnnotationUtil.resolveIntermediateCertsModeled(
                         derivationScope.getExtensionContext());
-        config.initializeChain(getSelectedValue(), intermediateCertsModeled);
+        config.initializeChain(getSelectedValue(), intermediateCertsModeled, true);
     }
 
     @Override
