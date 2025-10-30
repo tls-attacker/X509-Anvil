@@ -103,7 +103,7 @@ public class X509CertificateConfigUtil {
     }
 
     public static X509CertificateConfig generateDefaultIntermediateCaCertificateConfig(
-            boolean selfSigned, int intermediatePosition, boolean isLast, int certCounter, boolean uniqueKeyIds) {
+            boolean selfSigned, int intermediatePosition, boolean isSignedByRoot, int certCounter, boolean uniqueKeyIds) {
         X509CertificateConfig config =
                 generateDefaultCertificateConfig(
                         selfSigned,
@@ -120,7 +120,7 @@ public class X509CertificateConfigUtil {
         AuthorityKeyIdentifierConfig authorityKeyIdentifier = new AuthorityKeyIdentifierConfig();
         authorityKeyIdentifier.setPresent(true);
         authorityKeyIdentifier.setCritical(false);
-        if (isLast) {
+        if (isSignedByRoot) {
             // root is issuer
             authorityKeyIdentifier.setKeyIdentifier(keyIdForRoot());
         } else {
