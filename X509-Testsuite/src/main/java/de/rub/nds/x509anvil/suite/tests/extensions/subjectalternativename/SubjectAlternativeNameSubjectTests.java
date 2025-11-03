@@ -19,7 +19,7 @@ public class SubjectAlternativeNameSubjectTests extends X509AnvilTest {
     public void subjectAltNameMailInSubjectEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
-            subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "mail@test.com"));
+            subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "mail@tls-attacker.com"));
             subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "TLS-Attacker"));
             config.setSubject(subject);
         });
@@ -30,7 +30,7 @@ public class SubjectAlternativeNameSubjectTests extends X509AnvilTest {
     public void subjectAltNameMailInSubjectIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
-            subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "mail@test.com"));
+            subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "mail@tls-attacker.com"));
             subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "TLS-Attacker"));
             config.setSubject(subject);
         });
@@ -41,7 +41,7 @@ public class SubjectAlternativeNameSubjectTests extends X509AnvilTest {
     public void subjectAltNameDomainNameInSubjectEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
-            subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "test.com"));
+            subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "tls-attacker.com"));
             subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "TLS-Attacker"));
             config.setSubject(subject);
         });
@@ -52,7 +52,7 @@ public class SubjectAlternativeNameSubjectTests extends X509AnvilTest {
     public void subjectAltNameDomainNameInSubjectIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
-            subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "test.com"));
+            subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "tls-attacker.com"));
             subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "TLS-Attacker"));
             config.setSubject(subject);
         });
