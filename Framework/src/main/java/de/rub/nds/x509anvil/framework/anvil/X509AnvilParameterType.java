@@ -30,10 +30,6 @@ public enum X509AnvilParameterType implements ParameterType {
     EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT_PRESENT,
     EXT_BASIC_CONSTRAINTS_PATHLEN_CONSTRAINT,
 
-    // SubjectAlternativeName extension
-    EXT_SUBJECT_ALT_NAME_PRESENT,
-    EXT_SUBJECT_ALT_NAME_VALUES,
-
     // KeyUsage extension
     EXT_KEY_USAGE_ADDITIONAL,
     ;
