@@ -82,7 +82,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setPresent(true);
             subjectAlternativeNameConfig.setCritical(false);
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER));
-            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("https://test.com;file"));
+            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("https://tls-attacker.com;file"));
             config.addExtensions(subjectAlternativeNameConfig);
             config.setIncludeExtensions(true);
         });
@@ -97,7 +97,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setPresent(true);
             subjectAlternativeNameConfig.setCritical(false);
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER));
-            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("https://test.com;file"));
+            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("https://tls-attacker.com;file"));
             config.addExtensions(subjectAlternativeNameConfig);
         });
     }
@@ -111,7 +111,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setPresent(true);
             subjectAlternativeNameConfig.setCritical(false);
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER));
-            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("test.com/file"));
+            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com/file"));
             config.addExtensions(subjectAlternativeNameConfig);
             config.setIncludeExtensions(true);
         });
@@ -126,7 +126,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setPresent(true);
             subjectAlternativeNameConfig.setCritical(false);
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER));
-            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("test.com/file"));
+            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com/file"));
             config.addExtensions(subjectAlternativeNameConfig);
         });
     }
@@ -169,7 +169,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setPresent(true);
             subjectAlternativeNameConfig.setCritical(false);
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER));
-            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("user@test.com"));
+            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("user@tls-attacker.com"));
             config.addExtensions(subjectAlternativeNameConfig);
             config.setIncludeExtensions(true);
         });
@@ -184,7 +184,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setPresent(true);
             subjectAlternativeNameConfig.setCritical(false);
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER));
-            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("user@test.com"));
+            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("user@tls-attacker.com"));
             config.addExtensions(subjectAlternativeNameConfig);
         });
     }

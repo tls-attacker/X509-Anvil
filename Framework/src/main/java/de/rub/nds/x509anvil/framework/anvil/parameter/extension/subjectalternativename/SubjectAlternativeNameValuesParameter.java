@@ -34,12 +34,22 @@ public class SubjectAlternativeNameValuesParameter extends CertificateSpecificPa
             SubjectAlternativeNameConfig subjectAlternativeNameConfig = (SubjectAlternativeNameConfig) config.get();
             switch (getSelectedValue()) {
                 case IP -> {
-                    subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.IP_ADDRESS));
-                    subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of(new byte[] {(byte) 0xc0, (byte) 0xa8, (byte) 0x00, (byte) 0x01}));
+                    List<GeneralNameChoiceType> types = new ArrayList<>(subjectAlternativeNameConfig.getGeneralNameChoiceTypeConfigs());
+                    types.add(GeneralNameChoiceType.IP_ADDRESS);
+                    subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(types);
+
+                    List<Object> values = new ArrayList<>(subjectAlternativeNameConfig.getGeneralNameConfigValues());
+                    values.add(new byte[]{(byte) 0xc0, (byte) 0xa8, (byte) 0x00, (byte) 0x01});
+                    subjectAlternativeNameConfig.setGeneralNameConfigValues(values);
                 }
                 case DNS ->  {
-                    subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
-                    subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("www.test.com"));
+                    List<GeneralNameChoiceType> types = new ArrayList<>(subjectAlternativeNameConfig.getGeneralNameChoiceTypeConfigs());
+                    types.add(GeneralNameChoiceType.DNS_NAME);
+                    subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(types);
+
+                    List<Object> values = new ArrayList<>(subjectAlternativeNameConfig.getGeneralNameConfigValues());
+                    values.add("www.tls-attacker.com");
+                    subjectAlternativeNameConfig.setGeneralNameConfigValues(values);
                 }
             }
         } else {
@@ -53,7 +63,7 @@ public class SubjectAlternativeNameValuesParameter extends CertificateSpecificPa
                 }
                 case DNS ->  {
                     subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
-                    subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("www.test.com"));
+                    subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("www.tls-attacker.com"));
                 }
             }
             certificateConfig.addExtensions(subjectAlternativeNameConfig);

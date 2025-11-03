@@ -26,7 +26,7 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setPresent(true);
             issuerAlternativeNameConfig.setCritical(false);
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
-            issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("test.com"));
+            issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com"));
             config.addExtensions(issuerAlternativeNameConfig);
             config.setIssuer(new LinkedList<>());
             config.setFixIssuer(true);
@@ -36,7 +36,7 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setPresent(true);
             subjectAlternativeNameConfig.setCritical(false);
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
-            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("test.com"));
+            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com"));
             config.addExtensions(subjectAlternativeNameConfig);
             config.setSubject(new LinkedList<>());
         });
@@ -51,7 +51,7 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setPresent(true);
             issuerAlternativeNameConfig.setCritical(false);
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
-            issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("test.com"));
+            issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com"));
             config.addExtensions(issuerAlternativeNameConfig);
             config.setIssuer(new LinkedList<>());
             config.setFixIssuer(true);
@@ -60,7 +60,7 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setPresent(true);
             subjectAlternativeNameConfig.setCritical(false);
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
-            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("test.com"));
+            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com"));
             config.addExtensions(subjectAlternativeNameConfig);
             config.setSubject(new LinkedList<>());
         });
@@ -75,7 +75,7 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setPresent(true);
             issuerAlternativeNameConfig.setCritical(false);
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
-            issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("mail@test.com"));
+            issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("mail@tls-attacker.com"));
             config.addExtensions(issuerAlternativeNameConfig);
             config.setIncludeExtensions(true);
         });
@@ -89,7 +89,7 @@ public class IssuerAlternativeNameFormattingTests extends X509AnvilTest {
             issuerAlternativeNameConfig.setPresent(true);
             issuerAlternativeNameConfig.setCritical(false);
             issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
-            issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("mail@test.com"));
+            issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("mail@tls-attacker.com"));
             config.addExtensions(issuerAlternativeNameConfig);
         });
     }
