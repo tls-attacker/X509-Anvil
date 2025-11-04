@@ -58,7 +58,7 @@ public class TestConfig extends TLSDelegateConfig {
             names = "-docker",
             description =
                     "Use TLS Docker Library with indicated library (latest) or library:version.")
-    private String dockerLibrary = "botan:3.9.0_x509_anvil";
+    private String dockerLibrary = "";
 
     @JsonProperty("minChainLength")
     @Parameter(
