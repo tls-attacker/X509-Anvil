@@ -35,7 +35,10 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
                             (AuthorityKeyIdentifierConfig)
                                     X509CertificateConfigUtil.getExtensionConfig(
                                             config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
-                    authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 1, 1}); // wrong
+                    byte[] originalKeyId = authorityKeyIdentifier.getKeyIdentifier();
+                    byte[] modifiedKeyId = originalKeyId.clone();
+                    modifiedKeyId[4] ^= (byte) 0xFF; // flip a bit
+                    authorityKeyIdentifier.setKeyIdentifier(modifiedKeyId); // wrong
                 });
     }
 
@@ -51,7 +54,10 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
                             (AuthorityKeyIdentifierConfig)
                                     X509CertificateConfigUtil.getExtensionConfig(
                                             config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
-                    authorityKeyIdentifier.setKeyIdentifier(new byte[] {1, 1, 1}); // wrong
+                    byte[] originalKeyId = authorityKeyIdentifier.getKeyIdentifier();
+                    byte[] modifiedKeyId = originalKeyId.clone();
+                    modifiedKeyId[4] ^= (byte) 0xFF; // flip a bit
+                    authorityKeyIdentifier.setKeyIdentifier(modifiedKeyId); // wrong
                 });
     }
 }

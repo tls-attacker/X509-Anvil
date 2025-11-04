@@ -40,7 +40,7 @@
         </developer>
         <developer>
             <id>mradoy99</id>
-            <name>Maximilian radoy</name>
+            <name>Maximilian Radoy</name>
             <email>maximilian.radoy@uni-paderborn.de</email>
             <organization>UPB</organization>
             <organizationUrl>https://cs.uni-paderborn.de/syssec</organizationUrl>
@@ -58,8 +58,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <toolkit.common.coffee4j.anvil.version>1.2.0</toolkit.common.coffee4j.anvil.version>
         <toolkit.common.anvilcore.version>2.0.5</toolkit.common.anvilcore.version>
-        <toolkit.common.asn1attacker.version>4.2.1</toolkit.common.asn1attacker.version>
-        <toolkit.common.x509attacker.version>4.3.4</toolkit.common.x509attacker.version>
+        <toolkit.common.asn1attacker.version>4.2.2-SNAPSHOT</toolkit.common.asn1attacker.version>
+        <toolkit.common.x509attacker.version>4.3.5-SNAPSHOT</toolkit.common.x509attacker.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <skip.signature>true</skip.signature>

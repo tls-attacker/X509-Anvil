@@ -21,7 +21,7 @@ public class CertificateGenerationTest {
     @AnvilTest(id = "cert-gen")
     public void exportSampleCertificates() {
         X509CertificateChainConfig chainConfig = new X509CertificateChainConfig();
-        chainConfig.initializeChain(3, 1);
+        chainConfig.initializeChain(3, 1, true);
 
         X509CertificateChainGenerator chainGenerator =
                 new X509CertificateChainGenerator(chainConfig);
@@ -32,6 +32,6 @@ public class CertificateGenerationTest {
             LOGGER.error("Could not generate certificates with: ", e);
         }
 
-        X509Util.exportCertificates(chainGenerator.retrieveCertificateChain(), "resources/out");
+        X509Util.exportCertificates(chainGenerator.retrieveCertificateChain());
     }
 }

@@ -49,19 +49,14 @@ public class KeyUsageAdditionalUsagesParameter extends CertificateSpecificParame
     protected List<DerivationParameter<X509CertificateChainConfig, boolean[]>> getNonNullParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter<X509CertificateChainConfig, boolean[]>> parameterValues = new ArrayList<>();
         if (getParameterScope().isEntity()) {
-            parameterValues.add(generateValue(new boolean[]{true, true, false, true, true, false, false, false, false}));
             parameterValues.add(generateValue(new boolean[]{false, true, true, true, true, false, false, false, false}));
             parameterValues.add(generateValue(new boolean[]{false, true, false, true, true, true, false, false, false}));
             parameterValues.add(generateValue(new boolean[]{false, true, false, true, true, false, true, false, false}));
-            parameterValues.add(generateValue(new boolean[]{false, true, false, true, true, false, false, true, false}));
-            parameterValues.add(generateValue(new boolean[]{false, true, false, true, true, false, false, false, true}));
         } else {
             parameterValues.add(generateValue(new boolean[]{true, true, true, true, false, false, false, false, false}));
             parameterValues.add(generateValue(new boolean[]{true, true, true, false, true, false, false, false, false}));
             parameterValues.add(generateValue(new boolean[]{true, true, true, false, false, true, false, false, false}));
             parameterValues.add(generateValue(new boolean[]{true, true, true, false, false, false, true, false, false}));
-            parameterValues.add(generateValue(new boolean[]{true, true, true, false, false, false, false, true, false}));
-            parameterValues.add(generateValue(new boolean[]{true, true, true, false, false, false, false, false, true}));
         }
         return parameterValues;
     }

@@ -8,8 +8,6 @@
  */
 package de.rub.nds.x509anvil.framework.verifier.adapter;
 
-import com.github.dockerjava.api.exception.InternalServerErrorException;
-import com.github.dockerjava.api.exception.NotFoundException;
 import com.github.dockerjava.api.model.AccessMode;
 import com.github.dockerjava.api.model.Bind;
 import com.github.dockerjava.api.model.HostConfig;
@@ -18,12 +16,15 @@ import de.rub.nds.tls.subject.TlsImplementationType;
 import de.rub.nds.tls.subject.docker.DockerTlsClientInstance;
 import de.rub.nds.tls.subject.docker.DockerTlsManagerFactory;
 import de.rub.nds.tls.subject.exceptions.TlsVersionNotFoundException;
+import de.rub.nds.tlsattacker.core.constants.SignatureAndHashAlgorithm;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocker;
-import java.nio.file.Paths;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.rub.nds.x509anvil.framework.verifier.adapter.util.NSSPkcs12Util;
+import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,20 +34,30 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
     private static final Map<String, DockerTlsClientInstance> tlsClientInstances = new HashMap<>();
 
     private final DockerTlsClientInstance currentClientInstance;
-    private final int port;
-    private static int nextPort = 45655;
+    protected int realPort;
 
-    private TlsServerAuthVerifierAdapterDocker(DockerTlsClientInstance instance) {
-        super("localhost", nextPort);
+    private TlsServerAuthVerifierAdapterDocker(DockerTlsClientInstance instance, String type) {
+        super("localhost", 0);
         this.currentClientInstance = instance;
-        this.port = nextPort;
-        nextPort = ((nextPort +1)%10000)+40000;
+
+        if(TlsImplementationType.fromString(type) == TlsImplementationType.OPENSSL) {
+            config.setAddRenegotiationInfoExtension(true);
+        }
+        if(TlsImplementationType.fromString(type) == TlsImplementationType.WOLFSSL) {
+            config.setAddRenegotiationInfoExtension(false);
+            config.getDefaultServerSupportedSignatureAndHashAlgorithms()
+                    .removeAll(Arrays.asList(
+                            SignatureAndHashAlgorithm.DSA_SHA224,
+                            SignatureAndHashAlgorithm.ECDSA_SHA224,
+                            SignatureAndHashAlgorithm.RSA_SHA224
+                    ));
+        }
     }
 
     public static TlsServerAuthVerifierAdapterDocker fromConfig(
             TlsAuthVerifierAdapterConfigDocker config) {
         DockerTlsClientInstance instance = spinUpServer(config);
-        return new TlsServerAuthVerifierAdapterDocker(instance);
+        return new TlsServerAuthVerifierAdapterDocker(instance, config.getImage());
     }
 
     private static DockerTlsClientInstance spinUpServer(TlsAuthVerifierAdapterConfigDocker config) {
@@ -63,7 +74,8 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
                                     TlsImplementationType.fromString(config.getImage()),
                                     config.getVersion())
                             .hostConfigHook(TlsServerAuthVerifierAdapterDocker::applyConfig)
-                            .certificatePath("/x509-anv-resources/out/root_cert.pem");
+                            .certificatePath("/x509-anv-resources/out/root_cert.pem")
+                            .additionalParameters(supplementStartCommand(TlsImplementationType.fromString(config.getImage())));;
             if(TlsImplementationType.fromString(config.getImage()) == TlsImplementationType.NSS) {
                 NSSPkcs12Util.execSetup();
                 builder.certificatePath("sql:/x509-anv-resources/nss_db/").additionalParameters("-R X509-Anvil-CA");
@@ -82,8 +94,17 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
         return tlsClientInstance;
     }
 
+    private static String supplementStartCommand(TlsImplementationType tlsImplementationType) {
+        return (switch (tlsImplementationType) {
+            case OPENSSL, LIBRESSL ->
+                    "-verify 5 -verify_return_error";
+            case BOTAN -> "--skip-hostname-check";
+            default -> "";
+        });
+    }
+
     private static HostConfig applyConfig(HostConfig config) {
-        String hostPath = Paths.get("X509-Testsuite/resources/").toAbsolutePath().toString();
+        String hostPath = X509Util.RESOURCES_PATH.getAbsolutePath();
         config.withBinds(new Bind(hostPath, new Volume("/x509-anv-resources/"), AccessMode.ro));
         config.withExtraHosts("tls-attacker.com:host-gateway");
         config.withAutoRemove(true);
@@ -92,14 +113,14 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
 
     @Override
     public void runCommandInBackground() {
-        currentClientInstance.connect("tls-attacker.com", this.port);
+        currentClientInstance.connect("tls-attacker.com", realPort);
     }
 
     public static void stopContainers() {
         for (DockerTlsClientInstance instance : tlsClientInstances.values()) {
             try {
                 instance.kill();
-            } catch (NotFoundException | InternalServerErrorException e) {
+            } catch (Exception e) {
                 // Container is already dead, so it's alright :-)
             }
         }

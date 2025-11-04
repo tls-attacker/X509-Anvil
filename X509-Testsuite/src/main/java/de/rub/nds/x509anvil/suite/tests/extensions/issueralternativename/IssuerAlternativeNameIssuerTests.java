@@ -20,7 +20,7 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
                 LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
-                subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "mail@test.com"));
+                subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "mail@tls-attacker.com"));
                 subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "TLS-Attacker"));
                 subject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "Global"));
                 config.setSubject(subject);
@@ -33,7 +33,7 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
                 LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
-                subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "mail@test.com"));
+                subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "mail@tls-attacker.com"));
                 subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "TLS-Attacker"));
                 subject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "Global"));
                 config.setSubject(subject);
@@ -46,7 +46,7 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
                 LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
-                subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "test.com"));
+                subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "tls-attacker.com"));
                 subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "TLS-Attacker"));
                 subject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "Global"));
                 config.setSubject(subject);
@@ -59,7 +59,7 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
                 LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
-                subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "test.com"));
+                subject.add(new Pair<>(X500AttributeType.COMMON_NAME, "tls-attacker.com"));
                 subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "TLS-Attacker"));
                 subject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "Global"));
                 config.setSubject(subject);

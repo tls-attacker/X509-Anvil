@@ -19,12 +19,15 @@ import de.rub.nds.tls.subject.TlsImplementationType;
 import de.rub.nds.tls.subject.docker.DockerTlsManagerFactory;
 import de.rub.nds.tls.subject.docker.DockerTlsServerInstance;
 import de.rub.nds.tls.subject.exceptions.TlsVersionNotFoundException;
+import de.rub.nds.tlsattacker.core.constants.SignatureAndHashAlgorithm;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocker;
-import java.nio.file.Paths;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.rub.nds.x509anvil.framework.verifier.adapter.util.NSSPkcs12Util;
+import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,20 +35,28 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
     protected static final Logger LOGGER = LogManager.getLogger();
 
     private static final Map<String, DockerTlsServerInstance> tlsServerInstances =
-            new HashMap<String, DockerTlsServerInstance>();
+            new HashMap<>();
     private static final ServerUtil serverUtil = new ServerUtil();
 
     private final DockerTlsServerInstance currentServerInstance;
 
-    private TlsClientAuthVerifierAdapterDocker(DockerTlsServerInstance instance) {
+    private TlsClientAuthVerifierAdapterDocker(DockerTlsServerInstance instance, String type) {
         super("localhost", instance.getPort());
         this.currentServerInstance = instance;
+        if(TlsImplementationType.fromString(type) == TlsImplementationType.WOLFSSL) {
+            config.getDefaultClientSupportedSignatureAndHashAlgorithms()
+                    .removeAll(Arrays.asList(
+                            SignatureAndHashAlgorithm.DSA_SHA224,
+                            SignatureAndHashAlgorithm.ECDSA_SHA224,
+                            SignatureAndHashAlgorithm.RSA_SHA224
+                    ));
+        }
     }
 
     public static TlsClientAuthVerifierAdapterDocker fromConfig(
             TlsAuthVerifierAdapterConfigDocker config) {
         DockerTlsServerInstance instance = spinUpServer(config);
-        return new TlsClientAuthVerifierAdapterDocker(instance);
+        return new TlsClientAuthVerifierAdapterDocker(instance, config.getImage());
     }
 
     private static DockerTlsServerInstance spinUpServer(TlsAuthVerifierAdapterConfigDocker config) {
@@ -95,6 +106,13 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
                         builder.cmd(
                                 "-n", "nss-server-cert", "-p", "4430", "-d", "sql:/x509-anv-resources/nss_db", "-r", "-r", "-w", "password");
             }
+            if(implementationType == TlsImplementationType.S2N) {
+                builder = builder.cmd("--cert", "/x509-anv-resources/static-root/root-cert.pem", "--key", "/x509-anv-resources/static-root/private-key.pem",
+                        "--parallelize", "--self-service-blinding", "--mutualAuth", "--ca-file", "/x509-anv-resources/out/root_cert.pem", "--non-blocking", "0.0.0.0", "4430");
+            }
+            if(implementationType == TlsImplementationType.BOTAN) {
+                builder.keyPath("/x509-anv-resources/static-root/private-key-pkcs8.pem");
+            }
             tlsServerInstance = builder.build();
         } catch (TlsVersionNotFoundException e) {
             LOGGER.error("Unknown Version {} of {}", config.getVersion(), config.getImage());
@@ -110,7 +128,7 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
     }
 
     private static HostConfig applyConfig(HostConfig config) {
-        String hostPath = Paths.get("X509-Testsuite/resources/").toAbsolutePath().toString();
+        String hostPath = X509Util.RESOURCES_PATH.getAbsolutePath();
         config.withBinds(new Bind(hostPath, new Volume("/x509-anv-resources/"), AccessMode.ro));
         config.withAutoRemove(true);
         return config;
@@ -121,10 +139,11 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
             case OPENSSL, LIBRESSL ->
                     "-CAfile /x509-anv-resources/out/root_cert.pem -Verify 5 -verify_return_error";
             case WOLFSSL -> "-A /x509-anv-resources/out/root_cert.pem -b -i -F -x";
-            case BORINGSSL -> "-require-any-client-cert";
+            case BORINGSSL -> "-require-any-client-cert -root-certs /x509-anv-resources/out/root_cert.pem";
             case MBEDTLS -> "ca_file=/x509-anv-resources/out/root_cert.pem auth_mode=required";
             case RUSTLS -> "--auth /x509-anv-resources/out/root_cert.pem --require-auth";
-            case S2N -> "--mutualAuth --ca-file /x509-anv-resources/out/root_cert.pem";
+            case GNUTLS -> "--require-client-cert --verify-client-cert --x509cafile /x509-anv-resources/out/root_cert.pem";
+            case BOTAN -> "--ca-cert=/x509-anv-resources/out/root_cert.pem";
             default -> "";
         });
     }
@@ -134,10 +153,7 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
         if (!serverUtil.isServerOnline(
                 currentServerInstance.getHostInfo().getHostname(),
                 currentServerInstance.getPort())) {
-            currentServerInstance.restart();
-            serverUtil.waitUntilServerIsOnline(
-                    currentServerInstance.getHostInfo().getHostname(),
-                    currentServerInstance.getPort());
+            LOGGER.warn("Server is not reachable");
         }
     }
 
