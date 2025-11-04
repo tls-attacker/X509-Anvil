@@ -11,8 +11,6 @@ package de.rub.nds.x509anvil.framework.featureextraction;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.*;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.result.DigitalSignatureKeyUsageRequiredProbeResult;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ExtensionProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.SignatureAlgorithmProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.VersionProbeResult;
 import java.util.ArrayList;
