@@ -78,7 +78,7 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
                             .additionalParameters(supplementStartCommand(TlsImplementationType.fromString(config.getImage())));;
             if(TlsImplementationType.fromString(config.getImage()) == TlsImplementationType.NSS) {
                 NSSPkcs12Util.execSetup();
-                builder.certificatePath("sql:/x509-anv-resources/nss_db/").additionalParameters("-R X509-Anvil-CA");
+                builder.certificatePath("sql:/x509-anv-resources/nss_db/").additionalParameters("-R X509-Anvil-CA -q");
             }
 
             tlsClientInstance = builder.build();
