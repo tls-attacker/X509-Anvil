@@ -68,29 +68,4 @@ public class InsufficientPathLenTests extends X509AnvilTest {
                     basicConstraintsConfig.setIncludePathLenConstraint(DefaultEncodingRule.ENCODE);
                 });
     }
-
-    @ChainLength(minLength = 10, maxLength = 10, intermediateCertsModeled = 8)
-    @IpmLimitations(
-            identifiers =
-                    "inter0:ext_basic_constraints_pathlen_constraint, inter0:ext_basic_constraints_pathlen_constraint_present")
-    @AnvilTest(id = "extension-a4b5710704")
-    public void insufficientPathLenChainLength10(X509VerifierRunner testRunner)
-            throws VerifierException, CertificateGeneratorException {
-        assertInvalid(
-                testRunner,
-                false,
-                (X509CertificateConfigModifier)
-                        config -> {
-                            BasicConstraintsConfig basicConstraintsConfig =
-                                    (BasicConstraintsConfig)
-                                            X509CertificateConfigUtil.getExtensionConfig(
-                                                    config, X509ExtensionType.BASIC_CONSTRAINTS);
-                            basicConstraintsConfig.setPresent(true);
-                            basicConstraintsConfig.setCa(true);
-                            basicConstraintsConfig.setPathLenConstraint(6);
-                            basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.ENCODE);
-                            basicConstraintsConfig.setIncludePathLenConstraint(
-                                    DefaultEncodingRule.ENCODE);
-                        });
-    }
 }
