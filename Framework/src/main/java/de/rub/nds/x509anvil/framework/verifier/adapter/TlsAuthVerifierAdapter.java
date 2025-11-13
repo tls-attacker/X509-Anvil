@@ -118,13 +118,16 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
         DefaultWorkflowExecutor workflowExecutor = new DefaultWorkflowExecutor(state);
 
         if(this instanceof TlsServerAuthVerifierAdapter) {
+            Thread parentThread = Thread.currentThread();
             Thread t =
                     new Thread(
                             () -> {
-                                try {
-                                    Thread.sleep(20);
-                                } catch (InterruptedException e) {
-                                    throw new RuntimeException(e);
+                                while(!isWaitingInAccept(parentThread)) {
+                                    try {
+                                        Thread.sleep(3);
+                                    } catch (InterruptedException e) {
+                                        throw new RuntimeException(e);
+                                    }
                                 }
                                 runCommandInBackground();
                             });
@@ -174,6 +177,19 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
         } catch (NoSuchElementException e) {
             // modification removed public key container, this is fine
         }
+    }
+
+    private boolean isWaitingInAccept(Thread t) {
+        for (StackTraceElement e : t.getStackTrace()) {
+            String c = e.getClassName();
+            String m = e.getMethodName();
+            if (("java.net.ServerSocket".equals(c) && "accept".equals(m)) ||
+                (c.startsWith("sun.nio.ch.") && "accept".equals(m)) ||
+                (c.startsWith("java.net.") && m.contains("accept"))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     abstract WorkflowTrace buildWorkflowTraceDhe(Config config);

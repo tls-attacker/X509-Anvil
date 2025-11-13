@@ -28,7 +28,7 @@ public class NonCriticalNameConstraintsTests extends X509AnvilTest {
             GeneralSubtree permittedTree = new GeneralSubtree("permittedSubtree", 0, 5);
             GeneralName permittedName = new GeneralName("permittedName");
             permittedName.setGeneralNameChoiceTypeConfig(GeneralNameChoiceType.DNS_NAME);
-            permittedName.setGeneralNameConfigValue("permitted.com");
+            permittedName.setGeneralNameConfigValue("tls-attacker.com");
             permittedTree.setBase(permittedName);
             permittedTrees.setGeneralSubtrees(List.of(permittedTree));
             nameConstraintsConfig.setPermittedSubtrees(permittedTrees);

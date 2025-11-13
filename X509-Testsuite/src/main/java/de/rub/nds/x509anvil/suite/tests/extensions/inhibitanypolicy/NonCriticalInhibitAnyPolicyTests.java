@@ -12,7 +12,7 @@ import de.rub.nds.x509attacker.config.extension.InhibitAnyPolicyConfig;
 public class NonCriticalInhibitAnyPolicyTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-799e5cd831")
-    public void criticalIssuerAltNameIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void nonCriticalInhibitAnyPolicy(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             InhibitAnyPolicyConfig inhibitAnyPolicyConfig = new InhibitAnyPolicyConfig();
             inhibitAnyPolicyConfig.setPresent(true);
