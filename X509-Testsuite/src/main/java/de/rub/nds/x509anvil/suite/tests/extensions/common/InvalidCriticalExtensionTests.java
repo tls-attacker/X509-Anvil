@@ -27,7 +27,7 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
             identifiers =
                     "entity:extensions_present, entity:ext_basic_constraints_present, entity:ext_basic_constraints_critical")
     @AnvilTest(id = "extension-199eb869ce")
-    public void invalidCriticalSubjectKeyIdentifierEntity(X509VerifierRunner testRunner)
+    public void invalidCriticalBasicConstraintsEntity(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -50,7 +50,7 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
             identifiers =
                     "inter0:extensions_present, inter0:ext_basic_constraints_present, inter0:ext_basic_constraints_critical")
     @AnvilTest(id = "extension-5ad1c94f1c")
-    public void invalidCriticalSubjectKeyIdentifierIntermediate(X509VerifierRunner testRunner)
+    public void invalidCriticalBasicConstraintsIntermediate(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
