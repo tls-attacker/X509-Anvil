@@ -22,7 +22,7 @@ import de.rub.nds.x509attacker.constants.X509ExtensionType;
 
 public class KeyUsageWithoutKeyCertSignTests extends X509AnvilTest {
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = { "inter0:extensions_present", "inter0:ext_key_usage_additional" })
     @AnvilTest(id = "extension-930f474fe2")
     public void keyUsageWithoutKeyCert(X509VerifierRunner testRunner)

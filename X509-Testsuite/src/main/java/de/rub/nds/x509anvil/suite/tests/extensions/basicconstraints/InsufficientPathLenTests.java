@@ -76,7 +76,7 @@ public class InsufficientPathLenTests extends X509AnvilTest {
     @AnvilTest(id = "extension-a4b5710704")
     public void insufficientPathLenChainLength10(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
-        assertInvalid(
+        assertBooleanFirstIntermediate(
                 testRunner,
                 false,
                 (X509CertificateConfigModifier)
