@@ -13,6 +13,7 @@ import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
+import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
@@ -30,10 +31,12 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
                 true,
                 (X509CertificateConfigModifier)
                         config -> {
-                            config.amendSignatureAlgorithm(
+                            config.setDifferentSignatureAlgorithmOid(
                                     TestUtils.getNonMatchingAlgorithmOid(
-                                                    config.getDefaultSignatureAlgorithm())
-                                            .getSignatureAlgorithm());
+                                                    config.getSignatureAlgorithm())
+                                            .getSignatureAndHashAlgorithm()
+                                            .getOid());
+                            config.setSignatureTbsCertOidDifferent(true);
                         });
     }
 
@@ -47,10 +50,12 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
                 false,
                 (X509CertificateConfigModifier)
                         config -> {
-                            config.amendSignatureAlgorithm(
+                            config.setDifferentSignatureAlgorithmOid(
                                     TestUtils.getNonMatchingAlgorithmOid(
-                                                    config.getDefaultSignatureAlgorithm())
-                                            .getSignatureAlgorithm());
+                                                    config.getSignatureAlgorithm())
+                                            .getSignatureAndHashAlgorithm()
+                                            .getOid());
+                            config.setSignatureTbsCertOidDifferent(true);
                         });
     }
 }
