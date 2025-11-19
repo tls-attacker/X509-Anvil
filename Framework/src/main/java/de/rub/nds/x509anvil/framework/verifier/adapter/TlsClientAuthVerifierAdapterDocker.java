@@ -25,6 +25,7 @@ import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocke
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import de.rub.nds.x509anvil.framework.verifier.adapter.util.NSSPkcs12Util;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
@@ -58,11 +59,19 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
         DockerTlsServerInstance instance = spinUpServer(config);
         return new TlsClientAuthVerifierAdapterDocker(instance, config.getImage());
     }
-
+    private static int i = 0;
     private static DockerTlsServerInstance spinUpServer(TlsAuthVerifierAdapterConfigDocker config) {
         String key = config.getImage() + ":" + config.getVersion();
         if (tlsServerInstances.containsKey(key)) {
-            return tlsServerInstances.get(key);
+            if(i++%50 == 0) {
+                try {
+                    tlsServerInstances.get(key).stop();
+                    Thread.sleep(50);
+                } catch (Exception ignored) {
+            }
+            } else  {
+                return tlsServerInstances.get(key);
+            }
         }
         TlsImplementationType implementationType =
                 TlsImplementationType.fromString(config.getImage());
@@ -82,7 +91,8 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
             if (implementationType == TlsImplementationType.GNUTLS
                     || implementationType == TlsImplementationType.WOLFSSL) {
                 // First argument disables Client Auth, removing that.
-                builder.getProfile().getParameterList().remove(1);
+                if(builder.getProfile().getParameterList().size() == 3)
+                    builder.getProfile().getParameterList().remove(1);
             }
             if (TlsImplementationType.fromString(config.getImage())
                     == TlsImplementationType.RUSTLS) {
