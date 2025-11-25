@@ -23,7 +23,7 @@ public class TestUtils {
             X509SignatureAlgorithm actualAlgorithm) {
         FeatureReport featureReport = ContextHelper.getFeatureReport();
         return featureReport.getSupportedSignatureHashAndKeyLengthPairsEntity().stream()
-                .filter(a -> a.getSignatureAlgorithm() != actualAlgorithm.getSignatureAlgorithm())
+                .filter(a -> a.getSignatureAlgorithm() != actualAlgorithm.getSignatureAlgorithm() || a.getHashAlgorithm() != actualAlgorithm.getHashAlgorithm())
                 .findFirst()
                 .orElseThrow(() -> new JUnitException("No other algorithm supported"));
     }
