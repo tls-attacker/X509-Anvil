@@ -1242,6 +1242,17 @@
         },
         "tags": null
     },
+  "namechaining-5fbbc06150": {
+    "description": "Two naming attributes match if the attribute types are the same and the values of the attributes are an exact match after processing with the string preparation algorithm",
+    "severityLevels": {
+      "Security": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "7.1. Internationalized Names in Distinguished Names"
+    },
+    "tags": null
+  },
     "weakcrypto-5521f8be14": {
         "description": "This test checks whether weak key lengths are supported. In this case RSA 512 bit.",
         "severityLevels": {

@@ -22,7 +22,7 @@ public class CnMismatchTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-5fbbc06151")
-    public void cnMismatchInIssuerEntity(X509VerifierRunner testRunner)
+    public void cnMismatchInSubjectEntity(X509VerifierRunner testRunner)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -31,5 +31,21 @@ public class CnMismatchTests extends X509AnvilTest {
                         config ->
                                 X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(
                                         config, X500AttributeType.COMMON_NAME));
+    }
+
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "namechaining-5fbbc06150")
+    public void cnMismatchInIssuerEntity(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            X509CertificateConfigUtil.modifyAttributeAndValuePairInIssuer(
+                                    config, X500AttributeType.COMMON_NAME);
+                            config.setFixIssuer(true);
+                        });
+
     }
 }

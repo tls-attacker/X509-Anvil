@@ -263,4 +263,22 @@ public class X509CertificateConfigUtil {
             config.setSubject(modifiableSubject);
         }
     }
+
+    public static void modifyAttributeAndValuePairInIssuer(
+            X509CertificateConfig config, X500AttributeType type) {
+        try {
+            Pair<X500AttributeType, String> existingPair =
+                    config.getDefaultIssuer().stream()
+                            .filter(x -> x.getLeftElement() == type)
+                            .findFirst()
+                            .orElseThrow();
+            existingPair.setRightElement(existingPair.getRightElement() + "_modified");
+        } catch (NoSuchElementException e) {
+            Pair<X500AttributeType, String> newPair = new Pair<>(type, "modificationtest_modified");
+            List<Pair<X500AttributeType, String>> modifiableSubject =
+                    new ArrayList<>(config.getDefaultIssuer());
+            modifiableSubject.add(newPair);
+            config.setIssuer(modifiableSubject);
+        }
+    }
 }
