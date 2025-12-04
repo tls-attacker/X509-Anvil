@@ -110,7 +110,7 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
             }
 
             if(implementationType == TlsImplementationType.NSS) {
-                NSSPkcs12Util.execSetup();
+                //NSSPkcs12Util.execSetup();
                  builder =
                         builder.cmd(
                                 "-n", "nss-server-cert", "-p", "4430", "-d", "sql:/x509-anv-resources/nss_db", "-r", "-r", "-w", "password");
