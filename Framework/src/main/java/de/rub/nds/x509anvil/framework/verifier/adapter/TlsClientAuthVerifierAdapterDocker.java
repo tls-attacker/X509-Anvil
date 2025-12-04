@@ -70,6 +70,11 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
                 } catch (Exception ignored) {
                 }
             } else  {
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 return tlsServerInstances.get(key);
             }
         }
@@ -131,6 +136,11 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
         }
         tlsServerInstance.start();
         serverUtil.waitUntilServerIsOnline(hostname, tlsServerInstance.getPort());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         config.setPort(tlsServerInstance.getPort());
         tlsServerInstances.put(key, tlsServerInstance);
         return tlsServerInstance;
