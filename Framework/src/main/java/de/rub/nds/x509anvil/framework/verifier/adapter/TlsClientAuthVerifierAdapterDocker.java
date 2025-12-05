@@ -63,13 +63,13 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
     private static DockerTlsServerInstance spinUpServer(TlsAuthVerifierAdapterConfigDocker config) {
         String key = config.getImage() + ":" + config.getVersion();
         if (tlsServerInstances.containsKey(key)) {
-            if(i++%50 == 0) {
+            /*if(i++%50 == 55) {
                 try {
                     tlsServerInstances.get(key).stop();
                     Thread.sleep(50);
                 } catch (Exception ignored) {
                 }
-            } else  {
+            } else  */{
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException e) {
