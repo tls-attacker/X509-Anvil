@@ -114,7 +114,7 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
     @Override
     public void runCommandInBackground() {
         try {
-            Thread.sleep(20);
+            Thread.sleep(30);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
