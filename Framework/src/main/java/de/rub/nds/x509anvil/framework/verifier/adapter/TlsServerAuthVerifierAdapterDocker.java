@@ -22,8 +22,6 @@ import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocke
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import de.rub.nds.x509anvil.framework.verifier.adapter.util.NSSPkcs12Util;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -114,7 +112,7 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
     @Override
     public void runCommandInBackground() {
         try {
-            Thread.sleep(50);
+            Thread.sleep(150);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
