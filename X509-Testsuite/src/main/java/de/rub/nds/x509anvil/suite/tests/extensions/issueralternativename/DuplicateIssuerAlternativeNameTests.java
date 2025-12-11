@@ -118,4 +118,65 @@ public class DuplicateIssuerAlternativeNameTests extends X509AnvilTest {
             config.addExtensions(subjectAlternativeNameConfig);
         });
     }
+
+    @ChainLength(minLength = 3)
+    @AnvilTest(id  = "extension-91b57720bf" )
+    @IpmLimitations(identifiers = { "entity:extensions_present", "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values", "entity:ext_subject_alt_name_present", "entity:ext_subject_alt_name_values" })
+    public void duplicateDifferentOrderIssuerAlternativeNameEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();
+            issuerAlternativeNameConfig.setPresent(true);
+            issuerAlternativeNameConfig.setCritical(false);
+            issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
+            issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com"));
+
+            IssuerAlternativeNameConfig issuerAlternativeNameConfigDifferent = new IssuerAlternativeNameConfig();
+            issuerAlternativeNameConfigDifferent.setPresent(true);
+            issuerAlternativeNameConfigDifferent.setCritical(false);
+            issuerAlternativeNameConfigDifferent.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
+            issuerAlternativeNameConfigDifferent.setGeneralNameConfigValues(List.of("www.tls-attacker.com"));
+
+            config.addExtensions(issuerAlternativeNameConfigDifferent);
+            config.addExtensions(issuerAlternativeNameConfig);
+
+            config.setIncludeExtensions(true);
+        }, (X509CertificateConfigModifier) config -> {
+            SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
+            subjectAlternativeNameConfig.setPresent(true);
+            subjectAlternativeNameConfig.setCritical(false);
+            subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
+            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com"));
+            config.addExtensions(subjectAlternativeNameConfig);
+        });
+    }
+
+    @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
+    @AnvilTest(id = "extension-91b57730ff")
+    @IpmLimitations(identifiers = { "inter1:ext_subject_alt_name_present", "inter1:ext_subject_alt_name_values", "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values" })
+    public void duplicateDifferentOrderIssuerAlternativeNameIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();
+            issuerAlternativeNameConfig.setPresent(true);
+            issuerAlternativeNameConfig.setCritical(false);
+            issuerAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
+            issuerAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com"));
+
+            IssuerAlternativeNameConfig issuerAlternativeNameConfigDifferent = new IssuerAlternativeNameConfig();
+            issuerAlternativeNameConfigDifferent.setPresent(true);
+            issuerAlternativeNameConfigDifferent.setCritical(false);
+            issuerAlternativeNameConfigDifferent.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
+            issuerAlternativeNameConfigDifferent.setGeneralNameConfigValues(List.of("www.tls-attacker.com"));
+
+            config.addExtensions(issuerAlternativeNameConfigDifferent);
+            config.addExtensions(issuerAlternativeNameConfig);
+
+        }, (X509CertificateConfigModifier) config -> {
+            SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
+            subjectAlternativeNameConfig.setPresent(true);
+            subjectAlternativeNameConfig.setCritical(false);
+            subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
+            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com"));
+            config.addExtensions(subjectAlternativeNameConfig);
+        });
+    }
 }

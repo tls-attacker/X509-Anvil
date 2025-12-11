@@ -40,4 +40,23 @@ public class DuplicateInhibitAnyPolicyTests extends X509AnvilTest {
             config.addExtensions(inhibitAnyPolicyConfigDifferent);
         });
     }
+
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-799e5cd512")
+    public void duplicateDifferentOrderInhibitAnyPolicyIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            InhibitAnyPolicyConfig inhibitAnyPolicyConfig = new InhibitAnyPolicyConfig();
+            inhibitAnyPolicyConfig.setPresent(true);
+            inhibitAnyPolicyConfig.setCritical(true);
+            inhibitAnyPolicyConfig.setSkipCerts(2);
+
+            InhibitAnyPolicyConfig inhibitAnyPolicyConfigDifferent = new InhibitAnyPolicyConfig();
+            inhibitAnyPolicyConfigDifferent.setPresent(true);
+            inhibitAnyPolicyConfigDifferent.setCritical(true);
+            inhibitAnyPolicyConfigDifferent.setSkipCerts(3);
+
+            config.addExtensions(inhibitAnyPolicyConfigDifferent);
+            config.addExtensions(inhibitAnyPolicyConfig);
+        });
+    }
 }

@@ -88,4 +88,50 @@ public class DuplicateSubjectAlternativeNameTests extends X509AnvilTest {
             config.addExtensions(subjectAlternativeNameConfigDifferent);
         });
     }
+
+    @ChainLength(minLength = 2)
+    @AnvilTest(id  = "extension-f4c421dd6e" )
+    @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_subject_alt_name_present", "entity:ext_subject_alt_name_values" })
+    public void duplicateDifferentOrderSubjectAlternativeNameEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
+            subjectAlternativeNameConfig.setPresent(true);
+            subjectAlternativeNameConfig.setCritical(false);
+            subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
+            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com"));
+
+            SubjectAlternativeNameConfig subjectAlternativeNameConfigDifferent = new SubjectAlternativeNameConfig();
+            subjectAlternativeNameConfigDifferent.setPresent(true);
+            subjectAlternativeNameConfigDifferent.setCritical(false);
+            subjectAlternativeNameConfigDifferent.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
+            subjectAlternativeNameConfigDifferent.setGeneralNameConfigValues(List.of("www.tls-attacker.com"));
+
+            config.addExtensions(subjectAlternativeNameConfigDifferent);
+            config.addExtensions(subjectAlternativeNameConfig);
+
+            config.setIncludeExtensions(true);
+        });
+    }
+
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-f4c431dd6f")
+    @IpmLimitations(identifiers = { "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values" })
+    public void duplicateDifferentOrderSubjectAlternativeNameIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
+            subjectAlternativeNameConfig.setPresent(true);
+            subjectAlternativeNameConfig.setCritical(false);
+            subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
+            subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com"));
+
+            SubjectAlternativeNameConfig subjectAlternativeNameConfigDifferent = new SubjectAlternativeNameConfig();
+            subjectAlternativeNameConfigDifferent.setPresent(true);
+            subjectAlternativeNameConfigDifferent.setCritical(false);
+            subjectAlternativeNameConfigDifferent.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
+            subjectAlternativeNameConfigDifferent.setGeneralNameConfigValues(List.of("www.tls-attacker.com"));
+
+            config.addExtensions(subjectAlternativeNameConfigDifferent);
+            config.addExtensions(subjectAlternativeNameConfig);
+        });
+    }
 }
