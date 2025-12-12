@@ -18,7 +18,11 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.AuthorityKeyIdentifierConfig;
+import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DuplicateAuthKeyIdTests extends X509AnvilTest {
 
@@ -87,6 +91,49 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
                     differentConfig.setPresent(true);
                     differentConfig.setKeyIdentifier(new byte[] {(byte) 0xFF,(byte) 0xFF,(byte) 0xFF,(byte) 0xFF}); // wrong
                     config.addExtensions(differentConfig);
+
+                    config.setIncludeExtensions(true);
+                });
+    }
+
+    @ChainLength(minLength = 3)
+    @IpmLimitations(identifiers = "entity:extensions_present")
+    @AnvilTest(id = "extension-4a5dd1e00b")
+    public void duplicateDifferentOrderEntity(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier) config -> {
+                    AuthorityKeyIdentifierConfig differentConfig =
+                            new AuthorityKeyIdentifierConfig();
+                    differentConfig.setPresent(true);
+                    differentConfig.setKeyIdentifier(new byte[] {(byte) 0xFF,(byte) 0xFF,(byte) 0xFF,(byte) 0xFF}); // wrong
+
+                    List<ExtensionConfig> extensions = new ArrayList<>(config.getExtensions());
+                    extensions.add(0, differentConfig);
+                    config.setExtensions(extensions);
+
+                    config.setIncludeExtensions(true);
+                });
+    }
+
+    @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
+    @AnvilTest(id = "extension-3b0f420cac")
+    public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                false,
+                (X509CertificateConfigModifier) config -> {
+                    AuthorityKeyIdentifierConfig differentConfig =
+                            new AuthorityKeyIdentifierConfig();
+                    differentConfig.setPresent(true);
+                    differentConfig.setKeyIdentifier(new byte[] {(byte) 0xFF,(byte) 0xFF,(byte) 0xFF,(byte) 0xFF}); // wrong
+
+                    List<ExtensionConfig> extensions = new ArrayList<>(config.getExtensions());
+                    extensions.add(0, differentConfig);
+                    config.setExtensions(extensions);
 
                     config.setIncludeExtensions(true);
                 });
