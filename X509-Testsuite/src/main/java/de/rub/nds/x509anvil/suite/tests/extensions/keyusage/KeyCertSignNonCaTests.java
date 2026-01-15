@@ -20,6 +20,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class KeyCertSignNonCaTests extends X509AnvilTest {
 
@@ -28,7 +29,7 @@ public class KeyCertSignNonCaTests extends X509AnvilTest {
             identifiers =
                     "entity:extensions_present, entity:ext_basic_constraints_present, entity:ext_basic_constraints_ca, entity:ext_key_usage_additional")
     @AnvilTest(id = "extension-91e2ddbf9d")
-    public void keyCertSignNonCaEntity(X509VerifierRunner testRunner)
+    public void keyCertSignNonCaEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -48,6 +49,6 @@ public class KeyCertSignNonCaTests extends X509AnvilTest {
                             basicConstraintsConfig.setCa(false);
                             basicConstraintsConfig.setPresent(true);
                             config.setIncludeExtensions(true);
-                        });
+                        }, testInfo);
     }
 }

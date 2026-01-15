@@ -59,7 +59,7 @@
         <toolkit.common.coffee4j.anvil.version>1.2.0</toolkit.common.coffee4j.anvil.version>
         <toolkit.common.anvilcore.version>2.0.5</toolkit.common.anvilcore.version>
         <toolkit.common.asn1attacker.version>4.2.2-SNAPSHOT</toolkit.common.asn1attacker.version>
-        <toolkit.common.x509attacker.version>4.3.5-SNAPSHOT</toolkit.common.x509attacker.version>
+        <toolkit.common.x509attacker.version>4.3.10-SNAPSHOT</toolkit.common.x509attacker.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <skip.signature>true</skip.signature>
@@ -81,7 +81,7 @@
         <dependency>
             <groupId>de.rub.nds</groupId>
             <artifactId>x509-attacker</artifactId>
-            <version>4.3.7</version>
+            <version>4.3.10-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

@@ -12,13 +12,14 @@ import de.rub.nds.x509attacker.constants.GeneralNameChoiceType;
 import de.rub.nds.x509attacker.x509.model.GeneralName;
 import de.rub.nds.x509attacker.x509.model.extensions.GeneralSubtree;
 import de.rub.nds.x509attacker.x509.model.extensions.GeneralSubtrees;
+import org.junit.jupiter.api.TestInfo;
 
 import java.util.List;
 
 public class DuplicateNameConstraintsTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-c1a6acb0d3")
-    public void duplicateIdenticalNameConstraintsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void duplicateIdenticalNameConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             NameConstraintsConfig nameConstraintsConfig = new NameConstraintsConfig();
             nameConstraintsConfig.setPresent(true);
@@ -33,12 +34,12 @@ public class DuplicateNameConstraintsTests extends X509AnvilTest {
             nameConstraintsConfig.setPermittedSubtrees(permittedTrees);
             config.addExtensions(nameConstraintsConfig);
             config.addExtensions(nameConstraintsConfig);
-        });
+        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-c1a6acb1d3")
-    public void duplicateDifferentNameConstraintsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void duplicateDifferentNameConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             NameConstraintsConfig nameConstraintsConfig = new NameConstraintsConfig();
             nameConstraintsConfig.setPresent(true);
@@ -65,6 +66,6 @@ public class DuplicateNameConstraintsTests extends X509AnvilTest {
             permittedTreesDifferent.setGeneralSubtrees(List.of(permittedTreeDifferent));
             nameConstraintsConfigDifferent.setPermittedSubtrees(permittedTreesDifferent);
             config.addExtensions(nameConstraintsConfigDifferent);
-        });
+        }, testInfo);
     }
 }

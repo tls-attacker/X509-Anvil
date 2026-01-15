@@ -15,27 +15,28 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import org.junit.jupiter.api.TestInfo;
 
 public class EmptySignatureTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "signature-aee615f131")
-    public void emptySignatureEntity(X509VerifierRunner testRunner)
+    public void emptySignatureEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 true,
-                (X509CertificateConfigModifier) config -> config.setSignatureEmpty(true));
+                (X509CertificateConfigModifier) config -> config.setSignatureEmpty(true), testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "signature-0c864620d2")
-    public void emptySignatureIntermediate(X509VerifierRunner testRunner)
+    public void emptySignatureIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 false,
-                (X509CertificateConfigModifier) config -> config.setSignatureEmpty(true));
+                (X509CertificateConfigModifier) config -> config.setSignatureEmpty(true), testInfo);
     }
 
     @ChainLength(minLength = 2)

@@ -12,6 +12,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 import de.rub.nds.x509attacker.config.extension.SubjectDirectoryAttributesConfig;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.x509.model.AttributeValueSet;
+import org.junit.jupiter.api.TestInfo;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class CriticalSubjectDirectoryAttributesTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-ce3148df7c")
     @IpmLimitations(identifiers = "entity:extensions_present")
-    public void criticalSubjectDirectoryAttributesEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void criticalSubjectDirectoryAttributesEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             SubjectDirectoryAttributesConfig subjectDirectoryAttributesConfig = new SubjectDirectoryAttributesConfig();
             subjectDirectoryAttributesConfig.setPresent(true);
@@ -31,12 +32,12 @@ public class CriticalSubjectDirectoryAttributesTests extends X509AnvilTest {
             subjectDirectoryAttributesConfig.setAttributeValueSets(List.of(attributeValueSet));
             config.addExtensions(subjectDirectoryAttributesConfig);
             config.setIncludeExtensions(true);
-        });
+        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-bfad73e06a")
-    public void criticalSubjectDirectoryAttributesIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void criticalSubjectDirectoryAttributesIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectDirectoryAttributesConfig subjectDirectoryAttributesConfig = new SubjectDirectoryAttributesConfig();
             subjectDirectoryAttributesConfig.setPresent(true);
@@ -47,6 +48,6 @@ public class CriticalSubjectDirectoryAttributesTests extends X509AnvilTest {
             attributeValueSet.setValueHolders(List.of(new Asn1PrintableString("attribute")));
             subjectDirectoryAttributesConfig.setAttributeValueSets(List.of(attributeValueSet));
             config.addExtensions(subjectDirectoryAttributesConfig);
-        });
+        }, testInfo);
     }
 }

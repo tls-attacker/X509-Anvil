@@ -144,7 +144,7 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
 
         workflowExecutor.executeWorkflow();
 
-        return new VerifierResult(workflowTrace.executedAsPlanned());
+        return new VerifierResult(workflowTrace.executedAsPlanned(), certificatesChain);
     }
 
     private void adjustSignatureAndHashAlgorithm(List<X509Certificate> certificatesChain) {

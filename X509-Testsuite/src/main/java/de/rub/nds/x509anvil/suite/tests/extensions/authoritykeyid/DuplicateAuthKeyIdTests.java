@@ -19,13 +19,14 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.AuthorityKeyIdentifierConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class DuplicateAuthKeyIdTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-012f1b4bd0")
-    public void duplicateIdenticalEntity(X509VerifierRunner testRunner)
+    public void duplicateIdenticalEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -36,12 +37,12 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
                                     X509CertificateConfigUtil.getExtensionConfig(
                                             config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
                     config.addExtensions(authorityKeyIdentifier);
-                });
+                }, testInfo);
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-ff7cdd6926")
-    public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner)
+    public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -52,13 +53,13 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
                                     X509CertificateConfigUtil.getExtensionConfig(
                                             config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
                     config.addExtensions(authorityKeyIdentifier);
-                });
+                }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-4a5dd1e00a")
-    public void duplicateDifferentEntity(X509VerifierRunner testRunner)
+    public void duplicateDifferentEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -71,12 +72,12 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
                     config.addExtensions(differentConfig);
 
                     config.setIncludeExtensions(true);
-                });
+                }, testInfo);
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-3b0f420c2c")
-    public void duplicateDifferentIntermediate(X509VerifierRunner testRunner)
+    public void duplicateDifferentIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -89,6 +90,6 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
                     config.addExtensions(differentConfig);
 
                     config.setIncludeExtensions(true);
-                });
+                }, testInfo);
     }
 }
