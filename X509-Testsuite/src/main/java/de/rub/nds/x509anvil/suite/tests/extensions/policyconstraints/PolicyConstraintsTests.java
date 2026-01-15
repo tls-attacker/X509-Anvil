@@ -9,13 +9,14 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.PolicyConstraintsConfig;
+import org.junit.jupiter.api.TestInfo;
 
 public class PolicyConstraintsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-515bf6be01")
     @IpmLimitations(identifiers = "entity:extensions_present")
-    public void mustAcceptPolicyConstraintsEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void mustAcceptPolicyConstraintsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
             policyConstraintsConfig.setPresent(true);
@@ -25,12 +26,12 @@ public class PolicyConstraintsTests extends X509AnvilTest {
             policyConstraintsConfig.setSkipCertsRequired(10);
             config.addExtensions(policyConstraintsConfig);
             config.setIncludeExtensions(true);
-        });
+        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-ad71b692af")
-    public void mustAcceptPolicyConstraintsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void mustAcceptPolicyConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
             policyConstraintsConfig.setPresent(true);
@@ -39,13 +40,13 @@ public class PolicyConstraintsTests extends X509AnvilTest {
             policyConstraintsConfig.setIncludeRequired(true);
             policyConstraintsConfig.setSkipCertsRequired(10);
             config.addExtensions(policyConstraintsConfig);
-        });
+        }, testInfo);
     }
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-77b24ac4ff")
     @IpmLimitations(identifiers = "entity:extensions_present")
-    public void emptyPolicyConstraintsEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void emptyPolicyConstraintsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
             policyConstraintsConfig.setPresent(true);
@@ -54,12 +55,12 @@ public class PolicyConstraintsTests extends X509AnvilTest {
             policyConstraintsConfig.setIncludeRequired(false);
             config.addExtensions(policyConstraintsConfig);
             config.setIncludeExtensions(true);
-        });
+        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-b7dc0826ae")
-    public void emptyPolicyConstraintsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void emptyPolicyConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
             policyConstraintsConfig.setPresent(true);
@@ -67,13 +68,13 @@ public class PolicyConstraintsTests extends X509AnvilTest {
             policyConstraintsConfig.setIncludeInhibit(false);
             policyConstraintsConfig.setIncludeRequired(false);
             config.addExtensions(policyConstraintsConfig);
-        });
+        }, testInfo);
     }
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-6b9aabb935")
     @IpmLimitations(identifiers = "entity:extensions_present")
-    public void nonCriticalPolicyConstraintsEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void nonCriticalPolicyConstraintsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
             policyConstraintsConfig.setPresent(true);
@@ -83,12 +84,12 @@ public class PolicyConstraintsTests extends X509AnvilTest {
             policyConstraintsConfig.setSkipCertsRequired(10);
             config.addExtensions(policyConstraintsConfig);
             config.setIncludeExtensions(true);
-        });
+        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-ece1272184")
-    public void nonCriticalPolicyConstraintsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void nonCriticalPolicyConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
             policyConstraintsConfig.setPresent(true);
@@ -97,6 +98,6 @@ public class PolicyConstraintsTests extends X509AnvilTest {
             policyConstraintsConfig.setIncludeRequired(true);
             policyConstraintsConfig.setSkipCertsRequired(10);
             config.addExtensions(policyConstraintsConfig);
-        });
+        }, testInfo);
     }
 }

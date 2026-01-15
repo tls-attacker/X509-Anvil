@@ -20,6 +20,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
 import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-3e4c7f3e62")
     @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
-    public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner)
+    public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -41,13 +42,13 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
                                             X509CertificateConfigUtil.getExtensionConfig(
                                                     config, X509ExtensionType.KEY_USAGE);
                             config.addExtensions(keyUsageConfig);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-44d01aed5a")
     @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
-    public void duplicateDifferentIntermediate(X509VerifierRunner testRunner)
+    public void duplicateDifferentIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -62,13 +63,13 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
                             newConfig.setPresent(true);
                             newConfig.setDataEncipherment(!keyUsageConfig.isDataEncipherment());
                             config.addExtensions(newConfig);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-44d01aed5b")
     @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
-    public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner)
+    public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -86,6 +87,6 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
                             List<ExtensionConfig> extensions = new ArrayList<>(config.getExtensions());
                             extensions.add(0, newConfig);
                             config.setExtensions(extensions);
-                        });
+                        }, testInfo);
     }
 }

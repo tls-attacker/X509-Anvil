@@ -9,6 +9,7 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
+import org.junit.jupiter.api.TestInfo;
 
 import java.util.LinkedList;
 
@@ -16,7 +17,7 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id  = "extension-8c049a0d2d" )
-    public void issuerAltNameMailInIssuerEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void issuerAltNameMailInIssuerEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
                 LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
@@ -24,12 +25,12 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
                 subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "TLS-Attacker"));
                 subject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "Global"));
                 config.setSubject(subject);
-            });
+            }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-ae73e0f75b" )
-    public void issuerAltNameMailInIssuerIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void issuerAltNameMailInIssuerIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
                 LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
@@ -37,12 +38,12 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
                 subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "TLS-Attacker"));
                 subject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "Global"));
                 config.setSubject(subject);
-            });
+            }, testInfo);
     }
 
     @ChainLength(minLength = 2)
     @AnvilTest(id  = "extension-0e2e4cd7b4" )
-    public void issuerAltNameDomainNameInIssuerEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void issuerAltNameDomainNameInIssuerEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
                 LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
@@ -50,12 +51,12 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
                 subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "TLS-Attacker"));
                 subject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "Global"));
                 config.setSubject(subject);
-            });
+            }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-5419ef48ce" )
-    public void issuerAltNameDomainNameInIssuerIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void issuerAltNameDomainNameInIssuerIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
                 LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
@@ -63,12 +64,12 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
                 subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "TLS-Attacker"));
                 subject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "Global"));
                 config.setSubject(subject);
-            });
+            }, testInfo);
     }
 
     @ChainLength(minLength = 2)
     @AnvilTest(id  = "extension-4cb6303918" )
-    public void issuerAltNameIpInIssuerEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void issuerAltNameIpInIssuerEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
                 LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
@@ -76,12 +77,12 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
                 subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "TLS-Attacker"));
                 subject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "Global"));
                 config.setSubject(subject);
-            });
+            }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-1619f2e27a" )
-    public void issuerAltNameIpInIssuerIssuer(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void issuerAltNameIpInIssuerIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
                 LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
@@ -89,6 +90,6 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
                 subject.add(new Pair<>(X500AttributeType.ORGANISATION_NAME, "TLS-Attacker"));
                 subject.add(new Pair<>(X500AttributeType.COUNTRY_NAME, "Global"));
                 config.setSubject(subject);
-            });
+            }, testInfo);
     }
 }

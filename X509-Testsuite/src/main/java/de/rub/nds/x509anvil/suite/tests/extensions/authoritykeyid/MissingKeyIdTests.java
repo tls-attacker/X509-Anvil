@@ -19,13 +19,14 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.AuthorityKeyIdentifierConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class MissingKeyIdTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-190349e95d")
-    public void missingKeyIdentifierEntity(X509VerifierRunner testRunner)
+    public void missingKeyIdentifierEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -37,12 +38,12 @@ public class MissingKeyIdTests extends X509AnvilTest {
                                             X509CertificateConfigUtil.getExtensionConfig(
                                                     config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
                             authorityKeyIdentifier.setKeyIdentifier(null);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-9e241be2f9")
-    public void missingKeyIdentifierIntermediate(X509VerifierRunner testRunner)
+    public void missingKeyIdentifierIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -54,6 +55,6 @@ public class MissingKeyIdTests extends X509AnvilTest {
                                             X509CertificateConfigUtil.getExtensionConfig(
                                                     config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
                             authorityKeyIdentifier.setKeyIdentifier(null);
-                        });
+                        }, testInfo);
     }
 }

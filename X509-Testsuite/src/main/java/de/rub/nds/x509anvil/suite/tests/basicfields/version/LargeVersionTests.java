@@ -16,6 +16,8 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import org.junit.jupiter.api.TestInfo;
+
 import java.math.BigInteger;
 
 public class LargeVersionTests extends X509AnvilTest {
@@ -23,22 +25,22 @@ public class LargeVersionTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-b56d876a16")
     @IpmLimitations(identifiers = "entity:version")
-    public void largeVersionEntity(X509VerifierRunner testRunner)
+    public void largeVersionEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 true,
-                (X509CertificateConfigModifier) config -> config.setVersion(new BigInteger("256")));
+                (X509CertificateConfigModifier) config -> config.setVersion(new BigInteger("256")), testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-bdf4da10f4")
     @IpmLimitations(identifiers = "inter0:version")
-    public void largeVersionIntermediate(X509VerifierRunner testRunner)
+    public void largeVersionIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 false,
-                (X509CertificateConfigModifier) config -> config.setVersion(new BigInteger("256")));
+                (X509CertificateConfigModifier) config -> config.setVersion(new BigInteger("256")), testInfo);
     }
 }
