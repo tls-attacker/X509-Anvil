@@ -83,7 +83,7 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-0be3c6ebe2")
     @IpmLimitations(identifiers = "entity:cn_type")
-    public void typeMismatchOrganizationalUnit(X509VerifierRunner testRunner)
+    public void typeMismatchOrganizationalUnit(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(
                 testRunner,
@@ -103,13 +103,13 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
                                             X500AttributeType.ORGANISATION_UNIT_NAME,
                                             "Test Organizational Unit"));
                             config.setSubject(subject);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-7247764279")
     @IpmLimitations(identifiers = "entity:cn_type")
-    public void typeMismatchDnQualifier(X509VerifierRunner testRunner)
+    public void typeMismatchDnQualifier(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(
                 testRunner,
@@ -128,13 +128,13 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
                                     new Pair<>(
                                             X500AttributeType.DN_QUALIFIER, "Test DN Qualifier"));
                             config.setSubject(subject);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-75f6f195a4")
     @IpmLimitations(identifiers = "entity:cn_type")
-    public void typeMismatchStateProvince(X509VerifierRunner testRunner)
+    public void typeMismatchStateProvince(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(
                 testRunner,
@@ -154,13 +154,13 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
                                             X500AttributeType.STATE_OR_PROVINCE_NAME,
                                             "Test State Province"));
                             config.setSubject(subject);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-ce08905f2b")
     @IpmLimitations(identifiers = "entity:cn_type")
-    public void typeMismatchSerialNumber(X509VerifierRunner testRunner)
+    public void typeMismatchSerialNumber(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(
                 testRunner,
@@ -179,6 +179,6 @@ public class AttributeTypeMismatchTests extends X509AnvilTest {
                                     new Pair<>(
                                             X500AttributeType.SERIAL_NUMBER, "Test Serial Number"));
                             config.setSubject(subject);
-                        });
+                        }, testInfo);
     }
 }

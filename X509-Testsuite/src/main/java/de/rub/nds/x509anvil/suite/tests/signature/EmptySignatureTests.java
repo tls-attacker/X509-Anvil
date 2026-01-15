@@ -41,8 +41,8 @@ public class EmptySignatureTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "signature-104b0eac54")
-    public void nullSignatureRoot(X509VerifierRunner testRunner)
+    public void nullSignatureRoot(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
-        assertBooleanRoot(testRunner, false, config -> config.setSignatureEmpty(true));
+        assertBooleanRoot(testRunner, false, config -> config.setSignatureEmpty(true), testInfo);
     }
 }
