@@ -107,4 +107,61 @@ public class DuplicateSubjectDirectoryAttributesTests extends X509AnvilTest {
             config.addExtensions(subjectDirectoryAttributesConfigDifferent);
         }, testInfo);
     }
+
+    @ChainLength(minLength = 2)
+    @AnvilTest(id = "extension-ca2182df6d")
+    @IpmLimitations(identifiers = "entity:extensions_present")
+    public void duplicateDifferentOrderSubjectDirectoryAttributesEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            SubjectDirectoryAttributesConfig subjectDirectoryAttributesConfig = new SubjectDirectoryAttributesConfig();
+            subjectDirectoryAttributesConfig.setPresent(true);
+            subjectDirectoryAttributesConfig.setCritical(false);
+            subjectDirectoryAttributesConfig.setIdentifier(List.of(X500AttributeType.COMMON_NAME.getOid().toString()));
+            AttributeValueSet attributeValueSet = new AttributeValueSet("attributeValueSet");
+            attributeValueSet.setValues(List.of("test"));
+            attributeValueSet.setValueHolders(List.of(new Asn1PrintableString("attribute")));
+            subjectDirectoryAttributesConfig.setAttributeValueSets(List.of(attributeValueSet));
+
+            SubjectDirectoryAttributesConfig subjectDirectoryAttributesConfigDifferent = new SubjectDirectoryAttributesConfig();
+            subjectDirectoryAttributesConfigDifferent.setPresent(true);
+            subjectDirectoryAttributesConfigDifferent.setCritical(false);
+            subjectDirectoryAttributesConfigDifferent.setIdentifier(List.of(X500AttributeType.COMMON_NAME.getOid().toString()));
+            AttributeValueSet attributeValueSetDifferent = new AttributeValueSet("attributeValueSetDifferent");
+            attributeValueSetDifferent.setValues(List.of("test2"));
+            attributeValueSetDifferent.setValueHolders(List.of(new Asn1PrintableString("attributeDifferent")));
+            subjectDirectoryAttributesConfigDifferent.setAttributeValueSets(List.of(attributeValueSetDifferent));
+
+            config.addExtensions(subjectDirectoryAttributesConfigDifferent);
+            config.addExtensions(subjectDirectoryAttributesConfig);
+
+            config.setIncludeExtensions(true);
+        });
+    }
+
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-ca2183df6e")
+    public void duplicateDifferentOrderSubjectDirectoryAttributesIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            SubjectDirectoryAttributesConfig subjectDirectoryAttributesConfig = new SubjectDirectoryAttributesConfig();
+            subjectDirectoryAttributesConfig.setPresent(true);
+            subjectDirectoryAttributesConfig.setCritical(false);
+            subjectDirectoryAttributesConfig.setIdentifier(List.of(X500AttributeType.COMMON_NAME.getOid().toString()));
+            AttributeValueSet attributeValueSet = new AttributeValueSet("attributeValueSet");
+            attributeValueSet.setValues(List.of("test"));
+            attributeValueSet.setValueHolders(List.of(new Asn1PrintableString("attribute")));
+            subjectDirectoryAttributesConfig.setAttributeValueSets(List.of(attributeValueSet));
+
+            SubjectDirectoryAttributesConfig subjectDirectoryAttributesConfigDifferent = new SubjectDirectoryAttributesConfig();
+            subjectDirectoryAttributesConfigDifferent.setPresent(true);
+            subjectDirectoryAttributesConfigDifferent.setCritical(false);
+            subjectDirectoryAttributesConfigDifferent.setIdentifier(List.of(X500AttributeType.COMMON_NAME.getOid().toString()));
+            AttributeValueSet attributeValueSetDifferent = new AttributeValueSet("attributeValueSetDifferent");
+            attributeValueSetDifferent.setValues(List.of("test2"));
+            attributeValueSetDifferent.setValueHolders(List.of(new Asn1PrintableString("attributeDifferent")));
+            subjectDirectoryAttributesConfigDifferent.setAttributeValueSets(List.of(attributeValueSetDifferent));
+
+            config.addExtensions(subjectDirectoryAttributesConfigDifferent);
+            config.addExtensions(subjectDirectoryAttributesConfig);
+        });
+    }
 }

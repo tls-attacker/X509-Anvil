@@ -29,7 +29,7 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
         }, testInfo);
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-521bf6e001")
     public void duplicateIdenticalPolicyConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -68,7 +68,7 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
         }, testInfo);
     }
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-523bf6e001")
     public void duplicateDifferentPolicyConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -79,7 +79,6 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
             policyConstraintsConfig.setIncludeRequired(true);
             policyConstraintsConfig.setSkipCertsRequired(10);
             config.addExtensions(policyConstraintsConfig);
-            config.addExtensions(policyConstraintsConfig);
 
             PolicyConstraintsConfig policyConstraintsConfigDifferent = new PolicyConstraintsConfig();
             policyConstraintsConfigDifferent.setPresent(true);
@@ -89,5 +88,54 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
             policyConstraintsConfigDifferent.setSkipCertsRequired(5);
             config.addExtensions(policyConstraintsConfigDifferent);
         }, testInfo);
+    }
+
+    @ChainLength(minLength = 2)
+    @AnvilTest(id = "extension-522bf6e002")
+    @IpmLimitations(identifiers = "entity:extensions_present")
+    public void duplicateDifferentOrderPolicyConstraintsEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
+            policyConstraintsConfig.setPresent(true);
+            policyConstraintsConfig.setCritical(true);
+            policyConstraintsConfig.setIncludeInhibit(false);
+            policyConstraintsConfig.setIncludeRequired(true);
+            policyConstraintsConfig.setSkipCertsRequired(10);
+
+            PolicyConstraintsConfig policyConstraintsConfigDifferent = new PolicyConstraintsConfig();
+            policyConstraintsConfigDifferent.setPresent(true);
+            policyConstraintsConfigDifferent.setCritical(true);
+            policyConstraintsConfigDifferent.setIncludeInhibit(false);
+            policyConstraintsConfigDifferent.setIncludeRequired(true);
+            policyConstraintsConfigDifferent.setSkipCertsRequired(5);
+
+            config.addExtensions(policyConstraintsConfigDifferent);
+            config.addExtensions(policyConstraintsConfig);
+
+            config.setIncludeExtensions(true);
+        });
+    }
+
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-523bf6e003")
+    public void duplicateDifferentOrderPolicyConstraintsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
+            policyConstraintsConfig.setPresent(true);
+            policyConstraintsConfig.setCritical(true);
+            policyConstraintsConfig.setIncludeInhibit(false);
+            policyConstraintsConfig.setIncludeRequired(true);
+            policyConstraintsConfig.setSkipCertsRequired(10);
+
+            PolicyConstraintsConfig policyConstraintsConfigDifferent = new PolicyConstraintsConfig();
+            policyConstraintsConfigDifferent.setPresent(true);
+            policyConstraintsConfigDifferent.setCritical(true);
+            policyConstraintsConfigDifferent.setIncludeInhibit(false);
+            policyConstraintsConfigDifferent.setIncludeRequired(true);
+            policyConstraintsConfigDifferent.setSkipCertsRequired(5);
+
+            config.addExtensions(policyConstraintsConfigDifferent);
+            config.addExtensions(policyConstraintsConfig);
+        });
     }
 }

@@ -17,9 +17,13 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
 import de.rub.nds.x509attacker.config.extension.SubjectKeyIdentifierConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
 import org.junit.jupiter.api.TestInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
 
@@ -95,5 +99,50 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
 
                             config.setIncludeExtensions(true);
                         }, testInfo);
+    }
+
+    @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = "entity:extensions_present")
+    @AnvilTest(id = "extension-8fc40ac4e2")
+    public void duplicateDifferentOrderEntity(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            SubjectKeyIdentifierConfig differentConfig =
+                                    new SubjectKeyIdentifierConfig();
+                            differentConfig.setPresent(true);
+                            differentConfig.setKeyIdentifier(new byte[] {(byte) 0xFF,(byte)  0xFF,(byte)  0xFF,(byte)  0xFF}); // wrong
+
+                            List<ExtensionConfig> extensions = new ArrayList<>(config.getExtensions());
+                            extensions.add(0, differentConfig);
+                            config.setExtensions(extensions);
+
+                            config.setIncludeExtensions(true);
+                        });
+    }
+
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-c9f599cfc8")
+    public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                false,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            SubjectKeyIdentifierConfig differentConfig =
+                                    new SubjectKeyIdentifierConfig();
+                            differentConfig.setPresent(true);
+                            differentConfig.setKeyIdentifier(new byte[] {(byte) 0xFF,(byte)  0xFF,(byte)  0xFF,(byte)  0xFF}); // wrong
+
+                            List<ExtensionConfig> extensions = new ArrayList<>(config.getExtensions());
+                            extensions.add(0, differentConfig);
+                            config.setExtensions(extensions);
+
+                            config.setIncludeExtensions(true);
+                        });
     }
 }

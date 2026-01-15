@@ -17,9 +17,13 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
 import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
 import org.junit.jupiter.api.TestInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DuplicateKeyUsageTests extends X509AnvilTest {
 
@@ -60,5 +64,29 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
                             newConfig.setDataEncipherment(!keyUsageConfig.isDataEncipherment());
                             config.addExtensions(newConfig);
                         }, testInfo);
+    }
+
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-44d01aed5b")
+    @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
+    public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                false,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            KeyUsageConfig keyUsageConfig =
+                                    (KeyUsageConfig)
+                                            X509CertificateConfigUtil.getExtensionConfig(
+                                                    config, X509ExtensionType.KEY_USAGE);
+                            KeyUsageConfig newConfig = new KeyUsageConfig();
+                            newConfig.setPresent(true);
+                            newConfig.setDataEncipherment(!keyUsageConfig.isDataEncipherment());
+
+                            List<ExtensionConfig> extensions = new ArrayList<>(config.getExtensions());
+                            extensions.add(0, newConfig);
+                            config.setExtensions(extensions);
+                        });
     }
 }

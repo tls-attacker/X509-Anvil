@@ -92,4 +92,53 @@ public class DuplicateCertificatePoliciesTests extends X509AnvilTest {
             config.addExtensions(certificatePoliciesConfigDifferent);
         }, testInfo);
     }
+
+    @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = "entity:extensions_present")
+    @AnvilTest(id = "extension-3a127b4c98")
+    public void duplicateDifferentOrderPoliciesEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
+            certificatePoliciesConfig.setPresent(true);
+            certificatePoliciesConfig.setCritical(true);
+            certificatePoliciesConfig.setPolicyIdentifiers(List.of("1.3.6.1.5.5.7.2.1"));
+            certificatePoliciesConfig.setPolicyQualifiers(List.of(new PolicyQualifiers("empty")));
+            certificatePoliciesConfig.setIncludeQualifiers(List.of(false));
+
+            CertificatePoliciesConfig certificatePoliciesConfigDifferent = new CertificatePoliciesConfig();
+            certificatePoliciesConfigDifferent.setPresent(true);
+            certificatePoliciesConfigDifferent.setCritical(true);
+            certificatePoliciesConfigDifferent.setPolicyIdentifiers(List.of("1.3.6.1.5.5.7.2.2"));
+            certificatePoliciesConfigDifferent.setPolicyQualifiers(List.of(new PolicyQualifiers("empty")));
+            certificatePoliciesConfigDifferent.setIncludeQualifiers(List.of(false));
+
+            config.addExtensions(certificatePoliciesConfigDifferent);
+            config.addExtensions(certificatePoliciesConfig);
+
+            config.setIncludeExtensions(true);
+        });
+    }
+
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-3a128b4c99")
+    public void duplicateDifferentOrderPoliciesIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
+            CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
+            certificatePoliciesConfig.setPresent(true);
+            certificatePoliciesConfig.setCritical(true);
+            certificatePoliciesConfig.setPolicyIdentifiers(List.of("1.3.6.1.5.5.7.2.1"));
+            certificatePoliciesConfig.setPolicyQualifiers(List.of(new PolicyQualifiers("empty")));
+            certificatePoliciesConfig.setIncludeQualifiers(List.of(false));
+
+            CertificatePoliciesConfig certificatePoliciesConfigDifferent = new CertificatePoliciesConfig();
+            certificatePoliciesConfigDifferent.setPresent(true);
+            certificatePoliciesConfigDifferent.setCritical(true);
+            certificatePoliciesConfigDifferent.setPolicyIdentifiers(List.of("1.3.6.1.5.5.7.2.2"));
+            certificatePoliciesConfigDifferent.setPolicyQualifiers(List.of(new PolicyQualifiers("empty")));
+            certificatePoliciesConfigDifferent.setIncludeQualifiers(List.of(false));
+
+            config.addExtensions(certificatePoliciesConfigDifferent);
+            config.addExtensions(certificatePoliciesConfig);
+        });
+    }
 }
