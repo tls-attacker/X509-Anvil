@@ -44,7 +44,7 @@ public class DuplicateInhibitAnyPolicyTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-799e5cd512")
-    public void duplicateDifferentOrderInhibitAnyPolicyIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void duplicateDifferentOrderInhibitAnyPolicyIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             InhibitAnyPolicyConfig inhibitAnyPolicyConfig = new InhibitAnyPolicyConfig();
             inhibitAnyPolicyConfig.setPresent(true);
@@ -58,6 +58,6 @@ public class DuplicateInhibitAnyPolicyTests extends X509AnvilTest {
 
             config.addExtensions(inhibitAnyPolicyConfigDifferent);
             config.addExtensions(inhibitAnyPolicyConfig);
-        });
+        }, testInfo);
     }
 }

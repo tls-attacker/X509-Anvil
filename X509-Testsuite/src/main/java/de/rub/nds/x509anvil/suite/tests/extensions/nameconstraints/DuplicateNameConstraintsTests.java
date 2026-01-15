@@ -71,7 +71,7 @@ public class DuplicateNameConstraintsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-c1a6acb1d4")
-    public void duplicateDifferentOrderNameConstraintsIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void duplicateDifferentOrderNameConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             NameConstraintsConfig nameConstraintsConfig = new NameConstraintsConfig();
             nameConstraintsConfig.setPresent(true);
@@ -99,6 +99,6 @@ public class DuplicateNameConstraintsTests extends X509AnvilTest {
 
             config.addExtensions(nameConstraintsConfigDifferent);
             config.addExtensions(nameConstraintsConfig);
-        });
+        }, testInfo);
     }
 }

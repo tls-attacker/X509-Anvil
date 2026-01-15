@@ -96,7 +96,7 @@ public class DuplicateCertificatePoliciesTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-3a127b4c98")
-    public void duplicateDifferentOrderPoliciesEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void duplicateDifferentOrderPoliciesEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
             certificatePoliciesConfig.setPresent(true);
@@ -116,12 +116,12 @@ public class DuplicateCertificatePoliciesTests extends X509AnvilTest {
             config.addExtensions(certificatePoliciesConfig);
 
             config.setIncludeExtensions(true);
-        });
+        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-3a128b4c99")
-    public void duplicateDifferentOrderPoliciesIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void duplicateDifferentOrderPoliciesIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
             certificatePoliciesConfig.setPresent(true);
@@ -139,6 +139,6 @@ public class DuplicateCertificatePoliciesTests extends X509AnvilTest {
 
             config.addExtensions(certificatePoliciesConfigDifferent);
             config.addExtensions(certificatePoliciesConfig);
-        });
+        }, testInfo);
     }
 }

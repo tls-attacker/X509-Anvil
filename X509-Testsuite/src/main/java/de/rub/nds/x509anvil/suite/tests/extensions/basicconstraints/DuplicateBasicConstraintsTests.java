@@ -68,7 +68,7 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:ext_basic_constraints_ca")
     @AnvilTest(id = "extension-027e0728ff")
-    public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner)
+    public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -86,6 +86,6 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
                             List<ExtensionConfig> extensions = new ArrayList<>(config.getExtensions());
                             extensions.add(0, newConfig);
                             config.setExtensions(extensions);
-                        });
+                        }, testInfo);
     }
 }

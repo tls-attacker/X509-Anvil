@@ -104,7 +104,7 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-8fc40ac4e2")
-    public void duplicateDifferentOrderEntity(X509VerifierRunner testRunner)
+    public void duplicateDifferentOrderEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -121,12 +121,12 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
                             config.setExtensions(extensions);
 
                             config.setIncludeExtensions(true);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-c9f599cfc8")
-    public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner)
+    public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -143,6 +143,6 @@ public class DuplicateSubjectKeyIdTests extends X509AnvilTest {
                             config.setExtensions(extensions);
 
                             config.setIncludeExtensions(true);
-                        });
+                        }, testInfo);
     }
 }

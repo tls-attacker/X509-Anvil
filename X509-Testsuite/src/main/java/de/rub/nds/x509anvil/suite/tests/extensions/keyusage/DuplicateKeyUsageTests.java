@@ -69,7 +69,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-44d01aed5b")
     @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
-    public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner)
+    public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -87,6 +87,6 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
                             List<ExtensionConfig> extensions = new ArrayList<>(config.getExtensions());
                             extensions.add(0, newConfig);
                             config.setExtensions(extensions);
-                        });
+                        }, testInfo);
     }
 }

@@ -100,7 +100,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-4a5dd1e00b")
-    public void duplicateDifferentOrderEntity(X509VerifierRunner testRunner)
+    public void duplicateDifferentOrderEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -116,12 +116,12 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
                     config.setExtensions(extensions);
 
                     config.setIncludeExtensions(true);
-                });
+                }, testInfo);
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-3b0f420cac")
-    public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner)
+    public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -137,6 +137,6 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
                     config.setExtensions(extensions);
 
                     config.setIncludeExtensions(true);
-                });
+                }, testInfo);
     }
 }

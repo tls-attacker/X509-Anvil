@@ -123,7 +123,7 @@ public class DuplicateIssuerAlternativeNameTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @AnvilTest(id  = "extension-91b57720bf" )
     @IpmLimitations(identifiers = { "entity:extensions_present", "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values", "entity:ext_subject_alt_name_present", "entity:ext_subject_alt_name_values" })
-    public void duplicateDifferentOrderIssuerAlternativeNameEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void duplicateDifferentOrderIssuerAlternativeNameEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();
             issuerAlternativeNameConfig.setPresent(true);
@@ -148,13 +148,13 @@ public class DuplicateIssuerAlternativeNameTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
             subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com"));
             config.addExtensions(subjectAlternativeNameConfig);
-        });
+        }, testInfo);
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-91b57730ff")
     @IpmLimitations(identifiers = { "inter1:ext_subject_alt_name_present", "inter1:ext_subject_alt_name_values", "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values" })
-    public void duplicateDifferentOrderIssuerAlternativeNameIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void duplicateDifferentOrderIssuerAlternativeNameIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();
             issuerAlternativeNameConfig.setPresent(true);
@@ -178,6 +178,6 @@ public class DuplicateIssuerAlternativeNameTests extends X509AnvilTest {
             subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
             subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com"));
             config.addExtensions(subjectAlternativeNameConfig);
-        });
+        }, testInfo);
     }
 }

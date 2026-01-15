@@ -111,7 +111,7 @@ public class DuplicateSubjectDirectoryAttributesTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-ca2182df6d")
     @IpmLimitations(identifiers = "entity:extensions_present")
-    public void duplicateDifferentOrderSubjectDirectoryAttributesEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void duplicateDifferentOrderSubjectDirectoryAttributesEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             SubjectDirectoryAttributesConfig subjectDirectoryAttributesConfig = new SubjectDirectoryAttributesConfig();
             subjectDirectoryAttributesConfig.setPresent(true);
@@ -135,12 +135,12 @@ public class DuplicateSubjectDirectoryAttributesTests extends X509AnvilTest {
             config.addExtensions(subjectDirectoryAttributesConfig);
 
             config.setIncludeExtensions(true);
-        });
+        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-ca2183df6e")
-    public void duplicateDifferentOrderSubjectDirectoryAttributesIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void duplicateDifferentOrderSubjectDirectoryAttributesIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectDirectoryAttributesConfig subjectDirectoryAttributesConfig = new SubjectDirectoryAttributesConfig();
             subjectDirectoryAttributesConfig.setPresent(true);
@@ -162,6 +162,6 @@ public class DuplicateSubjectDirectoryAttributesTests extends X509AnvilTest {
 
             config.addExtensions(subjectDirectoryAttributesConfigDifferent);
             config.addExtensions(subjectDirectoryAttributesConfig);
-        });
+        }, testInfo);
     }
 }
