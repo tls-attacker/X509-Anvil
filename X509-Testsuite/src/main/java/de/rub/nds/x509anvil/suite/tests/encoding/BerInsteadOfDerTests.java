@@ -20,6 +20,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
 import de.rub.nds.x509attacker.constants.X509Version;
+import org.junit.jupiter.api.TestInfo;
 
 public class BerInsteadOfDerTests extends X509AnvilTest {
 
@@ -28,7 +29,7 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
             identifiers =
                     "entity:extensions_present, entity:ext_basic_constraints_present, entity:ext_basic_constraints_critical")
     @AnvilTest(id = "encoding-0e88c639e4")
-    public void booleanRepresentationEntity(X509VerifierRunner testRunner)
+    public void booleanRepresentationEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -43,7 +44,7 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
                             basicConstraintsConfig.setCritical(true);
                             basicConstraintsConfig.setInvalidCriticalEncoding(true);
                             config.setIncludeExtensions(true);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
@@ -51,7 +52,7 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
             identifiers =
                     "inter0:extensions_present, inter0:ext_basic_constraints_present, inter0:ext_basic_constraints_critical")
     @AnvilTest(id = "encoding-5735cdbb46")
-    public void booleanRepresentationIntermediate(X509VerifierRunner testRunner)
+    public void booleanRepresentationIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -66,28 +67,28 @@ public class BerInsteadOfDerTests extends X509AnvilTest {
                             basicConstraintsConfig.setCritical(true);
                             basicConstraintsConfig.setInvalidCriticalEncoding(true);
                             config.setIncludeExtensions(true);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "encoding-bbe8f26bc7")
-    public void explicitVersion1Entity(X509VerifierRunner testRunner)
+    public void explicitVersion1Entity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 true,
                 (X509CertificateConfigModifier)
-                        config -> config.setVersion(X509Version.V1.getValue()));
+                        config -> config.setVersion(X509Version.V1.getValue()), testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "encoding-42c061c4d3")
-    public void explicitVersion1Intermediate(X509VerifierRunner testRunner)
+    public void explicitVersion1Intermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 false,
                 (X509CertificateConfigModifier)
-                        config -> config.setVersion(X509Version.V1.getValue()));
+                        config -> config.setVersion(X509Version.V1.getValue()), testInfo);
     }
 }

@@ -16,12 +16,13 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateModifier;
+import org.junit.jupiter.api.TestInfo;
 
 public class InvalidCertificateLengthTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "encoding-465dca8b34")
-    public void shortLengthTagEntity(X509VerifierRunner testRunner)
+    public void shortLengthTagEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -32,12 +33,12 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
                                         .getLengthOctets()
                                         .setModifications(
                                                 new ByteArrayExplicitValueModification(
-                                                        new byte[] {(byte) 0x82, 0, 1})));
+                                                        new byte[] {(byte) 0x82, 0, 1})), testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "encoding-bfa8982b92")
-    public void shortLengthTagIntermediate(X509VerifierRunner testRunner)
+    public void shortLengthTagIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -48,12 +49,12 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
                                         .getLengthOctets()
                                         .setModifications(
                                                 new ByteArrayExplicitValueModification(
-                                                        new byte[] {(byte) 0x82, 0, 1})));
+                                                        new byte[] {(byte) 0x82, 0, 1})), testInfo);
     }
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "encoding-c151dbb976")
-    public void overflowingLengthTagEntity(X509VerifierRunner testRunner)
+    public void overflowingLengthTagEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -66,12 +67,12 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
                                                 new ByteArrayExplicitValueModification(
                                                         new byte[] {
                                                             (byte) 0x82, 0x07, (byte) 0xD0
-                                                        })));
+                                                        })), testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "encoding-0d3990e788")
-    public void overflowingLengthTagIntermediate(X509VerifierRunner testRunner)
+    public void overflowingLengthTagIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -84,6 +85,6 @@ public class InvalidCertificateLengthTests extends X509AnvilTest {
                                                 new ByteArrayExplicitValueModification(
                                                         new byte[] {
                                                             (byte) 0x82, 0x07, (byte) 0xD0
-                                                        })));
+                                                        })), testInfo);
     }
 }

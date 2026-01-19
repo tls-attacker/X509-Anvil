@@ -19,13 +19,14 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class KeyUsageWithoutKeyCertSignTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = { "inter0:extensions_present", "inter0:ext_key_usage_additional" })
     @AnvilTest(id = "extension-930f474fe2")
-    public void keyUsageWithoutKeyCert(X509VerifierRunner testRunner)
+    public void keyUsageWithoutKeyCert(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -39,6 +40,6 @@ public class KeyUsageWithoutKeyCertSignTests extends X509AnvilTest {
                             keyUsageConfig.setKeyCertSign(false);
                             keyUsageConfig.setPresent(true);
                             config.setIncludeExtensions(true);
-                        });
+                        }, testInfo);
     }
 }

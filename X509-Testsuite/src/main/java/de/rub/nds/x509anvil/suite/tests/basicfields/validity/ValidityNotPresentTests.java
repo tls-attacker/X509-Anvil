@@ -15,26 +15,27 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import org.junit.jupiter.api.TestInfo;
 
 public class ValidityNotPresentTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-a4593c9ff9")
-    public void noValidityEntity(X509VerifierRunner testRunner)
+    public void noValidityEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 true,
-                (X509CertificateConfigModifier) config -> config.setIncludeValidity(false));
+                (X509CertificateConfigModifier) config -> config.setIncludeValidity(false), testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-02f469f8a4")
-    public void noValidityIntermediate(X509VerifierRunner testRunner)
+    public void noValidityIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 false,
-                (X509CertificateConfigModifier) config -> config.setIncludeValidity(false));
+                (X509CertificateConfigModifier) config -> config.setIncludeValidity(false), testInfo);
     }
 }

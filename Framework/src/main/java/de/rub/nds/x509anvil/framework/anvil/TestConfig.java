@@ -60,6 +60,12 @@ public class TestConfig extends TLSDelegateConfig {
                     "Use TLS Docker Library with indicated library (latest) or library:version.")
     private String dockerLibrary = "nss:3.117";
 
+    @JsonProperty("dumpCertificates")
+    @Parameter(
+            names = "-dumpCertificates",
+            description = "Whether to dump certificates of all failed test cases")
+    private Boolean dumpCertificates = false;
+
     @JsonProperty("minChainLength")
     @Parameter(
             names = "-minChainLength",
@@ -197,5 +203,13 @@ public class TestConfig extends TLSDelegateConfig {
 
     public String getDockerLibrary() {
         return dockerLibrary;
+    }
+
+    public Boolean getDumpCertificates() {
+        return dumpCertificates;
+    }
+
+    public void setDumpCertificates(Boolean dumpCertificates) {
+        this.dumpCertificates = dumpCertificates;
     }
 }
