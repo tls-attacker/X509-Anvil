@@ -141,8 +141,13 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         modifier.apply(certificate);
         VerifierResult result =
             testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
-        // assert values are equal
-        Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+
+        TestConfig testConfig = ContextHelper.getTestConfig();
+        if (testConfig.getDumpCertificates()) {
+            Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+        } else {
+            Assertions.assertEquals(expectValid, result.isValid());
+        }
     }
 
     /**
@@ -164,7 +169,12 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         modifier.apply(config);
         VerifierResult result = testRunner.execute(certificateChainConfig);
 
-        Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+        TestConfig testConfig = ContextHelper.getTestConfig();
+        if (testConfig.getDumpCertificates()) {
+            Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+        } else {
+            Assertions.assertEquals(expectValid, result.isValid());
+        }
     }
 
     private void assertBoolean(X509VerifierRunner testRunner, boolean expectValid, boolean entity,
@@ -188,8 +198,13 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         modifier1.apply(config1);
         modifier2.apply(config2);
         VerifierResult result = testRunner.execute(certificateChainConfig);
-        // assert values are equal
-        Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+
+        TestConfig testConfig = ContextHelper.getTestConfig();
+        if (testConfig.getDumpCertificates()) {
+            Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+        } else {
+            Assertions.assertEquals(expectValid, result.isValid());
+        }
     }
 
     public void assertBooleanRoot(X509VerifierRunner testRunner, boolean expectValid,
@@ -200,8 +215,13 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         // apply modifications
         modifier.apply(config);
         VerifierResult result = testRunner.execute(certificateChainConfig);
-        // assert values are equal
-        Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+
+        TestConfig testConfig = ContextHelper.getTestConfig();
+        if (testConfig.getDumpCertificates()) {
+            Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+        } else {
+            Assertions.assertEquals(expectValid, result.isValid());
+        }
     }
 
     public void assertBooleanFirstIntermediate(X509VerifierRunner testRunner, boolean expectValid,
@@ -212,8 +232,13 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         // apply modifications
         modifier.apply(config);
         VerifierResult result = testRunner.execute(certificateChainConfig);
-        // assert values are equal
-        Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+
+        TestConfig testConfig = ContextHelper.getTestConfig();
+        if (testConfig.getDumpCertificates()) {
+            Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+        } else {
+            Assertions.assertEquals(expectValid, result.isValid());
+        }
     }
 
     private void assertBoolean(X509VerifierRunner testRunner, boolean expectValid, boolean entity,
@@ -245,8 +270,13 @@ public class X509AnvilTest extends AnvilTestBaseClass {
         certificateModifier.apply(certificate);
         VerifierResult result =
             testRunner.execute(certificateChainConfig.getEntityCertificateConfig(), generatedCertificates);
-        // assert values are equal
-        Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+
+        TestConfig testConfig = ContextHelper.getTestConfig();
+        if (testConfig.getDumpCertificates()) {
+            Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+        } else {
+            Assertions.assertEquals(expectValid, result.isValid());
+        }
     }
 
     public void assertValid(X509VerifierRunner testRunner, boolean entity, X509CertificateConfigModifier modifier, TestInfo testInfo)
