@@ -111,11 +111,6 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
 
     @Override
     public void runCommandInBackground() {
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         currentClientInstance.connect("tls-attacker.com", realPort);
     }
 

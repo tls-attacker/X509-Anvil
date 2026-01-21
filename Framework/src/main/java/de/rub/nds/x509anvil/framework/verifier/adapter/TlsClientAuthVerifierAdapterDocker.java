@@ -63,20 +63,7 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
     private static DockerTlsServerInstance spinUpServer(TlsAuthVerifierAdapterConfigDocker config) {
         String key = config.getImage() + ":" + config.getVersion();
         if (tlsServerInstances.containsKey(key)) {
-            /*if(i++%50 == 55) {
-                try {
-                    tlsServerInstances.get(key).stop();
-                    Thread.sleep(50);
-                } catch (Exception ignored) {
-                }
-            } else  */{
-                try {
-                    Thread.sleep(20);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                return tlsServerInstances.get(key);
-            }
+            return tlsServerInstances.get(key);
         }
         TlsImplementationType implementationType =
                 TlsImplementationType.fromString(config.getImage());
@@ -136,11 +123,6 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
         }
         tlsServerInstance.start();
         serverUtil.waitUntilServerIsOnline(hostname, tlsServerInstance.getPort());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         config.setPort(tlsServerInstance.getPort());
         tlsServerInstances.put(key, tlsServerInstance);
         return tlsServerInstance;
