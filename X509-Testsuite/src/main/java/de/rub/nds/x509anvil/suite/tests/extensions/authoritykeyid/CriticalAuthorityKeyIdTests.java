@@ -19,13 +19,14 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.AuthorityKeyIdentifierConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-efb61a5418")
-    public void criticalAuthorityKeyIdEntity(X509VerifierRunner testRunner)
+    public void criticalAuthorityKeyIdEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -37,12 +38,12 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
                                             config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
                     authorityKeyIdentifier.setCritical(true);
                     config.setIncludeExtensions(true);
-                });
+                }, testInfo);
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-320a8c3fd3")
-    public void criticalAuthorityKeyIdIntermediate(X509VerifierRunner testRunner)
+    public void criticalAuthorityKeyIdIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -53,6 +54,6 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
                                     X509CertificateConfigUtil.getExtensionConfig(
                                             config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
                     authorityKeyIdentifier.setCritical(true);
-                });
+                }, testInfo);
     }
 }

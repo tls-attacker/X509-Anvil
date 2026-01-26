@@ -16,6 +16,8 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import org.junit.jupiter.api.TestInfo;
+
 import java.math.BigInteger;
 
 public class ZeroSerialNumberTests extends X509AnvilTest {
@@ -23,24 +25,24 @@ public class ZeroSerialNumberTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:serial_number")
     @AnvilTest(id = "basic-0dd1f8b33d")
-    public void zeroSerialNumberEntity(X509VerifierRunner testRunner)
+    public void zeroSerialNumberEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(
                 testRunner,
                 true,
                 (X509CertificateConfigModifier)
-                        config -> config.setSerialNumber(BigInteger.valueOf(0)));
+                        config -> config.setSerialNumber(BigInteger.valueOf(0)), testInfo);
     }
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:serial_number")
     @AnvilTest(id = "basic-55a018dc6c")
-    public void zeroSerialNumberIntermediate(X509VerifierRunner testRunner)
+    public void zeroSerialNumberIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(
                 testRunner,
                 false,
                 (X509CertificateConfigModifier)
-                        config -> config.setSerialNumber(BigInteger.valueOf(0)));
+                        config -> config.setSerialNumber(BigInteger.valueOf(0)), testInfo);
     }
 }

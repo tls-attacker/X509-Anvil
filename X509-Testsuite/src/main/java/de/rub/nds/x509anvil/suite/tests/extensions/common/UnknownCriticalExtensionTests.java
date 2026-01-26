@@ -18,13 +18,14 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.UnknownConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class UnknownCriticalExtensionTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = {"entity:extensions_present"})
     @AnvilTest(id = "extension-d8772be424")
-    public void unknownCriticalExtensionEntity(X509VerifierRunner testRunner)
+    public void unknownCriticalExtensionEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -38,12 +39,12 @@ public class UnknownCriticalExtensionTests extends X509AnvilTest {
                             unknownConfig.setPresent(true);
                             unknownConfig.setContent(new byte[] {10, 11, 12});
                             config.addExtensions(unknownConfig);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-14d5fe1bed")
-    public void unknownCriticalExtensionIntermediate(X509VerifierRunner testRunner)
+    public void unknownCriticalExtensionIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -57,6 +58,6 @@ public class UnknownCriticalExtensionTests extends X509AnvilTest {
                             unknownConfig.setPresent(true);
                             unknownConfig.setContent(new byte[] {10, 11, 12});
                             config.addExtensions(unknownConfig);
-                        });
+                        }, testInfo);
     }
 }

@@ -19,6 +19,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class InvalidCriticalExtensionTests extends X509AnvilTest {
 
@@ -27,7 +28,7 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
             identifiers =
                     "entity:extensions_present, entity:ext_basic_constraints_present, entity:ext_basic_constraints_critical")
     @AnvilTest(id = "extension-199eb869ce")
-    public void invalidCriticalSubjectKeyIdentifierEntity(X509VerifierRunner testRunner)
+    public void invalidCriticalBasicConstraintsEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -42,7 +43,7 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
                             basicConstraintsConfig.setPresent(true);
                             basicConstraintsConfig.setInvalidExtensionContent(true);
                             config.setIncludeExtensions(true);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
@@ -50,7 +51,7 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
             identifiers =
                     "inter0:extensions_present, inter0:ext_basic_constraints_present, inter0:ext_basic_constraints_critical")
     @AnvilTest(id = "extension-5ad1c94f1c")
-    public void invalidCriticalSubjectKeyIdentifierIntermediate(X509VerifierRunner testRunner)
+    public void invalidCriticalBasicConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -64,6 +65,6 @@ public class InvalidCriticalExtensionTests extends X509AnvilTest {
                             basicConstraintsConfig.setCritical(true);
                             basicConstraintsConfig.setPresent(true);
                             basicConstraintsConfig.setInvalidExtensionContent(true);
-                        });
+                        }, testInfo);
     }
 }
