@@ -18,13 +18,14 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
+import org.junit.jupiter.api.TestInfo;
 
 public class TbsSignatureMismatchTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:key_type")
     @AnvilTest(id = "basic-3e2fbb009f")
-    public void tbsSignatureDoesntMatchAlgorithmEntity(X509VerifierRunner testRunner)
+    public void tbsSignatureDoesntMatchAlgorithmEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -37,13 +38,13 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
                                             .getSignatureAndHashAlgorithm()
                                             .getOid());
                             config.setSignatureTbsCertOidDifferent(true);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:key_type")
     @AnvilTest(id = "basic-eec58410b3")
-    public void tbsSignatureDoesntMatchAlgorithmIntermediate(X509VerifierRunner testRunner)
+    public void tbsSignatureDoesntMatchAlgorithmIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -56,6 +57,6 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
                                             .getSignatureAndHashAlgorithm()
                                             .getOid());
                             config.setSignatureTbsCertOidDifferent(true);
-                        });
+                        }, testInfo);
     }
 }

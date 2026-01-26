@@ -3600,5 +3600,247 @@
       "section": "4.2 Certificate Extensions"
     },
     "tags": null
-  }
+  },
+    "extension-4a5dd1e00b": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-3b0f420cac": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-027e0728ff": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-3a127b4c98": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-3a128b4c99": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-999f482fe3": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-999f483fe4": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-799e5cd512": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-91b57720bf": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-91b57730ff": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-44d01aed5b": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-c1a6acb1d4": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-522bf6e002": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-523bf6e003": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-72af523a2e": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-72af533a3e": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-f4c421dd6e": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-f4c431dd6f": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-ca2182df6d": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-ca2183df6e": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-8fc40ac4e2": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    },
+    "extension-c9f599cfc8": {
+        "description": "A certificate MUST NOT include more than one instance of a particular extension",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.2 Certificate Extensions"
+        },
+        "tags": null
+    }
 }

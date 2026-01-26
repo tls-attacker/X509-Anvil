@@ -16,6 +16,8 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import org.junit.jupiter.api.TestInfo;
+
 import java.math.BigInteger;
 
 public class NegativeVersionTests extends X509AnvilTest {
@@ -23,24 +25,24 @@ public class NegativeVersionTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-d196ac0293")
     @IpmLimitations(identifiers = "entity:version")
-    public void negativeVersionEntity(X509VerifierRunner testRunner)
+    public void negativeVersionEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 true,
                 (X509CertificateConfigModifier)
-                        config -> config.setVersion(BigInteger.valueOf(-1)));
+                        config -> config.setVersion(BigInteger.valueOf(-1)), testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-04db02edb2")
     @IpmLimitations(identifiers = "inter0:version")
-    public void negativeVersionIntermediate(X509VerifierRunner testRunner)
+    public void negativeVersionIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 false,
                 (X509CertificateConfigModifier)
-                        config -> config.setVersion(BigInteger.valueOf(-1)));
+                        config -> config.setVersion(BigInteger.valueOf(-1)), testInfo);
     }
 }

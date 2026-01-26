@@ -17,6 +17,8 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
+import org.junit.jupiter.api.TestInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class DomainComponentCaseInsensitiveTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-85e5f0f10d")
-    public void switchedCaseDomainComponentTest(X509VerifierRunner testRunner)
+    public void switchedCaseDomainComponentTest(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(
                 testRunner,
@@ -39,6 +41,6 @@ public class DomainComponentCaseInsensitiveTests extends X509AnvilTest {
                             modifiableSubject.add(newPair);
                             config.setSubject(modifiableSubject);
                             config.setSubjectDomainComponentCaseInsensitive(true);
-                        });
+                        }, testInfo);
     }
 }

@@ -60,7 +60,7 @@ public class NotAfterParameter extends CertificateSpecificParameter<NotAfterValu
             case UTC_TIME:
                 certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
                 certificateConfig.setNotAfter(
-                        new DateTime(2026, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
+                        new DateTime(2028, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
             case UTC_TIME_LATEST:
                 certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.UTC);
@@ -76,7 +76,7 @@ public class NotAfterParameter extends CertificateSpecificParameter<NotAfterValu
             /*case GENERALIZED_TIME_BEFORE_2050:
                 certificateConfig.setDefaultNotAfterEncoding(ValidityEncoding.GENERALIZED_TIME_UTC);
                 certificateConfig.setNotAfter(
-                        new DateTime(2026, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
+                        new DateTime(2028, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;*/
         }
     }

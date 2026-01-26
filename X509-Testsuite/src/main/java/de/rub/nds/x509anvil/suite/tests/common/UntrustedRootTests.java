@@ -17,6 +17,8 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
+import org.junit.jupiter.api.TestInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class UntrustedRootTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @AnvilTest(id = "common-f15e7199ea")
     @StaticRoot(false)
-    public void untrustedRootCertificate(X509VerifierRunner testRunner)
+    public void untrustedRootCertificate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertBooleanRoot(
                 testRunner,
@@ -39,6 +41,6 @@ public class UntrustedRootTests extends X509AnvilTest {
                                     subject.get(0).getLeftElement(),
                                     subject.get(0).getRightElement() + " Untrusted"));
                     config.setSubject(subject);
-                });
+                }, testInfo);
     }
 }

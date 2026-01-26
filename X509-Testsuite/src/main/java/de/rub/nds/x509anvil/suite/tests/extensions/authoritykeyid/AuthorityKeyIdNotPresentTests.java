@@ -11,12 +11,13 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.AuthorityKeyIdentifierConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class AuthorityKeyIdNotPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-a2c84a2918")
-    public void authKeyIdNotPresentEntity(X509VerifierRunner testRunner)
+    public void authKeyIdNotPresentEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -27,12 +28,12 @@ public class AuthorityKeyIdNotPresentTests extends X509AnvilTest {
                                     X509CertificateConfigUtil.getExtensionConfig(
                                             config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
                     authorityKeyIdentifier.setPresent(false);
-                });
+                }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-198c1c9f93")
-    public void authKeyIdNotPresentIntermediate(X509VerifierRunner testRunner)
+    public void authKeyIdNotPresentIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -43,6 +44,6 @@ public class AuthorityKeyIdNotPresentTests extends X509AnvilTest {
                                     X509CertificateConfigUtil.getExtensionConfig(
                                             config, X509ExtensionType.AUTHORITY_KEY_IDENTIFIER);
                     authorityKeyIdentifier.setPresent(false);
-                });
+                }, testInfo);
     }
 }

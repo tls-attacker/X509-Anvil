@@ -19,13 +19,14 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class InterCertWithoutBasicConstraintsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:ext_basic_constraints_present")
     @AnvilTest(id = "extension-0bd143b23d")
-    public void intermediateCertWithoutBasicConstraintsTests(X509VerifierRunner testRunner)
+    public void intermediateCertWithoutBasicConstraintsTests(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -37,6 +38,6 @@ public class InterCertWithoutBasicConstraintsTests extends X509AnvilTest {
                                             X509CertificateConfigUtil.getExtensionConfig(
                                                     config, X509ExtensionType.BASIC_CONSTRAINTS);
                             basicConstraintsConfig.setPresent(false);
-                        });
+                        }, testInfo);
     }
 }

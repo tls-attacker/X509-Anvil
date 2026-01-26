@@ -15,12 +15,13 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import org.junit.jupiter.api.TestInfo;
 
 public class AttributeNumberMismatchTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "namechaining-4075e0cc0f")
-    public void missingAttribute(X509VerifierRunner testRunner)
+    public void missingAttribute(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -28,12 +29,12 @@ public class AttributeNumberMismatchTests extends X509AnvilTest {
                 (X509CertificateConfigModifier)
                         config -> {
                             config.setRemoveFirstRdnIssuer(true);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "namechaining-5fa5031980")
-    public void additionalAttribute(X509VerifierRunner testRunner)
+    public void additionalAttribute(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -41,6 +42,6 @@ public class AttributeNumberMismatchTests extends X509AnvilTest {
                 (X509CertificateConfigModifier)
                         config -> {
                             config.setDuplicateFirstRdnIssuer(true);
-                        });
+                        }, testInfo);
     }
 }

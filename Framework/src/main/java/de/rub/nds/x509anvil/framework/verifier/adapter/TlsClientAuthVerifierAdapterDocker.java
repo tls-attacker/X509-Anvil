@@ -161,8 +161,8 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
         for (DockerTlsServerInstance instance : tlsServerInstances.values()) {
             try {
                 instance.kill();
-            } catch (NotFoundException | InternalServerErrorException e) {
-                // Container is already dead, so it's alright :-)
+            } catch (Exception ignored) {
+                // Container is already dead, this may fail, so it's alright :-)
             }
         }
     }

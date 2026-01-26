@@ -19,13 +19,14 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class KeyUsageOverflowTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_key_usage_additional" })
     @AnvilTest(id = "extension-53e2e2bb36")
-    public void keyUsageOverflowAppend1Entity(X509VerifierRunner testRunner)
+    public void keyUsageOverflowAppend1Entity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -47,13 +48,13 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
                             keyUsageConfig.setOverflowInvalidation(true);
                             keyUsageConfig.setOverflowWithOne(true);
                             config.setIncludeExtensions(true);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-7042e82768")
     @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
-    public void keyUsageOverflowAppend1Intermediate(X509VerifierRunner testRunner)
+    public void keyUsageOverflowAppend1Intermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -75,13 +76,13 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
                             keyUsageConfig.setOverflowInvalidation(true);
                             keyUsageConfig.setOverflowWithOne(true);
                             config.setIncludeExtensions(true);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-c88ac06a56")
     @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_key_usage_additional" })
-    public void keyUsageOverflowAppend0Entity(X509VerifierRunner testRunner)
+    public void keyUsageOverflowAppend0Entity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -103,13 +104,13 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
                             keyUsageConfig.setOverflowInvalidation(true);
                             keyUsageConfig.setOverflowWithOne(false);
                             config.setIncludeExtensions(true);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-a51284dc4b")
     @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
-    public void keyUsageOverflowAppend0Intermediate(X509VerifierRunner testRunner)
+    public void keyUsageOverflowAppend0Intermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -131,6 +132,6 @@ public class KeyUsageOverflowTests extends X509AnvilTest {
                             keyUsageConfig.setOverflowInvalidation(true);
                             keyUsageConfig.setOverflowWithOne(false);
                             config.setIncludeExtensions(true);
-                        });
+                        }, testInfo);
     }
 }
