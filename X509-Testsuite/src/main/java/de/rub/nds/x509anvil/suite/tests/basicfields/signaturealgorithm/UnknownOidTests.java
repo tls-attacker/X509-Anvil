@@ -15,28 +15,29 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import org.junit.jupiter.api.TestInfo;
 
 public class UnknownOidTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-fb1e899219")
-    public void unknownOidTbsAndCertEntity(X509VerifierRunner testRunner)
+    public void unknownOidTbsAndCertEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 true,
                 (X509CertificateConfigModifier)
-                        config -> config.setSignatureAlgorithmOidInvalid(true));
+                        config -> config.setSignatureAlgorithmOidInvalid(true), testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-3bd920316f")
-    public void unknownOidTbsAndCertIntermediate(X509VerifierRunner testRunner)
+    public void unknownOidTbsAndCertIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 false,
                 (X509CertificateConfigModifier)
-                        config -> config.setSignatureAlgorithmOidInvalid(true));
+                        config -> config.setSignatureAlgorithmOidInvalid(true), testInfo);
     }
 }

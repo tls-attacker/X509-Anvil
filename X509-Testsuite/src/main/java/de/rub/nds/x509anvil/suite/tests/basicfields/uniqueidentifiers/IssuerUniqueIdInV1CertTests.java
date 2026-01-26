@@ -16,6 +16,8 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import org.junit.jupiter.api.TestInfo;
+
 import java.math.BigInteger;
 
 public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
@@ -23,7 +25,7 @@ public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:version")
     @AnvilTest(id = "basic-4cfe12547b")
-    public void issuerUniqueIdPresentInV1Entity(X509VerifierRunner testRunner)
+    public void issuerUniqueIdPresentInV1Entity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -33,13 +35,13 @@ public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
                             config.setIncludeIssuerUniqueId(true);
                             config.setDefaultIssuerUniqueId(new byte[] {0x0, 0x1, 0x2, 0x3});
                             config.setVersion(BigInteger.valueOf(0));
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:version")
     @AnvilTest(id = "basic-adc3be6001")
-    public void issuerUniqueIdPresentInV1Intermediate(X509VerifierRunner testRunner)
+    public void issuerUniqueIdPresentInV1Intermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -49,6 +51,6 @@ public class IssuerUniqueIdInV1CertTests extends X509AnvilTest {
                             config.setIncludeIssuerUniqueId(true);
                             config.setDefaultIssuerUniqueId(new byte[] {0x0, 0x1, 0x2, 0x3});
                             config.setVersion(BigInteger.valueOf(0));
-                        });
+                        }, testInfo);
     }
 }

@@ -19,13 +19,14 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.constants.ValidityEncoding;
 import org.joda.time.DateTime;
+import org.junit.jupiter.api.TestInfo;
 
 public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:not_before")
     @AnvilTest(id = "basic-b09833f225")
-    public void notBeforeEntity(X509VerifierRunner testRunner)
+    public void notBeforeEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -36,13 +37,13 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
                             config.setDefaultNotBeforeEncoding(
                                     ValidityEncoding.GENERALIZED_TIME_UTC);
                             config.setNotBeforeAccurracy(TimeAccurracy.MINUTES);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_before")
     @AnvilTest(id = "basic-b1e7273312")
-    public void notBeforeIntermediate(X509VerifierRunner testRunner)
+    public void notBeforeIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -53,13 +54,13 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
                             config.setDefaultNotBeforeEncoding(
                                     ValidityEncoding.GENERALIZED_TIME_UTC);
                             config.setNotBeforeAccurracy(TimeAccurracy.MINUTES);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:not_after")
     @AnvilTest(id = "basic-0a0797aef4")
-    public void notAfterEntity(X509VerifierRunner testRunner)
+    public void notAfterEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -70,13 +71,13 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
                             config.setDefaultNotAfterEncoding(
                                     ValidityEncoding.GENERALIZED_TIME_UTC);
                             config.setNotAfterAccurracy(TimeAccurracy.MINUTES);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_after")
     @AnvilTest(id = "basic-beb1b04e7a")
-    public void notAfterIntermediate(X509VerifierRunner testRunner)
+    public void notAfterIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -87,6 +88,6 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
                             config.setDefaultNotAfterEncoding(
                                     ValidityEncoding.GENERALIZED_TIME_UTC);
                             config.setNotAfterAccurracy(TimeAccurracy.MINUTES);
-                        });
+                        }, testInfo);
     }
 }

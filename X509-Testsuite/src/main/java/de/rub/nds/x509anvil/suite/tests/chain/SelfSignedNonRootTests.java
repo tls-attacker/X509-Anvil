@@ -15,26 +15,27 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import org.junit.jupiter.api.TestInfo;
 
 public class SelfSignedNonRootTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "chain-1694cbbbbf")
-    public void selfSignedEntity(X509VerifierRunner testRunner)
+    public void selfSignedEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 true,
-                (X509CertificateConfigModifier) config -> config.setSelfSigned(true));
+                (X509CertificateConfigModifier) config -> config.setSelfSigned(true), testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "chain-01967f3251")
-    public void selfSignedIntermediate(X509VerifierRunner testRunner)
+    public void selfSignedIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 false,
-                (X509CertificateConfigModifier) config -> config.setSelfSigned(true));
+                (X509CertificateConfigModifier) config -> config.setSelfSigned(true), testInfo);
     }
 }

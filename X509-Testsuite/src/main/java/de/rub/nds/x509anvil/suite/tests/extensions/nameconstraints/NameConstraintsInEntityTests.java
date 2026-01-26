@@ -13,6 +13,7 @@ import de.rub.nds.x509attacker.constants.GeneralNameChoiceType;
 import de.rub.nds.x509attacker.x509.model.GeneralName;
 import de.rub.nds.x509attacker.x509.model.extensions.GeneralSubtree;
 import de.rub.nds.x509attacker.x509.model.extensions.GeneralSubtrees;
+import org.junit.jupiter.api.TestInfo;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class NameConstraintsInEntityTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-c1a6aca5d3")
-    public void nameConstraintsInEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void nameConstraintsInEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             NameConstraintsConfig nameConstraintsConfig = new NameConstraintsConfig();
             nameConstraintsConfig.setPresent(true);
@@ -30,12 +31,12 @@ public class NameConstraintsInEntityTests extends X509AnvilTest {
             GeneralSubtree permittedTree = new GeneralSubtree("permittedSubtree", 0, 5);
             GeneralName permittedName = new GeneralName("permittedName");
             permittedName.setGeneralNameChoiceTypeConfig(GeneralNameChoiceType.DNS_NAME);
-            permittedName.setGeneralNameConfigValue("permitted.com");
+            permittedName.setGeneralNameConfigValue("tls-attacker.com");
             permittedTree.setBase(permittedName);
             permittedTrees.setGeneralSubtrees(List.of(permittedTree));
             nameConstraintsConfig.setPermittedSubtrees(permittedTrees);
             config.addExtensions(nameConstraintsConfig);
             config.setIncludeExtensions(true);
-        });
+        }, testInfo);
     }
 }
