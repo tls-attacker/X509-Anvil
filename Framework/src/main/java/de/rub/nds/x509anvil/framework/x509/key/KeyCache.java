@@ -16,6 +16,7 @@ import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.X509NamedCurve;
 import de.rub.nds.x509attacker.constants.X509PublicKeyType;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.lang3.tuple.Pair;
@@ -40,7 +41,7 @@ public class KeyCache {
      * updates the given config with the produced key values.
      */
     public void generateNewKeys(
-            SignatureHashAlgorithmKeyLengthPair algorithmLengthPair, X509CertificateConfig config) {
+            SignatureHashAlgorithmKeyLengthPair algorithmLengthPair, X509CertificateConfig config, String cacheIdentifier) {
 
         switch (algorithmLengthPair.getSignatureAlgorithm()) {
             case RSA_PKCS1:
@@ -55,7 +56,9 @@ public class KeyCache {
                                         config.getDefaultSubjectRsaPublicExponent(),
                                         algorithmLengthPair.getKeyLength(),
                                         random);
-                        rsaKeyPairCache.put(algorithmLengthPair.getKeyLength(), keyPair);
+                        if (Objects.equals(cacheIdentifier, "root")) {
+                            rsaKeyPairCache.put(algorithmLengthPair.getKeyLength(), keyPair);
+                        }
                     }
                 }
                 config.setDefaultSubjectRsaModulus(keyPair.getLeft().getModulus());
@@ -74,7 +77,9 @@ public class KeyCache {
                                         algorithmLengthPair.getKeyLength(),
                                         160,
                                         random);
-                        dsaPublicKeyCache.put(algorithmLengthPair.getKeyLength(), dsaPublicKey);
+                        if (Objects.equals(cacheIdentifier, "root")) {
+                            dsaPublicKeyCache.put(algorithmLengthPair.getKeyLength(), dsaPublicKey);
+                        }
                     }
                 }
                 config.setDefaultSubjectDsaPrimeP(dsaPublicKey.getModulus());
@@ -96,7 +101,9 @@ public class KeyCache {
                                 KeyGenerator.generateEcdsaPublicKey(
                                         config.getDefaultSubjectEcPrivateKey(),
                                         config.getDefaultSubjectNamedCurve().getParameters());
-                        ecdsaPublicKeyCache.put(algorithmLengthPair.getKeyLength(), ecdsaPublicKey);
+                        if (Objects.equals(cacheIdentifier, "root")) {
+                            ecdsaPublicKeyCache.put(algorithmLengthPair.getKeyLength(), ecdsaPublicKey);
+                        }
                     }
                 }
                 config.setDefaultSubjectEcPublicKey(ecdsaPublicKey.getPublicPoint());
