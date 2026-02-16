@@ -51,14 +51,14 @@ public class TestConfig extends TLSDelegateConfig {
     @Parameter(
             names = "-verifierAdapterType",
             description = "Whether to test TLS servers or TLS clients.")
-    private VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_CLIENT_AUTH;
+    private VerifierAdapterType verifierAdapterType = VerifierAdapterType.TLS_SERVER_AUTH;
 
     @JsonProperty("docker")
     @Parameter(
             names = "-docker",
             description =
                     "Use TLS Docker Library with indicated library (latest) or library:version.")
-    private String dockerLibrary = "";
+    private String dockerLibrary = "openssl:3.6.0";
 
     @JsonProperty("dumpCertificates")
     @Parameter(

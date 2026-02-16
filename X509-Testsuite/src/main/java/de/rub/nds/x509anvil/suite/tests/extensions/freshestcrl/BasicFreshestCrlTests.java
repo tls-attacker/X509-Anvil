@@ -1,4 +1,4 @@
-package de.rub.nds.x509anvil.suite.tests.extensions.crldistributionpoints;
+package de.rub.nds.x509anvil.suite.tests.extensions.freshestcrl;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
@@ -8,25 +8,23 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.CrlDistributionPointsConfig;
-import de.rub.nds.x509attacker.config.extension.InhibitAnyPolicyConfig;
+import de.rub.nds.x509attacker.config.extension.FreshestCrlConfig;
 import de.rub.nds.x509attacker.constants.GeneralNameChoiceType;
 import de.rub.nds.x509attacker.x509.model.GeneralName;
 import de.rub.nds.x509attacker.x509.model.extensions.DistributionPoint;
-import de.rub.nds.x509attacker.x509.model.extensions.DistributionPointName;
 import de.rub.nds.x509attacker.x509.model.extensions.GeneralNames;
 import org.junit.jupiter.api.TestInfo;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class BasicCRLDistributionPointsTests extends X509AnvilTest {
+public class BasicFreshestCrlTests  extends X509AnvilTest {
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-0123456789")
+    @AnvilTest(id = "extension-0123456780")
     public void basicTest(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
-            CrlDistributionPointsConfig crlDistributionPointsConfig = new CrlDistributionPointsConfig();
-            crlDistributionPointsConfig.setPresent(true);
-            crlDistributionPointsConfig.setCritical(true);
+            FreshestCrlConfig freshestCrlConfig = new FreshestCrlConfig();
+            freshestCrlConfig.setPresent(true);
+            freshestCrlConfig.setCritical(true);
             List<DistributionPoint> distributionPointList = new ArrayList<>();
             DistributionPoint distributionPoint = new DistributionPoint("test dp");
             GeneralNames generalNames = new GeneralNames("gns:");
@@ -38,8 +36,8 @@ public class BasicCRLDistributionPointsTests extends X509AnvilTest {
             generalNames.setGeneralNames(generalNameList);
             distributionPoint.setCrlIssuer(generalNames);
             distributionPointList.add(distributionPoint);
-            crlDistributionPointsConfig.setDistributionPointList(distributionPointList);
-            config.addExtensions(crlDistributionPointsConfig);
+            freshestCrlConfig.setDistributionPointList(distributionPointList);
+            config.addExtensions(freshestCrlConfig);
         }, testInfo);
     }
 }

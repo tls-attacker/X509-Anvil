@@ -18,11 +18,18 @@ import de.rub.nds.x509anvil.framework.verifier.adapter.TlsServerAuthVerifierAdap
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509anvil.framework.x509.generator.X509CertificateChainGenerator;
+import de.rub.nds.x509anvil.suite.tests.util.CrlServer;
+
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
         ContextHelper.initializeConfigs(args);
         AnvilTestConfig anvilTestConfig = ContextHelper.getTestConfig().getAnvilTestConfig();
+        CrlServer crlServer;
+
+        crlServer = new CrlServer(8099);
+        crlServer.start();
 
         generateCACert();
 
@@ -30,6 +37,7 @@ public class Main {
                 new TestRunner(
                         anvilTestConfig, "placeholder", new X509AnvilParameterIdentifierProvider());
         testRunner.runTests();
+        crlServer.stop();
     }
 
     static {
