@@ -56,13 +56,13 @@ public class X509Util {
         X509CertificateChain x509CertificateChain = new X509CertificateChain(certificateChain);
         if (x509CertificateChain.size() >= 1) {
             writeCertificate(
-                    folder, "root_cert", x509CertificateChain.getCertificateList().getFirst());
+                    folder, "root_cert", x509CertificateChain.getCertificateList().get(x509CertificateChain.size() - 1));
         }
         if (x509CertificateChain.size() >= 2) {
             writeCertificate(
                     folder,
                     "leaf_cert",
-                    x509CertificateChain.getCertificateList().get(x509CertificateChain.size() - 1));
+                    x509CertificateChain.getCertificateList().getFirst());
         }
         if (x509CertificateChain.size() >= 3) {
             x509CertificateChain
