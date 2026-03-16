@@ -16,6 +16,8 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import org.junit.jupiter.api.TestInfo;
+
 import java.math.BigInteger;
 
 public class Version1CertWithExtensionsTests extends X509AnvilTest {
@@ -23,7 +25,7 @@ public class Version1CertWithExtensionsTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = { "entity:extensions_present", "entity:version" })
     @AnvilTest(id = "extension-9b75135269")
-    public void version1CertWithExtensionsEntity(X509VerifierRunner testRunner)
+    public void version1CertWithExtensionsEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -32,13 +34,13 @@ public class Version1CertWithExtensionsTests extends X509AnvilTest {
                         config -> {
                             config.setVersion(BigInteger.valueOf(0));
                             config.setIncludeExtensions(true);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:version")
     @AnvilTest(id = "extension-9b75135366")
-    public void version1CertWithExtensionsIntermediate(X509VerifierRunner testRunner)
+    public void version1CertWithExtensionsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -47,6 +49,6 @@ public class Version1CertWithExtensionsTests extends X509AnvilTest {
                         config -> {
                             config.setVersion(BigInteger.valueOf(0));
                             config.setIncludeExtensions(true);
-                        });
+                        }, testInfo);
     }
 }

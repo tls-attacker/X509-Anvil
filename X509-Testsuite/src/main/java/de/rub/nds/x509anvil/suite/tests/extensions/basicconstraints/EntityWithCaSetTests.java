@@ -12,12 +12,13 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class EntityWithCaSetTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:ext_basic_constraints_ca")
     @AnvilTest(id = "extension-da2157ba0f")
-    public void entityCertWithCaSet(X509VerifierRunner testRunner)
+    public void entityCertWithCaSet(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -32,6 +33,6 @@ public class EntityWithCaSetTests extends X509AnvilTest {
                             basicConstraintsConfig.setCritical(true);
                             basicConstraintsConfig.setCa(true);
                             basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.FOLLOW_DEFAULT);
-                        });
+                        }, testInfo);
     }
 }

@@ -17,6 +17,8 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
+import org.junit.jupiter.api.TestInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-f284c832ec")
-    public void missingRdn(X509VerifierRunner testRunner)
+    public void missingRdn(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -42,12 +44,12 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
                                         }
                                     });
                             config.setSubject(newSubject);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-b1401df33c")
-    public void additionalRdn(X509VerifierRunner testRunner)
+    public void additionalRdn(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -61,6 +63,6 @@ public class RdnNumberMismatchTests extends X509AnvilTest {
                                     new ArrayList<>(config.getSubject());
                             modifiableSubject.add(newPair);
                             config.setSubject(modifiableSubject);
-                        });
+                        }, testInfo);
     }
 }

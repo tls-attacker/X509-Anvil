@@ -19,6 +19,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.AuthorityKeyIdentifierConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 import java.math.BigInteger;
 
@@ -27,7 +28,7 @@ public class OnlySerialNumberTest extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-b054d544c3")
-    public void missingKeyIdentifierEntity(X509VerifierRunner testRunner)
+    public void missingKeyIdentifierEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -43,12 +44,12 @@ public class OnlySerialNumberTest extends X509AnvilTest {
                 (X509CertificateConfigModifier)
                         config -> {
                             config.setSerialNumber(BigInteger.valueOf(1024));
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-dadc51d905")
-    public void missingKeyIdentifierIntermediate(X509VerifierRunner testRunner)
+    public void missingKeyIdentifierIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -64,6 +65,6 @@ public class OnlySerialNumberTest extends X509AnvilTest {
                 (X509CertificateConfigModifier)
                         config -> {
                             config.setSerialNumber(BigInteger.valueOf(1024));
-                        });
+                        }, testInfo);
     }
 }

@@ -19,13 +19,14 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.AuthorityKeyIdentifierConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-a71fd6a6dc")
-    public void keyIdMismatchEntity(X509VerifierRunner testRunner)
+    public void keyIdMismatchEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -39,12 +40,12 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
                     byte[] modifiedKeyId = originalKeyId.clone();
                     modifiedKeyId[4] ^= (byte) 0xFF; // flip a bit
                     authorityKeyIdentifier.setKeyIdentifier(modifiedKeyId); // wrong
-                });
+                }, testInfo);
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
     @AnvilTest(id = "extension-0ff7547245")
-    public void keyIdMismatchIntermediate(X509VerifierRunner testRunner)
+    public void keyIdMismatchIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -58,6 +59,6 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
                     byte[] modifiedKeyId = originalKeyId.clone();
                     modifiedKeyId[4] ^= (byte) 0xFF; // flip a bit
                     authorityKeyIdentifier.setKeyIdentifier(modifiedKeyId); // wrong
-                });
+                }, testInfo);
     }
 }

@@ -15,12 +15,13 @@ import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
 import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
+import org.junit.jupiter.api.TestInfo;
 
 public class PositiveTest extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "common-f4db514b76")
-    public void sampleTestCase(X509VerifierRunner testRunner)
+    public void sampleTestCase(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(
                 testRunner,
@@ -29,6 +30,6 @@ public class PositiveTest extends X509AnvilTest {
                         config -> {
                             // No specific changes to config needed for this test, keeping the
                             // default valid case.
-                        });
+                        }, testInfo);
     }
 }

@@ -10,6 +10,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.ExtendedKeyUsageConfig;
 import de.rub.nds.x509attacker.constants.ExtendedKeyUsageType;
+import org.junit.jupiter.api.TestInfo;
 
 import java.util.List;
 
@@ -18,26 +19,26 @@ public class WrongExtendedKeyUsagesTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-930f499fe2")
-    public void wrongExtendedKeyUsagesEntity(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void wrongExtendedKeyUsagesEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             ExtendedKeyUsageConfig keyUsageConfig = new ExtendedKeyUsageConfig();
             keyUsageConfig.setExtendedKeyUsages(List.of(ExtendedKeyUsageType.EMAIL_PROECTION));
             keyUsageConfig.setPresent(true);
             config.addExtensions(keyUsageConfig);
             config.setIncludeExtensions(true);
-        });
+        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:extensions_present")
     @AnvilTest(id = "extension-930f987fe2")
-    public void wrongExtendedKeyUsagesIntermediate(X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+    public void wrongExtendedKeyUsagesIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             ExtendedKeyUsageConfig keyUsageConfig = new ExtendedKeyUsageConfig();
             keyUsageConfig.setExtendedKeyUsages(List.of(ExtendedKeyUsageType.EMAIL_PROECTION));
             keyUsageConfig.setPresent(true);
             config.addExtensions(keyUsageConfig);
             config.setIncludeExtensions(true);
-        });
+        }, testInfo);
     }
 }

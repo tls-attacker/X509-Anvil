@@ -11,12 +11,13 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.SubjectKeyIdentifierConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class CriticalSubjectKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-1ea3c5dc17")
-    public void criticalSubjectKeyIdEntity(X509VerifierRunner testRunner)
+    public void criticalSubjectKeyIdEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -28,12 +29,12 @@ public class CriticalSubjectKeyIdTests extends X509AnvilTest {
                                             X509CertificateConfigUtil.getExtensionConfig(
                                                     config, X509ExtensionType.SUBJECT_KEY_IDENTIFIER);
                             subjectKeyIdentifierConfig.setCritical(true);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-2d1d5dc178")
-    public void criticalSubjectKeyIdIntermediate(X509VerifierRunner testRunner)
+    public void criticalSubjectKeyIdIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -45,6 +46,6 @@ public class CriticalSubjectKeyIdTests extends X509AnvilTest {
                                             X509CertificateConfigUtil.getExtensionConfig(
                                                     config, X509ExtensionType.SUBJECT_KEY_IDENTIFIER);
                             subjectKeyIdentifierConfig.setCritical(true);
-                        });
+                        }, testInfo);
     }
 }

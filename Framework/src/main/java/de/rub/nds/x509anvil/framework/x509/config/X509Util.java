@@ -49,15 +49,18 @@ public class X509Util {
 
     public static void exportCertificates(
             List<X509Certificate> certificateChain) {
+        exportCertificates(certificateChain, RESOURCES_PATH.getAbsolutePath()+"/out/");
+    }
+
+    public static void exportCertificates(List<X509Certificate> certificateChain, String folder){
         X509CertificateChain x509CertificateChain = new X509CertificateChain(certificateChain);
-        String targetDirectory = RESOURCES_PATH.getAbsolutePath()+"/out/";
         if (x509CertificateChain.size() >= 1) {
             writeCertificate(
-                    targetDirectory, "root_cert", x509CertificateChain.getCertificateList().getFirst());
+                    folder, "root_cert", x509CertificateChain.getCertificateList().getFirst());
         }
         if (x509CertificateChain.size() >= 2) {
             writeCertificate(
-                    targetDirectory,
+                    folder,
                     "leaf_cert",
                     x509CertificateChain.getCertificateList().get(x509CertificateChain.size() - 1));
         }
@@ -68,7 +71,7 @@ public class X509Util {
                     .forEach(
                             x ->
                                     writeCertificate(
-                                            targetDirectory,
+                                            folder,
                                             "inter_cert_" + (certificateChain.indexOf(x) - 1),
                                             x));
         }

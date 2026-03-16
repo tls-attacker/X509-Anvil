@@ -72,22 +72,6 @@ public class X509VerifierRunner {
         return verifierAdapter.invokeVerifier(config.getEntityCertificateConfig(), certificateList);
     }
 
-    // TODO: modifiers unset rn, switch all tests to new modifiers
-    public VerifierResult execute(
-            X509CertificateChainConfig config, X509CertificateConfigModifier modifier)
-            throws CertificateGeneratorException, VerifierException {
-        X509CertificateChainGenerator certificateChainGenerator =
-                new X509CertificateChainGenerator(config);
-        certificateChainGenerator.generateCertificateChain();
-        List<X509Certificate> certificateList =
-                certificateChainGenerator.retrieveCertificateChain();
-        TestConfig testConfig = ContextHelper.getTestConfig();
-        VerifierAdapter verifierAdapter =
-                VerifierAdapterFactory.getInstance(
-                        testConfig.getVerifierAdapterType(), testConfig.getVerifierAdapterConfig());
-        return verifierAdapter.invokeVerifier(config.getEntityCertificateConfig(), certificateList);
-    }
-
     public VerifierResult execute(
             X509CertificateConfig leafCertificateConfig, List<X509Certificate> certificateList)
             throws VerifierException {

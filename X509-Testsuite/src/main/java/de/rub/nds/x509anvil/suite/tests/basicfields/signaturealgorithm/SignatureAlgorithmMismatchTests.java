@@ -16,12 +16,13 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
+import org.junit.jupiter.api.TestInfo;
 
 public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-51110d0302")
-    public void signatureAlgorithmFieldDoesntMatchAlgorithmEntity(X509VerifierRunner testRunner)
+    public void signatureAlgorithmFieldDoesntMatchAlgorithmEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -32,13 +33,13 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
                                         TestUtils.getNonMatchingAlgorithmOid(
                                                         config.getSignatureAlgorithm())
                                                 .getSignatureAndHashAlgorithm()
-                                                .getOid()));
+                                                .getOid()), testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-77e4d2a826")
     public void signatureAlgorithmFieldDoesntMatchAlgorithmIntermediate(
-            X509VerifierRunner testRunner) throws VerifierException, CertificateGeneratorException {
+            X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 false,
@@ -48,6 +49,6 @@ public class SignatureAlgorithmMismatchTests extends X509AnvilTest {
                                         TestUtils.getNonMatchingAlgorithmOid(
                                                         config.getSignatureAlgorithm())
                                                 .getSignatureAndHashAlgorithm()
-                                                .getOid()));
+                                                .getOid()), testInfo);
     }
 }

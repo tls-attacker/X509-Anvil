@@ -19,13 +19,14 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.config.extension.KeyUsageConfig;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class EmptyKeyUsageTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-c6d9fda7d3")
     @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
-    public void emptyKeyUsageIntermediate(X509VerifierRunner testRunner)
+    public void emptyKeyUsageIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -45,13 +46,13 @@ public class EmptyKeyUsageTests extends X509AnvilTest {
                             keyUsageConfig.setDecipherOnly(false);
                             keyUsageConfig.setEncipherOnly(false);
                             keyUsageConfig.setNonRepudiation(false);
-                        });
+                        }, testInfo);
     }
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-a3e1cdc1d3")
     @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_key_usage_additional" })
-    public void emptyKeyUsageEntity(X509VerifierRunner testRunner)
+    public void emptyKeyUsageEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -71,6 +72,6 @@ public class EmptyKeyUsageTests extends X509AnvilTest {
                             keyUsageConfig.setDecipherOnly(false);
                             keyUsageConfig.setEncipherOnly(false);
                             keyUsageConfig.setNonRepudiation(false);
-                        });
+                        }, testInfo);
     }
 }

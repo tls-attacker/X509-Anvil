@@ -20,6 +20,7 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import org.junit.jupiter.api.TestInfo;
 
 public class NegativePathLenTests extends X509AnvilTest {
 
@@ -28,7 +29,7 @@ public class NegativePathLenTests extends X509AnvilTest {
             identifiers =
                     "inter0:ext_basic_constraints_pathlen_constraint, inter0:ext_basic_constraints_pathlen_constraint_present")
     @AnvilTest(id = "extension-3dbdfa5609")
-    public void negativePathLen(X509VerifierRunner testRunner)
+    public void negativePathLen(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -45,6 +46,6 @@ public class NegativePathLenTests extends X509AnvilTest {
                             basicConstraintsConfig.setIncludeCA(DefaultEncodingRule.ENCODE);
                             basicConstraintsConfig.setIncludePathLenConstraint(
                                     DefaultEncodingRule.ENCODE);
-                        });
+                        }, testInfo);
     }
 }

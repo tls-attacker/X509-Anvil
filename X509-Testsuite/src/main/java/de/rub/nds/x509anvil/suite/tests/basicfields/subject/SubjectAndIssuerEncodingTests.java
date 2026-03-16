@@ -8,47 +8,48 @@ import de.rub.nds.x509anvil.framework.verifier.VerifierException;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
+import org.junit.jupiter.api.TestInfo;
 
 public class SubjectAndIssuerEncodingTests extends X509AnvilTest{
     @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-f214c1171a")
-    public void bmpEncodingEntity(X509VerifierRunner testRunner)
+    public void bmpEncodingEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setDefaultDirectoryStringType(DirectoryStringChoiceType.BMP_STRING));
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setDefaultDirectoryStringType(DirectoryStringChoiceType.BMP_STRING), testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-f149a9f71a")
-    public void bmpEncodingIntermediate(X509VerifierRunner testRunner)
+    public void bmpEncodingIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setDefaultDirectoryStringType(DirectoryStringChoiceType.BMP_STRING));
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setDefaultDirectoryStringType(DirectoryStringChoiceType.BMP_STRING), testInfo);
     }
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-e991a3581a")
-    public void teletexEncodingEntity(X509VerifierRunner testRunner)
+    public void teletexEncodingEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setDefaultDirectoryStringType(DirectoryStringChoiceType.TELETEX_STRING));
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setDefaultDirectoryStringType(DirectoryStringChoiceType.TELETEX_STRING), testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-e191a2791c")
-    public void teletexEncodingIntermediate(X509VerifierRunner testRunner)
+    public void teletexEncodingIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setDefaultDirectoryStringType(DirectoryStringChoiceType.TELETEX_STRING));
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setDefaultDirectoryStringType(DirectoryStringChoiceType.TELETEX_STRING), testInfo);
     }
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-e195f2581a")
-    public void universalEncodingEntity(X509VerifierRunner testRunner)
+    public void universalEncodingEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setDefaultDirectoryStringType(DirectoryStringChoiceType.UNIVERSAL_STRING));
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> config.setDefaultDirectoryStringType(DirectoryStringChoiceType.UNIVERSAL_STRING), testInfo);
     }
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "basic-e921fed89a")
-    public void universalEncodingIntermediate(X509VerifierRunner testRunner)
+    public void universalEncodingIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setDefaultDirectoryStringType(DirectoryStringChoiceType.UNIVERSAL_STRING));
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> config.setDefaultDirectoryStringType(DirectoryStringChoiceType.UNIVERSAL_STRING), testInfo);
     }
 }

@@ -17,12 +17,13 @@ import de.rub.nds.x509anvil.framework.x509.config.X509CertificateConfigUtil;
 import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorException;
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.constants.X500AttributeType;
+import org.junit.jupiter.api.TestInfo;
 
 public class OrganisationUnitMismatchTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @AnvilTest(id = "namechaining-789e36d91e")
-    public void organisationUnitMismatchInIssuerEntity(X509VerifierRunner testRunner)
+    public void organisationUnitMismatchInIssuerEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -30,6 +31,6 @@ public class OrganisationUnitMismatchTests extends X509AnvilTest {
                 (X509CertificateConfigModifier)
                         config ->
                                 X509CertificateConfigUtil.modifyAttributeAndValuePairInSubject(
-                                        config, X500AttributeType.ORGANISATION_UNIT_NAME));
+                                        config, X500AttributeType.ORGANISATION_UNIT_NAME), testInfo);
     }
 }
