@@ -102,7 +102,8 @@ public class X509AnvilTest extends AnvilTestBaseClass {
 
             X509Util.exportCertificates(
                     result.getCertificatesChain(),
-                    baseDir + "/"
+                    baseDir + "/",
+                    false
             );
 
             Files.writeString(
