@@ -48,14 +48,14 @@ public class X509Util {
     public static final File RESOURCES_PATH = new File("resources");
 
     public static void exportCertificates(
-            List<X509Certificate> certificateChain, Boolean reverse) {
-        exportCertificates(certificateChain, RESOURCES_PATH.getAbsolutePath()+"/out/", reverse);
+            List<X509Certificate> certificateChain, boolean isChainReversed) {
+        exportCertificates(certificateChain, RESOURCES_PATH.getAbsolutePath()+"/out/", isChainReversed);
     }
 
-    public static void exportCertificates(List<X509Certificate> certificateChain, String folder, Boolean reverse){
+    public static void exportCertificates(List<X509Certificate> certificateChain, String folder, boolean isChainReversed){
         X509CertificateChain x509CertificateChain = new X509CertificateChain(certificateChain);
 
-        if (reverse) {
+        if (isChainReversed) {
             x509CertificateChain.setCertificateList(x509CertificateChain.getCertificateList().reversed());
         }
 
