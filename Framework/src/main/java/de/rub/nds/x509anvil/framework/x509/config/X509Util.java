@@ -48,12 +48,17 @@ public class X509Util {
     public static final File RESOURCES_PATH = new File("resources");
 
     public static void exportCertificates(
-            List<X509Certificate> certificateChain) {
-        exportCertificates(certificateChain, RESOURCES_PATH.getAbsolutePath()+"/out/");
+            List<X509Certificate> certificateChain, boolean isChainReversed) {
+        exportCertificates(certificateChain, RESOURCES_PATH.getAbsolutePath()+"/out/", isChainReversed);
     }
 
-    public static void exportCertificates(List<X509Certificate> certificateChain, String folder){
+    public static void exportCertificates(List<X509Certificate> certificateChain, String folder, boolean isChainReversed){
         X509CertificateChain x509CertificateChain = new X509CertificateChain(certificateChain);
+
+        if (isChainReversed) {
+            x509CertificateChain.setCertificateList(x509CertificateChain.getCertificateList().reversed());
+        }
+
         if (x509CertificateChain.size() >= 1) {
             writeCertificate(
                     folder, "root_cert", x509CertificateChain.getCertificateList().get(x509CertificateChain.size() - 1));
