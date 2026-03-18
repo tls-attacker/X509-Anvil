@@ -137,7 +137,7 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
     private static String supplementStartCommand(TlsImplementationType tlsImplementationType) {
         return (switch (tlsImplementationType) {
             case OPENSSL, LIBRESSL ->
-                    "-CAfile /x509-anv-resources/out/root_cert.pem -Verify 5 -verify_return_error";
+                    "-CAfile /x509-anv-resources/out/root_cert.pem -Verify 5 -verify_return_error -x509_strict";
             case WOLFSSL -> "-A /x509-anv-resources/out/root_cert.pem -b -i -F -x";
             case BORINGSSL -> "-require-any-client-cert -root-certs /x509-anv-resources/out/root_cert.pem";
             case MBEDTLS -> "ca_file=/x509-anv-resources/out/root_cert.pem auth_mode=required";
