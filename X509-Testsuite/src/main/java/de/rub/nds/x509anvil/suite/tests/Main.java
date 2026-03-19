@@ -55,6 +55,6 @@ public class Main {
             throw new RuntimeException("Could not generate certificates with: ", e);
         }
 
-        X509Util.exportCertificates(chainGenerator.retrieveCertificateChain());
+        X509Util.exportCertificates(chainGenerator.retrieveCertificateChain(), true);
     }
 }
