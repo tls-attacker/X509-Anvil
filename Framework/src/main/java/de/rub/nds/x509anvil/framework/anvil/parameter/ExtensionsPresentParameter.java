@@ -13,14 +13,15 @@ import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
-import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
-import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
+import de.rwth.swc.coffee4j.model.constraints.ConstraintBuilder;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ExtensionsPresentParameter extends BooleanCertificateSpecificParameter {
 
@@ -62,16 +63,31 @@ public class ExtensionsPresentParameter extends BooleanCertificateSpecificParame
             DerivationScope derivationScope) {
         List<ConditionalConstraint> defaultConstraints =
                 super.getDefaultConditionalConstraints(derivationScope);
-        if (ContextHelper.getFeatureReport().getSupportedVersions().contains(0)) {
-            defaultConstraints.add(
-                    CommonConstraints.valuesNotAllowedForVersions(List.of(0), derivationScope, this, Collections.singletonList(true))
-            );
-        }
-        if (ContextHelper.getFeatureReport().getSupportedVersions().contains(1)) {
-            defaultConstraints.add(
-                    CommonConstraints.valuesNotAllowedForVersions(List.of(1), derivationScope, this, Collections.singletonList(true))
-            );
-        }
+
+        defaultConstraints.add(getCipherSuiteConstraint());
+
         return defaultConstraints;
+    }
+
+    private ConditionalConstraint getCipherSuiteConstraint() {
+        Set<ParameterIdentifier> requiredDerivations = new HashSet<>();
+        requiredDerivations.add(new ParameterIdentifier(X509AnvilParameterType.VERSION));
+        return new ConditionalConstraint(
+                requiredDerivations,
+                ConstraintBuilder.constrain(
+                                getParameterIdentifier().name(),
+                                X509AnvilParameterType.VERSION.name())
+                        .by(
+                                (ExtensionsPresentParameter extensionsPresentParameter,
+                                 VersionParameter versionParameter) -> {
+                                    boolean extensionsPresent = extensionsPresentParameter.getSelectedValue();
+                                    int version = versionParameter.getSelectedValue();
+
+                                    if (version == 0 || version == 1) {
+                                        return !extensionsPresent;
+                                    } else {
+                                        return true;
+                                    }
+                                }));
     }
 }
