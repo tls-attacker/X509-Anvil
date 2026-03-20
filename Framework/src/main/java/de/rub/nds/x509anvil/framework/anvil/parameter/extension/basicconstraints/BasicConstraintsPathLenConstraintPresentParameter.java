@@ -12,7 +12,6 @@ import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
-import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -21,9 +20,9 @@ import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.config.extension.BasicConstraintsConfig;
 import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
 import de.rub.nds.x509attacker.constants.X509ExtensionType;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Predicate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BasicConstraintsPathLenConstraintPresentParameter
         extends BooleanCertificateSpecificParameter {
@@ -66,14 +65,16 @@ public class BasicConstraintsPathLenConstraintPresentParameter
     }
 
     @Override
-    public Map<ParameterIdentifier, Predicate<DerivationParameter>>
-            getAdditionalEnableConditions() {
-        Map<ParameterIdentifier, Predicate<DerivationParameter>> conditions = new HashMap<>();
-        // Only model if ca is asserted
-        conditions.put(
-                getScopedIdentifier(X509AnvilParameterType.EXT_BASIC_CONSTRAINTS_CA),
-                CommonConstraints::enabledByParameterCondition);
-        return conditions;
+    public List<DerivationParameter<X509CertificateChainConfig, Boolean>> getNonNullParameterValues(
+            DerivationScope derivationScope) {
+        List<DerivationParameter<X509CertificateChainConfig, Boolean>> parameterValues =
+                new ArrayList<>();
+        if (!getParameterScope().isEntity()) {
+            parameterValues.add(generateValue(true));
+        }
+        parameterValues.add(generateValue(false));
+
+        return parameterValues;
     }
 
     @Override
