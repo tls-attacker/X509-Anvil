@@ -15,7 +15,6 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.extension.basicconstraints
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.keyusage.KeyUsageAdditionalUsagesParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.subjectalternativename.SubjectAlternativeNamePresentParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.subjectalternativename.SubjectAlternativeNameValuesParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.name.CNTypeParameter;
 
 public class X509AnvilParameterFactory {
 
@@ -23,11 +22,9 @@ public class X509AnvilParameterFactory {
         return switch ((X509AnvilParameterType) parameterIdentifier.getParameterType()) {
             case CHAIN_LENGTH -> new ChainLengthParameter();
             case VERSION -> new VersionParameter(parameterIdentifier.getParameterScope());
-            case SERIAL_NUMBER -> new SerialNumberParameter(parameterIdentifier.getParameterScope());
             case KEY_TYPE -> new SignatureHashAndLengthParameter(parameterIdentifier.getParameterScope());
             case NOT_BEFORE -> new NotBeforeParameter(parameterIdentifier.getParameterScope());
             case NOT_AFTER -> new NotAfterParameter(parameterIdentifier.getParameterScope());
-            case CN_TYPE -> new CNTypeParameter(parameterIdentifier.getParameterScope());
             case EXTENSIONS_PRESENT -> new ExtensionsPresentParameter(parameterIdentifier.getParameterScope());
             case EXT_BASIC_CONSTRAINTS_PRESENT -> new BasicConstraintsPresentParameter(
                     parameterIdentifier.getParameterScope());
