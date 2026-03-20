@@ -8,41 +8,9 @@
  */
 package de.rub.nds.x509anvil.framework.anvil;
 
-import de.rub.nds.anvilcore.model.DerivationScope;
-import de.rub.nds.anvilcore.model.constraint.FlexibleConditionalConstraint;
-import de.rub.nds.anvilcore.model.constraint.ValueRestrictionConstraintBuilder;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
-import de.rub.nds.x509anvil.framework.anvil.parameter.VersionParameter;
-
-import java.util.List;
-import java.util.Objects;
 
 public class CommonConstraints {
-    public static <T> FlexibleConditionalConstraint valuesNotAllowedForVersions(
-            List<Integer> restrictedVersions,
-            DerivationScope derivationScope,
-            CertificateSpecificParameter target,
-            List<T> values) {
-        return ValueRestrictionConstraintBuilder.<T>init(
-                        "Version Restriction", derivationScope)
-                .target(target)
-                .requiredParameter(target.getScopedIdentifier(X509AnvilParameterType.VERSION))
-                .restrictValues(values)
-                .condition(
-                        (unused, requiredParameters) -> {
-                            Integer version =
-                                    ((VersionParameter) requiredParameters.getLast())
-                                            .getSelectedValue();
-                            for (int restrictedVersion : restrictedVersions) {
-                                if (Objects.equals(version, restrictedVersion)) {
-                                    return true;
-                                }
-                            }
-                            return false;
-                        })
-                .get();
-    }
 
     public static boolean enabledByParameterCondition(DerivationParameter enabler) {
         if (!enabler.getValueClass().equals(Boolean.class)) {
