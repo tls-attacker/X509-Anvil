@@ -33,6 +33,6 @@ public class CachedKeyPairGenerator {
             String cacheIdentifier) {
 
         keyCaches.computeIfAbsent(cacheIdentifier, k -> new KeyCache(random));
-        keyCaches.get(cacheIdentifier).generateNewKeys(algorithmLengthPair, config);
+        keyCaches.get(cacheIdentifier).generateNewKeys(algorithmLengthPair, config, cacheIdentifier);
     }
 }

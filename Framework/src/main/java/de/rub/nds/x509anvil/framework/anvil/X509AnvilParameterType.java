@@ -20,7 +20,6 @@ public enum X509AnvilParameterType implements ParameterType {
     KEY_TYPE,
     NOT_BEFORE,
     NOT_AFTER,
-    CN_TYPE,
     EXTENSIONS_PRESENT,
 
     // BasicConstraints extension

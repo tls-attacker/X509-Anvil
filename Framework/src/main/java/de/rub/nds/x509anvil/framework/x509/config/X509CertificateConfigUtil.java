@@ -238,6 +238,7 @@ public class X509CertificateConfigUtil {
     public static X509CertificateChainConfig createBasicConfig(int chainLength) {
         X509CertificateChainConfig x509CertificateChainConfig = new X509CertificateChainConfig();
         x509CertificateChainConfig.initializeChain(chainLength, chainLength-2, true);
+        x509CertificateChainConfig.getEntityCertificateConfig().setIncludeExtensions(true);
         return x509CertificateChainConfig;
     }
 
@@ -261,6 +262,24 @@ public class X509CertificateConfigUtil {
                     new ArrayList<>(config.getSubject());
             modifiableSubject.add(newPair);
             config.setSubject(modifiableSubject);
+        }
+    }
+
+    public static void modifyAttributeAndValuePairInIssuer(
+            X509CertificateConfig config, X500AttributeType type) {
+        try {
+            Pair<X500AttributeType, String> existingPair =
+                    config.getDefaultIssuer().stream()
+                            .filter(x -> x.getLeftElement() == type)
+                            .findFirst()
+                            .orElseThrow();
+            existingPair.setRightElement(existingPair.getRightElement() + "_modified");
+        } catch (NoSuchElementException e) {
+            Pair<X500AttributeType, String> newPair = new Pair<>(type, "modificationtest_modified");
+            List<Pair<X500AttributeType, String>> modifiableSubject =
+                    new ArrayList<>(config.getDefaultIssuer());
+            modifiableSubject.add(newPair);
+            config.setIssuer(modifiableSubject);
         }
     }
 }

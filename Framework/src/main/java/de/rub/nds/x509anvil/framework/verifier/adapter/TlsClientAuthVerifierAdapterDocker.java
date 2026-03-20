@@ -58,7 +58,6 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
         DockerTlsServerInstance instance = spinUpServer(config);
         return new TlsClientAuthVerifierAdapterDocker(instance, config.getImage());
     }
-
     private static DockerTlsServerInstance spinUpServer(TlsAuthVerifierAdapterConfigDocker config) {
         String key = config.getImage() + ":" + config.getVersion();
         if (tlsServerInstances.containsKey(key)) {
@@ -82,7 +81,8 @@ public class TlsClientAuthVerifierAdapterDocker extends TlsClientAuthVerifierAda
             if (implementationType == TlsImplementationType.GNUTLS
                     || implementationType == TlsImplementationType.WOLFSSL) {
                 // First argument disables Client Auth, removing that.
-                builder.getProfile().getParameterList().remove(1);
+                if(builder.getProfile().getParameterList().size() == 3)
+                    builder.getProfile().getParameterList().remove(1);
             }
             if (TlsImplementationType.fromString(config.getImage())
                     == TlsImplementationType.RUSTLS) {

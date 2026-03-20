@@ -38,11 +38,7 @@ public class ExtensionsPresentParameter extends BooleanCertificateSpecificParame
     @Override
     public List<DerivationParameter<X509CertificateChainConfig, Boolean>> getNonNullParameterValues(
             DerivationScope derivationScope) {
-        // CA certificates must contain BasicConstraints extension
-        if (!getParameterScope().isEntity()) {
-            return Collections.singletonList(generateValue(true));
-        }
-        return super.getNonNullParameterValues(derivationScope);
+        return Collections.singletonList(generateValue(true));
     }
 
     @Override
@@ -86,7 +82,7 @@ public class ExtensionsPresentParameter extends BooleanCertificateSpecificParame
                                     if (version == 0 || version == 1) {
                                         return !extensionsPresent;
                                     } else {
-                                        return true;
+                                        return extensionsPresent;
                                     }
                                 }));
     }

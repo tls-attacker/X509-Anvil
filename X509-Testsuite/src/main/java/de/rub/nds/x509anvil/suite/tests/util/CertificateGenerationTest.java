@@ -22,6 +22,7 @@ public class CertificateGenerationTest {
     public void exportSampleCertificates() {
         X509CertificateChainConfig chainConfig = new X509CertificateChainConfig();
         chainConfig.initializeChain(3, 1, true);
+        chainConfig.getEntityCertificateConfig().setIncludeExtensions(true);
 
         X509CertificateChainGenerator chainGenerator =
                 new X509CertificateChainGenerator(chainConfig);
