@@ -70,7 +70,7 @@ public class SignatureHashAndLengthParameter
                                             signatureHashAlgorithmKeyLengthPair))
                     .collect(Collectors.toList());
         } else if (getParameterScope().isIntermediate()
-                && getParameterScope().getIntermediateIndex() == 0
+                && getParameterScope().getIntermediateIndex() == chainLength-3
                 && chainLength >= 4) {
             signatureHashAlgorithmKeyLengthPairs =
                     featureReport.getSupportedSignatureHashAndKeyLengthPairsIntermediate();
@@ -88,25 +88,17 @@ public class SignatureHashAndLengthParameter
     private X509CertificateConfig getSignerConfigByScope(
             X509CertificateChainConfig certificateChainConfig) {
         X509AnvilParameterScope parameterScope = getParameterScope();
-        if (parameterScope.isRoot()) { // self-signed root
-            return certificateChainConfig.getRootCertificateConfig();
-        } else if (parameterScope.isEntity()) { // first inter
-            return certificateChainConfig.getLastSigningConfig();
-        } else { // upper inter or root
-            if (parameterScope.getIntermediateIndex() + 1
-                    < certificateChainConfig.getIntermediateCertificateConfigs().size()) {
-                return certificateChainConfig.getIntermediateConfig(
-                        parameterScope.getIntermediateIndex());
-            } else {
-                return certificateChainConfig.getRootCertificateConfig();
-            }
+        if (parameterScope.isEntity()) { // first inter
+            return certificateChainConfig.getIntermediateConfig(certificateChainConfig.getChainLength()-3);
+        } else { // upper inter
+            return certificateChainConfig.getIntermediateConfig(certificateChainConfig.getChainLength()-4);
         }
     }
 
     @Override
     public void applyToConfig(X509CertificateChainConfig config, DerivationScope derivationScope) {
         if (getSelectedValue() != null) {
-            if (getParameterScope().isModeled(config.getChainLength() - 1)) {
+            if (getParameterScope().isModeled(config.getChainLength())) {
                 applyToCertificateConfig(getCertificateConfigByScope(config), derivationScope);
                 applyToSignerConfig(getSignerConfigByScope(config), config);
             } else {
@@ -130,31 +122,14 @@ public class SignatureHashAndLengthParameter
                 getSelectedValue(),
                 signerConfig,
                 getSignerParameterIdentifier(certificateChainConfig));
-
-        // if root keys changed, signature algorithm has to match. Also for self-signed
-        X509AnvilParameterScope parameterScope = getParameterScope();
-        if (parameterScope.isRoot() || signerConfig.isSelfSigned()) {
-            signerConfig.setSignatureAlgorithm(getSelectedValue().getSignatureAndHashAlgorithm());
-        } else if (!parameterScope.isEntity()
-                && parameterScope.getIntermediateIndex() + 1
-                        >= certificateChainConfig.getIntermediateCertificateConfigs().size()) {
-            signerConfig.setSignatureAlgorithm(getSelectedValue().getSignatureAndHashAlgorithm());
-        }
     }
 
     private String getSignerParameterIdentifier(X509CertificateChainConfig certificateChainConfig) {
         X509AnvilParameterScope parameterScope = getParameterScope();
-        if (parameterScope.isRoot()) { // self-signed root
-            return "root";
-        } else if (parameterScope.isEntity()) { // first inter
-            return "inter0";
-        } else { // upper inter or root
-            if (parameterScope.getIntermediateIndex() + 1
-                    < certificateChainConfig.getIntermediateCertificateConfigs().size()) {
-                return "inter" + (parameterScope.getIntermediateIndex() + 1);
-            } else {
-                return "root";
-            }
+        if (parameterScope.isEntity()) { // first inter
+            return "inter"+(certificateChainConfig.getChainLength()-3);
+        } else { // upper inter
+            return "inter"+(certificateChainConfig.getChainLength()-2);
         }
     }
 }
