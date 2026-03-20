@@ -1473,17 +1473,6 @@
         },
         "tags": null
     },
-    "extension-930f474fe2": {
-        "description": "(n) If a key usage extension is present verify that the keyCertSign bit is set.",
-        "severityLevels": {
-            "Security": 100
-        },
-        "rfc": {
-            "number": 5280,
-            "section": "6.1.4. Preparation for Certificate i+1"
-        },
-        "tags": null
-    },
     "extension-53e2e2bb36": {
         "description": "This test sets one undefined bit of the unused bits in the key usage extension to 1.",
         "severityLevels": {

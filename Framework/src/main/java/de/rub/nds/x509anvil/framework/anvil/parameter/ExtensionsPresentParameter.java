@@ -14,9 +14,11 @@ import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -60,10 +62,16 @@ public class ExtensionsPresentParameter extends BooleanCertificateSpecificParame
             DerivationScope derivationScope) {
         List<ConditionalConstraint> defaultConstraints =
                 super.getDefaultConditionalConstraints(derivationScope);
-        // Extensions are only allowed in v3 certificates
-        defaultConstraints.add(
-                CommonConstraints.valuesOnlyAllowedInV3Certs(
-                        derivationScope, this, Collections.singletonList(true)));
+        if (ContextHelper.getFeatureReport().getSupportedVersions().contains(0)) {
+            defaultConstraints.add(
+                    CommonConstraints.valuesNotAllowedForVersions(List.of(0), derivationScope, this, Collections.singletonList(true))
+            );
+        }
+        if (ContextHelper.getFeatureReport().getSupportedVersions().contains(1)) {
+            defaultConstraints.add(
+                    CommonConstraints.valuesNotAllowedForVersions(List.of(1), derivationScope, this, Collections.singletonList(true))
+            );
+        }
         return defaultConstraints;
     }
 }
