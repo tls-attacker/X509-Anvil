@@ -2,7 +2,6 @@
   "name": "RFC5280",
   "profiles": [],
   "testIds": [
-    "extension-0123456789",
-    "extension-0123456780"
+    "extension-0123456711"
   ]
 }

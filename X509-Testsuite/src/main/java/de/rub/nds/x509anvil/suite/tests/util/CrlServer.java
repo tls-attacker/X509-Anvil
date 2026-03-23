@@ -29,17 +29,19 @@ public class CrlServer {
 
     public void start() {
         server.start();
-        System.out.println("CRL Server started on http://localhost:" + port);
+        System.out.println("[CRL SERVER] CRL Server started on http://localhost:" + port);
     }
 
     public void stop() {
         server.stop(0);
-        System.out.println("CRL Server stopped.");
+        System.out.println("[CRL SERVER] CRL Server stopped.");
     }
 
     private static class Handler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
+            System.out.println("[CRL SERVER] Received HTTP request");
+            System.out.println("[CRL SERVER] Handling "+exchange.getRequestURI());
             if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
                 exchange.sendResponseHeaders(405, -1);
                 exchange.close();
