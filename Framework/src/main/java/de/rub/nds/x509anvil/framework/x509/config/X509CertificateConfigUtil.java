@@ -13,10 +13,11 @@ import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthP
 import de.rub.nds.x509anvil.framework.x509.key.CachedKeyPairGenerator;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.config.extension.*;
-import de.rub.nds.x509attacker.constants.CertificateChainPositionType;
-import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
-import de.rub.nds.x509attacker.constants.X500AttributeType;
-import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import de.rub.nds.x509attacker.constants.*;
+import de.rub.nds.x509attacker.x509.model.GeneralName;
+import de.rub.nds.x509attacker.x509.model.extensions.DistributionPoint;
+import de.rub.nds.x509attacker.x509.model.extensions.GeneralNames;
+
 import java.math.BigInteger;
 import java.util.*;
 
@@ -81,9 +82,34 @@ public class X509CertificateConfigUtil {
         List<ExtensionConfig> extensionConfigList = new ArrayList<>();
         extensionConfigList.add(generateBasicConstraintsConfig(chainPosType));
         extensionConfigList.add(generateKeyUsageConfig(chainPosType));
+        if(chainPosType != CertificateChainPositionType.ROOT){
+            extensionConfigList.add(generateCRLDistributionPointsConfig(chainPosType));
+        }
         config.setExtensions(extensionConfigList);
         config.setIncludeExtensions(true);
         return config;
+    }
+
+    private static ExtensionConfig generateCRLDistributionPointsConfig(CertificateChainPositionType chainPosType) {
+        CrlDistributionPointsConfig crlDistributionPointsConfig = new CrlDistributionPointsConfig();
+        crlDistributionPointsConfig.setPresent(true);
+        crlDistributionPointsConfig.setCritical(false);
+        List<DistributionPoint> distributionPoints = new ArrayList<>();
+        DistributionPoint distributionPoint = new DistributionPoint("dp");
+        GeneralNames generalNames = new GeneralNames("gns");
+        List<GeneralName> generalNameList = new ArrayList<>();
+        GeneralName generalName = new GeneralName("gn");
+        generalName.setGeneralNameChoiceTypeConfig(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER);
+        generalName.setGeneralNameConfigValue("http://172.17.0.1:8099/crls/72.crl");
+        generalNameList.add(generalName);
+        generalNames.setGeneralNames(generalNameList);
+        distributionPoint.setCrlIssuer(generalNames);
+        distributionPoint.setDistributionPointName(null);
+        distributionPoint.setReasons(null);
+        distributionPoints.add(distributionPoint);
+        crlDistributionPointsConfig.setDistributionPointList(distributionPoints);
+
+        return crlDistributionPointsConfig;
     }
 
     public static X509CertificateConfig generateDefaultRootCaCertificateConfig(boolean selfSigned) {
