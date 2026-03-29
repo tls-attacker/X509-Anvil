@@ -49,7 +49,7 @@ public class CrlServer {
             }
 
             URI requestURI = exchange.getRequestURI();
-            String path = requestURI.getPath(); // e.g. /crls/72.crl
+            String path = requestURI.getPath(); // e.g. /crls/default.crl
 
             // Expecting format: /crls/<filename>.crl
             String[] parts = path.split("/");

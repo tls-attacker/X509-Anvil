@@ -31,7 +31,7 @@ public class BasicFreshestCrlTests  extends X509AnvilTest {
             List<GeneralName> generalNameList = new ArrayList<>();
             GeneralName generalName = new GeneralName("gn");
             generalName.setGeneralNameChoiceTypeConfig(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER);
-            generalName.setGeneralNameConfigValue("http://localhost:8099/crls/72.crl");
+            generalName.setGeneralNameConfigValue("http://localhost:8099/crls/default.crl");
             generalNameList.add(generalName);
             generalNames.setGeneralNames(generalNameList);
             distributionPoint.setCrlIssuer(generalNames);

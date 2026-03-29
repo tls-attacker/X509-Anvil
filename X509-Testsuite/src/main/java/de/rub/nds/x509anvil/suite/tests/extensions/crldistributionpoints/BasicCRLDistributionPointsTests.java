@@ -42,7 +42,7 @@ public class BasicCRLDistributionPointsTests extends X509AnvilTest {
             List<GeneralName> generalNameListForDPName = new ArrayList<>();
             GeneralName generalNameForDPName = new GeneralName("test dp");
             generalNameForDPName.setGeneralNameChoiceTypeConfig(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER);
-            generalNameForDPName.setGeneralNameConfigValue("http://localhost:8099/crls/72.crl");
+            generalNameForDPName.setGeneralNameConfigValue("http://localhost:8099/crls/default.crl");
             generalNameListForDPName.add(generalNameForDPName);
             generalNamesForDPName.setGeneralNames(generalNameListForDPName);
             distributionPointName.setFullName(generalNamesForDPName);
@@ -86,7 +86,7 @@ public class BasicCRLDistributionPointsTests extends X509AnvilTest {
             reasonFlags.setKeyCompromise(true);
             reasonFlags.setAffiliationChanged(true);
             generalNameForIssuer.setGeneralNameChoiceTypeConfig(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER);
-            generalNameForIssuer.setGeneralNameConfigValue("http://localhost:8099/crls/72.crl");
+            generalNameForIssuer.setGeneralNameConfigValue("http://localhost:8099/crls/default.crl");
             generalNameListForIssuer.add(generalNameForIssuer);
             generalNamesForIssuer.setGeneralNames(generalNameListForIssuer);
             distributionPoint.setCrlIssuer(generalNamesForIssuer);

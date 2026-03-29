@@ -16,6 +16,7 @@ import de.rub.nds.x509attacker.config.extension.*;
 import de.rub.nds.x509attacker.constants.*;
 import de.rub.nds.x509attacker.x509.model.GeneralName;
 import de.rub.nds.x509attacker.x509.model.extensions.DistributionPoint;
+import de.rub.nds.x509attacker.x509.model.extensions.DistributionPointName;
 import de.rub.nds.x509attacker.x509.model.extensions.GeneralNames;
 
 import java.math.BigInteger;
@@ -27,11 +28,12 @@ public class X509CertificateConfigUtil {
      * A counter to generate unique auth key ids. Auth key structure is
      * <prefix: 4><0x00></><intermediatePosistionBytes: 1><0x00></><counter: 9>
      */
-    private static final byte[] AUTH_KEY_PREFIX = new byte[] {1, 2, 3, 4};
+    private static final byte[] AUTH_KEY_PREFIX = new byte[]{1, 2, 3, 4};
 
     /**
      * Generates a unique key identifier for the given position in the certificate chain. Increases the counter for
      * certificates.
+     *
      * @param position The intermediate position in the chain (FF for root, 00 for first intermediate, 01 for second intermediate, etc.)
      * @return A unique key identifier byte array.
      */
@@ -49,7 +51,7 @@ public class X509CertificateConfigUtil {
                     keyId, 7 + (9 - counterBytes.length),
                     counterBytes.length);
         } else {
-            System.arraycopy(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, keyId, 7, 9);
+            System.arraycopy(new byte[]{0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, keyId, 7, 9);
         }
         return keyId;
     }
@@ -82,29 +84,30 @@ public class X509CertificateConfigUtil {
         List<ExtensionConfig> extensionConfigList = new ArrayList<>();
         extensionConfigList.add(generateBasicConstraintsConfig(chainPosType));
         extensionConfigList.add(generateKeyUsageConfig(chainPosType));
-        if(chainPosType != CertificateChainPositionType.ROOT){
-            extensionConfigList.add(generateCRLDistributionPointsConfig(chainPosType));
-        }
         config.setExtensions(extensionConfigList);
         config.setIncludeExtensions(true);
         return config;
     }
 
-    private static ExtensionConfig generateCRLDistributionPointsConfig(CertificateChainPositionType chainPosType) {
+    private static ExtensionConfig generateCRLDistributionPointsConfig(int intermediatesGenerated) {
         CrlDistributionPointsConfig crlDistributionPointsConfig = new CrlDistributionPointsConfig();
         crlDistributionPointsConfig.setPresent(true);
         crlDistributionPointsConfig.setCritical(false);
         List<DistributionPoint> distributionPoints = new ArrayList<>();
         DistributionPoint distributionPoint = new DistributionPoint("dp");
+        DistributionPointName distributionPointName = new DistributionPointName("dpn");
+        distributionPointName.setDistributionPointNameChoiceType(DistributionPointNameChoiceType.FULL_NAME);
         GeneralNames generalNames = new GeneralNames("gns");
         List<GeneralName> generalNameList = new ArrayList<>();
         GeneralName generalName = new GeneralName("gn");
         generalName.setGeneralNameChoiceTypeConfig(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER);
-        generalName.setGeneralNameConfigValue("http://172.17.0.1:8099/crls/72.crl");
+        //if(intermediatesGenerated > 1) intermediatesGenerated=1;
+        generalName.setGeneralNameConfigValue("http://172.17.0.1:8099/crls/"+intermediatesGenerated+".crl");
         generalNameList.add(generalName);
         generalNames.setGeneralNames(generalNameList);
-        distributionPoint.setCrlIssuer(generalNames);
-        distributionPoint.setDistributionPointName(null);
+        distributionPointName.setFullName(generalNames);
+        distributionPoint.setDistributionPointName(distributionPointName);
+        distributionPoint.setCrlIssuer(null);
         distributionPoint.setReasons(null);
         distributionPoints.add(distributionPoint);
         crlDistributionPointsConfig.setDistributionPointList(distributionPoints);
@@ -174,6 +177,9 @@ public class X509CertificateConfigUtil {
         subjectKeyIdentifierConfig.setKeyIdentifier(keyIdForEntity(certCounter, uniqueKeyIds));
         config.addExtensions(subjectKeyIdentifierConfig);
         config.addExtensions(authorityKeyIdentifier);
+
+        config.addExtensions(generateCRLDistributionPointsConfig(intermediatesGenerated));
+
         return config;
     }
 
@@ -255,7 +261,7 @@ public class X509CertificateConfigUtil {
                 .filter(
                         x ->
                                 X509ExtensionType.decodeFromOidBytes(
-                                                x.getExtensionId().getEncoded())
+                                        x.getExtensionId().getEncoded())
                                         == extensionType)
                 .findFirst()
                 .orElse(null);
@@ -263,7 +269,7 @@ public class X509CertificateConfigUtil {
 
     public static X509CertificateChainConfig createBasicConfig(int chainLength) {
         X509CertificateChainConfig x509CertificateChainConfig = new X509CertificateChainConfig();
-        x509CertificateChainConfig.initializeChain(chainLength, chainLength-2, true);
+        x509CertificateChainConfig.initializeChain(chainLength, chainLength - 2, true);
         return x509CertificateChainConfig;
     }
 

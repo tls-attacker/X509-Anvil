@@ -38,7 +38,7 @@ public class CRLDPCertIssuerCRLIssuerTests extends X509AnvilTest {
             List<GeneralName> generalNameListForDPName = new ArrayList<>();
             GeneralName generalNameForDPName = new GeneralName("test dp");
             generalNameForDPName.setGeneralNameChoiceTypeConfig(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER);
-            generalNameForDPName.setGeneralNameConfigValue("http://172.17.0.1:8099/crls/72.crl");
+            generalNameForDPName.setGeneralNameConfigValue("http://172.17.0.1:8099/crls/default.crl");
             generalNameListForDPName.add(generalNameForDPName);
             generalNamesForDPName.setGeneralNames(generalNameListForDPName);
             distributionPointName.setFullName(generalNamesForDPName);

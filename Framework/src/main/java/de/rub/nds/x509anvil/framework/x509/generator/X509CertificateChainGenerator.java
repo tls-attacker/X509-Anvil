@@ -9,6 +9,8 @@
 
 package de.rub.nds.x509anvil.framework.x509.generator;
 
+import de.rub.nds.protocol.crypto.key.RsaPrivateKey;
+import de.rub.nds.protocol.crypto.signature.RsaPkcs1SignatureComputations;
 import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
@@ -17,10 +19,16 @@ import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPrivateCrtKeySpec;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class X509CertificateChainGenerator {
@@ -146,6 +154,75 @@ public class X509CertificateChainGenerator {
         for (X509CertificateConfig certificateConfig : certificateChainConfig.getCertificateConfigList()) {
             generateSingleCertificate(certificateConfig);
         }
+        X509Certificate leafCert = this.generatedCertificates.get(this.generatedCertificates.size() - 1);
+        RsaPkcs1SignatureComputations leafCertSignatureComputations = (RsaPkcs1SignatureComputations) leafCert.getSignatureComputations();
+        generateCRLKeyfileforCertificate(leafCertSignatureComputations.getModulus().getValue(), leafCertSignatureComputations.getPrivateKey().getValue(),certificateChainConfig.getIntermediateCertsModeled());
+
+    }
+
+    public String generateCRLKeyfileforCertificate(BigInteger modulus, BigInteger privateExponent, int intermediateCertsModeled) {
+        /*
+        * After generating the CRL keyfile, you should generate the crl file of the appropriate ca then generate the crl using openssl cli
+        * */
+
+        BigInteger publicExponent = BigInteger.valueOf(65537);
+
+            // reconstruct p and q from n, e, d
+            // using the standard algorithm from NIST SP 800-56B
+            BigInteger k = privateExponent.multiply(publicExponent).subtract(BigInteger.ONE);
+            BigInteger p = null, q = null;
+
+            Random rng = new Random();
+            outer:
+            while (true) {
+                BigInteger g = new BigInteger(modulus.bitLength(), rng);
+                BigInteger t = k;
+                while (!t.testBit(0)) {
+                    t = t.shiftRight(1);
+                    BigInteger x = g.modPow(t, modulus);
+                    if (x.compareTo(BigInteger.ONE) > 0
+                            && x.compareTo(modulus.subtract(BigInteger.ONE)) < 0) {
+                        BigInteger y = x.multiply(x).mod(modulus);
+                        if (y.equals(BigInteger.ONE)) {
+                            p = x.subtract(BigInteger.ONE).gcd(modulus);
+                            q = modulus.divide(p);
+                            break outer;
+                        }
+                    }
+                }
+            }
+
+            // compute CRT parameters
+            BigInteger dp = privateExponent.mod(p.subtract(BigInteger.ONE));
+            BigInteger dq = privateExponent.mod(q.subtract(BigInteger.ONE));
+            BigInteger qInv = q.modInverse(p);
+            RSAPrivateCrtKeySpec spec =
+                    new RSAPrivateCrtKeySpec(
+                            modulus, publicExponent, privateExponent, p, q, dp, dq, qInv);
+            PrivateKey privateKey = null;
+            try {
+                privateKey = KeyFactory.getInstance("RSA").generatePrivate(spec);
+            } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+            byte[] encoded = privateKey.getEncoded();
+            String pem =
+                    "-----BEGIN PRIVATE KEY-----\n"
+                            + Base64.getMimeEncoder(64, new byte[] {'\n'}).encodeToString(encoded)
+                            + "\n-----END PRIVATE KEY-----\n";
+            File RESOURCES_PATH = new File("resources");
+            try (FileWriter fw =
+                         new FileWriter(
+                                 RESOURCES_PATH.getAbsolutePath()
+                                         + "/out/crl-key-"
+                                         + intermediateCertsModeled
+                                         + ".pem")) {
+                fw.write(pem);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+            return pem;
+
     }
 
     public List<X509Certificate> retrieveCertificateChain() {
