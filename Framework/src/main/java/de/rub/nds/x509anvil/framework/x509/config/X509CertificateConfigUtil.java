@@ -18,6 +18,7 @@ import de.rub.nds.x509attacker.x509.model.GeneralName;
 import de.rub.nds.x509attacker.x509.model.extensions.DistributionPoint;
 import de.rub.nds.x509attacker.x509.model.extensions.DistributionPointName;
 import de.rub.nds.x509attacker.x509.model.extensions.GeneralNames;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.math.BigInteger;
 import java.util.*;
@@ -89,7 +90,7 @@ public class X509CertificateConfigUtil {
         return config;
     }
 
-    private static ExtensionConfig generateCRLDistributionPointsConfig(int intermediatesGenerated) {
+    private static ExtensionConfig generateCRLDistributionPointsConfig(String serialNumber) {
         CrlDistributionPointsConfig crlDistributionPointsConfig = new CrlDistributionPointsConfig();
         crlDistributionPointsConfig.setPresent(true);
         crlDistributionPointsConfig.setCritical(false);
@@ -102,7 +103,7 @@ public class X509CertificateConfigUtil {
         GeneralName generalName = new GeneralName("gn");
         generalName.setGeneralNameChoiceTypeConfig(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER);
         //if(intermediatesGenerated > 1) intermediatesGenerated=1;
-        generalName.setGeneralNameConfigValue("http://172.17.0.1:8099/crls/"+intermediatesGenerated+".crl");
+        generalName.setGeneralNameConfigValue("http://172.17.0.1:8099/crls/"+serialNumber+".crl");
         generalNameList.add(generalName);
         generalNames.setGeneralNames(generalNameList);
         distributionPointName.setFullName(generalNames);
@@ -177,8 +178,7 @@ public class X509CertificateConfigUtil {
         subjectKeyIdentifierConfig.setKeyIdentifier(keyIdForEntity(certCounter, uniqueKeyIds));
         config.addExtensions(subjectKeyIdentifierConfig);
         config.addExtensions(authorityKeyIdentifier);
-
-        config.addExtensions(generateCRLDistributionPointsConfig(intermediatesGenerated));
+        config.addExtensions(generateCRLDistributionPointsConfig(String.valueOf(config.getSerialNumber())));
 
         return config;
     }
