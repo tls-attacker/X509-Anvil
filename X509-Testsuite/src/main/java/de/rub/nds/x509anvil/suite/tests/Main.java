@@ -13,6 +13,7 @@ import de.rub.nds.anvilcore.execution.TestRunner;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterIdentifierProvider;
 
+import de.rub.nds.x509anvil.framework.crls.CrlUtils;
 import de.rub.nds.x509anvil.framework.verifier.adapter.TlsClientAuthVerifierAdapterDocker;
 import de.rub.nds.x509anvil.framework.verifier.adapter.TlsServerAuthVerifierAdapterDocker;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -38,6 +39,7 @@ public class Main {
                         anvilTestConfig, "placeholder", new X509AnvilParameterIdentifierProvider());
         testRunner.runTests();
         crlServer.stop();
+        CrlUtils.clean();
     }
 
     static {

@@ -27,12 +27,12 @@ public class CrlUtils {
 
     public static void GenerateCrls(X509CertificateConfig entityConfig, List<X509Certificate> certificateChain) {
         String serialNumber = String.valueOf(entityConfig.getSerialNumber());
-        X509Util.exportCertificates(certificateChain, outPath + serialNumber);
+        X509Util.exportCertificates(certificateChain, outPath + "certs_for_crls/" + serialNumber);
         writeCnf(outPath + "index.txt", outPath + "crlnumber", outPath + "ca.cnf");
         X509Certificate leafCert = certificateChain.getLast();
         RsaPkcs1SignatureComputations leafCertSignatureComputations = (RsaPkcs1SignatureComputations) leafCert.getSignatureComputations();
-        generateCRLKeyfileforCertificate(leafCertSignatureComputations.getModulus().getValue(), leafCertSignatureComputations.getPrivateKey().getValue(), certificateChain.size() - 2, serialNumber);
-        generateCrl(outPath + "../crls/" + serialNumber + ".crl", outPath + "ca.cnf", outPath + serialNumber + "/crl-key.pem", getHighestInterCert(outPath + serialNumber));
+        generateCRLKeyfileforCertificate(leafCertSignatureComputations.getModulus().getValue(), leafCertSignatureComputations.getPrivateKey().getValue(), serialNumber);
+        generateCrl(outPath + "../crls/" + serialNumber + ".crl", outPath + "ca.cnf", outPath + "certs_for_crls/" + serialNumber + "/crl-key.pem", getHighestInterCert(outPath + "certs_for_crls/" + serialNumber));
     }
 
 
@@ -51,7 +51,7 @@ public class CrlUtils {
 
     public static void generateCrl(String outputFile, String cnfPath, String keyPath, String certPath) {
 
-        System.out.println("Generating CRL file: " + outputFile);
+        //System.out.println("Generating CRL file: " + outputFile);
         runCommand("openssl", "ca",
                 "-config", cnfPath,
                 "-gencrl",
@@ -66,7 +66,6 @@ public class CrlUtils {
                 "-inform", "PEM",
                 "-outform", "DER",
                 "-out", outputFile);
-        //runCommand("cp", pemPath, "../../crls");
     }
 
     private static void runCommand(String... cmd) {
@@ -113,10 +112,7 @@ public class CrlUtils {
         }
     }
 
-    public static String generateCRLKeyfileforCertificate(BigInteger modulus, BigInteger privateExponent, int intermediateCertsModeled, String folder) {
-        /*
-         * After generating the CRL keyfile, you should generate the crl file of the appropriate ca then generate the crl using openssl cli
-         * */
+    public static String generateCRLKeyfileforCertificate(BigInteger modulus, BigInteger privateExponent, String folder) {
 
         BigInteger publicExponent = BigInteger.valueOf(65537);
 
@@ -159,7 +155,7 @@ public class CrlUtils {
             throw new RuntimeException(e);
         }
         byte[] encoded = privateKey.getEncoded();
-        System.out.println("\n\n=========" + "Creating Private Key file for CRL:\n Modulus is: " + modulus + "\nprivate exponent is: " + privateExponent + "\nfolder is: " + folder);
+        //System.out.println("\n\n=========\n" + "Creating Private Key file for CRL:\nModulus is: " + modulus + "\nprivate exponent is: " + privateExponent + "\nfolder is: " + folder);
         String pem =
                 "-----BEGIN PRIVATE KEY-----\n"
                         + Base64.getMimeEncoder(64, new byte[]{'\n'}).encodeToString(encoded)
@@ -168,7 +164,7 @@ public class CrlUtils {
         try (FileWriter fw =
                      new FileWriter(
                              RESOURCES_PATH.getAbsolutePath()
-                                     + "/out/" + folder + "/crl-key.pem")) {
+                                     + "/out/certs_for_crls/" + folder + "/crl-key.pem")) {
             fw.write(pem);
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -177,4 +173,25 @@ public class CrlUtils {
 
     }
 
+    public static void clean() {
+        emptyDirectory(outPath+"../crls/");
+        emptyDirectory(outPath+"certs_for_crls/");
+    }
+
+    private static void emptyDirectory(String directory) {
+        try {
+            Files.walk(Paths.get(directory))
+                    .sorted(Comparator.reverseOrder())
+                    .filter(p -> !p.equals(Paths.get(directory)))
+                    .forEach(p -> {
+                        try {
+                            Files.delete(p);
+                        } catch (Exception e) {
+                            throw new RuntimeException("Failed to delete " + p, e);
+                        }
+                    });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
