@@ -42,5 +42,16 @@
       "section": "4.2.1.15.  Freshest CRL"
     },
     "tags": null
+  },
+  "common-f4db514b76": {
+    "description": "This test performs no modifications and MUST always pass. If it does not it is an indication that the feature extraction is broken.",
+    "severityLevels": {
+      "Security": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": null
+    },
+    "tags": null
   }
 }

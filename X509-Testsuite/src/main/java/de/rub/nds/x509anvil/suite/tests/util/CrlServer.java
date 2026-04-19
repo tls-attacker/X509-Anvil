@@ -3,6 +3,7 @@ package de.rub.nds.x509anvil.suite.tests.util;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import de.rub.nds.x509anvil.framework.crls.CrlUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,6 +49,7 @@ public class CrlServer {
                 return;
             }
 
+
             URI requestURI = exchange.getRequestURI();
             String path = requestURI.getPath(); // e.g. /crls/default.crl
 
@@ -76,11 +78,13 @@ public class CrlServer {
                 return;
             }
 
-            if (!Files.exists(file) || Files.isDirectory(file)) {
-                sendText(exchange, "Not found", 404);
-                return;
+            while (!Files.exists(file) || Files.isDirectory(file)) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
-
             long size = Files.size(file);
 
             exchange.getResponseHeaders().set("Content-Type", "application/pkix-crl");

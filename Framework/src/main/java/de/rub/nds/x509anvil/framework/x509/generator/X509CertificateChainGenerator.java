@@ -9,9 +9,8 @@
 
 package de.rub.nds.x509anvil.framework.x509.generator;
 
-import de.rub.nds.protocol.crypto.key.RsaPrivateKey;
-import de.rub.nds.protocol.crypto.signature.RsaPkcs1SignatureComputations;
 import de.rub.nds.protocol.xml.Pair;
+import de.rub.nds.x509anvil.framework.crls.CrlUtils;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
@@ -19,15 +18,6 @@ import de.rub.nds.x509attacker.constants.X500AttributeType;
 import de.rub.nds.x509attacker.context.X509Context;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.math.BigInteger;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.RSAPrivateCrtKeySpec;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -154,7 +144,8 @@ public class X509CertificateChainGenerator {
         for (X509CertificateConfig certificateConfig : certificateChainConfig.getCertificateConfigList()) {
             generateSingleCertificate(certificateConfig);
         }
-
+        X509CertificateConfig entityConfig = certificateChainConfig.getEntityCertificateConfig();
+        CrlUtils.GenerateCRLs(entityConfig, this.generatedCertificates);
     }
 
     public List<X509Certificate> retrieveCertificateChain() {

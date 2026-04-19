@@ -4,6 +4,7 @@ import de.rub.nds.protocol.crypto.signature.RsaPkcs1SignatureComputations;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
+import org.joda.time.DateTime;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,22 +18,22 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateCrtKeySpec;
-import java.util.Base64;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class CrlUtils {
     private static final String outPath = new File("resources").getAbsolutePath() + "/out/";
-
-    public static void GenerateCrls(X509CertificateConfig entityConfig, List<X509Certificate> certificateChain) {
-        String serialNumber = String.valueOf(entityConfig.getSerialNumber());
-        X509Util.exportCertificates(certificateChain, outPath + "certs_for_crls/" + serialNumber);
+    public static String getUniqueID(){
+        return UUID.randomUUID().toString();
+    }
+    public static void GenerateCRLs(X509CertificateConfig entityConfig, List<X509Certificate> certificateChain) {
+        String uniqueIDToUse = entityConfig.getCRLName();
+        System.out.println("Generating CRLs for " + uniqueIDToUse);
+        X509Util.exportCertificates(certificateChain, outPath + "certs_for_crls/" + uniqueIDToUse);
         writeCnf(outPath + "index.txt", outPath + "crlnumber", outPath + "ca.cnf");
         X509Certificate leafCert = certificateChain.getLast();
         RsaPkcs1SignatureComputations leafCertSignatureComputations = (RsaPkcs1SignatureComputations) leafCert.getSignatureComputations();
-        generateCRLKeyfileforCertificate(leafCertSignatureComputations.getModulus().getValue(), leafCertSignatureComputations.getPrivateKey().getValue(), serialNumber);
-        generateCrl(outPath + "../crls/" + serialNumber + ".crl", outPath + "ca.cnf", outPath + "certs_for_crls/" + serialNumber + "/crl-key.pem", getHighestInterCert(outPath + "certs_for_crls/" + serialNumber));
+        generateCRLKeyfileforCertificate(leafCertSignatureComputations.getModulus().getValue(), leafCertSignatureComputations.getPrivateKey().getValue(), uniqueIDToUse);
+        generateCrl(outPath + "../crls/" + uniqueIDToUse + ".crl", outPath + "ca.cnf", outPath + "certs_for_crls/" + uniqueIDToUse + "/crl-key.pem", getHighestInterCert(outPath + "certs_for_crls/" + uniqueIDToUse));
     }
 
 
@@ -174,8 +175,8 @@ public class CrlUtils {
     }
 
     public static void clean() {
-        emptyDirectory(outPath+"../crls/");
-        emptyDirectory(outPath+"certs_for_crls/");
+        emptyDirectory(outPath + "../crls/");
+        emptyDirectory(outPath + "certs_for_crls/");
     }
 
     private static void emptyDirectory(String directory) {

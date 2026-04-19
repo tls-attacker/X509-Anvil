@@ -10,6 +10,7 @@ package de.rub.nds.x509anvil.framework.x509.config;
 
 import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
+import de.rub.nds.x509anvil.framework.crls.CrlUtils;
 import de.rub.nds.x509anvil.framework.x509.key.CachedKeyPairGenerator;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.config.extension.*;
@@ -90,7 +91,8 @@ public class X509CertificateConfigUtil {
         return config;
     }
 
-    private static ExtensionConfig generateCRLDistributionPointsConfig(String serialNumber) {
+    private static ExtensionConfig generateCRLDistributionPointsConfig(String uniqueID) {
+        System.out.println("Creating extension with ID: " + uniqueID);
         CrlDistributionPointsConfig crlDistributionPointsConfig = new CrlDistributionPointsConfig();
         crlDistributionPointsConfig.setPresent(true);
         crlDistributionPointsConfig.setCritical(false);
@@ -103,7 +105,7 @@ public class X509CertificateConfigUtil {
         GeneralName generalName = new GeneralName("gn");
         generalName.setGeneralNameChoiceTypeConfig(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER);
         //if(intermediatesGenerated > 1) intermediatesGenerated=1;
-        generalName.setGeneralNameConfigValue("http://172.17.0.1:8099/crls/"+serialNumber+".crl");
+        generalName.setGeneralNameConfigValue("http://172.17.0.1:8099/crls/"+uniqueID+".crl");
         generalNameList.add(generalName);
         generalNames.setGeneralNames(generalNameList);
         distributionPointName.setFullName(generalNames);
@@ -178,7 +180,8 @@ public class X509CertificateConfigUtil {
         subjectKeyIdentifierConfig.setKeyIdentifier(keyIdForEntity(certCounter, uniqueKeyIds));
         config.addExtensions(subjectKeyIdentifierConfig);
         config.addExtensions(authorityKeyIdentifier);
-        config.addExtensions(generateCRLDistributionPointsConfig(String.valueOf(config.getSerialNumber())));
+        config.setCRLName(CrlUtils.getUniqueID());
+        config.addExtensions(generateCRLDistributionPointsConfig(config.getCRLName()));
 
         return config;
     }

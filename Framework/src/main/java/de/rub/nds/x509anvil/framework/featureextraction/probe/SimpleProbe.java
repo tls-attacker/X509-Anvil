@@ -60,9 +60,6 @@ public abstract class SimpleProbe implements Probe {
         List<X509Certificate> certificateChain =
                 certificateChainGenerator.retrieveCertificateChain();
 
-        X509CertificateConfig entityConfig = config.getEntityCertificateConfig();
-        CrlUtils.GenerateCrls(entityConfig, certificateChain);
-
 
         TestConfig testConfig = ContextHelper.getTestConfig();
         VerifierAdapter verifierAdapter =
