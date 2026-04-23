@@ -42,9 +42,6 @@ public class VersionParameter extends CertificateSpecificParameter<Integer> {
     @Override
     public List<DerivationParameter<X509CertificateChainConfig, Integer>> getNonNullParameterValues(
             DerivationScope derivationScope) {
-        if (!getParameterScope().isEntity()) {
-            return List.of(generateValue(0), generateValue(1), generateValue(2));
-        }
         List<DerivationParameter<X509CertificateChainConfig, Integer>> parameterValues =
                 new ArrayList<>();
         List<Integer> supportedVersions = ContextHelper.getFeatureReport().getSupportedVersions();
