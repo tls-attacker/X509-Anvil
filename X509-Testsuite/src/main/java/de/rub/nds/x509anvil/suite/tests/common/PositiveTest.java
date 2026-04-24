@@ -9,6 +9,7 @@
 package de.rub.nds.x509anvil.suite.tests.common;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -21,6 +22,7 @@ import org.junit.jupiter.api.TestInfo;
 public class PositiveTest extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = {"entity:extensions_present"})
     @AnvilTest(id = "common-f4db514b76")
     public void sampleTestCase(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {

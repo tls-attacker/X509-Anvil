@@ -22,14 +22,24 @@ import java.util.*;
 
 public class CrlUtils {
     private static final String outPath = new File("resources").getAbsolutePath() + "/out/";
-    public static String getUniqueID(){
+    private static final Object CRL_LOCK = new Object();
+
+    public static String getUniqueID() {
         return UUID.randomUUID().toString();
     }
+
     public static void GenerateCRLs(X509CertificateConfig entityConfig, List<X509Certificate> certificateChain) {
         String uniqueIDToUse = entityConfig.getCRLName();
         System.out.println("Generating CRLs for " + uniqueIDToUse);
         X509Util.exportCertificates(certificateChain, outPath + "certs_for_crls/" + uniqueIDToUse);
+        /*IdpConfig idpConfig = new IdpConfig();
+        if (onlySomeReasons.isEmpty()){
+            idpConfig=null;
+        }else{
+            idpConfig.onlySomeReasons=onlySomeReasons;
+        }*/
         writeCnf(outPath + "index.txt", outPath + "crlnumber", outPath + "ca.cnf");
+        //writeCnf(outPath + "index.txt", outPath + "crlnumber", outPath + "ca.cnf", idpConfig);
         X509Certificate leafCert = certificateChain.getLast();
         RsaPkcs1SignatureComputations leafCertSignatureComputations = (RsaPkcs1SignatureComputations) leafCert.getSignatureComputations();
         generateCRLKeyfileforCertificate(leafCertSignatureComputations.getModulus().getValue(), leafCertSignatureComputations.getPrivateKey().getValue(), uniqueIDToUse);
@@ -51,22 +61,22 @@ public class CrlUtils {
     }
 
     public static void generateCrl(String outputFile, String cnfPath, String keyPath, String certPath) {
+        synchronized (CrlUtils.CRL_LOCK) {
+            runCommand("openssl", "ca",
+                    "-config", cnfPath,
+                    "-gencrl",
+                    "-keyfile", keyPath,
+                    "-cert", certPath,
+                    "-out", outputFile,
+                    "-crldays", "30",
+                    "-batch");
 
-        //System.out.println("Generating CRL file: " + outputFile);
-        runCommand("openssl", "ca",
-                "-config", cnfPath,
-                "-gencrl",
-                "-keyfile", keyPath,
-                "-cert", certPath,
-                "-out", outputFile,
-                "-crldays", "30",
-                "-batch");
-
-        runCommand("openssl", "crl",
-                "-in", outputFile,
-                "-inform", "PEM",
-                "-outform", "DER",
-                "-out", outputFile);
+            runCommand("openssl", "crl",
+                    "-in", outputFile,
+                    "-inform", "PEM",
+                    "-outform", "DER",
+                    "-out", outputFile);
+        }
     }
 
     private static void runCommand(String... cmd) {
@@ -94,24 +104,40 @@ public class CrlUtils {
             throw new RuntimeException("Command failed: " + String.join(" ", cmd) + "\n" + output);
         }
     }
-
     public static void writeCnf(String indexPath, String crlNumberPath, String cnfPath) {
-        String cnf = "[ca]\n"
-                + "default_ca = CA_default\n\n"
-                + "[CA_default]\n"
-                + "database        = " + indexPath + "\n"
-                + "crlnumber       = " + crlNumberPath + "\n"
-                + "default_md      = sha256\n"
-                + "default_crl_days = 30\n\n"
-                + "[crl_ext]\n"
-                + "authorityKeyIdentifier = keyid:always\n";
+        writeCnf(indexPath,crlNumberPath,cnfPath,null);
+    }
+    public static void writeCnf(String indexPath, String crlNumberPath, String cnfPath, IdpConfig idp) {
+        StringBuilder cnf = new StringBuilder();
+        cnf.append("[ca]\n")
+                .append("default_ca = CA_default\n\n")
+                .append("[CA_default]\n")
+                .append("database = ").append(indexPath).append("\n")
+                .append("crlnumber = ").append(crlNumberPath).append("\n")
+                .append("default_md = sha256\n")
+                .append("default_crl_days = 30\n")
+                .append("crl_extensions = crl_ext\n\n")
+                .append("[crl_ext]\n")
+                .append("authorityKeyIdentifier = keyid:always\n");
+
+        if (idp != null) {
+            cnf.append("issuingDistributionPoint = ")
+                    .append("critical, ")
+                    .append("@idp_section\n\n");
+
+            cnf.append("[idp_section]\n");
+            if (idp.onlySomeReasons != null) {
+                cnf.append("onlysomereasons = ").append(String.join(", ", idp.onlySomeReasons)).append("\n");
+            }
+        }
 
         try {
-            Files.write(Paths.get(cnfPath), cnf.getBytes());
+            Files.write(Paths.get(cnfPath), cnf.toString().getBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     public static String generateCRLKeyfileforCertificate(BigInteger modulus, BigInteger privateExponent, String folder) {
 
@@ -186,7 +212,9 @@ public class CrlUtils {
                     .filter(p -> !p.equals(Paths.get(directory)))
                     .forEach(p -> {
                         try {
-                            Files.delete(p);
+                            if(!p.endsWith("upb.crl")){ //Don't delete upb crls
+                                Files.delete(p);
+                            }
                         } catch (Exception e) {
                             throw new RuntimeException("Failed to delete " + p, e);
                         }
@@ -194,5 +222,14 @@ public class CrlUtils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public static class IdpConfig {
+        public String fullName;
+        public Set<String> onlySomeReasons;
+        public Boolean onlyUser;
+        public Boolean onlyCA;
+        public Boolean onlyAA;
+        public Boolean indirectCRL;
+        public boolean critical = true;
     }
 }

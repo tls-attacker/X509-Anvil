@@ -32,6 +32,28 @@
   },
   "tags": null
 },
+  "extension-0123456712": {
+    "description": "CRLDP CRLIssuer same as Issuer.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.13.  CRL Distribution Points"
+    },
+    "tags": null
+  },
+  "extension-0123456713": {
+    "description": "CRLDP CRLIssuer has more DN.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.13.  CRL Distribution Points"
+    },
+    "tags": null
+  },
   "extension-0123456780": {
     "description": "Simple Freshest CRL Test.",
     "severityLevels": {
