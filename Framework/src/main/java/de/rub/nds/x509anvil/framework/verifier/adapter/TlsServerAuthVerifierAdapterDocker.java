@@ -97,7 +97,7 @@ public class TlsServerAuthVerifierAdapterDocker extends TlsServerAuthVerifierAda
     private static String supplementStartCommand(TlsImplementationType tlsImplementationType) {
         return (switch (tlsImplementationType) {
             case OPENSSL, LIBRESSL ->
-                    "-verify 5 -verify_return_error -crl_check -crl_download";
+                    "-verify 5 -verify_return_error -crl_check -crl_download -extended_crl";
             case BOTAN -> "--skip-hostname-check";
             default -> "";
         });

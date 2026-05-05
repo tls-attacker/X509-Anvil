@@ -91,7 +91,7 @@ public class X509CertificateConfigUtil {
         return config;
     }
 
-    private static ExtensionConfig generateCRLDistributionPointsConfig(String uniqueID) {
+    public static ExtensionConfig generateCRLDistributionPointsConfig(String uniqueID) {
         System.out.println("Creating extension with ID: " + uniqueID);
         CrlDistributionPointsConfig crlDistributionPointsConfig = new CrlDistributionPointsConfig();
         crlDistributionPointsConfig.setPresent(true);
@@ -180,8 +180,8 @@ public class X509CertificateConfigUtil {
         subjectKeyIdentifierConfig.setKeyIdentifier(keyIdForEntity(certCounter, uniqueKeyIds));
         config.addExtensions(subjectKeyIdentifierConfig);
         config.addExtensions(authorityKeyIdentifier);
-        config.setCRLName(CrlUtils.getUniqueID());
-        config.addExtensions(generateCRLDistributionPointsConfig(config.getCRLName()));
+        config.setCrlUniqueID(CrlUtils.getUniqueID());
+        config.addExtensions(generateCRLDistributionPointsConfig(config.getCrlUniqueID()));
 
         return config;
     }

@@ -22,16 +22,16 @@
     "tags": null
   },
   "extension-0123456711": {
-  "description": "CRLDP CRLIssuer different from Issuer.",
-  "severityLevels": {
-    "Interoperability": 100
+    "description": "CRLDP CRLIssuer different from Issuer.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.13.  CRL Distribution Points"
+    },
+    "tags": null
   },
-  "rfc": {
-    "number": 5280,
-    "section": "4.2.1.13.  CRL Distribution Points"
-  },
-  "tags": null
-},
   "extension-0123456712": {
     "description": "CRLDP CRLIssuer same as Issuer.",
     "severityLevels": {
@@ -45,6 +45,50 @@
   },
   "extension-0123456713": {
     "description": "CRLDP CRLIssuer has more DN.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.13.  CRL Distribution Points"
+    },
+    "tags": null
+  },
+  "extension-0123456714": {
+    "description": "CRLDP CRL file does not cover all reasons when it should.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.13.  CRL Distribution Points"
+    },
+    "tags": null
+  },
+  "extension-0123456715": {
+    "description": "CRLDP CRL file covers all reasons.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.13.  CRL Distribution Points"
+    },
+    "tags": null
+  },
+  "extension-0123456716": {
+    "description": "CRLDP CRL has different reasons than the extension.",
+    "severityLevels": {
+      "Interoperability": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.13.  CRL Distribution Points"
+    },
+    "tags": null
+  },
+  "extension-0123456717": {
+    "description": "CRLDP CRL MUST be DER formatted.",
     "severityLevels": {
       "Interoperability": 100
     },

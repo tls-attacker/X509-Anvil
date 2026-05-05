@@ -2,9 +2,9 @@ package de.rub.nds.x509anvil.framework.crls;
 
 import de.rub.nds.protocol.crypto.signature.RsaPkcs1SignatureComputations;
 import de.rub.nds.x509anvil.framework.x509.config.X509Util;
+import de.rub.nds.x509attacker.config.CrlConfig;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.x509.model.X509Certificate;
-import org.joda.time.DateTime;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -25,25 +25,29 @@ public class CrlUtils {
     private static final Object CRL_LOCK = new Object();
 
     public static String getUniqueID() {
-        return UUID.randomUUID().toString();
+        return System.currentTimeMillis() + "_" + UUID.randomUUID();
     }
 
     public static void GenerateCRLs(X509CertificateConfig entityConfig, List<X509Certificate> certificateChain) {
-        String uniqueIDToUse = entityConfig.getCRLName();
-        System.out.println("Generating CRLs for " + uniqueIDToUse);
-        X509Util.exportCertificates(certificateChain, outPath + "certs_for_crls/" + uniqueIDToUse);
-        /*IdpConfig idpConfig = new IdpConfig();
-        if (onlySomeReasons.isEmpty()){
-            idpConfig=null;
-        }else{
-            idpConfig.onlySomeReasons=onlySomeReasons;
-        }*/
-        writeCnf(outPath + "index.txt", outPath + "crlnumber", outPath + "ca.cnf");
-        //writeCnf(outPath + "index.txt", outPath + "crlnumber", outPath + "ca.cnf", idpConfig);
-        X509Certificate leafCert = certificateChain.getLast();
-        RsaPkcs1SignatureComputations leafCertSignatureComputations = (RsaPkcs1SignatureComputations) leafCert.getSignatureComputations();
-        generateCRLKeyfileforCertificate(leafCertSignatureComputations.getModulus().getValue(), leafCertSignatureComputations.getPrivateKey().getValue(), uniqueIDToUse);
-        generateCrl(outPath + "../crls/" + uniqueIDToUse + ".crl", outPath + "ca.cnf", outPath + "certs_for_crls/" + uniqueIDToUse + "/crl-key.pem", getHighestInterCert(outPath + "certs_for_crls/" + uniqueIDToUse));
+        String uniqueIDToUse = entityConfig.getCrlUniqueID();
+        for (int i = 0; i < entityConfig.getCrlConfigs().size(); i++) {
+            CrlConfig crlConfig = entityConfig.getCrlConfigs().get(i);
+            uniqueIDToUse = uniqueIDToUse+crlConfig.getCrlNameSuffix();
+            System.out.println("Generating CRLs for " + uniqueIDToUse);
+            X509Util.exportCertificates(certificateChain, outPath + "certs_for_crls/" + uniqueIDToUse);
+            IdpConfig idpConfig = new IdpConfig();
+            if (crlConfig.getOnlySomeReasons() == null) {
+                idpConfig = null;
+            } else {
+                idpConfig.onlySomeReasons = crlConfig.getOnlySomeReasons();
+            }
+            writeCnf(outPath + "index.txt", outPath + "crlnumber", outPath + "ca.cnf", idpConfig, uniqueIDToUse);
+            X509Certificate leafCert = certificateChain.getLast();
+            RsaPkcs1SignatureComputations leafCertSignatureComputations = (RsaPkcs1SignatureComputations) leafCert.getSignatureComputations();
+            generateCRLKeyfile(leafCertSignatureComputations.getModulus().getValue(), leafCertSignatureComputations.getPrivateKey().getValue(), uniqueIDToUse);
+            generateCrl(outPath + "../crls/" + uniqueIDToUse + ".crl", outPath + "ca.cnf", outPath + "certs_for_crls/" + uniqueIDToUse + "/crl-key.pem", getHighestInterCert(outPath + "certs_for_crls/" + uniqueIDToUse),crlConfig.isPemInsteadOfDer());
+        }
+
     }
 
 
@@ -60,7 +64,7 @@ public class CrlUtils {
         }
     }
 
-    public static void generateCrl(String outputFile, String cnfPath, String keyPath, String certPath) {
+    private static void generateCrl(String outputFile, String cnfPath, String keyPath, String certPath, boolean pemInsteadOfDer) {
         synchronized (CrlUtils.CRL_LOCK) {
             runCommand("openssl", "ca",
                     "-config", cnfPath,
@@ -71,11 +75,13 @@ public class CrlUtils {
                     "-crldays", "30",
                     "-batch");
 
-            runCommand("openssl", "crl",
-                    "-in", outputFile,
-                    "-inform", "PEM",
-                    "-outform", "DER",
-                    "-out", outputFile);
+            if(!pemInsteadOfDer){
+                runCommand("openssl", "crl",
+                        "-in", outputFile,
+                        "-inform", "PEM",
+                        "-outform", "DER",
+                        "-out", outputFile);
+            }
         }
     }
 
@@ -104,10 +110,9 @@ public class CrlUtils {
             throw new RuntimeException("Command failed: " + String.join(" ", cmd) + "\n" + output);
         }
     }
-    public static void writeCnf(String indexPath, String crlNumberPath, String cnfPath) {
-        writeCnf(indexPath,crlNumberPath,cnfPath,null);
-    }
-    public static void writeCnf(String indexPath, String crlNumberPath, String cnfPath, IdpConfig idp) {
+
+
+    public static void writeCnf(String indexPath, String crlNumberPath, String cnfPath, IdpConfig idp, String uniqueIDToUse) {
         StringBuilder cnf = new StringBuilder();
         cnf.append("[ca]\n")
                 .append("default_ca = CA_default\n\n")
@@ -126,6 +131,7 @@ public class CrlUtils {
                     .append("@idp_section\n\n");
 
             cnf.append("[idp_section]\n");
+            //cnf.append("fullname = URI:http://172.17.0.1:8099/crls/").append(uniqueIDToUse).append(".crl\n");
             if (idp.onlySomeReasons != null) {
                 cnf.append("onlysomereasons = ").append(String.join(", ", idp.onlySomeReasons)).append("\n");
             }
@@ -139,28 +145,38 @@ public class CrlUtils {
     }
 
 
-    public static String generateCRLKeyfileforCertificate(BigInteger modulus, BigInteger privateExponent, String folder) {
+    public static void generateCRLKeyfile(BigInteger modulus, BigInteger privateExponent, String folder) {
 
+        /*
+         * Source: https://di-mgt.com.au/rsa_factorize_n.html
+         * Input: N, e, d.
+         * Output: p and q where pq=N.
+         *
+         * [Initialize] Set k←de−1.
+         * [Try a random g] Choose g at random from {2,…,N−1} and set t←k.
+         * [Next t] If t is divisible by 2, set t←t/2 and x←g^t mod N. Otherwise go to step 2.
+         * [Finished?] If x>1 and y=gcd(x−1,N)>1 then set p←y and q←N/y, output (p,q) and terminate the algorithm. Otherwise go to step 3.
+         * */
         BigInteger publicExponent = BigInteger.valueOf(65537);
 
-        // reconstruct p and q from n, e, d
-        // using the standard algorithm from NIST SP 800-56B
         BigInteger k = privateExponent.multiply(publicExponent).subtract(BigInteger.ONE);
         BigInteger p = null, q = null;
-
         Random rng = new Random();
+        BigInteger g;
+
         outer:
         while (true) {
-            BigInteger g = new BigInteger(modulus.bitLength(), rng);
+            do {
+                g = new BigInteger(modulus.bitLength(), rng);
+            } while (g.compareTo(BigInteger.valueOf(2)) < 0 || g.compareTo(modulus) >= 0);
             BigInteger t = k;
             while (!t.testBit(0)) {
                 t = t.shiftRight(1);
                 BigInteger x = g.modPow(t, modulus);
-                if (x.compareTo(BigInteger.ONE) > 0
-                        && x.compareTo(modulus.subtract(BigInteger.ONE)) < 0) {
-                    BigInteger y = x.multiply(x).mod(modulus);
-                    if (y.equals(BigInteger.ONE)) {
-                        p = x.subtract(BigInteger.ONE).gcd(modulus);
+                if (x.compareTo(BigInteger.ONE) > 0) {
+                    BigInteger y = x.subtract(BigInteger.ONE).gcd(modulus);
+                    if (y.compareTo(BigInteger.ONE) > 0) {
+                        p = y;
                         q = modulus.divide(p);
                         break outer;
                     }
@@ -168,7 +184,6 @@ public class CrlUtils {
             }
         }
 
-        // compute CRT parameters
         BigInteger dp = privateExponent.mod(p.subtract(BigInteger.ONE));
         BigInteger dq = privateExponent.mod(q.subtract(BigInteger.ONE));
         BigInteger qInv = q.modInverse(p);
@@ -196,7 +211,6 @@ public class CrlUtils {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        return pem;
 
     }
 
@@ -212,7 +226,7 @@ public class CrlUtils {
                     .filter(p -> !p.equals(Paths.get(directory)))
                     .forEach(p -> {
                         try {
-                            if(!p.endsWith("upb.crl")){ //Don't delete upb crls
+                            if (!p.endsWith("upb.crl")) { //Don't delete upb crls
                                 Files.delete(p);
                             }
                         } catch (Exception e) {
@@ -223,6 +237,7 @@ public class CrlUtils {
             throw new RuntimeException(e);
         }
     }
+
     public static class IdpConfig {
         public String fullName;
         public Set<String> onlySomeReasons;

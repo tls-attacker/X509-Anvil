@@ -28,7 +28,7 @@ public class CRLDPCertIssuerDiffersFromCRLIssuerTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-0123456711")
     public void basicTest(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
+        assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
             CrlDistributionPointsConfig crlDistributionPointsConfig = new CrlDistributionPointsConfig();
             crlDistributionPointsConfig.setPresent(true);
             List<DistributionPoint> distributionPointList = new ArrayList<>();
