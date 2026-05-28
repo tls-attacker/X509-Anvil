@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.crldistributionpoints;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.asn1.model.Asn1PrintableString;
 import de.rub.nds.asn1.model.Asn1Utf8String;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
@@ -23,14 +24,16 @@ import java.util.List;
 
 public class CRLDPCertIssuerDiffersFromCRLIssuerTests extends X509AnvilTest {
     /*
-    * If the certificate issuer is not the CRL issuer, then the cRLIssuer field MUST be present and contain the Name of the CRL issuer.
-    */
+     * If the certificate issuer is not the CRL issuer, then the cRLIssuer field MUST be present and contain the Name of the CRL issuer.
+     */
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-0123456711")
+    @IpmLimitations(identifiers = "entity:extensions_present")
     public void basicTest(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
             CrlDistributionPointsConfig crlDistributionPointsConfig = new CrlDistributionPointsConfig();
             crlDistributionPointsConfig.setPresent(true);
+            crlDistributionPointsConfig.setCritical(true);
             List<DistributionPoint> distributionPointList = new ArrayList<>();
             DistributionPoint distributionPoint = new DistributionPoint("test dp");
 
@@ -84,7 +87,7 @@ public class CRLDPCertIssuerDiffersFromCRLIssuerTests extends X509AnvilTest {
 
             RelativeDistinguishedName countryRdn = new RelativeDistinguishedName("country rdn");
             List<AttributeTypeAndValue> countryAtts = new ArrayList<>();
-            AttributeTypeAndValue countryAttribute = new AttributeTypeAndValue("country", DirectoryStringChoiceType.UTF8_STRING);
+            AttributeTypeAndValue countryAttribute = new AttributeTypeAndValue("country", DirectoryStringChoiceType.PRINTABLE_STRING);
             countryAttribute.setAttributeTypeConfig(X500AttributeType.COUNTRY_NAME);
             Asn1PrintableString asn1PrintableString = new Asn1PrintableString("commonNameUTF8");
             asn1PrintableString.setValue("GR");

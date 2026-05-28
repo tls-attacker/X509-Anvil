@@ -52,6 +52,9 @@ public class CRLDPNotAllReasonsTests extends X509AnvilTest {
     @IpmLimitations(identifiers = {"entity:extensions_present"})
     @AnvilTest(id = "extension-0123456715")
     public void validCase(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
+        /*
+         * When a conforming CA includes a cRLDistributionPoints extension in a certificate, it MUST include at least one DistributionPoint that points to a CRL that covers the certificate for all reasons.
+         * */
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
             // Docs: https://docs.openssl.org/master/man5/x509v3_config/#issuing-distribution-point
             Set<String> onlySomeReasons = new HashSet<>();
@@ -101,7 +104,10 @@ public class CRLDPNotAllReasonsTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = {"entity:extensions_present"})
     @AnvilTest(id = "extension-0123456716")
-    public void reasonsMismatch(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
+    public void notAllReasons(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
+        /*
+        * When a conforming CA includes a cRLDistributionPoints extension in a certificate, it MUST include at least one DistributionPoint that points to a CRL that covers the certificate for all reasons.
+        * */
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             // Docs: https://docs.openssl.org/master/man5/x509v3_config/#issuing-distribution-point
             Set<String> onlySomeReasons = new HashSet<>();
@@ -112,7 +118,7 @@ public class CRLDPNotAllReasonsTests extends X509AnvilTest {
                 if (extensionConfig.getExtensionId().toString().equals("2.5.29.31")) {
                     CrlDistributionPointsConfig crldpconfig = (CrlDistributionPointsConfig) extensionConfig;
                     ReasonFlags reasonFlags = new ReasonFlags("reasonFlags");
-                    reasonFlags.setaACompromise(true);
+                    reasonFlags.setKeyCompromise(true);
                     crldpconfig.getDistributionPointList().get(0).setReasons(reasonFlags);
                 }
             }

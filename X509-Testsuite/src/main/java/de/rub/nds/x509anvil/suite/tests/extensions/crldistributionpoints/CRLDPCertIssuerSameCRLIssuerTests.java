@@ -25,7 +25,7 @@ import java.util.List;
 
 public class CRLDPCertIssuerSameCRLIssuerTests extends X509AnvilTest {
     /*
-    * If the certificate issuer is not the CRL issuer, then the cRLIssuer field MUST be present and contain the Name of the CRL issuer.
+    * If the certificate issuer is also the CRL issuer, then conforming CAs MUST omit the cRLIssuer field and MUST include the distributionPoint field
     */
     @ChainLength(minLength = 2)
     @AnvilTest(id = "extension-0123456712")
@@ -72,7 +72,7 @@ public class CRLDPCertIssuerSameCRLIssuerTests extends X509AnvilTest {
 
             RelativeDistinguishedName countryRdn = new RelativeDistinguishedName("country rdn");
             List<AttributeTypeAndValue> countryAtts = new ArrayList<>();
-            AttributeTypeAndValue countryAttribute = new AttributeTypeAndValue("country", DirectoryStringChoiceType.UTF8_STRING);
+            AttributeTypeAndValue countryAttribute = new AttributeTypeAndValue("country", DirectoryStringChoiceType.PRINTABLE_STRING);
             countryAttribute.setAttributeTypeConfig(X500AttributeType.COUNTRY_NAME);
             Asn1PrintableString asn1PrintableString = new Asn1PrintableString("commonNameUTF8");
             asn1PrintableString.setValue("Global");
