@@ -26,35 +26,15 @@ public class CRLDPCertIssuerDiffersFromCRLIssuerTests extends X509AnvilTest {
     /*
      * If the certificate issuer is not the CRL issuer, then the cRLIssuer field MUST be present and contain the Name of the CRL issuer.
      */
-    @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-0123456711")
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-crldp-s2-1")
     @IpmLimitations(identifiers = "entity:extensions_present")
-    public void basicTest(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
+    public void validCase(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
-            CrlDistributionPointsConfig crlDistributionPointsConfig = new CrlDistributionPointsConfig();
-            crlDistributionPointsConfig.setPresent(true);
-            crlDistributionPointsConfig.setCritical(true);
-            List<DistributionPoint> distributionPointList = new ArrayList<>();
-            DistributionPoint distributionPoint = new DistributionPoint("test dp");
-
-            DistributionPointName distributionPointName = new DistributionPointName("dpn");
-            distributionPointName.setDistributionPointNameChoiceType(DistributionPointNameChoiceType.FULL_NAME);
-            GeneralNames generalNamesForDPName = new GeneralNames("gns0:");
-            List<GeneralName> generalNameListForDPName = new ArrayList<>();
-            GeneralName generalNameForDPName = new GeneralName("test dp");
-            generalNameForDPName.setGeneralNameChoiceTypeConfig(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER);
-            generalNameForDPName.setGeneralNameConfigValue("http://172.17.0.1:8099/crls/upb.crl");
-            generalNameListForDPName.add(generalNameForDPName);
-            generalNamesForDPName.setGeneralNames(generalNameListForDPName);
-            distributionPointName.setFullName(generalNamesForDPName);
-            distributionPoint.setDistributionPointName(distributionPointName);
-
-            //
+            config.getCrlConfigs().get(0).setRootAsIssuer(true);
             GeneralNames crlIssuer = new GeneralNames("general Names");
             List<GeneralName> crlIssuerList = new ArrayList<>();
             GeneralName generalNameForIssuer = new GeneralName("GeneralName");
-
-
             generalNameForIssuer.setGeneralNameChoiceTypeConfig(GeneralNameChoiceType.DIRECTORY_NAME);
             Name nameModel = new Name("nameModel", NameType.GENERAL_NAME);
             List<RelativeDistinguishedName> relativeDistinguishedNameList = new ArrayList<>();
@@ -64,7 +44,7 @@ public class CRLDPCertIssuerDiffersFromCRLIssuerTests extends X509AnvilTest {
             AttributeTypeAndValue commonNameAttribute = new AttributeTypeAndValue("commonName", DirectoryStringChoiceType.UTF8_STRING);
             commonNameAttribute.setAttributeTypeConfig(X500AttributeType.COMMON_NAME);
             Asn1Utf8String cnAsn1Utf8String = new Asn1Utf8String("commonNameUTF8");
-            cnAsn1Utf8String.setValue("GEANT TLS RSA 1");
+            cnAsn1Utf8String.setValue("TLS-Attacker");
             DirectoryString cnDirectoryString = new DirectoryString("cn directory string");
             cnDirectoryString.makeSelection(cnAsn1Utf8String);
             cnDirectoryString.setUtf8String(cnAsn1Utf8String);
@@ -76,8 +56,8 @@ public class CRLDPCertIssuerDiffersFromCRLIssuerTests extends X509AnvilTest {
             List<AttributeTypeAndValue> orgAtts = new ArrayList<>();
             AttributeTypeAndValue orgAttribute = new AttributeTypeAndValue("org", DirectoryStringChoiceType.UTF8_STRING);
             orgAttribute.setAttributeTypeConfig(X500AttributeType.ORGANISATION_NAME);
-            Asn1Utf8String orgAsn1Utf8String = new Asn1Utf8String("commonNameUTF8");
-            orgAsn1Utf8String.setValue("Hellenic Academic and Research Institutions CA");
+            Asn1Utf8String orgAsn1Utf8String = new Asn1Utf8String("orgnameUTF8");
+            orgAsn1Utf8String.setValue("TLS Attacker CA - Global Insecurity Provider");
             DirectoryString orgDirectoryString = new DirectoryString("org directory string");
             orgDirectoryString.makeSelection(orgAsn1Utf8String);
             orgDirectoryString.setUtf8String(orgAsn1Utf8String);
@@ -90,7 +70,7 @@ public class CRLDPCertIssuerDiffersFromCRLIssuerTests extends X509AnvilTest {
             AttributeTypeAndValue countryAttribute = new AttributeTypeAndValue("country", DirectoryStringChoiceType.PRINTABLE_STRING);
             countryAttribute.setAttributeTypeConfig(X500AttributeType.COUNTRY_NAME);
             Asn1PrintableString asn1PrintableString = new Asn1PrintableString("commonNameUTF8");
-            asn1PrintableString.setValue("GR");
+            asn1PrintableString.setValue("Global");
             DirectoryString countryDirectoryString = new DirectoryString("country directory string");
             countryDirectoryString.makeSelection(asn1PrintableString);
             countryDirectoryString.setPrintableString(asn1PrintableString);
@@ -107,21 +87,24 @@ public class CRLDPCertIssuerDiffersFromCRLIssuerTests extends X509AnvilTest {
 
             crlIssuerList.add(generalNameForIssuer);
             crlIssuer.setGeneralNames(crlIssuerList);
-            distributionPoint.setCrlIssuer(crlIssuer);
-            //
-
-            distributionPoint.setReasons(null);
-            distributionPointList.add(distributionPoint);
-            crlDistributionPointsConfig.setDistributionPointList(distributionPointList);
             List<ExtensionConfig> extensionConfigList = config.getExtensions();
             for (int i = extensionConfigList.size() - 1; i >= 0; i--) {
                 ExtensionConfig extensionConfig = extensionConfigList.get(i);
                 if (extensionConfig.getExtensionId().toString().equals("2.5.29.31")) {
-                    extensionConfigList.remove(i);
+                    CrlDistributionPointsConfig crldp = (CrlDistributionPointsConfig) extensionConfigList.get(i);
+                    crldp.getDistributionPointList().get(0).setCrlIssuer(crlIssuer);
                 }
             }
-            config.addExtensions(crlDistributionPointsConfig);
         }, testInfo);
     }
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-crldp-s2-2")
+    @IpmLimitations(identifiers = "entity:extensions_present")
+    public void invalidCase(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            config.getCrlConfigs().get(0).setRootAsIssuer(true);
+        }, testInfo);
+    }
+
 
 }

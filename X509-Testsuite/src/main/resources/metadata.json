@@ -1,8 +1,8 @@
 {
-  "extension-0123456789": {
-    "description": "Simple CRL Test.",
+  "extension-crldp-s4-1": {
+    "description": "No Valid URI present.",
     "severityLevels": {
-      "Interoperability": 100
+      "Security": 100
     },
     "rfc": {
       "number": 5280,
@@ -10,10 +10,21 @@
     },
     "tags": null
   },
-  "extension-0123456710": {
+  "extension-crldp-s4-2": {
+    "description": "Valid URI with CRL but with reasons mismatch.",
+    "severityLevels": {
+      "Security": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.13.  CRL Distribution Points"
+    },
+    "tags": null
+  },
+  "extension-crldp-s1-1": {
     "description": "CRLDP SoleReasons.",
     "severityLevels": {
-      "Interoperability": 100
+      "Security": 100
     },
     "rfc": {
       "number": 5280,
@@ -21,10 +32,10 @@
     },
     "tags": null
   },
-  "extension-0123456711": {
-    "description": "CRLDP CRLIssuer different from Issuer.",
+  "extension-crldp-s2-1": {
+    "description": "CRLDP CRL Issuer different from Issuer with crlIssuer included (ValidCase).",
     "severityLevels": {
-      "Interoperability": 100
+      "Security": 100
     },
     "rfc": {
       "number": 5280,
@@ -32,10 +43,21 @@
     },
     "tags": null
   },
-  "extension-0123456712": {
+  "extension-crldp-s2-2": {
+    "description": "CRLDP CRL Issuer different from Issuer without crlIssuer being included (InvalidCase).",
+    "severityLevels": {
+      "Security": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.13.  CRL Distribution Points"
+    },
+    "tags": null
+  },
+  "extension-crldp-s3-1": {
     "description": "CRLDP CRLIssuer same as Issuer.",
     "severityLevels": {
-      "Interoperability": 100
+      "Security": 100
     },
     "rfc": {
       "number": 5280,
@@ -43,10 +65,10 @@
     },
     "tags": null
   },
-  "extension-0123456713": {
+  "extension-crldp-s8-1": {
     "description": "CRLDP CRLIssuer has more DN.",
     "severityLevels": {
-      "Interoperability": 100
+      "Security": 100
     },
     "rfc": {
       "number": 5280,
@@ -54,10 +76,21 @@
     },
     "tags": null
   },
-  "extension-0123456714": {
+  "extension-crldp-s9-1": {
+    "description": "CRLDP CRLIssuer encoding mismatch.",
+    "severityLevels": {
+      "Security": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.13.  CRL Distribution Points"
+    },
+    "tags": null
+  },
+  "extension-crldp-s6-1": {
     "description": "CRLDP CRL file does not cover all reasons when it should.",
     "severityLevels": {
-      "Interoperability": 100
+      "Security": 100
     },
     "rfc": {
       "number": 5280,
@@ -65,10 +98,10 @@
     },
     "tags": null
   },
-  "extension-0123456715": {
-    "description": "CRLDP CRL file covers all reasons.",
+  "extension-crldp-s7-1": {
+    "description": "CRLDP at least one DP covers all reasons (appended).",
     "severityLevels": {
-      "Interoperability": 100
+      "Security": 100
     },
     "rfc": {
       "number": 5280,
@@ -76,10 +109,21 @@
     },
     "tags": null
   },
-  "extension-0123456716": {
+  "extension-crldp-s7-2": {
+    "description": "CRLDP at least one DP covers all reasons (prepended).",
+    "severityLevels": {
+      "Security": 100
+    },
+    "rfc": {
+      "number": 5280,
+      "section": "4.2.1.13.  CRL Distribution Points"
+    },
+    "tags": null
+  },
+  "extension-crldp-s7-3": {
     "description": "CRLDP CRL has different reasons than the extension.",
     "severityLevels": {
-      "Interoperability": 100
+      "Security": 100
     },
     "rfc": {
       "number": 5280,
@@ -87,10 +131,10 @@
     },
     "tags": null
   },
-  "extension-0123456717": {
+  "extension-crldp-s5-1": {
     "description": "CRLDP CRL MUST be DER formatted.",
     "severityLevels": {
-      "Interoperability": 100
+      "Security": 100
     },
     "rfc": {
       "number": 5280,
@@ -98,14 +142,14 @@
     },
     "tags": null
   },
-  "extension-0123456780": {
-    "description": "Simple Freshest CRL Test.",
+  "extension-crldp-revoked": {
+    "description": "Certificate revoked.",
     "severityLevels": {
-      "Interoperability": 100
+      "Security": 100
     },
     "rfc": {
       "number": 5280,
-      "section": "4.2.1.15.  Freshest CRL"
+      "section": "4.2.1.13.  CRL Distribution Points"
     },
     "tags": null
   },

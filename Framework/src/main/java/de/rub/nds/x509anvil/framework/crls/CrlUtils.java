@@ -13,9 +13,11 @@ import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.cert.CRL;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateCrtKeySpec;
 import java.util.*;
@@ -29,23 +31,50 @@ public class CrlUtils {
     }
 
     public static void GenerateCRLs(X509CertificateConfig entityConfig, List<X509Certificate> certificateChain) {
-        String uniqueIDToUse = entityConfig.getCrlUniqueID();
+        String uniqueID = entityConfig.getCrlUniqueID();
+        String handshakeDirectory = outPath + "certs_for_crls/" + uniqueID;
+
         for (int i = 0; i < entityConfig.getCrlConfigs().size(); i++) {
             CrlConfig crlConfig = entityConfig.getCrlConfigs().get(i);
-            uniqueIDToUse = uniqueIDToUse+crlConfig.getCrlNameSuffix();
+            String uniqueIDToUse = uniqueID + crlConfig.getCrlNameSuffix();
+            String crlDirectory = outPath + "certs_for_crls/" + uniqueIDToUse;
+            X509Util.exportCertificates(certificateChain, crlDirectory);
+            if(i==0){
+                try {
+                    Files.write(Path.of(handshakeDirectory + "/crlnumber"), "00".getBytes());
+                    Files.write(Path.of(handshakeDirectory + "/index.txt"), "".getBytes());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             System.out.println("Generating CRLs for " + uniqueIDToUse);
-            X509Util.exportCertificates(certificateChain, outPath + "certs_for_crls/" + uniqueIDToUse);
+
             IdpConfig idpConfig = new IdpConfig();
             if (crlConfig.getOnlySomeReasons() == null) {
                 idpConfig = null;
             } else {
                 idpConfig.onlySomeReasons = crlConfig.getOnlySomeReasons();
             }
-            writeCnf(outPath + "index.txt", outPath + "crlnumber", outPath + "ca.cnf", idpConfig, uniqueIDToUse);
-            X509Certificate leafCert = certificateChain.getLast();
-            RsaPkcs1SignatureComputations leafCertSignatureComputations = (RsaPkcs1SignatureComputations) leafCert.getSignatureComputations();
-            generateCRLKeyfile(leafCertSignatureComputations.getModulus().getValue(), leafCertSignatureComputations.getPrivateKey().getValue(), uniqueIDToUse);
-            generateCrl(outPath + "../crls/" + uniqueIDToUse + ".crl", outPath + "ca.cnf", outPath + "certs_for_crls/" + uniqueIDToUse + "/crl-key.pem", getHighestInterCert(outPath + "certs_for_crls/" + uniqueIDToUse),crlConfig.isPemInsteadOfDer());
+            synchronized (CRL_LOCK) {
+                writeCnf(handshakeDirectory + "/index.txt", handshakeDirectory + "/crlnumber", handshakeDirectory + "/ca.cnf", idpConfig);
+
+
+                if (crlConfig.isRootAsIssuer()) {
+                    X509Certificate rootCert = certificateChain.getFirst();
+                    RsaPkcs1SignatureComputations rootCertSignatureComputations = (RsaPkcs1SignatureComputations) rootCert.getSignatureComputations();
+                    generateCRLKeyfile(rootCertSignatureComputations.getModulus().getValue(), rootCertSignatureComputations.getPrivateKey().getValue(), uniqueIDToUse);
+                    generateCrl(outPath + "../crls/" + uniqueIDToUse + ".crl", handshakeDirectory + "/ca.cnf", crlDirectory + "/crl-key.pem", crlDirectory + "/root_cert.pem", crlConfig.isPemInsteadOfDer(), crlConfig.isRevokedCert(), crlDirectory + "/leaf_cert.pem");
+
+                } else {
+                    X509Certificate leafCert = certificateChain.getLast();
+                    RsaPkcs1SignatureComputations leafCertSignatureComputations = (RsaPkcs1SignatureComputations) leafCert.getSignatureComputations();
+                    generateCRLKeyfile(leafCertSignatureComputations.getModulus().getValue(), leafCertSignatureComputations.getPrivateKey().getValue(), uniqueIDToUse);
+                    generateCrl(outPath + "../crls/" + uniqueIDToUse + ".crl", handshakeDirectory + "/ca.cnf", crlDirectory + "/crl-key.pem", getHighestInterCert(handshakeDirectory), crlConfig.isPemInsteadOfDer(), crlConfig.isRevokedCert(), crlDirectory + "/leaf_cert.pem");
+
+                }
+            }
+
+
         }
 
     }
@@ -64,25 +93,35 @@ public class CrlUtils {
         }
     }
 
-    private static void generateCrl(String outputFile, String cnfPath, String keyPath, String certPath, boolean pemInsteadOfDer) {
-        synchronized (CrlUtils.CRL_LOCK) {
+    private static void generateCrl(String outputFile, String cnfPath, String keyPath, String issuerCertPath, boolean pemInsteadOfDer, boolean revoked, String entityCertPath) {
+
+        if (revoked) {
             runCommand("openssl", "ca",
                     "-config", cnfPath,
-                    "-gencrl",
+                    "-revoke", entityCertPath,
                     "-keyfile", keyPath,
-                    "-cert", certPath,
-                    "-out", outputFile,
-                    "-crldays", "30",
+                    "-cert", issuerCertPath,
                     "-batch");
-
-            if(!pemInsteadOfDer){
-                runCommand("openssl", "crl",
-                        "-in", outputFile,
-                        "-inform", "PEM",
-                        "-outform", "DER",
-                        "-out", outputFile);
-            }
         }
+
+        runCommand("openssl", "ca",
+                "-config", cnfPath,
+                "-gencrl",
+                "-keyfile", keyPath,
+                "-cert", issuerCertPath,
+                "-out", outputFile,
+                "-crldays", "30",
+                "-batch");
+
+
+        if (!pemInsteadOfDer) {
+            runCommand("openssl", "crl",
+                    "-in", outputFile,
+                    "-inform", "PEM",
+                    "-outform", "DER",
+                    "-out", outputFile);
+        }
+
     }
 
     private static void runCommand(String... cmd) {
@@ -112,7 +151,8 @@ public class CrlUtils {
     }
 
 
-    public static void writeCnf(String indexPath, String crlNumberPath, String cnfPath, IdpConfig idp, String uniqueIDToUse) {
+    public static void writeCnf(String indexPath, String crlNumberPath, String cnfPath, IdpConfig idp) {
+
         StringBuilder cnf = new StringBuilder();
         cnf.append("[ca]\n")
                 .append("default_ca = CA_default\n\n")
@@ -124,18 +164,17 @@ public class CrlUtils {
                 .append("crl_extensions = crl_ext\n\n")
                 .append("[crl_ext]\n")
                 .append("authorityKeyIdentifier = keyid:always\n");
-
         if (idp != null) {
             cnf.append("issuingDistributionPoint = ")
                     .append("critical, ")
                     .append("@idp_section\n\n");
 
             cnf.append("[idp_section]\n");
-            //cnf.append("fullname = URI:http://172.17.0.1:8099/crls/").append(uniqueIDToUse).append(".crl\n");
             if (idp.onlySomeReasons != null) {
                 cnf.append("onlysomereasons = ").append(String.join(", ", idp.onlySomeReasons)).append("\n");
             }
         }
+
 
         try {
             Files.write(Paths.get(cnfPath), cnf.toString().getBytes());

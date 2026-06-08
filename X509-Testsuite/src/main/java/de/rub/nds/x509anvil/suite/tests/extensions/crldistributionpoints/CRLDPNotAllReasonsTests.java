@@ -33,7 +33,7 @@ public class CRLDPNotAllReasonsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = {"entity:extensions_present"})
-    @AnvilTest(id = "extension-0123456714")
+    @AnvilTest(id = "extension-crldp-s6-1")
     public void invalidCase(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             /*
@@ -50,7 +50,7 @@ public class CRLDPNotAllReasonsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = {"entity:extensions_present"})
-    @AnvilTest(id = "extension-0123456715")
+    @AnvilTest(id = "extension-crldp-s7-1")
     public void validCase(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         /*
          * When a conforming CA includes a cRLDistributionPoints extension in a certificate, it MUST include at least one DistributionPoint that points to a CRL that covers the certificate for all reasons.
@@ -83,18 +83,9 @@ public class CRLDPNotAllReasonsTests extends X509AnvilTest {
                     generalNames.setGeneralNames(generalNameList);
                     distributionPointName.setFullName(generalNames);
                     newDp.setDistributionPointName(distributionPointName);
-                    ReasonFlags newReasonFlags = new ReasonFlags("reasonFlags2");
-                    newReasonFlags.setcACompromise(true);
-                    newReasonFlags.setaACompromise(true);
-                    newReasonFlags.setSuperseded(true);
-                    newReasonFlags.setCessationOfOperation(true);
-                    newReasonFlags.setPrivilegeWithdrawn(true);
-                    newReasonFlags.setAffiliationChanged(true);
-                    newReasonFlags.setCertificateHold(true);
-                    newReasonFlags.setKeyCompromise(true);
-                    newDp.setReasons(newReasonFlags);
+                    newDp.setReasons(null);
                     newDp.setCrlIssuer(null);
-                    crldpconfig.distributionPointList.add(0,newDp);
+                    crldpconfig.distributionPointList.add(newDp);
                 }
             }
 
@@ -103,7 +94,51 @@ public class CRLDPNotAllReasonsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = {"entity:extensions_present"})
-    @AnvilTest(id = "extension-0123456716")
+    @AnvilTest(id = "extension-crldp-s7-2")
+    public void anotherValidCase(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
+        /*
+         * When a conforming CA includes a cRLDistributionPoints extension in a certificate, it MUST include at least one DistributionPoint that points to a CRL that covers the certificate for all reasons.
+         * */
+        assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
+            // Docs: https://docs.openssl.org/master/man5/x509v3_config/#issuing-distribution-point
+            Set<String> onlySomeReasons = new HashSet<>();
+            onlySomeReasons.add("keyCompromise");
+            config.getCrlConfigs().get(0).setOnlySomeReasons(onlySomeReasons);
+            List<ExtensionConfig> extensionConfigList = config.getExtensions();
+            for (ExtensionConfig extensionConfig : extensionConfigList) {
+                if (extensionConfig.getExtensionId().toString().equals("2.5.29.31")) {
+                    CrlDistributionPointsConfig crldpconfig = (CrlDistributionPointsConfig) extensionConfig;
+                    ReasonFlags reasonFlags = new ReasonFlags("reasonFlags");
+                    reasonFlags.setKeyCompromise(true);
+                    crldpconfig.getDistributionPointList().get(0).setReasons(reasonFlags);
+                    CrlConfig crlConfig = new CrlConfig();
+                    crlConfig.setCrlNameSuffix("_2");
+                    config.getCrlConfigs().add(crlConfig);
+                    DistributionPoint newDp = new DistributionPoint("new dp");
+                    DistributionPointName distributionPointName = new DistributionPointName("dpn");
+                    distributionPointName.setDistributionPointNameChoiceType(DistributionPointNameChoiceType.FULL_NAME);
+                    GeneralNames generalNames = new GeneralNames("gns");
+                    List<GeneralName> generalNameList = new ArrayList<>();
+                    GeneralName generalName = new GeneralName("gn");
+                    generalName.setGeneralNameChoiceTypeConfig(GeneralNameChoiceType.UNIFORM_RESOURCE_IDENTIFIER);
+
+                    generalName.setGeneralNameConfigValue("http://172.17.0.1:8099/crls/"+config.getCrlUniqueID()+crlConfig.getCrlNameSuffix()+".crl");
+                    generalNameList.add(generalName);
+                    generalNames.setGeneralNames(generalNameList);
+                    distributionPointName.setFullName(generalNames);
+                    newDp.setDistributionPointName(distributionPointName);
+                    newDp.setReasons(null);
+                    newDp.setCrlIssuer(null);
+                    crldpconfig.distributionPointList.add(0, newDp);
+                }
+            }
+
+        }, testInfo);
+    }
+
+    @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = {"entity:extensions_present"})
+    @AnvilTest(id = "extension-crldp-s7-3")
     public void notAllReasons(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         /*
         * When a conforming CA includes a cRLDistributionPoints extension in a certificate, it MUST include at least one DistributionPoint that points to a CRL that covers the certificate for all reasons.

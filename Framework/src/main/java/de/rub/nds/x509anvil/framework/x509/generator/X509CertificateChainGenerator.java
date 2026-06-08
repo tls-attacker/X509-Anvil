@@ -13,6 +13,7 @@ import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.crls.CrlUtils;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.chooser.X509Chooser;
+import de.rub.nds.x509attacker.config.CrlConfig;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.config.extension.CrlDistributionPointsConfig;
 import de.rub.nds.x509attacker.config.extension.ExtensionConfig;
@@ -148,11 +149,7 @@ public class X509CertificateChainGenerator {
             generateSingleCertificate(certificateConfig);
         }
         X509CertificateConfig entityConfig = certificateChainConfig.getEntityCertificateConfig();
-        for (ExtensionConfig extension : entityConfig.getExtensions()) {
-            if (extension.getExtensionId().toString().equals("2.5.29.31")){
-                //((CrlDistributionPointsConfig) extension).getDistributionPointList().get(0).g
-            }
-        }
+
         CrlUtils.GenerateCRLs(entityConfig, this.generatedCertificates);
     }
 

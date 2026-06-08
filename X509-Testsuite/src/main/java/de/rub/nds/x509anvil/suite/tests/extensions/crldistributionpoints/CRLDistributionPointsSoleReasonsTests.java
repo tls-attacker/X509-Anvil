@@ -1,6 +1,7 @@
 package de.rub.nds.x509anvil.suite.tests.extensions.crldistributionpoints;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -22,11 +23,10 @@ public class CRLDistributionPointsSoleReasonsTests extends X509AnvilTest {
      * a DistributionPoint MUST NOT consist of only the reasons field; either distributionPoint or cRLIssuer MUST be present.
      */
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-0123456710")
+    @AnvilTest(id = "extension-crldp-s1-1")
+    @IpmLimitations(identifiers = {"entity:extensions_present"})
     public void basicTest(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
-            CrlDistributionPointsConfig crlDistributionPointsConfig = new CrlDistributionPointsConfig();
-            crlDistributionPointsConfig.setPresent(true);
             List<DistributionPoint> distributionPointList = new ArrayList<>();
             DistributionPoint distributionPoint = new DistributionPoint("test dp");
             distributionPoint.setDistributionPointName(null);
@@ -35,7 +35,6 @@ public class CRLDistributionPointsSoleReasonsTests extends X509AnvilTest {
             reasonFlags.setAffiliationChanged(true);
             distributionPoint.setReasons(reasonFlags);
             distributionPointList.add(distributionPoint);
-            crlDistributionPointsConfig.setDistributionPointList(distributionPointList);
             List<ExtensionConfig> extensionConfigList = config.getExtensions();
             for (ExtensionConfig extensionConfig : extensionConfigList) {
                 if (extensionConfig.getExtensionId().toString().equals("2.5.29.31")) {

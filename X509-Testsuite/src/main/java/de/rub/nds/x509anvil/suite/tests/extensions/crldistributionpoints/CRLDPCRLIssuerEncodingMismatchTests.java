@@ -3,6 +3,7 @@ package de.rub.nds.x509anvil.suite.tests.extensions.crldistributionpoints;
 import de.rub.nds.anvilcore.annotation.AnvilTest;
 import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.asn1.model.Asn1PrintableString;
+import de.rub.nds.protocol.xml.Pair;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -24,12 +25,12 @@ public class CRLDPCRLIssuerEncodingMismatchTests extends X509AnvilTest {
      * The encoding of the name in the cRLIssuer field MUST be exactly the same
      * as the encoding in the issuer field of the CRL.
      */
-    @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-0123456721")
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-crldp-s9-1")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void basicTest(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
-
+            config.getCrlConfigs().get(0).setRootAsIssuer(true);
             GeneralNames crlIssuer = new GeneralNames("general Names");
             List<GeneralName> crlIssuerList = new ArrayList<>();
             GeneralName generalNameForIssuer = new GeneralName("GeneralName");
@@ -43,7 +44,7 @@ public class CRLDPCRLIssuerEncodingMismatchTests extends X509AnvilTest {
             AttributeTypeAndValue commonNameAttribute = new AttributeTypeAndValue("commonName", DirectoryStringChoiceType.PRINTABLE_STRING);
             commonNameAttribute.setAttributeTypeConfig(X500AttributeType.COMMON_NAME);
             Asn1PrintableString cnPrintable = new Asn1PrintableString("cnPrintable");
-            cnPrintable.setValue("TLS Attacker CA - Global Insecurity Provider");
+            cnPrintable.setValue("TLS-Attacker");
             DirectoryString cnDirectoryString = new DirectoryString("cn directory string");
             cnDirectoryString.makeSelection(cnPrintable);
             cnDirectoryString.setPrintableString(cnPrintable);
@@ -56,7 +57,7 @@ public class CRLDPCRLIssuerEncodingMismatchTests extends X509AnvilTest {
             AttributeTypeAndValue orgAttribute = new AttributeTypeAndValue("org", DirectoryStringChoiceType.PRINTABLE_STRING);
             orgAttribute.setAttributeTypeConfig(X500AttributeType.ORGANISATION_NAME);
             Asn1PrintableString orgPrintable = new Asn1PrintableString("orgPrintable");
-            orgPrintable.setValue("TLS-Attacker");
+            orgPrintable.setValue("TLS Attacker CA - Global Insecurity Provider");
             DirectoryString orgDirectoryString = new DirectoryString("org directory string");
             orgDirectoryString.makeSelection(orgPrintable);
             orgDirectoryString.setPrintableString(orgPrintable);

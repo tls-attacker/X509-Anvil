@@ -24,17 +24,16 @@ public class CRLDPCertContainsMoreDN extends X509AnvilTest {
     /*
     * If present, the cRLIssuer MUST only contain the distinguished name (DN) from the issuer field of the CRL to which the DistributionPoint is pointing
     */
-    @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-0123456713")
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "extension-crldp-s8-1")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void basicTest(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
-
+            config.getCrlConfigs().get(0).setRootAsIssuer(true);
             //
             GeneralNames crlIssuer = new GeneralNames("general Names");
             List<GeneralName> crlIssuerList = new ArrayList<>();
             GeneralName generalNameForIssuer = new GeneralName("GeneralName");
-
 
             generalNameForIssuer.setGeneralNameChoiceTypeConfig(GeneralNameChoiceType.DIRECTORY_NAME);
             Name nameModel = new Name("nameModel", NameType.GENERAL_NAME);

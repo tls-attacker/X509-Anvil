@@ -2,6 +2,20 @@
   "name": "RFC5280",
   "profiles": [],
   "testIds": [
-    "extension-0123456712"
+    "common-f4db514b76",
+    "extension-crldp-s1-1",
+    "extension-crldp-s2-1",
+    "extension-crldp-s2-2",
+    "extension-crldp-s3-1",
+    "extension-crldp-s4-1",
+    "extension-crldp-s4-2",
+    "extension-crldp-s5-1",
+    "extension-crldp-s6-1",
+    "extension-crldp-s7-1",
+    "extension-crldp-s7-2",
+    "extension-crldp-s7-3",
+    "extension-crldp-s8-1",
+    "extension-crldp-s9-1",
+    "extension-crldp-revoked"
   ]
 }
