@@ -32,14 +32,17 @@ public class CrlUtils {
 
     public static void GenerateCRLs(X509CertificateConfig entityConfig, List<X509Certificate> certificateChain) {
         String uniqueID = entityConfig.getCrlUniqueID();
+        // Define a directory for the current test case
         String handshakeDirectory = outPath + "certs_for_crls/" + uniqueID;
-
+        // Iterate through all CRLs for this test
         for (int i = 0; i < entityConfig.getCrlConfigs().size(); i++) {
             CrlConfig crlConfig = entityConfig.getCrlConfigs().get(i);
             String uniqueIDToUse = uniqueID + crlConfig.getCrlNameSuffix();
+            // Define a unique name for the current CRL
             String crlDirectory = outPath + "certs_for_crls/" + uniqueIDToUse;
             X509Util.exportCertificates(certificateChain, crlDirectory);
-            if(i==0){
+            // For the first CRL of the test, create the necessary file for the CA config file
+            if (i == 0) {
                 try {
                     Files.write(Path.of(handshakeDirectory + "/crlnumber"), "00".getBytes());
                     Files.write(Path.of(handshakeDirectory + "/index.txt"), "".getBytes());
@@ -55,6 +58,7 @@ public class CrlUtils {
             } else {
                 idpConfig.onlySomeReasons = crlConfig.getOnlySomeReasons();
             }
+            // use the CRL_LOCK to prevent threads from competing
             synchronized (CRL_LOCK) {
                 writeCnf(handshakeDirectory + "/index.txt", handshakeDirectory + "/crlnumber", handshakeDirectory + "/ca.cnf", idpConfig);
 
@@ -96,6 +100,7 @@ public class CrlUtils {
     private static void generateCrl(String outputFile, String cnfPath, String keyPath, String issuerCertPath, boolean pemInsteadOfDer, boolean revoked, String entityCertPath) {
 
         if (revoked) {
+            // revoke the certificate before generating the CRL
             runCommand("openssl", "ca",
                     "-config", cnfPath,
                     "-revoke", entityCertPath,
@@ -103,7 +108,7 @@ public class CrlUtils {
                     "-cert", issuerCertPath,
                     "-batch");
         }
-
+        // Generate the CRL
         runCommand("openssl", "ca",
                 "-config", cnfPath,
                 "-gencrl",
@@ -115,6 +120,7 @@ public class CrlUtils {
 
 
         if (!pemInsteadOfDer) {
+            // Convert from PEM to DER
             runCommand("openssl", "crl",
                     "-in", outputFile,
                     "-inform", "PEM",
@@ -265,9 +271,7 @@ public class CrlUtils {
                     .filter(p -> !p.equals(Paths.get(directory)))
                     .forEach(p -> {
                         try {
-                            if (!p.endsWith("upb.crl")) { //Don't delete upb crls
-                                Files.delete(p);
-                            }
+                            Files.delete(p);
                         } catch (Exception e) {
                             throw new RuntimeException("Failed to delete " + p, e);
                         }

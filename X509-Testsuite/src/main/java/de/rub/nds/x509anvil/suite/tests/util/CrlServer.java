@@ -25,7 +25,7 @@ public class CrlServer {
             throw new RuntimeException(e);
         }
         server.createContext("/", new Handler());
-        server.setExecutor(null); // default executor
+        server.setExecutor(null);
     }
 
     public void start() {
@@ -42,16 +42,15 @@ public class CrlServer {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             System.out.println("[CRL SERVER] Received HTTP request");
-            System.out.println("[CRL SERVER] Handling "+exchange.getRequestURI());
+            System.out.println("[CRL SERVER] Handling " + exchange.getRequestURI());
             if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
                 exchange.sendResponseHeaders(405, -1);
                 exchange.close();
                 return;
             }
 
-
             URI requestURI = exchange.getRequestURI();
-            String path = requestURI.getPath(); // e.g. /crls/default.crl
+            String path = requestURI.getPath();
 
             // Expecting format: /crls/<filename>.crl
             String[] parts = path.split("/");
@@ -68,11 +67,9 @@ public class CrlServer {
                 return;
             }
 
-            // Base directory decided locally (no field). Example: ./crls
             Path baseDir = Paths.get("resources/crls").toAbsolutePath().normalize();
             Path file = baseDir.resolve(filename).normalize();
 
-            // Prevent path traversal
             if (!file.startsWith(baseDir)) {
                 sendText(exchange, "Forbidden", 403);
                 return;
@@ -80,13 +77,15 @@ public class CrlServer {
 
             while (!Files.exists(file) || Files.isDirectory(file)) {
                 try {
+                    // Prevent race condition. If the file is requested before it has been generated,
+                    // we have to wait for 1 second and check again
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
             long size = Files.size(file);
-
+            // Content-Type: application/pkix-crl
             exchange.getResponseHeaders().set("Content-Type", "application/pkix-crl");
             exchange.getResponseHeaders().set("Content-Disposition",
                     "inline; filename=\"" + filename.replace("\"", "") + "\"");
