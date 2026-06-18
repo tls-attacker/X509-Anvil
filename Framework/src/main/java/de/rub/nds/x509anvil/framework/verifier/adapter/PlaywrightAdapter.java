@@ -12,7 +12,7 @@ public class PlaywrightAdapter extends TlsServerAuthVerifierAdapter {
     public PlaywrightAdapter(String browser, String hostname, int port) {
         super(hostname, port);
         try {
-            this.target = new URL("https://localhost:3000/"+browser+"?target="+port);
+            this.target = new URL("http://localhost:3000/"+browser+"?target="+port);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
