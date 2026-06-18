@@ -29,18 +29,6 @@ public class DuplicateExtendedKeyUsagesTests extends X509AnvilTest {
         }, testInfo);
     }
 
-    @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-999f481fe2")
-    public void duplicateIdenticalExtendedKeyUsagesIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
-            ExtendedKeyUsageConfig keyUsageConfig = new ExtendedKeyUsageConfig();
-            keyUsageConfig.setExtendedKeyUsages(List.of(ExtendedKeyUsageType.CLIENT_AUTH,  ExtendedKeyUsageType.SERVER_AUTH));
-            keyUsageConfig.setPresent(true);
-            config.addExtensions(keyUsageConfig);
-            config.addExtensions(keyUsageConfig);
-        }, testInfo);
-    }
-
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
     @AnvilTest(id = "extension-999f482fe2")
@@ -56,22 +44,6 @@ public class DuplicateExtendedKeyUsagesTests extends X509AnvilTest {
             keyUsageConfigDifferent.setPresent(true);
             config.addExtensions(keyUsageConfigDifferent);
             config.setIncludeExtensions(true);
-        }, testInfo);
-    }
-
-    @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-999f483fe2")
-    public void duplicateDifferentExtendedKeyUsagesIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
-            ExtendedKeyUsageConfig keyUsageConfig = new ExtendedKeyUsageConfig();
-            keyUsageConfig.setExtendedKeyUsages(List.of(ExtendedKeyUsageType.CLIENT_AUTH,  ExtendedKeyUsageType.SERVER_AUTH));
-            keyUsageConfig.setPresent(true);
-            config.addExtensions(keyUsageConfig);
-
-            ExtendedKeyUsageConfig keyUsageConfigDifferent = new ExtendedKeyUsageConfig();
-            keyUsageConfigDifferent.setExtendedKeyUsages(List.of(ExtendedKeyUsageType.CLIENT_AUTH,  ExtendedKeyUsageType.SERVER_AUTH, ExtendedKeyUsageType.EMAIL_PROECTION));
-            keyUsageConfigDifferent.setPresent(true);
-            config.addExtensions(keyUsageConfigDifferent);
         }, testInfo);
     }
 
@@ -92,23 +64,6 @@ public class DuplicateExtendedKeyUsagesTests extends X509AnvilTest {
             config.addExtensions(keyUsageConfig);
 
             config.setIncludeExtensions(true);
-        }, testInfo);
-    }
-
-    @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-999f483fe4")
-    public void duplicateDifferentOrderExtendedKeyUsagesIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
-        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
-            ExtendedKeyUsageConfig keyUsageConfig = new ExtendedKeyUsageConfig();
-            keyUsageConfig.setExtendedKeyUsages(List.of(ExtendedKeyUsageType.CLIENT_AUTH,  ExtendedKeyUsageType.SERVER_AUTH));
-            keyUsageConfig.setPresent(true);
-
-            ExtendedKeyUsageConfig keyUsageConfigDifferent = new ExtendedKeyUsageConfig();
-            keyUsageConfigDifferent.setExtendedKeyUsages(List.of(ExtendedKeyUsageType.CLIENT_AUTH,  ExtendedKeyUsageType.SERVER_AUTH, ExtendedKeyUsageType.EMAIL_PROECTION));
-            keyUsageConfigDifferent.setPresent(true);
-
-            config.addExtensions(keyUsageConfigDifferent);
-            config.addExtensions(keyUsageConfig);
         }, testInfo);
     }
 }

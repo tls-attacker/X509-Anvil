@@ -1187,17 +1187,6 @@
         },
         "tags": null
     },
-    "namechaining-a42d0a45c1": {
-        "description": "Two distinguished names DN1 and DN2 match if [...] and the matching RDNs appear in the same order in both DNs",
-        "severityLevels": {
-            "Security": 100
-        },
-        "rfc": {
-            "number": 5280,
-            "section": "7.1. Internationalized Names in Distinguished Names"
-        },
-        "tags": null
-    },
     "namechaining-4075e0cc0f": {
         "description": "Two relative distinguished names RDN1 and RDN2 match if they have the same number of naming attributes",
         "severityLevels": {
@@ -3083,18 +3072,6 @@
     "bsi": null,
     "tags": null
   },
-  "extension-130f887ee2": {
-    "description": "Multiple valid extended key usages are allowed.",
-    "severityLevels": {
-      "Interoperability": 100
-    },
-    "rfc": {
-      "number": 5280,
-      "section": "4.2.1.12.  Extended Key Usage"
-    },
-    "bsi": null,
-    "tags": null
-  },
   "extension-a2c84a2918": {
     "description": "MUST be used for all non self-signed certificates.",
     "severityLevels": {
@@ -3156,18 +3133,6 @@
     "tags": null
   },
   "extension-930f499fe2": {
-    "description": "If a certificate contains both a key usage extension and an extended key usage extension, then both extensions MUST be processed independently and the certificate MUST only be used for a purpose consistent with both extensions.",
-    "severityLevels": {
-      "Security": 100
-    },
-    "rfc": {
-      "number": 5280,
-      "section": "4.2.1.12.  Extended Key Usage"
-    },
-    "bsi": null,
-    "tags": null
-  },
-  "extension-930f987fe2": {
     "description": "If a certificate contains both a key usage extension and an extended key usage extension, then both extensions MUST be processed independently and the certificate MUST only be used for a purpose consistent with both extensions.",
     "severityLevels": {
       "Security": 100
@@ -3282,29 +3247,7 @@
     },
     "tags": null
   },
-  "extension-999f481fe2": {
-    "description": "A certificate MUST NOT include more than one instance of a particular extension",
-    "severityLevels": {
-      "Interoperability": 100
-    },
-    "rfc": {
-      "number": 5280,
-      "section": "4.2 Certificate Extensions"
-    },
-    "tags": null
-  },
   "extension-999f482fe2": {
-    "description": "A certificate MUST NOT include more than one instance of a particular extension",
-    "severityLevels": {
-      "Security": 100
-    },
-    "rfc": {
-      "number": 5280,
-      "section": "4.2 Certificate Extensions"
-    },
-    "tags": null
-  },
-  "extension-999f483fe2": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3635,17 +3578,6 @@
         "tags": null
     },
     "extension-999f482fe3": {
-        "description": "A certificate MUST NOT include more than one instance of a particular extension",
-        "severityLevels": {
-            "Security": 100
-        },
-        "rfc": {
-            "number": 5280,
-            "section": "4.2 Certificate Extensions"
-        },
-        "tags": null
-    },
-    "extension-999f483fe4": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
