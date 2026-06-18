@@ -15,7 +15,7 @@ public class PlaywrightConfig extends TlsAuthVerifierAdapterConfig {
     private String browser;
 
     public PlaywrightConfig(String browser) {
-        super("localhost", new Random().nextInt(10000,65535));
+        super("localhost", 0);
         this.browser = browser;
     }
 
