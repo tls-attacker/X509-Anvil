@@ -25,7 +25,7 @@ public class PlaywrightAdapter extends TlsServerAuthVerifierAdapter {
     @Override
     public void runCommandInBackground() {
         try {
-            target.openConnection();
+            target.openConnection().getInputStream().close();
         } catch (IOException e) {
             //
             e.printStackTrace();
