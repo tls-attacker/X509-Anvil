@@ -13,10 +13,8 @@ import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthP
 import de.rub.nds.x509anvil.framework.x509.key.CachedKeyPairGenerator;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.config.extension.*;
-import de.rub.nds.x509attacker.constants.CertificateChainPositionType;
-import de.rub.nds.x509attacker.constants.DefaultEncodingRule;
-import de.rub.nds.x509attacker.constants.X500AttributeType;
-import de.rub.nds.x509attacker.constants.X509ExtensionType;
+import de.rub.nds.x509attacker.constants.*;
+
 import java.math.BigInteger;
 import java.util.*;
 
@@ -148,6 +146,13 @@ public class X509CertificateConfigUtil {
         subjectKeyIdentifierConfig.setKeyIdentifier(keyIdForEntity(certCounter, uniqueKeyIds));
         config.addExtensions(subjectKeyIdentifierConfig);
         config.addExtensions(authorityKeyIdentifier);
+
+        SubjectAlternativeNameConfig subjectAlternativeNameConfig = new SubjectAlternativeNameConfig();
+        subjectAlternativeNameConfig.setPresent(true);
+        subjectAlternativeNameConfig.setCritical(false);
+        subjectAlternativeNameConfig.setGeneralNameChoiceTypeConfigs(List.of(GeneralNameChoiceType.DNS_NAME));
+        subjectAlternativeNameConfig.setGeneralNameConfigValues(List.of("tls-attacker.com"));
+        config.addExtensions(subjectAlternativeNameConfig);
         return config;
     }
 
