@@ -2951,30 +2951,6 @@
     },
     "tags": null
   },
-  "basic-a5a68afea1": {
-    "description": "Version MUST be present.",
-    "severityLevels": {
-      "Interoperability": 100
-    },
-    "rfc": {
-      "number": 5280,
-      "section": "4.1.  Basic Certificate Fields"
-    },
-    "bsi": null,
-    "tags": null
-  },
-  "basic-a6b1964ba3": {
-    "description": "Version MUST be present.",
-    "severityLevels": {
-      "Interoperability": 100
-    },
-    "rfc": {
-      "number": 5280,
-      "section": "4.1.  Basic Certificate Fields"
-    },
-    "bsi": null,
-    "tags": null
-  },
   "basic-e106a2171a": {
     "description": "MUST be present and non-empty.",
     "severityLevels": {
