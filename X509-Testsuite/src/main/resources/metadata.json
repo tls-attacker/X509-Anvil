@@ -1187,6 +1187,17 @@
         },
         "tags": null
     },
+    "namechaining-a42d0a45c1": {
+        "description": "Two distinguished names DN1 and DN2 match if [...] and the matching RDNs appear in the same order in both DNs",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "7.1. Internationalized Names in Distinguished Names"
+        },
+        "tags": null
+    },
     "namechaining-4075e0cc0f": {
         "description": "Two relative distinguished names RDN1 and RDN2 match if they have the same number of naming attributes",
         "severityLevels": {
@@ -2938,30 +2949,6 @@
       "number": "TR-02103",
       "section": "4 TLS Server Zertifikate, 5 TLS Client Zertifikate"
     },
-    "tags": null
-  },
-  "basic-a5a68afea1": {
-    "description": "Version MUST be present.",
-    "severityLevels": {
-      "Interoperability": 100
-    },
-    "rfc": {
-      "number": 5280,
-      "section": "4.1.  Basic Certificate Fields"
-    },
-    "bsi": null,
-    "tags": null
-  },
-  "basic-a6b1964ba3": {
-    "description": "Version MUST be present.",
-    "severityLevels": {
-      "Interoperability": 100
-    },
-    "rfc": {
-      "number": 5280,
-      "section": "4.1.  Basic Certificate Fields"
-    },
-    "bsi": null,
     "tags": null
   },
   "basic-e106a2171a": {
