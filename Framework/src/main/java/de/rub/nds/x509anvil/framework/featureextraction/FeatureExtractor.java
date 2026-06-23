@@ -8,10 +8,12 @@
  */
 package de.rub.nds.x509anvil.framework.featureextraction;
 
+import de.rub.nds.x509anvil.framework.anvil.parameter.value.NotBeforeValue;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.*;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.CNTypeProbeResult;
+import de.rub.nds.x509anvil.framework.featureextraction.probe.result.NotBeforeProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.SignatureAlgorithmProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.VersionProbeResult;
 import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
@@ -31,10 +33,24 @@ public class FeatureExtractor {
         scanForSignatureHashAndKeyLengthAlgorithms(featureReport, false);
 
         scanForSupportedCNTypes(featureReport);
+        scanForSupportedNotBefore(featureReport);
 
         featureReport.addSupportedExtension(ExtensionType.BASIC_CONSTRAINTS);
         featureReport.addSupportedExtension(ExtensionType.KEY_USAGE);
         return featureReport;
+    }
+
+    private static void scanForSupportedNotBefore(FeatureReport featureReport) throws ProbeException {
+        List<NotBeforeValue> supportedNotBefores = new ArrayList<>();
+        for (NotBeforeValue notBeforeValue : NotBeforeValue.values()) {
+            NotBeforeProbe notBeforeProbe = new NotBeforeProbe(notBeforeValue);
+            NotBeforeProbeResult notBeforeProbeResult = (NotBeforeProbeResult) notBeforeProbe.execute();
+            if (notBeforeProbeResult.isSupported()) {
+                supportedNotBefores.add(notBeforeProbeResult.getNotBeforeValue());
+            }
+            featureReport.addProbeResult(notBeforeProbeResult);
+        }
+        featureReport.setSupportedNotBefores(supportedNotBefores);
     }
 
     private static void scanForSupportedCNTypes(FeatureReport featureReport) throws ProbeException {

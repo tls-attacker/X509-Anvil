@@ -8,6 +8,7 @@
  */
 package de.rub.nds.x509anvil.framework.featureextraction;
 
+import de.rub.nds.x509anvil.framework.anvil.parameter.value.NotBeforeValue;
 import de.rub.nds.x509anvil.framework.constants.*;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
 import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
@@ -27,6 +28,7 @@ public class FeatureReport {
     private boolean digitalSignatureKeyUsageRequired;
 
     private List<DirectoryStringChoiceType> supportedCNTypes = new ArrayList<>();
+    private List<NotBeforeValue> supportedNotBefores = new ArrayList<>();
 
     public List<ProbeResult> getProbeResults() {
         return probeResults;
@@ -122,5 +124,13 @@ public class FeatureReport {
 
     public void setSupportedCNTypes(List<DirectoryStringChoiceType> supportedCNTypes) {
         this.supportedCNTypes = supportedCNTypes;
+    }
+
+    public List<NotBeforeValue> getSupportedNotBefores() {
+        return supportedNotBefores;
+    }
+
+    public void setSupportedNotBefores(List<NotBeforeValue> supportedNotBefores) {
+        this.supportedNotBefores = supportedNotBefores;
     }
 }

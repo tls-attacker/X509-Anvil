@@ -13,4 +13,5 @@ public enum ProbeType {
     SIGNATURE_ALGORITHM,
     EXTENSION,
     CNTYPE,
+    NOTBEFORE,
 }
