@@ -23,29 +23,13 @@ public class FeatureExtractor {
         // Probe supported versions
         scanForSupportedVersions(featureReport);
 
-        // Probe support for basic constraints extension
-        scanForBasicConstraintsExtension(featureReport);
-
-        // Probe support for key usage extension
-        scanForKeyUsageExtension(featureReport);
-
         // Probe support for signature algorithms (entity + intermediate)
         scanForSignatureHashAndKeyLengthAlgorithms(featureReport, true);
-
         scanForSignatureHashAndKeyLengthAlgorithms(featureReport, false);
 
-        return featureReport;
-    }
-
-    private static void scanForKeyUsageExtension(FeatureReport featureReport)
-            throws ProbeException {
-        // No need to check, all certs are generated with this anyway
-        featureReport.addSupportedExtension(ExtensionType.KEY_USAGE);
-    }
-
-    private static void scanForBasicConstraintsExtension(FeatureReport featureReport) {
-        // No need to check, all certs are generated with this anyway
         featureReport.addSupportedExtension(ExtensionType.BASIC_CONSTRAINTS);
+        featureReport.addSupportedExtension(ExtensionType.KEY_USAGE);
+        return featureReport;
     }
 
     private static void scanForSupportedVersions(FeatureReport featureReport)
@@ -69,7 +53,7 @@ public class FeatureExtractor {
 
     private static void scanForSignatureHashAndKeyLengthAlgorithms(
             FeatureReport featureReport, boolean entity)
-            throws ProbeException, UnsupportedFeatureException {
+            throws UnsupportedFeatureException {
         List<SignatureHashAlgorithmKeyLengthPair> signatureHashAlgorithmKeyLengthPairs =
                 new ArrayList<>();
 
