@@ -10,6 +10,8 @@ package de.rub.nds.x509anvil.framework.featureextraction;
 
 import de.rub.nds.x509anvil.framework.constants.*;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
+import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
+
 import java.util.*;
 
 public class FeatureReport {
@@ -23,6 +25,8 @@ public class FeatureReport {
     private List<SignatureHashAlgorithmKeyLengthPair>
             supportedSignatureHashAndKeyLengthPairsIntermediate = new ArrayList<>();
     private boolean digitalSignatureKeyUsageRequired;
+
+    private List<DirectoryStringChoiceType> supportedCNTypes = new ArrayList<>();
 
     public List<ProbeResult> getProbeResults() {
         return probeResults;
@@ -110,5 +114,13 @@ public class FeatureReport {
                 + "\n"
                 + "Supported extensions: "
                 + supportedExtensions;
+    }
+
+    public List<DirectoryStringChoiceType> getSupportedCNTypes() {
+        return supportedCNTypes;
+    }
+
+    public void setSupportedCNTypes(List<DirectoryStringChoiceType> supportedCNTypes) {
+        this.supportedCNTypes = supportedCNTypes;
     }
 }

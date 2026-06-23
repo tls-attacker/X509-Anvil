@@ -11,8 +11,11 @@ package de.rub.nds.x509anvil.framework.featureextraction;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.*;
+import de.rub.nds.x509anvil.framework.featureextraction.probe.result.CNTypeProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.SignatureAlgorithmProbeResult;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.VersionProbeResult;
+import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,9 +30,24 @@ public class FeatureExtractor {
         scanForSignatureHashAndKeyLengthAlgorithms(featureReport, true);
         scanForSignatureHashAndKeyLengthAlgorithms(featureReport, false);
 
+        scanForSupportedCNTypes(featureReport);
+
         featureReport.addSupportedExtension(ExtensionType.BASIC_CONSTRAINTS);
         featureReport.addSupportedExtension(ExtensionType.KEY_USAGE);
         return featureReport;
+    }
+
+    private static void scanForSupportedCNTypes(FeatureReport featureReport) throws ProbeException {
+        List<DirectoryStringChoiceType> supportedCNTypes = new ArrayList<>();
+        for (DirectoryStringChoiceType directoryStringChoiceType : DirectoryStringChoiceType.values()) {
+            CNTypeProbe cnTypeProbe = new CNTypeProbe(directoryStringChoiceType);
+            CNTypeProbeResult cnTypeProbeResult = (CNTypeProbeResult) cnTypeProbe.execute();
+            if (cnTypeProbeResult.isSupported()) {
+                supportedCNTypes.add(cnTypeProbeResult.getDirectoryStringChoiceType());
+            }
+            featureReport.addProbeResult(cnTypeProbeResult);
+        }
+        featureReport.setSupportedCNTypes(supportedCNTypes);
     }
 
     private static void scanForSupportedVersions(FeatureReport featureReport)
@@ -39,7 +57,7 @@ public class FeatureExtractor {
             Probe versionProbe = new VersionProbe(i);
             VersionProbeResult versionProbeResult = (VersionProbeResult) versionProbe.execute();
             if (versionProbeResult.isSupported()) {
-                supportedVersions.add(i);
+                supportedVersions.add(versionProbeResult.getVersion());
             }
             featureReport.addProbeResult(versionProbeResult);
         }
