@@ -4,6 +4,7 @@ import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.extension.ExtensionPresentParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -75,9 +76,17 @@ public class SubjectAlternativeNamePresentParameter extends ExtensionPresentPara
     @Override
     public List<DerivationParameter<X509CertificateChainConfig, Boolean>> getNonNullParameterValues(
             DerivationScope derivationScope) {
+
+        // modifications in root are not allowed
         if (getParameterScope().isRoot()) {
             return Collections.singletonList(generateValue(false));
         }
+
+        // restrict entity cert parameter if necessary
+        if (!ContextHelper.getFeatureReport().isExtensionsAbsentEntitySupported() && getParameterScope().isEntity()) {
+            return Collections.singletonList(generateValue(true));
+        }
+
         return super.getNonNullParameterValues(derivationScope);
     }
 }

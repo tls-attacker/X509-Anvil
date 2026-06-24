@@ -12,6 +12,7 @@ import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -21,7 +22,7 @@ import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Sets the DirectoryStringType of the subject */
+/** Sets the DirectoryStringType of the subject/issuer */
 public class CNTypeParameter extends CertificateSpecificParameter<DirectoryStringChoiceType> {
 
     public CNTypeParameter(ParameterScope parameterScope) {
@@ -47,9 +48,9 @@ public class CNTypeParameter extends CertificateSpecificParameter<DirectoryStrin
     protected List<DerivationParameter<X509CertificateChainConfig, DirectoryStringChoiceType>>
             getNonNullParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter<X509CertificateChainConfig, DirectoryStringChoiceType>> parameters = new ArrayList<>();
-        parameters.add(generateValue(DirectoryStringChoiceType.PRINTABLE_STRING));
-        parameters.add(generateValue(DirectoryStringChoiceType.UTF8_STRING));
-        // BSI compliant by default: printable and utf8
+        for (DirectoryStringChoiceType directoryStringChoiceType : ContextHelper.getFeatureReport().getSupportedCNTypes()) {
+            parameters.add(generateValue(directoryStringChoiceType));
+        }
         return parameters;
     }
 

@@ -13,6 +13,7 @@ import de.rub.nds.anvilcore.model.constraint.ConditionalConstraint;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
@@ -38,11 +39,16 @@ public class ExtensionsPresentParameter extends BooleanCertificateSpecificParame
     @Override
     public List<DerivationParameter<X509CertificateChainConfig, Boolean>> getNonNullParameterValues(
             DerivationScope derivationScope) {
-        // CA certificates must contain BasicConstraints extension
+        // CA certificates must always contain BasicConstraints extension to be valid
         if (!getParameterScope().isEntity()) {
             return Collections.singletonList(generateValue(true));
         }
-        return super.getNonNullParameterValues(derivationScope);
+
+        if (ContextHelper.getFeatureReport().isExtensionsAbsentEntitySupported()) {
+            return super.getNonNullParameterValues(derivationScope);
+        }
+
+        return Collections.singletonList(generateValue(true));
     }
 
     @Override

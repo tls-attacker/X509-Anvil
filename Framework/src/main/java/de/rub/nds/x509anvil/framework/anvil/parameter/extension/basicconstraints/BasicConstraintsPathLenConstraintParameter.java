@@ -17,6 +17,7 @@ import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.annotation.AnnotationUtil;
 import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.CertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.anvil.parameter.ChainLengthParameter;
@@ -72,8 +73,10 @@ public class BasicConstraintsPathLenConstraintParameter
         for (int i = 0; i <= maxChainLength - 2; i++) {
             derivationParameters.add(generateValue(i));
         }
-        // Add an unreasonably high (but still valid) value
-        derivationParameters.add(generateValue(1000));
+        // Add additional, high (but still supported) values
+        for (int supported : ContextHelper.getFeatureReport().getSupportedPathLens()) {
+            derivationParameters.add(generateValue(supported));
+        }
         return derivationParameters;
     }
 

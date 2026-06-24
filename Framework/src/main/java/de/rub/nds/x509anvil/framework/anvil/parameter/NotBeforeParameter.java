@@ -12,6 +12,7 @@ import de.rub.nds.anvilcore.model.DerivationScope;
 import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.value.NotBeforeValue;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -47,7 +48,7 @@ public class NotBeforeParameter extends CertificateSpecificParameter<NotBeforeVa
             getNonNullParameterValues(DerivationScope derivationScope) {
         List<DerivationParameter<X509CertificateChainConfig, NotBeforeValue>> parameterValues =
                 new ArrayList<>();
-        for (NotBeforeValue value : NotBeforeValue.values()) {
+        for (NotBeforeValue value : ContextHelper.getFeatureReport().getSupportedNotBefores()) {
             parameterValues.add(generateValue(value));
         }
         return parameterValues;
@@ -67,8 +68,7 @@ public class NotBeforeParameter extends CertificateSpecificParameter<NotBeforeVa
                 certificateConfig.setNotBefore(
                         new DateTime(1950, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
                 break;
-            // removed due to BSI compliance by default
-            /*case GENERALIZED_TIME:
+            case GENERALIZED_TIME:
                 certificateConfig.setDefaultNotBeforeEncoding(
                         ValidityEncoding.GENERALIZED_TIME_UTC);
                 certificateConfig.setNotBefore(
@@ -79,7 +79,7 @@ public class NotBeforeParameter extends CertificateSpecificParameter<NotBeforeVa
                         ValidityEncoding.GENERALIZED_TIME_UTC);
                 certificateConfig.setNotBefore(
                         new DateTime(1950, 1, 1, 0, 0, DateTimeZone.forID("UTC")));
-                break;*/
+                break;
         }
     }
 }
