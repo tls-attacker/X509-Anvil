@@ -32,12 +32,12 @@ public class FeatureExtractor {
         scanForSignatureHashAndKeyLengthAlgorithms(featureReport, false);
 
         // Scan for other parameters
-        scanForSupportedCNTypes(featureReport);
         scanForSupportedNotBefore(featureReport);
         scanForSupportedBasicConstraintsCa(featureReport);
         scanForSupportedPathLens(featureReport);
         scanForExtensionsAbsentEntity(featureReport);
         scanForSANAbsentEntity(featureReport);
+        scanForSupportedCNTypes(featureReport);
 
         return featureReport;
     }
@@ -92,7 +92,7 @@ public class FeatureExtractor {
     private static void scanForSupportedCNTypes(FeatureReport featureReport) throws ProbeException {
         List<DirectoryStringChoiceType> supportedCNTypes = new ArrayList<>();
         for (DirectoryStringChoiceType directoryStringChoiceType : DirectoryStringChoiceType.values()) {
-            CNTypeProbe cnTypeProbe = new CNTypeProbe(directoryStringChoiceType);
+            CNTypeProbe cnTypeProbe = new CNTypeProbe(directoryStringChoiceType, featureReport.isSanAbsentEntitySupported());
             CNTypeProbeResult cnTypeProbeResult = (CNTypeProbeResult) cnTypeProbe.execute();
             if (cnTypeProbeResult.isSupported()) {
                 supportedCNTypes.add(cnTypeProbeResult.getDirectoryStringChoiceType());
