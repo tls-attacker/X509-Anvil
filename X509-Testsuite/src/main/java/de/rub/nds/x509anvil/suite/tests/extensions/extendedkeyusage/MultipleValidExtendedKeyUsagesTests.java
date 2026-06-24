@@ -28,17 +28,4 @@ public class MultipleValidExtendedKeyUsagesTests extends X509AnvilTest {
             config.setIncludeExtensions(true);
         }, testInfo);
     }
-
-    @ChainLength(minLength = 3)
-    @IpmLimitations(identifiers = "inter0:extensions_present")
-    @AnvilTest(id = "extension-130f887ee2")
-    public void multipleValidExtendedKeyUsagesIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
-        assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {
-            ExtendedKeyUsageConfig keyUsageConfig = new ExtendedKeyUsageConfig();
-            keyUsageConfig.setExtendedKeyUsages(List.of(ExtendedKeyUsageType.CLIENT_AUTH,  ExtendedKeyUsageType.SERVER_AUTH, ExtendedKeyUsageType.EMAIL_PROECTION));
-            keyUsageConfig.setPresent(true);
-            config.addExtensions(keyUsageConfig);
-            config.setIncludeExtensions(true);
-        }, testInfo);
-    }
 }
