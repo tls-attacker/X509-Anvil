@@ -135,6 +135,9 @@ public abstract class TlsAuthVerifierAdapter implements VerifierAdapter {
                 if(this instanceof TlsServerAuthVerifierAdapterDocker) {
                     ((TlsServerAuthVerifierAdapterDocker)this).realPort = ((ServerTcpTransportHandler)state1.getContext().getTransportHandler()).getSrcPort();
                 }
+                if(this instanceof PlaywrightAdapter) {
+                    ((PlaywrightAdapter)this).realPort = ((ServerTcpTransportHandler)state1.getContext().getTransportHandler()).getSrcPort();
+                }
                 t.start();
                 return 0;
             });

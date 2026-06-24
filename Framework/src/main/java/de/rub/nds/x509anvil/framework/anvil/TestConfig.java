@@ -17,10 +17,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import de.rub.nds.anvilcore.context.AnvilTestConfig;
 import de.rub.nds.tlsattacker.core.config.TLSDelegateConfig;
 import de.rub.nds.tlsattacker.core.config.delegate.GeneralDelegate;
-import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfigDocker;
-import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterConfig;
-import de.rub.nds.x509anvil.framework.verifier.VerifierAdapterType;
-import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfig;
+import de.rub.nds.x509anvil.framework.verifier.*;
+import de.rub.nds.x509anvil.framework.verifier.adapter.PlaywrightAdapter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -59,6 +57,13 @@ public class TestConfig extends TLSDelegateConfig {
             description =
                     "Use TLS Docker Library with indicated library (latest) or library:version.")
     private String dockerLibrary = "";
+
+    @JsonProperty("playwright")
+    @Parameter(
+            names = "-playwright",
+            description =
+                    "Use TLS Docker Library with indicated library (latest) or library:version.")
+    private String playwrightLibrary = "";
 
     @JsonProperty("dumpCertificates")
     @Parameter(
@@ -154,6 +159,11 @@ public class TestConfig extends TLSDelegateConfig {
     }
 
     public VerifierAdapterConfig getVerifierAdapterConfig() {
+        if(useDocker() && usePlaywright())
+            throw new IllegalArgumentException();
+        if(usePlaywright())
+            return new PlaywrightConfig(playwrightLibrary);
+
         if (useDocker()) {
             String[] parts = dockerLibrary.split(":");
             return switch (parts.length) {
@@ -205,6 +215,10 @@ public class TestConfig extends TLSDelegateConfig {
 
     public boolean useDocker() {
         return !dockerLibrary.isEmpty();
+    }
+
+    public boolean usePlaywright() {
+        return !playwrightLibrary.isEmpty();
     }
 
     public String getDockerLibrary() {

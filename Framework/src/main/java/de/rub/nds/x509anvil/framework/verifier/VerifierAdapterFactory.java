@@ -8,14 +8,13 @@
  */
 package de.rub.nds.x509anvil.framework.verifier;
 
-import de.rub.nds.x509anvil.framework.verifier.adapter.TlsClientAuthVerifierAdapter;
-import de.rub.nds.x509anvil.framework.verifier.adapter.TlsClientAuthVerifierAdapterDocker;
-import de.rub.nds.x509anvil.framework.verifier.adapter.TlsServerAuthVerifierAdapter;
-import de.rub.nds.x509anvil.framework.verifier.adapter.TlsServerAuthVerifierAdapterDocker;
+import de.rub.nds.x509anvil.framework.verifier.adapter.*;
 
 public class VerifierAdapterFactory {
     public static VerifierAdapter getInstance(
             VerifierAdapterType verifierAdapterType, VerifierAdapterConfig verifierAdapterConfig) {
+        if(verifierAdapterConfig instanceof PlaywrightConfig playwrightConfig)
+            return PlaywrightAdapter.fromConfig(playwrightConfig);
         return switch (verifierAdapterType) {
             case TLS_CLIENT_AUTH -> {
                 if (!(verifierAdapterConfig

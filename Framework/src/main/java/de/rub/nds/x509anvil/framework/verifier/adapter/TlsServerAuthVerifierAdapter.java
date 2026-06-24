@@ -27,7 +27,6 @@ public class TlsServerAuthVerifierAdapter extends TlsAuthVerifierAdapter {
         config.setDefaultServerConnection(new InboundConnection("server", port, hostname));
         config.setClientAuthentication(false);
         config.setDefaultRunningMode(RunningModeType.SERVER);
-        config.setAddExtendedMasterSecretExtension(true);
         config.setDefaultServerSupportedCipherSuites(
                 CipherSuite.getImplemented().stream()
                         .filter(
