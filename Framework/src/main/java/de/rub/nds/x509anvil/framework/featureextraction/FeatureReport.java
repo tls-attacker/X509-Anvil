@@ -31,6 +31,7 @@ public class FeatureReport {
     private boolean basicConstraintsCaEntitySupported;
     private List<Integer> supportedPathLens = new ArrayList<>();
     private boolean extensionsAbsentEntitySupported;
+    private boolean sanAbsentEntitySupported;
 
     public List<ProbeResult> getProbeResults() {
         return probeResults;
@@ -140,5 +141,13 @@ public class FeatureReport {
 
     public void setExtensionsAbsentEntitySupported(boolean extensionsAbsentEntitySupported) {
         this.extensionsAbsentEntitySupported = extensionsAbsentEntitySupported;
+    }
+
+    public boolean isSanAbsentEntitySupported() {
+        return sanAbsentEntitySupported;
+    }
+
+    public void setSanAbsentEntitySupported(boolean sanAbsentEntitySupported) {
+        this.sanAbsentEntitySupported = sanAbsentEntitySupported;
     }
 }

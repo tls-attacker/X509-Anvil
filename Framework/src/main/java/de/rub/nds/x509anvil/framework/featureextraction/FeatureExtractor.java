@@ -9,7 +9,6 @@
 package de.rub.nds.x509anvil.framework.featureextraction;
 
 import de.rub.nds.x509anvil.framework.anvil.parameter.value.NotBeforeValue;
-import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.*;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.*;
@@ -38,8 +37,16 @@ public class FeatureExtractor {
         scanForSupportedBasicConstraintsCa(featureReport);
         scanForSupportedPathLens(featureReport);
         scanForExtensionsAbsentEntity(featureReport);
+        scanForSANAbsentEntity(featureReport);
 
         return featureReport;
+    }
+
+    private static void scanForSANAbsentEntity(FeatureReport featureReport) throws ProbeException {
+        SANAbsentProbe sanAbsentProbe = new SANAbsentProbe();
+        SANAbsentResult sanAbsentResult = (SANAbsentResult) sanAbsentProbe.execute();
+        featureReport.addProbeResult(sanAbsentResult);
+        featureReport.setSanAbsentEntitySupported(sanAbsentResult.isSupported());
     }
 
     private static void scanForExtensionsAbsentEntity(FeatureReport featureReport) throws ProbeException {
