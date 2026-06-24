@@ -13,6 +13,7 @@ import de.rub.nds.anvilcore.model.parameter.DerivationParameter;
 import de.rub.nds.anvilcore.model.parameter.ParameterIdentifier;
 import de.rub.nds.anvilcore.model.parameter.ParameterScope;
 import de.rub.nds.x509anvil.framework.anvil.CommonConstraints;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilParameterType;
 import de.rub.nds.x509anvil.framework.anvil.parameter.BooleanCertificateSpecificParameter;
 import de.rub.nds.x509anvil.framework.x509.config.X509CertificateChainConfig;
@@ -47,7 +48,12 @@ public class BasicConstraintsCaParameter extends BooleanCertificateSpecificParam
         if (!getParameterScope().isEntity()) {
             return Collections.singletonList(generateValue(true));
         }
-        return super.getNonNullParameterValues(derivationScope);
+
+        if (ContextHelper.getFeatureReport().isBasicConstraintsCaEntitySupported()) {
+            return super.getNonNullParameterValues(derivationScope);
+        }
+
+        return Collections.singletonList(generateValue(false));
     }
 
     @Override

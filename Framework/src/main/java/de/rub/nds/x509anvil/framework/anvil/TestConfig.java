@@ -91,6 +91,12 @@ public class TestConfig extends TLSDelegateConfig {
             description = "The default number of intermediate certificated modeled. Ignored for test cases with annotated chain length.")
     private int defaultIntermediateCertsModeled = 2;
 
+    @JsonProperty("noKeyCaching")
+    @Parameter(
+            names = "-noKeyCaching",
+            description = "Disables key caching, needed for libraries that cache certificates based on the contained public key. Will decrease performance.")
+    private boolean noKeyCaching;
+
     public TestConfig() {
         super(new GeneralDelegate());
     }
@@ -225,5 +231,9 @@ public class TestConfig extends TLSDelegateConfig {
 
     public void setDumpCertificates(Boolean dumpCertificates) {
         this.dumpCertificates = dumpCertificates;
+    }
+
+    public boolean isNoKeyCaching() {
+        return noKeyCaching;
     }
 }

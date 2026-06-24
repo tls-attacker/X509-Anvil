@@ -8,14 +8,16 @@
  */
 package de.rub.nds.x509anvil.framework.featureextraction;
 
+import de.rub.nds.x509anvil.framework.anvil.parameter.value.NotBeforeValue;
 import de.rub.nds.x509anvil.framework.constants.*;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.result.ProbeResult;
+import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
+
 import java.util.*;
 
 public class FeatureReport {
     private final List<ProbeResult> probeResults = new ArrayList<>();
     private List<Integer> supportedVersions = new ArrayList<>();
-    private List<ExtensionType> supportedExtensions = new ArrayList<>();
 
     private List<SignatureHashAlgorithmKeyLengthPair>
             supportedSignatureHashAndKeyLengthPairsEntity = new ArrayList<>();
@@ -23,6 +25,13 @@ public class FeatureReport {
     private List<SignatureHashAlgorithmKeyLengthPair>
             supportedSignatureHashAndKeyLengthPairsIntermediate = new ArrayList<>();
     private boolean digitalSignatureKeyUsageRequired;
+
+    private List<DirectoryStringChoiceType> supportedCNTypes = new ArrayList<>();
+    private List<NotBeforeValue> supportedNotBefores = new ArrayList<>();
+    private boolean basicConstraintsCaEntitySupported;
+    private List<Integer> supportedPathLens = new ArrayList<>();
+    private boolean extensionsAbsentEntitySupported;
+    private boolean sanAbsentEntitySupported;
 
     public List<ProbeResult> getProbeResults() {
         return probeResults;
@@ -50,22 +59,6 @@ public class FeatureReport {
 
     public boolean version3Supported() {
         return supportedVersions.contains(2);
-    }
-
-    public List<ExtensionType> getSupportedExtensions() {
-        return supportedExtensions;
-    }
-
-    public void setSupportedExtensions(List<ExtensionType> supportedExtensions) {
-        this.supportedExtensions = supportedExtensions;
-    }
-
-    public void addSupportedExtension(ExtensionType extensionType) {
-        supportedExtensions.add(extensionType);
-    }
-
-    public boolean extensionSupported(ExtensionType extensionType) {
-        return supportedExtensions.contains(extensionType);
     }
 
     public boolean isDigitalSignatureKeyUsageRequired() {
@@ -107,8 +100,54 @@ public class FeatureReport {
                 + "\n"
                 + "Supported Signature and HashAlgorithm and Key Length triples: "
                 + supportedSignatureHashAndKeyLengthPairsIntermediate
-                + "\n"
-                + "Supported extensions: "
-                + supportedExtensions;
+                + "\n";
+    }
+
+    public List<DirectoryStringChoiceType> getSupportedCNTypes() {
+        return supportedCNTypes;
+    }
+
+    public void setSupportedCNTypes(List<DirectoryStringChoiceType> supportedCNTypes) {
+        this.supportedCNTypes = supportedCNTypes;
+    }
+
+    public List<NotBeforeValue> getSupportedNotBefores() {
+        return supportedNotBefores;
+    }
+
+    public void setSupportedNotBefores(List<NotBeforeValue> supportedNotBefores) {
+        this.supportedNotBefores = supportedNotBefores;
+    }
+
+    public boolean isBasicConstraintsCaEntitySupported() {
+        return basicConstraintsCaEntitySupported;
+    }
+
+    public void setBasicConstraintsCaEntitySupported(boolean basicConstraintsCaEntitySupported) {
+        this.basicConstraintsCaEntitySupported = basicConstraintsCaEntitySupported;
+    }
+
+    public List<Integer> getSupportedPathLens() {
+        return supportedPathLens;
+    }
+
+    public void setSupportedPathLens(List<Integer> supportedPathLens) {
+        this.supportedPathLens = supportedPathLens;
+    }
+
+    public boolean isExtensionsAbsentEntitySupported() {
+        return extensionsAbsentEntitySupported;
+    }
+
+    public void setExtensionsAbsentEntitySupported(boolean extensionsAbsentEntitySupported) {
+        this.extensionsAbsentEntitySupported = extensionsAbsentEntitySupported;
+    }
+
+    public boolean isSanAbsentEntitySupported() {
+        return sanAbsentEntitySupported;
+    }
+
+    public void setSanAbsentEntitySupported(boolean sanAbsentEntitySupported) {
+        this.sanAbsentEntitySupported = sanAbsentEntitySupported;
     }
 }

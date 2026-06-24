@@ -49,8 +49,6 @@ public class SignatureHashAndKeyLengthProbe extends SimpleProbe {
             interConfig.setSignatureAlgorithm(
                     signatureHashAlgorithmKeyLengthPair.getSignatureAndHashAlgorithm());
         }
-        // set signature hash and key length
-        // TODO: for RSA_PSS we always use the same hash algorithm
         return x509CertificateChainConfig;
     }
 
