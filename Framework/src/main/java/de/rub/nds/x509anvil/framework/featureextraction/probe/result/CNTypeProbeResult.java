@@ -8,7 +8,7 @@ public class CNTypeProbeResult extends FeatureSupportedProbeResult{
     private final DirectoryStringChoiceType directoryStringChoiceType;
 
     public CNTypeProbeResult(DirectoryStringChoiceType directoryStringChoiceType, boolean supported) {
-        super(ProbeType.CNTYPE, supported);
+        super(ProbeType.CN_TYPE, supported);
 
         this.directoryStringChoiceType = directoryStringChoiceType;
     }

@@ -12,10 +12,7 @@ import de.rub.nds.x509anvil.framework.anvil.parameter.value.NotBeforeValue;
 import de.rub.nds.x509anvil.framework.constants.ExtensionType;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509anvil.framework.featureextraction.probe.*;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.result.CNTypeProbeResult;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.result.NotBeforeProbeResult;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.result.SignatureAlgorithmProbeResult;
-import de.rub.nds.x509anvil.framework.featureextraction.probe.result.VersionProbeResult;
+import de.rub.nds.x509anvil.framework.featureextraction.probe.result.*;
 import de.rub.nds.x509attacker.constants.DirectoryStringChoiceType;
 
 import java.util.ArrayList;
@@ -34,10 +31,18 @@ public class FeatureExtractor {
 
         scanForSupportedCNTypes(featureReport);
         scanForSupportedNotBefore(featureReport);
+        scanForBasicConstraintsCa(featureReport);
 
         featureReport.addSupportedExtension(ExtensionType.BASIC_CONSTRAINTS);
         featureReport.addSupportedExtension(ExtensionType.KEY_USAGE);
         return featureReport;
+    }
+
+    private static void scanForBasicConstraintsCa(FeatureReport featureReport) throws ProbeException {
+        BasicConstraintsCaProbe basicConstraintsCaProbe = new BasicConstraintsCaProbe();
+        BasicConstraintsCaResult basicConstraintsCaResult = (BasicConstraintsCaResult) basicConstraintsCaProbe.execute();
+        featureReport.addProbeResult(basicConstraintsCaResult);
+        featureReport.setBasicConstraintsCaEntitySupported(basicConstraintsCaResult.isSupported());
     }
 
     private static void scanForSupportedNotBefore(FeatureReport featureReport) throws ProbeException {

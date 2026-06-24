@@ -29,6 +29,7 @@ public class FeatureReport {
 
     private List<DirectoryStringChoiceType> supportedCNTypes = new ArrayList<>();
     private List<NotBeforeValue> supportedNotBefores = new ArrayList<>();
+    private boolean basicConstraintsCaEntitySupported;
 
     public List<ProbeResult> getProbeResults() {
         return probeResults;
@@ -132,5 +133,13 @@ public class FeatureReport {
 
     public void setSupportedNotBefores(List<NotBeforeValue> supportedNotBefores) {
         this.supportedNotBefores = supportedNotBefores;
+    }
+
+    public boolean isBasicConstraintsCaEntitySupported() {
+        return basicConstraintsCaEntitySupported;
+    }
+
+    public void setBasicConstraintsCaEntitySupported(boolean basicConstraintsCaEntitySupported) {
+        this.basicConstraintsCaEntitySupported = basicConstraintsCaEntitySupported;
     }
 }

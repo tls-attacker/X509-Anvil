@@ -8,7 +8,7 @@ public class NotBeforeProbeResult extends FeatureSupportedProbeResult{
     private final NotBeforeValue notBeforeValue;
 
     public NotBeforeProbeResult(NotBeforeValue notBeforeValue, boolean supported) {
-        super(ProbeType.NOTBEFORE, supported);
+        super(ProbeType.NOT_BEFORE, supported);
 
         this.notBeforeValue = notBeforeValue;
     }

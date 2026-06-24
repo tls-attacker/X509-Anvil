@@ -12,6 +12,7 @@ public enum ProbeType {
     VERSION,
     SIGNATURE_ALGORITHM,
     EXTENSION,
-    CNTYPE,
-    NOTBEFORE,
+    CN_TYPE,
+    NOT_BEFORE,
+    BASIC_CONSTRAINTS_CA,
 }
