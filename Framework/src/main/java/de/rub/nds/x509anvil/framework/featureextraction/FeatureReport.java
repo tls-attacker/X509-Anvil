@@ -18,7 +18,6 @@ import java.util.*;
 public class FeatureReport {
     private final List<ProbeResult> probeResults = new ArrayList<>();
     private List<Integer> supportedVersions = new ArrayList<>();
-    private List<ExtensionType> supportedExtensions = new ArrayList<>();
 
     private List<SignatureHashAlgorithmKeyLengthPair>
             supportedSignatureHashAndKeyLengthPairsEntity = new ArrayList<>();
@@ -31,6 +30,7 @@ public class FeatureReport {
     private List<NotBeforeValue> supportedNotBefores = new ArrayList<>();
     private boolean basicConstraintsCaEntitySupported;
     private List<Integer> supportedPathLens = new ArrayList<>();
+    private boolean extensionsAbsentEntitySupported;
 
     public List<ProbeResult> getProbeResults() {
         return probeResults;
@@ -58,22 +58,6 @@ public class FeatureReport {
 
     public boolean version3Supported() {
         return supportedVersions.contains(2);
-    }
-
-    public List<ExtensionType> getSupportedExtensions() {
-        return supportedExtensions;
-    }
-
-    public void setSupportedExtensions(List<ExtensionType> supportedExtensions) {
-        this.supportedExtensions = supportedExtensions;
-    }
-
-    public void addSupportedExtension(ExtensionType extensionType) {
-        supportedExtensions.add(extensionType);
-    }
-
-    public boolean extensionSupported(ExtensionType extensionType) {
-        return supportedExtensions.contains(extensionType);
     }
 
     public boolean isDigitalSignatureKeyUsageRequired() {
@@ -115,9 +99,7 @@ public class FeatureReport {
                 + "\n"
                 + "Supported Signature and HashAlgorithm and Key Length triples: "
                 + supportedSignatureHashAndKeyLengthPairsIntermediate
-                + "\n"
-                + "Supported extensions: "
-                + supportedExtensions;
+                + "\n";
     }
 
     public List<DirectoryStringChoiceType> getSupportedCNTypes() {
@@ -150,5 +132,13 @@ public class FeatureReport {
 
     public void setSupportedPathLens(List<Integer> supportedPathLens) {
         this.supportedPathLens = supportedPathLens;
+    }
+
+    public boolean isExtensionsAbsentEntitySupported() {
+        return extensionsAbsentEntitySupported;
+    }
+
+    public void setExtensionsAbsentEntitySupported(boolean extensionsAbsentEntitySupported) {
+        this.extensionsAbsentEntitySupported = extensionsAbsentEntitySupported;
     }
 }

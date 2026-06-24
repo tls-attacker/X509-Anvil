@@ -32,14 +32,21 @@ public class FeatureExtractor {
         scanForSignatureHashAndKeyLengthAlgorithms(featureReport, true);
         scanForSignatureHashAndKeyLengthAlgorithms(featureReport, false);
 
+        // Scan for other parameters
         scanForSupportedCNTypes(featureReport);
         scanForSupportedNotBefore(featureReport);
         scanForSupportedBasicConstraintsCa(featureReport);
         scanForSupportedPathLens(featureReport);
+        scanForExtensionsAbsentEntity(featureReport);
 
-        featureReport.addSupportedExtension(ExtensionType.BASIC_CONSTRAINTS);
-        featureReport.addSupportedExtension(ExtensionType.KEY_USAGE);
         return featureReport;
+    }
+
+    private static void scanForExtensionsAbsentEntity(FeatureReport featureReport) throws ProbeException {
+        ExtensionsPresentProbe extensionsPresentProbe = new ExtensionsPresentProbe();
+        ExtensionsPresentResult extensionsPresentResult = (ExtensionsPresentResult) extensionsPresentProbe.execute();
+        featureReport.addProbeResult(extensionsPresentResult);
+        featureReport.setExtensionsAbsentEntitySupported(extensionsPresentResult.isSupported());
     }
 
     private static void scanForSupportedPathLens(FeatureReport featureReport) throws ProbeException {
