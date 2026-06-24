@@ -30,6 +30,7 @@ public class FeatureReport {
     private List<DirectoryStringChoiceType> supportedCNTypes = new ArrayList<>();
     private List<NotBeforeValue> supportedNotBefores = new ArrayList<>();
     private boolean basicConstraintsCaEntitySupported;
+    private List<Integer> supportedPathLens = new ArrayList<>();
 
     public List<ProbeResult> getProbeResults() {
         return probeResults;
@@ -141,5 +142,13 @@ public class FeatureReport {
 
     public void setBasicConstraintsCaEntitySupported(boolean basicConstraintsCaEntitySupported) {
         this.basicConstraintsCaEntitySupported = basicConstraintsCaEntitySupported;
+    }
+
+    public List<Integer> getSupportedPathLens() {
+        return supportedPathLens;
+    }
+
+    public void setSupportedPathLens(List<Integer> supportedPathLens) {
+        this.supportedPathLens = supportedPathLens;
     }
 }

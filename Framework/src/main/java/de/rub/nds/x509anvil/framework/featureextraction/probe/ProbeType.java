@@ -15,4 +15,5 @@ public enum ProbeType {
     CN_TYPE,
     NOT_BEFORE,
     BASIC_CONSTRAINTS_CA,
+    BASIC_CONSTRAINTS_PATH_LEN,
 }

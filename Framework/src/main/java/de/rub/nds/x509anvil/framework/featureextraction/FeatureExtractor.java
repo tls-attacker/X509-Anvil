@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FeatureExtractor {
+
+    private static final List<Integer> toBeTestedSpecialPathLens = List.of(1000);
+
     public static FeatureReport scanFeatures() throws ProbeException, UnsupportedFeatureException {
         FeatureReport featureReport = new FeatureReport();
 
@@ -31,14 +34,28 @@ public class FeatureExtractor {
 
         scanForSupportedCNTypes(featureReport);
         scanForSupportedNotBefore(featureReport);
-        scanForBasicConstraintsCa(featureReport);
+        scanForSupportedBasicConstraintsCa(featureReport);
+        scanForSupportedPathLens(featureReport);
 
         featureReport.addSupportedExtension(ExtensionType.BASIC_CONSTRAINTS);
         featureReport.addSupportedExtension(ExtensionType.KEY_USAGE);
         return featureReport;
     }
 
-    private static void scanForBasicConstraintsCa(FeatureReport featureReport) throws ProbeException {
+    private static void scanForSupportedPathLens(FeatureReport featureReport) throws ProbeException {
+        List<Integer> supportedPathLens = new ArrayList<>();
+        for (int toBeTested : toBeTestedSpecialPathLens) {
+            BasicConstraintsPathLenProbe basicConstraintsPathLenProbe = new BasicConstraintsPathLenProbe(toBeTested);
+            BasicConstraintsPathLenResult basicConstraintsPathLenResult = (BasicConstraintsPathLenResult) basicConstraintsPathLenProbe.execute();
+            if (basicConstraintsPathLenResult.isSupported()) {
+                supportedPathLens.add(basicConstraintsPathLenResult.getPathLen());
+            }
+            featureReport.addProbeResult(basicConstraintsPathLenResult);
+        }
+        featureReport.setSupportedPathLens(supportedPathLens);
+    }
+
+    private static void scanForSupportedBasicConstraintsCa(FeatureReport featureReport) throws ProbeException {
         BasicConstraintsCaProbe basicConstraintsCaProbe = new BasicConstraintsCaProbe();
         BasicConstraintsCaResult basicConstraintsCaResult = (BasicConstraintsCaResult) basicConstraintsCaProbe.execute();
         featureReport.addProbeResult(basicConstraintsCaResult);
