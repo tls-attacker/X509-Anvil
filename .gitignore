@@ -1,5 +1,6 @@
 resources/*.pem
 resources/out/
+resources/out/*.pem
 X509-Testsuite/resources/*.pem
 test.sh
 .vscode/
