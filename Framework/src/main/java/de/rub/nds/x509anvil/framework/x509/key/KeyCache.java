@@ -11,6 +11,7 @@ package de.rub.nds.x509anvil.framework.x509.key;
 import static de.rub.nds.x509attacker.constants.X509NamedCurve.*;
 
 import de.rub.nds.protocol.crypto.key.*;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.X509NamedCurve;
@@ -27,12 +28,14 @@ public class KeyCache {
     private final Map<Integer, EcdsaPublicKey> ecdsaPublicKeyCache;
 
     private final Random random;
+    private boolean disableFullKeyCaching;
 
     KeyCache(Random random) {
         rsaKeyPairCache = new ConcurrentHashMap<>();
         dsaPublicKeyCache = new ConcurrentHashMap<>();
         ecdsaPublicKeyCache = new ConcurrentHashMap<>();
         this.random = random;
+        this.disableFullKeyCaching = ContextHelper.getTestConfig().isNoKeyCaching();
     }
 
     /**
@@ -40,7 +43,7 @@ public class KeyCache {
      * updates the given config with the produced key values.
      */
     public void generateNewKeys(
-            SignatureHashAlgorithmKeyLengthPair algorithmLengthPair, X509CertificateConfig config) {
+            SignatureHashAlgorithmKeyLengthPair algorithmLengthPair, X509CertificateConfig config, String cacheIdentifier) {
 
         switch (algorithmLengthPair.getSignatureAlgorithm()) {
             case RSA_PKCS1:
@@ -55,7 +58,9 @@ public class KeyCache {
                                         config.getDefaultSubjectRsaPublicExponent(),
                                         algorithmLengthPair.getKeyLength(),
                                         random);
-                        rsaKeyPairCache.put(algorithmLengthPair.getKeyLength(), keyPair);
+                        if (!disableFullKeyCaching || cacheIdentifier.equals("root")) {
+                            rsaKeyPairCache.put(algorithmLengthPair.getKeyLength(), keyPair);
+                        }
                     }
                 }
                 config.setDefaultSubjectRsaModulus(keyPair.getLeft().getModulus());
@@ -74,7 +79,9 @@ public class KeyCache {
                                         algorithmLengthPair.getKeyLength(),
                                         160,
                                         random);
-                        dsaPublicKeyCache.put(algorithmLengthPair.getKeyLength(), dsaPublicKey);
+                        if (!disableFullKeyCaching || cacheIdentifier.equals("root")) {
+                            dsaPublicKeyCache.put(algorithmLengthPair.getKeyLength(), dsaPublicKey);
+                        }
                     }
                 }
                 config.setDefaultSubjectDsaPrimeP(dsaPublicKey.getModulus());
@@ -96,7 +103,10 @@ public class KeyCache {
                                 KeyGenerator.generateEcdsaPublicKey(
                                         config.getDefaultSubjectEcPrivateKey(),
                                         config.getDefaultSubjectNamedCurve().getParameters());
-                        ecdsaPublicKeyCache.put(algorithmLengthPair.getKeyLength(), ecdsaPublicKey);
+
+                        if (!disableFullKeyCaching || cacheIdentifier.equals("root")) {
+                            ecdsaPublicKeyCache.put(algorithmLengthPair.getKeyLength(), ecdsaPublicKey);
+                        }
                     }
                 }
                 config.setDefaultSubjectEcPublicKey(ecdsaPublicKey.getPublicPoint());
@@ -107,18 +117,13 @@ public class KeyCache {
 
     private static X509NamedCurve curveFromAlgorithmLengthPair(
             SignatureHashAlgorithmKeyLengthPair pair) {
-        switch (pair.getKeyLength()) {
+        return switch (pair.getKeyLength()) {
             // TODO: replace with constant
-            case 192:
-                return SECP160R1;
-            case 224:
-                return SECP224R1;
-            case 256:
-                return SECP256R1;
-            case 384:
-                return SECP384R1;
-            default:
-                throw new UnsupportedOperationException("Algorithm " + pair + " has no curve!");
-        }
+            case 192 -> SECP160R1;
+            case 224 -> SECP224R1;
+            case 256 -> SECP256R1;
+            case 384 -> SECP384R1;
+            default -> throw new UnsupportedOperationException("Algorithm " + pair + " has no curve!");
+        };
     }
 }
