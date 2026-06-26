@@ -97,6 +97,12 @@ public class TestConfig extends TLSDelegateConfig {
             description = "Disables key caching, needed for libraries that cache certificates based on the contained public key. Will decrease performance.")
     private boolean noKeyCaching;
 
+    @JsonProperty("postCertificateDelay")
+    @Parameter(
+            names = "-postCertificateDelay",
+            description = "Delays further handshake messages after the Certificate message to allow the SUT to process. Useful for testing systems with asynchronous certificate validation.")
+    private int postCertificateDelay;
+
     public TestConfig() {
         super(new GeneralDelegate());
     }
@@ -235,5 +241,9 @@ public class TestConfig extends TLSDelegateConfig {
 
     public boolean isNoKeyCaching() {
         return noKeyCaching;
+    }
+
+    public int getPostCertificateDelay() {
+        return postCertificateDelay;
     }
 }

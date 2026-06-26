@@ -16,6 +16,8 @@ import de.rub.nds.tlsattacker.core.protocol.message.*;
 import de.rub.nds.tlsattacker.core.workflow.WorkflowTrace;
 import de.rub.nds.tlsattacker.core.workflow.action.ReceiveAction;
 import de.rub.nds.tlsattacker.core.workflow.action.SendAction;
+import de.rub.nds.tlsattacker.core.workflow.action.WaitAction;
+import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.verifier.TlsAuthVerifierAdapterConfig;
 
 public class TlsClientAuthVerifierAdapter extends TlsAuthVerifierAdapter {
@@ -53,7 +55,9 @@ public class TlsClientAuthVerifierAdapter extends TlsAuthVerifierAdapter {
                         new ServerHelloDoneMessage()));
         workflowTrace.addTlsAction(
                 new SendAction(
-                        new CertificateMessage(),
+                        new CertificateMessage()));
+        workflowTrace.addTlsAction(new WaitAction(ContextHelper.getTestConfig().getPostCertificateDelay()));
+        workflowTrace.addTlsAction(new SendAction(
                         new ECDHClientKeyExchangeMessage(),
                         new CertificateVerifyMessage(),
                         new ChangeCipherSpecMessage(),
