@@ -100,8 +100,8 @@ public class TestConfig extends TLSDelegateConfig {
     @JsonProperty("postCertificateDelay")
     @Parameter(
             names = "-postCertificateDelay",
-            description = "Delays further handshake messages after the Certificate message to allow the SUT to process. Useful for testing systems with asynchronous certificate validation.")
-    private int postCertificateDelay;
+            description = "Delays further handshake messages after the Certificate message to allow the SUT to process. Useful for testing systems with asynchronous certificate validation. In (ms).")
+    private int postCertificateDelay = 0;
 
     public TestConfig() {
         super(new GeneralDelegate());
