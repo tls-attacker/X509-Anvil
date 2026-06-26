@@ -62,7 +62,7 @@ public class TestConfig extends TLSDelegateConfig {
     @Parameter(
             names = "-playwright",
             description =
-                    "Use TLS Docker Library with indicated library (latest) or library:version.")
+                    "Use Playwright container to invoke browser testing it's server authentication. Supports [Chromium, Firefox, Webkit].")
     private String playwrightLibrary = "";
 
     @JsonProperty("dumpCertificates")
