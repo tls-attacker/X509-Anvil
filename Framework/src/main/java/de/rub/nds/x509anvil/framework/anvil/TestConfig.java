@@ -62,7 +62,7 @@ public class TestConfig extends TLSDelegateConfig {
     @Parameter(
             names = "-playwright",
             description =
-                    "Use TLS Docker Library with indicated library (latest) or library:version.")
+                    "Use Playwright container to invoke browser testing it's server authentication. Supports [Chromium, Firefox, Webkit].")
     private String playwrightLibrary = "";
 
     @JsonProperty("dumpCertificates")
@@ -96,6 +96,12 @@ public class TestConfig extends TLSDelegateConfig {
             names = "-noKeyCaching",
             description = "Disables key caching, needed for libraries that cache certificates based on the contained public key. Will decrease performance.")
     private boolean noKeyCaching;
+
+    @JsonProperty("postCertificateDelay")
+    @Parameter(
+            names = "-postCertificateDelay",
+            description = "Delays further handshake messages after the Certificate message to allow the SUT to process. Useful for testing systems with asynchronous certificate validation. In (ms).")
+    private int postCertificateDelay = 0;
 
     public TestConfig() {
         super(new GeneralDelegate());
@@ -235,5 +241,9 @@ public class TestConfig extends TLSDelegateConfig {
 
     public boolean isNoKeyCaching() {
         return noKeyCaching;
+    }
+
+    public int getPostCertificateDelay() {
+        return postCertificateDelay;
     }
 }
