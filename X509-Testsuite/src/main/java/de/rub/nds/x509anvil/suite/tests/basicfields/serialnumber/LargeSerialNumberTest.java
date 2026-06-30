@@ -19,12 +19,14 @@ import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateCon
 import de.rub.nds.x509anvil.suite.tests.util.TestUtils;
 import org.junit.jupiter.api.TestInfo;
 
+import java.math.BigInteger;
+
 public class LargeSerialNumberTest extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:serial_number")
     @AnvilTest(id = "basic-63b58d6a92")
-    public void largeSerialNumberEntity(X509VerifierRunner testRunner, TestInfo testInfo)
+    public void tooLargeSerialNumberEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
@@ -36,12 +38,36 @@ public class LargeSerialNumberTest extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:serial_number")
     @AnvilTest(id = "basic-c482ae3643")
-    public void largeSerialNumberIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
+    public void tooLargeSerialNumberIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
                 testRunner,
                 false,
                 (X509CertificateConfigModifier)
                         config -> config.setSerialNumber(TestUtils.createBigInteger(256)), testInfo);
+    }
+
+    @ChainLength(minLength = 2)
+    @IpmLimitations(identifiers = "entity:serial_number")
+    @AnvilTest(id = "basic-63b58d6a92")
+    public void largeSerialNumberEntity(X509VerifierRunner testRunner, TestInfo testInfo)
+            throws VerifierException, CertificateGeneratorException {
+        assertValid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier)
+                        config -> config.setSerialNumber(new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16)), testInfo);
+    }
+
+    @ChainLength(minLength = 3)
+    @IpmLimitations(identifiers = "inter0:serial_number")
+    @AnvilTest(id = "basic-c482ae3643")
+    public void largeSerialNumberIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
+            throws VerifierException, CertificateGeneratorException {
+        assertValid(
+                testRunner,
+                false,
+                (X509CertificateConfigModifier)
+                        config -> config.setSerialNumber(new BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16)), testInfo);
     }
 }

@@ -743,7 +743,7 @@
         },
         "rfc": {
             "number": 5280,
-            "section": "4.1.2.1. Version"
+            "section": "4.1.2.2. Version"
         },
         "tags": null
     },
@@ -754,7 +754,7 @@
         },
         "rfc": {
             "number": 5280,
-            "section": "4.1.2.1. Version"
+            "section": "4.1.2.2. Version"
         },
         "tags": null
     },
@@ -1397,7 +1397,7 @@
         "tags": null
     },
     "extension-d8772be424": {
-        "description": "A certificate-using system MUST reject the certificate if it encounters a 100 extension it does not recognize",
+        "description": "A certificate-using system MUST reject the certificate if it encounters a critical extension it does not recognize",
         "severityLevels": {
             "Security": 100
         },
@@ -1408,7 +1408,7 @@
         "tags": null
     },
     "extension-14d5fe1bed": {
-        "description": "A certificate-using system MUST reject the certificate if it encounters a 100 extension it does not recognize",
+        "description": "A certificate-using system MUST reject the certificate if it encounters a critical extension it does not recognize",
         "severityLevels": {
             "Security": 100
         },
@@ -1576,7 +1576,7 @@
         "tags": null
     },
     "extension-efb61a5418": {
-        "description": "Conforming CAs MUST mark this extension as non-100.",
+        "description": "Conforming CAs MUST mark this extension as non-critical.",
         "severityLevels": {
             "Interoperability": 100
         },
@@ -1587,7 +1587,7 @@
         "tags": null
     },
     "extension-320a8c3fd3": {
-        "description": "Conforming CAs MUST mark this extension as non-100.",
+        "description": "Conforming CAs MUST mark this extension as non-critical.",
         "severityLevels": {
             "Interoperability": 100
         },
