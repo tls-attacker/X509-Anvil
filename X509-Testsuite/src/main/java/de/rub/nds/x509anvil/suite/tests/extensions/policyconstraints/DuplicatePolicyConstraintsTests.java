@@ -16,7 +16,7 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
     @AnvilTest(id = "extension-policyconstraints-520bf6e001")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void duplicateIdenticalPolicyConstraintsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
-        assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
             policyConstraintsConfig.setPresent(true);
             policyConstraintsConfig.setCritical(true);
@@ -32,7 +32,7 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-policyconstraints-521bf6e001")
     public void duplicateIdenticalPolicyConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
-        assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
             policyConstraintsConfig.setPresent(true);
             policyConstraintsConfig.setCritical(true);
@@ -48,7 +48,7 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
     @AnvilTest(id = "extension-policyconstraints-522bf6e001")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void duplicateDifferentPolicyConstraintsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
-        assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
             policyConstraintsConfig.setPresent(true);
             policyConstraintsConfig.setCritical(true);
@@ -71,7 +71,7 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-policyconstraints-523bf6e001")
     public void duplicateDifferentPolicyConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
-        assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
             policyConstraintsConfig.setPresent(true);
             policyConstraintsConfig.setCritical(true);
@@ -94,7 +94,7 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
     @AnvilTest(id = "extension-policyconstraints-522bf6e002")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void duplicateDifferentOrderPolicyConstraintsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
-        assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
+        assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
             policyConstraintsConfig.setPresent(true);
             policyConstraintsConfig.setCritical(true);
@@ -119,7 +119,7 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @AnvilTest(id = "extension-policyconstraints-523bf6e003")
     public void duplicateDifferentOrderPolicyConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
-        assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {
+        assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
             policyConstraintsConfig.setPresent(true);
             policyConstraintsConfig.setCritical(true);
