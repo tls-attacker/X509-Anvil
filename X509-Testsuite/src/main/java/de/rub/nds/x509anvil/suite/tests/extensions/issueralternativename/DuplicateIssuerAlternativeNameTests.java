@@ -17,7 +17,7 @@ import java.util.List;
 
 public class DuplicateIssuerAlternativeNameTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-91b57700be" )
+    @AnvilTest(id  = "extension-ian-91b57700be" )
     @IpmLimitations(identifiers = { "entity:extensions_present", "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values", "entity:ext_subject_alt_name_present", "entity:ext_subject_alt_name_values" })
     public void duplicateIdenticalIssuerAlternativeNameEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -40,7 +40,7 @@ public class DuplicateIssuerAlternativeNameTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-91b57710be")
+    @AnvilTest(id = "extension-ian-91b57710be")
     @IpmLimitations(identifiers = { "inter1:ext_subject_alt_name_present", "inter1:ext_subject_alt_name_values", "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values" })
     public void duplicateIdenticalIssuerAlternativeNameIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -63,7 +63,7 @@ public class DuplicateIssuerAlternativeNameTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-91b57720be" )
+    @AnvilTest(id  = "extension-ian-91b57720be" )
     @IpmLimitations(identifiers = { "entity:extensions_present", "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values", "entity:ext_subject_alt_name_present", "entity:ext_subject_alt_name_values" })
     public void duplicateDifferentIssuerAlternativeNameEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -92,7 +92,7 @@ public class DuplicateIssuerAlternativeNameTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-91b57730be")
+    @AnvilTest(id = "extension-ian-91b57730be")
     @IpmLimitations(identifiers = { "inter1:ext_subject_alt_name_present", "inter1:ext_subject_alt_name_values", "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values" })
     public void duplicateDifferentIssuerAlternativeNameIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -121,7 +121,7 @@ public class DuplicateIssuerAlternativeNameTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-91b57720bf" )
+    @AnvilTest(id  = "extension-ian-91b57720bf" )
     @IpmLimitations(identifiers = { "entity:extensions_present", "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values", "entity:ext_subject_alt_name_present", "entity:ext_subject_alt_name_values" })
     public void duplicateDifferentOrderIssuerAlternativeNameEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -152,7 +152,7 @@ public class DuplicateIssuerAlternativeNameTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-91b57730ff")
+    @AnvilTest(id = "extension-ian-91b57730ff")
     @IpmLimitations(identifiers = { "inter1:ext_subject_alt_name_present", "inter1:ext_subject_alt_name_values", "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values" })
     public void duplicateDifferentOrderIssuerAlternativeNameIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

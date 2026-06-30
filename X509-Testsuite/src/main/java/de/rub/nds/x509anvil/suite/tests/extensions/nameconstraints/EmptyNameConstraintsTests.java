@@ -12,7 +12,7 @@ import org.junit.jupiter.api.TestInfo;
 
 public class EmptyNameConstraintsTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-a6c2a465a3")
+    @AnvilTest(id = "extension-nc-a6c2a465a3")
     public void emptyNameConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             NameConstraintsConfig nameConstraintsConfig = new NameConstraintsConfig();

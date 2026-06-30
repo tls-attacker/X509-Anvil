@@ -13,7 +13,7 @@ import java.util.List;
 
 public class EmptySubjectTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "basic-e106a2171a")
+    @AnvilTest(id = "basic-subject-e106a2171a")
     public void emptySubjectIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

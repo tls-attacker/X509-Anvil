@@ -18,7 +18,7 @@ import java.util.List;
 
 public class CriticalSubjectDirectoryAttributesTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-ce3148df7c")
+    @AnvilTest(id = "extension-subjectdir-ce3148df7c")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void criticalSubjectDirectoryAttributesEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -36,7 +36,7 @@ public class CriticalSubjectDirectoryAttributesTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-bfad73e06a")
+    @AnvilTest(id = "extension-subjectdir-bfad73e06a")
     public void criticalSubjectDirectoryAttributesIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectDirectoryAttributesConfig subjectDirectoryAttributesConfig = new SubjectDirectoryAttributesConfig();

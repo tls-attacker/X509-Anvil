@@ -28,7 +28,7 @@ public class PathlenWithoutCaSetTests extends X509AnvilTest {
     @IpmLimitations(
             identifiers =
                     "inter0:ext_basic_constraints_pathlen_constraint, inter0:ext_basic_constraints_pathlen_constraint_present, inter0:ext_basic_constraints_ca")
-    @AnvilTest(id = "extension-ef15984307")
+    @AnvilTest(id = "extension-bc-ef15984307")
     public void pathlenWithoutCaSetEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

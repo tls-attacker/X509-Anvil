@@ -20,7 +20,7 @@ import org.junit.jupiter.api.TestInfo;
 public class TbsSignatureNotPresentTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "basic-4d1fd77ec3")
+    @AnvilTest(id = "basic-tbssignature-4d1fd77ec3")
     public void noSignatureEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -30,7 +30,7 @@ public class TbsSignatureNotPresentTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "basic-ab702acb6f")
+    @AnvilTest(id = "basic-tbssignature-ab702acb6f")
     public void noSignatureIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

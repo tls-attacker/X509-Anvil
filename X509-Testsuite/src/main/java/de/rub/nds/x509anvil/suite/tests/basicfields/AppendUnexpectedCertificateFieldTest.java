@@ -20,7 +20,7 @@ import org.junit.jupiter.api.TestInfo;
 public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "basic-e0bcce347c")
+    @AnvilTest(id = "basic-unexpectedfield-e0bcce347c")
     public void appendUnexpectedFieldEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -31,7 +31,7 @@ public class AppendUnexpectedCertificateFieldTest extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "basic-6d1ba61fab")
+    @AnvilTest(id = "basic-unexpectedfield-6d1ba61fab")
     public void appendUnexpectedFieldIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

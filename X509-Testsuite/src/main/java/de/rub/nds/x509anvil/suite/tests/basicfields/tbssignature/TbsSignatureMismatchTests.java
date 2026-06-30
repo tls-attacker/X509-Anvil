@@ -24,7 +24,7 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:key_type")
-    @AnvilTest(id = "basic-3e2fbb009f")
+    @AnvilTest(id = "basic-tbssignature-3e2fbb009f")
     public void tbsSignatureDoesntMatchAlgorithmEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -43,7 +43,7 @@ public class TbsSignatureMismatchTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:key_type")
-    @AnvilTest(id = "basic-eec58410b3")
+    @AnvilTest(id = "basic-tbssignature-eec58410b3")
     public void tbsSignatureDoesntMatchAlgorithmIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

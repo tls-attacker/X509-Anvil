@@ -17,7 +17,7 @@ import java.util.List;
 public class DuplicateExtendedKeyUsagesTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-999f480fe2")
+    @AnvilTest(id = "extension-eku-999f480fe2")
     public void duplicateIdenticalExtendedKeyUsagesEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             ExtendedKeyUsageConfig keyUsageConfig = new ExtendedKeyUsageConfig();
@@ -31,7 +31,7 @@ public class DuplicateExtendedKeyUsagesTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-999f482fe2")
+    @AnvilTest(id = "extension-eku-999f482fe2")
     public void duplicateDifferentExtendedKeyUsagesEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             ExtendedKeyUsageConfig keyUsageConfig = new ExtendedKeyUsageConfig();
@@ -49,7 +49,7 @@ public class DuplicateExtendedKeyUsagesTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-999f482fe3")
+    @AnvilTest(id = "extension-eku-999f482fe3")
     public void duplicateDifferentOrderExtendedKeyUsagesEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             ExtendedKeyUsageConfig keyUsageConfig = new ExtendedKeyUsageConfig();

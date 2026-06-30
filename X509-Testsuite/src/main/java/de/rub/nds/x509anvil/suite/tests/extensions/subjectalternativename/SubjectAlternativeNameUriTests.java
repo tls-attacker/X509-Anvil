@@ -17,7 +17,7 @@ import java.util.List;
 public class SubjectAlternativeNameUriTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id  = "extension-c7bcd39697" )
+    @AnvilTest(id  = "extension-san-c7bcd39697" )
     @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_subject_alt_name_present", "entity:ext_subject_alt_name_values" })
     public void subjectAltNameUriEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -32,7 +32,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-485a129c88" )
+    @AnvilTest(id  = "extension-san-485a129c88" )
     @IpmLimitations(identifiers = { "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values" })
     public void subjectAltNameUriIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -46,7 +46,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id  = "extension-4a67c83ba5" )
+    @AnvilTest(id  = "extension-san-4a67c83ba5" )
     @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_subject_alt_name_present", "entity:ext_subject_alt_name_values" })
     public void subjectAltNameUriRelativeEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -61,7 +61,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-b2a952d256" )
+    @AnvilTest(id  = "extension-san-b2a952d256" )
     @IpmLimitations(identifiers = { "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values" })
     public void subjectAltNameUriRelativeIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -75,7 +75,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id  = "extension-755f6f9a73" )
+    @AnvilTest(id  = "extension-san-755f6f9a73" )
     @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_subject_alt_name_present", "entity:ext_subject_alt_name_values" })
     public void subjectAltNameInvalidUriEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -90,7 +90,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-90276bbd2e" )
+    @AnvilTest(id  = "extension-san-90276bbd2e" )
     @IpmLimitations(identifiers = { "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values" })
     public void subjectAltNameInvalidUriIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -104,7 +104,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id  = "extension-1de992c455" )
+    @AnvilTest(id  = "extension-san-1de992c455" )
     @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_subject_alt_name_present", "entity:ext_subject_alt_name_values" })
     public void subjectAltNameNoSchemeUriEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -119,7 +119,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-5e7399fe45" )
+    @AnvilTest(id  = "extension-san-5e7399fe45" )
     @IpmLimitations(identifiers = { "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values" })
     public void subjectAltNameNoSchemeUriIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -133,7 +133,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id  = "extension-6abf32243f" )
+    @AnvilTest(id  = "extension-san-6abf32243f" )
     @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_subject_alt_name_present", "entity:ext_subject_alt_name_values" })
     public void subjectAltNameNoPathUriEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -148,7 +148,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-c6ff9d3f5f" )
+    @AnvilTest(id  = "extension-san-c6ff9d3f5f" )
     @IpmLimitations(identifiers = { "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values" })
     public void subjectAltNameNoPathUriIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
@@ -162,7 +162,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id  = "extension-0710a73747" )
+    @AnvilTest(id  = "extension-san-0710a73747" )
     @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_subject_alt_name_present", "entity:ext_subject_alt_name_values" })
     public void subjectAltNameAuthorityUriEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -177,7 +177,7 @@ public class SubjectAlternativeNameUriTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-2be00fdc1f" )
+    @AnvilTest(id  = "extension-san-2be00fdc1f" )
     @IpmLimitations(identifiers = { "inter0:ext_subject_alt_name_present", "inter0:ext_subject_alt_name_values" })
     public void subjectAltNameAuthorityUriIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {

@@ -20,7 +20,7 @@ import org.junit.jupiter.api.TestInfo;
 public class ValidityNotPresentTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "basic-a4593c9ff9")
+    @AnvilTest(id = "basic-validity-a4593c9ff9")
     public void noValidityEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -30,7 +30,7 @@ public class ValidityNotPresentTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "basic-02f469f8a4")
+    @AnvilTest(id = "basic-validity-02f469f8a4")
     public void noValidityIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

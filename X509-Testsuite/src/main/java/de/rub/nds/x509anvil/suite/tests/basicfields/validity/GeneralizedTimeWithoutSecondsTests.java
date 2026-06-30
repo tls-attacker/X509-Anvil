@@ -25,7 +25,7 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:not_before")
-    @AnvilTest(id = "basic-b09833f225")
+    @AnvilTest(id = "basic-validity-b09833f225")
     public void notBeforeEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -42,7 +42,7 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_before")
-    @AnvilTest(id = "basic-b1e7273312")
+    @AnvilTest(id = "basic-validity-b1e7273312")
     public void notBeforeIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -59,7 +59,7 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:not_after")
-    @AnvilTest(id = "basic-0a0797aef4")
+    @AnvilTest(id = "basic-validity-0a0797aef4")
     public void notAfterEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -76,7 +76,7 @@ public class GeneralizedTimeWithoutSecondsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_after")
-    @AnvilTest(id = "basic-beb1b04e7a")
+    @AnvilTest(id = "basic-validity-beb1b04e7a")
     public void notAfterIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

@@ -20,7 +20,7 @@ import org.junit.jupiter.api.TestInfo;
 public class SerialNumberNotPresentTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "basic-c946fef182")
+    @AnvilTest(id = "basic-serialnumber-c946fef182")
     public void noSerialNumberEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -30,7 +30,7 @@ public class SerialNumberNotPresentTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "basic-99ffba7896")
+    @AnvilTest(id = "basic-serialnumber-99ffba7896")
     public void noSerialNumberIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.TestInfo;
 
 public class DuplicateInhibitAnyPolicyTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-799e5cd501")
+    @AnvilTest(id = "extension-inhibitany-799e5cd501")
     public void duplicateIdenticalInhibitAnyPolicyIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             InhibitAnyPolicyConfig inhibitAnyPolicyConfig = new InhibitAnyPolicyConfig();
@@ -25,7 +25,7 @@ public class DuplicateInhibitAnyPolicyTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-799e5cd511")
+    @AnvilTest(id = "extension-inhibitany-799e5cd511")
     public void duplicateDifferentInhibitAnyPolicyIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             InhibitAnyPolicyConfig inhibitAnyPolicyConfig = new InhibitAnyPolicyConfig();
@@ -43,7 +43,7 @@ public class DuplicateInhibitAnyPolicyTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-799e5cd512")
+    @AnvilTest(id = "extension-inhibitany-799e5cd512")
     public void duplicateDifferentOrderInhibitAnyPolicyIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             InhibitAnyPolicyConfig inhibitAnyPolicyConfig = new InhibitAnyPolicyConfig();

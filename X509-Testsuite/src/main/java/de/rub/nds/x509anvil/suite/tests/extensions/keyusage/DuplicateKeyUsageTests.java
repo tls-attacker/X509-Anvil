@@ -28,7 +28,7 @@ import java.util.List;
 public class DuplicateKeyUsageTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-3e4c7f3e62")
+    @AnvilTest(id = "extension-ku-3e4c7f3e62")
     @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
     public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
@@ -46,7 +46,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-44d01aed5a")
+    @AnvilTest(id = "extension-ku-44d01aed5a")
     @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
     public void duplicateDifferentIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
@@ -67,7 +67,7 @@ public class DuplicateKeyUsageTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-44d01aed5b")
+    @AnvilTest(id = "extension-ku-44d01aed5b")
     @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
     public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {

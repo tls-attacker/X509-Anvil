@@ -25,7 +25,7 @@ public class MissingKeyIdTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-190349e95d")
+    @AnvilTest(id = "extension-akid-190349e95d")
     public void missingKeyIdentifierEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -42,7 +42,7 @@ public class MissingKeyIdTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-9e241be2f9")
+    @AnvilTest(id = "extension-akid-9e241be2f9")
     public void missingKeyIdentifierIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

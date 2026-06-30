@@ -20,7 +20,7 @@ import org.junit.jupiter.api.TestInfo;
 public class UnknownOidTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "basic-fb1e899219")
+    @AnvilTest(id = "basic-signaturealgorithm-fb1e899219")
     public void unknownOidTbsAndCertEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -31,7 +31,7 @@ public class UnknownOidTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "basic-3bd920316f")
+    @AnvilTest(id = "basic-signaturealgorithm-3bd920316f")
     public void unknownOidTbsAndCertIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

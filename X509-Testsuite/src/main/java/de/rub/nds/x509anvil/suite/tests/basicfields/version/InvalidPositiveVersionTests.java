@@ -23,7 +23,7 @@ import java.math.BigInteger;
 public class InvalidPositiveVersionTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "basic-c1e564eea6")
+    @AnvilTest(id = "basic-version-c1e564eea6")
     @IpmLimitations(identifiers = "entity:version")
     public void invalidVersion4Entity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
@@ -34,7 +34,7 @@ public class InvalidPositiveVersionTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "basic-1203edde46")
+    @AnvilTest(id = "basic-version-1203edde46")
     @IpmLimitations(identifiers = "inter0:version")
     public void invalidVersion4Intermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {

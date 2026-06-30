@@ -16,7 +16,7 @@ import org.junit.jupiter.api.TestInfo;
 public class AuthorityKeyIdNotPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-a2c84a2918")
+    @AnvilTest(id = "extension-akid-a2c84a2918")
     public void authKeyIdNotPresentEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -32,7 +32,7 @@ public class AuthorityKeyIdNotPresentTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-198c1c9f93")
+    @AnvilTest(id = "extension-akid-198c1c9f93")
     public void authKeyIdNotPresentIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

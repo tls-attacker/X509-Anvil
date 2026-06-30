@@ -14,7 +14,7 @@ import org.junit.jupiter.api.TestInfo;
 
 public class SubjectKeyIdNotPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-128a9aac93")
+    @AnvilTest(id = "extension-skid-128a9aac93")
     public void subjectKeyIdNotPresentIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

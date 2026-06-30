@@ -25,7 +25,7 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-a71fd6a6dc")
+    @AnvilTest(id = "extension-skid-a71fd6a6dc")
     public void keyIdMismatchEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -44,7 +44,7 @@ public class AuthKeyIdSubjectKeyIdMismatchTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-0ff7547245")
+    @AnvilTest(id = "extension-skid-0ff7547245")
     public void keyIdMismatchIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

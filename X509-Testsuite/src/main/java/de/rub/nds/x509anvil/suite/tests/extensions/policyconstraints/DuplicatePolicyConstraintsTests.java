@@ -13,7 +13,7 @@ import org.junit.jupiter.api.TestInfo;
 
 public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-520bf6e001")
+    @AnvilTest(id = "extension-policyconstraints-520bf6e001")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void duplicateIdenticalPolicyConstraintsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -30,7 +30,7 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-521bf6e001")
+    @AnvilTest(id = "extension-policyconstraints-521bf6e001")
     public void duplicateIdenticalPolicyConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
@@ -45,7 +45,7 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-522bf6e001")
+    @AnvilTest(id = "extension-policyconstraints-522bf6e001")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void duplicateDifferentPolicyConstraintsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -69,7 +69,7 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-523bf6e001")
+    @AnvilTest(id = "extension-policyconstraints-523bf6e001")
     public void duplicateDifferentPolicyConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
@@ -91,7 +91,7 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-522bf6e002")
+    @AnvilTest(id = "extension-policyconstraints-522bf6e002")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void duplicateDifferentOrderPolicyConstraintsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -117,7 +117,7 @@ public class DuplicatePolicyConstraintsTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-523bf6e003")
+    @AnvilTest(id = "extension-policyconstraints-523bf6e003")
     public void duplicateDifferentOrderPolicyConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();

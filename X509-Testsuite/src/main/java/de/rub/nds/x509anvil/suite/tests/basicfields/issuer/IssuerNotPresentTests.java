@@ -20,7 +20,7 @@ import org.junit.jupiter.api.TestInfo;
 public class IssuerNotPresentTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "basic-3d37c180b5")
+    @AnvilTest(id = "basic-issuer-3d37c180b5")
     public void noIssuerEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -30,7 +30,7 @@ public class IssuerNotPresentTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "basic-3502b37055")
+    @AnvilTest(id = "basic-issuer-3502b37055")
     public void noIssuerIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

@@ -16,7 +16,7 @@ import java.util.LinkedList;
 public class SubjectAlternativeNameSubjectTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id  = "extension-9af0478bd0" )
+    @AnvilTest(id  = "extension-san-9af0478bd0" )
     public void subjectAltNameMailInSubjectEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
@@ -27,7 +27,7 @@ public class SubjectAlternativeNameSubjectTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-aad8a2245b" )
+    @AnvilTest(id  = "extension-san-aad8a2245b" )
     public void subjectAltNameMailInSubjectIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
@@ -38,7 +38,7 @@ public class SubjectAlternativeNameSubjectTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id  = "extension-402322d3de" )
+    @AnvilTest(id  = "extension-san-402322d3de" )
     public void subjectAltNameDomainNameInSubjectEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
@@ -49,7 +49,7 @@ public class SubjectAlternativeNameSubjectTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-2dcf039fe2" )
+    @AnvilTest(id  = "extension-san-2dcf039fe2" )
     public void subjectAltNameDomainNameInSubjectIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
@@ -60,7 +60,7 @@ public class SubjectAlternativeNameSubjectTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id  = "extension-4d10f6a130" )
+    @AnvilTest(id  = "extension-san-4d10f6a130" )
     public void subjectAltNameIpInSubjectEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();
@@ -71,7 +71,7 @@ public class SubjectAlternativeNameSubjectTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-bbd5958633" )
+    @AnvilTest(id  = "extension-san-bbd5958633" )
     public void subjectAltNameIpInSubjectIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             LinkedList<Pair<X500AttributeType, String>> subject = new LinkedList<>();

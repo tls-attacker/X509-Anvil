@@ -15,7 +15,7 @@ import org.junit.jupiter.api.TestInfo;
 
 public class InvalidKeyUsagesTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-9e051adef5")
+    @AnvilTest(id = "extension-ku-9e051adef5")
     @IpmLimitations(identifiers = "inter0:ext_key_usage_additional")
     public void intermediateCertWithCertSignNotSet(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
@@ -33,7 +33,7 @@ public class InvalidKeyUsagesTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-1e2a19cef5")
+    @AnvilTest(id = "extension-ku-1e2a19cef5")
     @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_key_usage_additional" })
     public void entityInvalidUse(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {

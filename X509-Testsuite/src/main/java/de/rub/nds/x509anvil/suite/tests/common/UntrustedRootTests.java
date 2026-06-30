@@ -25,7 +25,7 @@ import java.util.List;
 public class UntrustedRootTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "common-f15e7199ea")
+    @AnvilTest(id = "common-untrusted-f15e7199ea")
     @StaticRoot(false)
     public void untrustedRootCertificate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {

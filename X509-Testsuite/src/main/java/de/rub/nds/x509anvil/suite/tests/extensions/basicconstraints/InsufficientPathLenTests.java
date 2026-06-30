@@ -28,7 +28,7 @@ public class InsufficientPathLenTests extends X509AnvilTest {
     @IpmLimitations(
             identifiers =
                     "inter0:ext_basic_constraints_pathlen_constraint, inter0:ext_basic_constraints_pathlen_constraint_present")
-    @AnvilTest(id = "extension-b88af2b7d6")
+    @AnvilTest(id = "extension-bc-b88af2b7d6")
     public void insufficientPathLenChainLength4(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertBooleanFirstIntermediate(

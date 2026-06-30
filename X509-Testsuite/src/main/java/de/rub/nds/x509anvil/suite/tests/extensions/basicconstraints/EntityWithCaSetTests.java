@@ -17,7 +17,7 @@ import org.junit.jupiter.api.TestInfo;
 public class EntityWithCaSetTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:ext_basic_constraints_ca")
-    @AnvilTest(id = "extension-da2157ba0f")
+    @AnvilTest(id = "extension-bc-da2157ba0f")
     public void entityCertWithCaSet(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

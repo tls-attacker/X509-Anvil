@@ -1,5 +1,5 @@
 {
-    "basic-e0bcce347c": {
+    "basic-unexpectedfield-e0bcce347c": {
         "description": "Adds an unexpected field to the certificate. This does not conform with the specification and needs to fail.",
         "severityLevels": {
             "Security": 100
@@ -10,7 +10,7 @@
         },
         "tags": null
     },
-    "basic-6d1ba61fab": {
+    "basic-unexpectedfield-6d1ba61fab": {
         "description": "Adds an unexpected field to the certificate. This does not conform with the specification and needs to fail.",
         "severityLevels": {
             "Security": 100
@@ -21,7 +21,7 @@
         },
         "tags": null
     },
-    "basic-21d376ecbb": {
+    "basic-issuer-21d376ecbb": {
         "description": "The issuer field MUST contain a non-empty distinguished name (DN).",
         "severityLevels": {
             "Security": 100
@@ -32,7 +32,7 @@
         },
         "tags": null
     },
-    "basic-3d37c180b5": {
+    "basic-issuer-3d37c180b5": {
         "description": "The issuer field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -43,7 +43,7 @@
         },
         "tags": null
     },
-    "basic-3502b37055": {
+    "basic-issuer-3502b37055": {
         "description": "The issuer field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -54,7 +54,7 @@
         },
         "tags": null
     },
-    "basic-b56d876a16": {
+    "basic-version-b56d876a16": {
         "description": "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }",
         "severityLevels": {
             "Interoperability": 100
@@ -65,7 +65,7 @@
         },
         "tags": null
     },
-    "basic-bdf4da10f4": {
+    "basic-version-bdf4da10f4": {
         "description": "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }",
         "severityLevels": {
             "Interoperability": 100
@@ -76,7 +76,7 @@
         },
         "tags": null
     },
-    "basic-c1e564eea6": {
+    "basic-version-c1e564eea6": {
         "description": "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }",
         "severityLevels": {
             "Interoperability": 100
@@ -87,7 +87,7 @@
         },
         "tags": null
     },
-    "basic-1203edde46": {
+    "basic-version-1203edde46": {
         "description": "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }",
         "severityLevels": {
             "Interoperability": 100
@@ -98,7 +98,7 @@
         },
         "tags": null
     },
-    "basic-d196ac0293": {
+    "basic-version-d196ac0293": {
         "description": "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }",
         "severityLevels": {
             "Interoperability": 100
@@ -109,7 +109,7 @@
         },
         "tags": null
     },
-    "basic-04db02edb2": {
+    "basic-version-04db02edb2": {
         "description": "Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }",
         "severityLevels": {
             "Interoperability": 100
@@ -120,7 +120,7 @@
         },
         "tags": null
     },
-    "basic-4cfe12547b": {
+    "basic-uniqueids-4cfe12547b": {
         "description": "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).",
         "severityLevels": {
             "Interoperability": 100
@@ -131,7 +131,7 @@
         },
         "tags": null
     },
-    "basic-adc3be6001": {
+    "basic-uniqueids-adc3be6001": {
         "description": "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).",
         "severityLevels": {
             "Interoperability": 100
@@ -142,7 +142,7 @@
         },
         "tags": null
     },
-    "basic-9966458966": {
+    "basic-uniqueids-9966458966": {
         "description": "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).",
         "severityLevels": {
             "Interoperability": 100
@@ -153,7 +153,7 @@
         },
         "tags": null
     },
-    "basic-8ab9f03d9c": {
+    "basic-uniqueids-8ab9f03d9c": {
         "description": "These fields MUST only appear if the version is 2 or 3 (Section 4.1.2.1).",
         "severityLevels": {
             "Interoperability": 100
@@ -164,7 +164,7 @@
         },
         "tags": null
     },
-    "basic-51110d0302": {
+    "basic-signaturealgorithm-51110d0302": {
         "description": "This field MUST contain the same algorithm identifier as the signature field in the sequence tbsCertificate (Section 4.1.2.3).",
         "severityLevels": {
             "Security": 100
@@ -175,7 +175,7 @@
         },
         "tags": null
     },
-    "basic-77e4d2a826": {
+    "basic-signaturealgorithm-77e4d2a826": {
         "description": "This field MUST contain the same algorithm identifier as the signature field in the sequence tbsCertificate (Section 4.1.2.3).",
         "severityLevels": {
             "Security": 100
@@ -186,7 +186,7 @@
         },
         "tags": null
     },
-    "basic-d4c4dd28f7": {
+    "basic-signaturealgorithm-d4c4dd28f7": {
         "description": "The signatureAlgorithm field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -197,7 +197,7 @@
         },
         "tags": null
     },
-    "basic-a5f35deb02": {
+    "basic-signaturealgorithm-a5f35deb02": {
         "description": "The signatureAlgorithm field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -208,7 +208,7 @@
         },
         "tags": null
     },
-    "basic-fb1e899219": {
+    "basic-signaturealgorithm-fb1e899219": {
         "description": "Tests whether and unknown OID is accepted as signatureAlgorithm. This needs to fail.",
         "severityLevels": {
             "Security": 100
@@ -219,7 +219,7 @@
         },
         "tags": null
     },
-    "basic-3bd920316f": {
+    "basic-signaturealgorithm-3bd920316f": {
         "description": "Tests whether and unknown OID is accepted as signatureAlgorithm. This needs to fail.",
         "severityLevels": {
             "Security": 100
@@ -230,7 +230,7 @@
         },
         "tags": null
     },
-    "basic-45174189ef": {
+    "basic-subjectpki-45174189ef": {
         "description": "The subjectPublicKeyInfo field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -241,7 +241,7 @@
         },
         "tags": null
     },
-    "basic-d3f8dfc444": {
+    "basic-subjectpki-d3f8dfc444": {
         "description": "The subjectPublicKeyInfo field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -252,7 +252,7 @@
         },
         "tags": null
     },
-    "basic-24f7012913": {
+    "basic-subject-24f7012913": {
         "description": "The subject field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -263,7 +263,7 @@
         },
         "tags": null
     },
-    "basic-e026d7520e": {
+    "basic-subject-e026d7520e": {
         "description": "The subject field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -274,7 +274,7 @@
         },
         "tags": null
     },
-    "basic-fc7bf2a460": {
+    "basic-validity-fc7bf2a460": {
         "description": "The notAfter field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -285,7 +285,7 @@
         },
         "tags": null
     },
-    "basic-3c7f842115": {
+    "basic-validity-3c7f842115": {
         "description": "The notAfter field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -296,7 +296,7 @@
         },
         "tags": null
     },
-    "basic-21f3acf036": {
+    "basic-validity-21f3acf036": {
         "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
         "severityLevels": {
             "Interoperability": 100
@@ -307,7 +307,7 @@
         },
         "tags": null
     },
-    "basic-4b8345d5e1": {
+    "basic-validity-4b8345d5e1": {
         "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
         "severityLevels": {
             "Interoperability": 100
@@ -318,7 +318,7 @@
         },
         "tags": null
     },
-    "basic-b2548936e9": {
+    "basic-validity-b2548936e9": {
         "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
         "severityLevels": {
             "Interoperability": 100
@@ -329,7 +329,7 @@
         },
         "tags": null
     },
-    "basic-797cfb720a": {
+    "basic-validity-797cfb720a": {
         "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
         "severityLevels": {
             "Interoperability": 100
@@ -340,7 +340,7 @@
         },
         "tags": null
     },
-    "basic-a4593c9ff9": {
+    "basic-validity-a4593c9ff9": {
         "description": "The validity field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -351,7 +351,7 @@
         },
         "tags": null
     },
-    "basic-02f469f8a4": {
+    "basic-validity-02f469f8a4": {
         "description": "The validity field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -362,7 +362,7 @@
         },
         "tags": null
     },
-    "basic-0b35348dd5": {
+    "basic-validity-0b35348dd5": {
         "description": "The certificate validity period includes the current time.",
         "severityLevels": {
             "Security": 100
@@ -373,7 +373,7 @@
         },
         "tags": null
     },
-    "basic-d0325d7e05": {
+    "basic-validity-d0325d7e05": {
         "description": "The certificate validity period includes the current time.",
         "severityLevels": {
             "Security": 100
@@ -384,7 +384,7 @@
         },
         "tags": null
     },
-    "basic-48f16a250d": {
+    "basic-validity-48f16a250d": {
         "description": "The certificate validity period includes the current time.",
         "severityLevels": {
             "Security": 100
@@ -395,7 +395,7 @@
         },
         "tags": null
     },
-    "basic-5341312baf": {
+    "basic-validity-5341312baf": {
         "description": "The certificate validity period includes the current time.",
         "severityLevels": {
             "Security": 100
@@ -406,7 +406,7 @@
         },
         "tags": null
     },
-    "basic-7d768e9cc6": {
+    "basic-validity-7d768e9cc6": {
         "description": "The certificate validity period includes the current time.",
         "severityLevels": {
             "Security": 100
@@ -417,7 +417,7 @@
         },
         "tags": null
     },
-    "basic-b71262c3ab": {
+    "basic-validity-b71262c3ab": {
         "description": "The certificate validity period includes the current time.",
         "severityLevels": {
             "Security": 100
@@ -428,7 +428,7 @@
         },
         "tags": null
     },
-    "basic-a00de3717c": {
+    "basic-validity-a00de3717c": {
         "description": "The certificate validity period includes the current time.",
         "severityLevels": {
             "Security": 100
@@ -439,7 +439,7 @@
         },
         "tags": null
     },
-    "basic-fd5f30ce88": {
+    "basic-validity-fd5f30ce88": {
         "description": "The certificate validity period includes the current time.",
         "severityLevels": {
             "Security": 100
@@ -450,7 +450,7 @@
         },
         "tags": null
     },
-    "basic-b09833f225": {
+    "basic-validity-b09833f225": {
         "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
         "severityLevels": {
             "Interoperability": 100
@@ -461,7 +461,7 @@
         },
         "tags": null
     },
-    "basic-b1e7273312": {
+    "basic-validity-b1e7273312": {
         "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
         "severityLevels": {
             "Interoperability": 100
@@ -472,7 +472,7 @@
         },
         "tags": null
     },
-    "basic-0a0797aef4": {
+    "basic-validity-0a0797aef4": {
         "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
         "severityLevels": {
             "Interoperability": 100
@@ -483,7 +483,7 @@
         },
         "tags": null
     },
-    "basic-beb1b04e7a": {
+    "basic-validity-beb1b04e7a": {
         "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
         "severityLevels": {
             "Interoperability": 100
@@ -494,7 +494,7 @@
         },
         "tags": null
     },
-    "basic-8161c07302": {
+    "basic-validity-8161c07302": {
         "description": "The notBefore field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -505,7 +505,7 @@
         },
         "tags": null
     },
-    "basic-a995359b4a": {
+    "basic-validity-a995359b4a": {
         "description": "The notBefore field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -516,7 +516,7 @@
         },
         "tags": null
     },
-    "basic-e46824186e": {
+    "basic-validity-e46824186e": {
         "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
         "severityLevels": {
             "Interoperability": 100
@@ -527,7 +527,7 @@
         },
         "tags": null
     },
-    "basic-8706cfabaa": {
+    "basic-validity-8706cfabaa": {
         "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
         "severityLevels": {
             "Interoperability": 100
@@ -538,7 +538,7 @@
         },
         "tags": null
     },
-    "basic-f9cadd3fe6": {
+    "basic-validity-f9cadd3fe6": {
         "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
         "severityLevels": {
             "Interoperability": 100
@@ -549,7 +549,7 @@
         },
         "tags": null
     },
-    "basic-3f0d1ca795": {
+    "basic-validity-3f0d1ca795": {
         "description": "For the purposes of this profile GeneralizedTime values MUST be expressed in Greenwich Mean Time (Zulu)",
         "severityLevels": {
             "Interoperability": 100
@@ -560,7 +560,7 @@
         },
         "tags": null
     },
-    "basic-4d9f222798": {
+    "basic-validity-4d9f222798": {
         "description": "GeneralizedTime values MUST NOT include fractional seconds.",
         "severityLevels": {
             "Interoperability": 100
@@ -571,7 +571,7 @@
         },
         "tags": null
     },
-    "basic-d786262526": {
+    "basic-validity-d786262526": {
         "description": "GeneralizedTime values MUST NOT include fractional seconds.",
         "severityLevels": {
             "Interoperability": 100
@@ -582,7 +582,7 @@
         },
         "tags": null
     },
-    "basic-c2bc812f45": {
+    "basic-validity-c2bc812f45": {
         "description": "GeneralizedTime values MUST NOT include fractional seconds.",
         "severityLevels": {
             "Interoperability": 100
@@ -593,7 +593,7 @@
         },
         "tags": null
     },
-    "basic-0f5f2487f7": {
+    "basic-validity-0f5f2487f7": {
         "description": "GeneralizedTime values MUST NOT include fractional seconds.",
         "severityLevels": {
             "Interoperability": 100
@@ -604,7 +604,7 @@
         },
         "tags": null
     },
-    "basic-9e21624bf9": {
+    "basic-validity-9e21624bf9": {
         "description": "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)",
         "severityLevels": {
             "Interoperability": 100
@@ -615,7 +615,7 @@
         },
         "tags": null
     },
-    "basic-db726975ce": {
+    "basic-validity-db726975ce": {
         "description": "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)",
         "severityLevels": {
             "Interoperability": 100
@@ -626,7 +626,7 @@
         },
         "tags": null
     },
-    "basic-8f1bf51a99": {
+    "basic-validity-8f1bf51a99": {
         "description": "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)",
         "severityLevels": {
             "Interoperability": 100
@@ -637,7 +637,7 @@
         },
         "tags": null
     },
-    "basic-6690fa3d2f": {
+    "basic-validity-6690fa3d2f": {
         "description": "For the purposes of this profile, UTCTime values MUST be expressed in Greenwich Mean Time (Zulu)",
         "severityLevels": {
             "Interoperability": 100
@@ -648,7 +648,7 @@
         },
         "tags": null
     },
-    "basic-f898ad6553": {
+    "basic-validity-f898ad6553": {
         "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
         "severityLevels": {
             "Interoperability": 100
@@ -659,7 +659,7 @@
         },
         "tags": null
     },
-    "basic-963d221c48": {
+    "basic-validity-963d221c48": {
         "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
         "severityLevels": {
             "Interoperability": 100
@@ -670,7 +670,7 @@
         },
         "tags": null
     },
-    "basic-88ec7bd824": {
+    "basic-validity-88ec7bd824": {
         "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
         "severityLevels": {
             "Interoperability": 100
@@ -681,7 +681,7 @@
         },
         "tags": null
     },
-    "basic-cfa169c84e": {
+    "basic-validity-cfa169c84e": {
         "description": "For the purposes of this profile UTCTime values [...] MUST include seconds",
         "severityLevels": {
             "Interoperability": 100
@@ -692,7 +692,7 @@
         },
         "tags": null
     },
-    "basic-4d1fd77ec3": {
+    "basic-tbssignature-4d1fd77ec3": {
         "description": "The signature field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -703,7 +703,7 @@
         },
         "tags": null
     },
-    "basic-ab702acb6f": {
+    "basic-tbssignature-ab702acb6f": {
         "description": "The signature field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -714,7 +714,7 @@
         },
         "tags": null
     },
-    "basic-3e2fbb009f": {
+    "basic-tbssignature-3e2fbb009f": {
         "description": "This field MUST contain the same algorithm identifier as the signatureAlgorithm field in the sequence Certificate (Section 4.1.1.2).",
         "severityLevels": {
             "Security": 100
@@ -725,7 +725,7 @@
         },
         "tags": null
     },
-    "basic-eec58410b3": {
+    "basic-tbssignature-eec58410b3": {
         "description": "This field MUST contain the same algorithm identifier as the signatureAlgorithm field in the sequence Certificate (Section 4.1.1.2).",
         "severityLevels": {
             "Security": 100
@@ -736,7 +736,7 @@
         },
         "tags": null
     },
-    "basic-63b58d6a92": {
+    "basic-serialnumber-63b58d6a92": {
         "description": "Given the uniqueness requirements above serial numbers can be expected to contain long integers. Certificate users MUST be able to handle serialNumber values up to 20 octets. Conforming CAs MUST NOT use serialNumber values longer than 20 octets.",
         "severityLevels": {
             "Interoperability": 100
@@ -747,7 +747,7 @@
         },
         "tags": null
     },
-    "basic-c482ae3643": {
+    "basic-serialnumber-c482ae3643": {
         "description": "Given the uniqueness requirements above serial numbers can be expected to contain long integers. Certificate users MUST be able to handle serialNumber values up to 20 octets. Conforming CAs MUST NOT use serialNumber values longer than 20 octets.",
         "severityLevels": {
             "Interoperability": 100
@@ -758,7 +758,29 @@
         },
         "tags": null
     },
-    "basic-c946fef182": {
+    "basic-serialnumber-63b58d6a93": {
+        "description": "Given the uniqueness requirements above serial numbers can be expected to contain long integers. Certificate users MUST be able to handle serialNumber values up to 20 octets. Conforming CAs MUST NOT use serialNumber values longer than 20 octets.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.2. Version"
+        },
+        "tags": null
+    },
+    "basic-serialnumber-c482ae3644": {
+        "description": "Given the uniqueness requirements above serial numbers can be expected to contain long integers. Certificate users MUST be able to handle serialNumber values up to 20 octets. Conforming CAs MUST NOT use serialNumber values longer than 20 octets.",
+        "severityLevels": {
+            "Interoperability": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": "4.1.2.2. Version"
+        },
+        "tags": null
+    },
+    "basic-serialnumber-c946fef182": {
         "description": "The serialNumber field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -769,7 +791,7 @@
         },
         "tags": null
     },
-    "basic-99ffba7896": {
+    "basic-serialnumber-99ffba7896": {
         "description": "The serialNumber field is non-optional and must be present.",
         "severityLevels": {
             "Security": 100
@@ -780,7 +802,7 @@
         },
         "tags": null
     },
-    "basic-d2c3455637": {
+    "basic-serialnumber-d2c3455637": {
         "description": "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may issue certificates with serial numbers that are negative or zero. Certificate users SHOULD be prepared to gracefully handle such certificates.",
         "severityLevels": {
             "Interoperability": 100
@@ -791,7 +813,7 @@
         },
         "tags": null
     },
-    "basic-dc9c549b5f": {
+    "basic-serialnumber-dc9c549b5f": {
         "description": "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may issue certificates with serial numbers that are negative or zero. Certificate users SHOULD be prepared to gracefully handle such certificates.",
         "severityLevels": {
             "Interoperability": 100
@@ -802,7 +824,7 @@
         },
         "tags": null
     },
-    "basic-0dd1f8b33d": {
+    "basic-serialnumber-0dd1f8b33d": {
         "description": "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may issue certificates with serial numbers that are negative or zero. Certificate users SHOULD be prepared to gracefully handle such certificates.",
         "severityLevels": {
             "Interoperability": 100
@@ -813,7 +835,7 @@
         },
         "tags": null
     },
-    "basic-55a018dc6c": {
+    "basic-serialnumber-55a018dc6c": {
         "description": "The serial number MUST be a positive integer assigned by the CA to each certificate. [...] Note: Non-conforming CAs may issue certificates with serial numbers that are negative or zero. Certificate users SHOULD be prepared to gracefully handle such certificates.",
         "severityLevels": {
             "Interoperability": 100
@@ -901,7 +923,7 @@
         },
         "tags": null
     },
-    "common-f4db514b76": {
+    "common-positive-f4db514b76": {
         "description": "This test performs no modifications and MUST always pass. If it does not it is an indication that the feature extraction is broken.",
         "severityLevels": {
             "Security": 100
@@ -912,7 +934,7 @@
         },
         "tags": null
     },
-    "common-f15e7199ea": {
+    "common-untrusted-f15e7199ea": {
         "description": "If the root certificate is not trusted the certificate MUST be rejected.",
         "severityLevels": {
             "Security": 100
@@ -1374,7 +1396,7 @@
         },
         "tags": null
     },
-    "extension-9b75135269": {
+    "extension-common-9b75135269": {
         "description": "This field MUST only appear if the version is 3 (Section 4.1.2.1).",
         "severityLevels": {
             "Interoperability": 100
@@ -1385,7 +1407,7 @@
         },
         "tags": null
     },
-    "extension-9b75135366": {
+    "extension-common-9b75135366": {
         "description": "This field MUST only appear if the version is 3 (Section 4.1.2.1).",
         "severityLevels": {
             "Interoperability": 100
@@ -1396,7 +1418,7 @@
         },
         "tags": null
     },
-    "extension-d8772be424": {
+    "extension-common-d8772be424": {
         "description": "A certificate-using system MUST reject the certificate if it encounters a critical extension it does not recognize",
         "severityLevels": {
             "Security": 100
@@ -1407,7 +1429,7 @@
         },
         "tags": null
     },
-    "extension-14d5fe1bed": {
+    "extension-common-14d5fe1bed": {
         "description": "A certificate-using system MUST reject the certificate if it encounters a critical extension it does not recognize",
         "severityLevels": {
             "Security": 100
@@ -1418,7 +1440,7 @@
         },
         "tags": null
     },
-    "extension-0a5be219fe": {
+    "extension-common-0a5be219fe": {
         "description": "This field MUST only appear if the version is 3 (Section 4.1.2.1).",
         "severityLevels": {
             "Interoperability": 100
@@ -1429,7 +1451,7 @@
         },
         "tags": null
     },
-    "extension-2b30514cc9": {
+    "extension-common-2b30514cc9": {
         "description": "This field MUST only appear if the version is 3 (Section 4.1.2.1).",
         "severityLevels": {
             "Interoperability": 100
@@ -1440,7 +1462,7 @@
         },
         "tags": null
     },
-    "extension-199eb869ce": {
+    "extension-common-199eb869ce": {
         "description": "A certificate-using system MUST reject the certificate if it encounters a 100 extension [...] that contains information that it cannot process.",
         "severityLevels": {
             "Security": 100
@@ -1451,7 +1473,7 @@
         },
         "tags": null
     },
-    "extension-5ad1c94f1c": {
+    "extension-common-5ad1c94f1c": {
         "description": "A certificate-using system MUST reject the certificate if it encounters a 100 extension [...] that contains information that it cannot process.",
         "severityLevels": {
             "Security": 100
@@ -1462,7 +1484,7 @@
         },
         "tags": null
     },
-    "extension-53e2e2bb36": {
+    "extension-ku-53e2e2bb36": {
         "description": "This test sets one undefined bit of the unused bits in the key usage extension to 1.",
         "severityLevels": {
             "Interoperability": 100
@@ -1473,7 +1495,7 @@
         },
         "tags": null
     },
-    "extension-7042e82768": {
+    "extension-ku-7042e82768": {
         "description": "This test sets one undefined bit of the unused bits in the key usage extension to 1.",
         "severityLevels": {
             "Interoperability": 100
@@ -1484,7 +1506,7 @@
         },
         "tags": null
     },
-    "extension-c88ac06a56": {
+    "extension-ku-c88ac06a56": {
         "description": "This test sets one undefined bit of the unused bits in the key usage extension to 0.",
         "severityLevels": {
             "Interoperability": 100
@@ -1495,7 +1517,7 @@
         },
         "tags": null
     },
-    "extension-a51284dc4b": {
+    "extension-ku-a51284dc4b": {
         "description": "This test sets one undefined bit of the unused bits in the key usage extension to 0.",
         "severityLevels": {
             "Interoperability": 100
@@ -1506,7 +1528,7 @@
         },
         "tags": null
     },
-    "extension-3e4c7f3e62": {
+    "extension-ku-3e4c7f3e62": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Interoperability": 100
@@ -1517,7 +1539,7 @@
         },
         "tags": null
     },
-    "extension-44d01aed5a": {
+    "extension-ku-44d01aed5a": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -1528,7 +1550,7 @@
         },
         "tags": null
     },
-    "extension-9e051adef5": {
+    "extension-ku-9e051adef5": {
         "description": "If the keyUsage extension is present then the subject public key MUST NOT be used to verify signatures on certificates or CRLs unless the corresponding keyCertSign or cRLSign bit is set.",
         "severityLevels": {
             "Security": 100
@@ -1540,7 +1562,7 @@
         "bsi": null,
         "tags": null
     },
-    "extension-c6d9fda7d3": {
+    "extension-ku-c6d9fda7d3": {
         "description": "When the keyUsage extension appears in a certificate at least one of the bits MUST be set to 1.",
         "severityLevels": {
             "Security": 100
@@ -1552,7 +1574,7 @@
         "bsi": null,
         "tags": null
     },
-    "extension-a3e1cdc1d3": {
+    "extension-ku-a3e1cdc1d3": {
       "description": "When the keyUsage extension appears in a certificate at least one of the bits MUST be set to 1.",
       "severityLevels": {
         "Security": 100
@@ -1564,7 +1586,7 @@
       "bsi": null,
       "tags": null
     },
-    "extension-91e2ddbf9d": {
+    "extension-ku-91e2ddbf9d": {
         "description": "If the keyCertSign bit is asserted then the cA bit in the basic constraints extension (Section 4.2.1.9) MUST also be asserted",
         "severityLevels": {
             "Interoperability": 100
@@ -1575,7 +1597,7 @@
         },
         "tags": null
     },
-    "extension-efb61a5418": {
+    "extension-akid-efb61a5418": {
         "description": "Conforming CAs MUST mark this extension as non-critical.",
         "severityLevels": {
             "Interoperability": 100
@@ -1586,7 +1608,7 @@
         },
         "tags": null
     },
-    "extension-320a8c3fd3": {
+    "extension-akid-320a8c3fd3": {
         "description": "Conforming CAs MUST mark this extension as non-critical.",
         "severityLevels": {
             "Interoperability": 100
@@ -1597,7 +1619,7 @@
         },
         "tags": null
     },
-    "extension-b054d544c3": {
+    "extension-akid-b054d544c3": {
         "description": "authorityCertIssuer and authorityCertSerialNumber MUST both be present or both be absent",
         "severityLevels": {
             "Security": 100
@@ -1608,7 +1630,7 @@
         },
         "tags": null
     },
-    "extension-dadc51d905": {
+    "extension-akid-dadc51d905": {
         "description": "authorityCertIssuer and authorityCertSerialNumber MUST both be present or both be absent",
         "severityLevels": {
             "Security": 100
@@ -1619,7 +1641,7 @@
         },
         "tags": null
     },
-    "extension-190349e95d": {
+    "extension-akid-190349e95d": {
         "description": "The keyIdentifier field of the authorityKeyIdentifier extension MUST be included in all certificates generated by conforming CAs.",
         "severityLevels": {
             "Interoperability": 100
@@ -1630,7 +1652,7 @@
         },
         "tags": null
     },
-    "extension-9e241be2f9": {
+    "extension-akid-9e241be2f9": {
         "description": "The keyIdentifier field of the authorityKeyIdentifier extension MUST be included in all certificates generated by conforming CAs.",
         "severityLevels": {
             "Interoperability": 100
@@ -1641,7 +1663,7 @@
         },
         "tags": null
     },
-    "extension-012f1b4bd0": {
+    "extension-akid-012f1b4bd0": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Interoperability": 100
@@ -1652,7 +1674,7 @@
         },
         "tags": null
     },
-    "extension-ff7cdd6926": {
+    "extension-akid-ff7cdd6926": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Interoperability": 100
@@ -1663,7 +1685,7 @@
         },
         "tags": null
     },
-    "extension-4a5dd1e00a": {
+    "extension-akid-4a5dd1e00a": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -1674,7 +1696,7 @@
         },
         "tags": null
     },
-    "extension-3b0f420c2c": {
+    "extension-akid-3b0f420c2c": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -1685,7 +1707,7 @@
         },
         "tags": null
     },
-    "extension-3dbdfa5609": {
+    "extension-bc-3dbdfa5609": {
         "description": "here it appears the pathLenConstraint field MUST be greater than or equal to zero.",
         "severityLevels": {
             "Security": 100
@@ -1696,7 +1718,7 @@
         },
         "tags": null
     },
-    "extension-b88af2b7d6": {
+    "extension-bc-b88af2b7d6": {
         "description": "In this case it [the pathLenConstraint field] gives the maximum number of non-self-issued intermediate certificates that may follow this certificate in a valid certification path.",
         "severityLevels": {
             "Security": 100
@@ -1729,7 +1751,7 @@
         },
         "tags": null
     },
-    "extension-ef15984307": {
+    "extension-bc-ef15984307": {
         "description": "CAs MUST NOT include the pathLenConstraint field unless the cA boolean is asserted",
         "severityLevels": {
             "Interoperability": 100
@@ -1740,7 +1762,7 @@
         },
         "tags": null
     },
-    "extension-bcb4b2c11e": {
+    "extension-bc-bcb4b2c11e": {
         "description": "in all CA certificates that contain public keys used to validate digital signatures on certificates [...] MUST mark the extension as 100 in such certificates.",
         "severityLevels": {
             "Interoperability": 100
@@ -1751,7 +1773,7 @@
         },
         "tags": null
     },
-    "extension-5427239f8e": {
+    "extension-bc-5427239f8e": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Interoperability": 100
@@ -1762,7 +1784,7 @@
         },
         "tags": null
     },
-    "extension-027e0728ed": {
+    "extension-bc-027e0728ed": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -1773,7 +1795,7 @@
         },
         "tags": null
     },
-    "extension-db7489730f": {
+    "extension-bc-db7489730f": {
         "description": "If the basic constraints extension is not present in a version 3 certificate or the extension is present but the cA boolean is not asserted then the certified public key MUST NOT be used to verify certificate signatures.",
         "severityLevels": {
             "Security": 100
@@ -1784,7 +1806,7 @@
         },
         "tags": null
     },
-    "extension-0bd143b23d": {
+    "extension-bc-0bd143b23d": {
         "description": "Conforming CAs MUST include this extension in all CA certificates that contain public keys used to validate digital signatures on certificates",
         "severityLevels": {
             "Security": 100
@@ -1795,7 +1817,7 @@
         },
         "tags": null
     },
-    "extension-a71fd6a6dc": {
+    "extension-skid-a71fd6a6dc": {
         "description": "In conforming CA certificates the value of the subject key identifier MUST be the value placed in the key identifier field of the authority key identifier extension (Section 4.2.1.1) of certificates issued by the subject of this certificate.",
         "severityLevels": {
             "Security": 100
@@ -1806,7 +1828,7 @@
         },
         "tags": null
     },
-    "extension-0ff7547245": {
+    "extension-skid-0ff7547245": {
         "description": "In conforming CA certificates the value of the subject key identifier MUST be the value placed in the key identifier field of the authority key identifier extension (Section 4.2.1.1) of certificates issued by the subject of this certificate.",
         "severityLevels": {
             "Security": 100
@@ -1817,7 +1839,7 @@
         },
         "tags": null
     },
-    "extension-ddb7cadc32": {
+    "extension-skid-ddb7cadc32": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Interoperability": 100
@@ -1828,7 +1850,7 @@
         },
         "tags": null
     },
-    "extension-ad98d1b6ce": {
+    "extension-skid-ad98d1b6ce": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Interoperability": 100
@@ -1839,7 +1861,7 @@
         },
         "tags": null
     },
-    "extension-8fc40ac4e1": {
+    "extension-skid-8fc40ac4e1": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -1850,7 +1872,7 @@
         },
         "tags": null
     },
-    "extension-c9f599cfc7": {
+    "extension-skid-c9f599cfc7": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -1861,7 +1883,7 @@
         },
         "tags": null
     },
-    "extension-c1b1cda8d9": {
+    "extension-san-c1b1cda8d9": {
       "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry",
       "severityLevels": {
         "Interoperability": 100
@@ -1872,7 +1894,7 @@
       },
       "tags": null
     },
-    "extension-a8b5caa8d9": {
+    "extension-san-a8b5caa8d9": {
       "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry",
       "severityLevels": {
         "Interoperability": 100
@@ -1883,7 +1905,7 @@
       },
       "tags": null
     },
-    "extension-9af0478bd0": {
+    "extension-san-9af0478bd0": {
       "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
       "severityLevels": {
         "Interoperability": 100
@@ -1894,7 +1916,7 @@
       },
       "tags": null
     },
-    "extension-aad8a2245b": {
+    "extension-san-aad8a2245b": {
       "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
       "severityLevels": {
         "Interoperability": 100
@@ -1905,7 +1927,7 @@
       },
       "tags": null
     },
-    "extension-402322d3de": {
+    "extension-san-402322d3de": {
       "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
       "severityLevels": {
         "Interoperability": 100
@@ -1916,7 +1938,7 @@
       },
       "tags": null
     },
-    "extension-2dcf039fe2": {
+    "extension-san-2dcf039fe2": {
       "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
       "severityLevels": {
         "Interoperability": 100
@@ -1927,7 +1949,7 @@
       },
       "tags": null
     },
-    "extension-4d10f6a130": {
+    "extension-san-4d10f6a130": {
       "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
       "severityLevels": {
         "Interoperability": 100
@@ -1938,7 +1960,7 @@
       },
       "tags": null
     },
-    "extension-bbd5958633": {
+    "extension-san-bbd5958633": {
       "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
       "severityLevels": {
         "Interoperability": 100
@@ -1949,7 +1971,7 @@
       },
       "tags": null
     },
-    "extension-f4c711dd6d": {
+    "extension-san-f4c711dd6d": {
       "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry.",
       "severityLevels": {
         "Interoperability": 100
@@ -1960,7 +1982,7 @@
       },
       "tags": null
     },
-    "extension-53a913244e": {
+    "extension-san-53a913244e": {
       "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry.",
       "severityLevels": {
         "Interoperability": 100
@@ -1971,7 +1993,7 @@
       },
       "tags": null
     },
-    "extension-b85eea047f": {
+    "extension-san-53a913244e": {
       "description": "When the subjectAltName extension contains an Internet mail address, the address MUST be stored in the rfc822Name.",
       "severityLevels": {
         "Interoperability": 100
@@ -1982,7 +2004,7 @@
       },
       "tags": null
     },
-    "extension-ba3c67bcf6": {
+    "extension-san-ba3c67bcf6": {
       "description": "When the subjectAltName extension contains an Internet mail address, the address MUST be stored in the rfc822Name.",
       "severityLevels": {
         "Interoperability": 100
@@ -1993,7 +2015,7 @@
       },
       "tags": null
     },
-    "extension-5c3703f705": {
+    "extension-san-5c3703f705": {
       "description": "For IP version 4, as specified in [RFC791], the octet string MUST contain exactly four octets. For IP version 6, as specified in [RFC2460], the octet string MUST contain exactly sixteen octets.",
       "severityLevels": {
         "Interoperability": 100
@@ -2004,7 +2026,7 @@
       },
       "tags": null
     },
-    "extension-e6cdce436a": {
+    "extension-san-e6cdce436a": {
       "description": "For IP version 4, as specified in [RFC791], the octet string MUST contain exactly four octets. For IP version 6, as specified in [RFC2460], the octet string MUST contain exactly sixteen octets.",
       "severityLevels": {
         "Interoperability": 100
@@ -2015,7 +2037,7 @@
       },
       "tags": null
     },
-    "extension-e313a21fbc": {
+    "extension-san-e313a21fbc": {
       "description": "When the subjectAltName extension contains a domain name system label, the domain name MUST be stored in the dNSName.",
       "severityLevels": {
         "Interoperability": 100
@@ -2026,7 +2048,7 @@
       },
       "tags": null
     },
-    "extension-420b8e5ee3": {
+    "extension-san-420b8e5ee3": {
       "description": "When the subjectAltName extension contains a domain name system label, the domain name MUST be stored in the dNSName.",
       "severityLevels": {
         "Interoperability": 100
@@ -2037,7 +2059,7 @@
       },
       "tags": null
     },
-    "extension-8cfafee500": {
+    "extension-san-8cfafee500": {
       "description": "The name MUST be in the preferred name syntax",
       "severityLevels": {
         "Interoperability": 100
@@ -2048,7 +2070,7 @@
       },
       "tags": null
     },
-    "extension-ad3d24bfdd": {
+    "extension-san-ad3d24bfdd": {
       "description": "The name MUST be in the preferred name syntax",
       "severityLevels": {
         "Interoperability": 100
@@ -2059,7 +2081,7 @@
       },
       "tags": null
     },
-    "extension-395bba36f0": {
+    "extension-san-395bba36f0": {
       "description": "subjectAltName extensions with a dNSName of \" \" MUST NOT be used.",
       "severityLevels": {
         "Interoperability": 100
@@ -2070,7 +2092,7 @@
       },
       "tags": null
     },
-    "extension-aed854dd91": {
+    "extension-san-aed854dd91": {
       "description": "subjectAltName extensions with a dNSName of \" \" MUST NOT be used",
       "severityLevels": {
         "Interoperability": 100
@@ -2081,7 +2103,7 @@
       },
       "tags": null
     },
-    "extension-c7bcd39697": {
+    "extension-san-c7bcd39697": {
       "description": "When the subjectAltName extension contains a URI, the name MUST be stored in the uniformResourceIdentifier (an IA5String)",
       "severityLevels": {
         "Interoperability": 100
@@ -2092,7 +2114,7 @@
       },
       "tags": null
     },
-    "extension-485a129c88": {
+    "extension-san-485a129c88": {
       "description": "When the subjectAltName extension contains a URI, the name MUST be stored in the uniformResourceIdentifier (an IA5String)",
       "severityLevels": {
         "Interoperability": 100
@@ -2103,7 +2125,7 @@
       },
       "tags": null
     },
-    "extension-4a67c83ba5": {
+    "extension-san-4a67c83ba5": {
       "description": "The name MUST NOT be a relative URI",
       "severityLevels": {
         "Interoperability": 100
@@ -2114,7 +2136,7 @@
       },
       "tags": null
     },
-    "extension-b2a952d256": {
+    "extension-san-b2a952d256": {
       "description": "The name MUST NOT be a relative URI",
       "severityLevels": {
         "Interoperability": 100
@@ -2125,7 +2147,7 @@
       },
       "tags": null
     },
-    "extension-755f6f9a73": {
+    "extension-san-755f6f9a73": {
       "description": "MUST follow the URI syntax and encoding rules specified in [RFC3986]",
       "severityLevels": {
         "Interoperability": 100
@@ -2136,7 +2158,7 @@
       },
       "tags": null
     },
-    "extension-90276bbd2e": {
+    "extension-san-90276bbd2e": {
       "description": "MUST follow the URI syntax and encoding rules specified in [RFC3986]",
       "severityLevels": {
         "Interoperability": 100
@@ -2147,7 +2169,7 @@
       },
       "tags": null
     },
-    "extension-1de992c455": {
+    "extension-san-1de992c455": {
       "description": "The name MUST include a scheme (e.g., \"http\" or \"ftp\")",
       "severityLevels": {
         "Interoperability": 100
@@ -2158,7 +2180,7 @@
       },
       "tags": null
     },
-    "extension-5e7399fe45": {
+    "extension-san-5e7399fe45": {
       "description": "The name MUST include a scheme (e.g., \"http\" or \"ftp\")",
       "severityLevels": {
         "Interoperability": 100
@@ -2169,7 +2191,7 @@
       },
       "tags": null
     },
-    "extension-6abf32243f": {
+    "extension-san-6abf32243f": {
       "description": "The name MUST include a scheme-specific-part",
       "severityLevels": {
         "Interoperability": 100
@@ -2180,7 +2202,7 @@
       },
       "tags": null
     },
-    "extension-c6ff9d3f5f": {
+    "extension-san-c6ff9d3f5f": {
       "description": "The name MUST include a scheme-specific-part",
       "severityLevels": {
         "Interoperability": 100
@@ -2191,7 +2213,7 @@
       },
       "tags": null
     },
-    "extension-0710a73747": {
+    "extension-san-0710a73747": {
       "description": "URIs that include an authority ([RFC3986], Section 3.2) MUST include a fully qualified domain name or IP address as the host",
       "severityLevels": {
         "Interoperability": 100
@@ -2202,7 +2224,7 @@
       },
       "tags": null
     },
-    "extension-2be00fdc1f": {
+    "extension-san-2be00fdc1f": {
       "description": "URIs that include an authority ([RFC3986], Section 3.2) MUST include a fully qualified domain name or IP address as the host",
       "severityLevels": {
         "Interoperability": 100
@@ -2213,7 +2235,7 @@
       },
       "tags": null
     },
-    "extension-eb7d7b73a7": {
+    "extension-ian-eb7d7b73a7": {
       "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry",
       "severityLevels": {
         "Interoperability": 100
@@ -2224,7 +2246,7 @@
       },
       "tags": null
     },
-    "extension-ee591d0f6d": {
+    "extension-ian-ee591d0f6d": {
       "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry",
       "severityLevels": {
         "Interoperability": 100
@@ -2235,7 +2257,7 @@
       },
       "tags": null
     },
-    "extension-8c049a0d2d": {
+    "extension-ian-8c049a0d2d": {
       "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
       "severityLevels": {
         "Interoperability": 100
@@ -2246,7 +2268,7 @@
       },
       "tags": null
     },
-    "extension-ae73e0f75b": {
+    "extension-ian-ae73e0f75b": {
       "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
       "severityLevels": {
         "Interoperability": 100
@@ -2257,7 +2279,7 @@
       },
       "tags": null
     },
-    "extension-0e2e4cd7b4": {
+    "extension-ian-0e2e4cd7b4": {
       "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
       "severityLevels": {
         "Interoperability": 100
@@ -2268,7 +2290,7 @@
       },
       "tags": null
     },
-    "extension-5419ef48ce": {
+    "extension-ian-5419ef48ce": {
       "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
       "severityLevels": {
         "Interoperability": 100
@@ -2279,7 +2301,7 @@
       },
       "tags": null
     },
-    "extension-4cb6303918": {
+    "extension-ian-4cb6303918": {
       "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
       "severityLevels": {
         "Interoperability": 100
@@ -2290,7 +2312,7 @@
       },
       "tags": null
     },
-    "extension-1619f2e27a": {
+    "extension-ian-1619f2e27a": {
       "description": "Multiple name forms, and multiple instances of each name form, MAY be included.  Whenever such identities are to be bound into a certificate, the subject alternative name (or issuer alternative name) extension MUST be used",
       "severityLevels": {
         "Interoperability": 100
@@ -2301,7 +2323,7 @@
       },
       "tags": null
     },
-    "extension-91b57880be": {
+    "extension-ian-91b57880be": {
       "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry.",
       "severityLevels": {
         "Interoperability": 100
@@ -2312,7 +2334,7 @@
       },
       "tags": null
     },
-    "extension-68c93d34e9": {
+    "extension-ian-68c93d34e9": {
       "description": "If the subjectAltName extension is present, the sequence MUST contain at least one entry.",
       "severityLevels": {
         "Interoperability": 100
@@ -2323,7 +2345,7 @@
       },
       "tags": null
     },
-    "extension-fd6f7e2ec8": {
+    "extension-ian-fd6f7e2ec8": {
       "description": "When the subjectAltName extension contains an Internet mail address, the address MUST be stored in the rfc822Name.",
       "severityLevels": {
         "Interoperability": 100
@@ -2334,7 +2356,7 @@
       },
       "tags": null
     },
-    "extension-df9c7bd48a": {
+    "extension-ian-df9c7bd48a": {
       "description": "When the subjectAltName extension contains an Internet mail address, the address MUST be stored in the rfc822Name.",
       "severityLevels": {
         "Interoperability": 100
@@ -2345,7 +2367,7 @@
       },
       "tags": null
     },
-    "extension-9a8cfa3dcc": {
+    "extension-ian-9a8cfa3dcc": {
       "description": "For IP version 4, as specified in [RFC791], the octet string MUST contain exactly four octets. For IP version 6, as specified in [RFC2460], the octet string MUST contain exactly sixteen octets.",
       "severityLevels": {
         "Interoperability": 100
@@ -2356,7 +2378,7 @@
       },
       "tags": null
     },
-    "extension-72d58e9202": {
+    "extension-ian-72d58e9202": {
       "description": "For IP version 4, as specified in [RFC791], the octet string MUST contain exactly four octets. For IP version 6, as specified in [RFC2460], the octet string MUST contain exactly sixteen octets.",
       "severityLevels": {
         "Interoperability": 100
@@ -2367,7 +2389,7 @@
       },
       "tags": null
     },
-    "extension-d943626982": {
+    "extension-ian-d943626982": {
       "description": "When the subjectAltName extension contains a domain name system label, the domain name MUST be stored in the dNSName.",
       "severityLevels": {
         "Interoperability": 100
@@ -2378,7 +2400,7 @@
       },
       "tags": null
     },
-    "extension-8a26a71fc0": {
+    "extension-ian-8a26a71fc0": {
       "description": "When the subjectAltName extension contains a domain name system label, the domain name MUST be stored in the dNSName.",
       "severityLevels": {
         "Interoperability": 100
@@ -2389,7 +2411,7 @@
       },
       "tags": null
     },
-    "extension-c199210ef3": {
+    "extension-ian-c199210ef3": {
       "description": "The name MUST be in the preferred name syntax",
       "severityLevels": {
         "Interoperability": 100
@@ -2400,7 +2422,7 @@
       },
       "tags": null
     },
-    "extension-c4f9120a7d": {
+    "extension-ian-c4f9120a7d": {
       "description": "The name MUST be in the preferred name syntax",
       "severityLevels": {
         "Interoperability": 100
@@ -2411,7 +2433,7 @@
       },
       "tags": null
     },
-    "extension-75fc92cadc": {
+    "extension-ian-75fc92cadc": {
       "description": "subjectAltName extensions with a dNSName of \" \" MUST NOT be used.",
       "severityLevels": {
         "Interoperability": 100
@@ -2422,7 +2444,7 @@
       },
       "tags": null
     },
-    "extension-e4e530c1ca": {
+    "extension-ian-e4e530c1ca": {
       "description": "subjectAltName extensions with a dNSName of \" \" MUST NOT be used",
       "severityLevels": {
         "Interoperability": 100
@@ -2433,7 +2455,7 @@
       },
       "tags": null
     },
-    "extension-b247cea7ca": {
+    "extension-ian-b247cea7ca": {
       "description": "When the subjectAltName extension contains a URI, the name MUST be stored in the uniformResourceIdentifier (an IA5String)",
       "severityLevels": {
         "Interoperability": 100
@@ -2444,7 +2466,7 @@
       },
       "tags": null
     },
-    "extension-337825e1c7": {
+    "extension-ian-337825e1c7": {
       "description": "When the subjectAltName extension contains a URI, the name MUST be stored in the uniformResourceIdentifier (an IA5String)",
       "severityLevels": {
         "Interoperability": 100
@@ -2455,7 +2477,7 @@
       },
       "tags": null
     },
-    "extension-848691cb51": {
+    "extension-ian-848691cb51": {
       "description": "The name MUST NOT be a relative URI",
       "severityLevels": {
         "Interoperability": 100
@@ -2466,7 +2488,7 @@
       },
       "tags": null
     },
-    "extension-497dede29d": {
+    "extension-ian-497dede29d": {
       "description": "The name MUST NOT be a relative URI",
       "severityLevels": {
         "Interoperability": 100
@@ -2477,7 +2499,7 @@
       },
       "tags": null
     },
-    "extension-195bf04da5": {
+    "extension-ian-195bf04da5": {
       "description": "MUST follow the URI syntax and encoding rules specified in [RFC3986]",
       "severityLevels": {
         "Interoperability": 100
@@ -2488,7 +2510,7 @@
       },
       "tags": null
     },
-    "extension-38d4b6e6f1": {
+    "extension-ian-38d4b6e6f1": {
       "description": "MUST follow the URI syntax and encoding rules specified in [RFC3986]",
       "severityLevels": {
         "Interoperability": 100
@@ -2499,7 +2521,7 @@
       },
       "tags": null
     },
-    "extension-8a6d852e22": {
+    "extension-ian-8a6d852e22": {
       "description": "The name MUST include a scheme (e.g., \"http\" or \"ftp\")",
       "severityLevels": {
         "Interoperability": 100
@@ -2510,7 +2532,7 @@
       },
       "tags": null
     },
-    "extension-f675452d31": {
+    "extension-ian-f675452d31": {
       "description": "The name MUST include a scheme (e.g., \"http\" or \"ftp\")",
       "severityLevels": {
         "Interoperability": 100
@@ -2521,7 +2543,7 @@
       },
       "tags": null
     },
-    "extension-3f9fa8cb40": {
+    "extension-ian-3f9fa8cb40": {
       "description": "The name MUST include a scheme-specific-part",
       "severityLevels": {
         "Interoperability": 100
@@ -2532,7 +2554,7 @@
       },
       "tags": null
     },
-    "extension-f7749028cf": {
+    "extension-ian-f7749028cf": {
       "description": "The name MUST include a scheme-specific-part",
       "severityLevels": {
         "Interoperability": 100
@@ -2543,7 +2565,7 @@
       },
       "tags": null
     },
-    "extension-a1b27a1650": {
+    "extension-ian-a1b27a1650": {
       "description": "URIs that include an authority ([RFC3986], Section 3.2) MUST include a fully qualified domain name or IP address as the host",
       "severityLevels": {
         "Interoperability": 100
@@ -2554,7 +2576,7 @@
       },
       "tags": null
     },
-    "extension-5a2b87c1f5": {
+    "extension-ian-5a2b87c1f5": {
       "description": "URIs that include an authority ([RFC3986], Section 3.2) MUST include a fully qualified domain name or IP address as the host",
       "severityLevels": {
         "Interoperability": 100
@@ -2565,7 +2587,7 @@
       },
       "tags": null
     },
-    "extension-ce3148df7c": {
+    "extension-subjectdir-ce3148df7c": {
       "description": "Conforming CAs MUST mark this extension as non-critical",
       "severityLevels": {
         "Interoperability": 100
@@ -2576,7 +2598,7 @@
       },
       "tags": null
     },
-    "extension-bfad73e06a": {
+    "extension-subjectdir-bfad73e06a": {
       "description": "Conforming CAs MUST mark this extension as non-critical",
       "severityLevels": {
         "Interoperability": 100
@@ -2587,7 +2609,7 @@
       },
       "tags": null
     },
-    "extension-6b125b4c97": {
+    "extension-certpolicies-6b125b4c97": {
       "description": "A certificate policy OID MUST NOT appear more than once in a certificate policies extension.",
       "severityLevels": {
         "Interoperability": 100
@@ -2598,7 +2620,7 @@
       },
       "tags": null
     },
-    "extension-c3e50f1c30": {
+    "extension-certpolicies-c3e50f1c30": {
       "description": "A certificate policy OID MUST NOT appear more than once in a certificate policies extension.",
       "severityLevels": {
         "Interoperability": 100
@@ -2609,7 +2631,7 @@
       },
       "tags": null
     },
-    "extension-bf8b1694b7": {
+    "extension-certpolicies-bf8b1694b7": {
       "description": "When qualifiers are used with the special policy anyPolicy, they MUST be limited to the qualifiers identified in this section",
       "severityLevels": {
         "Interoperability": 100
@@ -2620,7 +2642,7 @@
       },
       "tags": null
     },
-    "extension-bada689d12": {
+    "extension-certpolicies-bada689d12": {
       "description": "When qualifiers are used with the special policy anyPolicy, they MUST be limited to the qualifiers identified in this section",
       "severityLevels": {
         "Interoperability": 100
@@ -2631,7 +2653,7 @@
       },
       "tags": null
     },
-    "extension-7b8f543a1f": {
+    "extension-policymappings-7b8f543a1f": {
       "description": "Policies MUST NOT be mapped from the special value anyPolicy",
       "severityLevels": {
         "Interoperability": 100
@@ -2642,7 +2664,7 @@
       },
       "tags": null
     },
-    "extension-42c0e99d7d": {
+    "extension-policymappings-42c0e99d7d": {
       "description": "Policies MUST NOT be mapped from the special value anyPolicy",
       "severityLevels": {
         "Interoperability": 100
@@ -2653,7 +2675,7 @@
       },
       "tags": null
     },
-    "extension-587d94f3b5": {
+    "extension-policymappings-587d94f3b5": {
       "description": "Policies MUST NOT be mapped to the special value anyPolicy",
       "severityLevels": {
         "Interoperability": 100
@@ -2664,7 +2686,7 @@
       },
       "tags": null
     },
-    "extension-ab7837006f": {
+    "extension-policymappings-ab7837006f": {
       "description": "Policies MUST NOT be mapped to the special value anyPolicy",
       "severityLevels": {
         "Interoperability": 100
@@ -2675,7 +2697,7 @@
       },
       "tags": null
     },
-    "extension-799e5cd831": {
+    "extension-inhibitany-799e5cd831": {
       "description": "Conforming CAs MUST mark this extension as critical.",
       "severityLevels": {
         "Interoperability": 100
@@ -2686,7 +2708,7 @@
       },
       "tags": null
     },
-    "extension-515bf6be01": {
+    "extension-policyconstraints-515bf6be01": {
       "description": "Conforming applications MUST be able to process the\n   requireExplicitPolicy field",
       "severityLevels": {
         "Interoperability": 100
@@ -2697,7 +2719,7 @@
       },
       "tags": null
     },
-    "extension-ad71b692af": {
+    "extension-policyconstraints-ad71b692af": {
       "description": "Conforming applications MUST be able to process the\n   requireExplicitPolicy field",
       "severityLevels": {
         "Interoperability": 100
@@ -2708,7 +2730,7 @@
       },
       "tags": null
     },
-    "extension-b7dc0826ae": {
+    "extension-policyconstraints-b7dc0826ae": {
       "description": "Conforming CAs MUST NOT issue certificates where policy constraints is an empty sequence.  That is, either the inhibitPolicyMapping field or the requireExplicitPolicy field MUST be present.",
       "severityLevels": {
         "Interoperability": 100
@@ -2719,7 +2741,7 @@
       },
       "tags": null
     },
-    "extension-77b24ac4ff": {
+    "extension-policyconstraints-77b24ac4ff": {
       "description": "Conforming CAs MUST NOT issue certificates where policy constraints is an empty sequence.  That is, either the inhibitPolicyMapping field or the requireExplicitPolicy field MUST be present.",
       "severityLevels": {
         "Interoperability": 100
@@ -2741,7 +2763,7 @@
       },
       "tags": null
     },
-    "extension-6b9aabb935": {
+    "extension-policyconstraints-6b9aabb935": {
       "description": "Conforming CAs MUST mark this extension as critical.",
       "severityLevels": {
         "Interoperability": 100
@@ -2752,7 +2774,7 @@
       },
       "tags": null
     },
-    "extension-ece1272184": {
+    "extension-policyconstraints-ece1272184": {
       "description": "Conforming CAs MUST mark this extension as critical.",
       "severityLevels": {
         "Interoperability": 100
@@ -2763,7 +2785,7 @@
       },
       "tags": null
     },
-    "extension-2d1dd79c3e": {
+    "extension-certpolicies-2d1dd79c3e": {
       "description": "Conforming CAs MUST NOT encode explicitText as BMPString.",
       "severityLevels": {
         "Interoperability": 100
@@ -2774,7 +2796,7 @@
       },
       "tags": null
     },
-    "extension-bf3cd590b7": {
+    "extension-certpolicies-bf3cd590b7": {
       "description": "Conforming CAs MUST NOT encode explicitText as BMPString.",
       "severityLevels": {
         "Interoperability": 100
@@ -2785,7 +2807,7 @@
       },
       "tags": null
     },
-    "extension-e73101436a": {
+    "extension-certpolicies-e73101436a": {
       "description": "Conforming CAs MUST NOT encode explicitText as VisibleString.",
       "severityLevels": {
         "Interoperability": 100
@@ -2796,7 +2818,7 @@
       },
       "tags": null
     },
-    "extension-5005585bbd": {
+    "extension-certpolicies-5005585bbd": {
       "description": "Conforming CAs MUST NOT encode explicitText as VisibleString.",
       "severityLevels": {
         "Interoperability": 100
@@ -2807,7 +2829,7 @@
       },
       "tags": null
     },
-  "basic-3f9a198ac8": {
+  "basic-validity-3f9a198ac8": {
     "description": "MUST only use GeneralizedTime starting at year 2050.",
     "severityLevels": {
       "Interoperability": 100
@@ -2819,7 +2841,7 @@
     },
     "tags": null
   },
-  "basic-3f2aca81b6": {
+  "basic-validity-3f2aca81b6": {
     "description": "MUST only use GeneralizedTime starting at year 2050.",
     "severityLevels": {
       "Interoperability": 100
@@ -2831,7 +2853,7 @@
     },
     "tags": null
   },
-  "basic-3f9b9cf188": {
+  "basic-validity-3f9b9cf188": {
     "description": "MUST only use GeneralizedTime starting at year 2050.",
     "severityLevels": {
       "Interoperability": 100
@@ -2843,7 +2865,7 @@
     },
     "tags": null
   },
-  "basic-1ef52d9ac8": {
+  "basic-validity-1ef52d9ac8": {
     "description": "MUST only use GeneralizedTime starting at year 2050.",
     "severityLevels": {
       "Interoperability": 100
@@ -2855,7 +2877,7 @@
     },
     "tags": null
   },
-  "basic-2ec124217b": {
+  "basic-uniqueids-2ec124217b": {
     "description": "MUST not be used anymore.",
     "severityLevels": {
       "Interoperability": 100
@@ -2867,7 +2889,7 @@
     },
     "tags": null
   },
-  "basic-2e1514212d": {
+  "basic-uniqueids-2e1514212d": {
     "description": "MUST not be used anymore.",
     "severityLevels": {
       "Interoperability": 100
@@ -2879,7 +2901,7 @@
     },
     "tags": null
   },
-  "basic-5da143217b": {
+  "basic-uniqueids-5da143217b": {
     "description": "MUST not be used anymore.",
     "severityLevels": {
       "Interoperability": 100
@@ -2891,7 +2913,7 @@
     },
     "tags": null
   },
-  "basic-5da113007b": {
+  "basic-uniqueids-5da113007b": {
     "description": "MUST not be used anymore.",
     "severityLevels": {
       "Interoperability": 100
@@ -2903,7 +2925,7 @@
     },
     "tags": null
   },
-  "basic-a3e135eba6": {
+  "basic-version-a3e135eba6": {
     "description": "MUST: Version 3.",
     "severityLevels": {
       "Interoperability": 100
@@ -2915,7 +2937,7 @@
     },
     "tags": null
   },
-  "basic-a6a825cba3": {
+  "basic-version-a6a825cba3": {
     "description": "MUST: Version 3.",
     "severityLevels": {
       "Interoperability": 100
@@ -2927,7 +2949,7 @@
     },
     "tags": null
   },
-  "basic-a9e117aba9": {
+  "basic-version-a9e117aba9": {
     "description": "MUST: Version 3.",
     "severityLevels": {
       "Interoperability": 100
@@ -2939,7 +2961,7 @@
     },
     "tags": null
   },
-  "basic-c9a8351ca3": {
+  "basic-version-c9a8351ca3": {
     "description": "MUST: Version 3.",
     "severityLevels": {
       "Interoperability": 100
@@ -2951,7 +2973,7 @@
     },
     "tags": null
   },
-  "basic-e106a2171a": {
+  "basic-subject-e106a2171a": {
     "description": "MUST be present and non-empty.",
     "severityLevels": {
       "Interoperability": 100
@@ -2963,7 +2985,7 @@
     },
     "tags": null
   },
-  "basic-f214c1171a": {
+  "basic-subject-issuer-f214c1171a": {
     "description": "MUST use PrintableString or UTF8String for subject and issuer.",
     "severityLevels": {
       "Interoperability": 100
@@ -2975,7 +2997,7 @@
     },
     "tags": null
   },
-  "basic-f149a9f71a": {
+  "basic-subject-issuer-f149a9f71a": {
     "description": "MUST use PrintableString or UTF8String for subject and issuer.",
     "severityLevels": {
       "Interoperability": 100
@@ -2987,7 +3009,7 @@
     },
     "tags": null
   },
-  "basic-e991a3581a": {
+  "basic-subject-issuer-e991a3581a": {
     "description": "MUST use PrintableString or UTF8String for subject and issuer.",
     "severityLevels": {
       "Interoperability": 100
@@ -2999,7 +3021,7 @@
     },
     "tags": null
   },
-  "basic-e191a2791c": {
+  "basic-subject-issuer-e191a2791c": {
     "description": "MUST use PrintableString or UTF8String for subject and issuer.",
     "severityLevels": {
       "Interoperability": 100
@@ -3011,7 +3033,7 @@
     },
     "tags": null
   },
-  "basic-e195f2581a": {
+  "basic-subject-issuer-e195f2581a": {
     "description": "MUST use PrintableString or UTF8String for subject and issuer.",
     "severityLevels": {
       "Interoperability": 100
@@ -3023,7 +3045,7 @@
     },
     "tags": null
   },
-  "basic-e921fed89a": {
+  "basic-subject-issuer-e921fed89a": {
     "description": "MUST use PrintableString or UTF8String for subject and issuer.",
     "severityLevels": {
       "Interoperability": 100
@@ -3035,7 +3057,7 @@
     },
     "tags": null
   },
-  "extension-128a9aac93": {
+  "extension-skid-128a9aac93": {
     "description": "MUST be used for all CA certificates.",
     "severityLevels": {
       "Interoperability": 100
@@ -3047,7 +3069,7 @@
     },
     "tags": null
   },
-  "extension-999f499fe2": {
+  "extension-eku-999f499fe2": {
     "description": "Multiple valid extended key usages are allowed.",
     "severityLevels": {
       "Interoperability": 100
@@ -3059,7 +3081,7 @@
     "bsi": null,
     "tags": null
   },
-  "extension-a2c84a2918": {
+  "extension-akid-a2c84a2918": {
     "description": "MUST be used for all non self-signed certificates.",
     "severityLevels": {
       "Interoperability": 100
@@ -3071,7 +3093,7 @@
     },
     "tags": null
   },
-  "extension-198c1c9f93": {
+  "extension-akid-198c1c9f93": {
     "description": "MUST be used for all non self-signed certificates.",
     "severityLevels": {
       "Interoperability": 100
@@ -3083,7 +3105,7 @@
     },
     "tags": null
   },
-  "extension-1e2a19cef5": {
+  "extension-ku-1e2a19cef5": {
     "description": "Set key usages MUST be valid.",
     "severityLevels": {
       "Security": 100
@@ -3095,7 +3117,7 @@
     "bsi": null,
     "tags": null
   },
-  "extension-1ea3c5dc17": {
+  "extension-skid-1ea3c5dc17": {
     "description": "Conforming CAs MUST mark this extension as non-critical.",
     "severityLevels": {
       "Interoperability": 100
@@ -3107,7 +3129,7 @@
     "bsi": null,
     "tags": null
   },
-  "extension-2d1d5dc178": {
+  "extension-skid-2d1d5dc178": {
     "description": "Conforming CAs MUST mark this extension as non-critical.",
     "severityLevels": {
       "Interoperability": 100
@@ -3119,7 +3141,7 @@
     "bsi": null,
     "tags": null
   },
-  "extension-930f499fe2": {
+  "extension-eku-930f499fe2": {
     "description": "If a certificate contains both a key usage extension and an extended key usage extension, then both extensions MUST be processed independently and the certificate MUST only be used for a purpose consistent with both extensions.",
     "severityLevels": {
       "Security": 100
@@ -3131,7 +3153,7 @@
     "bsi": null,
     "tags": null
   },
-  "extension-a6c2a465a3": {
+  "extension-nc-a6c2a465a3": {
     "description": "If present, the content of the name constraints extension MUST not be empty.",
     "severityLevels": {
       "Interoperability": 100
@@ -3143,7 +3165,7 @@
     },
     "tags": null
   },
-  "extension-c1a6aca5d3": {
+  "extension-nc-c1a6aca5d3": {
     "description": "The name constraints extension, which MUST be used only in a CA certificate,[...]",
     "severityLevels": {
       "Interoperability": 100
@@ -3155,7 +3177,7 @@
     "bsi": null,
     "tags": null
   },
-  "extension-c1c9dcb5d3": {
+  "extension-nc-c1c9dcb5d3": {
     "description": "Conforming CAs MUST mark this extension as critical",
     "severityLevels": {
       "Interoperability": 100
@@ -3167,7 +3189,7 @@
     "bsi": null,
     "tags": null
   },
-  "extension-da2157ba0f": {
+  "extension-bc-da2157ba0f": {
     "description": "If present, cA field must have value false.",
     "severityLevels": {
       "Interoperability": 100
@@ -3179,7 +3201,7 @@
     },
     "tags": null
   },
-  "extension-3a125b4c97": {
+  "extension-certpolicies-3a125b4c97": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3190,7 +3212,7 @@
     },
     "tags": null
   },
-  "extension-3a126b4c97": {
+  "extension-certpolicies-3a126b4c97": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3201,7 +3223,7 @@
     },
     "tags": null
   },
-  "extension-3a127b4c97": {
+  "extension-certpolicies-3a127b4c97": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3212,7 +3234,7 @@
     },
     "tags": null
   },
-  "extension-3a128b4c97": {
+  "extension-certpolicies-3a128b4c97": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3223,7 +3245,7 @@
     },
     "tags": null
   },
-  "extension-999f480fe2": {
+  "extension-eku-999f480fe2": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3234,7 +3256,7 @@
     },
     "tags": null
   },
-  "extension-999f482fe2": {
+  "extension-eku-999f482fe2": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3245,7 +3267,7 @@
     },
     "tags": null
   },
-  "extension-799e5cd501": {
+  "extension-inhibitany-799e5cd501": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3256,7 +3278,7 @@
     },
     "tags": null
   },
-  "extension-799e5cd511": {
+  "extension-inhibitany-799e5cd511": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3267,7 +3289,7 @@
     },
     "tags": null
   },
-  "extension-91b57700be": {
+  "extension-ian-91b57700be": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3278,7 +3300,7 @@
     },
     "tags": null
   },
-  "extension-91b57710be": {
+  "extension-ian-91b57710be": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3289,7 +3311,7 @@
     },
     "tags": null
   },
-  "extension-91b57720be": {
+  "extension-ian-91b57720be": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3300,7 +3322,7 @@
     },
     "tags": null
   },
-  "extension-91b57730be": {
+  "extension-ian-91b57730be": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3311,7 +3333,7 @@
     },
     "tags": null
   },
-  "extension-c1a6acb0d3": {
+  "extension-nc-c1a6acb0d3": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3322,7 +3344,7 @@
     },
     "tags": null
   },
-  "extension-c1a6acb1d3": {
+  "extension-nc-c1a6acb1d3": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3333,7 +3355,7 @@
     },
     "tags": null
   },
-  "extension-520bf6e001": {
+  "extension-policyconstraints-520bf6e001": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3344,7 +3366,7 @@
     },
     "tags": null
   },
-  "extension-521bf6e001": {
+  "extension-policyconstraints-521bf6e001": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3355,7 +3377,7 @@
     },
     "tags": null
   },
-  "extension-522bf6e001": {
+  "extension-policyconstraints-522bf6e001": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3366,7 +3388,7 @@
     },
     "tags": null
   },
-  "extension-523bf6e001": {
+  "extension-policyconstraints-523bf6e001": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3377,7 +3399,7 @@
     },
     "tags": null
   },
-  "extension-72af503a1f": {
+  "extension-policymappings-72af503a1f": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3388,7 +3410,7 @@
     },
     "tags": null
   },
-  "extension-72af513a1f": {
+  "extension-policymappings-72af513a1f": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3399,7 +3421,7 @@
     },
     "tags": null
   },
-  "extension-72af523a1f": {
+  "extension-policymappings-72af523a1f": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3410,7 +3432,7 @@
     },
     "tags": null
   },
-  "extension-72af533a1f": {
+  "extension-policymappings-72af533a1f": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3421,7 +3443,7 @@
     },
     "tags": null
   },
-  "extension-f4c401dd6d": {
+  "extension-san-f4c401dd6d": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3432,7 +3454,7 @@
     },
     "tags": null
   },
-  "extension-f4c411dd6d": {
+  "extension-san-f4c411dd6d": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3443,7 +3465,7 @@
     },
     "tags": null
   },
-  "extension-f4c421dd6d": {
+  "extension-san-f4c421dd6d": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3454,7 +3476,7 @@
     },
     "tags": null
   },
-  "extension-f4c431dd6d": {
+  "extension-san-f4c431dd6d": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3465,7 +3487,7 @@
     },
     "tags": null
   },
-  "extension-ca2180df7c": {
+  "extension-subjectdir-ca2180df7c": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3476,7 +3498,7 @@
     },
     "tags": null
   },
-  "extension-ca2181df7c": {
+  "extension-subjectdir-ca2181df7c": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Interoperability": 100
@@ -3487,7 +3509,7 @@
     },
     "tags": null
   },
-  "extension-ca2182df7c": {
+  "extension-subjectdir-ca2182df7c": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3498,7 +3520,7 @@
     },
     "tags": null
   },
-  "extension-ca2183df7c": {
+  "extension-subjectdir-ca2183df7c": {
     "description": "A certificate MUST NOT include more than one instance of a particular extension",
     "severityLevels": {
       "Security": 100
@@ -3509,7 +3531,7 @@
     },
     "tags": null
   },
-    "extension-4a5dd1e00b": {
+    "extension-akid-4a5dd1e00b": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3520,7 +3542,7 @@
         },
         "tags": null
     },
-    "extension-3b0f420cac": {
+    "extension-akid-3b0f420cac": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3531,7 +3553,7 @@
         },
         "tags": null
     },
-    "extension-027e0728ff": {
+    "extension-bc-027e0728ff": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3542,7 +3564,7 @@
         },
         "tags": null
     },
-    "extension-3a127b4c98": {
+    "extension-certpolicies-3a127b4c98": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3553,7 +3575,7 @@
         },
         "tags": null
     },
-    "extension-3a128b4c99": {
+    "extension-certpolicies-3a128b4c99": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3564,7 +3586,7 @@
         },
         "tags": null
     },
-    "extension-999f482fe3": {
+    "extension-eku-999f482fe3": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3575,7 +3597,7 @@
         },
         "tags": null
     },
-    "extension-799e5cd512": {
+    "extension-inhibitany-799e5cd512": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3586,7 +3608,7 @@
         },
         "tags": null
     },
-    "extension-91b57720bf": {
+    "extension-ian-91b57720bf": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3597,7 +3619,7 @@
         },
         "tags": null
     },
-    "extension-91b57730ff": {
+    "extension-ian-91b57730ff": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3608,7 +3630,7 @@
         },
         "tags": null
     },
-    "extension-44d01aed5b": {
+    "extension-ku-44d01aed5b": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3619,7 +3641,7 @@
         },
         "tags": null
     },
-    "extension-c1a6acb1d4": {
+    "extension-nc-c1a6acb1d4": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3630,7 +3652,7 @@
         },
         "tags": null
     },
-    "extension-522bf6e002": {
+    "extension-policyconstraints-522bf6e002": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3641,7 +3663,7 @@
         },
         "tags": null
     },
-    "extension-523bf6e003": {
+    "extension-policyconstraints-523bf6e003": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3652,7 +3674,7 @@
         },
         "tags": null
     },
-    "extension-72af523a2e": {
+    "extension-policymappings-72af523a2e": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3663,7 +3685,7 @@
         },
         "tags": null
     },
-    "extension-72af533a3e": {
+    "extension-policymappings-72af533a3e": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3674,7 +3696,7 @@
         },
         "tags": null
     },
-    "extension-f4c421dd6e": {
+    "extension-san-f4c421dd6e": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3685,7 +3707,7 @@
         },
         "tags": null
     },
-    "extension-f4c431dd6f": {
+    "extension-san-f4c431dd6f": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3696,7 +3718,7 @@
         },
         "tags": null
     },
-    "extension-ca2182df6d": {
+    "extension-subjectdir-ca2182df6d": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3707,7 +3729,7 @@
         },
         "tags": null
     },
-    "extension-ca2183df6e": {
+    "extension-subjectdir-ca2183df6e": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3718,7 +3740,7 @@
         },
         "tags": null
     },
-    "extension-8fc40ac4e2": {
+    "extension-skid-8fc40ac4e2": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100
@@ -3729,7 +3751,7 @@
         },
         "tags": null
     },
-    "extension-c9f599cfc8": {
+    "extension-skid-c9f599cfc8": {
         "description": "A certificate MUST NOT include more than one instance of a particular extension",
         "severityLevels": {
             "Security": 100

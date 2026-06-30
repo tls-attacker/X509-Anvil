@@ -14,7 +14,7 @@ import org.junit.jupiter.api.TestInfo;
 public class PolicyConstraintsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-515bf6be01")
+    @AnvilTest(id = "extension-policyconstraints-515bf6be01")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void mustAcceptPolicyConstraintsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -30,7 +30,7 @@ public class PolicyConstraintsTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-ad71b692af")
+    @AnvilTest(id = "extension-policyconstraints-ad71b692af")
     public void mustAcceptPolicyConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, false, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
@@ -44,7 +44,7 @@ public class PolicyConstraintsTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-77b24ac4ff")
+    @AnvilTest(id = "extension-policyconstraints-77b24ac4ff")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void emptyPolicyConstraintsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -59,7 +59,7 @@ public class PolicyConstraintsTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-b7dc0826ae")
+    @AnvilTest(id = "extension-policyconstraints-b7dc0826ae")
     public void emptyPolicyConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
@@ -72,7 +72,7 @@ public class PolicyConstraintsTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-6b9aabb935")
+    @AnvilTest(id = "extension-policyconstraints-6b9aabb935")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void nonCriticalPolicyConstraintsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -88,7 +88,7 @@ public class PolicyConstraintsTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-ece1272184")
+    @AnvilTest(id = "extension-policyconstraints-ece1272184")
     public void nonCriticalPolicyConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             PolicyConstraintsConfig policyConstraintsConfig = new PolicyConstraintsConfig();
