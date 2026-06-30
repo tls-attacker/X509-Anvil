@@ -20,7 +20,7 @@ import org.junit.jupiter.api.TestInfo;
 public class NotAfterNotPresentTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "basic-fc7bf2a460")
+    @AnvilTest(id = "basic-validity-fc7bf2a460")
     public void noNotAfterEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -30,7 +30,7 @@ public class NotAfterNotPresentTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "basic-3c7f842115")
+    @AnvilTest(id = "basic-validity-3c7f842115")
     public void noNotAfterIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

@@ -28,7 +28,7 @@ public class KeyCertSignNonCaTests extends X509AnvilTest {
     @IpmLimitations(
             identifiers =
                     "entity:extensions_present, entity:ext_basic_constraints_present, entity:ext_basic_constraints_ca, entity:ext_key_usage_additional")
-    @AnvilTest(id = "extension-91e2ddbf9d")
+    @AnvilTest(id = "extension-ku-91e2ddbf9d")
     public void keyCertSignNonCaEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

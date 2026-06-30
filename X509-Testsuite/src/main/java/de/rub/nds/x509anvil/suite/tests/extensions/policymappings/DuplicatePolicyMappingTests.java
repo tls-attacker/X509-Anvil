@@ -18,7 +18,7 @@ import java.util.List;
 public class DuplicatePolicyMappingTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-72af503a1f")
+    @AnvilTest(id = "extension-policymappings-72af503a1f")
     public void duplicateIdenticalPolicyMappingsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -50,7 +50,7 @@ public class DuplicatePolicyMappingTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-72af513a1f")
+    @AnvilTest(id = "extension-policymappings-72af513a1f")
     public void duplicateIdenticalPolicyMappingsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -81,7 +81,7 @@ public class DuplicatePolicyMappingTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-72af523a1f")
+    @AnvilTest(id = "extension-policymappings-72af523a1f")
     public void duplicateDifferentPolicyMappingsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -119,7 +119,7 @@ public class DuplicatePolicyMappingTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-72af533a1f")
+    @AnvilTest(id = "extension-policymappings-72af533a1f")
     public void duplicateDifferentPolicyMappingsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -156,7 +156,7 @@ public class DuplicatePolicyMappingTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-72af523a2e")
+    @AnvilTest(id = "extension-policymappings-72af523a2e")
     public void duplicateDifferentOrderPolicyMappingsEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -195,7 +195,7 @@ public class DuplicatePolicyMappingTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-72af533a3e")
+    @AnvilTest(id = "extension-policymappings-72af533a3e")
     public void duplicateDifferentOrderPolicyMappingsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();

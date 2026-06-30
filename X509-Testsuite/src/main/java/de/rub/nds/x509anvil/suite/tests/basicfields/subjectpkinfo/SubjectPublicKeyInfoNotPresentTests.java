@@ -20,7 +20,7 @@ import org.junit.jupiter.api.TestInfo;
 public class SubjectPublicKeyInfoNotPresentTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "basic-45174189ef")
+    @AnvilTest(id = "basic-subjectpki-45174189ef")
     public void noSubjectPublicKeyInfoEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -31,7 +31,7 @@ public class SubjectPublicKeyInfoNotPresentTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "basic-d3f8dfc444")
+    @AnvilTest(id = "basic-subjectpki-d3f8dfc444")
     public void noSubjectPublicKeyInfoIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

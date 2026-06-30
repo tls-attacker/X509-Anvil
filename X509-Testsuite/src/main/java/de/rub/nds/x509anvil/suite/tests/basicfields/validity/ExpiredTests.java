@@ -24,7 +24,7 @@ public class ExpiredTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:not_after")
-    @AnvilTest(id = "basic-7d768e9cc6")
+    @AnvilTest(id = "basic-validity-7d768e9cc6")
     public void expiredUtcEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -39,7 +39,7 @@ public class ExpiredTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:not_after")
-    @AnvilTest(id = "basic-b71262c3ab")
+    @AnvilTest(id = "basic-validity-b71262c3ab")
     public void expiredGeneralizedEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -55,7 +55,7 @@ public class ExpiredTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_after")
-    @AnvilTest(id = "basic-a00de3717c")
+    @AnvilTest(id = "basic-validity-a00de3717c")
     public void expiredUtcIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -70,7 +70,7 @@ public class ExpiredTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_after")
-    @AnvilTest(id = "basic-fd5f30ce88")
+    @AnvilTest(id = "basic-validity-fd5f30ce88")
     public void expiredGeneralizedIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

@@ -24,7 +24,7 @@ public class NegativeSerialNumberTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:serial_number")
-    @AnvilTest(id = "basic-d2c3455637")
+    @AnvilTest(id = "basic-serialnumber-d2c3455637")
     public void negativeSerialNumberEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(
@@ -36,7 +36,7 @@ public class NegativeSerialNumberTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:serial_number")
-    @AnvilTest(id = "basic-dc9c549b5f")
+    @AnvilTest(id = "basic-serialnumber-dc9c549b5f")
     public void negativeSerialNumberIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(

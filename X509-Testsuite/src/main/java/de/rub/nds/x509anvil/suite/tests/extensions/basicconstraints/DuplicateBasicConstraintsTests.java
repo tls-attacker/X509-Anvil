@@ -28,7 +28,7 @@ import java.util.List;
 public class DuplicateBasicConstraintsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-5427239f8e")
+    @AnvilTest(id = "extension-bc-5427239f8e")
     public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -46,7 +46,7 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:ext_basic_constraints_ca")
-    @AnvilTest(id = "extension-027e0728ed")
+    @AnvilTest(id = "extension-bc-027e0728ed")
     public void duplicateDifferentIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -67,7 +67,7 @@ public class DuplicateBasicConstraintsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:ext_basic_constraints_ca")
-    @AnvilTest(id = "extension-027e0728ff")
+    @AnvilTest(id = "extension-bc-027e0728ff")
     public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

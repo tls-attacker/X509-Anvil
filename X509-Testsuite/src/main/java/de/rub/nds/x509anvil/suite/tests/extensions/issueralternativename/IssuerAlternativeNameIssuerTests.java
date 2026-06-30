@@ -16,7 +16,7 @@ import java.util.LinkedList;
 public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id  = "extension-8c049a0d2d" )
+    @AnvilTest(id  = "extension-ian-8c049a0d2d" )
     public void issuerAltNameMailInIssuerEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
@@ -29,7 +29,7 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-ae73e0f75b" )
+    @AnvilTest(id  = "extension-ian-ae73e0f75b" )
     public void issuerAltNameMailInIssuerIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
@@ -42,7 +42,7 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id  = "extension-0e2e4cd7b4" )
+    @AnvilTest(id  = "extension-ian-0e2e4cd7b4" )
     public void issuerAltNameDomainNameInIssuerEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
@@ -55,7 +55,7 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-5419ef48ce" )
+    @AnvilTest(id  = "extension-ian-5419ef48ce" )
     public void issuerAltNameDomainNameInIssuerIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
@@ -68,7 +68,7 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id  = "extension-4cb6303918" )
+    @AnvilTest(id  = "extension-ian-4cb6303918" )
     public void issuerAltNameIpInIssuerEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {
@@ -81,7 +81,7 @@ public class IssuerAlternativeNameIssuerTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id  = "extension-1619f2e27a" )
+    @AnvilTest(id  = "extension-ian-1619f2e27a" )
     public void issuerAltNameIpInIssuerIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {},
             (X509CertificateConfigModifier) config -> {

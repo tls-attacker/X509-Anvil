@@ -17,7 +17,7 @@ public class IssuerAlternativeNameWithoutContentTests extends X509AnvilTest {
 
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-eb7d7b73a7")
+    @AnvilTest(id = "extension-ian-eb7d7b73a7")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void issuerAltNameEmptyEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -32,7 +32,7 @@ public class IssuerAlternativeNameWithoutContentTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-ee591d0f6d")
+    @AnvilTest(id = "extension-ian-ee591d0f6d")
     public void issuerAltNameEmptyIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             IssuerAlternativeNameConfig issuerAlternativeNameConfig = new IssuerAlternativeNameConfig();

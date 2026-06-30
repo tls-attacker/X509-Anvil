@@ -29,7 +29,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-012f1b4bd0")
+    @AnvilTest(id = "extension-akid-012f1b4bd0")
     public void duplicateIdenticalEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -45,7 +45,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-ff7cdd6926")
+    @AnvilTest(id = "extension-akid-ff7cdd6926")
     public void duplicateIdenticalIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -62,7 +62,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-4a5dd1e00a")
+    @AnvilTest(id = "extension-akid-4a5dd1e00a")
     public void duplicateDifferentEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -80,7 +80,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-3b0f420c2c")
+    @AnvilTest(id = "extension-akid-3b0f420c2c")
     public void duplicateDifferentIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -99,7 +99,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-4a5dd1e00b")
+    @AnvilTest(id = "extension-akid-4a5dd1e00b")
     public void duplicateDifferentOrderEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -120,7 +120,7 @@ public class DuplicateAuthKeyIdTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-3b0f420cac")
+    @AnvilTest(id = "extension-akid-3b0f420cac")
     public void duplicateDifferentOrderIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

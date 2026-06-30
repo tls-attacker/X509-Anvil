@@ -22,7 +22,7 @@ public class CertificatePoliciesTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-6b125b4c97")
+    @AnvilTest(id = "extension-certpolicies-6b125b4c97")
     public void duplicatePoliciesEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -37,7 +37,7 @@ public class CertificatePoliciesTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-c3e50f1c30")
+    @AnvilTest(id = "extension-certpolicies-c3e50f1c30")
     public void duplicatePoliciesIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -52,7 +52,7 @@ public class CertificatePoliciesTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-bf8b1694b7")
+    @AnvilTest(id = "extension-certpolicies-bf8b1694b7")
     public void undefinedAnyPolicyEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -76,7 +76,7 @@ public class CertificatePoliciesTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-bada689d12")
+    @AnvilTest(id = "extension-certpolicies-bada689d12")
     public void undefinedAnyPolicyIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -100,7 +100,7 @@ public class CertificatePoliciesTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-2d1dd79c3e")
+    @AnvilTest(id = "extension-certpolicies-2d1dd79c3e")
     public void explicitTestBmpStringEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -127,7 +127,7 @@ public class CertificatePoliciesTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-bf3cd590b7")
+    @AnvilTest(id = "extension-certpolicies-bf3cd590b7")
     public void explicitTestBmpStringIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -155,7 +155,7 @@ public class CertificatePoliciesTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-e73101436a")
+    @AnvilTest(id = "extension-certpolicies-e73101436a")
     public void explicitTestVisibleStringEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -182,7 +182,7 @@ public class CertificatePoliciesTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-5005585bbd")
+    @AnvilTest(id = "extension-certpolicies-5005585bbd")
     public void explicitTestVisibleStringIssuer(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();

@@ -20,7 +20,7 @@ import org.junit.jupiter.api.TestInfo;
 public class SubjectNotPresentTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "basic-24f7012913")
+    @AnvilTest(id = "basic-subject-24f7012913")
     public void noSubjectEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -30,7 +30,7 @@ public class SubjectNotPresentTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "basic-e026d7520e")
+    @AnvilTest(id = "basic-subject-e026d7520e")
     public void noSubjectIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

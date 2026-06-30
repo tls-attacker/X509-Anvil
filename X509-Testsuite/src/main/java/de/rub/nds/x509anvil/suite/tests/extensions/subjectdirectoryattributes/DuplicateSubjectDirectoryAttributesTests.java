@@ -18,7 +18,7 @@ import java.util.List;
 
 public class DuplicateSubjectDirectoryAttributesTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-ca2180df7c")
+    @AnvilTest(id = "extension-subjectdir-ca2180df7c")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void duplicateIdenticalSubjectDirectoryAttributesEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -37,7 +37,7 @@ public class DuplicateSubjectDirectoryAttributesTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-ca2181df7c")
+    @AnvilTest(id = "extension-subjectdir-ca2181df7c")
     public void duplicateIdenticalSubjectDirectoryAttributesIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectDirectoryAttributesConfig subjectDirectoryAttributesConfig = new SubjectDirectoryAttributesConfig();
@@ -54,7 +54,7 @@ public class DuplicateSubjectDirectoryAttributesTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-ca2182df7c")
+    @AnvilTest(id = "extension-subjectdir-ca2182df7c")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void duplicateDifferentSubjectDirectoryAttributesEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -83,7 +83,7 @@ public class DuplicateSubjectDirectoryAttributesTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-ca2183df7c")
+    @AnvilTest(id = "extension-subjectdir-ca2183df7c")
     public void duplicateDifferentSubjectDirectoryAttributesIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectDirectoryAttributesConfig subjectDirectoryAttributesConfig = new SubjectDirectoryAttributesConfig();
@@ -109,7 +109,7 @@ public class DuplicateSubjectDirectoryAttributesTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "extension-ca2182df6d")
+    @AnvilTest(id = "extension-subjectdir-ca2182df6d")
     @IpmLimitations(identifiers = "entity:extensions_present")
     public void duplicateDifferentOrderSubjectDirectoryAttributesEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
@@ -139,7 +139,7 @@ public class DuplicateSubjectDirectoryAttributesTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-ca2183df6e")
+    @AnvilTest(id = "extension-subjectdir-ca2183df6e")
     public void duplicateDifferentOrderSubjectDirectoryAttributesIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             SubjectDirectoryAttributesConfig subjectDirectoryAttributesConfig = new SubjectDirectoryAttributesConfig();

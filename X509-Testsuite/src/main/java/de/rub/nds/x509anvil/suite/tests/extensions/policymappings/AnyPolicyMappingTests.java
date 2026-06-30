@@ -20,7 +20,7 @@ public class AnyPolicyMappingTests extends X509AnvilTest {
     // When qualifiers are used with the special policy anyPolicy, they MUST be limited to the qualifiers identified in this section
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-7b8f543a1f")
+    @AnvilTest(id = "extension-policymappings-7b8f543a1f")
     public void anyPolicyMappingFromEntityToIssuerInEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -56,7 +56,7 @@ public class AnyPolicyMappingTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-42c0e99d7d")
+    @AnvilTest(id = "extension-policymappings-42c0e99d7d")
     public void anyPolicyMappingFromEntityToIssuerInIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -93,7 +93,7 @@ public class AnyPolicyMappingTests extends X509AnvilTest {
     // When qualifiers are used with the special policy anyPolicy, they MUST be limited to the qualifiers identified in this section
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-587d94f3b5")
+    @AnvilTest(id = "extension-policymappings-587d94f3b5")
     public void anyPolicyMappingFromIssuerToEntityInEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();
@@ -129,7 +129,7 @@ public class AnyPolicyMappingTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-ab7837006f")
+    @AnvilTest(id = "extension-policymappings-ab7837006f")
     public void anyPolicyMappingFromIssuerToEntityInIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             CertificatePoliciesConfig certificatePoliciesConfig = new CertificatePoliciesConfig();

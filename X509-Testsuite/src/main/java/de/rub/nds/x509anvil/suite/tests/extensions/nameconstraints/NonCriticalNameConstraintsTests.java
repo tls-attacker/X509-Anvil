@@ -19,7 +19,7 @@ import java.util.List;
 public class NonCriticalNameConstraintsTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-c1c9dcb5d3")
+    @AnvilTest(id = "extension-nc-c1c9dcb5d3")
     public void nonCriticalNameConstraintsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             NameConstraintsConfig nameConstraintsConfig = new NameConstraintsConfig();

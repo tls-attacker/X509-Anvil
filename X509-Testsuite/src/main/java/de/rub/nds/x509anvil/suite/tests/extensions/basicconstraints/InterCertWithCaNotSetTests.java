@@ -26,7 +26,7 @@ public class InterCertWithCaNotSetTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:ext_basic_constraints_ca")
-    @AnvilTest(id = "extension-db7489730f")
+    @AnvilTest(id = "extension-bc-db7489730f")
     public void intermediateCertWithCaNotSet(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

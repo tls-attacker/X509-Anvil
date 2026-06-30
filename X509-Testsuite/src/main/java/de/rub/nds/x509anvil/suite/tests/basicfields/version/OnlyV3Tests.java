@@ -14,7 +14,7 @@ import java.math.BigInteger;
 
 public class OnlyV3Tests extends X509AnvilTest {
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "basic-a3e135eba6")
+    @AnvilTest(id = "basic-version-a3e135eba6")
     @IpmLimitations(identifiers = "entity:version")
     public void v1Entity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
@@ -25,7 +25,7 @@ public class OnlyV3Tests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "basic-a6a825cba3")
+    @AnvilTest(id = "basic-version-a6a825cba3")
     @IpmLimitations(identifiers = "inter0:version")
     public void v1Intermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
@@ -36,7 +36,7 @@ public class OnlyV3Tests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "basic-a9e117aba9")
+    @AnvilTest(id = "basic-version-a9e117aba9")
     @IpmLimitations(identifiers = "entity:version")
     public void v2Entity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
@@ -47,7 +47,7 @@ public class OnlyV3Tests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "basic-c9a8351ca3")
+    @AnvilTest(id = "basic-version-c9a8351ca3")
     @IpmLimitations(identifiers = "inter0:version")
     public void v2Intermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {

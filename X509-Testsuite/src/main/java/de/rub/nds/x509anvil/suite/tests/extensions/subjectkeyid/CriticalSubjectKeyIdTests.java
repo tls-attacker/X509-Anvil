@@ -16,7 +16,7 @@ import org.junit.jupiter.api.TestInfo;
 public class CriticalSubjectKeyIdTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-1ea3c5dc17")
+    @AnvilTest(id = "extension-skid-1ea3c5dc17")
     public void criticalSubjectKeyIdEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -33,7 +33,7 @@ public class CriticalSubjectKeyIdTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-2d1d5dc178")
+    @AnvilTest(id = "extension-skid-2d1d5dc178")
     public void criticalSubjectKeyIdIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

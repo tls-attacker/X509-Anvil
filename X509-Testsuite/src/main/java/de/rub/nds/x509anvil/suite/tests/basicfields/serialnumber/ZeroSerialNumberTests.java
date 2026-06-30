@@ -24,7 +24,7 @@ public class ZeroSerialNumberTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:serial_number")
-    @AnvilTest(id = "basic-0dd1f8b33d")
+    @AnvilTest(id = "basic-serialnumber-0dd1f8b33d")
     public void zeroSerialNumberEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(
@@ -36,7 +36,7 @@ public class ZeroSerialNumberTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:serial_number")
-    @AnvilTest(id = "basic-55a018dc6c")
+    @AnvilTest(id = "basic-serialnumber-55a018dc6c")
     public void zeroSerialNumberIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(

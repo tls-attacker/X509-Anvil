@@ -24,7 +24,7 @@ public class UnknownCriticalExtensionTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = {"entity:extensions_present"})
-    @AnvilTest(id = "extension-d8772be424")
+    @AnvilTest(id = "extension-common-d8772be424")
     public void unknownCriticalExtensionEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -43,7 +43,7 @@ public class UnknownCriticalExtensionTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-14d5fe1bed")
+    @AnvilTest(id = "extension-common-14d5fe1bed")
     public void unknownCriticalExtensionIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

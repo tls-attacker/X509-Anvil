@@ -12,7 +12,7 @@ import org.junit.jupiter.api.TestInfo;
 
 public class NonCriticalInhibitAnyPolicyTests extends X509AnvilTest {
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "extension-799e5cd831")
+    @AnvilTest(id = "extension-inhibitany-799e5cd831")
     public void nonCriticalInhibitAnyPolicy(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, false, (X509CertificateConfigModifier) config -> {
             InhibitAnyPolicyConfig inhibitAnyPolicyConfig = new InhibitAnyPolicyConfig();

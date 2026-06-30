@@ -25,7 +25,7 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-efb61a5418")
+    @AnvilTest(id = "extension-akid-efb61a5418")
     public void criticalAuthorityKeyIdEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -42,7 +42,7 @@ public class CriticalAuthorityKeyIdTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-320a8c3fd3")
+    @AnvilTest(id = "extension-akid-320a8c3fd3")
     public void criticalAuthorityKeyIdIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

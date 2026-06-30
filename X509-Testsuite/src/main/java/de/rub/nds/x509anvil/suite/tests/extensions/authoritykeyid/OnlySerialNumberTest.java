@@ -27,7 +27,7 @@ public class OnlySerialNumberTest extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-b054d544c3")
+    @AnvilTest(id = "extension-akid-b054d544c3")
     public void missingKeyIdentifierEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -48,7 +48,7 @@ public class OnlySerialNumberTest extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength = 4)
-    @AnvilTest(id = "extension-dadc51d905")
+    @AnvilTest(id = "extension-akid-dadc51d905")
     public void missingKeyIdentifierIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

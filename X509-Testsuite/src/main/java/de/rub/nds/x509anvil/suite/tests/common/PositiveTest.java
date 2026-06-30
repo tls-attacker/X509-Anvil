@@ -20,7 +20,7 @@ import org.junit.jupiter.api.TestInfo;
 public class PositiveTest extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "common-f4db514b76")
+    @AnvilTest(id = "common-positive-f4db514b76")
     public void sampleTestCase(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(

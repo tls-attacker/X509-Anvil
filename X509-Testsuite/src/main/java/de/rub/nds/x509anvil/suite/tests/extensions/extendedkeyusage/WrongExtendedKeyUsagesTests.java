@@ -18,7 +18,7 @@ public class WrongExtendedKeyUsagesTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-930f499fe2")
+    @AnvilTest(id = "extension-eku-930f499fe2")
     public void wrongExtendedKeyUsagesEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             ExtendedKeyUsageConfig keyUsageConfig = new ExtendedKeyUsageConfig();

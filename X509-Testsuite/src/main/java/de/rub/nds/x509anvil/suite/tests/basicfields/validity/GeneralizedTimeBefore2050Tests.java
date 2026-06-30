@@ -15,7 +15,7 @@ import org.junit.jupiter.api.TestInfo;
 public class GeneralizedTimeBefore2050Tests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:not_before")
-    @AnvilTest(id = "basic-3f9a198ac8")
+    @AnvilTest(id = "basic-validity-3f9a198ac8")
     public void generalizedTimeBefore2050BeforeEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -31,7 +31,7 @@ public class GeneralizedTimeBefore2050Tests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_before")
-    @AnvilTest(id = "basic-3f2aca81b6")
+    @AnvilTest(id = "basic-validity-3f2aca81b6")
     public void generalizedTimeBefore2050BeforeIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -47,7 +47,7 @@ public class GeneralizedTimeBefore2050Tests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:not_after")
-    @AnvilTest(id = "basic-3f9b9cf188")
+    @AnvilTest(id = "basic-validity-3f9b9cf188")
     public void generalizedTimeBefore2050AfterEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -63,7 +63,7 @@ public class GeneralizedTimeBefore2050Tests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:not_after")
-    @AnvilTest(id = "basic-1ef52d9ac8")
+    @AnvilTest(id = "basic-validity-1ef52d9ac8")
     public void generalizedTimeBefore2050AfterIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

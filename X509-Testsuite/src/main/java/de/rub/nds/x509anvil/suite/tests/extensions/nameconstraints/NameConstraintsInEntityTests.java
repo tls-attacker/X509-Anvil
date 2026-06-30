@@ -21,7 +21,7 @@ public class NameConstraintsInEntityTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-c1a6aca5d3")
+    @AnvilTest(id = "extension-nc-c1a6aca5d3")
     public void nameConstraintsInEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {
             NameConstraintsConfig nameConstraintsConfig = new NameConstraintsConfig();

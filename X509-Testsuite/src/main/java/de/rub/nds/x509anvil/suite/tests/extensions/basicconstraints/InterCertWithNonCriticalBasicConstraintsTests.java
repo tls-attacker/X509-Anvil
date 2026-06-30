@@ -25,7 +25,7 @@ public class InterCertWithNonCriticalBasicConstraintsTests extends X509AnvilTest
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:ext_basic_constraints_critical")
-    @AnvilTest(id = "extension-bcb4b2c11e")
+    @AnvilTest(id = "extension-bc-bcb4b2c11e")
     public void intermediateCertWithNonCriticalBasicConstraints(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

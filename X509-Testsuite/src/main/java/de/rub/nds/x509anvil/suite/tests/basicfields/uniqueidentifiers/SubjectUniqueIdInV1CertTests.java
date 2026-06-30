@@ -24,7 +24,7 @@ public class SubjectUniqueIdInV1CertTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:version")
-    @AnvilTest(id = "basic-9966458966")
+    @AnvilTest(id = "basic-uniqueids-9966458966")
     public void subjectUniqueIdPresentInV1Entity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -40,7 +40,7 @@ public class SubjectUniqueIdInV1CertTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:version")
-    @AnvilTest(id = "basic-8ab9f03d9c")
+    @AnvilTest(id = "basic-uniqueids-8ab9f03d9c")
     public void subjectUniqueIdPresentInV1Intermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

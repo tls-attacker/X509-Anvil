@@ -20,7 +20,7 @@ import org.junit.jupiter.api.TestInfo;
 public class SignatureAlgorithmNotPresentTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id = "basic-d4c4dd28f7")
+    @AnvilTest(id = "basic-signaturealgorithm-d4c4dd28f7")
     public void noSignatureAlgorithmEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -31,7 +31,7 @@ public class SignatureAlgorithmNotPresentTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
-    @AnvilTest(id = "basic-a5f35deb02")
+    @AnvilTest(id = "basic-signaturealgorithm-a5f35deb02")
     public void noSignatureAlgorithmIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

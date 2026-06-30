@@ -24,7 +24,7 @@ public class Version2CertWithExtensionTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = { "entity:extensions_present", "entity:version" })
-    @AnvilTest(id = "extension-0a5be219fe")
+    @AnvilTest(id = "extension-common-0a5be219fe")
     public void version2CertWithExtensionsEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -39,7 +39,7 @@ public class Version2CertWithExtensionTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:version")
-    @AnvilTest(id = "extension-2b30514cc9")
+    @AnvilTest(id = "extension-common-2b30514cc9")
     public void version2CertWithExtensionsIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

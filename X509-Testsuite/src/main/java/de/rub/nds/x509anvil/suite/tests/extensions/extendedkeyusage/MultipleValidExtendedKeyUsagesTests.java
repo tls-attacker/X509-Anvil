@@ -18,7 +18,7 @@ public class MultipleValidExtendedKeyUsagesTests extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:extensions_present")
-    @AnvilTest(id = "extension-999f499fe2")
+    @AnvilTest(id = "extension-eku-999f499fe2")
     public void multipleValidExtendedKeyUsagesEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertValid(testRunner, true, (X509CertificateConfigModifier) config -> {
             ExtendedKeyUsageConfig keyUsageConfig = new ExtendedKeyUsageConfig();

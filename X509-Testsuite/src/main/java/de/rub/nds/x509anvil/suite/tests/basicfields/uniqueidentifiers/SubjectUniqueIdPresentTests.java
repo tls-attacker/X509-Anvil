@@ -13,7 +13,7 @@ import org.junit.jupiter.api.TestInfo;
 public class SubjectUniqueIdPresentTests extends X509AnvilTest {
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:version")
-    @AnvilTest(id = "basic-2ec124217b")
+    @AnvilTest(id = "basic-uniqueids-2ec124217b")
     public void subjectUniqueIdPresentInEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -28,7 +28,7 @@ public class SubjectUniqueIdPresentTests extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:version")
-    @AnvilTest(id = "basic-2e1514212d")
+    @AnvilTest(id = "basic-uniqueids-2e1514212d")
     public void subjectUniqueIdPresentInIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(

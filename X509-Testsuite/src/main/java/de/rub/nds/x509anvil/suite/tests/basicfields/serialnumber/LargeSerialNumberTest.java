@@ -25,7 +25,7 @@ public class LargeSerialNumberTest extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:serial_number")
-    @AnvilTest(id = "basic-63b58d6a92")
+    @AnvilTest(id = "basic-serialnumber-63b58d6a92")
     public void tooLargeSerialNumberEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -37,7 +37,7 @@ public class LargeSerialNumberTest extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:serial_number")
-    @AnvilTest(id = "basic-c482ae3643")
+    @AnvilTest(id = "basic-serialnumber-c482ae3643")
     public void tooLargeSerialNumberIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertInvalid(
@@ -49,7 +49,7 @@ public class LargeSerialNumberTest extends X509AnvilTest {
 
     @ChainLength(minLength = 2)
     @IpmLimitations(identifiers = "entity:serial_number")
-    @AnvilTest(id = "basic-63b58d6a92")
+    @AnvilTest(id = "basic-serialnumber-63b58d6a93")
     public void largeSerialNumberEntity(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(
@@ -61,7 +61,7 @@ public class LargeSerialNumberTest extends X509AnvilTest {
 
     @ChainLength(minLength = 3)
     @IpmLimitations(identifiers = "inter0:serial_number")
-    @AnvilTest(id = "basic-c482ae3643")
+    @AnvilTest(id = "basic-serialnumber-c482ae3644")
     public void largeSerialNumberIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(
