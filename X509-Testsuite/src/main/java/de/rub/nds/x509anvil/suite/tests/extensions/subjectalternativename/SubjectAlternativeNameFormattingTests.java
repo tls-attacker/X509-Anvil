@@ -50,7 +50,7 @@ public class SubjectAlternativeNameFormattingTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 2)
-    @AnvilTest(id  = "extension-san-53a913244e" )
+    @AnvilTest(id  = "extension-san-53a913244d" )
     @IpmLimitations(identifiers = { "entity:extensions_present", "entity:ext_subject_alt_name_present", "entity:ext_subject_alt_name_values" })
     public void subjectAltNameMailFormattingEntity(X509VerifierRunner testRunner, TestInfo testInfo) throws VerifierException, CertificateGeneratorException {
         assertInvalid(testRunner, true, (X509CertificateConfigModifier) config -> {

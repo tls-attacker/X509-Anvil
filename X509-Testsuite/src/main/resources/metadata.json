@@ -1729,28 +1729,6 @@
         },
         "tags": null
     },
-    "extension-f4379eba22": {
-        "description": "In this case it [the pathLenConstraint field] gives the maximum number of non-self-issued intermediate certificates that may follow this certificate in a valid certification path.",
-        "severityLevels": {
-            "Security": 100
-        },
-        "rfc": {
-            "number": 5280,
-            "section": "4.2.1.9. Basic Constraints"
-        },
-        "tags": null
-    },
-    "extension-a4b5710704": {
-        "description": "In this case it [the pathLenConstraint field] gives the maximum number of non-self-issued intermediate certificates that may follow this certificate in a valid certification path.",
-        "severityLevels": {
-            "Security": 100
-        },
-        "rfc": {
-            "number": 5280,
-            "section": "4.2.1.9. Basic Constraints"
-        },
-        "tags": null
-    },
     "extension-bc-ef15984307": {
         "description": "CAs MUST NOT include the pathLenConstraint field unless the cA boolean is asserted",
         "severityLevels": {
@@ -1993,7 +1971,7 @@
       },
       "tags": null
     },
-    "extension-san-53a913244e": {
+    "extension-san-53a913244d": {
       "description": "When the subjectAltName extension contains an Internet mail address, the address MUST be stored in the rfc822Name.",
       "severityLevels": {
         "Interoperability": 100
