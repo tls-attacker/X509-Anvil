@@ -19,9 +19,37 @@ import org.junit.jupiter.api.TestInfo;
 
 public class PositiveTest extends X509AnvilTest {
 
-    @ChainLength(minLength = 2)
+    @ChainLength(minLength = 2, maxLength = 2)
     @AnvilTest(id = "common-positive-f4db514b76")
-    public void sampleTestCase(X509VerifierRunner testRunner, TestInfo testInfo)
+    public void positiveTest2(X509VerifierRunner testRunner, TestInfo testInfo)
+            throws VerifierException, CertificateGeneratorException {
+        assertValid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            // No specific changes to config needed for this test, keeping the
+                            // default valid case.
+                        }, testInfo);
+    }
+
+    @ChainLength(minLength = 3)
+    @AnvilTest(id = "common-positive-f4db514b77")
+    public void positiveTest3(X509VerifierRunner testRunner, TestInfo testInfo)
+            throws VerifierException, CertificateGeneratorException {
+        assertValid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            // No specific changes to config needed for this test, keeping the
+                            // default valid case.
+                        }, testInfo);
+    }
+
+    @ChainLength(minLength = 4, intermediateCertsModeled = 2, maxLength =  4)
+    @AnvilTest(id = "common-positive-f4db514b78")
+    public void positiveTest4(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
         assertValid(
                 testRunner,

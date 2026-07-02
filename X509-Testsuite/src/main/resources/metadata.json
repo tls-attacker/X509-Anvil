@@ -924,7 +924,29 @@
         "tags": null
     },
     "common-positive-f4db514b76": {
-        "description": "This test performs no modifications and MUST always pass. If it does not it is an indication that the feature extraction is broken.",
+        "description": "This test performs no modifications on a certificate chain of length 2 and MUST always pass. If it does not it is an indication that the feature extraction is broken.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "common-positive-f4db514b77": {
+        "description": "This test performs no modifications on a certificate chain of length 3 and MUST always pass. If it does not it is an indication that the feature extraction is broken.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 5280,
+            "section": null
+        },
+        "tags": null
+    },
+    "common-positive-f4db514b78": {
+        "description": "This test performs no modifications on a certificate chain of length 4 and MUST always pass. If it does not it is an indication that the feature extraction is broken.",
         "severityLevels": {
             "Security": 100
         },
