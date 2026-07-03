@@ -10,7 +10,7 @@ public class ExtensionsPresentProbe extends SimpleProbe{
     @Override
     protected X509CertificateChainConfig prepareConfig() {
         X509CertificateChainConfig x509CertificateChainConfig =
-                X509CertificateConfigUtil.createBasicConfig(2);
+                X509CertificateConfigUtil.createBasicConfig(3);
         x509CertificateChainConfig.getEntityCertificateConfig().setIncludeExtensions(false);
         return x509CertificateChainConfig;
     }
