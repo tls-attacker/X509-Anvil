@@ -1,0 +1,8 @@
+{
+  "name": "RFC3279",
+  "profiles": ["rfc3279"],
+  "testIds": [
+    "basic-subjectpki-algorithm-21f27b8d32",
+    "basic-subjectpki-algorithm-a65cdbb3b8"
+  ]
+}

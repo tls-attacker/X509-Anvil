@@ -230,6 +230,28 @@
         },
         "tags": null
     },
+    "basic-subjectpki-algorithm-a65cdbb3b8": {
+        "description": "The parameters field MUST have ASN.1 type NULL for this algorithm identifier.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.3.1 RSA Keys"
+        },
+        "tags": null
+    },
+    "basic-subjectpki-algorithm-21f27b8d32": {
+        "description": "The parameters field MUST have ASN.1 type NULL for this algorithm identifier.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.3.1 RSA Keys"
+        },
+        "tags": null
+    },
     "basic-subjectpki-45174189ef": {
         "description": "The subjectPublicKeyInfo field is non-optional and must be present.",
         "severityLevels": {
