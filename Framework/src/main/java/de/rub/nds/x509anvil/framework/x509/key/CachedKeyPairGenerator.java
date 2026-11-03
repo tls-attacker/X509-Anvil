@@ -35,4 +35,9 @@ public class CachedKeyPairGenerator {
         keyCaches.computeIfAbsent(cacheIdentifier, k -> new KeyCache(random));
         keyCaches.get(cacheIdentifier).generateNewKeys(algorithmLengthPair, config, cacheIdentifier);
     }
+
+    public static void generateDhKeys(int keyLength, X509CertificateConfig config, String cacheIdentifier) {
+        keyCaches.computeIfAbsent(cacheIdentifier, k -> new KeyCache(random));
+        keyCaches.get(cacheIdentifier).generateDhKeys(keyLength, config, cacheIdentifier);
+    }
 }

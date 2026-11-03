@@ -100,10 +100,11 @@ public class SignatureHashAlgorithmKeyLengthPair {
                                     .collect(Collectors.toList()));
                     break;
                 default:
-                    throw new UnsupportedOperationException(
-                            "Algorithm "
-                                    + signatureAlgorithm.getSignatureAlgorithm()
-                                    + " not supported.");
+                    break;
+                    // throw new UnsupportedOperationException(
+                    //         "Algorithm "
+                    //                 + signatureAlgorithm.getSignatureAlgorithm()
+                    //                 + " not supported.");
             }
         }
         return pairs;

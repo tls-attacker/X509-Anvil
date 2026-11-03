@@ -252,6 +252,28 @@
         },
         "tags": null
     },
+    "basic-subjectpki-algorithm-c7be42804c": {
+        "description": "If the subjectPublicKeyInfo AlgorithmIdentifier field omits the parameters component, the CA signed the subject with a signature algorithm other than DSA, and the subject's DSA parameters are not available through other means, then clients MUST reject the certificate.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.3.2 DSA Signature Keys"
+        },
+        "tags": null
+    },
+    "basic-subjectpki-algorithm-4fd33de9c2": {
+        "description": "If the subjectPublicKeyInfo AlgorithmIdentifier field omits the parameters component, the CA signed the subject with a signature algorithm other than DSA, and the subject's DSA parameters are not available through other means, then clients MUST reject the certificate.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.3.2 DSA Signature Keys"
+        },
+        "tags": null
+    },
     "basic-subjectpki-45174189ef": {
         "description": "The subjectPublicKeyInfo field is non-optional and must be present.",
         "severityLevels": {
@@ -1638,6 +1660,28 @@
         "rfc": {
             "number": 5280,
             "section": "4.2.1.3. Key Usage"
+        },
+        "tags": null
+    },
+    "extension-ku-98c73b6e21": {
+        "description": "The keyUsage extension MUST NOT assert both encipherOnly and decipherOnly.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.3.5 ECDSA and ECDH Keys"
+        },
+        "tags": null
+    },
+    "extension-ku-2ba914f7d0": {
+        "description": "The keyUsage extension MUST NOT assert both encipherOnly and decipherOnly.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.3.5 ECDSA and ECDH Keys"
         },
         "tags": null
     },

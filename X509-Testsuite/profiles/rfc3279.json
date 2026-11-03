@@ -1,8 +1,12 @@
 {
   "name": "RFC3279",
-  "profiles": ["rfc3279"],
+  "profiles": [],
   "testIds": [
+    "basic-subjectpki-algorithm-a65cdbb3b8",
     "basic-subjectpki-algorithm-21f27b8d32",
-    "basic-subjectpki-algorithm-a65cdbb3b8"
+    "basic-subjectpki-algorithm-c7be42804c",
+    "basic-subjectpki-algorithm-4fd33de9c2",
+    "extension-ku-98c73b6e21",
+    "extension-ku-2ba914f7d0"
   ]
 }

@@ -16,6 +16,7 @@ import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthP
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.X509NamedCurve;
 import de.rub.nds.x509attacker.constants.X509PublicKeyType;
+import java.math.BigInteger;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,6 +27,7 @@ public class KeyCache {
     private final Map<Integer, Pair<RsaPublicKey, RsaPrivateKey>> rsaKeyPairCache;
     private final Map<Integer, DsaPublicKey> dsaPublicKeyCache;
     private final Map<Integer, EcdsaPublicKey> ecdsaPublicKeyCache;
+    private final Map<Pair<Integer, BigInteger>, DhPublicKey> dhPublicKeyCache;
 
     private final Random random;
     private boolean disableFullKeyCaching;
@@ -34,6 +36,7 @@ public class KeyCache {
         rsaKeyPairCache = new ConcurrentHashMap<>();
         dsaPublicKeyCache = new ConcurrentHashMap<>();
         ecdsaPublicKeyCache = new ConcurrentHashMap<>();
+        dhPublicKeyCache = new ConcurrentHashMap<>();
         this.random = random;
         this.disableFullKeyCaching = ContextHelper.getTestConfig().isNoKeyCaching();
     }

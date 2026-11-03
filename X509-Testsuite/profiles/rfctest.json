@@ -1,0 +1,8 @@
+{
+  "name": "rfctest",
+  "profiles": [],
+  "testIds": [
+    "basic-subjectpki-algorithm-c7be42804c",
+    "basic-subjectpki-algorithm-4fd33de9c2"
+  ]
+}

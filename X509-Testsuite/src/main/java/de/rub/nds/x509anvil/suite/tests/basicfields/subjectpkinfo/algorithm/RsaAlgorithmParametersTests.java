@@ -9,6 +9,7 @@
 package de.rub.nds.x509anvil.suite.tests.basicfields.subjectpkinfo.algorithm;
 
 import de.rub.nds.anvilcore.annotation.AnvilTest;
+import de.rub.nds.anvilcore.annotation.IpmLimitations;
 import de.rub.nds.x509anvil.framework.annotation.ChainLength;
 import de.rub.nds.x509anvil.framework.anvil.X509AnvilTest;
 import de.rub.nds.x509anvil.framework.anvil.X509VerifierRunner;
@@ -37,6 +38,7 @@ public class RsaAlgorithmParametersTests extends X509AnvilTest {
     }
 
     @ChainLength(minLength = 3)
+    @IpmLimitations(identifiers = "entity:key_type")
     @AnvilTest(id = "basic-subjectpki-algorithm-21f27b8d32")
     public void subjectPublicKeyInfoRsaAlgorithmParametersNotNullIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
             throws VerifierException, CertificateGeneratorException {
