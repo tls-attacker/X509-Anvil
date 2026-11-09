@@ -8,19 +8,31 @@
  */
 package de.rub.nds.x509anvil.framework.x509.key;
 
-import static de.rub.nds.x509attacker.constants.X509NamedCurve.*;
+import static de.rub.nds.x509attacker.constants.X509NamedCurve.SECP160R1;
+import static de.rub.nds.x509attacker.constants.X509NamedCurve.SECP224R1;
+import static de.rub.nds.x509attacker.constants.X509NamedCurve.SECP256R1;
+import static de.rub.nds.x509attacker.constants.X509NamedCurve.SECP384R1;
 
-import de.rub.nds.protocol.crypto.key.*;
+import java.math.BigInteger;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.apache.commons.lang3.tuple.Pair;
+import org.bouncycastle.crypto.agreement.DHStandardGroups;
+import org.bouncycastle.crypto.params.DHParameters;
+
+import de.rub.nds.protocol.crypto.key.DhPublicKey;
+import de.rub.nds.protocol.crypto.key.DsaPublicKey;
+import de.rub.nds.protocol.crypto.key.EcdsaPublicKey;
+import de.rub.nds.protocol.crypto.key.KeyGenerator;
+import de.rub.nds.protocol.crypto.key.RsaPrivateKey;
+import de.rub.nds.protocol.crypto.key.RsaPublicKey;
 import de.rub.nds.x509anvil.framework.anvil.ContextHelper;
 import de.rub.nds.x509anvil.framework.constants.SignatureHashAlgorithmKeyLengthPair;
 import de.rub.nds.x509attacker.config.X509CertificateConfig;
 import de.rub.nds.x509attacker.constants.X509NamedCurve;
 import de.rub.nds.x509attacker.constants.X509PublicKeyType;
-import java.math.BigInteger;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
-import org.apache.commons.lang3.tuple.Pair;
 
 public class KeyCache {
 
@@ -116,6 +128,44 @@ public class KeyCache {
                 config.setPublicKeyType(X509PublicKeyType.ECDH_ECDSA);
                 break;
         }
+    }
+
+    public void generateDhKeys(int keyLength, X509CertificateConfig config, String cacheIdentifier) {
+        DHParameters parameters = switch (keyLength) {
+            case 2048 -> DHStandardGroups.rfc7919_ffdhe2048;
+            case 3072 -> DHStandardGroups.rfc7919_ffdhe3072;
+            case 4096 -> DHStandardGroups.rfc7919_ffdhe4096;
+            case 6144 -> DHStandardGroups.rfc7919_ffdhe6144;
+            case 8192 -> DHStandardGroups.rfc7919_ffdhe8192;
+            default -> throw new IllegalArgumentException("Unsupported DH key length: " + keyLength);
+        };
+
+        BigInteger privateKey = config.getDefaultSubjectDhPrivateKey();
+        BigInteger subgroupOrder = parameters.getP().subtract(BigInteger.ONE).divide(BigInteger.TWO);
+        if (privateKey.compareTo(BigInteger.TWO) < 0 || privateKey.compareTo(subgroupOrder) >= 0) {
+            throw new IllegalArgumentException("DH private key must be between 2 and q - 1");
+        }
+
+        Pair<Integer, BigInteger> cacheKey = Pair.of(keyLength, privateKey);
+        DhPublicKey dhPublicKey;
+
+        synchronized (dhPublicKeyCache) {
+            dhPublicKey = dhPublicKeyCache.get(cacheKey);
+            if (dhPublicKey == null) {
+                BigInteger publicKey = parameters.getG().modPow(privateKey, parameters.getP());
+                dhPublicKey = new DhPublicKey(publicKey, parameters.getG(), parameters.getP());
+
+                if (!disableFullKeyCaching || cacheIdentifier.equals("root")) {
+                    dhPublicKeyCache.put(cacheKey, dhPublicKey);
+                }
+            }
+        }
+
+        config.setDhModulus(dhPublicKey.getModulus());
+        config.setDhGenerator(dhPublicKey.getGenerator());
+        config.setDhSubgroupOrder(subgroupOrder);
+        config.setDefaultSubjectDhPublicKey(dhPublicKey.getPublicKey());
+        config.setPublicKeyType(X509PublicKeyType.DH);
     }
 
     private static X509NamedCurve curveFromAlgorithmLengthPair(

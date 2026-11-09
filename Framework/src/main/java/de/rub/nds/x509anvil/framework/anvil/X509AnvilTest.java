@@ -145,7 +145,7 @@ public class X509AnvilTest extends AnvilTestBaseClass {
 
         TestConfig testConfig = ContextHelper.getTestConfig();
         if (testConfig.getDumpCertificates()) {
-            Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+            Assertions.assertEquals(expectValid, result.isValid(), dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
         } else {
             Assertions.assertEquals(expectValid, result.isValid());
         }
@@ -172,7 +172,7 @@ public class X509AnvilTest extends AnvilTestBaseClass {
 
         TestConfig testConfig = ContextHelper.getTestConfig();
         if (testConfig.getDumpCertificates()) {
-            Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+            Assertions.assertEquals(expectValid, result.isValid(), dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
         } else {
             Assertions.assertEquals(expectValid, result.isValid());
         }
@@ -202,7 +202,7 @@ public class X509AnvilTest extends AnvilTestBaseClass {
 
         TestConfig testConfig = ContextHelper.getTestConfig();
         if (testConfig.getDumpCertificates()) {
-            Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+            Assertions.assertEquals(expectValid, result.isValid(), dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
         } else {
             Assertions.assertEquals(expectValid, result.isValid());
         }
@@ -219,7 +219,7 @@ public class X509AnvilTest extends AnvilTestBaseClass {
 
         TestConfig testConfig = ContextHelper.getTestConfig();
         if (testConfig.getDumpCertificates()) {
-            Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+            Assertions.assertEquals(expectValid, result.isValid(), dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
         } else {
             Assertions.assertEquals(expectValid, result.isValid());
         }
@@ -236,7 +236,7 @@ public class X509AnvilTest extends AnvilTestBaseClass {
 
         TestConfig testConfig = ContextHelper.getTestConfig();
         if (testConfig.getDumpCertificates()) {
-            Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+            Assertions.assertEquals(expectValid, result.isValid(), dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
         } else {
             Assertions.assertEquals(expectValid, result.isValid());
         }
@@ -274,7 +274,7 @@ public class X509AnvilTest extends AnvilTestBaseClass {
 
         TestConfig testConfig = ContextHelper.getTestConfig();
         if (testConfig.getDumpCertificates()) {
-            Assertions.assertEquals(expectValid, result.isValid(), () -> dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
+            Assertions.assertEquals(expectValid, result.isValid(), dumpCertificateForFailedTest(expectValid, result, testRunner, testInfo));
         } else {
             Assertions.assertEquals(expectValid, result.isValid());
         }

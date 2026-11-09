@@ -2,7 +2,7 @@
   "name": "rfctest",
   "profiles": [],
   "testIds": [
-    "basic-subjectpki-algorithm-c7be42804c",
-    "basic-subjectpki-algorithm-4fd33de9c2"
+    "basic-signaturealgorithm-5f0b81d3c7",
+    "basic-signaturealgorithm-a26d4e90b8"
   ]
 }

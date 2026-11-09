@@ -18,10 +18,46 @@ import de.rub.nds.x509anvil.framework.x509.generator.CertificateGeneratorExcepti
 import de.rub.nds.x509anvil.framework.x509.generator.modifier.X509CertificateConfigModifier;
 import de.rub.nds.x509attacker.constants.X509PublicKeyType;
 import de.rub.nds.x509attacker.constants.X509SignatureAlgorithm;
+import de.rub.nds.x509attacker.x509.model.publickey.parameters.X509NullParameters;
 
 import org.junit.jupiter.api.TestInfo;
 
 public class DsaAlgorithmParametersTests extends X509AnvilTest {
+
+    @ChainLength(minLength = 2)
+    @AnvilTest(id = "basic-subjectpki-algorithm-8d49c2f061")
+    public void subjectPublicKeyInfoDsaAlgorithmParametersNullEntity(X509VerifierRunner testRunner, TestInfo testInfo)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier)
+                        config -> {
+                            config.setPublicKeyType(X509PublicKeyType.DSA);
+                            config.setIncludeSubjectPublicKeyParameters(true);
+                            config.setPublicKeyParameters(new X509NullParameters("nullParameters"));
+                        }, testInfo);
+    }
+
+    @ChainLength(minLength = 3)
+    @IpmLimitations(identifiers = "entity:key_type")
+    @AnvilTest(id = "basic-subjectpki-algorithm-e135a07bd2")
+    public void subjectPublicKeyInfoDsaAlgorithmParametersNullIntermediate(X509VerifierRunner testRunner, TestInfo testInfo)
+            throws VerifierException, CertificateGeneratorException {
+        assertInvalid(
+                testRunner,
+                true,
+                (X509CertificateConfigModifier)
+                        entityConfig -> {
+                            entityConfig.setSignatureAlgorithm(X509SignatureAlgorithm.DSA_WITH_SHA256);
+                        },
+                (X509CertificateConfigModifier)
+                        config -> {
+                            config.setPublicKeyType(X509PublicKeyType.DSA);
+                            config.setIncludeSubjectPublicKeyParameters(true);
+                            config.setPublicKeyParameters(new X509NullParameters("nullParameters"));
+                        }, testInfo);
+    }
 
     @ChainLength(minLength = 2)
     @AnvilTest(id = "basic-subjectpki-algorithm-c7be42804c")
