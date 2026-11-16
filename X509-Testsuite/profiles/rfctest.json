@@ -2,7 +2,11 @@
   "name": "rfctest",
   "profiles": [],
   "testIds": [
-    "basic-signaturealgorithm-5f0b81d3c7",
-    "basic-signaturealgorithm-a26d4e90b8"
+    "signature-7c91a6e204",
+    "signature-b38d20f671",
+    "signature-04e7c9a152",
+    "signature-d65b8190af",
+    "signature-28f4a0c963",
+    "signature-e9037b5d14"
   ]
 }

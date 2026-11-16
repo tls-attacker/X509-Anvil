@@ -230,6 +230,72 @@
         },
         "tags": null
     },
+    "signature-7c91a6e204": {
+        "description": "When performing the data encoding step, the md2, md5, and id-sha1 OIDs MUST be used to specify the MD2, MD5, and SHA-1 one-way hash functions, respectively",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.1 RSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-b38d20f671": {
+        "description": "When performing the data encoding step, the md2, md5, and id-sha1 OIDs MUST be used to specify the MD2, MD5, and SHA-1 one-way hash functions, respectively",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.1 RSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-04e7c9a152": {
+        "description": "When performing the data encoding step, the md2, md5, and id-sha1 OIDs MUST be used to specify the MD2, MD5, and SHA-1 one-way hash functions, respectively",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.1 RSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-d65b8190af": {
+        "description": "When performing the data encoding step, the md2, md5, and id-sha1 OIDs MUST be used to specify the MD2, MD5, and SHA-1 one-way hash functions, respectively",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.1 RSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-28f4a0c963": {
+        "description": "When performing the data encoding step, the md2, md5, and id-sha1 OIDs MUST be used to specify the MD2, MD5, and SHA-1 one-way hash functions, respectively",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.1 RSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-e9037b5d14": {
+        "description": "When performing the data encoding step, the md2, md5, and id-sha1 OIDs MUST be used to specify the MD2, MD5, and SHA-1 one-way hash functions, respectively",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.1 RSA Signature Algorithm"
+        },
+        "tags": null
+    },
     "basic-signaturealgorithm-3a4d9c70b2": {
         "description": "When any of these three OIDs appears within the ASN.1 type AlgorithmIdentifier, the parameters component of that type SHALL be the ASN.1 type NULL.",
         "severityLevels": {
@@ -315,6 +381,160 @@
         "rfc": {
             "number": 3279,
             "section": "2.2.2 DSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-71a0c3d8e2": {
+        "description": "When signing, the DSA algorithm generates two values.  These values are commonly referred to as r and s.  To easily transfer these two values as one signature, they SHALL be ASN.1 encoded using the following ASN.1 structure",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.2 DSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-2e4b7c190a": {
+        "description": "When signing, the DSA algorithm generates two values.  These values are commonly referred to as r and s.  To easily transfer these two values as one signature, they SHALL be ASN.1 encoded using the following ASN.1 structure",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.2 DSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-0cf5a812bd": {
+        "description": "When signing, the DSA algorithm generates two values.  These values are commonly referred to as r and s.  To easily transfer these two values as one signature, they SHALL be ASN.1 encoded using the following ASN.1 structure",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.2 DSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-943d62e0fa": {
+        "description": "When signing, the DSA algorithm generates two values.  These values are commonly referred to as r and s.  To easily transfer these two values as one signature, they SHALL be ASN.1 encoded using the following ASN.1 structure",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.2 DSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-b82e30a7c1": {
+        "description": "When signing, the DSA algorithm generates two values.  These values are commonly referred to as r and s.  To easily transfer these two values as one signature, they SHALL be ASN.1 encoded using the following ASN.1 structure",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.2 DSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-e19f406bd3": {
+        "description": "When signing, the DSA algorithm generates two values.  These values are commonly referred to as r and s.  To easily transfer these two values as one signature, they SHALL be ASN.1 encoded using the following ASN.1 structure",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.2 DSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "basic-signaturealgorithm-bc6e0ad217": {
+        "description": "When the ecdsa-with-SHA1 algorithm identifier appears as the algorithm field in an AlgorithmIdentifier, the encoding MUST omit the parameters field.  That is, the AlgorithmIdentifier SHALL be a SEQUENCE of one component: the OBJECT IDENTIFIER ecdsa-with-SHA1.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.3 ECDSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "basic-signaturealgorithm-e219c03a7d": {
+        "description": "When the ecdsa-with-SHA1 algorithm identifier appears as the algorithm field in an AlgorithmIdentifier, the encoding MUST omit the parameters field.  That is, the AlgorithmIdentifier SHALL be a SEQUENCE of one component: the OBJECT IDENTIFIER ecdsa-with-SHA1.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.3 ECDSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-c560a8d213": {
+        "description": "When signing, the ECDSA algorithm generates two values.  These values are commonly referred to as r and s.  To easily transfer these two values as one signature, they MUST be ASN.1 encoded using the following ASN.1 structure",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.3 ECDSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-4f18bc709e": {
+        "description": "When signing, the ECDSA algorithm generates two values.  These values are commonly referred to as r and s.  To easily transfer these two values as one signature, they MUST be ASN.1 encoded using the following ASN.1 structure",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.3 ECDSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-a307d9e461": {
+        "description": "When signing, the ECDSA algorithm generates two values.  These values are commonly referred to as r and s.  To easily transfer these two values as one signature, they MUST be ASN.1 encoded using the following ASN.1 structure",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.3 ECDSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-8b6e02ca94": {
+        "description": "When signing, the ECDSA algorithm generates two values.  These values are commonly referred to as r and s.  To easily transfer these two values as one signature, they MUST be ASN.1 encoded using the following ASN.1 structure",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.3 ECDSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-d42c7f018b": {
+        "description": "When signing, the ECDSA algorithm generates two values.  These values are commonly referred to as r and s.  To easily transfer these two values as one signature, they MUST be ASN.1 encoded using the following ASN.1 structure",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.3 ECDSA Signature Algorithm"
+        },
+        "tags": null
+    },
+    "signature-5e9a31d670": {
+        "description": "When signing, the ECDSA algorithm generates two values.  These values are commonly referred to as r and s.  To easily transfer these two values as one signature, they MUST be ASN.1 encoded using the following ASN.1 structure",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.2.3 ECDSA Signature Algorithm"
         },
         "tags": null
     },
@@ -1913,6 +2133,28 @@
         "rfc": {
             "number": 3279,
             "section": "2.3.3 Diffie-Hellman Key Exchange Keys"
+        },
+        "tags": null
+    },
+    "basic-subjectpki-algorithm-6a19c8e042": {
+        "description": "When certificates contain an ECDSA or ECDH public key, the id-ecPublicKey algorithm identifier MUST be used.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.3.5 ECDSA and ECDH Keys"
+        },
+        "tags": null
+    },
+    "basic-subjectpki-algorithm-f427b0d913": {
+        "description": "When certificates contain an ECDSA or ECDH public key, the id-ecPublicKey algorithm identifier MUST be used.",
+        "severityLevels": {
+            "Security": 100
+        },
+        "rfc": {
+            "number": 3279,
+            "section": "2.3.5 ECDSA and ECDH Keys"
         },
         "tags": null
     },
